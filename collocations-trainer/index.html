@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0f766e">
+<title>Collocations Trainer</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">COLLOCATIONS <span>LAB</span></div>
+    <div class="sub">Interactive practice • 238 items</div>
+    <div class="cat-title">Choose a set</div>
+    <div id="catList" class="cat-list"></div>
+    <div class="side-footer">Tip: use “All sets” for mixed revision after practising separate groups.</div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <div class="eyebrow">Vocabulary trainer</div>
+        <h1 id="title">Collocations Trainer</h1>
+        <p class="lead">Learn, recognise, retrieve and hear common collocations in different task formats.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="correctStat">0</b><span>correct</span></div>
+        <div class="stat"><b id="attemptStat">0</b><span>attempts</span></div>
+        <div class="stat"><b id="streakStat">0</b><span>streak</span></div>
+      </div>
+    </div>
+
+    <div class="mobile-cats"><select id="catSelect" aria-label="Choose collocation set"></select></div>
+
+    <nav id="modebar" class="modebar" aria-label="Training modes">
+      <button class="mode active" data-mode="cards">🗂 Flashcards</button>
+      <button class="mode" data-mode="choice">✓ Context Choice</button>
+      <button class="mode" data-mode="type">⌨ Type It</button>
+      <button class="mode" data-mode="match">↔ Match Up</button>
+      <button class="mode" data-mode="listen">🔊 Listen & Type</button>
+      <button class="mode" data-mode="mix">⚡ Mixed Challenge</button>
+    </nav>
+
+    <section id="panel" class="panel" aria-live="polite"></section>
+  </main>
+</div>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
