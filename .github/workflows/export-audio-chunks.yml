@@ -1,4 +1,4 @@
-name: Export audio chunks
+name: Build Elspeth audio
 
 on:
   push:
@@ -6,18 +6,43 @@ on:
       - '.github/workflows/export-audio-chunks.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  export:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/upload-artifact@v4
         with:
-          name: current-audio-chunks
-          path: |
-            maya-english-hub/media/audio-00.txt
-            maya-english-hub/media/audio-03.txt
-            maya-english-hub/media/audio-04.txt
-            maya-english-hub/media/audio-07.txt
-          if-no-files-found: error
-          retention-days: 1
+          fetch-depth: 0
+      - name: Rebuild WebM audio
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64
+
+          folder = Path('maya-english-hub/media')
+          parts = [
+              folder / 'elspeth-1-19.part1.txt',
+              folder / 'elspeth-1-19.part2.txt',
+          ]
+          encoded = ''.join(''.join(p.read_text().split()) for p in parts)
+          encoded += '=' * ((4 - len(encoded) % 4) % 4)
+          audio = base64.b64decode(encoded)
+          target = folder / 'elspeth-1-19.webm'
+          target.write_bytes(audio)
+          print(f'Created {target} ({len(audio)} bytes)')
+          PY
+          ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1 maya-english-hub/media/elspeth-1-19.webm
+      - name: Commit rebuilt audio
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add maya-english-hub/media/elspeth-1-19.webm
+          if ! git diff --cached --quiet; then
+            git commit -m "Add working Elspeth 1.19 audio"
+            git push
+          fi
