@@ -1,0 +1,1 @@
+window.GRAMMAR=[["BE","is"],["THEY","their"],["BEGIN","began"],["HE","his"],["OWN","are owned"],["GOOD","better"],["ACTIVITY","activities"],["DO","is done"],["INSTALL","have installed"],["EXCITING","most exciting"],["OFFER","offering"],["TURN","turns"]];
