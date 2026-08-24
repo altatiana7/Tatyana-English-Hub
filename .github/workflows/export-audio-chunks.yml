@@ -1,0 +1,23 @@
+name: Export audio chunks
+
+on:
+  push:
+    paths:
+      - '.github/workflows/export-audio-chunks.yml'
+  workflow_dispatch:
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: current-audio-chunks
+          path: |
+            maya-english-hub/media/audio-00.txt
+            maya-english-hub/media/audio-03.txt
+            maya-english-hub/media/audio-04.txt
+            maya-english-hub/media/audio-07.txt
+          if-no-files-found: error
+          retention-days: 1
