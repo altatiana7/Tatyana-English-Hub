@@ -127,7 +127,7 @@ function renderStudent(student,moduleIndex){
   student.modules.forEach((module,index)=>{const btn=document.createElement('button');btn.className='module-button'+(index===moduleIndex?' active':'');btn.textContent=module.name;btn.addEventListener('click',()=>renderStudent(student,index));nav.appendChild(btn);});
   const module=student.modules[moduleIndex];document.getElementById('lessonCount').textContent=module.lessons.length;
   const grid=document.getElementById('lessonGrid');grid.innerHTML='';
-  module.lessons.forEach((lesson,index)=>{const card=document.createElement('article');card.className='lesson-card';card.innerHTML=`<div><span class="lesson-tag">LESSON ${index+1}</span><h3>${lesson}</h3><p class="muted">Interactive lesson space.</p></div><button type="button">Open lesson</button>`;card.querySelector('button').addEventListener('click',()=>alert('This lesson space is ready for content.'));grid.appendChild(card);});
+  module.lessons.forEach((lesson,index)=>{const card=document.createElement('article');card.className='lesson-card';card.innerHTML=`<div><span class="lesson-tag">LESSON ${index+1}</span><h3>${lesson}</h3><p class="muted">Interactive lesson space.</p></div><button type="button">Open lesson</button>`;card.querySelector('button').addEventListener('click',()=>{if(student.id==='gabi'){window.location.href='gabi-english-hub/';}else{alert('This lesson space is ready for content.');}});grid.appendChild(card);});
 }
 
 function renderTeacher(){
