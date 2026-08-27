@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Homework · Fix & Build</title>
+<style>
+:root{--ink:#17323f;--teal:#18b8ae;--line:#dbe9e8;--muted:#647982;--bg:#f7fbf8;--pink:#fff0f4;--yellow:#fff7d8;--blue:#edf5ff}*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:linear-gradient(135deg,#eafaf7,#fff9e9 55%,#f2efff);color:var(--ink)}.wrap{width:min(980px,calc(100% - 24px));margin:18px auto 48px}.hero{background:linear-gradient(125deg,#17323f,#226e74);color:#fff;border-radius:24px;padding:22px 25px;box-shadow:0 16px 34px #17323f25}.hero small{font-weight:900;letter-spacing:.12em;color:#9cebe5}.hero h1{margin:7px 0 4px;font-size:clamp(28px,5vw,46px)}.hero p{margin:0;color:#d9efed}.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin:14px 0}.tab{border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px 8px;font-weight:900;color:var(--ink);cursor:pointer}.tab.active{background:var(--ink);color:#fff}.panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 10px 28px #2c4a5014}.hidden{display:none!important}.muted{color:var(--muted)}.q{border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0;background:#fbfefd}.q b{display:block;margin-bottom:8px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:8px}.choice{border:1px solid #d9e6e6;border-radius:12px;padding:9px 10px}.choice label{cursor:pointer}.wf{display:grid;grid-template-columns:1fr 180px;gap:10px;align-items:center}.wf input,.mix select{width:100%;padding:10px 11px;border:2px solid #dbe6e7;border-radius:11px;font:inherit}.mix{line-height:2.1}.mix select{width:auto;min-width:86px;padding:7px 8px}.btn{border:0;background:var(--ink);color:#fff;border-radius:13px;padding:12px 16px;font-weight:900;cursor:pointer}.code{margin-top:12px;background:#f4f7f7;border:1px dashed #aac2c1;border-radius:14px;padding:12px;font:12px ui-monospace,SFMono-Regular,Consolas,monospace;word-break:break-all}.status{margin-top:10px;font-weight:900}.bad{color:#c9475e}@media(max-width:720px){.tabs{grid-template-columns:1fr 1fr}.choices{grid-template-columns:1fr}.wf{grid-template-columns:1fr}}
+</style>
+</head><body><main class="wrap">
+<section class="hero"><small>MODULE 1 · REPAIR HOMEWORK</small><h1>Fix it. Build it.</h1><p>Vocabulary · Word formation · Articles · Mixed challenge</p></section>
+<div class="tabs"><button class="tab active" data-p="v">Vocabulary</button><button class="tab" data-p="w">Word formation</button><button class="tab" data-p="a">Articles</button><button class="tab" data-p="m">Challenge</button><button class="tab" data-p="s">Submit</button></div>
+<section class="panel" id="v"><h2>1. Vocabulary repair</h2><p class="muted">Choose the best word for the context.</p><div id="vocab"></div></section>
+<section class="panel hidden" id="w"><h2>2. Word formation</h2><p class="muted">Use the correct form of the word in brackets.</p><div id="wf"></div></section>
+<section class="panel hidden" id="a"><h2>3. Articles</h2><p class="muted">Choose <b>a / an / the / —</b>.</p><div id="arts"></div></section>
+<section class="panel hidden" id="m"><h2>4. Mini challenge</h2><p class="muted">Complete the short story with vocabulary and articles.</p><div id="mix"></div></section>
+<section class="panel hidden" id="s"><h2>5. Send to teacher</h2><p>Finish every task, then create your homework code.</p><button class="btn" id="submit">Create homework code</button><div id="status" class="status"></div><div id="codeWrap" class="hidden"><div class="code" id="code"></div><button class="btn" id="copy" style="margin-top:10px">Copy code</button></div></section>
+</main><script>
+const vocab=[
+['After three difficult weeks, Leo still had to ______ with waking up at 6 a.m.',['regret','struggle','intend','take the chance'],'struggle'],
+['Mia made a ______ to practise English for fifteen minutes every day.',['resolution','courage','habit','gap year'],'resolution'],
+['I didn’t ______ joining the school club; I met some great people there.',['regret','further','struggle','perhaps'],'regret'],
+['Sam ______ to study computer science after school.',['intends','regrets','struggles','habits'],'intends'],
+['You need a lot of ______ to speak in front of hundreds of people.',['courage','habit','resolution','chance'],'courage'],
+['When the exchange programme offered one free place, Nina decided to ______.',['take the chance','make a habit','study further','regret'],'take the chance'],
+['After a month, reading before bed became a useful ______.',['habit','courage','gap year','resolution'],'habit'],
+['______ we’ll go camping this weekend, but we haven’t decided yet.',['Perhaps','Further','Brave','Regret'],'Perhaps']
+];
+const wf=[
+['Our coach asked us to take a more ______ role in the project.','ACT','active'],
+['She answered the question ______ and clearly.','ACT','actively'],
+['The club organises lots of after-school ______.','ACT','activities'],
+['It was an ______ experience for everyone.','EDUCATION','educational'],
+['He made an important ______ about his future.','DECIDE','decision']
+];
+const arts=[
+['My brother wants to become ___ engineer.','an'],['We visited ___ new sports centre near our school yesterday.','a'],['___ sports centre was much bigger than I expected.','the'],['She usually goes to ___ school by bus.','zero'],['My aunt is ___ doctor.','a'],['I saw ___ interesting advert for a summer course.','an'],['Can you close ___ window, please?','the'],['Teenagers need ___ sleep to concentrate well.','zero'],['We spent ___ hour talking about our plans.','an'],['He bought ___ bike last month.','a'],['___ bike is already his favourite thing.','the'],['They went to ___ Italy during the holidays.','zero'],['This is ___ best decision I’ve made this year.','the'],['She wants to join ___ drama club at her school.','the'],['I need ___ advice about choosing a course.','zero']
+];
+const mixItems=[
+{type:'art',text:'This summer I joined ___ photography course.',key:'a'},
+{type:'v',text:'At first I really ______ with getting up early.',opts:['regretted','struggled','intended','resolved'],key:'struggled'},
+{type:'art',text:'___ course started at 8.00 every morning.',key:'the'},
+{type:'v',text:'After two weeks, waking up early became a ______.',opts:['courage','habit','chance','regret'],key:'habit'},
+{type:'art',text:'One day we met ___ professional photographer.',key:'a'},
+{type:'v',text:'I decided to ______ and enter one of my photos in a competition.',opts:['take the chance','regret','struggle','study further'],key:'take the chance'},
+{type:'art',text:'In the end, it was ___ life-changing experience.',key:'a'}
+];
+function choiceHTML(name,opts){return '<div class="choices">'+opts.map((o,i)=>`<div class="choice"><input type="radio" name="${name}" id="${name}_${i}" value="${o}"><label for="${name}_${i}"> ${o}</label></div>`).join('')+'</div>'}
+const vg=document.getElementById('vocab');vocab.forEach((q,i)=>{const d=document.createElement('div');d.className='q';d.innerHTML=`<b>${i+1}. ${q[0]}</b>${choiceHTML('v'+i,q[1])}`;vg.appendChild(d)});
+const wg=document.getElementById('wf');wf.forEach((q,i)=>{const d=document.createElement('div');d.className='q wf';d.innerHTML=`<div><b>${i+1}. ${q[0]}</b><span class="muted">(${q[1]})</span></div><input data-wf="${i}" autocomplete="off">`;wg.appendChild(d)});
+const ag=document.getElementById('arts');arts.forEach((q,i)=>{const d=document.createElement('div');d.className='q';d.innerHTML=`<b>${i+1}. ${q[0]}</b>${choiceHTML('a'+i,['a','an','the','—'])}`;ag.appendChild(d)});
+const mg=document.getElementById('mix');mixItems.forEach((q,i)=>{const d=document.createElement('div');d.className='q';d.innerHTML=`<b>${i+1}. ${q.text}</b>${choiceHTML('m'+i,q.type==='art'?['a','an','the','—']:q.opts)}`;mg.appendChild(d)});
+function normVal(v){return v==='—'?'zero':v}function selected(name){const e=document.querySelector(`input[name="${name}"]:checked`);return e?normVal(e.value):''}function collect(){return{v:vocab.map((_,i)=>selected('v'+i)),wf:wf.map((_,i)=>document.querySelector(`[data-wf="${i}"]`).value.trim()),a:arts.map((_,i)=>selected('a'+i)),m:mixItems.map((_,i)=>selected('m'+i))}}function enc(obj){const bytes=new TextEncoder().encode(JSON.stringify(obj));let s='';bytes.forEach(b=>s+=String.fromCharCode(b));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}function save(){localStorage.setItem('gabi-repair-20260827',JSON.stringify(collect()))}document.addEventListener('change',save);document.addEventListener('input',save);try{const d=JSON.parse(localStorage.getItem('gabi-repair-20260827')||'{}');(d.v||[]).forEach((v,i)=>{const e=[...document.querySelectorAll(`input[name="v${i}"]`)].find(x=>normVal(x.value)===v);if(e)e.checked=true});(d.wf||[]).forEach((v,i)=>{const e=document.querySelector(`[data-wf="${i}"]`);if(e)e.value=v});(d.a||[]).forEach((v,i)=>{const e=[...document.querySelectorAll(`input[name="a${i}"]`)].find(x=>normVal(x.value)===v);if(e)e.checked=true});(d.m||[]).forEach((v,i)=>{const e=[...document.querySelectorAll(`input[name="m${i}"]`)].find(x=>normVal(x.value)===v);if(e)e.checked=true})}catch(e){}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(x=>x.classList.add('hidden'));document.getElementById(b.dataset.p).classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})});
+document.getElementById('submit').onclick=()=>{const d=collect(),missing=[...d.v,...d.wf,...d.a,...d.m].filter(x=>!x).length,st=document.getElementById('status');if(missing){st.className='status bad';st.textContent=`Finish all tasks first · ${missing} missing.`;return}const code=enc({v:3,assignment:'gabi-repair-20260827',submitted:new Date().toISOString(),...d});document.getElementById('code').textContent=code;document.getElementById('codeWrap').classList.remove('hidden');st.className='status';st.textContent='Homework code created. Send it to your teacher.'};document.getElementById('copy').onclick=async()=>{const c=document.getElementById('code').textContent;try{await navigator.clipboard.writeText(c);document.getElementById('copy').textContent='Copied ✓'}catch(e){}};
+</script></body></html>
