@@ -20,3 +20,36 @@ const prompts=['entire year','new phone','latest model','advertisement','store',
 function showPanel(id){document.querySelectorAll('.panel').forEach(p=>p.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.panel===id));window.scrollTo({top:0,behavior:'smooth'})}document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>showPanel(b.dataset.panel));document.getElementById('openHw').onclick=()=>{document.getElementById('course').classList.add('hidden');document.getElementById('homework').classList.add('show');showPanel('readPanel')};document.getElementById('backBtn').onclick=()=>{document.getElementById('homework').classList.remove('show');document.getElementById('course').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})};
 function bytesToB64url(bytes){let s='';bytes.forEach(b=>s+=String.fromCharCode(b));return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}function encodePayload(obj){return bytesToB64url(new TextEncoder().encode(JSON.stringify(obj)))}function collect(){const wf=[...document.querySelectorAll('[data-wf]')].map(x=>x.value),art=[...document.querySelectorAll('[data-art]')].map(x=>x.value),lexAns=lex.map((_,i)=>{const e=document.querySelector(`input[name="lex${i}"]:checked`);return e?e.value:''});return{wf,art,lex:lexAns}}function save(){localStorage.setItem('life-plans-hw1',JSON.stringify(collect()))}function load(){try{const d=JSON.parse(localStorage.getItem('life-plans-hw1')||'{}');(d.wf||[]).forEach((v,i)=>{const e=document.querySelector(`[data-wf="${i}"]`);if(e)e.value=v});(d.art||[]).forEach((v,i)=>{const e=document.querySelector(`[data-art="${i}"]`);if(e)e.value=v});(d.lex||[]).forEach((v,i)=>{if(v){const e=[...document.querySelectorAll(`input[name="lex${i}"]`)].find(x=>x.value===v);if(e)e.checked=true}})}catch(e){}}document.addEventListener('change',e=>{if(e.target.matches('[data-wf],[data-art],[data-lex]'))save()});document.addEventListener('input',e=>{if(e.target.matches('[data-wf]'))save()});load();
 document.getElementById('submitBtn').onclick=()=>{const d=collect(),missing=d.wf.filter(x=>!x.trim()).length+d.art.filter(x=>!x).length+d.lex.filter(x=>!x).length;if(missing){const s=document.getElementById('submitStatus');s.className='status bad';s.textContent='Finish all tasks first · '+missing+' answer'+(missing===1?'':'s')+' missing.';return}const payload={v:2,assignment:'life-plans-hw1',submitted:new Date().toISOString(),wf:d.wf.map(x=>x.trim()),art:d.art,lex:d.lex};const code=encodePayload(payload);document.getElementById('submissionCode').textContent=code;document.getElementById('codeWrap').classList.remove('hidden');const s=document.getElementById('submitStatus');s.className='status';s.textContent='Homework code created. Send it to your teacher.';localStorage.setItem('life-plans-hw1-code',code)};document.getElementById('copyBtn').onclick=async()=>{const c=document.getElementById('submissionCode').textContent;try{await navigator.clipboard.writeText(c);document.getElementById('copyBtn').textContent='Copied ✓'}catch(e){const r=document.createRange();r.selectNode(document.getElementById('submissionCode'));getSelection().removeAllRanges();getSelection().addRange(r)}};
+
+// Module 1 lesson navigation — keep the existing cover and visual design.
+(()=>{
+  const course=document.getElementById('course');
+  const firstCard=course?.querySelector('.lesson-card');
+  const head=course?.querySelector('.lesson-head');
+  if(!course||!firstCard||!head)return;
+  const sub=head.querySelector('p');
+  if(sub)sub.textContent='Lessons 1–2';
+  const tag=firstCard.querySelector('.tag');
+  if(tag)tag.textContent='LESSON 1 · HOMEWORK';
+  const grid=document.createElement('div');
+  grid.className='lesson-grid-two';
+  grid.style.display='grid';
+  grid.style.gridTemplateColumns='repeat(2,minmax(0,1fr))';
+  grid.style.gap='16px';
+  grid.style.alignItems='stretch';
+  firstCard.parentNode.insertBefore(grid,firstCard);
+  grid.appendChild(firstCard);
+  const second=firstCard.cloneNode(true);
+  second.querySelector('.tag').textContent='LESSON 2 · HOMEWORK';
+  second.querySelector('h3').textContent='Fix & Strengthen';
+  second.querySelector('p').textContent='Vocabulary, word formation and articles — practice from your mistakes.';
+  const btn=second.querySelector('.open-btn');
+  btn.id='openHw2';
+  btn.textContent='Homework →';
+  btn.onclick=()=>{window.location.href='repair-homework.html'};
+  grid.appendChild(second);
+  const mq=window.matchMedia('(max-width: 760px)');
+  const apply=()=>grid.style.gridTemplateColumns=mq.matches?'1fr':'repeat(2,minmax(0,1fr))';
+  apply();
+  if(mq.addEventListener)mq.addEventListener('change',apply);
+})();
