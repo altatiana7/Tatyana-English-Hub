@@ -98,3 +98,54 @@ document.getElementById('submitBtn').onclick=()=>{const d=collect(),missing=d.wf
   btn3.onclick=()=>{window.location.href='lesson-3-homework.html'};
   grid.appendChild(third);
 })();
+
+// Daily Must-Know English Expressions + separate BY phrases for Gabi.
+(()=>{
+  const course=document.getElementById('course');
+  const cover=course?.querySelector('.course-cover');
+  if(!course||!cover||document.getElementById('gabi-daily-strip'))return;
+
+  const style=document.createElement('style');
+  style.textContent=`
+    .gabi-daily{margin:18px 0 20px;padding:14px 16px;border:1px solid #d9e7ea;border-radius:18px;background:linear-gradient(135deg,#ffffff,#f5fbfb);box-shadow:0 8px 24px rgba(28,119,119,.08)}
+    .gabi-daily-top{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+    .gabi-today{font-size:14px;font-weight:900;color:#207f7a}.gabi-today span{color:#54666c;font-weight:700;margin-left:8px}
+    .gabi-by-btn{border:1px solid #cfe3e2;background:#fff;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:900;color:#207f7a;cursor:pointer}
+    .gabi-bubble{display:inline-block;position:relative;background:#fff0b8;border:1px solid #f3cf57;border-radius:16px;padding:10px 13px;font-size:15px;font-weight:900;color:#714d00;margin-bottom:12px}
+    .gabi-bubble:after{content:'';position:absolute;left:24px;bottom:-9px;border:9px solid transparent;border-top-color:#f3cf57;border-bottom:0}
+    .gabi-exprs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .gabi-expr{padding:12px 13px;border-radius:15px;background:#fff;border:1px solid #e5ecee;box-shadow:0 4px 12px rgba(30,87,91,.05)}
+    .gabi-expr:nth-child(2){background:#f4fbff}.gabi-expr:nth-child(3){background:#fff6f9}
+    .gabi-expr b{display:block;font-size:16px;color:#26384a;line-height:1.15}.gabi-expr span{display:block;margin-top:5px;font-size:12px;color:#8a4f66}.gabi-expr p{margin:6px 0 0;font-size:12px;line-height:1.4;color:#5f6c74}
+    .gabi-by{display:none;margin-top:12px;padding-top:12px;border-top:1px solid #dde8e8}.gabi-by.open{display:flex;gap:7px;flex-wrap:wrap}.gabi-by span{padding:6px 9px;border-radius:999px;background:#fff;border:1px solid #dce8e8;font-size:12px;font-weight:800;color:#42565c}
+    @media(max-width:850px){.gabi-exprs{grid-template-columns:1fr}}
+  `;
+  document.head.appendChild(style);
+
+  const expressions=[
+    ['no cap','честно / без вранья','No cap, that episode was actually creepy.'],
+    ['catching strays','попасть под раздачу ни за что','Why am I catching strays? I didn’t even say anything.'],
+    ['shady','подозрительный / мутный','That guy seems a bit shady.'],
+    ['lowkey','слегка / втайне','I lowkey want to watch the next episode now.'],
+    ['red flag','тревожный звоночек','That behaviour is a serious red flag.'],
+    ['try-hard','тот, кто слишком старается произвести впечатление','He’s acting like such a try-hard.'],
+    ['spill the tea','расскажи, что случилось / выкладывай сплетни','Come on, spill the tea. What happened?'],
+    ['ghost someone','резко перестать отвечать человеку','He just ghosted everyone after the party.']
+  ];
+  const messages=['Keep going — you’re building real English.','Small progress every day adds up.','Use it, don’t just memorise it.','One good phrase can make you sound much more natural.'];
+  const now=new Date();
+  const day=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);
+  const picks=[expressions[day%expressions.length],expressions[(day+3)%expressions.length],expressions[(day+5)%expressions.length]];
+
+  const strip=document.createElement('section');
+  strip.id='gabi-daily-strip';
+  strip.className='gabi-daily';
+  strip.innerHTML=`
+    <div class="gabi-daily-top"><div class="gabi-today">Today · ${now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}<span>${messages[day%messages.length]}</span></div><button class="gabi-by-btn" type="button">Useful BY phrases ▾</button></div>
+    <div class="gabi-bubble">❗ MUST-KNOW ENGLISH EXPRESSIONS!</div>
+    <div class="gabi-exprs">${picks.map(x=>`<div class="gabi-expr"><b>${x[0]}</b><span>${x[1]}</span><p>${x[2]}</p></div>`).join('')}</div>
+    <div class="gabi-by"><span>by heart</span><span>by accident</span><span>by chance</span><span>by name</span><span>by the way</span><span>by hand</span><span>by myself</span></div>`;
+  cover.insertAdjacentElement('afterend',strip);
+  const by=strip.querySelector('.gabi-by');
+  strip.querySelector('.gabi-by-btn').onclick=()=>by.classList.toggle('open');
+})();
