@@ -95,7 +95,7 @@ document.getElementById('submitBtn').onclick=()=>{const d=collect(),missing=d.wf
   });
   const btn3=third.querySelector('.open-btn');
   btn3.id='openHw3';
-  btn3.onclick=()=>{window.location.href='lesson-3-homework.html'};
+  btn3.onclick=()=>{window.location.href='lesson-3-homework.html?from=hub'};
   grid.appendChild(third);
 })();
 
