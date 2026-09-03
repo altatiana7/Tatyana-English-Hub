@@ -10,6 +10,33 @@
 </style>
 </head>
 <body>
-<iframe id="scaled" src="remakes-full.html?v=20260903-textbook-v3" title="Maya 1C Remakes"></iframe>
+<iframe id="scaled" src="remakes-full.html?v=20260903-no-pron" title="Maya 1C Remakes"></iframe>
+<script>
+const frame=document.getElementById('scaled');
+frame.addEventListener('load',()=>{
+  try{
+    const d=frame.contentDocument;
+    const patch=d.createElement('script');
+    patch.textContent=`(function(){
+      const i=sections.findIndex(x=>x.id==='pron');
+      if(i>=0) sections.splice(i,1);
+      if(typeof data==='object' && data.pron) delete data.pron;
+      const labels=[
+        ['1. Clothes Sprint','Use what you already know'],
+        ['2. Two Remakes','Look before grammar'],
+        ['3. Present Continuous','What is happening now?'],
+        ['4. Simple vs Continuous','usual vs now'],
+        ['5. Quick Practice','Choose the tense'],
+        ['6. Vermeer Mini Listening','The Milkmaid'],
+        ['7. Place + Compare','Describe the remake'],
+        ['8. Final Speaking','Original vs remake']
+      ];
+      sections.forEach((x,n)=>{x.label=labels[n][0];x.sub=labels[n][1]});
+      current=0;step=0;makeSide();render();
+    })();`;
+    d.body.appendChild(patch);
+  }catch(e){console.error(e)}
+});
+</script>
 </body>
 </html>
