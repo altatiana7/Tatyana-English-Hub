@@ -10,6 +10,19 @@
 </style>
 </head>
 <body>
-<iframe id="scaled" src="remakes-full.html?v=20260903-compact" title="Maya 1C Remakes"></iframe>
+<iframe id="scaled" src="remakes-full.html?v=20260903-grammar2" title="Maya 1C Remakes"></iframe>
+<script>
+const frame=document.getElementById('scaled');
+frame.addEventListener('load',()=>{
+  try{
+    const d=frame.contentDocument;
+    if(!d || d.getElementById('mayaWarmupPatch')) return;
+    const s=d.createElement('script');
+    s.id='mayaWarmupPatch';
+    s.src='remakes-warmup.js?v=20260903-2';
+    d.body.appendChild(s);
+  }catch(e){console.error(e)}
+});
+</script>
 </body>
 </html>
