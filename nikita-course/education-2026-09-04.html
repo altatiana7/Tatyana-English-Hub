@@ -1,15 +1,648 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"><title>Nikita · Mystery Place · 4 September 2026</title><style>
-*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;background:#eef5f3;color:#12384b}button,input,select,textarea{font:inherit}.app{height:100vh;display:grid;grid-template-columns:205px 1fr;overflow:hidden}.side{background:#0d3448;color:#fff;padding:14px 10px;overflow:auto}.brand{padding:8px 10px 14px;border-bottom:1px solid #36566a;margin-bottom:10px}.brand b{font-size:17px}.brand small{display:block;color:#a9c8d6;font-size:10px;line-height:1.4;margin-top:5px}.nav{width:100%;border:0;background:transparent;color:#dcecf3;border-radius:11px;padding:10px;text-align:left;cursor:pointer;margin:2px 0;font-weight:800;font-size:12px}.nav:hover,.nav.active{background:#eff8f5;color:#12384b}.nav span{display:inline-block;width:24px;color:#73d2c2}.main{min-width:0;display:grid;grid-template-rows:50px 1fr;min-height:0}.top{background:#fff;border-bottom:1px solid #d6e5e1;padding:0 18px;display:flex;align-items:center;justify-content:space-between}.top b{font-size:18px}.top small{font-size:11px;color:#647b86;font-weight:800}.stage{padding:14px;overflow:auto}.screen{display:none;max-width:1160px;margin:0 auto}.screen.active{display:block}.cover{min-height:650px;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#e7f4f1,#fff 50%,#f6efe3);border:1px solid #d6e5e1;display:grid;grid-template-columns:1.05fr .95fr}.coverText{padding:52px 46px;display:flex;flex-direction:column;justify-content:center}.eyebrow{font-size:12px;letter-spacing:.17em;font-weight:950;color:#2b8c7e}h1{font-size:64px;line-height:.92;margin:12px 0 14px;letter-spacing:-.04em}.sub{font-size:20px;line-height:1.5;color:#496571}.art{display:grid;place-items:center;background:linear-gradient(150deg,#143d51,#216b72)}.door{width:72%;aspect-ratio:.78;background:#edf3ef;border-radius:18px;border:10px solid #cbd9d5;position:relative}.door:before{content:'?';position:absolute;inset:0;display:grid;place-items:center;font-size:150px;font-weight:950;color:#1f5d62}.door:after{content:'NORWAY · LOCATION UNKNOWN';position:absolute;bottom:24px;left:20px;right:20px;background:#fff;padding:10px;border-radius:10px;text-align:center;font-size:12px;font-weight:950;letter-spacing:.08em}.btn{border:0;border-radius:11px;padding:10px 14px;font-weight:900;cursor:pointer;background:#2b8c7e;color:#fff}.btn.alt{background:#fff;color:#12384b;border:1px solid #d6e5e1}.btn.gold{background:#d89a2b;color:#30250e}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.head{margin-bottom:11px}.head h2{font-size:28px;margin:0 0 4px}.head p{margin:0;color:#647b86;font-size:14px;line-height:1.45}.panel{background:#fff;border:1px solid #d6e5e1;border-radius:17px;padding:15px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}.clue{background:#fff;border:1px solid #d6e5e1;border-radius:15px;padding:15px;min-height:104px}.clue b{display:block;font-size:19px;margin-bottom:5px}.clue small{font-size:13px;color:#647b86;line-height:1.4}.choices{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}.choice{border:1px solid #bdd8d1;background:#f8fcfb;border-radius:999px;padding:8px 11px;font-weight:800;cursor:pointer}.choice.on{background:#dff3ee;border-color:#5cac9f}.predict{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}.predict input,input[type=text],textarea,select{width:100%;border:1px solid #bfd5d0;border-radius:9px;padding:9px 10px;background:#fff}.msg,.feedback{min-height:18px;font-size:13px;font-weight:850;margin-top:7px}.ok{color:#198754}.bad{color:#c93c4b}.video{position:relative;aspect-ratio:16/9;background:#10232d;border-radius:18px;overflow:hidden}.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.veil{position:absolute;inset:0;z-index:3;display:grid;place-items:center;text-align:center;background:linear-gradient(135deg,#163c50,#24646c);color:#fff;padding:28px}.veil h3{font-size:38px;margin:0 0 8px}.veil p{color:#d7e9eb;line-height:1.45}.reveal{display:none;background:#182f3c;color:#fff;border-radius:17px;padding:16px;text-align:center;margin-top:10px}.reveal strong{display:block;font-size:38px}.task{padding:10px;border:1px solid #d6e5e1;border-radius:13px;background:#fbfefd;margin:7px 0}.task b{display:block;margin-bottom:6px}.options{display:grid;gap:5px}.options label{display:flex;gap:7px;border:1px solid #e0ebe8;background:#fff;border-radius:9px;padding:7px 9px;cursor:pointer}.answer{display:none;background:#eef8f5;border:1px dashed #80bbae;border-radius:10px;padding:9px;margin-top:7px;font-size:13px;line-height:1.5}.footer{display:flex;justify-content:flex-end;gap:8px;margin-top:11px}.quiz{display:grid;grid-template-columns:150px 1fr;gap:12px}.cardnav{display:flex;flex-direction:column;gap:8px}.counter{background:#fff;border:1px solid #d6e5e1;border-radius:11px;padding:10px;text-align:center;font-weight:900}.flash{height:320px;perspective:1000px}.inner{height:100%;position:relative;transform-style:preserve-3d;transition:.55s;cursor:pointer}.flash.flip .inner{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid #d6e5e1;border-radius:19px;padding:25px;background:linear-gradient(135deg,#f7fcfb,#fff)}.back{transform:rotateY(180deg);background:linear-gradient(135deg,#fff9ef,#fff)}.word{font-size:40px;font-weight:950;margin-top:62px}.ru{font-size:27px;font-weight:900;color:#7f4c12;margin:23px 0 9px}.def{font-size:17px;line-height:1.45}.ex{font-size:15px;color:#526c78;margin-top:10px}.match{display:grid;grid-template-columns:1fr 180px;gap:7px;align-items:center;font-size:13px}.tfrow{display:grid;grid-template-columns:1fr 140px;gap:8px;align-items:center;padding:7px;border-bottom:1px solid #edf3f1;font-size:13px}.facts{display:grid;grid-template-columns:.9fr 1.1fr;gap:12px}.fact{border-left:4px solid #2b8c7e;background:#f8fcfb;padding:9px 11px;border-radius:9px;margin:6px 0;font-size:13px;line-height:1.4}.promptgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.prompt{border:1px solid #d6e5e1;border-radius:13px;padding:12px;min-height:92px}.prompt b{display:block;color:#22695f;margin-bottom:5px}.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{background:#e9f4f2;border:1px solid #c8ded9;border-radius:999px;padding:6px 8px;font-size:12px;font-weight:850}@media(max-width:900px){.app{grid-template-columns:1fr}.side{display:none}.cover{grid-template-columns:1fr;min-height:auto}.art{display:none}.coverText{padding:34px 24px}h1{font-size:48px}.grid2,.grid3,.quiz,.facts,.promptgrid{grid-template-columns:1fr}.cardnav{flex-direction:row}.match,.tfrow{grid-template-columns:1fr}}
-</style></head><body><div class="app"><aside class="side"><div class="brand"><b>NIKITA · UNIT 8</b><small>4 September 2026<br>Mystery lesson</small></div><button class="nav active" data-s="cover"><span>00</span>Start</button><button class="nav" data-s="warm"><span>01</span>Warm-up</button><button class="nav" data-s="video"><span>02</span>Mystery video</button><button class="nav" data-s="watch"><span>03</span>Watch again</button><button class="nav" data-s="cards"><span>04</span>Video words</button><button class="nav" data-s="work"><span>05</span>Interactive worksheet</button><button class="nav" data-s="deep"><span>06</span>Education inside</button><button class="nav" data-s="system"><span>07</span>A good system</button><button class="nav" data-s="grammar"><span>08</span>Past rules</button><button class="nav" data-s="final"><span>09</span>Final opinion</button></aside><main class="main"><header class="top"><b id="ttl">The Mystery Place</b><small>Nikita · 4 September</small></header><div class="stage">
-<section id="cover" class="screen active"><div class="cover"><div class="coverText"><div class="eyebrow">NORWAY · LOCATION UNKNOWN</div><h1>WHERE<br>ARE WE?</h1><div class="sub">One place. Six strange clues. Make a prediction before you see the answer.</div><div class="actions"><button class="btn" data-go="warm">Start the mystery</button></div></div><div class="art"><div class="door"></div></div></div></section>
-<section id="warm" class="screen"><div class="head"><h2>Warm-up · What kind of place is this?</h2><p>You are somewhere in Norway. Read the clues. Do not search online.</p></div><div class="grid3"><div class="clue"><b>Heated floors</b><small>Comfort is treated as normal, not a luxury.</small></div><div class="clue"><b>Pillow-top mattresses</b><small>People have private, comfortable rooms.</small></div><div class="clue"><b>Bike rides</b><small>People can spend time outdoors.</small></div><div class="clue"><b>Cooking classes</b><small>Practical life skills are part of the routine.</small></div><div class="clue"><b>Puppies, ice cream, flowers</b><small>Yes. All three appear here.</small></div><div class="clue"><b>Friendly staff</b><small>Staff talk with the people who live here.</small></div></div><div class="panel" style="margin-top:11px"><b>Choose your best guess.</b><div class="choices"><button class="choice">residential college</button><button class="choice">wellness retreat</button><button class="choice">rehabilitation centre</button><button class="choice">boarding school</button><button class="choice">eco-village</button></div><div class="predict"><input id="pred" placeholder="My guess: ... because ..."><button class="btn gold" id="lock">Lock prediction</button></div><div class="msg" id="lockmsg"></div><div class="footer"><button class="btn" data-go="video">Watch and find out</button></div></div></section>
-<section id="video" class="screen"><div class="head"><h2>The reveal</h2><p>Watch without stopping. Your only job is to discover what this place really is.</p></div><div class="video"><iframe id="frame" src="about:blank" title="Mystery video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe><div class="veil" id="veil"><div><h3>Ready?</h3><p>Your prediction is locked. The mystery ends in the first few seconds.</p><button class="btn gold" id="revealVideo">Reveal the place</button></div></div></div><div class="reveal" id="reveal"><strong>A PRISON. IN NORWAY.</strong><div>Compare the answer with your prediction. What surprised you most?</div></div><div class="footer"><button class="btn" id="know">I know what it is</button><button class="btn alt" data-go="watch">Next: catch the details</button></div></section>
-<section id="watch" class="screen"><div class="head"><h2>Watch again · Catch the details</h2><p>Now listen for the philosophy behind the surprising conditions.</p></div><div class="grid2"><div class="panel"><div class="task"><b>1. Which three values shape the Norwegian model?</b><div class="options"><label><input type="radio" name="q1" value="a"> discipline, silence, obedience</label><label><input type="radio" name="q1" value="b"> normality, humanity, rehabilitation</label><label><input type="radio" name="q1" value="c"> work, isolation, deterrence</label></div></div><div class="task"><b>2. What is the long-term goal?</b><div class="options"><label><input type="radio" name="q2" value="a"> make inmates “better neighbors” after release</label><label><input type="radio" name="q2" value="b"> make prison feel like a holiday</label><label><input type="radio" name="q2" value="c"> remove all rules</label></div></div><div class="task"><b>3. Tick what is mentioned.</b><div class="options"><label><input type="checkbox" class="det" value="heated"> heated floors</label><label><input type="checkbox" class="det" value="bikes"> bike rides</label><label><input type="checkbox" class="det" value="cooking"> cooking classes</label><label><input type="checkbox" class="det" value="pool"> private swimming pools</label></div></div><div class="actions"><button class="btn" id="checkWatch">Check</button></div><div class="feedback" id="watchfb"></div></div><div class="panel"><div class="task"><b>4. Complete the phrase.</b>The point is to make inmates better <input id="g1" type="text" placeholder="word"> once they are <input id="g2" type="text" placeholder="word">.</div><div class="task"><b>5. Reaction</b>Which idea is strongest: normality, humanity or rehabilitation? Why?<textarea rows="5" placeholder="I think ... because ..."></textarea></div><div class="actions"><button class="btn" id="checkGap">Check phrase</button><button class="btn alt" id="showWatch">Show answers</button></div><div class="feedback" id="gapfb"></div><div class="answer" id="watchans">1 B · 2 A · 3 heated floors, bike rides, cooking classes · 4 neighbors / released</div></div></div><div class="footer"><button class="btn" data-go="cards">Next: video vocabulary</button></div></section>
-<section id="cards" class="screen"><div class="head"><h2>Video vocabulary · Quizlet style</h2><p>Say the word, then click the card to flip.</p></div><div class="quiz"><div class="cardnav"><div class="counter" id="counter">1 / 10</div><button class="btn alt" id="prev">Previous</button><button class="btn" id="next">Next</button></div><div class="flash" id="flash"><div class="inner"><div class="face"><div class="eyebrow">FROM THE VIDEO</div><div class="word" id="cw"></div><div class="actions"><button class="btn alt" id="listen">Listen</button></div></div><div class="face back"><div class="ru" id="cr"></div><div class="def" id="cd"></div><div class="ex" id="ce"></div></div></div></div></div><div class="footer"><button class="btn" data-go="work">Next: worksheet</button></div></section>
-<section id="work" class="screen"><div class="head"><h2>Interactive worksheet</h2><p>Vocabulary, fast facts and True / False / Not Given.</p></div><div class="grid2"><div class="panel"><b>1. Match the words.</b><div class="match" id="matches"><div>reoffending</div><select data-a="C"><option></option><option>A</option><option>B</option><option>C</option><option>D</option></select><div>vocational training</div><select data-a="D"><option></option><option>A</option><option>B</option><option>C</option><option>D</option></select><div>rehabilitation</div><select data-a="B"><option></option><option>A</option><option>B</option><option>C</option><option>D</option></select><div>reintegration</div><select data-a="A"><option></option><option>A</option><option>B</option><option>C</option><option>D</option></select></div><div class="answer" style="display:block">A becoming part of society again · B returning to a normal life · C committing another crime after release · D practical job training</div><div class="actions"><button class="btn" id="checkMatch">Check</button></div><div class="feedback" id="matchfb"></div><hr style="border:0;border-top:1px solid #edf3f1"><b>2. Complete the facts.</b><div class="task">One aim is to reduce <input id="f1" type="text"></div><div class="task">Some prisoners can study at <input id="f2" type="text"></div><div class="task">Teachers are often <input id="f3" type="text"> teachers from local schools.</div><div class="task">Security rules can limit access to the <input id="f4" type="text"></div><div class="actions"><button class="btn" id="checkFacts">Check</button><button class="btn alt" id="showFacts">Answers</button></div><div class="feedback" id="factsfb"></div><div class="answer" id="factsans">reoffending / recidivism · university · civilian / regular · internet</div></div><div class="panel" id="tf"><b>3. True, False or Not Given?</b><div class="tfrow"><div>Prisoners only study basic reading and writing.</div><select data-a="False"><option></option><option>True</option><option>False</option><option>Not Given</option></select></div><div class="tfrow"><div>Education can improve job opportunities after release.</div><select data-a="True"><option></option><option>True</option><option>False</option><option>Not Given</option></select></div><div class="tfrow"><div>Every prisoner is motivated from the beginning.</div><select data-a="Not Given"><option></option><option>True</option><option>False</option><option>Not Given</option></select></div><div class="tfrow"><div>Some inmates can continue into higher education.</div><select data-a="True"><option></option><option>True</option><option>False</option><option>Not Given</option></select></div><div class="tfrow"><div>Security restrictions can make studying harder.</div><select data-a="True"><option></option><option>True</option><option>False</option><option>Not Given</option></select></div><div class="tfrow"><div>The system expects prisoners to return to society.</div><select data-a="True"><option></option><option>True</option><option>False</option><option>Not Given</option></select></div><div class="actions"><button class="btn" id="checkTF">Check</button><button class="btn alt" id="showTF">Answers</button></div><div class="feedback" id="tffb"></div><div class="answer" id="tfans">False · True · Not Given · True · True · True</div><div class="task"><b>4. Cause → effect</b>Why might education reduce reoffending? Give a two-step chain.<textarea rows="4" placeholder="Education gives... → therefore... → so..."></textarea></div></div></div><div class="footer"><button class="btn" data-go="deep">Next: education inside</button></div></section>
-<section id="deep" class="screen"><div class="head"><h2>Education inside · Why does Norway do this?</h2><p>Now connect the surprise to Unit 8: Education.</p></div><div class="facts"><div class="panel"><div class="fact"><b>Legal right.</b> Prisoners can continue school, vocational and higher education.</div><div class="fact"><b>Education counts as work.</b> Studying can replace prison labour as the structured daily activity.</div><div class="fact"><b>Civilian teachers.</b> Local schools and colleges provide teachers.</div><div class="fact"><b>Practical focus.</b> Courses build employable skills for life after release.</div><div class="fact"><b>University is possible.</b> Normal admission rules apply, but security limits internet access.</div></div><div class="panel"><b>Choose two and discuss.</b><div class="promptgrid" style="margin-top:8px"><div class="prompt"><b>Taxpayers</b>Should taxpayers pay for university courses for prisoners?</div><div class="prompt"><b>Normality</b>Should prison life be as close as possible to normal life?</div><div class="prompt"><b>Internet</b>Can someone study seriously without normal internet access?</div><div class="prompt"><b>Work vs study</b>Should studying count as a prisoner’s daily work?</div></div><textarea rows="4" placeholder="I can see the logic, but... / The main advantage is..."></textarea></div></div><div class="footer"><button class="btn" data-go="system">Next: compare systems</button></div></section>
-<section id="system" class="screen"><div class="head"><h2>A good system · From prison to ordinary education</h2><p>Which ideas could improve normal schools?</p></div><div class="grid2"><div class="panel"><b>Keep / Borrow / Reject</b><div class="task">Practical job skills<select><option>Keep in prison only</option><option>Borrow for schools</option><option>Reject</option></select></div><div class="task">Personal learning plans<select><option>Keep in prison only</option><option>Borrow for schools</option><option>Reject</option></select></div><div class="task">Strict internet restrictions<select><option>Keep in prison only</option><option>Borrow for schools</option><option>Reject</option></select></div><div class="task">Learning through responsibility<select><option>Keep in prison only</option><option>Borrow for schools</option><option>Reject</option></select></div></div><div class="panel"><b>Build an ideal system</b><div class="chips" style="margin:10px 0"><span class="chip">real-life skills</span><span class="chip">academic subjects</span><span class="chip">freedom</span><span class="chip">rules</span><span class="chip">personal support</span><span class="chip">exams</span></div><textarea rows="8" placeholder="My ideal education system would..."></textarea></div></div><div class="footer"><button class="btn" data-go="grammar">Next: past rules</button></div></section>
-<section id="grammar" class="screen"><div class="head"><h2>Past rules · had to / could / couldn’t</h2><p>Use past obligation and possibility in context.</p></div><div class="grid2"><div class="panel"><div class="task">At my school, we had to ...</div><div class="task">We couldn’t ...</div><div class="task">Teachers could ...</div><div class="task">In a traditional prison, inmates had to ...</div><div class="task">In the Norwegian model, inmates could ...</div></div><div class="panel"><b>Then → Now → Future</b><textarea rows="10" placeholder="Say 6–8 sentences. Use had to, could/couldn't, can, will be able to."></textarea></div></div><div class="footer"><button class="btn" data-go="final">Final speaking</button></div></section>
-<section id="final" class="screen"><div class="head"><h2>Final opinion · Punishment or preparation?</h2><p>Speak for 60–90 seconds.</p></div><div class="grid2"><div class="panel"><div class="eyebrow">THE QUESTION</div><h2 style="font-size:36px;margin:8px 0">Should prison mainly punish people or prepare them for life after release?</h2><div class="chips"><span class="chip">rehabilitation</span><span class="chip">normality</span><span class="chip">reoffending</span><span class="chip">qualifications</span><span class="chip">reintegration</span></div></div><div class="panel"><b>Include:</b><ul><li>your position</li><li>one detail from the video</li><li>one benefit of education</li><li>one possible criticism</li><li>a final conclusion</li></ul><textarea rows="7" placeholder="Plan only — don't write a full script."></textarea></div></div></section>
-</div></main></div><script>(()=>{const screens=[...document.querySelectorAll('.screen')],nav=[...document.querySelectorAll('.nav')];const titles={cover:'The Mystery Place',warm:'Warm-up: What kind of place?',video:'The Reveal',watch:'Watch Again',cards:'Video Vocabulary',work:'Interactive Worksheet',deep:'Education Inside',system:'A Good System',grammar:'Past Rules',final:'Final Opinion'};function show(id){screens.forEach(x=>x.classList.toggle('active',x.id===id));nav.forEach(x=>x.classList.toggle('active',x.dataset.s===id));ttl.textContent=titles[id];document.querySelector('.stage').scrollTop=0}nav.forEach(b=>b.addEventListener('click',()=>show(b.dataset.s)));document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.go)));document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('on')));lock.addEventListener('click',()=>{lockmsg.textContent=pred.value.trim()?'Prediction locked: '+pred.value.trim():'Write your prediction first.'});revealVideo.addEventListener('click',()=>{frame.src='https://www.youtube.com/embed/MauMiCL7G9Y?autoplay=1&rel=0';veil.style.display='none'});know.addEventListener('click',()=>reveal.style.display='block');function fb(el,n,total){el.textContent='Score: '+n+' / '+total;el.className='feedback '+(n===total?'ok':'bad')}checkWatch.addEventListener('click',()=>{let n=0;const a=document.querySelector('input[name=q1]:checked'),b=document.querySelector('input[name=q2]:checked');if(a&&a.value==='b')n++;if(b&&b.value==='a')n++;const d=[...document.querySelectorAll('.det:checked')].map(x=>x.value).sort().join(',');if(d==='bikes,cooking,heated')n++;fb(watchfb,n,3)});checkGap.addEventListener('click',()=>{const ok=g1.value.trim().toLowerCase()==='neighbors'&&g2.value.trim().toLowerCase()==='released';gapfb.textContent=ok?'Correct.':'Try again.';gapfb.className='feedback '+(ok?'ok':'bad')});showWatch.addEventListener('click',()=>watchans.style.display='block');const cards=[['humane','гуманный','showing kindness and respect for people','a humane prison system'],['inmate','заключённый','a person who is in prison','inmates prepare for release'],['incarceration','лишение свободы','the state of being kept in prison','the point of incarceration'],['normality','нормальность','making life inside resemble normal life outside','the principle of normality'],['rehabilitation','реабилитация','helping someone return to a stable life','focus on rehabilitation'],['release','освобождение','leaving prison at the end of a sentence','after release'],['recidivism','рецидив','returning to crime after punishment','a low recidivism rate'],['correctional officer','сотрудник тюрьмы','an officer who works in a prison','officers and inmates interact'],['solitary confinement','одиночное заключение','being kept alone in a cell','time in solitary confinement'],['reoffend','совершить преступление снова','to commit another crime after release','less likely to reoffend']];let i=0;function draw(){counter.textContent=(i+1)+' / '+cards.length;cw.textContent=cards[i][0];cr.textContent=cards[i][1];cd.textContent=cards[i][2];ce.textContent='Example: '+cards[i][3];flash.classList.remove('flip')}draw();flash.addEventListener('click',e=>{if(e.target!==listen)flash.classList.toggle('flip')});prev.addEventListener('click',()=>{i=(i-1+cards.length)%cards.length;draw()});next.addEventListener('click',()=>{i=(i+1)%cards.length;draw()});listen.addEventListener('click',e=>{e.stopPropagation();if('speechSynthesis'in window){const u=new SpeechSynthesisUtterance(cards[i][0]);u.lang='en-GB';u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u)}});function checks(id,feed){const ss=[...document.querySelectorAll('#'+id+' select[data-a]')];let n=0;ss.forEach(s=>{const ok=s.value===s.dataset.a;s.style.borderColor=ok?'#198754':'#c93c4b';if(ok)n++});fb(feed,n,ss.length)}checkMatch.addEventListener('click',()=>checks('matches',matchfb));checkTF.addEventListener('click',()=>checks('tf',tffb));showTF.addEventListener('click',()=>tfans.style.display='block');showFacts.addEventListener('click',()=>factsans.style.display='block');checkFacts.addEventListener('click',()=>{const vals=[f1.value,f2.value,f3.value,f4.value].map(x=>x.trim().toLowerCase()),ans=[['reoffending','recidivism'],['university'],['civilian','regular'],['internet','the internet']];let n=0;[f1,f2,f3,f4].forEach((el,j)=>{const ok=ans[j].includes(vals[j]);el.style.borderColor=ok?'#198754':'#c93c4b';if(ok)n++});fb(factsfb,n,4)});})();</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nikita — Education in Norwegian Prisons — 4 September 2026</title>
+<style>
+  :root{
+    --bg:#eef7fb;
+    --panel:#ffffff;
+    --line:#cfe4ef;
+    --accent:#0e7fb0;
+    --accent2:#17a88c;
+    --accent3:#f39c12;
+    --accent4:#a64bd4;
+    --text:#173042;
+    --muted:#5d7586;
+    --ok:#1a9c4e;
+    --bad:#cc3344;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font-family:Arial, Helvetica, sans-serif;background:var(--bg);color:var(--text)}
+  .app{display:flex;height:100vh;overflow:hidden}
+  .sidebar{width:240px;background:linear-gradient(180deg,#0d5f86,#1280af);color:#fff;padding:14px 12px;display:flex;flex-direction:column;gap:8px;overflow:auto}
+  .logo{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:12px;border-radius:16px}
+  .logo h1{font-size:20px;line-height:1.05;margin:0 0 8px 0}
+  .logo p{font-size:12px;line-height:1.35;margin:0;opacity:.95}
+  .menu button{width:100%;text-align:left;border:none;border-radius:12px;padding:10px 12px;margin:4px 0;background:rgba(255,255,255,.12);color:#fff;font-weight:700;cursor:pointer;font-size:13px}
+  .menu button:hover,.menu button.active{background:#fff;color:#0d5f86}
+  .smallnote{font-size:11px;line-height:1.35;opacity:.92;padding:8px 4px 0}
+
+  .main{flex:1;display:flex;flex-direction:column;min-width:0}
+  .topbar{background:#fff;border-bottom:1px solid var(--line);padding:10px 18px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+  .topbar .title{font-size:22px;font-weight:800;color:#12425c}
+  .topbar .meta{font-size:14px;color:var(--muted);font-weight:700}
+  .content{padding:16px;overflow:auto}
+  .screen{display:none;max-width:1280px;margin:0 auto}
+  .screen.active{display:block}
+  .hero{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 8px 30px rgba(17,76,104,.08)}
+  .heroHead{padding:22px 24px;background:linear-gradient(135deg,#e8f7ff,#fff 52%,#ecfff9)}
+  .heroHead h2{margin:0;font-size:42px;line-height:1}
+  .heroHead .red{color:#d53b47;font-style:italic;font-size:30px;display:block;margin-top:4px}
+  .heroHead p{margin:10px 0 0;font-size:18px;color:#3b5970}
+  .heroGrid{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;padding:18px}
+  .card,.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 4px 16px rgba(16,77,106,.05)}
+  .card h3,.panel h3{margin:0 0 10px;font-size:22px;color:#12425c}
+  .sub{color:var(--muted);font-size:15px;line-height:1.5}
+  .heroImg{width:100%;border-radius:16px;border:1px solid var(--line)}
+  .pillrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .pill{background:#e9f7ff;color:#0b678f;padding:8px 12px;border-radius:999px;font-weight:700;font-size:13px}
+  .objectives li{margin:8px 0;line-height:1.45}
+  .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .statement{padding:14px;border-radius:16px;border:1px solid var(--line);background:#f9fdff}
+  .statement strong{display:block;color:#0a5f83;margin-bottom:6px}
+  .agreeLine{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+  .tag{display:inline-block;padding:8px 12px;border-radius:999px;background:#f0f8fc;border:1px solid var(--line);font-size:13px;font-weight:700}
+  .taskTitle{font-size:24px;font-weight:800;margin:0 0 4px;color:#12425c}
+  .taskIntro{font-size:15px;color:var(--muted);margin-bottom:14px}
+  ol,ul{padding-left:22px}
+  li{margin:8px 0;line-height:1.45}
+  input[type=text], textarea, select{width:100%;padding:10px 12px;border:1.5px solid #bfd8e5;border-radius:10px;font-size:15px;background:#fff}
+  textarea{min-height:90px;resize:vertical}
+  .question{margin:10px 0 14px}
+  .checkBtn,.showBtn,.navBtn,.speakBtn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+  .showBtn{background:#6c4db3}
+  .navBtn{background:var(--accent2)}
+  .speakBtn{background:var(--accent3);color:#3b2500;padding:6px 10px;font-size:12px}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .feedback{font-size:13px;font-weight:700;margin-top:6px;min-height:16px}
+  .ok{color:var(--ok)} .bad{color:var(--bad)}
+  .answerBox{display:none;margin-top:12px;padding:12px 14px;border-radius:14px;background:#f4fbff;border:1px dashed #93c3d8}
+  .wordlist{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .pair{display:grid;grid-template-columns:1.2fr 1.8fr;gap:12px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px;background:#fbfeff}
+  .mcq{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+  .mcq label{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:#fbfeff}
+  .cardshell{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap}
+  .quizCard{width:min(680px,100%);height:300px;perspective:1200px}
+  .quizInner{position:relative;width:100%;height:100%;transition:transform .7s;transform-style:preserve-3d;cursor:pointer}
+  .quizCard.flipped .quizInner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:22px;padding:24px;border:1px solid var(--line);box-shadow:0 8px 26px rgba(18,66,92,.07)}
+  .front{background:linear-gradient(135deg,#edf9ff,#ffffff 55%,#eaf9f1)}
+  .back{background:linear-gradient(135deg,#fff7ea,#ffffff 55%,#f2ebff);transform:rotateY(180deg)}
+  .front .big{font-size:34px;font-weight:800;margin:36px 0 12px;color:#0f5678}
+  .back .ru{font-size:28px;font-weight:800;color:#7c3b00;margin-bottom:10px}
+  .back p{font-size:17px;line-height:1.5;margin:8px 0}
+  .tiny{font-size:13px;color:var(--muted)}
+  .progress{font-size:16px;font-weight:800;color:#12425c;min-width:90px;text-align:center}
+  .miniGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  .sectionBanner{padding:14px 18px;background:linear-gradient(90deg,#f0fbff,#ffffff);border-radius:18px;border:1px solid var(--line);margin-bottom:14px}
+  .lineInput{display:grid;grid-template-columns:1fr;gap:8px;margin:10px 0}
+  .tfgrid .question,.fillgrid .question{padding:12px;border:1px solid var(--line);border-radius:14px;background:#fff}
+  .compact li{margin:6px 0}
+  .quote{font-size:21px;font-style:italic;color:#1f556f;margin:0 0 10px}
+  .footerNote{font-size:12px;color:var(--muted);margin-top:10px}
+  .hidden{display:none}
+  @media (max-width:1100px){
+    .sidebar{width:210px}
+    .grid2,.grid3,.grid4,.heroGrid,.miniGrid,.wordlist{grid-template-columns:1fr}
+  }
+  @media (max-width:760px){
+    .app{display:block;height:auto}
+    .sidebar{width:auto;height:auto}
+    .main{height:auto}
+    .content{padding:10px}
+    .topbar{padding:8px 12px}
+    .topbar .title{font-size:18px}
+    .heroHead h2{font-size:32px}
+    .heroHead .red{font-size:24px}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="logo">
+      <h1>Nikita Lesson</h1>
+      <p>4 September 2026<br>Education in Norwegian Prisons<br>Warm-up → Video → Quizlet Cards → Interactive Worksheet → Outcomes Bridge</p>
+    </div>
+    <div class="menu">
+      <button class="active" onclick="showScreen('home', this)">Home</button>
+      <button onclick="showScreen('warmup', this)">1. Warm-up</button>
+      <button onclick="showScreen('video', this)">2. Video</button>
+      <button onclick="showScreen('videotasks', this)">3. Video Tasks</button>
+      <button onclick="showScreen('cards', this)">4. Quizlet Cards</button>
+      <button onclick="showScreen('ws1', this)">5. Worksheet 1–3</button>
+      <button onclick="showScreen('ws2', this)">6. Worksheet 4–6</button>
+      <button onclick="showScreen('ws3', this)">7. Worksheet 7–10</button>
+      <button onclick="showScreen('bridge', this)">8. A Good System</button>
+      <button onclick="showScreen('grammar', this)">9. had to / could</button>
+      <button onclick="showScreen('final', this)">10. Final Speaking</button>
+    </div>
+    <div class="smallnote">Tip: each task opens on a separate screen. Use the left menu any time.</div>
+  </aside>
+
+  <section class="main">
+    <div class="topbar">
+      <div class="title">Education in Norwegian Prisons</div>
+      <div class="meta">Nikita • 4 September 2026</div>
+    </div>
+    <div class="content">
+
+      <div class="screen active" id="home">
+        <div class="hero">
+          <div class="heroHead">
+            <h2>Education <span class="red">in Norwegian Prisons</span></h2>
+            <p>More than a sentence. A second chance.</p>
+          </div>
+          <div class="heroGrid">
+            <div class="card">
+              <h3>Today’s lesson route</h3>
+              <ul class="objectives">
+                <li><strong>Warm-up:</strong> discuss prison education and second chances.</li>
+                <li><strong>Watch:</strong> a report about humane prisons in Norway.</li>
+                <li><strong>Learn:</strong> key vocabulary from the video and topic.</li>
+                <li><strong>Do:</strong> an interactive worksheet based on Norwegian prison education.</li>
+                <li><strong>Bridge:</strong> move from prison education to education systems in general.</li>
+                <li><strong>Grammar:</strong> practise <em>had to / could</em> in a meaningful context.</li>
+              </ul>
+              <div class="pillrow">
+                <span class="pill">rehabilitation</span>
+                <span class="pill">reintegration</span>
+                <span class="pill">vocational training</span>
+                <span class="pill">recidivism</span>
+                <span class="pill">qualifications</span>
+              </div>
+            </div>
+            <div class="card">
+              <div style="min-height:240px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(135deg,#eaf7ff,#ffffff 55%,#eefcf6);display:flex;align-items:center;justify-content:center;padding:26px;text-align:center">
+                <div><div style="font-size:42px;font-weight:900;color:#0f5678">10 interactive tasks</div><p style="font-size:17px;line-height:1.5;color:#58707b">Video → vocabulary cards → worksheet → discussion → Outcomes bridge</p></div>
+              </div>
+              <p class="footerNote">The original worksheet has been rebuilt as clickable interactive tasks below.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" id="warmup">
+        <div class="sectionBanner">
+          <div class="taskTitle">Warm-up — Agree, Disagree or It Depends?</div>
+          <div class="taskIntro">Choose a position for each statement and explain your idea in 1–2 sentences.</div>
+        </div>
+        <div class="grid2">
+          <div class="statement"><strong>1.</strong> Prison should mainly punish people, not educate them.<div class="agreeLine"><span class="tag">Agree</span><span class="tag">Disagree</span><span class="tag">It depends</span></div></div>
+          <div class="statement"><strong>2.</strong> If prisoners study, they should get the same money as prisoners who work.<div class="agreeLine"><span class="tag">Agree</span><span class="tag">Disagree</span><span class="tag">It depends</span></div></div>
+          <div class="statement"><strong>3.</strong> University education in prison is a waste of taxpayers’ money.<div class="agreeLine"><span class="tag">Agree</span><span class="tag">Disagree</span><span class="tag">It depends</span></div></div>
+          <div class="statement"><strong>4.</strong> Education is one of the best ways to reduce crime in the future.<div class="agreeLine"><span class="tag">Agree</span><span class="tag">Disagree</span><span class="tag">It depends</span></div></div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <h3>Quick starter questions</h3>
+          <ol class="compact">
+            <li>What do prisoners usually do during the day in most countries?</li>
+            <li>Should prisoners be allowed to study at school or university?</li>
+            <li>Which is more important: punishment or rehabilitation? Why?</li>
+            <li>What skills could help a person start a new life after prison?</li>
+          </ol>
+          <div class="btnrow"><button class="navBtn" onclick="goTo('video')">Next: Video</button></div>
+        </div>
+      </div>
+
+      <div class="screen" id="video">
+        <div class="sectionBanner">
+          <div class="taskTitle">Watch the video</div>
+          <div class="taskIntro">Before watching, predict: What will be unusual about a Norwegian prison? Then watch once for the general idea.</div>
+        </div>
+        <div class="panel videoWrap">
+          <div style="position:relative;width:100%;padding-top:56.25%;border-radius:16px;overflow:hidden;background:#000">
+            <iframe src="https://www.youtube.com/embed/sCZt2YipiIs" title="Go Inside One Of The Most Humane Prisons In The World | Sunday TODAY" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+          </div>
+        </div>
+        <div class="grid2" style="margin-top:16px">
+          <div class="panel">
+            <h3>Before you watch</h3>
+            <ol class="compact">
+              <li>What facilities do you expect to see?</li>
+              <li>What tone do you expect: strict, humane, or luxurious?</li>
+              <li>What might the goal of this prison system be?</li>
+            </ol>
+          </div>
+          <div class="panel">
+            <h3>While watching</h3>
+            <ol class="compact">
+              <li>Write down 5 words or phrases you hear or notice.</li>
+              <li>Find one idea that surprised you.</li>
+              <li>Be ready to explain why Norway invests in this system.</li>
+            </ol>
+            <div class="btnrow"><button class="navBtn" onclick="goTo('videotasks')">Next: Video Tasks</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" id="videotasks">
+        <div class="sectionBanner">
+          <div class="taskTitle">Video Tasks</div>
+          <div class="taskIntro">Do the tasks after watching. Then check your answers.</div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <h3>A. Choose the best summary</h3>
+            <div class="mcq" id="mcqSummary">
+              <label><input type="radio" name="summary" value="a"> A. Norway keeps prisoners busy with hard physical work and very little education.</label>
+              <label><input type="radio" name="summary" value="b"> B. Norway treats prison as preparation for life outside, using education, responsibility and humane conditions.</label>
+              <label><input type="radio" name="summary" value="c"> C. Norway allows prisoners to do whatever they want because punishment is not important.</label>
+            </div>
+            <div class="btnrow"><button class="checkBtn" onclick="checkRadio('summary','b','fbSummary')">Check</button></div>
+            <div class="feedback" id="fbSummary"></div>
+          </div>
+          <div class="panel">
+            <h3>B. Complete the notes</h3>
+            <div class="question">1. Norwegian prison education is a legal <input type="text" id="v1"></div>
+            <div class="question">2. The system follows the principle of <input type="text" id="v2"></div>
+            <div class="question">3. If prisoners study, education is treated like <input type="text" id="v3"></div>
+            <div class="question">4. Prisoners in closed prisons usually have no free access to the <input type="text" id="v4"></div>
+            <div class="btnrow"><button class="checkBtn" onclick="checkTextSet(['v1','v2','v3','v4'],[['right'],['normality'],['work','a job','job'],['internet','the internet']],'fbV')">Check</button><button class="showBtn" onclick="toggle('ansV')">Show answers</button></div>
+            <div class="feedback" id="fbV"></div>
+            <div class="answerBox" id="ansV">1. right &nbsp; 2. normality &nbsp; 3. work &nbsp; 4. internet</div>
+          </div>
+        </div>
+        <div class="grid2" style="margin-top:16px">
+          <div class="panel">
+            <h3>C. True or False?</h3>
+            <div class="mcq" id="tfVid1">
+              <label><input type="radio" name="tf1" value="f"> Prison education in Norway is available only for basic reading and writing.</label>
+              <label><input type="radio" name="tf1" value="t"> Prisoners can study up to university level if they meet the requirements.</label>
+            </div>
+            <div class="mcq" id="tfVid2">
+              <label><input type="radio" name="tf2" value="t"> Teachers usually come from normal civilian schools and colleges.</label>
+              <label><input type="radio" name="tf2" value="f"> Teachers are special prison employees only.</label>
+            </div>
+            <div class="btnrow"><button class="checkBtn" onclick="checkManyRadios([['tf1','t'],['tf2','t']], 'fbTFVid')">Check</button></div>
+            <div class="feedback" id="fbTFVid"></div>
+          </div>
+          <div class="panel">
+            <h3>D. Discuss</h3>
+            <ol class="compact">
+              <li>What looked most surprising in the prison?</li>
+              <li>Do humane prisons make sense? Why / Why not?</li>
+              <li>Would this system work in your country?</li>
+            </ol>
+            <div class="btnrow"><button class="navBtn" onclick="goTo('cards')">Next: Quizlet Cards</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" id="cards">
+        <div class="sectionBanner">
+          <div class="taskTitle">Quizlet-style cards</div>
+          <div class="taskIntro">Click the card to flip it. Use ◀ ▶ to move. Click Listen to hear the word.</div>
+        </div>
+        <div class="cardshell">
+          <button class="navBtn" onclick="prevCard()">◀ Back</button>
+          <div class="progress" id="cardCounter">1 / 12</div>
+          <button class="navBtn" onclick="nextCard()">Next ▶</button>
+        </div>
+        <div id="cardHost" style="margin-top:14px"></div>
+      </div>
+
+      <div class="screen" id="ws1">
+        <div class="sectionBanner">
+          <div class="taskTitle">Interactive Worksheet — Parts 1–3</div>
+          <div class="taskIntro">Warm-up ideas, key vocabulary and fast facts.</div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <h3>1. Before You Look</h3>
+            <ol class="compact">
+              <li>What do you think prisoners usually do during the day?</li>
+              <li>Should prisoners be allowed to study at school or university?</li>
+              <li>Which is more important: punishment or rehabilitation? Why?</li>
+              <li>What skills could help a person start a new life after prison?</li>
+            </ol>
+          </div>
+          <div class="panel">
+            <h3>2. Key Vocabulary</h3>
+            <div class="wordlist">
+              <div class="pair"><div><strong>1. reoffending</strong></div><div>committing another crime after leaving prison</div></div>
+              <div class="pair"><div><strong>2. vocational training</strong></div><div>education that teaches practical job skills</div></div>
+              <div class="pair"><div><strong>3. rehabilitation</strong></div><div>helping somebody return to a normal life</div></div>
+              <div class="pair"><div><strong>4. reintegration</strong></div><div>becoming part of society again</div></div>
+              <div class="pair"><div><strong>5. inmate</strong></div><div>a person who is in prison</div></div>
+              <div class="pair"><div><strong>6. self-esteem</strong></div><div>confidence and respect for yourself</div></div>
+              <div class="pair"><div><strong>7. restrictions</strong></div><div>rules that limit what somebody can do</div></div>
+              <div class="pair"><div><strong>8. curriculum</strong></div><div>the subjects and content taught in a school</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <h3>3. Find It Fast — Complete the sentences</h3>
+          <div class="question">1. One aim of prison education is to reduce <input type="text" id="ff1"></div>
+          <div class="question">2. Prisoners can learn practical skills such as <input type="text" id="ff2" placeholder="example 1"> <input type="text" id="ff3" placeholder="example 2"> and <input type="text" id="ff4" placeholder="example 3"></div>
+          <div class="question">3. Some prisoners can even study at <input type="text" id="ff5"></div>
+          <div class="question">4. Teachers in Norwegian prisons are <input type="text" id="ff6"></div>
+          <div class="question">5. Prisoners may have access to classrooms, libraries and <input type="text" id="ff7"></div>
+          <div class="question">6. Each prisoner can have a personal <input type="text" id="ff8"> plan</div>
+          <div class="btnrow"><button class="checkBtn" onclick="checkWorksheet1()">Check</button><button class="showBtn" onclick="toggle('ansFF')">Show answers</button><button class="navBtn" onclick="goTo('ws2')">Next</button></div>
+          <div class="feedback" id="fbFF"></div>
+          <div class="answerBox" id="ansFF">
+            1. reoffending / recidivism<br>
+            2. cooking, welding, carpentry / car mechanics / driving (any three practical skills)<br>
+            3. university<br>
+            4. civilian / regular teachers from local schools and colleges<br>
+            5. computers<br>
+            6. education / learning
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" id="ws2">
+        <div class="sectionBanner">
+          <div class="taskTitle">Interactive Worksheet — Parts 4–6</div>
+          <div class="taskIntro">Reading for detail and making logical connections.</div>
+        </div>
+        <div class="grid2 tfgrid">
+          <div class="panel">
+            <h3>4. True, False or Not Given?</h3>
+            <div class="question">1. Norwegian prisoners only study basic reading and writing. <select id="tfw1"><option value="">Choose</option><option>True</option><option>False</option><option>Not Given</option></select></div>
+            <div class="question">2. Prison education can help people find better jobs after release. <select id="tfw2"><option value="">Choose</option><option>True</option><option>False</option><option>Not Given</option></select></div>
+            <div class="question">3. Prisoners always study in very large classes. <select id="tfw3"><option value="">Choose</option><option>True</option><option>False</option><option>Not Given</option></select></div>
+            <div class="question">4. Some inmates can continue into higher education. <select id="tfw4"><option value="">Choose</option><option>True</option><option>False</option><option>Not Given</option></select></div>
+            <div class="question">5. Every prisoner is highly motivated to study from the beginning. <select id="tfw5"><option value="">Choose</option><option>True</option><option>False</option><option>Not Given</option></select></div>
+            <div class="question">6. Security rules can sometimes make education more difficult. <select id="tfw6"><option value="">Choose</option><option>True</option><option>False</option><option>Not Given</option></select></div>
+            <div class="question">7. The Norwegian system sees prisoners as people who will eventually return to society. <select id="tfw7"><option value="">Choose</option><option>True</option><option>False</option><option>Not Given</option></select></div>
+            <div class="question">8. All former prisoners in Norway find jobs immediately. <select id="tfw8"><option value="">Choose</option><option>True</option><option>False</option><option>Not Given</option></select></div>
+            <div class="btnrow"><button class="checkBtn" onclick="checkTFWorksheet()">Check</button><button class="showBtn" onclick="toggle('ansTFW')">Show answers</button></div>
+            <div class="feedback" id="fbTFW"></div>
+            <div class="answerBox" id="ansTFW">1 F &nbsp; 2 T &nbsp; 3 F &nbsp; 4 T &nbsp; 5 NG &nbsp; 6 T &nbsp; 7 T &nbsp; 8 F</div>
+          </div>
+          <div class="panel fillgrid">
+            <h3>5. Complete the Ideas</h3>
+            <p>Use the words: <strong>skills, confidence, punishment, society, opportunities, crime, curriculum, restrictions</strong></p>
+            <div class="question">1. Education can give prisoners useful job <input type="text" id="ci1"></div>
+            <div class="question">2. Studying may help prisoners build <input type="text" id="ci2"></div>
+            <div class="question">3. Better qualifications can create more job <input type="text" id="ci3"></div>
+            <div class="question">4. Reintegration means becoming part of <input type="text" id="ci4"> again</div>
+            <div class="question">5. Norwegian prisons focus strongly on rehabilitation rather than only on <input type="text" id="ci5"></div>
+            <div class="question">6. Education may help break the cycle of <input type="text" id="ci6"></div>
+            <div class="btnrow"><button class="checkBtn" onclick="checkTextSet(['ci1','ci2','ci3','ci4','ci5','ci6'],[['skills'],['confidence'],['opportunities'],['society'],['punishment'],['crime']],'fbCI')">Check</button><button class="showBtn" onclick="toggle('ansCI')">Show answers</button></div>
+            <div class="feedback" id="fbCI"></div>
+            <div class="answerBox" id="ansCI">1 skills • 2 confidence • 3 opportunities • 4 society • 5 punishment • 6 crime</div>
+          </div>
+        </div>
+        <div class="panel" style="margin-top:16px">
+          <h3>6. Cause → Effect</h3>
+          <p>Write the letter.</p>
+          <div class="miniGrid">
+            <div>
+              <div class="question">1. Prisoners learn job skills. <input type="text" id="ce1" placeholder="A–E"></div>
+              <div class="question">2. Prisoners continue their education. <input type="text" id="ce2" placeholder="A–E"></div>
+              <div class="question">3. People gain confidence. <input type="text" id="ce3" placeholder="A–E"></div>
+              <div class="question">4. Former prisoners find work. <input type="text" id="ce4" placeholder="A–E"></div>
+              <div class="question">5. Reoffending falls. <input type="text" id="ce5" placeholder="A–E"></div>
+            </div>
+            <div>
+              <ol type="A" class="compact">
+                <li>communities may become safer.</li>
+                <li>so they may feel more able to change their lives.</li>
+                <li>so they may have more opportunities after release.</li>
+                <li>so they may be less likely to return to crime.</li>
+                <li>so they can get qualifications they missed earlier.</li>
+              </ol>
+            </div>
+          </div>
+          <div class="btnrow"><button class="checkBtn" onclick="checkTextSet(['ce1','ce2','ce3','ce4','ce5'],[['c'],['e'],['b'],['d'],['a']],'fbCE')">Check</button><button class="showBtn" onclick="toggle('ansCE')">Show answers</button><button class="navBtn" onclick="goTo('ws3')">Next</button></div>
+          <div class="feedback" id="fbCE"></div>
+          <div class="answerBox" id="ansCE">1 C • 2 E • 3 B • 4 D • 5 A</div>
+        </div>
+      </div>
+
+      <div class="screen" id="ws3">
+        <div class="sectionBanner">
+          <div class="taskTitle">Interactive Worksheet — Parts 7–10</div>
+          <div class="taskIntro">Personal response, debate and a mini speech.</div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <h3>7. Finish the sentences</h3>
+            <div class="question">1. Education in prison is useful because <textarea></textarea></div>
+            <div class="question">2. One possible problem with prison education is <textarea></textarea></div>
+            <div class="question">3. A prisoner who learns a profession may <textarea></textarea></div>
+            <div class="question">4. Society benefits when former prisoners <textarea></textarea></div>
+            <div class="question">5. I think prisoners should / should not have access to university because <textarea></textarea></div>
+          </div>
+          <div class="panel">
+            <h3>8. Punishment or Second Chance?</h3>
+            <p><strong>A.</strong> Prison should mainly punish people for crimes.<br><strong>B.</strong> Prison should mainly prepare people for a better life after release.</p>
+            <p>Choose A or B. Then give <strong>three arguments</strong> and one argument against your own position.</p>
+            <textarea placeholder="My position is...\nArgument 1...\nArgument 2...\nArgument 3...\nOne counterargument..."></textarea>
+          </div>
+        </div>
+        <div class="grid2" style="margin-top:16px">
+          <div class="panel">
+            <h3>9. What would you change?</h3>
+            <p>Choose four things you would include in a prison education programme.</p>
+            <div class="grid2">
+              <label><input type="checkbox"> school subjects</label>
+              <label><input type="checkbox"> carpentry</label>
+              <label><input type="checkbox"> IT</label>
+              <label><input type="checkbox"> university courses</label>
+              <label><input type="checkbox"> cooking</label>
+              <label><input type="checkbox"> communication skills</label>
+              <label><input type="checkbox"> languages</label>
+              <label><input type="checkbox"> art and music</label>
+              <label><input type="checkbox"> financial skills</label>
+              <label><input type="checkbox"> job interview training</label>
+            </div>
+            <div class="question" style="margin-top:12px">Explain your choices. <textarea></textarea></div>
+          </div>
+          <div class="panel">
+            <h3>10. Final Challenge</h3>
+            <p class="quote">“Education is cheaper than prison.”</p>
+            <p>Speak for <strong>60–90 seconds</strong>. Include:</p>
+            <ul class="compact">
+              <li>your opinion</li>
+              <li>one example</li>
+              <li>one possible disadvantage</li>
+              <li>a final conclusion</li>
+            </ul>
+            <textarea placeholder="Useful plan: In my opinion... / For example... / However... / To sum up..."></textarea>
+            <div class="btnrow"><button class="navBtn" onclick="goTo('bridge')">Next: A Good System</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" id="bridge">
+        <div class="sectionBanner">
+          <div class="taskTitle">Bridge to Outcomes — A Good System</div>
+          <div class="taskIntro">Now move from prison education to education systems in general.</div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <h3>Compare three systems</h3>
+            <table style="width:100%;border-collapse:collapse;font-size:14px">
+              <tr><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">Area</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">Norwegian prisons</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">Ordinary schools</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">Ideal system</th></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--line)">Goal</td><td style="padding:8px;border-bottom:1px solid var(--line)">reintegration</td><td style="padding:8px;border-bottom:1px solid var(--line)">education + exams</td><td style="padding:8px;border-bottom:1px solid var(--line)">...</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--line)">Subjects</td><td style="padding:8px;border-bottom:1px solid var(--line)">practical + academic</td><td style="padding:8px;border-bottom:1px solid var(--line)">...</td><td style="padding:8px;border-bottom:1px solid var(--line)">...</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--line)">Rules</td><td style="padding:8px;border-bottom:1px solid var(--line)">strict security</td><td style="padding:8px;border-bottom:1px solid var(--line)">...</td><td style="padding:8px;border-bottom:1px solid var(--line)">...</td></tr>
+              <tr><td style="padding:8px">Result</td><td style="padding:8px">lower reoffending</td><td style="padding:8px">...</td><td style="padding:8px">...</td></tr>
+            </table>
+          </div>
+          <div class="panel">
+            <h3>Discussion</h3>
+            <ol class="compact">
+              <li>What makes a good education system?</li>
+              <li>Should education focus more on real-life skills?</li>
+              <li>Are exams too important in many countries?</li>
+              <li>What should schools borrow from the Norwegian prison model?</li>
+            </ol>
+            <div class="question">My best idea for a fairer education system: <textarea></textarea></div>
+            <div class="btnrow"><button class="navBtn" onclick="goTo('grammar')">Next: Grammar</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" id="grammar">
+        <div class="sectionBanner">
+          <div class="taskTitle">Grammar — had to / could</div>
+          <div class="taskIntro">Talk about past rules, duties and abilities.</div>
+        </div>
+        <div class="grid2">
+          <div class="panel">
+            <h3>A. Complete the sentences</h3>
+            <div class="question">1. When he was at school, Nikita <input type="text" id="g1" placeholder="had to / could / couldn't ..."></div>
+            <div class="question">2. In many prisons, inmates <input type="text" id="g2" placeholder="had to ..."></div>
+            <div class="question">3. In Norway, some prisoners <input type="text" id="g3" placeholder="could ..."></div>
+            <div class="question">4. Prisoners in closed prisons <input type="text" id="g4" placeholder="couldn't ..."></div>
+            <div class="question">5. When you were at school, you <input type="text" id="g5" placeholder="had to ..."></div>
+            <div class="answerBox" style="display:block">Open answers. Use <strong>had to</strong> for obligation and <strong>could / couldn't</strong> for ability or possibility.</div>
+          </div>
+          <div class="panel">
+            <h3>B. Then vs Now</h3>
+            <ul class="compact">
+              <li>When I was at school, I had to ...</li>
+              <li>I couldn’t ...</li>
+              <li>My teachers could ...</li>
+              <li>Now adults can ...</li>
+              <li>In the future students will be able to ...</li>
+            </ul>
+            <textarea placeholder="Speak or write 6–8 sentences."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen" id="final">
+        <div class="sectionBanner">
+          <div class="taskTitle">Final Speaking</div>
+          <div class="taskIntro">Put everything together.</div>
+        </div>
+        <div class="panel">
+          <h3>Speak for 1 minute</h3>
+          <p>Topic: <strong>What can ordinary schools learn from the Norwegian prison education model?</strong></p>
+          <ul class="compact">
+            <li>Mention at least <strong>three</strong> ideas from today’s lesson.</li>
+            <li>Use at least <strong>two</strong> target words.</li>
+            <li>Use at least one sentence with <strong>had to / could</strong>.</li>
+          </ul>
+          <textarea placeholder="Plan your answer here if you want."></textarea>
+          <div class="footerNote">End of lesson.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+<script>
+  function showScreen(id, btn){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+    else {
+      document.querySelectorAll('.menu button').forEach(b=>{
+        if(b.getAttribute('onclick') && b.getAttribute('onclick').includes("'"+id+"'")) b.classList.add('active');
+      })
+    }
+    document.querySelector('.content').scrollTop=0;
+  }
+  function goTo(id){showScreen(id);}
+  function norm(s){return String(s).toLowerCase().trim().replace(/[.]/g,'');}
+  function toggle(id){const el=document.getElementById(id); el.style.display=(el.style.display==='block'?'none':'block');}
+  function markFeedback(id, ok, text){const el=document.getElementById(id); el.textContent=text; el.className='feedback '+(ok?'ok':'bad');}
+  function checkRadio(name, correct, fbId){
+    const ch=document.querySelector('input[name="'+name+'"]:checked');
+    if(!ch){markFeedback(fbId,false,'Choose an option first.'); return;}
+    markFeedback(fbId, ch.value===correct, ch.value===correct ? 'Correct!' : 'Try again.');
+  }
+  function checkManyRadios(pairs, fbId){
+    let good=0;
+    for(const [name,correct] of pairs){ const ch=document.querySelector('input[name="'+name+'"]:checked'); if(ch && ch.value===correct) good++; }
+    markFeedback(fbId, good===pairs.length, 'Score: '+good+' / '+pairs.length + (good===pairs.length ? ' — Great!' : ' — Check again.'));
+  }
+  function checkTextSet(ids, answers, fbId){
+    let good=0;
+    ids.forEach((id,i)=>{
+      const val=norm(document.getElementById(id).value);
+      const ok=answers[i].some(a=>val===norm(a));
+      if(ok) good++;
+      document.getElementById(id).style.borderColor = ok ? '#1a9c4e' : '#cc3344';
+    });
+    markFeedback(fbId, good===ids.length, 'Score: '+good+' / '+ids.length + (good===ids.length ? ' — Excellent!' : ' — Some answers need correction.'));
+  }
+  function checkWorksheet1(){
+    let good=0, total=8;
+    const checks=[
+      ['ff1',['reoffending','recidivism']],
+      ['ff5',['university']],
+      ['ff6',['civilian teachers','regular teachers','civilian','teachers from local schools and colleges','local teachers']],
+      ['ff7',['computers','isolated computers']],
+      ['ff8',['education','learning']]
+    ];
+    checks.forEach(([id,ans])=>{
+      const val=norm(document.getElementById(id).value);
+      const ok=ans.some(a=>val===norm(a));
+      if(ok) good++;
+      document.getElementById(id).style.borderColor=ok?'#1a9c4e':'#cc3344';
+    });
+    const skillAnswers=[norm(document.getElementById('ff2').value),norm(document.getElementById('ff3').value),norm(document.getElementById('ff4').value)];
+    const pool=['cooking','cookery','car mechanics','mechanics','auto mechanics','welding','carpentry','driving','driver training','mechanic','car mechanic','welder'];
+    let skillGood=0;
+    ['ff2','ff3','ff4'].forEach((id)=>document.getElementById(id).style.borderColor='#cc3344');
+    skillAnswers.forEach((v,idx)=>{ if(pool.includes(v)){ skillGood++; document.getElementById('ff'+(idx+2)).style.borderColor='#1a9c4e'; } });
+    good += Math.min(skillGood,3);
+    markFeedback('fbFF', good===total, 'Score: '+good+' / '+total + (good===total ? ' — Great job!' : ' — Check the suggested answers if needed.'));
+  }
+  function checkTFWorksheet(){
+    const correct=['False','True','False','True','Not Given','True','True','False'];
+    let good=0;
+    for(let i=1;i<=8;i++){
+      const el=document.getElementById('tfw'+i);
+      const ok=el.value===correct[i-1];
+      el.style.borderColor=ok?'#1a9c4e':'#cc3344';
+      if(ok) good++;
+    }
+    markFeedback('fbTFW', good===8, 'Score: '+good+' / 8' + (good===8 ? ' — Excellent!' : ' — A few need correction.'));
+  }
+
+  const cards=[
+    {word:'humane', ru:'гуманный', def:'showing kindness and respect for people', ex:'Norway is famous for its humane approach to prison.'},
+    {word:'inmate', ru:'заключённый', def:'a person who is in prison', ex:'Each inmate can apply for education.'},
+    {word:'rehabilitation', ru:'реабилитация', def:'the process of helping someone return to a normal and useful life', ex:'The system focuses on rehabilitation, not only punishment.'},
+    {word:'reintegration', ru:'реинтеграция / возвращение в общество', def:'becoming part of society again', ex:'Education helps reintegration after release.'},
+    {word:'vocational training', ru:'профессиональное обучение', def:'training for practical jobs and professions', ex:'Some prisoners do vocational training in carpentry or cooking.'},
+    {word:'reoffend', ru:'совершить преступление снова', def:'to commit another crime after punishment or release', ex:'The goal is to stop people from reoffending.'},
+    {word:'restrictions', ru:'ограничения', def:'rules that limit what someone can do', ex:'Security restrictions may limit internet access.'},
+    {word:'civilian teachers', ru:'гражданские преподаватели', def:'normal teachers from local schools, not prison staff', ex:'Civilian teachers come into the prison to teach.'},
+    {word:'daily allowance', ru:'ежедневное пособие / выплата', def:'a small amount of money received each day', ex:'Students get the same daily allowance as working prisoners.'},
+    {word:'principle of normality', ru:'принцип нормальности', def:'the idea that life in prison should be as close as possible to normal life', ex:'Norwegian prisons follow the principle of normality.'},
+    {word:'recidivism', ru:'рецидив', def:'the tendency of a person to commit crimes again', ex:'Norway has a lower recidivism rate than many countries.'},
+    {word:'qualifications', ru:'квалификации / дипломы', def:'official skills, certificates or degrees', ex:'Education gives people qualifications for work.'}
+  ];
+  let cardIndex=0;
+  function renderCard(){
+    const c=cards[cardIndex];
+    document.getElementById('cardCounter').textContent=(cardIndex+1)+' / '+cards.length;
+    document.getElementById('cardHost').innerHTML=`<div class="quizCard" id="cardFlip" onclick="flipCard()"><div class="quizInner"><div class="face front"><button class="speakBtn" onclick="event.stopPropagation();speakWord('${c.word.replace(/'/g,"\\'")}')">Listen</button><div class="big">${c.word}</div><div class="tiny">Click to flip</div></div><div class="face back"><div class="ru">${c.ru}</div><p><strong>Meaning:</strong> ${c.def}</p><p><strong>Example:</strong> ${c.ex}</p><div class="tiny">Click to flip back</div></div></div></div>`;
+  }
+  function flipCard(){document.getElementById('cardFlip').classList.toggle('flipped');}
+  function prevCard(){cardIndex=(cardIndex-1+cards.length)%cards.length;renderCard();}
+  function nextCard(){cardIndex=(cardIndex+1)%cards.length;renderCard();}
+  function speakWord(word){
+    if('speechSynthesis' in window){
+      const u=new SpeechSynthesisUtterance(word); u.lang='en-GB'; u.rate=0.92; speechSynthesis.cancel(); speechSynthesis.speak(u);
+    }
+  }
+  renderCard();
+</script>
+</body>
+</html>
