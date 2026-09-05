@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>Education in Norwegian Prisons — compact worksheet</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#eef7fb}
+#lesson{display:block;width:100%;height:100%;border:0}
+</style>
+</head>
+<body>
+<iframe id="lesson" src="education-2026-09-04.html?v=20260905-wscompact" title="Education in Norwegian Prisons"></iframe>
+<script>
+const frame=document.getElementById('lesson');
+frame.addEventListener('load',()=>{
+  const w=frame.contentWindow,d=w.document;
+  if(!d || d.getElementById('wsA1')) return;
+
+  const css=d.createElement('style');
+  css.textContent=`
+    .wsNew{max-width:1180px!important;height:auto;min-height:0}
+    .wsWrap{display:flex;flex-direction:column;gap:10px}
+    .wsTop{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:9px 12px;box-shadow:0 3px 12px rgba(16,77,106,.05)}
+    .wsTopTitle{font-weight:900;font-size:20px;color:#12425c;white-space:nowrap}
+    .wsSteps{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+    .wsStep{border:1px solid #b9d9e8;background:#f4fbff;color:#0d668d;border-radius:10px;min-width:38px;height:34px;font-weight:900;cursor:pointer}
+    .wsStep.on{background:#0e7fb0;color:#fff;border-color:#0e7fb0}
+    .wsPanel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 16px;box-shadow:0 4px 16px rgba(16,77,106,.05)}
+    .wsPanel h3{margin:0 0 5px;color:#12425c;font-size:22px}
+    .wsHint{margin:0 0 10px;color:var(--muted);font-size:14px}
+    .promptGrid,.factGrid,.tfCards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .promptCard{border:1px solid var(--line);background:#f9fdff;border-radius:15px;padding:13px 14px;font-size:17px;line-height:1.35;font-weight:700;min-height:88px;display:flex;align-items:center}
+    .matchBoard{display:grid;grid-template-columns:.88fr 1.35fr;gap:12px}
+    .matchCol{display:grid;grid-template-columns:1fr;gap:6px}
+    .matchBtn{border:1px solid #bfd8e5;background:#fbfeff;color:#173042;border-radius:11px;padding:9px 11px;text-align:left;font-size:14px;line-height:1.2;cursor:pointer;min-height:39px}
+    .matchBtn.term{font-weight:900;color:#0d6288}
+    .matchBtn.sel{outline:3px solid #f3b13b;background:#fff8e8}
+    .matchBtn.done{background:#eaf9f0;border-color:#76c995;color:#17643a;opacity:.72;cursor:default}
+    .factCard{border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:#fbfeff;font-size:15px;line-height:1.35}
+    .factCard input{margin-top:7px;padding:8px 10px;font-size:15px}
+    .skillRow{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:7px}
+    .choiceRow{border:1px solid var(--line);border-radius:14px;background:#fbfeff;padding:9px 10px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;min-height:68px}
+    .choiceText{font-size:14px;line-height:1.25;font-weight:700}
+    .seg{display:flex;gap:4px}
+    .seg button,.letterBtns button{border:1px solid #bfd8e5;background:#fff;color:#145b7d;border-radius:9px;padding:7px 9px;font-weight:900;cursor:pointer;min-width:34px}
+    .seg button.pick,.letterBtns button.pick{background:#0e7fb0;color:#fff;border-color:#0e7fb0}
+    .seg button.good,.letterBtns button.good{background:#e7f8ed;color:#17643a;border-color:#73c793}
+    .seg button.bad,.letterBtns button.bad{background:#fff0f2;color:#a52637;border-color:#e599a3}
+    .bank{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 10px}
+    .bankWord{border:1px solid #b7d8e7;background:#eaf7ff;color:#0b6289;border-radius:999px;padding:7px 11px;font-weight:900;cursor:pointer}
+    .bankWord.used{opacity:.3;pointer-events:none}
+    .slotGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .slotRow{border:1px solid var(--line);border-radius:13px;background:#fbfeff;padding:9px 10px;font-size:14px;line-height:1.3}
+    .slot{display:inline-flex;min-width:120px;min-height:29px;align-items:center;justify-content:center;border:1.5px dashed #8fbfd3;background:#fff;border-radius:8px;margin-left:5px;padding:4px 8px;font-weight:900;color:#0d6288;cursor:pointer;vertical-align:middle}
+    .slot.good{border-style:solid;border-color:#65bf87;background:#eaf9f0;color:#17643a}
+    .slot.bad{border-style:solid;border-color:#dd7c88;background:#fff0f2;color:#a52637}
+    .causeGrid{display:grid;grid-template-columns:1.2fr .9fr;gap:12px}
+    .causeRows{display:grid;gap:7px}
+    .causeRow{border:1px solid var(--line);background:#fbfeff;border-radius:13px;padding:8px 10px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;font-size:14px;font-weight:700}
+    .letterBtns{display:flex;gap:4px}
+    .effects{margin:0;padding-left:30px;display:grid;gap:6px}
+    .effects li{margin:0;padding:7px 8px;border:1px solid var(--line);border-radius:11px;background:#fbfeff;font-size:14px;line-height:1.25}
+    .wsActions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:9px}
+    .wsScore{font-weight:900;font-size:14px;min-height:18px;color:#12425c}
+    .revealMini{display:none;margin-top:8px;padding:9px 11px;border:1px dashed #93c3d8;border-radius:11px;background:#f4fbff;font-size:14px;line-height:1.35}
+    @media(max-width:900px){.promptGrid,.factGrid,.tfCards,.slotGrid,.matchBoard,.causeGrid{grid-template-columns:1fr}.wsTop{align-items:flex-start}.choiceRow,.causeRow{grid-template-columns:1fr}.wsTopTitle{white-space:normal}}
+  `;
+  d.head.appendChild(css);
+
+  const menu=d.querySelector('.menu');
+  const old1=[...menu.querySelectorAll('button')].find(b=>b.getAttribute('onclick')?.includes("'ws1'"));
+  const old2=[...menu.querySelectorAll('button')].find(b=>b.getAttribute('onclick')?.includes("'ws2'"));
+  if(old1){old1.textContent='5. Worksheet 1–6';old1.setAttribute('onclick',"showScreen('wsA1', this)");}
+  if(old2) old2.remove();
+  const ws3btn=[...menu.querySelectorAll('button')].find(b=>b.getAttribute('onclick')?.includes("'ws3'"));
+  const bridgeBtn=[...menu.querySelectorAll('button')].find(b=>b.getAttribute('onclick')?.includes("'bridge'"));
+  const grammarBtn=[...menu.querySelectorAll('button')].find(b=>b.getAttribute('onclick')?.includes("'grammar'"));
+  const finalBtn=[...menu.querySelectorAll('button')].find(b=>b.getAttribute('onclick')?.includes("'final'"));
+  if(ws3btn) ws3btn.textContent='6. Worksheet 7–10';
+  if(bridgeBtn) bridgeBtn.textContent='7. A Good System';
+  if(grammarBtn) grammarBtn.textContent='8. had to / could';
+  if(finalBtn) finalBtn.textContent='9. Final Speaking';
+
+  d.getElementById('ws1')?.remove();
+  d.getElementById('ws2')?.remove();
+  const before=d.getElementById('ws3');
+  const make=(id,part,title,body)=>{
+    const el=d.createElement('div');
+    el.className='screen wsNew'; el.id=id;
+    el.innerHTML=`<div class="wsWrap"><div class="wsTop"><div class="wsTopTitle">Interactive Worksheet</div><div class="wsSteps">${[1,2,3,4,5,6].map(n=>`<button class="wsStep ${n===part?'on':''}" onclick="showScreen('wsA${n}')">${n}</button>`).join('')}</div></div><div class="wsPanel"><h3>${part}. ${title}</h3>${body}</div></div>`;
+    before.parentNode.insertBefore(el,before);
+  };
+
+  make('wsA1',1,'Before You Look',`
+    <p class="wsHint">Discuss. One idea per card — no writing needed.</p>
+    <div class="promptGrid">
+      <div class="promptCard">What do you think prisoners usually do during the day?</div>
+      <div class="promptCard">Should prisoners be allowed to study at school or university?</div>
+      <div class="promptCard">Which is more important: punishment or rehabilitation? Why?</div>
+      <div class="promptCard">What skills could help a person start a new life after prison?</div>
+    </div>
+    <div class="wsActions"><button class="navBtn" onclick="showScreen('wsA2')">Next →</button></div>`);
+
+  const defs=[
+    ['reoffending','committing another crime after leaving prison'],
+    ['vocational training','education that teaches practical job skills'],
+    ['rehabilitation','helping somebody return to a normal life'],
+    ['reintegration','becoming part of society again'],
+    ['inmate','a person who is in prison'],
+    ['self-esteem','confidence and respect for yourself'],
+    ['restrictions','rules that limit what somebody can do'],
+    ['curriculum','the subjects and content taught in a school']
+  ];
+  const shuffled=[4,1,6,3,0,7,2,5];
+  make('wsA2',2,'Key Vocabulary — Match',`
+    <p class="wsHint">Click a word, then click its definition. Correct pairs lock automatically.</p>
+    <div class="matchBoard"><div class="matchCol" id="termCol">${defs.map((x,i)=>`<button class="matchBtn term" data-i="${i}" onclick="pickMatch(this,'term')">${x[0]}</button>`).join('')}</div><div class="matchCol" id="defCol">${shuffled.map(i=>`<button class="matchBtn" data-i="${i}" onclick="pickMatch(this,'def')">${defs[i][1]}</button>`).join('')}</div></div>
+    <div class="wsActions"><button class="showBtn" onclick="resetMatch()">Reset</button><div class="wsScore" id="matchScore">0 / 8 matched</div><button class="navBtn" onclick="showScreen('wsA3')">Next →</button></div>`);
+
+  make('wsA3',3,'Find It Fast',`
+    <p class="wsHint">Complete the facts. Type short answers only.</p>
+    <div class="factGrid">
+      <div class="factCard"><b>1.</b> One aim is to reduce…<input id="ff1" type="text"></div>
+      <div class="factCard"><b>2.</b> Three practical skills:<div class="skillRow"><input id="ff2" type="text"><input id="ff3" type="text"><input id="ff4" type="text"></div></div>
+      <div class="factCard"><b>3.</b> Some prisoners can even study at…<input id="ff5" type="text"></div>
+      <div class="factCard"><b>4.</b> Teachers in Norwegian prisons are…<input id="ff6" type="text"></div>
+      <div class="factCard"><b>5.</b> Prisoners may have classrooms, libraries and…<input id="ff7" type="text"></div>
+      <div class="factCard"><b>6.</b> Each prisoner can have a personal ___ plan.<input id="ff8" type="text"></div>
+    </div>
+    <div class="wsActions"><button class="checkBtn" onclick="checkWorksheet1()">Check</button><button class="showBtn" onclick="document.getElementById('ffAns').style.display=document.getElementById('ffAns').style.display==='block'?'none':'block'">Answers</button><div class="feedback" id="fbFF"></div><button class="navBtn" onclick="showScreen('wsA4')">Next →</button></div>
+    <div class="revealMini" id="ffAns">1 reoffending / recidivism · 2 cooking, welding, carpentry / car mechanics / driving · 3 university · 4 civilian / regular teachers · 5 computers · 6 education / learning</div>`);
+
+  const tfStatements=[
+    'Norwegian prisoners only study basic reading and writing.',
+    'Prison education can help people find better jobs after release.',
+    'Prisoners always study in very large classes.',
+    'Some inmates can continue into higher education.',
+    'Every prisoner is highly motivated to study from the beginning.',
+    'Security rules can sometimes make education more difficult.',
+    'The system sees prisoners as people who will eventually return to society.',
+    'All former prisoners in Norway find jobs immediately.'
+  ];
+  make('wsA4',4,'True, False or Not Given?',`
+    <p class="wsHint">Tap T, F or NG. No dropdowns.</p>
+    <div class="tfCards">${tfStatements.map((s,i)=>`<div class="choiceRow" data-q="${i}"><div class="choiceText">${i+1}. ${s}</div><div class="seg"><button onclick="pickTF(${i},'True',this)">T</button><button onclick="pickTF(${i},'False',this)">F</button><button onclick="pickTF(${i},'Not Given',this)">NG</button></div></div>`).join('')}</div>
+    <div class="wsActions"><button class="checkBtn" onclick="checkTFNew()">Check</button><button class="showBtn" onclick="document.getElementById('tfAns').style.display=document.getElementById('tfAns').style.display==='block'?'none':'block'">Answers</button><div class="wsScore" id="tfScore"></div><button class="navBtn" onclick="showScreen('wsA5')">Next →</button></div>
+    <div class="revealMini" id="tfAns">1 F · 2 T · 3 F · 4 T · 5 NG · 6 T · 7 T · 8 F</div>`);
+
+  make('wsA5',5,'Complete the Ideas',`
+    <p class="wsHint">Click the words. They fill the blanks in order. Click a filled blank to clear it.</p>
+    <div class="bank" id="wordBank">${['skills','confidence','punishment','society','opportunities','crime','curriculum','restrictions'].map(x=>`<button class="bankWord" data-word="${x}" onclick="useWord(this)">${x}</button>`).join('')}</div>
+    <div class="slotGrid">
+      <div class="slotRow">1. Education can give prisoners useful job <button class="slot" data-i="0" onclick="clearSlot(this)">_____</button></div>
+      <div class="slotRow">2. Studying may help prisoners build <button class="slot" data-i="1" onclick="clearSlot(this)">_____</button></div>
+      <div class="slotRow">3. Better qualifications create more job <button class="slot" data-i="2" onclick="clearSlot(this)">_____</button></div>
+      <div class="slotRow">4. Reintegration means becoming part of <button class="slot" data-i="3" onclick="clearSlot(this)">_____</button> again.</div>
+      <div class="slotRow">5. Rehabilitation rather than only <button class="slot" data-i="4" onclick="clearSlot(this)">_____</button></div>
+      <div class="slotRow">6. Education may help break the cycle of <button class="slot" data-i="5" onclick="clearSlot(this)">_____</button></div>
+    </div>
+    <div class="wsActions"><button class="checkBtn" onclick="checkSlots()">Check</button><button class="showBtn" onclick="resetSlots()">Reset</button><div class="wsScore" id="slotScore"></div><button class="navBtn" onclick="showScreen('wsA6')">Next →</button></div>`);
+
+  const causes=['Prisoners learn job skills.','Prisoners continue their education.','People gain confidence.','Former prisoners find work.','Reoffending falls.'];
+  make('wsA6',6,'Cause → Effect',`
+    <p class="wsHint">Choose A–E for each cause. One tap per answer.</p>
+    <div class="causeGrid"><div class="causeRows">${causes.map((c,i)=>`<div class="causeRow" data-c="${i}"><span>${i+1}. ${c}</span><div class="letterBtns">${['A','B','C','D','E'].map(l=>`<button onclick="pickCause(${i},'${l}',this)">${l}</button>`).join('')}</div></div>`).join('')}</div><ol type="A" class="effects"><li>communities may become safer.</li><li>so they may feel more able to change their lives.</li><li>so they may have more opportunities after release.</li><li>so they may be less likely to return to crime.</li><li>so they can get qualifications they missed earlier.</li></ol></div>
+    <div class="wsActions"><button class="checkBtn" onclick="checkCause()">Check</button><button class="showBtn" onclick="document.getElementById('causeAns').style.display=document.getElementById('causeAns').style.display==='block'?'none':'block'">Answers</button><div class="wsScore" id="causeScore"></div><button class="navBtn" onclick="showScreen('ws3')">Next: Parts 7–10 →</button></div>
+    <div class="revealMini" id="causeAns">1 C · 2 E · 3 B · 4 D · 5 A</div>`);
+
+  let mTerm=null,mDef=null,matched=0;
+  w.pickMatch=(btn,type)=>{
+    if(btn.classList.contains('done'))return;
+    const col=type==='term'?d.getElementById('termCol'):d.getElementById('defCol');
+    col.querySelectorAll('.matchBtn').forEach(x=>x.classList.remove('sel'));
+    btn.classList.add('sel');
+    if(type==='term')mTerm=btn; else mDef=btn;
+    if(mTerm&&mDef){
+      if(mTerm.dataset.i===mDef.dataset.i){mTerm.classList.remove('sel');mDef.classList.remove('sel');mTerm.classList.add('done');mDef.classList.add('done');matched++;d.getElementById('matchScore').textContent=matched+' / 8 matched';}
+      else{const a=mTerm,b=mDef;setTimeout(()=>{a.classList.remove('sel');b.classList.remove('sel')},350)}
+      mTerm=null;mDef=null;
+    }
+  };
+  w.resetMatch=()=>{matched=0;mTerm=mDef=null;d.querySelectorAll('#wsA2 .matchBtn').forEach(x=>x.className=x.classList.contains('term')?'matchBtn term':'matchBtn');d.getElementById('matchScore').textContent='0 / 8 matched'};
+
+  const tfPick={};
+  w.pickTF=(i,val,btn)=>{tfPick[i]=val;btn.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('pick','good','bad'));btn.classList.add('pick')};
+  w.checkTFNew=()=>{const correct=['False','True','False','True','Not Given','True','True','False'];let score=0;d.querySelectorAll('#wsA4 .choiceRow').forEach((row,i)=>{row.querySelectorAll('button').forEach(b=>{b.classList.remove('good','bad');if(b.classList.contains('pick')){const label=b.textContent==='T'?'True':b.textContent==='F'?'False':'Not Given';b.classList.add(label===correct[i]?'good':'bad');if(label===correct[i])score++;}})});d.getElementById('tfScore').textContent='Score: '+score+' / 8'};
+
+  w.useWord=(btn)=>{const slot=[...d.querySelectorAll('#wsA5 .slot')].find(s=>!s.dataset.value);if(!slot)return;slot.dataset.value=btn.dataset.word;slot.textContent=btn.dataset.word;slot.dataset.source=btn.dataset.word;btn.classList.add('used');slot.classList.remove('good','bad')};
+  w.clearSlot=(slot)=>{if(!slot.dataset.value)return;const word=slot.dataset.value;const btn=[...d.querySelectorAll('#wsA5 .bankWord')].find(b=>b.dataset.word===word);if(btn)btn.classList.remove('used');delete slot.dataset.value;slot.textContent='_____';slot.classList.remove('good','bad');d.getElementById('slotScore').textContent=''};
+  w.resetSlots=()=>{d.querySelectorAll('#wsA5 .slot').forEach(s=>{delete s.dataset.value;s.textContent='_____';s.classList.remove('good','bad')});d.querySelectorAll('#wsA5 .bankWord').forEach(b=>b.classList.remove('used'));d.getElementById('slotScore').textContent=''};
+  w.checkSlots=()=>{const correct=['skills','confidence','opportunities','society','punishment','crime'];let score=0;d.querySelectorAll('#wsA5 .slot').forEach((s,i)=>{const ok=s.dataset.value===correct[i];s.classList.remove('good','bad');s.classList.add(ok?'good':'bad');if(ok)score++});d.getElementById('slotScore').textContent='Score: '+score+' / 6'};
+
+  const causePick={};
+  w.pickCause=(i,val,btn)=>{causePick[i]=val;btn.parentElement.querySelectorAll('button').forEach(x=>x.classList.remove('pick','good','bad'));btn.classList.add('pick')};
+  w.checkCause=()=>{const correct=['C','E','B','D','A'];let score=0;d.querySelectorAll('#wsA6 .causeRow').forEach((row,i)=>row.querySelectorAll('button').forEach(b=>{b.classList.remove('good','bad');if(b.classList.contains('pick')){const ok=b.textContent===correct[i];b.classList.add(ok?'good':'bad');if(ok)score++}}));d.getElementById('causeScore').textContent='Score: '+score+' / 5'};
+});
+</script>
+</body>
+</html>
