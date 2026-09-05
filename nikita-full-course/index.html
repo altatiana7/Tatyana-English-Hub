@@ -11,12 +11,14 @@ let text=null,errors=[];
 for(const names of candidates){try{text=await unpack(names);break}catch(e){errors.push(e.message)}}
 if(!text)throw new Error(errors.join(' | '));
 const mirrorCss=`<style>.studentMirror{background:#071b27;border-radius:18px;padding:12px;box-shadow:0 12px 30px #0002}.studentMirror iframe{width:100%;height:78vh;min-height:720px;border:0;border-radius:12px;background:#f3f0eb}.mirrorNote{background:#fff3c9;border:1px solid #e2c469;border-radius:12px;padding:12px 14px;margin-bottom:12px;font-weight:850;color:#59440e}@media(max-width:760px){.studentMirror iframe{height:82vh;min-height:620px}}</style>`;
-text=text.replace('</head>',mirrorCss+'</head>');
+const revisionCss=`<link rel="stylesheet" href="revision-games.css?v=20260905-fixed2">`;
+text=text.replace('</head>',revisionCss+mirrorCss+'</head>');
 const a=text.indexOf('"Homework · 24 August 2026":');
 const b=text.indexOf('", "Homework Check: TED + Previous Lexis"',a);
 if(a>=0&&b>a){const mirrors=`"Homework · 24 August 2026": "<div class='mirrorNote'>Teacher mirror of Nikita’s student homework. This always shows the same 24 August version Nikita sees.</div><div class='studentMirror'><iframe src='../nikita-homework/2026-08-24.html?v=teacher-sync-20260826' title='Nikita homework 24 August'></iframe></div>", "Homework · 26 August 2026": "<div class='mirrorNote'>Teacher mirror of Nikita’s current homework. It includes Video Summary, Phantom, Innocent and the 10-question Crime Lexis test.</div><div class='studentMirror'><iframe src='../nikita-homework/2026-08-26.html?v=teacher-sync-20260826' title='Nikita homework 26 August'></iframe></div>"`;text=text.slice(0,a)+mirrors+text.slice(b+1)}
 const oldBtn=`<button onclick="showLesson(7,'Homework · 24 August 2026')">HOMEWORK · 24 AUGUST</button>`;
 text=text.replace(oldBtn,oldBtn+`<button onclick="showLesson(7,'Homework · 26 August 2026')">HOMEWORK · 26 AUGUST</button>`);
+text=text.replace('</body>',`<script src="revision-games.js?v=20260905-fixed2"><\/script></body>`);
 document.open();document.write(text);document.close();
 })().catch(e=>{document.body.innerHTML='<div class="l"><b>Course recovery failed</b><div class="s">'+String(e.message).replace(/[<>&]/g,'')+'</div></div>';console.error(e)});
 </script></body></html>
