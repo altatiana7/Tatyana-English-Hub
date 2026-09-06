@@ -5,43 +5,18 @@ const candidates=[
   [...base,'r17.txt'],
   [...base,'q17.txt','q18.txt']
 ];
-async function getText(n){
-  const urls=[n+'?v=20260906-recovery3','./'+n+'?v=20260906-recovery3'];
-  let last='';
-  for(const u of urls){
-    try{const r=await fetch(u,{cache:'no-store'});if(r.ok)return await r.text();last='HTTP '+r.status+' '+n}catch(e){last=e.message}
-  }
-  throw new Error(last||('Failed to fetch '+n));
-}
-async function read(names){let s='';for(const n of names)s+=(await getText(n)).trim();return s.replace(/\s+/g,'')}
-function cleanBase64(s){
-  s=s.replace(/\uFEFF/g,'').replace(/-/g,'+').replace(/_/g,'/').replace(/[^A-Za-z0-9+/=]/g,'');
-  const firstEq=s.indexOf('=');
-  if(firstEq>=0 && firstEq<s.length-2)s=s.replace(/=/g,'');
-  while(s.length%4)s+='=';
-  return s;
-}
-async function unpack(names){
-  const s=cleanBase64(await read(names));
-  const raw=atob(s);
-  const bin=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bin[i]=raw.charCodeAt(i);
-  const ds=new DecompressionStream('gzip');
-  const text=await new Response(new Blob([bin]).stream().pipeThrough(ds)).text();
-  if(!text||!/<html|<!doctype/i.test(text))throw new Error('Payload did not produce HTML');
-  return text;
-}
+async function read(names){let s='';for(const n of names){const r=await fetch(n+'?v=20260905-restore2',{cache:'no-store'});if(!r.ok)throw new Error('Missing '+n);s+=(await r.text()).trim()}return s.replace(/\s+/g,'')}
+async function unpack(names){const s=await read(names);const raw=atob(s);const bin=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)bin[i]=raw.charCodeAt(i);const ds=new DecompressionStream('gzip');const text=await new Response(new Blob([bin]).stream().pipeThrough(ds)).text();if(!text||!/<html|<!doctype/i.test(text))throw new Error('Payload did not produce HTML');return text}
 let text=null,errors=[];
 for(const names of candidates){try{text=await unpack(names);break}catch(e){errors.push(e.message)}}
 if(!text)throw new Error(errors.join(' | '));
 const mirrorCss=`<style>.studentMirror{background:#071b27;border-radius:18px;padding:12px;box-shadow:0 12px 30px #0002}.studentMirror iframe{width:100%;height:78vh;min-height:720px;border:0;border-radius:12px;background:#f3f0eb}.mirrorNote{background:#fff3c9;border:1px solid #e2c469;border-radius:12px;padding:12px 14px;margin-bottom:12px;font-weight:850;color:#59440e}@media(max-width:760px){.studentMirror iframe{height:82vh;min-height:620px}}</style>`;
-const revisionCss=`<link rel="stylesheet" href="revision-games.css?v=20260906-recovery3">`;
-text=text.replace('</head>',revisionCss+mirrorCss+'</head>');
+text=text.replace('</head>',mirrorCss+'</head>');
 const a=text.indexOf('"Homework · 24 August 2026":');
 const b=text.indexOf('\", \"Homework Check: TED + Previous Lexis\"',a);
 if(a>=0&&b>a){const mirrors=`\"Homework · 24 August 2026\": \"<div class='mirrorNote'>Teacher mirror of Nikita’s student homework. This always shows the same 24 August version Nikita sees.</div><div class='studentMirror'><iframe src='../nikita-homework/2026-08-24.html?v=teacher-sync-20260826' title='Nikita homework 24 August'></iframe></div>\", \"Homework · 26 August 2026\": \"<div class='mirrorNote'>Teacher mirror of Nikita’s current homework. It includes Video Summary, Phantom, Innocent and the 10-question Crime Lexis test.</div><div class='studentMirror'><iframe src='../nikita-homework/2026-08-26.html?v=teacher-sync-20260826' title='Nikita homework 26 August'></iframe></div>\"`;text=text.slice(0,a)+mirrors+text.slice(b+1)}
 const oldBtn=`<button onclick="showLesson(7,'Homework · 24 August 2026')">HOMEWORK · 24 AUGUST</button>`;
 text=text.replace(oldBtn,oldBtn+`<button onclick="showLesson(7,'Homework · 26 August 2026')">HOMEWORK · 26 AUGUST</button>`);
-text=text.replace('</body>',`<script src="revision-games.js?v=20260906-recovery3"><\/script></body>`);
 document.open();document.write(text);document.close();
 })().catch(e=>{document.body.innerHTML='<div class="l"><b>Course recovery failed</b><div class="s">'+String(e.message).replace(/[<>&]/g,'')+'</div></div>';console.error(e)});
 </script></body></html>
