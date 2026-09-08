@@ -26,7 +26,7 @@
     <div class="sideHead"><b>Gabi English Hub</b><span>Interactive course</span></div>
     <nav class="modules" id="modules"></nav>
   </aside>
-  <div class="coverShell"><div class="coverStage"><img src="gateway-future-cover-clean-v2.jpg?v=20260908-2316" fetchpriority="high" alt="Gateway to the Future — Interactive English Course"></div></div>
+  <div class="coverShell"><div class="coverStage"><img src="gabi-cover-final.webp?v=20260908-2328" fetchpriority="high" alt="Gateway to the Future — Interactive English Course"></div></div>
 </section>
 <section id="lessonView">
   <header class="lessonTop"><button class="backBtn" onclick="closeLesson()">←</button><div><small id="crumb">Gateway to the World B1</small><h1 id="topTitle">Lesson</h1></div></header>
@@ -45,7 +45,7 @@ const data=[
 {n:9,t:'Facts about fiction',l:['Things we read','Genres','Book reviews','Phrasal verbs connected with reading and writing','Reported speech – statements','Reported speech – questions','Culture exchange: Three great British writers','Books on the move','Using a pen name']},
 {n:10,t:'Computer update',l:['Computers and accessories','Using a computer and the Internet','Collocations with email and document','The passive – present simple','The passive – other tenses','have something done','Culture exchange: The Science Museum, London','Switching off the Internet','The Museum of Failure']}
 ];
-let openUnit=1;
+let openUnit=null;
 function render(){document.getElementById('modules').innerHTML=data.map(u=>`<div class="module ${openUnit===u.n?'open':''}"><button class="moduleBtn" onclick="toggle(${u.n})"><span class="num">${u.n}</span><span class="name"><b>Module ${u.n}</b><span>${u.t}</span></span><span class="arrow">›</span></button><div class="lessons">${u.l.map((x,i)=>`<button class="lessonBtn" onclick="openLesson(${u.n},${i})"><strong>Lesson ${i+1}</strong> ${x}</button>`).join('')}</div></div>`).join('')}
 function toggle(n){openUnit=openUnit===n?null:n;render()}
 function openLesson(n,i){const u=data.find(x=>x.n===n);document.getElementById('crumb').textContent='MODULE '+n+' — '+u.t;document.getElementById('topTitle').textContent='Lesson '+(i+1)+' · '+u.l[i];document.getElementById('unitLine').textContent='MODULE '+n+' — '+u.t;document.getElementById('lessonTitle').textContent='Lesson '+(i+1)+' · '+u.l[i];document.getElementById('lessonView').classList.add('lessonViewOn')}
