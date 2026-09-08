@@ -1,0 +1,41 @@
+name: One-time Nikita modules CSS normalize
+
+on:
+  push:
+    paths:
+      - '.github/workflows/nikita-modules-normalize.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Normalize CSS separator
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('nikita-course/index.html')
+          s = p.read_text(encoding='utf-8')
+          start = 'body.courseHomeMode .modulesHeading{'
+          nxt = 'body.courseHomeMode #moduleMenu{'
+          i = s.find(start)
+          if i < 0:
+              raise SystemExit('Modules heading CSS not found')
+          close = s.find('}', i)
+          j = s.find(nxt, close + 1)
+          if close < 0 or j < 0 or j - close > 12:
+              raise SystemExit('Unexpected CSS layout near modules heading')
+          s = s[:close+1] + '\n' + s[j:]
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit normalization and remove one-time workflow
+        run: |
+          rm .github/workflows/nikita-modules-normalize.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add nikita-course/index.html .github/workflows/nikita-modules-normalize.yml
+          git commit -m "Normalize Nikita modules heading CSS"
+          git push
