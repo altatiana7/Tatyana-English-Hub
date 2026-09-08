@@ -1,0 +1,35 @@
+name: One-time Nikita modules CSS fix
+
+on:
+  push:
+    paths:
+      - '.github/workflows/nikita-modules-fix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Remove stray CSS character
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('nikita-course/index.html')
+          s = p.read_text(encoding='utf-8')
+          bad = '}' + chr(92) + '\nbody.courseHomeMode #moduleMenu'
+          good = '}\nbody.courseHomeMode #moduleMenu'
+          if bad in s:
+              s = s.replace(bad, good, 1)
+              p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit fix and remove one-time workflow
+        run: |
+          rm .github/workflows/nikita-modules-fix.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add nikita-course/index.html .github/workflows/nikita-modules-fix.yml
+          git commit -m "Fix Nikita modules heading CSS"
+          git push
