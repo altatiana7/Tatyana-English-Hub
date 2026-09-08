@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>Nikita · Education · 5 September 2026</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;background:#eef7f5;color:#17394b}.wrap{min-height:100%;padding:22px;display:flex;flex-direction:column;align-items:center}.head{width:min(760px,100%);display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:14px}.eyebrow{font-size:11px;font-weight:950;letter-spacing:.14em;color:#087c78;text-transform:uppercase}.head h1{font-size:30px;line-height:1;margin:5px 0 0}.date{font-size:13px;font-weight:850;color:#60757d}.shell{width:min(760px,100%);background:#fff;border:1px solid #d7e6e1;border-radius:22px;padding:18px;box-shadow:0 12px 34px rgba(31,74,78,.09)}.toolbar{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px}.btn{border:0;border-radius:10px;padding:9px 13px;background:#176f83;color:#fff;font-weight:850;cursor:pointer}.btn.audio{background:#2f7d64}.count{min-width:74px;text-align:center;font-size:13px;font-weight:900;color:#41606a}.card{width:min(560px,100%);height:210px;margin:0 auto;perspective:1000px}.inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer}.card.flipped .inner{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid #cfe2de;border-radius:18px;padding:18px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.front{background:linear-gradient(135deg,#eaf8f5,#fff)}.back{background:linear-gradient(135deg,#fff8e9,#fff);transform:rotateY(180deg)}.word{font-size:30px;font-weight:950;color:#125b70}.hint{font-size:11px;color:#74888c;margin-top:9px}.ru{font-size:21px;font-weight:900;color:#87520d;margin-bottom:8px}.def,.ex{font-size:14px;line-height:1.35;margin:3px 0;color:#435d65}.bottom{display:flex;justify-content:center;gap:9px;margin-top:12px}.small{font-size:11px;color:#73848a;text-align:center;margin-top:10px}@media(max-width:650px){.wrap{padding:12px}.head{align-items:flex-start;flex-direction:column}.card{height:230px}.word{font-size:27px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="head"><div><div class="eyebrow">Education · Vocabulary</div><h1>Quizlet Cards</h1></div><div class="date">5 September 2026</div></div>
+  <section class="shell">
+    <div class="toolbar"><button class="btn" onclick="prev()">Back</button><div class="count" id="count"></div><button class="btn" onclick="next()">Next</button></div>
+    <div class="card" id="card" onclick="flip()"><div class="inner"><div class="face front"><div class="word" id="word"></div><div class="hint">Click to flip</div></div><div class="face back"><div class="ru" id="ru"></div><div class="def" id="def"></div><div class="ex" id="ex"></div><div class="hint">Click to flip back</div></div></div></div>
+    <div class="bottom"><button class="btn audio" onclick="event.stopPropagation();speak()">Audio</button></div>
+    <div class="small">Compact set for today’s Education lesson.</div>
+  </section>
+</main>
+<script>
+const cards=[
+['humane','гуманный','showing kindness and respect for people','Norway is famous for its humane approach to prison.'],
+['inmate','заключённый','a person who is in prison','Each inmate can apply for education.'],
+['rehabilitation','реабилитация','helping someone return to a normal and useful life','The system focuses on rehabilitation, not only punishment.'],
+['reintegration','реинтеграция / возвращение в общество','becoming part of society again','Education helps reintegration after release.'],
+['vocational training','профессиональное обучение','training for practical jobs and professions','Some prisoners do vocational training in carpentry or cooking.'],
+['reoffend','совершить преступление снова','to commit another crime after punishment or release','The goal is to stop people from reoffending.'],
+['restrictions','ограничения','rules that limit what someone can do','Security restrictions may limit internet access.'],
+['civilian teachers','гражданские преподаватели','teachers from ordinary schools or colleges, not prison staff','Civilian teachers come into the prison to teach.'],
+['daily allowance','ежедневная выплата','a small amount of money received each day','Students get the same daily allowance as working prisoners.'],
+['principle of normality','принцип нормальности','the idea that prison life should be as close as possible to normal life','Norwegian prisons follow the principle of normality.'],
+['recidivism','рецидив','the tendency to commit crimes again after release','Education may help reduce recidivism.'],
+['qualifications','квалификации / дипломы','official skills, certificates or degrees','Education gives people qualifications for work.']
+];
+let i=0;
+function render(){const c=cards[i];count.textContent=(i+1)+' / '+cards.length;word.textContent=c[0];ru.textContent=c[1];def.textContent=c[2];ex.textContent=c[3];card.classList.remove('flipped')}
+function flip(){card.classList.toggle('flipped')}
+function prev(){i=(i-1+cards.length)%cards.length;render()}
+function next(){i=(i+1)%cards.length;render()}
+function speak(){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(cards[i][0]);u.lang='en-GB';const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.lang.startsWith('en'))||null;speechSynthesis.speak(u)}
+speechSynthesis.onvoiceschanged=()=>{};render();
+</script>
+</body>
+</html>
