@@ -21,7 +21,7 @@
 .modal{position:fixed;inset:0;background:#07314dcc;display:none;place-items:center;padding:20px;z-index:50}.modal.on{display:grid}.modalBox{width:min(760px,96%);max-height:82vh;overflow:auto;background:#fff;border-radius:20px;padding:18px}.modalBox h3{margin:0;color:var(--navy)}.modalBox pre{white-space:pre-wrap;font:inherit;font-size:11px;line-height:1.45;color:#4d6c7e;background:#f5fafc;border-radius:12px;padding:12px}.close{float:right;border:0;background:#eef4f7;border-radius:8px;padding:7px 10px;color:var(--navy);font-weight:900}
 @media(max-width:900px){.app{grid-template-columns:150px minmax(0,1fr)}.screen{padding:10px}.head h2{font-size:22px}.heroCard h3{font-size:33px}.flash{height:270px}.term{font-size:42px}.order{grid-template-columns:repeat(4,1fr)}}
 </style>
-<link rel="stylesheet" href="enhancements.css?v=three-lessons-2">
+<link rel="stylesheet" href="enhancements.css?v=reading-studio-4">
 </head>
 <body>
 <div class="app">
@@ -80,8 +80,9 @@ const bombs=[['What stage is 13–19?','teenager'],['Name two things Jake must m
 const kah=[['Which stage is usually 2–3 years old?',['toddler','teenager','young adult','senior'],0],['Which plural is correct?',['childs','childrens','children','childes'],2],['Who is studying engineering?',['Ben','Max','Jake','Grandpa Tom'],2],['What did Ben’s dad do recently?',['retired','changed jobs','moved house','started university'],1],['Which statement is NOT mentioned?',['Jake misses home','Max started walking','Ben wants to be an engineer','Grandpa goes fishing'],2],['What does independent mean?',['very old','able to do things without depending on others','retired','married'],1],['Which stage has an exact numerical name range?',['middle-aged','young adult','teenager','senior'],2],['Grandpa Tom spends more time…',['working','doing hobbies','at school','travelling Europe'],1],['Which is a life event?',['relative','move out','toddler','middle-aged'],1],['“I finally have time for the things I enjoy.” Who?',['Ben','Jake','Dad','Grandpa'],3],['Which is usually a senior age?',['13–19','20–39','40–64','65+'],3],['A challenge is…',['a test of your ability','a family member','a fixed age','a hobby'],0]];let ki=0,ks=0;function rKah(){let q=kah[ki];if(!q){complete();stage.innerHTML=shell(`<div class="game"><div class="gameCard"><div class="score">FINAL SCORE</div><h3>${ks} / ${kah.length}</h3><button class="action" onclick="ki=0;ks=0;rKah()">Play again</button></div></div>`);return}let ch=sh(q[1].map((x,i)=>[x,i===q[2]]));stage.innerHTML=shell(`<div class="game"><div class="gameCard"><div class="score">QUESTION ${ki+1} / ${kah.length} · SCORE ${ks}</div><h3>${q[0]}</h3><div class="answers">${ch.map(x=>`<button onclick="kAnswer(${x[1]})">${x[0]}</button>`).join('')}</div></div></div>`)}function kAnswer(ok){if(ok)ks++;ki++;rKah()}
 const renderers=[rWarm,rGuess,rCore,rCards,rSort,rEvents,rAge,rStereo,rBefore,rMatch,rMC,rTF,rSaid,rVocab,rSpeak,rSprint,rBomb,rKah];function render(){renderers[current]()}nav();render();save();
 </script>
-<script src="book-data.js?v=three-lessons-2"></script>
-<script src="enhancements.js?v=three-lessons-2"></script>
+<script src="book-data.js?v=reading-studio-4"></script>
+<script src="enhancements.js?v=reading-studio-4"></script>
 </body>
 </html>
+
 

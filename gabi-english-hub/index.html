@@ -54,7 +54,7 @@ let openUnit=null,activeModule=1,activeLesson=0;
 function render(){document.getElementById('modules').innerHTML=data.map(u=>`<div class="module ${openUnit===u.n?'open':''}"><button class="moduleBtn" onclick="toggle(${u.n})"><span class="num">${u.n}</span><span class="name"><b>Module ${u.n}</b><span>${u.t}</span></span><span class="arrow">›</span></button><div class="lessons">${lessonTitles.map((x,i)=>`<button class="lessonBtn" onclick="openLesson(${u.n},${i})"><strong>Lesson ${i+1}</strong> ${x}</button>`).join('')}</div></div>`).join('')}
 function toggle(n){openUnit=openUnit===n?null:n;render()}
 function openLesson(n,i){activeModule=n;activeLesson=i;const u=data.find(x=>x.n===n);const ws=document.getElementById('lessonWorkspace');document.getElementById('crumb').textContent='MODULE '+n+' — '+u.t;document.getElementById('topTitle').textContent='Lesson '+(i+1)+' · '+lessonTitles[i];document.querySelector('.lessonTop').hidden=n===1;
-if(n===1){ws.innerHTML=`<iframe allowfullscreen class="lessonFrame" src="stages-of-life.html?v=three-lessons-2&lesson=${i+1}" title="Happy families · Lesson ${i+1}"></iframe>`}
+if(n===1){ws.innerHTML=`<iframe allowfullscreen class="lessonFrame" src="stages-of-life.html?v=reading-studio-4&lesson=${i+1}" title="Happy families · Lesson ${i+1}"></iframe>`}
 else{const topics=grouping[n][i].map(j=>u.l[j]);ws.innerHTML=`<div class="futureLesson"><nav class="activityStrip">${topics.map((t,j)=>`<button onclick="selectFutureTopic(${j})">${t}</button>`).join('')}</nav><article class="lessonPage"><div class="unitLine">MODULE ${n} · ${u.t}</div><h2 id="futureTopic">${topics[0]}</h2><p class="notReady">Materials for this activity have not been added yet.</p></article></div>`}
 document.getElementById('lessonView').classList.add('lessonViewOn');}
 function selectFutureTopic(j){const u=data.find(x=>x.n===activeModule);document.getElementById('futureTopic').textContent=u.l[grouping[activeModule][activeLesson][j]]}
@@ -64,4 +64,5 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});rend
 </script>
 </body>
 </html>
+
 
