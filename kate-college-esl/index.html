@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#eef6fb">
+<title>Kate · ESL Interactive Lessons</title>
+<style>
+:root{
+  --navy:#08284f;--blue:#3f7fe3;--sky:#eef6ff;--mint:#d9f1eb;--teal:#216f74;
+  --violet:#e8e9ff;--orange:#fff0cf;--paper:#ffffff;--ink:#102d50;--muted:#68809b;
+  --shadow:0 18px 50px rgba(16,58,96,.15);--r:26px;
+}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:var(--ink);background:#eef6fb}
+button,input{font:inherit}.app{width:100vw;height:100svh;display:grid;grid-template-columns:clamp(230px,17.2vw,310px) 1fr;overflow:hidden;background:#f7fbfe}
+.sidebar{height:100%;padding:clamp(14px,1.5vh,24px);display:flex;flex-direction:column;gap:clamp(11px,1.4vh,18px);background:linear-gradient(180deg,#f8fbff 0%,#edf7fa 100%);border-right:1px solid rgba(19,64,104,.08);z-index:4}
+.brand{height:clamp(65px,9vh,92px);display:flex;flex-direction:column;justify-content:center}.brand strong{font:800 clamp(24px,2.1vw,38px)/1 Georgia,serif;letter-spacing:-1px;color:#0b2b56}.brand span{margin-top:7px;color:#74a0cf;font-size:clamp(12px,1vw,17px);letter-spacing:.04em}
+.navbtn{width:100%;min-height:clamp(82px,12vh,116px);border:0;border-radius:22px;padding:16px 18px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:center;position:relative;transition:.18s transform,.18s box-shadow;box-shadow:0 9px 22px rgba(35,73,111,.08)}.navbtn:hover,.navbtn:focus-visible{transform:translateX(5px);box-shadow:0 14px 28px rgba(35,73,111,.16);outline:3px solid rgba(63,127,227,.18)}.navbtn b{font-size:clamp(18px,1.45vw,25px);line-height:1.05}.navbtn small{margin-top:7px;font-weight:800;opacity:.68;font-size:clamp(11px,.85vw,14px)}.navbtn::after{content:'›';position:absolute;right:17px;top:50%;transform:translateY(-50%);font-size:38px;font-weight:300}.modules{background:linear-gradient(135deg,#3f84e8,#639eef);color:#fff}.speaking{background:linear-gradient(135deg,#d9f4ef,#bdebe5);color:#075b69}.grammar{background:linear-gradient(135deg,#eef0ff,#dfe5ff);color:#315a9d}.lexis{background:linear-gradient(135deg,#fff0d2,#ffdda0);color:#9d5a00}.sidebar-note{margin-top:auto;padding:4px 8px 1px;color:#6c8bac;font:italic clamp(13px,1.05vw,18px)/1.3 Georgia,serif}
+.main{min-width:0;position:relative;height:100%;overflow:hidden;background:#fff}.hero-photo{position:absolute;left:0;top:0;width:48%;height:100%;background:linear-gradient(90deg,rgba(2,33,67,.04),rgba(255,255,255,.08)),url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1400&q=88') center/cover no-repeat}.hero-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 55%,#f7fbfe 100%)}
+.content{position:absolute;inset:0 0 0 42%;padding:clamp(16px,2vh,28px) clamp(18px,2.1vw,34px);display:grid;grid-template-rows:auto auto 1fr auto;gap:clamp(10px,1.4vh,18px);background:linear-gradient(90deg,rgba(247,251,254,.35),#f7fbfe 12%,#f7fbfe 100%)}
+.topbar{display:flex;align-items:center;gap:18px}.search{flex:1;height:clamp(44px,6.2vh,64px);border:1px solid #cfdeed;border-radius:999px;background:#fff;display:flex;align-items:center;padding:0 20px;box-shadow:0 8px 25px rgba(38,82,122,.07)}.search input{width:100%;border:0;outline:0;background:transparent;color:#26496d;font-size:clamp(14px,1.2vw,20px)}.kate-chip{white-space:nowrap;font-weight:800;font-size:clamp(14px,1.05vw,18px)}
+.title p{margin:0 0 4px;color:#7898bd;font-size:clamp(10px,.82vw,14px);letter-spacing:.34em;font-weight:800}.title h1{margin:0;color:#092b58;font:800 clamp(31px,3.35vw,61px)/.98 Georgia,serif;letter-spacing:-1.9px}.title h1 em{display:block;color:#2c7375;font-weight:600;font-size:.72em}.title .sub{margin-top:8px;color:#516f90;font-size:clamp(12px,1vw,17px);letter-spacing:0}
+.dashboard{min-height:0;display:grid;grid-template-rows:1fr .88fr;gap:clamp(10px,1.3vh,16px)}.panel{min-height:0;background:rgba(255,255,255,.91);border:1px solid #dbe7f1;border-radius:20px;padding:clamp(11px,1.2vw,18px);box-shadow:0 10px 26px rgba(24,64,104,.07);overflow:hidden}.panelhead{height:24px;display:flex;align-items:center;justify-content:space-between;font-weight:900;font-size:clamp(13px,1vw,17px);margin-bottom:9px}.focusgrid{height:calc(100% - 33px);display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.focuscard{border:1px solid #dbe6f0;border-radius:15px;overflow:hidden;background:#fff;cursor:pointer;display:grid;grid-template-rows:58% 42%;transition:.16s transform,.16s box-shadow}.focuscard:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(20,70,110,.12)}.focuscard img{width:100%;height:100%;object-fit:cover}.focuscard .txt{padding:8px 10px;overflow:hidden}.focuscard b{display:block;font-size:clamp(11px,.95vw,16px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.focuscard span{color:#7189a3;font-size:clamp(9px,.75vw,13px)}
+.flashgrid{height:calc(100% - 33px);display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.flash{perspective:800px;cursor:pointer}.flashin{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:.45s}.flash.flipped .flashin{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid #dbe6f0;border-radius:14px;background:#fff;padding:12px;display:flex;flex-direction:column;justify-content:center}.back{transform:rotateY(180deg);background:#f3fbfa}.face b{font-size:clamp(11px,.95vw,16px)}.face span{margin-top:5px;color:#6c8197;font-size:clamp(9px,.75vw,13px);line-height:1.25}.face small{margin-top:auto;color:#7f9bb8;font-weight:800;font-size:10px}
+.bottom{height:clamp(58px,8.2vh,88px);border-radius:20px;background:linear-gradient(90deg,rgba(232,244,252,.95),rgba(255,255,255,.98));border:1px solid #dce9f2;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,2vw,28px);box-shadow:0 10px 26px rgba(20,63,104,.07)}.quote{font:italic clamp(15px,1.3vw,22px)/1.2 Georgia,serif;color:#1f4a74}.start{border:0;border-radius:999px;background:#082e5d;color:#fff;font-weight:900;padding:13px 24px;cursor:pointer;white-space:nowrap;font-size:clamp(12px,1vw,16px)}
+.overlay{position:absolute;inset:0;z-index:20;background:rgba(244,249,252,.98);backdrop-filter:blur(10px);display:none;padding:clamp(16px,2vw,30px)}.overlay.show{display:grid;grid-template-rows:auto 1fr}.overlaytop{display:flex;align-items:center;gap:15px;margin-bottom:15px}.overlaytop h2{margin:0;font:800 clamp(26px,2.5vw,44px)/1 Georgia,serif;color:#0c315e}.overlaytop p{margin:5px 0 0;color:#71869c}.close{margin-left:auto;border:1px solid #ccdce9;background:#fff;border-radius:999px;width:48px;height:48px;cursor:pointer;font-size:28px;color:#274c73}.lesson-grid{min-height:0;overflow:auto;padding:3px 4px 20px;display:grid;grid-template-columns:repeat(5,minmax(140px,1fr));gap:14px;align-content:start}.lesson{min-height:135px;border:1px solid #d7e4ee;border-radius:18px;background:#fff;padding:16px;text-align:left;cursor:pointer;box-shadow:0 8px 18px rgba(35,71,110,.06);transition:.15s}.lesson:hover{transform:translateY(-3px);box-shadow:0 13px 24px rgba(35,71,110,.13)}.lesson .num{font-size:12px;font-weight:900;color:#7a9bb9}.lesson b{display:block;margin-top:14px;font-size:17px;color:#153d67}.lesson span{display:block;margin-top:6px;color:#8598aa;font-size:12px}.lesson.active{border-color:#5b96e6;background:#edf5ff}.empty{grid-column:1/-1;text-align:center;padding:50px;color:#7c91a5}
+.lessonview{position:absolute;inset:0;z-index:30;background:#f8fbfd;display:none}.lessonview.show{display:grid;grid-template-rows:70px 1fr}.lessonbar{display:flex;align-items:center;padding:0 24px;border-bottom:1px solid #dce7ef;background:#fff;gap:14px}.backbtn{border:0;background:#eaf2fa;color:#163e66;border-radius:12px;padding:10px 16px;font-weight:900;cursor:pointer}.lessonbar strong{font-size:18px}.placeholder{display:grid;place-items:center;padding:25px}.placeholder-card{width:min(920px,90%);min-height:52vh;border:1px solid #d8e5ef;border-radius:26px;background:#fff;box-shadow:var(--shadow);padding:clamp(26px,4vw,52px);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}.placeholder-card .tag{font-size:12px;letter-spacing:.2em;color:#7e9bb8;font-weight:900}.placeholder-card h3{font:800 clamp(29px,3vw,52px)/1 Georgia,serif;margin:16px 0 10px;color:#0c315e}.placeholder-card p{max-width:620px;color:#6b8198;font-size:clamp(14px,1.15vw,18px);margin:0}.teacherbtn{margin-top:24px;border:0;border-radius:999px;background:#0d3a70;color:#fff;padding:13px 20px;font-weight:900}
+@media(max-width:1000px){.app{grid-template-columns:205px 1fr}.content{inset:0 0 0 36%;}.hero-photo{width:43%}.lesson-grid{grid-template-columns:repeat(3,1fr)}.focusgrid{gap:7px}.flashgrid{gap:6px}}
+@media(max-width:760px){html,body{overflow:auto}.app{min-height:100svh;height:auto;display:block}.sidebar{height:auto;display:grid;grid-template-columns:repeat(2,1fr);position:relative;padding:12px}.brand{grid-column:1/-1;height:58px}.navbtn{min-height:72px}.sidebar-note{display:none}.main{height:100svh}.hero-photo{display:none}.content{inset:0;padding:13px}.title h1{font-size:34px}.dashboard{grid-template-rows:1fr 1fr}.lesson-grid{grid-template-columns:repeat(2,1fr)}.kate-chip{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><strong>GlobalLearn</strong><span>Kate · College English</span></div>
+    <button class="navbtn modules" data-section="modules"><b>Modules</b><small>10 units</small></button>
+    <button class="navbtn speaking" data-section="speaking"><b>Speaking Lessons</b><small>10 lessons</small></button>
+    <button class="navbtn grammar" data-section="grammar"><b>Grammar</b><small>15 lessons</small></button>
+    <button class="navbtn lexis" data-section="lexis"><b>Lexis</b><small>10 lessons</small></button>
+    <div class="sidebar-note">Real skills.<br>Real confidence.<br>Brighter opportunities.</div>
+  </aside>
+
+  <main class="main">
+    <div class="hero-photo" aria-hidden="true"></div>
+    <section class="content">
+      <div class="topbar">
+        <label class="search"><input id="search" autocomplete="off" placeholder="Search lessons, topics, or words…"></label>
+        <div class="kate-chip">Hi, Kate</div>
+      </div>
+      <div class="title"><p>LEARN · PRACTICE · GROW</p><h1>ESL Interactive Lessons <em>for Smart College Student Kate</em></h1><div class="sub">Real Skills. Real Confidence. A Brighter Future.</div></div>
+      <div class="dashboard">
+        <section class="panel">
+          <div class="panelhead"><span>Today’s Focus</span><span style="color:#7e9ab5;font-size:12px">open a section on the left</span></div>
+          <div class="focusgrid">
+            <div class="focuscard" data-section="lexis"><img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=700&q=82" alt="Student notes"><div class="txt"><b>Academic Vocabulary</b><span>Words for university life</span></div></div>
+            <div class="focuscard" data-section="grammar"><img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=700&q=82" alt="Notebook"><div class="txt"><b>Grammar in Context</b><span>Accuracy for real communication</span></div></div>
+            <div class="focuscard" data-section="speaking"><img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=700&q=82" alt="Students talking"><div class="txt"><b>Speaking Practice</b><span>Express and defend your ideas</span></div></div>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panelhead"><span>Quick Review · click to flip</span><span style="color:#7e9ab5;font-size:12px">Quizlet-style</span></div>
+          <div class="flashgrid">
+            <div class="flash"><div class="flashin"><div class="face"><b>opportunity</b><span>noun</span><small>CLICK TO FLIP</small></div><div class="face back"><b>a chance for progress</b><span>Studying abroad can create new opportunities.</span></div></div></div>
+            <div class="flash"><div class="flashin"><div class="face"><b>perspective</b><span>noun</span><small>CLICK TO FLIP</small></div><div class="face back"><b>a way of seeing something</b><span>The debate gave her a different perspective.</span></div></div></div>
+            <div class="flash"><div class="flashin"><div class="face"><b>achieve</b><span>verb</span><small>CLICK TO FLIP</small></div><div class="face back"><b>reach a goal successfully</b><span>Consistent practice helps you achieve more.</span></div></div></div>
+            <div class="flash"><div class="flashin"><div class="face"><b>confidence</b><span>noun</span><small>CLICK TO FLIP</small></div><div class="face back"><b>belief in your ability</b><span>Fluency grows with confidence and practice.</span></div></div></div>
+          </div>
+        </section>
+      </div>
+      <div class="bottom"><div class="quote">“A more confident you, a more connected world.”</div><button class="start" data-section="modules">Let’s Learn →</button></div>
+    </section>
+
+    <section class="overlay" id="overlay">
+      <div class="overlaytop"><div><h2 id="sectionTitle">Modules</h2><p id="sectionSub">Choose a lesson. Topics can be added later.</p></div><button class="close" id="close" aria-label="Close">×</button></div>
+      <div class="lesson-grid" id="lessonGrid"></div>
+    </section>
+
+    <section class="lessonview" id="lessonView">
+      <div class="lessonbar"><button class="backbtn" id="back">← Back</button><strong id="lessonBarTitle">Lesson</strong></div>
+      <div class="placeholder"><div class="placeholder-card"><div class="tag">READY FOR CONTENT</div><h3 id="lessonTitle">Lesson 01</h3><p>This lesson slot is already connected to the navigation. Add the topic, video, vocabulary cards and interactive activities here when you are ready.</p><button class="teacherbtn" id="returnSection">Choose another lesson</button></div></div>
+    </section>
+  </main>
+</div>
+<script>
+const sections={
+  modules:{title:'Modules',count:10,sub:'10 complete learning modules'},
+  speaking:{title:'Speaking Lessons',count:10,sub:'10 communication-focused lessons'},
+  grammar:{title:'Grammar',count:15,sub:'15 grammar lessons in context'},
+  lexis:{title:'Lexis',count:10,sub:'10 vocabulary lessons'}
+};
+let current='modules';
+const overlay=document.getElementById('overlay'), grid=document.getElementById('lessonGrid'), lessonView=document.getElementById('lessonView');
+function makeLessons(key,query=''){
+  const s=sections[key]; grid.innerHTML=''; let found=0;
+  for(let i=1;i<=s.count;i++){
+    const n=String(i).padStart(2,'0'), title=`${s.title} · Lesson ${n}`, hay=(title+' add topic').toLowerCase();
+    if(query && !hay.includes(query.toLowerCase())) continue; found++;
+    const b=document.createElement('button'); b.className='lesson'; b.innerHTML=`<span class="num">LESSON ${n}</span><b>Add topic</b><span>${s.title} · ready to build</span>`;
+    b.onclick=()=>openLesson(key,i); grid.appendChild(b);
+  }
+  if(!found) grid.innerHTML='<div class="empty">No lessons match your search.</div>';
+}
+function openSection(key,query=''){
+  current=key; const s=sections[key]; document.getElementById('sectionTitle').textContent=s.title; document.getElementById('sectionSub').textContent=s.sub+' · choose a lesson'; makeLessons(key,query); overlay.classList.add('show'); lessonView.classList.remove('show');
+}
+function openLesson(key,i){
+  const s=sections[key], n=String(i).padStart(2,'0'); document.getElementById('lessonBarTitle').textContent=`${s.title} · Lesson ${n}`; document.getElementById('lessonTitle').textContent=`${s.title} · Lesson ${n}`; lessonView.classList.add('show');
+}
+document.querySelectorAll('[data-section]').forEach(el=>el.addEventListener('click',()=>openSection(el.dataset.section)));
+document.querySelectorAll('.flash').forEach(el=>el.addEventListener('click',()=>el.classList.toggle('flipped')));
+document.getElementById('close').onclick=()=>overlay.classList.remove('show');
+document.getElementById('back').onclick=()=>lessonView.classList.remove('show');
+document.getElementById('returnSection').onclick=()=>lessonView.classList.remove('show');
+document.getElementById('search').addEventListener('input',e=>{const q=e.target.value.trim(); if(q){openSection(current,q)} else if(overlay.classList.contains('show')) makeLessons(current);});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(lessonView.classList.contains('show')) lessonView.classList.remove('show'); else overlay.classList.remove('show')}});
+</script>
+</body>
+</html>
