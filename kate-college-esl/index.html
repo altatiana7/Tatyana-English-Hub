@@ -43,7 +43,7 @@ textarea{width:100%;min-height:130px;border:1px solid #d7dce6;border-radius:14px
 <body>
 <main class="cover-shell">
   <div class="cover" aria-label="ESL Homework Hub for Kate">
-    <img id="coverImg" alt="ESL Homework Hub for Kate cover">
+    <img src="assets/kate-cover.webp" alt="ESL Homework Hub for Kate cover">
     <button class="hotspot" id="home" aria-label="Home"></button>
     <button class="hotspot" id="lessons" aria-label="Lessons"></button>
     <button class="hotspot" id="lesson1" aria-label="Lesson 1"></button>
@@ -65,16 +65,6 @@ textarea{width:100%;min-height:130px;border:1px solid #d7dce6;border-radius:14px
   </section>
 </div>
 <script>
-async function loadCover(){
-  const resp=await fetch('assets/kate-image-1.txt');
-  const b64=(await resp.text()).trim();
-  const binary=atob(b64);
-  const bytes=new Uint8Array(binary.length);
-  for(let i=0;i<binary.length;i++)bytes[i]=binary.charCodeAt(i);
-  const blob=new Blob([bytes],{type:'image/webp'});
-  document.getElementById('coverImg').src=URL.createObjectURL(blob);
-}
-loadCover().catch(()=>{document.getElementById('coverImg').alt='Cover image could not be loaded';});
 const overlay=document.getElementById('overlay'),body=document.getElementById('modalBody'),title=document.getElementById('modalTitle');
 const saved=JSON.parse(localStorage.getItem('kateHub')||'{}');
 function openModal(t,h){title.textContent=t;body.innerHTML=h;overlay.classList.add('open');wire()}
