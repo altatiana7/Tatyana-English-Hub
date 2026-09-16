@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ESL Homework Hub for Kate</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#070d1b;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111}
+body{min-height:100vh}
+.cover-shell{min-height:100vh;display:grid;place-items:center;background:#070d1b;padding:0}
+.cover{position:relative;width:min(100vw,177.68vh);aspect-ratio:1672/941;background:#0b1020;overflow:hidden}
+.cover>img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
+.hotspot{position:absolute;border:0;background:transparent;cursor:pointer;border-radius:14px;padding:0}
+.hotspot:focus-visible{outline:3px solid rgba(255,255,255,.96);outline-offset:2px;background:rgba(255,255,255,.06)}
+@media(hover:hover){.hotspot:hover{background:rgba(255,255,255,.055);box-shadow:inset 0 0 0 2px rgba(255,255,255,.10)}}
+#home{left:.7%;top:17.5%;width:8%;height:5.8%}
+#lessons{left:.7%;top:24%;width:8%;height:5.8%}
+#lesson1{left:.8%;top:34.5%;width:7.8%;height:8%}
+#lesson2{left:.8%;top:44.2%;width:7.8%;height:6.6%}
+#lesson3{left:.8%;top:52%;width:7.8%;height:6.6%}
+#goal{left:10.8%;top:27.8%;width:32%;height:11%}
+#current{left:46.2%;top:27.3%;width:49.4%;height:20.5%}
+#vocab{left:46.4%;top:48.1%;width:22.7%;height:35.3%}
+#review{left:70.6%;top:48.1%;width:25%;height:13.3%}
+#reading{left:70.6%;top:64.8%;width:25%;height:18.8%}
+#homework{left:46.4%;top:84%;width:49.1%;height:13%}
+.overlay{position:fixed;inset:0;background:rgba(5,10,24,.72);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}
+.overlay.open{display:flex}
+.modal{width:min(860px,96vw);max-height:88vh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 30px 90px rgba(0,0,0,.42);padding:28px;position:relative}
+.modal h2{margin:0 48px 10px 0;font-size:30px}
+.modal p{line-height:1.55;color:#50586b}
+.close{position:absolute;right:18px;top:16px;width:44px;height:44px;border-radius:12px;border:1px solid #dce1eb;background:#fff;font-size:26px;cursor:pointer}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.tab{border:1px solid #d9dee8;background:#f7f8fb;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}
+.tab.active{background:#12182b;color:#fff;border-color:#12182b}
+.panel{display:none}
+.panel.active{display:block}
+.card{border:1px solid #e0e4ec;border-radius:16px;padding:18px;margin:12px 0;background:#fbfcfe}
+.btn{border:0;background:#12182b;color:#fff;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer}
+.btn.alt{background:#eef1f6;color:#181d2b}
+.checkrow{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #eceff4}
+.checkrow:last-child{border-bottom:0}
+.checkrow input{width:20px;height:20px;margin-top:2px}
+.progress{height:12px;background:#e7eaf0;border-radius:999px;overflow:hidden;margin:14px 0}
+.progress>span{display:block;height:100%;width:0;background:#202a5a;transition:width .25s}
+textarea{width:100%;min-height:130px;border:1px solid #d7dce6;border-radius:14px;padding:14px;font:inherit;resize:vertical}
+.lesson-list{display:grid;gap:12px}
+.lesson-link{display:flex;justify-content:space-between;align-items:center;border:1px solid #e0e4ec;border-radius:16px;padding:16px;background:#fff}
+.lesson-link strong{font-size:17px}
+.pill{font-size:12px;font-weight:800;background:#eef1f6;border-radius:999px;padding:6px 10px}
+.quizq{font-weight:800;margin:18px 0 8px}
+.choice{display:block;width:100%;text-align:left;border:1px solid #d8dde7;background:#fff;border-radius:12px;padding:12px;margin:8px 0;cursor:pointer}
+.choice.correct{background:#edf8ef;border-color:#7fc18a}
+.choice.wrong{background:#fff0f0;border-color:#e09090}
+.flash{min-height:180px;border:1px solid #dfe3eb;border-radius:18px;display:grid;place-items:center;text-align:center;padding:22px;font-size:30px;font-weight:800;cursor:pointer;background:#fff}
+.flash small{display:block;font-size:14px;color:#6b7280;margin-top:10px;font-weight:600}
+@media(max-width:700px){.modal{padding:20px;border-radius:18px}.modal h2{font-size:24px}}
+</style>
+</head>
+<body>
+<main class="cover-shell">
+  <div class="cover" aria-label="ESL Homework Hub for Kate">
+    <img src="data:image/webp;base64,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...<BASE64_TRUNCATED_FOR_TRANSPORT>" alt="ESL Homework Hub for Kate cover">
+    <button class="hotspot" id="home" aria-label="Home"></button>
+    <button class="hotspot" id="lessons" aria-label="Lessons"></button>
+    <button class="hotspot" id="lesson1" aria-label="Lesson 1"></button>
+    <button class="hotspot" id="lesson2" aria-label="Lesson 2"></button>
+    <button class="hotspot" id="lesson3" aria-label="Lesson 3"></button>
+    <button class="hotspot" id="goal" aria-label="Weekly Goal"></button>
+    <button class="hotspot" id="current" aria-label="Current Lesson"></button>
+    <button class="hotspot" id="vocab" aria-label="Vocabulary"></button>
+    <button class="hotspot" id="review" aria-label="Review"></button>
+    <button class="hotspot" id="reading" aria-label="Reading"></button>
+    <button class="hotspot" id="homework" aria-label="Homework"></button>
+  </div>
+</main>
+
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <section class="modal">
+    <button class="close" id="close" aria-label="Close">×</button>
+    <h2 id="modalTitle">Kate's lesson</h2>
+    <div id="modalBody"></div>
+  </section>
+</div>
+
+<script>
+const overlay=document.getElementById('overlay'), body=document.getElementById('modalBody'), title=document.getElementById('modalTitle');
+const saved=JSON.parse(localStorage.getItem('kateHub')||'{}');
+function openModal(t,html){title.textContent=t;body.innerHTML=html;overlay.classList.add('open');wire();}
+function closeModal(){overlay.classList.remove('open');}
+document.getElementById('close').addEventListener('click',closeModal);
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+function lessons(){
+openModal('Lessons',`<div class="lesson-list">
+<div class="lesson-link"><div><strong>Lesson 1</strong><p>Personal boundaries • Vocabulary • Review • Reading</p></div><span class="pill">CURRENT</span></div>
+<div class="lesson-link"><div><strong>Lesson 2</strong><p>Next lesson</p></div><span class="pill">LOCKED</span></div>
+<div class="lesson-link"><div><strong>Lesson 3</strong><p>Next lesson</p></div><span class="pill">LOCKED</span></div>
+</div>`)}
+
+function weekly(){
+const g=saved.goals||[false,false,false];
+openModal('Weekly Goal',`<p>Complete 3 activities this week.</p>
+<div class="progress"><span id="bar"></span></div>
+<label class="checkrow"><input type="checkbox" data-g="0" ${g[0]?'checked':''}> <span><b>Vocabulary</b><br>Learn and practise the key expressions.</span></label>
+<label class="checkrow"><input type="checkbox" data-g="1" ${g[1]?'checked':''}> <span><b>Review</b><br>Check understanding with a short quiz.</span></label>
+<label class="checkrow"><input type="checkbox" data-g="2" ${g[2]?'checked':''}> <span><b>Reading</b><br>Read the text and answer the questions.</span></label>
+<p id="goalText"></p>`)}
+
+const cards=[
+['personal boundary','a limit that protects your comfort, time or space'],
+['rude','not polite; showing little respect'],
+['pushy','too forceful when trying to get what you want'],
+['interrupt','to speak while another person is still talking'],
+['respectful','showing consideration for another person'],
+['set a limit','to clearly say what is acceptable'],
+['say no','to refuse something directly'],
+['feel uncomfortable','to feel uneasy or not at ease'],
+['give someone space','to allow privacy or distance'],
+['speak up','to express your opinion clearly']
+];
+let ci=0, flipped=false;
+function vocab(){
+openModal('Vocabulary',`<p>Click the card to flip it.</p><div class="flash" id="flash"></div>
+<div style="display:flex;justify-content:space-between;gap:10px;margin-top:12px">
+<button class="btn alt" id="prev">← Previous</button><span id="counter" style="align-self:center;font-weight:800"></span><button class="btn" id="next">Next →</button></div>`)}
+function renderCard(){
+const f=document.getElementById('flash'); if(!f)return;
+f.innerHTML=flipped?`${cards[ci][1]}<small>click to see the phrase</small>`:`${cards[ci][0]}<small>click to see the meaning</small>`;
+document.getElementById('counter').textContent=`${ci+1} / ${cards.length}`;
+}
+function review(){
+openModal('Review',`<p class="quizq">Someone keeps asking you the same personal question after you have said you do not want to answer. What is the best response?</p>
+<button class="choice" data-a="0">Change the subject and hope they stop.</button>
+<button class="choice" data-a="1">Say clearly that you prefer not to discuss it.</button>
+<button class="choice" data-a="0">Answer so the situation is less awkward.</button>
+<p id="feedback" aria-live="polite"></p>`)}
+function reading(){
+openModal('Reading',`<div class="card"><h3 style="margin-top:0">Personal boundaries in everyday life</h3>
+<p>Personal boundaries are the limits we set around our time, space, feelings and personal information. They do not have to sound rude. A clear boundary can be simple: “I’d rather not talk about that,” “I need some time to think,” or “Please ask before using my things.” Healthy communication means noticing other people’s limits as well as explaining your own.</p></div>
+<p class="quizq">1. Which idea is stated in the text?</p>
+<button class="choice" data-a="1">Boundaries can be expressed politely and clearly.</button>
+<button class="choice" data-a="0">Good boundaries mean avoiding difficult conversations.</button>
+<button class="choice" data-a="0">Personal information should always be shared with friends.</button>
+<p id="feedback" aria-live="polite"></p>`)}
+function homework(){
+const note=saved.note||'';
+openModal('Homework',`<p>Write 5–7 sentences about a situation where a person should set a clear boundary. Use at least three expressions from Vocabulary.</p>
+<textarea id="note" placeholder="Write your answer here...">${note.replaceAll('&','&amp;').replaceAll('<','&lt;')}</textarea>
+<div style="display:flex;gap:10px;margin-top:12px"><button class="btn" id="save">Save answer</button><span id="savedMsg" style="align-self:center;color:#566070"></span></div>`)}
+
+function current(){
+openModal('Current Lesson',`<p><b>Lesson 1:</b> Personal boundaries</p>
+<div class="tabs">
+<button class="tab active" data-open="vocab">Vocabulary</button>
+<button class="tab" data-open="review">Review</button>
+<button class="tab" data-open="reading">Reading</button>
+<button class="tab" data-open="homework">Homework</button>
+</div>
+<div class="card"><b>Choose a section.</b><p>Your progress is saved on this device.</p></div>`)}
+
+function wire(){
+document.querySelectorAll('[data-g]').forEach(c=>c.addEventListener('change',()=>{
+saved.goals=[...document.querySelectorAll('[data-g]')].map(x=>x.checked); localStorage.setItem('kateHub',JSON.stringify(saved));
+const n=saved.goals.filter(Boolean).length; document.getElementById('bar').style.width=(n/3*100)+'%'; document.getElementById('goalText').textContent=`${n} of 3 completed`;
+}));
+if(document.querySelector('[data-g]')){const n=(saved.goals||[false,false,false]).filter(Boolean).length;document.getElementById('bar').style.width=(n/3*100)+'%';document.getElementById('goalText').textContent=`${n} of 3 completed`;}
+document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>({vocab,review,reading,homework}[b.dataset.open]||current)()));
+document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>{
+document.querySelectorAll('.choice').forEach(x=>x.disabled=true);
+b.classList.add(b.dataset.a==='1'?'correct':'wrong');
+document.getElementById('feedback').textContent=b.dataset.a==='1'?'Correct.':'Try again next time — look for the clearest respectful boundary.';
+}));
+const f=document.getElementById('flash'); if(f){renderCard();f.addEventListener('click',()=>{flipped=!flipped;renderCard()});document.getElementById('prev').addEventListener('click',()=>{ci=(ci-1+cards.length)%cards.length;flipped=false;renderCard()});document.getElementById('next').addEventListener('click',()=>{ci=(ci+1)%cards.length;flipped=false;renderCard()});}
+const save=document.getElementById('save'); if(save)save.addEventListener('click',()=>{saved.note=document.getElementById('note').value;localStorage.setItem('kateHub',JSON.stringify(saved));document.getElementById('savedMsg').textContent='Saved ✓';});
+}
+
+document.getElementById('home').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+document.getElementById('lessons').addEventListener('click',lessons);
+document.getElementById('lesson1').addEventListener('click',current);
+document.getElementById('lesson2').addEventListener('click',()=>openModal('Lesson 2','<p>This lesson is locked for now.</p>'));
+document.getElementById('lesson3').addEventListener('click',()=>openModal('Lesson 3','<p>This lesson is locked for now.</p>'));
+document.getElementById('goal').addEventListener('click',weekly);
+document.getElementById('current').addEventListener('click',current);
+document.getElementById('vocab').addEventListener('click',vocab);
+document.getElementById('review').addEventListener('click',review);
+document.getElementById('reading').addEventListener('click',reading);
+document.getElementById('homework').addEventListener('click',homework);
+</script>
+</body>
+</html>
