@@ -2,86 +2,48 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ESL Homework Hub for Kate</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ESL Interactive Lessons for Kate</title>
 <style>
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#07132f;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:#111}
-.cover-shell,.cover{position:relative;width:100vw;height:100vh;overflow:hidden}
-.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block;user-select:none;-webkit-user-drag:none}
-.hotspot{position:absolute;border:0;background:transparent;cursor:pointer;border-radius:14px;padding:0}
-.hotspot:focus-visible{outline:3px solid #fff;outline-offset:2px;background:rgba(255,255,255,.07)}
-@media(hover:hover){.hotspot:hover{background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 2px rgba(255,255,255,.10)}}
-#home{left:.7%;top:17.5%;width:8%;height:5.8%}
-#lessons{left:.7%;top:24%;width:8%;height:5.8%}
-#lesson1{left:.8%;top:34.5%;width:7.8%;height:8%}
-#lesson2{left:.8%;top:44.2%;width:7.8%;height:6.6%}
-#lesson3{left:.8%;top:52%;width:7.8%;height:6.6%}
-#goal{left:10.8%;top:27.8%;width:32%;height:11%}
-#current{left:46.2%;top:27.3%;width:49.4%;height:20.5%}
-#vocab{left:46.4%;top:48.1%;width:22.7%;height:35.3%}
-#review{left:70.6%;top:48.1%;width:25%;height:13.3%}
-#reading{left:70.6%;top:64.8%;width:25%;height:18.8%}
-#homework{left:46.4%;top:84%;width:49.1%;height:13%}
-.overlay{position:fixed;inset:0;background:rgba(5,10,24,.72);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:24px;z-index:50}
-.overlay.open{display:flex}
-.modal{width:min(860px,96vw);max-height:88vh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 30px 90px rgba(0,0,0,.42);padding:28px;position:relative}
-.modal h2{margin:0 48px 10px 0;font-size:30px}.modal p{line-height:1.55;color:#50586b}
-.close{position:absolute;right:18px;top:16px;width:44px;height:44px;border-radius:12px;border:1px solid #dce1eb;background:#fff;font-size:26px;cursor:pointer}
-.card{border:1px solid #e0e4ec;border-radius:16px;padding:18px;margin:12px 0;background:#fbfcfe}
-.btn{border:0;background:#12182b;color:#fff;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer}.btn.alt{background:#eef1f6;color:#181d2b}
-.checkrow{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid #eceff4}.checkrow input{width:20px;height:20px;margin-top:2px}
-.progress{height:12px;background:#e7eaf0;border-radius:999px;overflow:hidden;margin:14px 0}.progress span{display:block;height:100%;width:0;background:#202a5a;transition:width .25s}
-textarea{width:100%;min-height:130px;border:1px solid #d7dce6;border-radius:14px;padding:14px;font:inherit}
-.lesson-list{display:grid;gap:12px}.lesson-link{display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid #e0e4ec;border-radius:16px;padding:16px;background:#fff}
-.pill{font-size:12px;font-weight:800;background:#eef1f6;border-radius:999px;padding:6px 10px}
-.choice{display:block;width:100%;text-align:left;border:1px solid #d8dde7;background:#fff;border-radius:12px;padding:12px;margin:8px 0;cursor:pointer}.choice.correct{background:#edf8ef;border-color:#7fc18a}.choice.wrong{background:#fff0f0;border-color:#e09090}
-.flash{min-height:180px;border:1px solid #dfe3eb;border-radius:18px;display:grid;place-items:center;text-align:center;padding:22px;font-size:30px;font-weight:800;cursor:pointer;background:#fff}.flash small{display:block;font-size:14px;color:#6b7280;margin-top:10px;font-weight:600}
-@media(max-width:700px){.modal{padding:20px;border-radius:18px}.modal h2{font-size:24px}}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#eef5f5;font-family:Arial,Helvetica,sans-serif;color:#173240}body{display:grid;place-items:center;overflow:hidden}.stage{position:relative;width:min(100vw,calc(100vh * 2.30419));aspect-ratio:1265/549;max-height:100vh;overflow:hidden;background:#fff}.cover{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;-webkit-user-drag:none}.hot{position:absolute;border:0;background:transparent;cursor:pointer;border-radius:10px;padding:0}.hot:focus-visible{outline:3px solid rgba(255,255,255,.95);outline-offset:-3px;box-shadow:0 0 0 5px rgba(32,93,124,.45)}@media(hover:hover){.hot:hover{background:rgba(255,255,255,.10);box-shadow:inset 0 0 0 2px rgba(255,255,255,.42)}}
+#modules{left:1.1%;top:1.3%;width:15.2%;height:11.2%}#speaking{left:1.1%;top:14.0%;width:15.2%;height:15.2%}#grammar{left:1.1%;top:30.5%;width:15.2%;height:15.8%}#lexis{left:1.1%;top:48.6%;width:15.2%;height:15.7%}
+#focus1{left:56.0%;top:35.1%;width:14.8%;height:24.8%}#focus2{left:71.0%;top:35.1%;width:14.7%;height:24.8%}#focus3{left:85.9%;top:35.1%;width:13.6%;height:24.8%}
+#word1{left:56.0%;top:68.0%;width:10.3%;height:19.7%}#word2{left:66.7%;top:68.0%;width:10.3%;height:19.7%}#word3{left:77.4%;top:68.0%;width:10.3%;height:19.7%}#word4{left:88.1%;top:68.0%;width:10.3%;height:19.7%}
+.overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(16,31,39,.56);backdrop-filter:blur(6px);z-index:20}.overlay.open{display:flex}.modal{position:relative;width:min(900px,94vw);max-height:86vh;overflow:auto;background:#fff;border-radius:20px;padding:26px 28px;box-shadow:0 24px 80px rgba(0,0,0,.28)}.modal h2{margin:0 52px 6px 0;font:700 30px Georgia,serif;color:#173b4b}.modal .lead{margin:0 0 18px;color:#607681}.close{position:absolute;top:14px;right:14px;width:44px;height:44px;border:1px solid #d8e4e6;border-radius:12px;background:#fff;font-size:26px;cursor:pointer;color:#284652}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.tile{border:1px solid #d9e4e6;border-radius:14px;padding:15px;background:#fbfdfd}.tile h3{margin:0 0 6px;font:700 17px Georgia,serif}.tile p{margin:0;color:#64777f;line-height:1.4;font-size:14px}.lessonbtn,.choice{width:100%;text-align:left;border:1px solid #d5e1e3;border-radius:12px;background:#fff;padding:12px 14px;margin:7px 0;cursor:pointer;font:inherit}.lessonbtn:hover,.choice:hover{background:#f4f9f9}.choice.correct{background:#edf8ef;border-color:#8ac19a}.choice.wrong{background:#fff0f0;border-color:#d39a9a}.flash{min-height:220px;border:1px solid #d7e3e5;border-radius:16px;display:grid;place-items:center;text-align:center;padding:24px;font-size:32px;font-weight:700;cursor:pointer;background:#fff}.flash small{display:block;font-size:14px;color:#6d8088;margin-top:12px;font-weight:400}.row{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:12px}.btn{border:0;border-radius:11px;background:#2c6677;color:#fff;padding:11px 16px;font-weight:700;cursor:pointer}.btn.alt{background:#e9f1f2;color:#274653}.panel{padding:14px;border-radius:13px;background:#f6f9f9;border:1px solid #e0e8e9;margin:10px 0}.panel p{line-height:1.55;margin:6px 0}.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#eaf3f4;font-size:12px;font-weight:700;margin-right:5px}.status{margin-top:10px;color:#52717c;font-size:14px}@media(max-width:700px){.modal{padding:20px}.modal h2{font-size:24px}.grid{grid-template-columns:1fr}.overlay{padding:12px}}
 </style>
 </head>
 <body>
-<main class="cover-shell">
-  <div class="cover" aria-label="ESL Homework Hub for Kate">
-    <img src="assets/kate-cover.webp" alt="ESL Homework Hub for Kate cover">
-    <button class="hotspot" id="home" aria-label="Home"></button>
-    <button class="hotspot" id="lessons" aria-label="Lessons"></button>
-    <button class="hotspot" id="lesson1" aria-label="Lesson 1"></button>
-    <button class="hotspot" id="lesson2" aria-label="Lesson 2"></button>
-    <button class="hotspot" id="lesson3" aria-label="Lesson 3"></button>
-    <button class="hotspot" id="goal" aria-label="Weekly Goal"></button>
-    <button class="hotspot" id="current" aria-label="Current Lesson"></button>
-    <button class="hotspot" id="vocab" aria-label="Vocabulary"></button>
-    <button class="hotspot" id="review" aria-label="Review"></button>
-    <button class="hotspot" id="reading" aria-label="Reading"></button>
-    <button class="hotspot" id="homework" aria-label="Homework"></button>
-  </div>
+<main class="stage" aria-label="ESL Interactive Lessons for Kate">
+  <img class="cover" id="coverImage" alt="ESL Interactive Lessons for Smart College Student Kate">
+  <button class="hot" id="modules" aria-label="Modules"></button>
+  <button class="hot" id="speaking" aria-label="Speaking Lessons"></button>
+  <button class="hot" id="grammar" aria-label="Grammar"></button>
+  <button class="hot" id="lexis" aria-label="Lexis"></button>
+  <button class="hot" id="focus1" aria-label="Academic Vocabulary"></button>
+  <button class="hot" id="focus2" aria-label="Grammar in Context"></button>
+  <button class="hot" id="focus3" aria-label="Speaking Practice"></button>
+  <button class="hot" id="word1" aria-label="Opportunity"></button>
+  <button class="hot" id="word2" aria-label="Perspective"></button>
+  <button class="hot" id="word3" aria-label="Achieve"></button>
+  <button class="hot" id="word4" aria-label="Ambitious"></button>
 </main>
-<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <section class="modal">
-    <button class="close" id="close" aria-label="Close">×</button>
-    <h2 id="modalTitle">Kate's lesson</h2>
-    <div id="modalBody"></div>
-  </section>
-</div>
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><section class="modal"><button class="close" id="close" aria-label="Close">×</button><h2 id="modalTitle"></h2><p class="lead" id="modalLead"></p><div id="modalBody"></div></section></div>
 <script>
-const overlay=document.getElementById('overlay'),body=document.getElementById('modalBody'),title=document.getElementById('modalTitle');
-const saved=JSON.parse(localStorage.getItem('kateHub')||'{}');
-function openModal(t,h){title.textContent=t;body.innerHTML=h;overlay.classList.add('open');wire()}
-function closeModal(){overlay.classList.remove('open')}
-document.getElementById('close').onclick=closeModal;overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-function lessons(){openModal('Lessons',`<div class="lesson-list"><div class="lesson-link"><div><strong>Lesson 1</strong><p>Personal boundaries • Vocabulary • Review • Reading</p></div><span class="pill">CURRENT</span></div><div class="lesson-link"><div><strong>Lesson 2</strong><p>Next lesson</p></div><span class="pill">LOCKED</span></div><div class="lesson-link"><div><strong>Lesson 3</strong><p>Next lesson</p></div><span class="pill">LOCKED</span></div></div>`)}
-function weekly(){const g=saved.goals||[false,false,false];openModal('Weekly Goal',`<p>Complete 3 activities this week.</p><div class="progress"><span id="bar"></span></div><label class="checkrow"><input type="checkbox" data-g="0" ${g[0]?'checked':''}><span><b>Vocabulary</b><br>Learn and practise the key expressions.</span></label><label class="checkrow"><input type="checkbox" data-g="1" ${g[1]?'checked':''}><span><b>Review</b><br>Check understanding with a short quiz.</span></label><label class="checkrow"><input type="checkbox" data-g="2" ${g[2]?'checked':''}><span><b>Reading</b><br>Read the text and answer the questions.</span></label><p id="goalText"></p>`)}
-const cards=[['personal boundary','a limit that protects your comfort, time or space'],['rude','not polite; showing little respect'],['pushy','too forceful when trying to get what you want'],['interrupt','to speak while another person is still talking'],['respectful','showing consideration for another person'],['set a limit','to clearly say what is acceptable'],['say no','to refuse something directly'],['feel uncomfortable','to feel uneasy or not at ease'],['give someone space','to allow privacy or distance'],['speak up','to express your opinion clearly']];
-let ci=0,flipped=false;
-function vocab(){openModal('Vocabulary',`<p>Click the card to flip it.</p><div class="flash" id="flash"></div><div style="display:flex;justify-content:space-between;gap:10px;margin-top:12px"><button class="btn alt" id="prev">← Previous</button><span id="counter" style="align-self:center;font-weight:800"></span><button class="btn" id="next">Next →</button></div>`)}
-function renderCard(){const f=document.getElementById('flash');if(!f)return;f.innerHTML=flipped?`${cards[ci][1]}<small>click to see the phrase</small>`:`${cards[ci][0]}<small>click to see the meaning</small>`;document.getElementById('counter').textContent=`${ci+1} / ${cards.length}`}
-function review(){openModal('Review',`<p><b>Someone keeps asking you the same personal question after you have said you do not want to answer. What is the best response?</b></p><button class="choice" data-a="0">Change the subject and hope they stop.</button><button class="choice" data-a="1">Say clearly that you prefer not to discuss it.</button><button class="choice" data-a="0">Answer so the situation is less awkward.</button><p id="feedback" aria-live="polite"></p>`)}
-function reading(){openModal('Reading',`<div class="card"><h3 style="margin-top:0">Personal boundaries in everyday life</h3><p>Personal boundaries are the limits we set around our time, space, feelings and personal information. They do not have to sound rude. A clear boundary can be simple: “I’d rather not talk about that,” “I need some time to think,” or “Please ask before using my things.” Healthy communication means noticing other people’s limits as well as explaining your own.</p></div><p><b>Which idea is stated in the text?</b></p><button class="choice" data-a="1">Boundaries can be expressed politely and clearly.</button><button class="choice" data-a="0">Good boundaries mean avoiding difficult conversations.</button><button class="choice" data-a="0">Personal information should always be shared with friends.</button><p id="feedback" aria-live="polite"></p>`)}
-function homework(){const note=saved.note||'';openModal('Homework',`<p>Write 5–7 sentences about a situation where a person should set a clear boundary. Use at least three expressions from Vocabulary.</p><textarea id="note" placeholder="Write your answer here..."></textarea><div style="display:flex;gap:10px;margin-top:12px"><button class="btn" id="save">Save answer</button><span id="savedMsg" style="align-self:center;color:#566070"></span></div>`);document.getElementById('note').value=note}
-function current(){openModal('Current Lesson',`<p><b>Lesson 1:</b> Personal boundaries</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin:18px 0"><button class="btn" data-open="vocab">Vocabulary</button><button class="btn alt" data-open="review">Review</button><button class="btn alt" data-open="reading">Reading</button><button class="btn alt" data-open="homework">Homework</button></div><div class="card"><b>Choose a section.</b><p>Your progress is saved on this device.</p></div>`)}
-function wire(){document.querySelectorAll('[data-g]').forEach(c=>c.addEventListener('change',()=>{saved.goals=[...document.querySelectorAll('[data-g]')].map(x=>x.checked);localStorage.setItem('kateHub',JSON.stringify(saved));const n=saved.goals.filter(Boolean).length;document.getElementById('bar').style.width=n/3*100+'%';document.getElementById('goalText').textContent=n+' of 3 completed'}));if(document.querySelector('[data-g]')){const n=(saved.goals||[false,false,false]).filter(Boolean).length;document.getElementById('bar').style.width=n/3*100+'%';document.getElementById('goalText').textContent=n+' of 3 completed'}document.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>({vocab,review,reading,homework}[b.dataset.open]||current)()));document.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.choice').forEach(x=>x.disabled=true);b.classList.add(b.dataset.a==='1'?'correct':'wrong');document.getElementById('feedback').textContent=b.dataset.a==='1'?'Correct.':'Try again — choose the clearest respectful boundary.'}));const f=document.getElementById('flash');if(f){renderCard();f.onclick=()=>{flipped=!flipped;renderCard()};document.getElementById('prev').onclick=()=>{ci=(ci-1+cards.length)%cards.length;flipped=false;renderCard()};document.getElementById('next').onclick=()=>{ci=(ci+1)%cards.length;flipped=false;renderCard()}}const s=document.getElementById('save');if(s)s.onclick=()=>{saved.note=document.getElementById('note').value;localStorage.setItem('kateHub',JSON.stringify(saved));document.getElementById('savedMsg').textContent='Saved ✓'}}
-document.getElementById('home').onclick=()=>window.scrollTo({top:0,behavior:'smooth'});document.getElementById('lessons').onclick=lessons;document.getElementById('lesson1').onclick=current;document.getElementById('lesson2').onclick=()=>openModal('Lesson 2','<p>This lesson is locked for now.</p>');document.getElementById('lesson3').onclick=()=>openModal('Lesson 3','<p>This lesson is locked for now.</p>');document.getElementById('goal').onclick=weekly;document.getElementById('current').onclick=current;document.getElementById('vocab').onclick=vocab;document.getElementById('review').onclick=review;document.getElementById('reading').onclick=reading;document.getElementById('homework').onclick=homework;
+const coverImage=document.getElementById('coverImage');
+Promise.all(Array.from({length:4},(_,i)=>fetch(`assets/kate-exact-${String(i).padStart(2,'0')}.txt`).then(r=>{if(!r.ok)throw new Error('image');return r.text()}))).then(parts=>{coverImage.src='data:image/webp;base64,'+parts.join('')}).catch(()=>{coverImage.src='assets/kate-cover.webp'});
+(()=>{const $=s=>document.querySelector(s),overlay=$('#overlay'),title=$('#modalTitle'),lead=$('#modalLead'),body=$('#modalBody');const open=(t,l,h)=>{title.textContent=t;lead.textContent=l||'';body.innerHTML=h;overlay.classList.add('open');wireInside()};const close=()=>overlay.classList.remove('open');$('#close').addEventListener('click',close);overlay.addEventListener('click',e=>{if(e.target===overlay)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+const modules=`<div class="grid"><div class="tile"><h3>1. College Life</h3><p>Academic vocabulary, study habits, discussion.</p><button class="lessonbtn" data-open="academic">Open module</button></div><div class="tile"><h3>2. Communication</h3><p>Speaking, opinions, interviews and confidence.</p><button class="lessonbtn" data-open="speaking">Open module</button></div><div class="tile"><h3>3. Grammar Lab</h3><p>Grammar in context with short challenge tasks.</p><button class="lessonbtn" data-open="grammar">Open module</button></div><div class="tile"><h3>4. Vocabulary Builder</h3><p>Collocations, word formation and phrasal verbs.</p><button class="lessonbtn" data-open="lexis">Open module</button></div><div class="tile"><h3>5. Review</h3><p>Mixed practice and quick checks.</p><button class="lessonbtn" data-open="review">Open review</button></div></div>`;
+function showModules(){open('Modules','Choose a section. The original hub design stays on the main screen.',modules)}
+function showSpeaking(){open('Speaking Lessons','Build fluency and confidence.',`<div class="panel"><span class="badge">30–40 sec</span><span class="badge">B1–B2</span><h3>Speaking Practice</h3><p><b>Prompt:</b> What skill would you most like to improve this year, and why?</p><p>Use: <i>From my perspective… / One reason is… / For example… / That would help me…</i></p></div><div class="panel"><h3>Follow-up challenge</h3><p>Give one advantage, one difficulty and one practical step.</p></div>`)}
+function showGrammar(){open('Grammar','Short grammar-in-context practice.',`<div class="panel"><p><b>Choose the correct sentence.</b></p><button class="choice" data-correct="0">If I would have more time, I would join the course.</button><button class="choice" data-correct="1">If I had more time, I would join the course.</button><button class="choice" data-correct="0">If I have more time, I would joined the course.</button><div class="status" id="feedback"></div></div>`)}
+function showLexis(){open('Lexis','Useful words and phrases for study and discussion.',`<div class="grid"><div class="tile"><h3>Collocations</h3><p>meet a deadline • gain experience • take responsibility</p></div><div class="tile"><h3>Word formation</h3><p>achieve → achievement<br>ambition → ambitious</p></div><div class="tile"><h3>Phrasal verbs</h3><p>keep up with • figure out • work on</p></div></div>`)}
+function academic(){open('Academic Vocabulary','Today’s focus.',`<div class="panel"><h3>Mini challenge</h3><p>Complete the sentence with the strongest phrase:</p><p><b>The internship gave me a valuable ______ to gain practical experience.</b></p><button class="choice" data-correct="1">opportunity</button><button class="choice" data-correct="0">perspective</button><button class="choice" data-correct="0">ambition</button><div class="status" id="feedback"></div></div>`)}
+function review(){open('Quick Review','A short mixed check.',`<div class="panel"><p><b>Which sentence sounds most natural?</b></p><button class="choice" data-correct="0">I achieved to finish the task.</button><button class="choice" data-correct="1">I managed to finish the task on time.</button><button class="choice" data-correct="0">I made the task successfully.</button><div class="status" id="feedback"></div></div>`)}
+const words={word1:['opportunity','a good chance to do or achieve something','The course gave her an opportunity to practise speaking.'],word2:['perspective','a particular way of thinking about or viewing something','The discussion helped me see the issue from a different perspective.'],word3:['achieve','to succeed in reaching a goal','She worked consistently to achieve her goal.'],word4:['ambitious','determined to be successful or achieve something difficult','He is ambitious and willing to work hard.']};
+function wordCard(id){const [w,m,e]=words[id];open(w,'Quick Review Vocabulary',`<div class="flash" id="flash"><div>${w}<small>click to reveal meaning</small></div></div><div class="status">Click the card to flip it.</div>`);let flip=false;$('#flash').addEventListener('click',()=>{flip=!flip;$('#flash').innerHTML=flip?`<div>${m}<small>${e}</small></div>`:`<div>${w}<small>click to reveal meaning</small></div>`})}
+function wireInside(){body.querySelectorAll('[data-open]').forEach(b=>b.addEventListener('click',()=>({academic,showSpeaking,showGrammar,showLexis,review,speaking:showSpeaking,grammar:showGrammar,lexis:showLexis}[b.dataset.open]||academic)()));body.querySelectorAll('.choice').forEach(b=>b.addEventListener('click',()=>{body.querySelectorAll('.choice').forEach(x=>x.disabled=true);b.classList.add(b.dataset.correct==='1'?'correct':'wrong');const f=$('#feedback');if(f)f.textContent=b.dataset.correct==='1'?'Correct.':'Try the option that fits the context and grammar best.'}))}
+$('#modules').addEventListener('click',showModules);$('#speaking').addEventListener('click',showSpeaking);$('#grammar').addEventListener('click',showGrammar);$('#lexis').addEventListener('click',showLexis);$('#focus1').addEventListener('click',academic);$('#focus2').addEventListener('click',showGrammar);$('#focus3').addEventListener('click',showSpeaking);['word1','word2','word3','word4'].forEach(id=>$('#'+id).addEventListener('click',()=>wordCard(id)));
+})();
 </script>
 </body>
 </html>
