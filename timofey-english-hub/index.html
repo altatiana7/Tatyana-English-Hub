@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Timofey's English Hub</title>
+<style>
+:root{--bg:#081629;--panel:rgba(8,23,42,.9);--panel2:rgba(12,31,56,.86);--line:#4b87c9;--accent:#5fb1ff;--text:#f4f8fc;--muted:#b9c8d8}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#071322;color:var(--text)}
+body{overflow-x:hidden}.hero{min-height:100vh;display:grid;grid-template-columns:minmax(250px,325px) 1fr minmax(265px,335px);gap:24px;padding:28px;background:linear-gradient(90deg,rgba(4,14,28,.72),rgba(5,17,31,.32) 38%,rgba(5,17,31,.22) 66%,rgba(4,14,28,.7)),url('https://images.unsplash.com/photo-1636487658572-323ec2efc218?fm=jpg&ixlib=rb-4.0.3&q=88&w=2400') center/cover no-repeat;position:relative}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(91,170,255,.06),rgba(0,0,0,.08));pointer-events:none}.panel,.center{position:relative;z-index:1}.panel{background:linear-gradient(180deg,rgba(8,27,51,.94),rgba(7,23,43,.9));border:1px solid rgba(93,174,255,.58);border-radius:24px;padding:22px;backdrop-filter:blur(8px);box-shadow:0 18px 50px rgba(0,0,0,.24)}
+.panel h2{font-size:clamp(28px,3vw,42px);margin:0 0 5px}.sub{color:var(--muted);font-size:14px;margin-bottom:20px}.lesson-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.lesson-btn,.oge-btn{border:1px solid rgba(119,185,255,.5);background:linear-gradient(180deg,rgba(31,61,93,.92),rgba(18,43,69,.92));color:white;cursor:pointer;transition:.18s ease;box-shadow:inset 0 1px rgba(255,255,255,.05)}.lesson-btn{aspect-ratio:1/1;border-radius:13px;font-size:24px;font-weight:700}.lesson-btn:hover,.oge-btn:hover{transform:translateY(-2px);border-color:#82c2ff;background:linear-gradient(180deg,rgba(37,79,120,.98),rgba(24,54,84,.98))}.lesson-btn:focus,.oge-btn:focus,.close-btn:focus{outline:3px solid rgba(95,177,255,.45);outline-offset:2px}.oge-list{display:flex;flex-direction:column;gap:10px}.oge-btn{min-height:72px;border-radius:14px;text-align:left;padding:0 18px;display:flex;justify-content:space-between;align-items:center;font-size:20px;font-weight:700}.oge-btn span small{display:block;font-size:12px;color:#87bdf4;margin-top:5px;font-weight:400}.arrow{font-size:30px;font-weight:300}.quote{margin-top:26px;font:italic 24px Georgia,serif;color:#d7e9fb;line-height:1.35}.center{align-self:start;padding:70px 4px 0;min-width:0;text-shadow:0 2px 13px rgba(0,0,0,.5)}.center h1{font-size:clamp(45px,6vw,92px);line-height:.92;margin:0;letter-spacing:-2px}.center h1 b{display:block;color:#71b8ff}.center .meta{font-size:clamp(16px,2vw,24px);font-weight:700;margin-top:15px}.center .tag{margin-top:34px;font:italic 28px Georgia,serif;max-width:270px;color:#dceeff;transform:rotate(-4deg)}.badge{display:inline-block;margin-top:22px;background:rgba(8,25,47,.76);border:1px solid rgba(117,185,255,.45);border-radius:999px;padding:10px 15px;color:#dfefff;font-size:14px}.overlay{position:fixed;inset:0;background:radial-gradient(circle at 30% 15%,#183b62 0,#0c2038 42%,#071321 100%);z-index:100;display:none;padding:24px;overflow:auto}.overlay.open{display:block}.overlay-inner{min-height:calc(100vh - 48px);border:1px solid rgba(115,186,255,.45);border-radius:24px;background:linear-gradient(145deg,rgba(18,45,77,.94),rgba(8,22,39,.96));padding:34px;display:flex;flex-direction:column}.topbar{display:flex;justify-content:space-between;gap:18px;align-items:center}.topbar h3{font-size:clamp(30px,5vw,64px);margin:0}.close-btn{border:1px solid #6faeea;background:#102d4c;color:white;border-radius:12px;padding:12px 18px;font-size:17px;cursor:pointer}.empty{flex:1;display:grid;place-items:center;text-align:center;padding:40px 10px}.empty p{font-size:clamp(20px,3vw,34px);color:#b9d5ef;margin:0}.empty small{display:block;margin-top:12px;font-size:15px;color:#7fa7cc}.oge-note{margin-top:20px;color:#9fc3e5;font-size:14px}
+@media(max-width:1050px){.hero{grid-template-columns:270px 1fr}.right{grid-column:1/-1}.right .oge-list{display:grid;grid-template-columns:repeat(3,1fr)}.center{padding-top:50px}}@media(max-width:760px){.hero{grid-template-columns:1fr;padding:14px;gap:14px}.center{order:-1;padding:28px 8px 10px}.panel{border-radius:18px}.right .oge-list{grid-template-columns:1fr}.lesson-grid{grid-template-columns:repeat(5,1fr)}.center h1{font-size:48px}.center .tag{font-size:22px}.quote{font-size:20px}.overlay{padding:10px}.overlay-inner{min-height:calc(100vh - 20px);padding:20px}}
+</style>
+</head>
+<body>
+<main class="hero">
+<section class="panel left">
+<h2>Lessons</h2>
+<div class="sub">20 lessons · open full screen</div>
+<div class="lesson-grid" id="lessonGrid"></div>
+<div class="quote">Small steps every day lead to big results.</div>
+</section>
+<section class="center">
+<h1>TIMOFEY’S <b>ENGLISH HUB</b></h1>
+<div class="meta">Grade 9 · ОГЭ Preparation · Speaking English</div>
+<div class="tag">Same student.<br>Bigger goals.</div>
+<div class="badge">Computer geek mode: ON</div>
+</section>
+<section class="panel right">
+<h2>ОГЭ</h2>
+<div class="sub">Exam sections · open full screen</div>
+<div class="oge-list" id="ogeList"></div>
+<div class="oge-note">The sections are intentionally empty for now — content can be added gradually.</div>
+</section>
+</main>
+<div class="overlay" id="overlay" aria-hidden="true">
+<div class="overlay-inner">
+<div class="topbar"><h3 id="overlayTitle">Lesson</h3><button class="close-btn" id="closeBtn" type="button">← Back to hub</button></div>
+<div class="empty"><div><p id="overlayText">This page is ready for future content.</p><small>Nothing has been added yet.</small></div></div>
+</div>
+</div>
+<script>
+const lessonGrid=document.getElementById('lessonGrid');
+const ogeList=document.getElementById('ogeList');
+const overlay=document.getElementById('overlay');
+const overlayTitle=document.getElementById('overlayTitle');
+const overlayText=document.getElementById('overlayText');
+const closeBtn=document.getElementById('closeBtn');
+function openScreen(title,text){overlayTitle.textContent=title;overlayText.textContent=text;overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';closeBtn.focus();}
+function closeScreen(){overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+for(let i=1;i<=20;i++){const b=document.createElement('button');b.type='button';b.className='lesson-btn';b.textContent=i;b.setAttribute('aria-label','Open Lesson '+i);b.addEventListener('click',()=>openScreen('Lesson '+i,'This lesson is ready for future content.'));lessonGrid.appendChild(b);}
+['Listening','Reading','Grammar','Vocabulary','Writing','Speaking'].forEach(name=>{const b=document.createElement('button');b.type='button';b.className='oge-btn';b.innerHTML='<span>'+name+'<small>Full-screen mode</small></span><span class="arrow">›</span>';b.addEventListener('click',()=>openScreen('ОГЭ · '+name,'This ОГЭ section is ready for future content.'));ogeList.appendChild(b);});
+closeBtn.addEventListener('click',closeScreen);document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('open'))closeScreen();});
+</script>
+</body>
+</html>
