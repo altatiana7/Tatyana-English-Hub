@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+<title>Tatyana Planner</title>
+<style>
+:root{--bg:#f7f3ef;--card:#fff;--line:#e7ded7;--text:#201d1b;--muted:#756e68;--accent:#9d45c7;--personal:#fbf0ff;--weekend:#fff6e5;--school:#edf4f9;--blocked:#ededed}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.app{max-width:1500px;margin:0 auto;padding:10px}.top{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:10px}
+.title{font-size:17px;font-weight:900}.actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.status{font-size:11px;color:var(--muted)}
+button{font:inherit;border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 10px;font-weight:800;cursor:pointer}.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:10px}.cardhead{padding:8px 10px;font-size:12px;font-weight:900;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.cardhead small{color:var(--muted);font-weight:700}
+.scroll{overflow:auto}.grid{display:grid;min-width:940px}.personal{grid-template-columns:96px repeat(7,minmax(118px,1fr))}.school{grid-template-columns:100px repeat(5,minmax(130px,1fr));min-width:800px}
+.cell,.day,.time{border-right:1px solid #eee6df;border-bottom:1px solid #eee6df;min-height:38px;padding:6px}.day{font-weight:900;text-align:center;background:#fff}.day.weekend{background:#fff0d5}.time{font-size:10px;font-weight:900;background:#fcfaf8;display:flex;align-items:center;justify-content:center;white-space:nowrap}.cell{font-weight:700;white-space:pre-wrap;outline:none}.personalcell{background:var(--personal)}.weekendcell{background:var(--weekend)}.schoolcell{background:var(--school)}.blocked{background:var(--blocked);pointer-events:none}.editing{box-shadow:inset 0 0 0 2px #c98ce5;background:#fff!important}
+.schoolbox{display:none}.schoolbox.open{display:block}.tabs{display:flex;gap:6px;margin-bottom:10px}.tab{background:#fff}.tab.active{background:#f3e8f8;color:#7f2aa6}
+.panel{display:none}.panel.active{display:block}.section{padding:12px}.students{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}.student{padding:12px;border-radius:10px;font-weight:900}
+textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
+.notice{font-size:12px;color:var(--muted);padding:10px;background:#fff;border:1px solid var(--line);border-radius:10px}
+@media(max-width:700px){.top{align-items:flex-start;flex-direction:column}.actions{width:100%}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="title">Tatyana Planner</div>
+    <div class="actions">
+      <span id="saveStatus" class="status">Готово</span>
+      <button onclick="toggleSchool()" id="schoolBtn">Школьное расписание</button>
+      <button onclick="connectCloud()" id="cloudBtn">Cloud</button>
+      <button onclick="downloadBackup()">Backup</button>
+      <button onclick="document.getElementById('restoreFile').click()">Restore</button>
+      <input id="restoreFile" type="file" accept=".json,application/json" hidden onchange="restoreBackup(this)">
+      <button class="primary" onclick="toggleEdit()" id="editBtn">Edit</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-panel="schedule">Schedule</button>
+    <button class="tab" data-panel="students">Students</button>
+    <button class="tab" data-panel="payments">Payments</button>
+    <button class="tab" data-panel="attendance">Attendance</button>
+    <button class="tab" data-panel="notes">Notes</button>
+  </div>
+
+  <section id="schedule" class="panel active">
+    <div id="schoolBox" class="card schoolbox">
+      <div class="cardhead">ШКОЛА <small>Пн–Пт</small></div>
+      <div class="scroll"><div class="grid school" id="schoolGrid"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">ЛИЧНЫЕ УРОКИ <small>Пн–Пт с 14.00 · Сб–Вс с 10.00 · по 1 часу</small></div>
+      <div class="scroll"><div class="grid personal" id="personalGrid"></div></div>
+    </div>
+  </section>
+
+  <section id="students" class="panel"><div class="card section"><div class="students" id="studentsList"></div></div></section>
+  <section id="payments" class="panel"><div class="notice">Платежи сохраняются в резервной и облачной копии планнера.</div></section>
+  <section id="attendance" class="panel"><div class="notice">Посещаемость сохраняется в резервной и облачной копии планнера.</div></section>
+  <section id="notes" class="panel"><div class="card section"><textarea id="notesBox" placeholder="Notes..."></textarea></div></section>
+</div>
+
+<script>
+const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const SCHOOL_DAYS=DAYS.slice(0,5);
+const PERSONAL_TIMES=['10.00-11.00','11.00-12.00','12.00-13.00','13.00-14.00','14.00-15.00','15.00-16.00','16.00-17.00','17.00-18.00','18.00-19.00','19.00-20.00','20.00-21.00'];
+const SCHOOL_TIMES=['08:00–08:40','08:50–09:30','09:40–10:20','10:30–11:10','11:20–12:00','12:10–12:50','13:00–13:40','13:50–14:30'];
+
+const DEFAULT_SCHEDULE={"p|2|5":"Тимофей","p|2|6":"Соня Баш","p|4|0":"Катя","p|4|2":"Катя","p|5|3":"Катя","p|6|2":"Габи","p|6|3":"Габи","p|7|0":"Габи","p|7|1":"Соня Баш","s|1|0":"9А\\nАнгл. яз.","s|2|0":"11А\\nАнгл. яз.","s|3|0":"7Г\\nАнгл. яз.\\nЗамена урока","s|4|0":"9Г\\nАнгл. яз.","s|5|0":"9В\\nАнгл. яз.","s|6|0":"10А\\nАнгл. яз.","s|0|1":"9Б\\nАнгл. яз.","s|1|1":"11А\\nАнгл. яз.","s|2|1":"9Г\\nАнгл. яз.","s|3|1":"7В\\nАнгл. яз.","s|5|1":"10А\\nАнгл. яз.","s|6|1":"10А\\nАнгл. яз.","s|7|1":"11А\\nПодготовка к ЕГЭ","s|0|2":"7Г\\nАнгл. яз.\\nЗамена урока","s|1|2":"9В\\nАнгл. яз.","s|2|2":"9Б\\nАнгл. яз.","s|3|2":"7В\\nАнгл. яз.","s|4|2":"9А\\nАнгл. яз.","s|5|2":"11А\\nАнгл. яз.","s|6|2":"11А\\nАнгл. яз.","s|1|3":"10А\\nАнгл. яз.","s|2|3":"9В\\nАнгл. яз.","s|3|3":"7Г\\nАнгл. яз.\\nЗамена урока","s|5|3":"11А\\nАнгл. яз.","s|6|3":"9А\\nАнгл. яз.","s|7|3":"10А\\nАнгл. яз.","s|0|4":"7В\\nАнгл. яз.","s|1|4":"9Г\\nАнгл. яз.","s|2|4":"9Б\\nАнгл. яз.","s|3|4":"11А\\nАнгл. яз.","s|4|4":"10А\\nАнгл. яз."};
+
+const DEFAULT_STUDENTS=[
+  {id:1,name:'Maya',time:'18:00',color:'#c9b8ff',level:'A2'},
+  {id:2,name:'Nikita',time:'17:00',color:'#bfe8db',level:'A2+/B1'},
+  {id:3,name:'Gabi',time:'12:00',color:'#ffc8bd',level:''},
+  {id:4,name:'Катя',time:'',color:'#ead0f6',level:''},
+  {id:5,name:'Соня Баш',time:'',color:'#ffe0b5',level:''},
+  {id:6,name:'Тимофей',time:'',color:'#cfe5ff',level:''}
+];
+
+const STORE='tp_schedule_v4';
+const STUDENTS_STORE='crm_students_v4';
+const NOTES_STORE='tp_notes_v4';
+const CLOUD_TOKEN='tp_cloud_token_v1';
+const CLOUD_STAMP='tp_cloud_stamp_v2';
+const SUPABASE_URL='https://lzxcmrlubhjfdhtqvqzt.supabase.co';
+
+let editing=false;
+let schedule={...DEFAULT_SCHEDULE};
+let students=[...DEFAULT_STUDENTS];
+let notes='';
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function setStatus(s){const el=document.getElementById('saveStatus');el.textContent=s;clearTimeout(setStatus.t);setStatus.t=setTimeout(()=>el.textContent='Готово',1500)}
+function cellKey(kind,r,d){return kind+'|'+r+'|'+d}
+
+function loadLocal(){
+  try{
+    const s=JSON.parse(localStorage.getItem(STORE)||'{}');
+    if(s&&typeof s==='object') schedule={...DEFAULT_SCHEDULE,...s};
+    const st=JSON.parse(localStorage.getItem(STUDENTS_STORE)||'null');
+    if(Array.isArray(st)&&st.length) students=st;
+    notes=localStorage.getItem(NOTES_STORE)||'';
+  }catch(e){}
+}
+
+function saveLocal(){
+  try{
+    localStorage.setItem(STORE,JSON.stringify(schedule));
+    localStorage.setItem(STUDENTS_STORE,JSON.stringify(students));
+    localStorage.setItem(NOTES_STORE,notes);
+  }catch(e){}
+  setStatus('Сохранено');
+  queueCloudSave();
+}
+
+function renderSchedule(){
+  let p='<div class="time"></div>'+DAYS.map((d,i)=>'<div class="day '+(i>4?'weekend':'')+'">'+d+'</div>').join('');
+  PERSONAL_TIMES.forEach((t,r)=>{
+    p+='<div class="time">'+t+'</div>';
+    DAYS.forEach((d,di)=>{
+      if(di<5&&r<4){p+='<div class="cell blocked"></div>';return}
+      const k=cellKey('p',r,di);
+      p+='<div class="cell personalcell '+(di>4?'weekendcell ':'')+(editing?'editing':'')+'" data-k="'+k+'" '+(editing?'contenteditable="true"':'')+'>'+esc(schedule[k]||'')+'</div>';
+    });
+  });
+  document.getElementById('personalGrid').innerHTML=p;
+
+  let s='<div class="time"></div>'+SCHOOL_DAYS.map(d=>'<div class="day">'+d+'</div>').join('');
+  SCHOOL_TIMES.forEach((t,r)=>{
+    s+='<div class="time">'+t+'</div>';
+    SCHOOL_DAYS.forEach((d,di)=>{
+      const k=cellKey('s',r,di);
+      s+='<div class="cell schoolcell '+(editing?'editing':'')+'" data-k="'+k+'" '+(editing?'contenteditable="true"':'')+'>'+esc(schedule[k]||'')+'</div>';
+    });
+  });
+  document.getElementById('schoolGrid').innerHTML=s;
+}
+
+function renderStudents(){
+  document.getElementById('studentsList').innerHTML=students.map(x=>'<div class="student" style="background:'+esc(x.color||'#eee')+'">'+esc(x.name)+(x.time?'<div style="font-size:12px;margin-top:4px">'+esc(x.time)+'</div>':'')+'</div>').join('');
+  document.getElementById('notesBox').value=notes;
+}
+
+function toggleSchool(){
+  const box=document.getElementById('schoolBox');
+  box.classList.toggle('open');
+  document.getElementById('schoolBtn').textContent=box.classList.contains('open')?'Скрыть школьное':'Школьное расписание';
+}
+
+function toggleEdit(){
+  if(!editing){editing=true;document.getElementById('editBtn').textContent='Save';renderSchedule();return}
+  document.querySelectorAll('[data-k]').forEach(el=>{schedule[el.dataset.k]=el.innerText.trim()});
+  editing=false;document.getElementById('editBtn').textContent='Edit';renderSchedule();saveLocal();
+}
+
+document.addEventListener('input',e=>{
+  if(e.target&&e.target.matches('[data-k]')&&editing){schedule[e.target.dataset.k]=e.target.innerText.trim();saveLocal()}
+  if(e.target&&e.target.id==='notesBox'){notes=e.target.value;saveLocal()}
+});
+
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===btn));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===btn.dataset.panel));
+}));
+
+function collectState(){return {version:4,schedule,students,notes}}
+function applyState(state){
+  if(!state||typeof state!=='object')return;
+  if(state.schedule&&typeof state.schedule==='object')schedule={...DEFAULT_SCHEDULE,...state.schedule};
+  if(Array.isArray(state.students)&&state.students.length)students=state.students;
+  if(typeof state.notes==='string')notes=state.notes;
+  saveLocal();renderSchedule();renderStudents();
+}
+
+async function cloudRequest(method,data){
+  const token=(localStorage.getItem(CLOUD_TOKEN)||'').trim();
+  if(!token)throw new Error('no token');
+  const res=await fetch(SUPABASE_URL+'/functions/v1/planner-sync',{
+    method,
+    headers:{'Content-Type':'application/json','x-planner-key':token},
+    body:method==='POST'?JSON.stringify({data}):undefined
+  });
+  if(!res.ok)throw new Error('cloud '+res.status);
+  return await res.json();
+}
+
+let cloudTimer=null;
+function queueCloudSave(){
+  if(!(localStorage.getItem(CLOUD_TOKEN)||'').trim())return;
+  clearTimeout(cloudTimer);
+  cloudTimer=setTimeout(async()=>{
+    try{
+      setStatus('Сохраняю в облако…');
+      const out=await cloudRequest('POST',collectState());
+      if(out&&out.ok){localStorage.setItem(CLOUD_STAMP,String(Date.now()));document.getElementById('cloudBtn').textContent='Cloud ✓';setStatus('Сохранено в облаке')}
+    }catch(e){document.getElementById('cloudBtn').textContent='Cloud !';setStatus('Ошибка облака')}
+  },500);
+}
+
+async function syncCloud(){
+  if(!(localStorage.getItem(CLOUD_TOKEN)||'').trim())return;
+  try{
+    setStatus('Загружаю облако…');
+    const out=await cloudRequest('GET');
+    if(out&&out.data&&Object.keys(out.data).length){applyState(out.data);localStorage.setItem(CLOUD_STAMP,String(Date.parse(out.updated_at)||Date.now()))}
+    else queueCloudSave();
+    document.getElementById('cloudBtn').textContent='Cloud ✓';
+    setStatus('Облако подключено');
+  }catch(e){document.getElementById('cloudBtn').textContent='Cloud !';setStatus('Проверьте ключ Cloud')}
+}
+
+function connectCloud(){
+  const token=prompt('Вставьте ключ облачного сохранения:');
+  if(token===null)return;
+  if(!token.trim())return;
+  localStorage.setItem(CLOUD_TOKEN,token.trim());
+  syncCloud();
+}
+
+function downloadBackup(){
+  const blob=new Blob([JSON.stringify({exported_at:new Date().toISOString(),state:collectState()},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tatyana-planner-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();
+}
+
+function restoreBackup(input){
+  const file=input.files&&input.files[0];if(!file)return;
+  const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);applyState(x.state||x);queueCloudSave();setStatus('Восстановлено')}catch(e){alert('Не удалось прочитать файл')}};r.readAsText(file);input.value='';
+}
+
+loadLocal();
+renderSchedule();
+renderStudents();
+setTimeout(syncCloud,100);
+</script>
+</body>
+</html>
