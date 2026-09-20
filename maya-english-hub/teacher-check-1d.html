@@ -53,8 +53,8 @@ const questions=[
 ];
 function checksum(bytes){let c=73;for(const b of bytes)c=(c*131+b)%256;return c}
 function decode(code){
-  code=code.trim().toUpperCase();
-  if(!/^D1-[A-Z0-9_-]{8}$/.test(code))throw new Error('Неверный формат кода.');
+  code=code.trim();
+  if(!/^D1-[A-Za-z0-9_-]{8}$/.test(code))throw new Error('Неверный формат кода.');
   const body=code.slice(3).replace(/-/g,'+').replace(/_/g,'/');
   let bin;try{bin=atob(body)}catch(e){throw new Error('Код повреждён.')}
   if(bin.length!==6)throw new Error('Код повреждён.');
