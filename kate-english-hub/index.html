@@ -142,6 +142,60 @@ button{cursor:pointer}
 .modal-actions a,.modal-actions button{border:0;text-decoration:none;border-radius:10px;padding:10px 13px;font-weight:800}
 .modal-actions a{background:var(--teal);color:white}.modal-actions button{background:#edf4f4;color:#2f4449}
 
+/* Full-screen lesson viewer */
+.lesson-view{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  height:100dvh;
+  z-index:120;
+  background:#fff;
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+}
+.lesson-view.on{display:flex}
+.lesson-view-bar{
+  flex:0 0 58px;
+  min-height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:8px 14px;
+  background:linear-gradient(135deg,#0d7f8b,#169ca9);
+  color:#fff;
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+}
+.lesson-view-title{
+  min-width:0;
+  font-weight:900;
+  font-size:17px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.lesson-view-actions{display:flex;gap:8px;flex:none}
+.lesson-view-actions button{
+  border:0;
+  border-radius:10px;
+  padding:9px 12px;
+  background:rgba(255,255,255,.95);
+  color:#155961;
+  font-weight:900;
+  cursor:pointer;
+}
+.lesson-frame{
+  display:block;
+  width:100%;
+  flex:1 1 auto;
+  min-height:0;
+  border:0;
+  background:#fff;
+}
+body.lesson-open{overflow:hidden}
+
 @media(max-width:1100px){
   .app{grid-template-columns:190px 1fr}.sidebar{padding-left:8px;padding-right:8px}
   .logo .kate{font-size:24px}.logo .english{font-size:22px}
@@ -226,7 +280,7 @@ button{cursor:pointer}
 
       <div class="module-card" id="module-card-2">
         <div class="module-title">Module 2</div>
-        <button class="lesson-btn" onclick="location.href='module2-lesson1-generations.html'">Lesson 1 · Generations <span>›</span></button>
+        <button class="lesson-btn" onclick="openLesson(2,1)">Lesson 1 · Generations <span>›</span></button>
         <button class="lesson-btn" onclick="openLesson(2,2)">Lesson 2 <span>›</span></button>
         <button class="lesson-btn" onclick="openLesson(2,3)">Lesson 3 <span>›</span></button>
         <a class="homework-chip" href="module2-lesson1-homework-generations.html">HOMEWORK · GENERATIONS</a>
@@ -257,6 +311,18 @@ button{cursor:pointer}
     </nav>
   </main>
 </div>
+
+<section class="lesson-view" id="lessonView" aria-hidden="true">
+  <div class="lesson-view-bar">
+    <div class="lesson-view-title" id="lessonViewTitle">Lesson</div>
+    <div class="lesson-view-actions">
+      <button onclick="lessonFrameBack()">← Back</button>
+      <button onclick="toggleLessonFullscreen()">⛶ Full screen</button>
+      <button onclick="closeLessonView()">✕ Close</button>
+    </div>
+  </div>
+  <iframe class="lesson-frame" id="lessonFrame" title="Kate lesson"></iframe>
+</section>
 
 <div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
   <div class="modal-card">
@@ -300,11 +366,55 @@ function showModal(title,text,homework){
   document.getElementById('modal').classList.add('on');
 }
 function openLesson(module,lesson){
+  const view=document.getElementById('lessonView');
+  const frame=document.getElementById('lessonFrame');
+  const title=document.getElementById('lessonViewTitle');
+
+  document.body.classList.add('lesson-open');
+  view.classList.add('on');
+  view.setAttribute('aria-hidden','false');
+
   if(module===2 && lesson===1){
-    showModal('Module 2 · Lesson 1 — Generations','Your current homework is ready: generation facts, stereotypes, vocabulary, reading and speaking.',true);
+    title.textContent='Module 2 · Lesson 1 — Generations';
+    frame.removeAttribute('srcdoc');
+    frame.src='module2-lesson1-generations.html';
   }else{
-    showModal('Module '+module+' · Lesson '+lesson,'This lesson slot is ready for new materials.',false);
+    title.textContent='Module '+module+' · Lesson '+lesson;
+    frame.removeAttribute('src');
+    frame.srcdoc='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:linear-gradient(#fbfefe,#edf6f7);color:#17343a}.wrap{min-height:100vh;display:grid;place-items:center;padding:30px}.card{width:min(900px,92vw);background:#fff;border:1px solid #d8e8e9;border-radius:26px;padding:34px;box-shadow:0 16px 38px rgba(23,54,67,.10);text-align:center}h1{margin:0 0 10px;color:#0f7782;font-size:34px}p{color:#62787d;font-size:17px;line-height:1.55}</style></head><body><div class="wrap"><div class="card"><h1>Module '+module+' · Lesson '+lesson+'</h1><p>This lesson page is ready for the next materials. It opens here in a full-screen workspace, without cutting off the page.</p></div></div></body></html>';
   }
+}
+
+function closeLessonView(){
+  const view=document.getElementById('lessonView');
+  const frame=document.getElementById('lessonFrame');
+  view.classList.remove('on');
+  view.setAttribute('aria-hidden','true');
+  document.body.classList.remove('lesson-open');
+  frame.src='about:blank';
+  frame.removeAttribute('srcdoc');
+}
+
+function lessonFrameBack(){
+  const frame=document.getElementById('lessonFrame');
+  try{
+    if(frame.contentWindow && frame.contentWindow.history.length>1){
+      frame.contentWindow.history.back();
+      return;
+    }
+  }catch(e){}
+  closeLessonView();
+}
+
+async function toggleLessonFullscreen(){
+  const view=document.getElementById('lessonView');
+  try{
+    if(document.fullscreenElement){
+      await document.exitFullscreen();
+    }else{
+      await view.requestFullscreen();
+    }
+  }catch(e){}
 }
 function openInfo(name){
   showModal(name,'This section is ready for Kate’s next materials.',false);
@@ -321,6 +431,11 @@ document.querySelectorAll('.mod-link').forEach(function(btn){
       showModal('Module '+n,'This module is reserved for future lessons.',false);
     }
   });
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape' && document.getElementById('lessonView').classList.contains('on')){
+    closeLessonView();
+  }
 });
 </script>
 </body>
