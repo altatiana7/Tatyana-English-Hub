@@ -17,34 +17,34 @@
   --shadow:0 18px 50px rgba(13,37,43,.20);
 }
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#d8e3e4}
+html,body{margin:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#d8e3e4;overflow-y:auto}
 button,a{font:inherit}
 button{cursor:pointer}
-.app{height:100vh;display:grid;grid-template-columns:220px 1fr;overflow:hidden}
+.app{min-height:100vh;display:grid;grid-template-columns:205px 1fr;overflow:visible}
 .sidebar{
   position:relative;z-index:10;background:rgba(255,255,255,.95);
   border-right:1px solid rgba(0,0,0,.08);padding:12px 11px 14px;
-  display:flex;flex-direction:column;gap:9px;box-shadow:10px 0 30px rgba(0,0,0,.08)
+  display:flex;flex-direction:column;gap:7px;box-shadow:10px 0 30px rgba(0,0,0,.08);overflow-y:auto;max-height:100vh
 }
 .logo{
-  background:white;border-radius:0 0 20px 20px;padding:14px 10px 11px;text-align:center;
+  background:white;border-radius:0 0 18px 18px;padding:10px 8px 8px;text-align:center;
   box-shadow:0 7px 18px rgba(0,0,0,.06);border:1px solid #e5eaeb
 }
-.logo .kate{font-size:29px;font-weight:900;color:var(--teal);letter-spacing:.05em;transform:rotate(-2deg)}
-.logo .english{font-size:26px;font-weight:900;line-height:1.02;letter-spacing:.02em}
+.logo .kate{font-size:22px;font-weight:900;color:var(--teal);letter-spacing:.04em;transform:rotate(-2deg)}
+.logo .english{font-size:20px;font-weight:900;line-height:1.02;letter-spacing:.015em}
 .logo .hub{color:var(--teal)}
-.logo .motto{font-size:9px;font-weight:800;letter-spacing:.09em;margin-top:9px}
+.logo .motto{font-size:7.5px;font-weight:800;letter-spacing:.07em;margin-top:6px}
 .big-btn{
-  border:0;border-radius:10px;padding:10px 12px;text-align:left;font-weight:800;color:#263238;
+  border:0;border-radius:10px;padding:8px 10px;text-align:left;font-weight:800;color:#263238;
   background:#eef4f4;display:flex;align-items:center;gap:9px
 }
 .big-btn.active{background:linear-gradient(135deg,var(--teal),#39adba);color:white}
 .big-btn.homework{background:linear-gradient(135deg,#ffef9c,#ffe276);color:#3a3425;border:1px solid rgba(172,136,0,.22)}
 .big-btn:hover{filter:brightness(.98)}
-.module-scroll{min-height:0;overflow:auto;padding-right:2px}
+.module-scroll{overflow:visible;padding-right:2px;flex:0 0 auto}
 .module-scroll::-webkit-scrollbar{width:6px}.module-scroll::-webkit-scrollbar-thumb{background:#c5dadd;border-radius:8px}
 .mod-link{
-  width:100%;border:0;border-radius:9px;margin:3px 0;padding:5px 8px;background:#dceff1;
+  width:100%;border:0;border-radius:9px;margin:2px 0;padding:4px 7px;background:#dceff1;
   color:#33454a;text-align:center;font-size:13px
 }
 .mod-link:hover,.mod-link.selected{background:#bfe5e8;color:#0b6872;font-weight:800}
@@ -97,7 +97,7 @@ button{cursor:pointer}
   position:absolute;z-index:3;left:285px;top:30px;max-width:510px;color:white;
   text-shadow:0 3px 12px rgba(0,0,0,.38)
 }
-.welcome h1{font-size:28px;margin:0 0 5px}
+.welcome h1{font-size:24px;margin:0 0 4px}
 .welcome p{margin:0;font-size:15px;font-weight:700}
 .quick-homework{
   position:absolute;z-index:5;right:33px;top:178px;width:235px;background:rgba(255,255,255,.94);
