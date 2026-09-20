@@ -3,373 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kate's English Hub</title>
+<title>Kate's Hub</title>
 <style>
 :root{
-  --bg-main:#f3ece3;--bg-sidebar:#e8dfd5;--text-dark:#2c2a29;
-  --accent-mint:#bce3db;--accent-blue:#bfdbfe;--accent-pink:#f7d6dc;
-  --border-color:#cac2b7;--correct-green:#22c55e;--wrong-red:#ef4444;
+  --paper:#fffdf5;
+  --desk:#f3ece3;
+  --sidebar:#e8dfd5;
+  --ink:#2c2a29;
+  --line:#cac2b7;
+  --mint:#bce3db;
+  --blue:#bfdbfe;
+  --yellow:#fef08a;
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
-body{background:var(--bg-main);color:var(--text-dark);display:flex;min-height:100vh}
-.sidebar{
-  width:280px;background:var(--bg-sidebar);border-right:2px dashed var(--border-color);
-  padding:25px;display:flex;flex-direction:column;gap:20px;flex-shrink:0
-}
-.logo-area{
-  background:#fff;padding:20px;border-radius:12px;border:2px dashed #b5ae1a;
-  text-align:center;box-shadow:3px 3px 12px rgba(0,0,0,.03)
-}
-.logo-area h2{font-size:1.3rem;color:#0f172a;font-weight:800}
-.logo-area p{margin-top:6px;font-size:.82rem;color:#64748b}
-.nav-list{list-style:none;display:flex;flex-direction:column;gap:6px;max-height:60vh;overflow-y:auto;padding-right:5px}
-.nav-item{
-  padding:12px 16px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.95rem;
-  transition:.2s;background:rgba(255,255,255,.7);border:1px solid var(--border-color);
-  display:flex;justify-content:space-between;align-items:center
-}
-.nav-item:hover,.nav-item.active{background:#fff;border-color:#b8afa3;transform:translateX(3px)}
-.sub-menu{margin-left:15px;margin-top:4px;display:none;flex-direction:column;gap:4px}
-.sub-menu.open{display:flex}
-.sub-item{
-  padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;
-  font-size:.85rem;cursor:pointer;transition:.2s
-}
-.sub-item:hover{background:var(--accent-mint)}
-.main-content{flex-grow:1;padding:40px;position:relative;overflow-y:auto;max-height:100vh}
-.screen{display:none;animation:fadeIn .35s ease-in-out forwards}
-.screen.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.sticker-note{
-  background:#fef08a;color:#713f12;padding:15px;border-radius:4px;box-shadow:3px 5px 15px rgba(0,0,0,.06);
-  transform:rotate(-1deg);display:inline-block;margin:15px 0;font-weight:600;border-left:5px solid #eab308
-}
-.welcome-banner{
-  background:#fff;padding:40px;border-radius:20px;border:1px solid var(--border-color);
-  box-shadow:0 4px 15px rgba(0,0,0,.02);position:relative;margin-bottom:30px;min-height:220px
-}
-.welcome-banner h1{font-size:2.4rem;margin-bottom:10px;color:#0f172a}
-.welcome-banner p{max-width:620px;line-height:1.55;color:#475569}
-.deco-photo{
-  position:absolute;right:40px;top:-15px;background:#fff;padding:10px 10px 30px;
-  box-shadow:0 8px 25px rgba(0,0,0,.1);border-radius:4px;transform:rotate(3deg);
-  width:140px;text-align:center;font-size:.8rem;font-weight:bold
-}
-.deco-photo .photo-placeholder{
-  width:100%;height:120px;border-radius:2px;
-  background:linear-gradient(135deg,#dbeafe,#fce7f3);
-  display:grid;place-items:center;font-size:2rem;color:#64748b
-}
-.action-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-.btn-homework,.btn-secondary{
-  border:none;padding:14px 24px;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;
-  transition:.25s;display:inline-flex;align-items:center;gap:8px
-}
-.btn-homework{background:#2c2a29;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.15);border-radius:25px}
-.btn-homework:hover{transform:scale(1.02);background:#4a4744}
-.btn-secondary{background:#fff;color:#1e293b;border:1px solid var(--border-color)}
-.btn-secondary:hover{background:#f8fafc}
-.quick-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-bottom:30px
-}
-.quick-card{
-  background:#fff;border:1px solid var(--border-color);border-radius:16px;padding:22px;
-  box-shadow:0 2px 12px rgba(0,0,0,.02);cursor:pointer;transition:.2s
-}
-.quick-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(15,23,42,.08)}
-.quick-card h3{margin-bottom:8px;font-size:1.05rem}
-.quick-card p{font-size:.9rem;color:#64748b;line-height:1.45}
-.polaroid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px;margin:25px 0}
-.polaroid-card{
-  background:#fff;padding:15px 15px 30px;box-shadow:0 6px 18px rgba(0,0,0,.05);
-  border-radius:4px;border:1px solid #e2e8f0;text-align:center;transition:.3s;transform:rotate(-1deg)
-}
-.polaroid-card:nth-child(even){transform:rotate(2deg)}.polaroid-card:hover{transform:scale(1.04) rotate(0deg)}
-.polaroid-img-placeholder{
-  height:120px;background:#f1f5f9;border-radius:4px;display:flex;align-items:center;
-  justify-content:center;font-size:2.2rem;margin-bottom:12px
-}
-.polaroid-card h3{font-size:1.05rem;margin-bottom:4px}
-.polaroid-card em{font-size:.78rem;color:#64748b;display:block;margin-bottom:8px}
-.polaroid-card ul{text-align:left;font-size:.83rem;list-style:none;padding-top:8px;border-top:1px dashed #e2e8f0}
-.polaroid-card li{margin-bottom:5px;position:relative;padding-left:12px}
-.polaroid-card li:before{content:"•";position:absolute;left:0;color:#38bdf8}
-.exercise-box{
-  background:#fff;border-radius:16px;border:1px solid var(--border-color);padding:30px;margin-bottom:30px;
-  box-shadow:0 2px 12px rgba(0,0,0,.01)
-}
-.exercise-box h2{font-size:1.3rem;margin-bottom:15px;border-bottom:2px solid var(--bg-main);padding-bottom:10px}
-.match-item{background:#f8fafc;padding:14px 20px;border-radius:10px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;border:1px solid #edf2f7;gap:15px}
-.match-item select{padding:8px;border-radius:6px;border:1px solid var(--border-color);background:#fff}
-.bool-item{margin-bottom:20px;padding:15px;background:#f8fafc;border-radius:10px}
-.bool-btns{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
-.btn-opt{background:#fff;border:1px solid var(--border-color);padding:8px 20px;border-radius:6px;cursor:pointer;font-weight:600}
-.btn-opt.correct{background:var(--correct-green);color:#fff;border-color:var(--correct-green)}
-.btn-opt.wrong{background:var(--wrong-red);color:#fff;border-color:var(--wrong-red)}
-.cards-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:15px}
-.flip-card{height:140px;perspective:1000px;cursor:pointer}
-.flip-card-inner{position:relative;width:100%;height:100%;text-align:center;transition:transform .5s;transform-style:preserve-3d;border-radius:12px}
-.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
-.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;border:1px solid var(--border-color);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:15px;box-shadow:0 4px 8px rgba(0,0,0,.02)}
-.card-front{background:#fff;color:#1e3a8a;font-weight:700;font-size:1.1rem}
-.card-back{background:#f0fdf4;color:#166534;transform:rotateY(180deg);border:1px dashed var(--correct-green)}
-.text-highlight{background:linear-gradient(120deg,#fef08a 0%,#fef08a 100%);background-repeat:no-repeat;background-size:100% 40%;background-position:0 85%;font-weight:600}
-.notebook-textarea{width:100%;height:120px;padding:15px;border:1px solid #cbd5e1;border-radius:8px;background:repeating-linear-gradient(#fff,#fff 31px,#e5e7eb 32px);line-height:32px;resize:vertical}
-
-.fullscreen-panel{
-  position:fixed;inset:0;background:#f3ece3;z-index:50;display:none;overflow:auto;padding:28px
-}
-.fullscreen-panel.active{display:block}
-.panel-head{
-  display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px;
-  position:sticky;top:0;background:#f3ece3;padding:8px 0 14px;z-index:2
-}
-.panel-head h2{font-size:1.6rem}
-.close-btn{border:1px solid var(--border-color);background:#fff;padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:700}
-.homework-frame{
-  width:100%;height:calc(100vh - 100px);border:0;border-radius:16px;background:#fff;
-  box-shadow:0 6px 24px rgba(15,23,42,.08)
-}
-.placeholder{
-  min-height:56vh;background:#fff;border:1px dashed #94a3b8;border-radius:18px;
-  display:grid;place-items:center;text-align:center;padding:40px
-}
-.placeholder h3{font-size:1.6rem;margin-bottom:10px}.placeholder p{color:#64748b;max-width:650px;line-height:1.55}
-.top-tools{margin-top:auto;display:grid;gap:8px}
-.small-btn{border:1px solid var(--border-color);background:#fff;border-radius:8px;padding:9px;cursor:pointer;font-weight:700}
-@media(max-width:900px){
-  body{display:block}.sidebar{width:100%;border-right:0;border-bottom:1px solid var(--border-color)}
-  .nav-list{max-height:none}.main-content{max-height:none;padding:20px}.deco-photo{display:none}
-  .welcome-banner{padding:28px}.welcome-banner h1{font-size:2rem}
-}
+body{min-height:100vh;display:flex;background:var(--desk);color:var(--ink)}
+.sidebar{width:270px;background:var(--sidebar);border-right:2px dashed var(--line);padding:24px;display:flex;flex-direction:column;gap:18px}
+.brand{background:#fff;padding:20px;border-radius:14px;border:2px dashed #b5ae1a;text-align:center;box-shadow:3px 3px 12px rgba(0,0,0,.03)}
+.brand h1{font-size:1.3rem}.brand p{font-size:.84rem;color:#6b625c;margin-top:5px}
+.side-btn{width:100%;text-align:left;background:rgba(255,255,255,.76);border:1px solid var(--line);padding:12px 14px;border-radius:9px;font-weight:700;cursor:pointer;margin-bottom:6px}
+.side-btn:hover{background:#fff}
+.submods{display:none;margin-left:12px;gap:6px;flex-direction:column}.submods.open{display:flex}
+.submods button{background:#fff;border:1px solid var(--line);padding:9px 11px;border-radius:7px;text-align:left;cursor:pointer}
+.keep{margin-top:auto;background:#fff;padding:14px;border-radius:10px;text-align:center;font-weight:700}
+.main{flex:1;padding:36px;overflow:auto}
+.screen{display:none}.screen.active{display:block}
+.hero,.lesson-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:34px;box-shadow:0 5px 18px rgba(0,0,0,.03);margin-bottom:24px}
+.hero h2{font-size:2.3rem;margin-bottom:8px}.hero .tag{font-size:1.08rem;color:#6b625c}
+.polaroid{float:right;width:145px;background:#fff;padding:10px 10px 28px;border:1px solid #e3ddd4;box-shadow:0 8px 24px rgba(0,0,0,.1);transform:rotate(3deg);text-align:center;font-weight:700;margin-left:24px}
+.polaroid div{height:110px;background:linear-gradient(135deg,#dbeafe,#fce7f3);display:grid;place-items:center;font-size:2rem;margin-bottom:8px}
+.note{display:inline-block;margin:18px 0;background:var(--yellow);padding:13px 18px;border-left:5px solid #eab308;transform:rotate(-1deg);font-weight:700}
+.program{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:inset 0 2px 4px rgba(0,0,0,.02)}
+.program h3{margin-bottom:8px}.program p{line-height:1.55;color:#5f5752}
+.lesson-card h2{font-size:1.8rem;margin-bottom:6px}.lesson-card h3{font-size:1.15rem;color:#6b625c;margin-bottom:14px}
+.lesson-card p{line-height:1.6;max-width:850px}
+.btn-primary{display:inline-block;margin-top:20px;background:#2c2a29;color:#fff;border:0;border-radius:24px;padding:15px 28px;font-weight:800;cursor:pointer;text-decoration:none}
+.btn-primary:hover{background:#4a4744}
+.back{background:#fff;border:1px solid var(--line);padding:10px 15px;border-radius:8px;cursor:pointer;font-weight:700;margin-bottom:18px}
+@media(max-width:850px){body{display:block}.sidebar{width:100%;border-right:0;border-bottom:2px dashed var(--line)}.main{padding:20px}.polaroid{display:none}}
 </style>
 </head>
 <body>
 <aside class="sidebar">
-  <div class="logo-area">
-    <h2>KATE'S ENGLISH HUB</h2>
-    <p>EGE 2026 · Lessons · Practice · Homework</p>
+  <div class="brand">
+    <h1>KATE'S HUB ✨</h1>
+    <p>Personal Study Space</p>
   </div>
 
-  <ul class="nav-list" id="navList">
-    <li>
-      <div class="nav-item" data-module="1"><span>Module 1</span><span>›</span></div>
-      <div class="sub-menu" id="module-1">
-        <div class="sub-item" data-title="Module 1 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 1 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 1 · Lesson 3">Lesson 3</div>
-      </div>
-    </li><li>
-      <div class="nav-item" data-module="2"><span>Module 2</span><span>›</span></div>
-      <div class="sub-menu" id="module-2">
-        <div class="sub-item" data-title="Module 2 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 2 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 2 · Lesson 3">Lesson 3</div>
-      </div>
-    </li><li>
-      <div class="nav-item" data-module="3"><span>Module 3</span><span>›</span></div>
-      <div class="sub-menu" id="module-3">
-        <div class="sub-item" data-title="Module 3 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 3 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 3 · Lesson 3">Lesson 3</div>
-      </div>
-    </li><li>
-      <div class="nav-item" data-module="4"><span>Module 4</span><span>›</span></div>
-      <div class="sub-menu" id="module-4">
-        <div class="sub-item" data-title="Module 4 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 4 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 4 · Lesson 3">Lesson 3</div>
-      </div>
-    </li><li>
-      <div class="nav-item" data-module="5"><span>Module 5</span><span>›</span></div>
-      <div class="sub-menu" id="module-5">
-        <div class="sub-item" data-title="Module 5 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 5 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 5 · Lesson 3">Lesson 3</div>
-      </div>
-    </li><li>
-      <div class="nav-item" data-module="6"><span>Module 6</span><span>›</span></div>
-      <div class="sub-menu" id="module-6">
-        <div class="sub-item" data-title="Module 6 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 6 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 6 · Lesson 3">Lesson 3</div>
-      </div>
-    </li><li>
-      <div class="nav-item" data-module="7"><span>Module 7</span><span>›</span></div>
-      <div class="sub-menu" id="module-7">
-        <div class="sub-item" data-title="Module 7 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 7 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 7 · Lesson 3">Lesson 3</div>
-      </div>
-    </li><li>
-      <div class="nav-item" data-module="8"><span>Module 8</span><span>›</span></div>
-      <div class="sub-menu" id="module-8">
-        <div class="sub-item" data-title="Module 8 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 8 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 8 · Lesson 3">Lesson 3</div>
-      </div>
-    </li><li>
-      <div class="nav-item" data-module="9"><span>Module 9</span><span>›</span></div>
-      <div class="sub-menu" id="module-9">
-        <div class="sub-item" data-title="Module 9 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 9 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 9 · Lesson 3">Lesson 3</div>
-      </div>
-    </li><li>
-      <div class="nav-item" data-module="10"><span>Module 10</span><span>›</span></div>
-      <div class="sub-menu" id="module-10">
-        <div class="sub-item" data-title="Module 10 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 10 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 10 · Lesson 3">Lesson 3</div>
-      </div>
-    </li><li>
-      <div class="nav-item" data-module="11"><span>Module 11</span><span>›</span></div>
-      <div class="sub-menu" id="module-11">
-        <div class="sub-item" data-title="Module 11 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 11 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 11 · Lesson 3">Lesson 3</div>
-      </div>
-    </li><li>
-      <div class="nav-item" data-module="12"><span>Module 12</span><span>›</span></div>
-      <div class="sub-menu" id="module-12">
-        <div class="sub-item" data-title="Module 12 · Lesson 1">Lesson 1</div>
-        <div class="sub-item" data-title="Module 12 · Lesson 2">Lesson 2</div>
-        <div class="sub-item" data-title="Module 12 · Lesson 3">Lesson 3</div>
-      </div>
-    </li>
-  </ul>
+  <button class="side-btn" onclick="showScreen('home-screen')">🏠 Home</button>
+  <button class="side-btn" onclick="toggleSubMenu()">📚 Modules ▼</button>
 
-  <div class="top-tools">
-    <button class="small-btn" data-open="Vocabulary">Vocabulary</button>
-    <button class="small-btn" data-open="Grammar">Grammar</button>
-    <button class="small-btn" data-open="Speaking">Speaking</button>
-    <button class="small-btn" id="fullBtn">⛶ Full screen</button>
+  <div class="submods" id="sub-modules">
+    <button onclick="showScreen('module1-screen')">Module 1: Intro</button>
+    <button onclick="showScreen('module2-screen')">Module 2: Lesson 1</button>
+    <button onclick="showScreen('module3-screen')">Module 3: Future</button>
   </div>
+
+  <div class="keep">Keep Learning! ♥</div>
 </aside>
 
-<main class="main-content">
-  <section class="screen active" id="homeScreen">
-    <div class="welcome-banner">
-      <div class="deco-photo">
-        <div class="photo-placeholder">K</div>
-        Kate's study space
-      </div>
-      <h1>Welcome back, Kate.</h1>
-      <p>Your English hub keeps lessons, EGE practice, vocabulary, grammar, speaking and homework in one place.</p>
-      <div class="sticker-note">Current homework: Generations</div>
-      <div class="action-row">
-        <button class="btn-homework" id="openHomework">HOMEWORK · Generations</button>
-        <button class="btn-secondary" data-open="Speaking">Speaking Practice</button>
-        <button class="btn-secondary" data-open="Grammar">Grammar Practice</button>
-      </div>
+<main class="main">
+  <section class="screen active" id="home-screen">
+    <div class="hero">
+      <div class="polaroid"><div>🇬🇧</div>London Space</div>
+      <h2>Welcome back, Kate!</h2>
+      <div class="tag">Same language. A bigger world.</div>
+      <div class="note">✨ Small Steps, Big Progress!</div>
+      <div style="clear:both"></div>
     </div>
 
-    <div class="quick-grid">
-      <div class="quick-card" data-open="Vocabulary"><h3>Vocabulary</h3><p>Review and recycle useful words with compact practice.</p></div>
-      <div class="quick-card" data-open="Grammar"><h3>Grammar</h3><p>Rules, examples and targeted EGE practice.</p></div>
-      <div class="quick-card" data-open="Speaking"><h3>Speaking</h3><p>Interview questions, timers and answer practice.</p></div>
-      <div class="quick-card" id="homeworkCard"><h3>Homework</h3><p>Open the latest assigned task: Generations.</p></div>
+    <div class="program">
+      <h3>Your Active Program</h3>
+      <p>Click <strong>"Modules"</strong> in the sidebar and choose <strong>"Module 2: Lesson 1"</strong> to see current materials.</p>
     </div>
+  </section>
 
-    <div class="exercise-box">
-      <h2>Generations · Quick Reference</h2>
-      <div class="polaroid-grid">
-        <div class="polaroid-card">
-          <div class="polaroid-img-placeholder">BB</div>
-          <h3>Baby Boomers</h3><em>1946–1964</em>
-          <ul><li>grew up before the internet</li><li>adapted to digital technology later</li></ul>
-        </div>
-        <div class="polaroid-card">
-          <div class="polaroid-img-placeholder">X</div>
-          <h3>Gen X</h3><em>1965–1980</em>
-          <ul><li>saw the shift from analogue to digital</li><li>often value independence</li></ul>
-        </div>
-        <div class="polaroid-card">
-          <div class="polaroid-img-placeholder">M</div>
-          <h3>Millennials</h3><em>1981–1996</em>
-          <ul><li>came of age with the internet</li><li>experienced rapid tech change</li></ul>
-        </div>
-        <div class="polaroid-card">
-          <div class="polaroid-img-placeholder">Z</div>
-          <h3>Gen Z</h3><em>1997–2012</em>
-          <ul><li>grew up with smartphones</li><li>strong digital communication habits</li></ul>
-        </div>
-        <div class="polaroid-card">
-          <div class="polaroid-img-placeholder">A</div>
-          <h3>Gen Alpha</h3><em>2013–present</em>
-          <ul><li>AI and tablets are part of childhood</li><li>highly visual digital environment</li></ul>
-        </div>
-      </div>
+  <section class="screen" id="module1-screen">
+    <button class="back" onclick="showScreen('home-screen')">← Back to Home</button>
+    <div class="lesson-card">
+      <h2>Module 1</h2>
+      <h3>Intro</h3>
+      <p>This module is reserved for introductory materials and revision.</p>
+    </div>
+  </section>
+
+  <section class="screen" id="module2-screen">
+    <button class="back" onclick="showScreen('home-screen')">← Back to Lesson Screen</button>
+    <div class="lesson-card">
+      <h2>Module 2 • Lesson 1</h2>
+      <h3>The Generation Gap</h3>
+      <p>In this session, we analyzed how age groups communicate, work, and embrace technology. Review your active home assignments below.</p>
+      <a class="btn-primary" href="module2-lesson1-homework-generations.html">🚀 Open Homework: Generations</a>
+    </div>
+  </section>
+
+  <section class="screen" id="module3-screen">
+    <button class="back" onclick="showScreen('home-screen')">← Back to Home</button>
+    <div class="lesson-card">
+      <h2>Module 3</h2>
+      <h3>Future</h3>
+      <p>This module is ready for future materials.</p>
     </div>
   </section>
 </main>
 
-<section class="fullscreen-panel" id="contentPanel">
-  <div class="panel-head">
-    <h2 id="panelTitle">Lesson</h2>
-    <button class="close-btn" id="closePanel">← Back to Home</button>
-  </div>
-  <div class="placeholder">
-    <div>
-      <h3 id="placeholderTitle">Lesson</h3>
-      <p id="placeholderText">This full-screen section is ready for lesson materials.</p>
-    </div>
-  </div>
-</section>
-
-<section class="fullscreen-panel" id="homeworkPanel">
-  <div class="panel-head">
-    <h2>Homework · Generations</h2>
-    <button class="close-btn" id="closeHomework">← Back to Home</button>
-  </div>
-  <iframe class="homework-frame" src="module2-lesson1-homework-generations.html" title="Kate Homework Generations"></iframe>
-</section>
-
 <script>
-const navItems=[...document.querySelectorAll('.nav-item')];
-navItems.forEach(item=>{
-  item.addEventListener('click',()=>{
-    const id='module-'+item.dataset.module;
-    const menu=document.getElementById(id);
-    const wasOpen=menu.classList.contains('open');
-    document.querySelectorAll('.sub-menu').forEach(m=>m.classList.remove('open'));
-    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-    if(!wasOpen){menu.classList.add('open');item.classList.add('active')}
-  });
-});
-
-const contentPanel=document.getElementById('contentPanel');
-const homeworkPanel=document.getElementById('homeworkPanel');
-const panelTitle=document.getElementById('panelTitle');
-const placeholderTitle=document.getElementById('placeholderTitle');
-const placeholderText=document.getElementById('placeholderText');
-
-function openContent(title){
-  panelTitle.textContent=title;
-  placeholderTitle.textContent=title;
-  const map={
-    'Vocabulary':'Flashcards, matching, pronunciation and vocabulary revision are collected here.',
-    'Grammar':'Grammar rules, examples, practice and quick checks are collected here.',
-    'Speaking':'Speaking prompts, interview practice, timers and model answers are collected here.'
-  };
-  placeholderText.textContent=map[title]||'This full-screen lesson page is ready for lesson materials.';
-  contentPanel.classList.add('active');
+function showScreen(screenId){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
 }
-document.querySelectorAll('[data-open]').forEach(el=>el.addEventListener('click',()=>openContent(el.dataset.open)));
-document.querySelectorAll('.sub-item').forEach(el=>el.addEventListener('click',()=>openContent(el.dataset.title)));
-document.getElementById('closePanel').onclick=()=>contentPanel.classList.remove('active');
-
-function openHomework(){homeworkPanel.classList.add('active')}
-document.getElementById('openHomework').onclick=openHomework;
-document.getElementById('homeworkCard').onclick=openHomework;
-document.getElementById('closeHomework').onclick=()=>homeworkPanel.classList.remove('active');
-
-document.getElementById('fullBtn').onclick=async()=>{
-  try{
-    if(document.fullscreenElement) await document.exitFullscreen();
-    else await document.documentElement.requestFullscreen();
-  }catch(e){}
-};
+function toggleSubMenu(){
+  document.getElementById('sub-modules').classList.toggle('open');
+}
 </script>
 </body>
 </html>
