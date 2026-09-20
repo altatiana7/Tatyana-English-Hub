@@ -1,5 +1,358 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kate English Learning Hub</title><style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif;color:#173643}body{background:#dfe7e7}#app{position:relative;width:100vw;height:100vh;overflow:hidden;background:#eef4f4;background-size:cover;background-position:center}#app:after{content:"";position:absolute;inset:1.2vh 1vw;border:1px solid rgba(40,95,105,.16);border-radius:28px;pointer-events:none}.top{position:absolute;left:2vw;right:2vw;top:2vh;height:7vh;display:flex;justify-content:space-between;align-items:center;z-index:5}.ttl{font-size:1.35vw;font-weight:700;letter-spacing:.04em}.ctl{display:flex;gap:.5vw}.ctl button,.back{border:0;border-radius:12px;padding:.7vw 1vw;background:rgba(255,255,255,.9);color:#285f69;font-weight:700;cursor:pointer}.bg-clean{position:absolute;left:18vw;top:4.5vh;width:23vw;height:17vh;border-radius:24px;background:linear-gradient(180deg,rgba(243,248,248,.98),rgba(243,248,248,.94));backdrop-filter:blur(4px);z-index:3;pointer-events:none}.panel{position:absolute;left:2vw;top:10vh;bottom:5vh;width:17.5vw;background:rgba(255,255,255,.96);border-radius:22px;box-shadow:0 16px 45px rgba(23,54,67,.16);overflow:hidden;z-index:4;border:1px solid rgba(40,95,105,.1)}.ph{height:7vh;min-height:52px;background:linear-gradient(135deg,#285f69,#377f8b);color:white;display:flex;align-items:center;padding:0 1vw;font-size:1.05vw;font-weight:800}.ml{height:calc(100% - 7vh);padding:.6vw;overflow:auto}.mb{width:100%;border:0;background:transparent;text-align:left;border-radius:12px;padding:.74vh .82vw;margin:.14vh 0;font-size:1.28vw;font-weight:700;color:#173643;cursor:pointer;display:flex;justify-content:space-between}.mb:after{content:"›";opacity:.6}.mb.on{background:#e3f3f4}.ls{display:none;padding:.1vh .45vw .45vh .7vw}.ls.on{display:block}.lb{width:100%;border:1px solid #e0eded;background:#f7fbfb;border-radius:10px;padding:.55vw;margin:.2vh 0;font-size:.95vw;font-weight:700;color:#285f69;cursor:pointer}.skills{position:absolute;right:1.8vw;top:20.5vh;width:17.5vw;display:flex;flex-direction:column;gap:1vh;z-index:10;padding:1.2vw;background:#f7fbfb;border:1px solid rgba(40,95,105,.14);border-radius:24px;box-shadow:0 16px 45px rgba(23,54,67,.14)}.skills:before{content:"";position:absolute;z-index:-1;left:-1.1vw;right:-1vw;top:-8.5vh;bottom:-10vh;background:linear-gradient(180deg,#f5faf9 0%,#edf5f5 100%);border-radius:30px;box-shadow:0 10px 34px rgba(23,54,67,.08)}.sb{height:6.3vh;min-height:48px;border:0;border-radius:16px;background:linear-gradient(135deg,#285f69,#377f8b);color:#fff;cursor:pointer;font-size:1.02vw;font-weight:800;text-align:left;padding:0 1vw;box-shadow:0 8px 22px rgba(23,54,67,.14)}.sb:hover{filter:brightness(1.04)}.footer{position:absolute;left:2vw;bottom:1.8vh;font-size:.72vw;font-weight:700;letter-spacing:.15em;color:#4e747b;z-index:4}#screen{position:fixed;inset:0;background:#f3f8f8;z-index:50;display:none;flex-direction:column}#screen.on{display:flex}.st{height:9vh;min-height:68px;background:linear-gradient(135deg,#285f69,#377f8b);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 2vw}#st{font-size:1.8vw;font-weight:800}.stage{flex:1;padding:2vw;display:grid;place-items:center;background:radial-gradient(circle at 85% 15%,rgba(55,127,139,.12),transparent 30%),linear-gradient(#fbfdfd,#edf5f5)}.empty{width:min(78vw,1050px);min-height:68vh;border:2px dashed #bfd4d7;border-radius:26px;background:#fff;display:grid;place-items:center;text-align:center;padding:4vw}.empty h2{font-size:2.2vw;margin:.2em}.empty p{font-size:1.05vw;line-height:1.5;color:#6a8388;max-width:45vw}@media(max-aspect-ratio:4/3){.panel{width:25vw}.mb{font-size:1.55vw}.ph{font-size:1.3vw}.skills{width:22vw;top:20vh}.sb{font-size:1.32vw}}
-</style></head><body><div id="app"><div class="bg-clean"></div><div class="top"><div></div><div class="ctl"><button id="home">Home</button><button id="full">⛶ Full screen</button></div></div><section class="panel"><div class="ph">Modules</div><div class="ml" id="ml"><div class="m"><button class="mb" data-m="1">Module 1</button><div class="ls" id="l1"><button class="lb" data-m="1" data-l="1">Lesson 1</button><button class="lb" data-m="1" data-l="2">Lesson 2</button><button class="lb" data-m="1" data-l="3">Lesson 3</button></div></div><div class="m"><button class="mb" data-m="2">Module 2</button><div class="ls" id="l2"><button class="lb" data-m="2" data-l="1">Lesson 1</button><button class="lb" data-m="2" data-l="2">Lesson 2</button><button class="lb" data-m="2" data-l="3">Lesson 3</button></div></div><div class="m"><button class="mb" data-m="3">Module 3</button><div class="ls" id="l3"><button class="lb" data-m="3" data-l="1">Lesson 1</button><button class="lb" data-m="3" data-l="2">Lesson 2</button><button class="lb" data-m="3" data-l="3">Lesson 3</button></div></div><div class="m"><button class="mb" data-m="4">Module 4</button><div class="ls" id="l4"><button class="lb" data-m="4" data-l="1">Lesson 1</button><button class="lb" data-m="4" data-l="2">Lesson 2</button><button class="lb" data-m="4" data-l="3">Lesson 3</button></div></div><div class="m"><button class="mb" data-m="5">Module 5</button><div class="ls" id="l5"><button class="lb" data-m="5" data-l="1">Lesson 1</button><button class="lb" data-m="5" data-l="2">Lesson 2</button><button class="lb" data-m="5" data-l="3">Lesson 3</button></div></div><div class="m"><button class="mb" data-m="6">Module 6</button><div class="ls" id="l6"><button class="lb" data-m="6" data-l="1">Lesson 1</button><button class="lb" data-m="6" data-l="2">Lesson 2</button><button class="lb" data-m="6" data-l="3">Lesson 3</button></div></div><div class="m"><button class="mb" data-m="7">Module 7</button><div class="ls" id="l7"><button class="lb" data-m="7" data-l="1">Lesson 1</button><button class="lb" data-m="7" data-l="2">Lesson 2</button><button class="lb" data-m="7" data-l="3">Lesson 3</button></div></div><div class="m"><button class="mb" data-m="8">Module 8</button><div class="ls" id="l8"><button class="lb" data-m="8" data-l="1">Lesson 1</button><button class="lb" data-m="8" data-l="2">Lesson 2</button><button class="lb" data-m="8" data-l="3">Lesson 3</button></div></div><div class="m"><button class="mb" data-m="9">Module 9</button><div class="ls" id="l9"><button class="lb" data-m="9" data-l="1">Lesson 1</button><button class="lb" data-m="9" data-l="2">Lesson 2</button><button class="lb" data-m="9" data-l="3">Lesson 3</button></div></div><div class="m"><button class="mb" data-m="10">Module 10</button><div class="ls" id="l10"><button class="lb" data-m="10" data-l="1">Lesson 1</button><button class="lb" data-m="10" data-l="2">Lesson 2</button><button class="lb" data-m="10" data-l="3">Lesson 3</button></div></div><div class="m"><button class="mb" data-m="11">Module 11</button><div class="ls" id="l11"><button class="lb" data-m="11" data-l="1">Lesson 1</button><button class="lb" data-m="11" data-l="2">Lesson 2</button><button class="lb" data-m="11" data-l="3">Lesson 3</button></div></div><div class="m"><button class="mb" data-m="12">Module 12</button><div class="ls" id="l12"><button class="lb" data-m="12" data-l="1">Lesson 1</button><button class="lb" data-m="12" data-l="2">Lesson 2</button><button class="lb" data-m="12" data-l="3">Lesson 3</button></div></div></div></section><div class="skills"><button class="sb" data-s="Vocabulary">Vocabulary</button><button class="sb" data-s="Grammar">Grammar</button><button class="sb" data-s="Speaking">Speaking</button><button class="sb" data-s="Extra Practice">Extra Practice</button></div><div class="footer">KATE · ENGLISH LEARNING HUB</div></div><section id="screen"><div class="st"><div id="st">Lesson</div><div><button class="back" id="back">← Back</button> <button class="back" id="full2">⛶ Full screen</button></div></div><div class="stage"><div class="empty"><div><h2 id="et">Lesson</h2><p id="ep">This page is ready for future lesson materials.</p></div></div></div></section><script>
-const qs=s=>document.querySelector(s),qsa=s=>[...document.querySelectorAll(s)],scr=qs('#screen');function close(){qsa('.ls').forEach(x=>x.classList.remove('on'));qsa('.mb').forEach(x=>x.classList.remove('on'))}qsa('.mb').forEach(b=>b.onclick=()=>{let n=b.dataset.m,x=qs('#l'+n),o=x.classList.contains('on');close();if(!o){x.classList.add('on');b.classList.add('on')}});function openT(t,p){qs('#st').textContent=t;qs('#et').textContent=t;qs('#ep').textContent=p;scr.classList.add('on')}qsa('.lb').forEach(b=>b.onclick=()=>openT(`Module ${b.dataset.m} · Lesson ${b.dataset.l}`,'This full-screen lesson page is ready for future materials: warm-up, video, vocabulary, grammar, speaking, reading, homework and revision.'));qsa('.sb').forEach(b=>b.onclick=()=>{let s=b.dataset.s,d=s==='Vocabulary'?'Flashcards, matching, pronunciation and vocabulary revision will go here.':s==='Grammar'?'Grammar rules, examples, practice and quick checks will go here.':s==='Speaking'?'Speaking prompts, discussion cards, timers and role plays will go here.':'Homework, games, tests and extension practice will go here.';openT(s,d)});qs('#back').onclick=()=>scr.classList.remove('on');qs('#home').onclick=()=>{scr.classList.remove('on');close();qs('#ml').scrollTop=0};async function fs(){try{document.fullscreenElement?await document.exitFullscreen():await document.documentElement.requestFullscreen()}catch(e){}}qs('#full').onclick=fs;qs('#full2').onclick=fs;
-</script><script src="bg1.js"></script><script src="bg2.js"></script><script src="bg3.js"></script><script src="bg4.js"></script><script src="bg5.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kate's English Hub</title>
+<style>
+:root{
+  --bg-main:#dbe2e9;--bg-sidebar:#f1f5f9;--text-dark:#1e293b;
+  --accent-mint:#a7f3d0;--accent-blue:#bae6fd;--accent-pink:#fbcfe8;
+  --border-color:#cbd5e1;--correct-green:#10b981;--wrong-red:#ef4444;
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+body{background:var(--bg-main);color:var(--text-dark);display:flex;min-height:100vh}
+.sidebar{
+  width:280px;background:var(--bg-sidebar);border-right:1px solid var(--border-color);
+  padding:20px;display:flex;flex-direction:column;gap:20px;flex-shrink:0
+}
+.logo-area{
+  background:#fff;padding:15px;border-radius:12px;border:2px dashed #94a3b8;
+  text-align:center;box-shadow:2px 2px 8px rgba(0,0,0,.05)
+}
+.logo-area h2{font-size:1.3rem;color:#0f172a;font-weight:800}
+.logo-area p{margin-top:6px;font-size:.82rem;color:#64748b}
+.nav-list{list-style:none;display:flex;flex-direction:column;gap:4px;max-height:60vh;overflow-y:auto;padding-right:5px}
+.nav-item{
+  padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.95rem;
+  transition:.2s;background:#fff;border:1px solid var(--border-color);
+  display:flex;justify-content:space-between;align-items:center
+}
+.nav-item:hover,.nav-item.active{background:#e2e8f0;border-color:#94a3b8}
+.sub-menu{margin-left:15px;margin-top:4px;display:none;flex-direction:column;gap:4px}
+.sub-menu.open{display:flex}
+.sub-item{
+  padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;
+  font-size:.85rem;cursor:pointer;transition:.2s
+}
+.sub-item:hover{background:var(--accent-blue)}
+.main-content{flex-grow:1;padding:40px;position:relative;overflow-y:auto;max-height:100vh}
+.screen{display:none;animation:fadeIn .35s ease-in-out forwards}
+.screen.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sticker-note{
+  background:#fef08a;color:#713f12;padding:15px;border-radius:4px;box-shadow:3px 3px 10px rgba(0,0,0,.08);
+  transform:rotate(-1deg);display:inline-block;margin:15px 0;font-weight:600;border-left:4px solid #facc15
+}
+.welcome-banner{
+  background:#fff;padding:40px;border-radius:20px;border:1px solid var(--border-color);
+  box-shadow:0 4px 20px rgba(0,0,0,.02);position:relative;margin-bottom:30px;min-height:220px
+}
+.welcome-banner h1{font-size:2.4rem;margin-bottom:10px;color:#0f172a}
+.welcome-banner p{max-width:620px;line-height:1.55;color:#475569}
+.deco-photo{
+  position:absolute;right:40px;top:-20px;background:#fff;padding:10px 10px 30px;
+  box-shadow:0 8px 24px rgba(0,0,0,.15);border-radius:4px;transform:rotate(3deg);
+  width:150px;text-align:center;font-size:.8rem;font-weight:bold
+}
+.deco-photo .photo-placeholder{
+  width:100%;height:120px;border-radius:2px;
+  background:linear-gradient(135deg,#dbeafe,#fce7f3);
+  display:grid;place-items:center;font-size:2rem;color:#64748b
+}
+.action-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.btn-homework,.btn-secondary{
+  border:none;padding:14px 24px;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;
+  transition:.25s;display:inline-flex;align-items:center;gap:8px
+}
+.btn-homework{background:#0f172a;color:#fff;box-shadow:0 4px 15px rgba(15,23,42,.25)}
+.btn-homework:hover{transform:translateY(-2px);background:#1e293b}
+.btn-secondary{background:#fff;color:#1e293b;border:1px solid var(--border-color)}
+.btn-secondary:hover{background:#f8fafc}
+.quick-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin-bottom:30px
+}
+.quick-card{
+  background:#fff;border:1px solid var(--border-color);border-radius:16px;padding:22px;
+  box-shadow:0 2px 12px rgba(0,0,0,.02);cursor:pointer;transition:.2s
+}
+.quick-card:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(15,23,42,.08)}
+.quick-card h3{margin-bottom:8px;font-size:1.05rem}
+.quick-card p{font-size:.9rem;color:#64748b;line-height:1.45}
+.polaroid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px;margin:25px 0}
+.polaroid-card{
+  background:#fff;padding:12px 12px 24px;box-shadow:0 4px 15px rgba(0,0,0,.06);
+  border-radius:4px;border:1px solid #e2e8f0;text-align:center;transition:.3s
+}
+.polaroid-card:hover{transform:scale(1.03) rotate(1deg)}
+.polaroid-img-placeholder{
+  height:110px;background:#f1f5f9;border-radius:4px;display:flex;align-items:center;
+  justify-content:center;font-size:2.2rem;margin-bottom:12px
+}
+.polaroid-card h3{font-size:1.05rem;margin-bottom:4px}
+.polaroid-card em{font-size:.78rem;color:#64748b;display:block;margin-bottom:8px}
+.polaroid-card ul{text-align:left;font-size:.83rem;list-style:none;padding-top:8px;border-top:1px dashed #e2e8f0}
+.polaroid-card li{margin-bottom:5px;position:relative;padding-left:12px}
+.polaroid-card li:before{content:"•";position:absolute;left:0;color:#38bdf8}
+.exercise-box{
+  background:#fff;border-radius:16px;border:1px solid var(--border-color);padding:30px;margin-bottom:30px;
+  box-shadow:0 2px 12px rgba(0,0,0,.01)
+}
+.exercise-box h2{font-size:1.3rem;margin-bottom:15px;border-bottom:2px solid var(--bg-main);padding-bottom:10px}
+.fullscreen-panel{
+  position:fixed;inset:0;background:#eef2f6;z-index:50;display:none;overflow:auto;padding:28px
+}
+.fullscreen-panel.active{display:block}
+.panel-head{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px;
+  position:sticky;top:0;background:#eef2f6;padding:8px 0 14px;z-index:2
+}
+.panel-head h2{font-size:1.6rem}
+.close-btn{border:1px solid var(--border-color);background:#fff;padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:700}
+.homework-frame{
+  width:100%;height:calc(100vh - 100px);border:0;border-radius:16px;background:#fff;
+  box-shadow:0 6px 24px rgba(15,23,42,.08)
+}
+.placeholder{
+  min-height:56vh;background:#fff;border:1px dashed #94a3b8;border-radius:18px;
+  display:grid;place-items:center;text-align:center;padding:40px
+}
+.placeholder h3{font-size:1.6rem;margin-bottom:10px}.placeholder p{color:#64748b;max-width:650px;line-height:1.55}
+.top-tools{margin-top:auto;display:grid;gap:8px}
+.small-btn{border:1px solid var(--border-color);background:#fff;border-radius:8px;padding:9px;cursor:pointer;font-weight:700}
+@media(max-width:900px){
+  body{display:block}.sidebar{width:100%;border-right:0;border-bottom:1px solid var(--border-color)}
+  .nav-list{max-height:none}.main-content{max-height:none;padding:20px}.deco-photo{display:none}
+  .welcome-banner{padding:28px}.welcome-banner h1{font-size:2rem}
+}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="logo-area">
+    <h2>KATE'S ENGLISH HUB</h2>
+    <p>EGE 2026 · Lessons · Practice · Homework</p>
+  </div>
+
+  <ul class="nav-list" id="navList">
+    <li>
+      <div class="nav-item" data-module="1"><span>Module 1</span><span>›</span></div>
+      <div class="sub-menu" id="module-1">
+        <div class="sub-item" data-title="Module 1 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 1 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 1 · Lesson 3">Lesson 3</div>
+      </div>
+    </li><li>
+      <div class="nav-item" data-module="2"><span>Module 2</span><span>›</span></div>
+      <div class="sub-menu" id="module-2">
+        <div class="sub-item" data-title="Module 2 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 2 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 2 · Lesson 3">Lesson 3</div>
+      </div>
+    </li><li>
+      <div class="nav-item" data-module="3"><span>Module 3</span><span>›</span></div>
+      <div class="sub-menu" id="module-3">
+        <div class="sub-item" data-title="Module 3 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 3 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 3 · Lesson 3">Lesson 3</div>
+      </div>
+    </li><li>
+      <div class="nav-item" data-module="4"><span>Module 4</span><span>›</span></div>
+      <div class="sub-menu" id="module-4">
+        <div class="sub-item" data-title="Module 4 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 4 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 4 · Lesson 3">Lesson 3</div>
+      </div>
+    </li><li>
+      <div class="nav-item" data-module="5"><span>Module 5</span><span>›</span></div>
+      <div class="sub-menu" id="module-5">
+        <div class="sub-item" data-title="Module 5 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 5 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 5 · Lesson 3">Lesson 3</div>
+      </div>
+    </li><li>
+      <div class="nav-item" data-module="6"><span>Module 6</span><span>›</span></div>
+      <div class="sub-menu" id="module-6">
+        <div class="sub-item" data-title="Module 6 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 6 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 6 · Lesson 3">Lesson 3</div>
+      </div>
+    </li><li>
+      <div class="nav-item" data-module="7"><span>Module 7</span><span>›</span></div>
+      <div class="sub-menu" id="module-7">
+        <div class="sub-item" data-title="Module 7 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 7 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 7 · Lesson 3">Lesson 3</div>
+      </div>
+    </li><li>
+      <div class="nav-item" data-module="8"><span>Module 8</span><span>›</span></div>
+      <div class="sub-menu" id="module-8">
+        <div class="sub-item" data-title="Module 8 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 8 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 8 · Lesson 3">Lesson 3</div>
+      </div>
+    </li><li>
+      <div class="nav-item" data-module="9"><span>Module 9</span><span>›</span></div>
+      <div class="sub-menu" id="module-9">
+        <div class="sub-item" data-title="Module 9 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 9 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 9 · Lesson 3">Lesson 3</div>
+      </div>
+    </li><li>
+      <div class="nav-item" data-module="10"><span>Module 10</span><span>›</span></div>
+      <div class="sub-menu" id="module-10">
+        <div class="sub-item" data-title="Module 10 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 10 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 10 · Lesson 3">Lesson 3</div>
+      </div>
+    </li><li>
+      <div class="nav-item" data-module="11"><span>Module 11</span><span>›</span></div>
+      <div class="sub-menu" id="module-11">
+        <div class="sub-item" data-title="Module 11 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 11 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 11 · Lesson 3">Lesson 3</div>
+      </div>
+    </li><li>
+      <div class="nav-item" data-module="12"><span>Module 12</span><span>›</span></div>
+      <div class="sub-menu" id="module-12">
+        <div class="sub-item" data-title="Module 12 · Lesson 1">Lesson 1</div>
+        <div class="sub-item" data-title="Module 12 · Lesson 2">Lesson 2</div>
+        <div class="sub-item" data-title="Module 12 · Lesson 3">Lesson 3</div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="top-tools">
+    <button class="small-btn" data-open="Vocabulary">Vocabulary</button>
+    <button class="small-btn" data-open="Grammar">Grammar</button>
+    <button class="small-btn" data-open="Speaking">Speaking</button>
+    <button class="small-btn" id="fullBtn">⛶ Full screen</button>
+  </div>
+</aside>
+
+<main class="main-content">
+  <section class="screen active" id="homeScreen">
+    <div class="welcome-banner">
+      <div class="deco-photo">
+        <div class="photo-placeholder">K</div>
+        Kate's study space
+      </div>
+      <h1>Welcome back, Kate.</h1>
+      <p>Your English hub keeps lessons, EGE practice, vocabulary, grammar, speaking and homework in one place.</p>
+      <div class="sticker-note">Current homework: Generations</div>
+      <div class="action-row">
+        <button class="btn-homework" id="openHomework">HOMEWORK · Generations</button>
+        <button class="btn-secondary" data-open="Speaking">Speaking Practice</button>
+        <button class="btn-secondary" data-open="Grammar">Grammar Practice</button>
+      </div>
+    </div>
+
+    <div class="quick-grid">
+      <div class="quick-card" data-open="Vocabulary"><h3>Vocabulary</h3><p>Review and recycle useful words with compact practice.</p></div>
+      <div class="quick-card" data-open="Grammar"><h3>Grammar</h3><p>Rules, examples and targeted EGE practice.</p></div>
+      <div class="quick-card" data-open="Speaking"><h3>Speaking</h3><p>Interview questions, timers and answer practice.</p></div>
+      <div class="quick-card" id="homeworkCard"><h3>Homework</h3><p>Open the latest assigned task: Generations.</p></div>
+    </div>
+
+    <div class="exercise-box">
+      <h2>Generations · Quick Reference</h2>
+      <div class="polaroid-grid">
+        <div class="polaroid-card">
+          <div class="polaroid-img-placeholder">BB</div>
+          <h3>Baby Boomers</h3><em>1946–1964</em>
+          <ul><li>grew up before the internet</li><li>adapted to digital technology later</li></ul>
+        </div>
+        <div class="polaroid-card">
+          <div class="polaroid-img-placeholder">X</div>
+          <h3>Gen X</h3><em>1965–1980</em>
+          <ul><li>saw the shift from analogue to digital</li><li>often value independence</li></ul>
+        </div>
+        <div class="polaroid-card">
+          <div class="polaroid-img-placeholder">M</div>
+          <h3>Millennials</h3><em>1981–1996</em>
+          <ul><li>came of age with the internet</li><li>experienced rapid tech change</li></ul>
+        </div>
+        <div class="polaroid-card">
+          <div class="polaroid-img-placeholder">Z</div>
+          <h3>Gen Z</h3><em>1997–2012</em>
+          <ul><li>grew up with smartphones</li><li>strong digital communication habits</li></ul>
+        </div>
+        <div class="polaroid-card">
+          <div class="polaroid-img-placeholder">A</div>
+          <h3>Gen Alpha</h3><em>2013–present</em>
+          <ul><li>AI and tablets are part of childhood</li><li>highly visual digital environment</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="fullscreen-panel" id="contentPanel">
+  <div class="panel-head">
+    <h2 id="panelTitle">Lesson</h2>
+    <button class="close-btn" id="closePanel">← Back to Home</button>
+  </div>
+  <div class="placeholder">
+    <div>
+      <h3 id="placeholderTitle">Lesson</h3>
+      <p id="placeholderText">This full-screen section is ready for lesson materials.</p>
+    </div>
+  </div>
+</section>
+
+<section class="fullscreen-panel" id="homeworkPanel">
+  <div class="panel-head">
+    <h2>Homework · Generations</h2>
+    <button class="close-btn" id="closeHomework">← Back to Home</button>
+  </div>
+  <iframe class="homework-frame" src="module2-lesson1-homework-generations.html" title="Kate Homework Generations"></iframe>
+</section>
+
+<script>
+const navItems=[...document.querySelectorAll('.nav-item')];
+navItems.forEach(item=>{
+  item.addEventListener('click',()=>{
+    const id='module-'+item.dataset.module;
+    const menu=document.getElementById(id);
+    const wasOpen=menu.classList.contains('open');
+    document.querySelectorAll('.sub-menu').forEach(m=>m.classList.remove('open'));
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    if(!wasOpen){menu.classList.add('open');item.classList.add('active')}
+  });
+});
+
+const contentPanel=document.getElementById('contentPanel');
+const homeworkPanel=document.getElementById('homeworkPanel');
+const panelTitle=document.getElementById('panelTitle');
+const placeholderTitle=document.getElementById('placeholderTitle');
+const placeholderText=document.getElementById('placeholderText');
+
+function openContent(title){
+  panelTitle.textContent=title;
+  placeholderTitle.textContent=title;
+  const map={
+    'Vocabulary':'Flashcards, matching, pronunciation and vocabulary revision are collected here.',
+    'Grammar':'Grammar rules, examples, practice and quick checks are collected here.',
+    'Speaking':'Speaking prompts, interview practice, timers and model answers are collected here.'
+  };
+  placeholderText.textContent=map[title]||'This full-screen lesson page is ready for lesson materials.';
+  contentPanel.classList.add('active');
+}
+document.querySelectorAll('[data-open]').forEach(el=>el.addEventListener('click',()=>openContent(el.dataset.open)));
+document.querySelectorAll('.sub-item').forEach(el=>el.addEventListener('click',()=>openContent(el.dataset.title)));
+document.getElementById('closePanel').onclick=()=>contentPanel.classList.remove('active');
+
+function openHomework(){homeworkPanel.classList.add('active')}
+document.getElementById('openHomework').onclick=openHomework;
+document.getElementById('homeworkCard').onclick=openHomework;
+document.getElementById('closeHomework').onclick=()=>homeworkPanel.classList.remove('active');
+
+document.getElementById('fullBtn').onclick=async()=>{
+  try{
+    if(document.fullscreenElement) await document.exitFullscreen();
+    else await document.documentElement.requestFullscreen();
+  }catch(e){}
+};
+</script>
+</body>
+</html>
