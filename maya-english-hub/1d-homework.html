@@ -10,14 +10,15 @@
 *{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,#f3efff,#effaff 55%,#f5fff1)}
 .app{height:100vh;max-width:1260px;margin:auto;padding:10px 12px;display:grid;grid-template-rows:auto 1fr;gap:8px}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:12px}.title h1{margin:0;font-size:27px;color:var(--p)}.title p{margin:2px 0 0;color:#6b6880;font-size:14px}
-.tabs{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.tab,.save,.check{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:8px 12px;font-weight:900;color:#513aad;cursor:pointer}.tab.active{background:var(--p2);color:#fff}.save{color:#08798d}.check{background:var(--teal);color:#fff;border-color:var(--teal)}
-.saveStatus{font-size:12px;color:#766f88;font-weight:800}
-.panel{display:none;min-height:0;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:17px;padding:12px 14px;box-shadow:0 8px 22px rgba(70,49,135,.08);overflow:auto}.panel.active{display:block}
+.tabs{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.tab,.save,.finish{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:8px 12px;font-weight:900;color:#513aad;cursor:pointer}.tab.active{background:var(--p2);color:#fff}.save{color:#08798d}.finish{background:var(--pink);color:#fff;border-color:var(--pink)}
+.saveStatus{font-size:12px;color:#766f88;font-weight:800}.panel{display:none;min-height:0;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:17px;padding:12px 14px;box-shadow:0 8px 22px rgba(70,49,135,.08);overflow:auto}.panel.active{display:block}
 .photoGrid{display:grid;grid-template-columns:minmax(300px,48%) 1fr;gap:14px;height:100%}.photoBox{display:flex;align-items:center;justify-content:center;background:#f2eff8;border-radius:14px;padding:8px}.photoBox img{width:100%;max-height:64vh;object-fit:contain;border-radius:10px}
 .task h2,.rules h2,.testHead h2{margin:0 0 6px;color:var(--p);font-size:21px}.task p{margin:4px 0 8px}.prompt{background:#f7f4ff;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:14px;line-height:1.45}.prompt b{color:var(--p)}textarea{width:100%;height:230px;border:1px solid #d7d0e8;border-radius:12px;padding:11px;font:16px/1.5 Inter,Segoe UI,Arial;margin-top:9px;resize:none}.count{font-size:12px;color:#756f84;text-align:right;margin-top:3px}
 .ruleGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ruleCard{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.ruleCard h3{margin:0 0 8px;font-size:20px}.simple h3{color:var(--p)}.cont h3{color:var(--teal)}.ruleRow{display:grid;grid-template-columns:155px 1fr;gap:8px;padding:7px 0;border-top:1px solid #eee9f5;font-size:14px}.ruleRow:first-of-type{border-top:0}.ruleRow b{color:#44358f}.warning{margin-top:12px;background:#fff7e7;border:1px solid #f2d99f;border-radius:12px;padding:10px;font-size:14px}
-.testHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}.score{font-weight:900;color:var(--p)}.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.q{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px;font-size:14.5px;line-height:1.35}.q input{width:150px;border:1px solid #cfc6e4;border-radius:7px;padding:5px 7px;font-size:14px}.q.ok{border-color:#77c9a8;background:#f1fff9}.q.bad{border-color:#e6a2b0;background:#fff5f7}.feedback{display:block;min-height:16px;margin-top:4px;font-size:12px;font-weight:800}.q.ok .feedback{color:var(--ok)}.q.bad .feedback{color:var(--bad)}
+.testHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}.progress{font-weight:900;color:var(--p);white-space:nowrap}.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.q{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;font-size:14.5px;line-height:1.35}.stem{font-weight:800;margin-bottom:7px}.opts{display:grid;gap:5px}.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid #e7e1f2;border-radius:9px;padding:7px 8px;cursor:pointer;background:#fff}.opt:hover{background:#faf8ff}.opt:has(input:checked){border-color:#8b75d4;background:#f4f0ff}.opt input{margin-top:2px}.letter{font-weight:900;color:#5b47b3;min-width:18px}
+.submitArea{margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.submitArea small{color:#777186}.getCode{border:0;border-radius:12px;background:linear-gradient(110deg,var(--pink),var(--p2));color:#fff;padding:11px 17px;font-weight:900;cursor:pointer}
 .flashWrap{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px}.flashTools{width:min(760px,94%);display:flex;justify-content:flex-end;gap:7px}.tool{border:1px solid #d9d0ef;background:#fff;border-radius:10px;padding:7px 10px;font-weight:900;color:#513aad;cursor:pointer}.flash{width:min(760px,94%);height:min(380px,52vh);perspective:1200px;cursor:pointer}.inner{position:relative;width:100%;height:100%;transition:.38s;transform-style:preserve-3d}.flash.flipped .inner{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 10px 28px rgba(70,49,135,.10);display:flex;align-items:center;justify-content:center;text-align:center;padding:28px}.front{font-size:38px;font-weight:900;color:var(--p)}.back{transform:rotateY(180deg);font-size:20px;line-height:1.5}.back b{color:var(--teal)}.nav{display:flex;align-items:center;gap:15px}.nav button{width:42px;height:42px;border:1px solid #d9d0ef;border-radius:50%;background:#fff;font-size:18px;font-weight:900;color:var(--p);cursor:pointer}.counter{min-width:65px;text-align:center;font-weight:900}
+.modal{position:fixed;inset:0;background:rgba(26,18,58,.5);display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.show{display:flex}.codeCard{width:min(520px,94vw);background:#fff;border-radius:20px;padding:20px;text-align:center;box-shadow:0 18px 50px rgba(42,29,91,.2)}.codeCard h2{margin:0 0 6px;color:var(--p)}.codeCard p{margin:4px 0 13px;color:#666176}.code{font:900 30px/1.1 Consolas,monospace;letter-spacing:.08em;background:#f3efff;border:2px dashed #9b88d8;border-radius:14px;padding:14px;margin:10px 0}.codeBtns{display:flex;gap:8px;justify-content:center}.codeBtns button{border:0;border-radius:10px;padding:9px 13px;font-weight:900;cursor:pointer}.copy{background:var(--teal);color:#fff}.close{background:#eee}
 @media(max-width:900px){.app{height:auto}.photoGrid,.ruleGrid,.qgrid{grid-template-columns:1fr}.photoBox img{max-height:420px}.bar{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
@@ -78,17 +79,18 @@
         <div class="ruleRow"><b>annoying repetition</b><span>You are always interrupting me!</span></div>
       </div>
     </div>
-    <div class="warning"><b>Important:</b> do not use stative verbs in Continuous in their normal state meaning: <b>I know</b>, not <s>I am knowing</s>; <b>she wants</b>, not <s>she is wanting</s>.</div>
+    <div class="warning"><b>Important:</b> stative verbs normally use Present Simple: <b>I know</b>, <b>she wants</b>, <b>he believes</b>.</div>
   </section>
 
   <section class="panel" id="test1">
-    <div class="testHead"><div><h2>Interactive test · 1–10</h2><small>Open the brackets. Use vocabulary from 1A–1C.</small></div><button class="check" data-set="0">CHECK 1–10</button></div>
-    <div class="qgrid" id="q1"></div><div class="score" id="score1"></div>
+    <div class="testHead"><div><h2>Choose the correct answer · 1–10</h2><small>Only one answer is correct. Options are mixed.</small></div><div class="progress" id="progress1"></div></div>
+    <div class="qgrid" id="q1"></div>
   </section>
 
   <section class="panel" id="test2">
-    <div class="testHead"><div><h2>Interactive test · 11–20</h2><small>Think about the meaning before choosing the tense.</small></div><button class="check" data-set="1">CHECK 11–20</button></div>
-    <div class="qgrid" id="q2"></div><div class="score" id="score2"></div>
+    <div class="testHead"><div><h2>Choose the correct answer · 11–20</h2><small>Think about meaning: routine, now, temporary, change or state.</small></div><div class="progress" id="progress2"></div></div>
+    <div class="qgrid" id="q2"></div>
+    <div class="submitArea"><small>Answer all 20 questions. Then get a short code and send it to your teacher.</small><button class="getCode" id="getCode">FINISH & GET CODE</button></div>
   </section>
 
   <section class="panel" id="vocab">
@@ -101,81 +103,91 @@
   </section>
 </div>
 
+<div class="modal" id="modal"><div class="codeCard"><h2>Homework code</h2><p>Send this short code to your teacher. It contains all 20 test answers.</p><div class="code" id="codeOut"></div><div class="codeBtns"><button class="close" id="closeModal">Close</button><button class="copy" id="copyCode">COPY CODE</button></div></div></div>
+
 <script>
-const STORAGE='maya_1d_homework_v1';
+const STORAGE='maya_1d_homework_v2';
 let saved={};try{saved=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{}}catch(e){saved={}}
 const photoText=document.getElementById('photoText'),saveStatus=document.getElementById('saveStatus');
 photoText.value=saved.photo||'';
 function wc(){const n=(photoText.value.trim().match(/\b[\w’'-]+\b/g)||[]).length;document.getElementById('wordCount').textContent=n}wc();
 
 const questions=[
-['Maya usually ___ (keep) in touch with her friends online.','keeps'],
-['Look at the picture: the woman ___ (stand) near the window.','is standing'],
-['This dark jacket really ___ (suit) her.','suits'],
-['I ___ (not/understand) why he is upset.','do not understand'],
-['We ___ (meet) our old classmates tonight; the table is already booked.','are meeting'],
-['Her style ___ (become) more confident these days.','is becoming'],
-['He often ___ (wear) smart clothes to work.','wears'],
-['Why ___ you ___ (look) at me like that?','are you looking'],
-['She ___ (prefer) fitted jackets to oversized ones.','prefers'],
-['At the moment they ___ (talk) about their relationship.','are talking'],
-['My best friend and I ___ (have) a lot in common.','have'],
-['This month Maya ___ (try) to use more English outside lessons.','is trying'],
-['The man in the picture ___ (sit) in a chair.','is sitting'],
-['She ___ (not/believe) that expensive clothes always look better.','does not believe'],
-['More people ___ (buy) second-hand clothes these days.','are buying'],
-['Her colleague usually ___ (get) on well with everyone.','gets'],
-['You ___ always ___ (change) your mind at the last minute!','are always changing'],
-['My sister ___ (live) abroad, so we mostly keep in touch online.','lives'],
-['I ___ (need) a comfortable outfit for the trip.','need'],
-['Listen! Someone ___ (knock) at the door.','is knocking']
+{q:'Maya usually ___ in touch with her friends online.',o:['keeps','is keeping','keep','does keep'],a:0},
+{q:'Look at the picture: the woman ___ near the window.',o:['stands','is standing','stand','standing'],a:1},
+{q:'This dark jacket really ___ her.',o:['is suiting','suit','suits','is suit'],a:2},
+{q:'I ___ why he is upset.',o:["don't understand","am not understanding","doesn't understand","not understand"],a:0},
+{q:'We ___ our old classmates tonight; the table is already booked.',o:['meet','meets','are meeting','meeting'],a:2},
+{q:'Her style ___ more confident these days.',o:['becomes','is becoming','become','does becoming'],a:1},
+{q:'He often ___ smart clothes to work.',o:['is wearing','wear','wears','wearing'],a:2},
+{q:'Why ___ at me like that?',o:['do you look','are you looking','you are looking','does you look'],a:1},
+{q:'She ___ fitted jackets to oversized ones.',o:['is preferring','prefer','prefers','is prefer'],a:2},
+{q:'At the moment they ___ about their relationship.',o:['talk','talks','are talking','is talking'],a:2},
+{q:'My best friend and I ___ a lot in common.',o:['are having','has','have','having'],a:2},
+{q:'This month Maya ___ to use more English outside lessons.',o:['tries','is trying','try','does trying'],a:1},
+{q:'The man in the picture ___ in a chair.',o:['sits','is sitting','sit','sitting'],a:1},
+{q:'She ___ that expensive clothes always look better.',o:["doesn't believe","isn't believing","don't believe","not believes"],a:0},
+{q:'More people ___ second-hand clothes these days.',o:['buy','buys','are buying','is buying'],a:2},
+{q:'Her colleague usually ___ on well with everyone.',o:['get','is getting','gets','getting'],a:2},
+{q:'You ___ your mind at the last minute!',o:['always change','are always changing','always changes','is always changing'],a:1},
+{q:'My sister ___ abroad, so we mostly keep in touch online.',o:['is living','live','lives','living'],a:2},
+{q:'I ___ a comfortable outfit for the trip.',o:['am needing','need','needs','needing'],a:1},
+{q:'Listen! Someone ___ at the door.',o:['knocks','knock','is knocking','are knocking'],a:2}
 ];
-let answers=Array.isArray(saved.answers)?saved.answers:Array(20).fill('');
-function norm(s){return s.toLowerCase().trim().replace(/’/g,"'").replace(/\s+/g,' ')}
+
+let answers=Array.isArray(saved.answers)&&saved.answers.length===20?saved.answers:Array(20).fill(null);
+const letters=['A','B','C','D'];
+
+function orderFor(i){
+  let arr=[0,1,2,3],s=(i+1)*7919+137;
+  for(let k=3;k>0;k--){s=(s*1664525+1013904223)>>>0;const j=s%(k+1);[arr[k],arr[j]]=[arr[j],arr[k]]}
+  return arr;
+}
 function renderSet(set){
   const start=set?10:0,end=set?20:10,box=document.getElementById(set?'q2':'q1');
-  box.innerHTML=questions.slice(start,end).map((x,j)=>{const i=start+j;return '<div class="q" data-i="'+i+'"><div><b>'+(i+1)+'.</b> '+x[0].replace('___','<input data-i="'+i+'" value="'+(answers[i]||'').replace(/"/g,'&quot;')+'">')+'</div><span class="feedback"></span></div>'}).join('');
+  box.innerHTML=questions.slice(start,end).map((item,j)=>{
+    const i=start+j,order=orderFor(i);
+    const opts=order.map((idx,pos)=>'<label class="opt"><input type="radio" name="q'+i+'" value="'+idx+'" '+(answers[i]===idx?'checked':'')+'><span class="letter">'+letters[pos]+'</span><span>'+item.o[idx]+'</span></label>').join('');
+    return '<div class="q"><div class="stem">'+(i+1)+'. '+item.q+'</div><div class="opts">'+opts+'</div></div>';
+  }).join('');
 }
-renderSet(0);renderSet(1);
-document.addEventListener('input',e=>{if(e.target.matches('.q input')){answers[+e.target.dataset.i]=e.target.value;autosave()}if(e.target===photoText){wc();autosave()}});
-document.querySelectorAll('.check').forEach(b=>b.onclick=()=>checkSet(+b.dataset.set));
-function checkSet(set){
-  const start=set?10:0,end=set?20:10;let score=0;
-  for(let i=start;i<end;i++){
-    const q=document.querySelector('.q[data-i="'+i+'"]'),inp=q.querySelector('input');answers[i]=inp.value;
-    const ok=norm(inp.value)===norm(questions[i][1]);q.classList.toggle('ok',ok);q.classList.toggle('bad',!ok);q.querySelector('.feedback').textContent=ok?'Correct':'Correct answer: '+questions[i][1];if(ok)score++;
-  }
-  document.getElementById(set?'score2':'score1').textContent='Score: '+score+' / 10';save();
+function updateProgress(){
+  const n1=answers.slice(0,10).filter(v=>v!==null).length,n2=answers.slice(10).filter(v=>v!==null).length;
+  document.getElementById('progress1').textContent=n1+' / 10 answered';
+  document.getElementById('progress2').textContent=n2+' / 10 answered';
 }
+renderSet(0);renderSet(1);updateProgress();
+
+document.addEventListener('change',e=>{if(e.target.matches('.q input[type=radio]')){const i=+e.target.name.slice(1);answers[i]=+e.target.value;updateProgress();autosave()}});
+document.addEventListener('input',e=>{if(e.target===photoText){wc();autosave()}});
+
+function checksum(bytes){let c=73;for(const b of bytes)c=(c*131+b)%256;return c}
+function makeCode(){
+  if(answers.some(v=>v===null)){alert('Please answer all 20 questions first.');return null}
+  const bytes=new Uint8Array(6);
+  for(let i=0;i<20;i++){const bi=Math.floor(i/4),shift=(i%4)*2;bytes[bi]|=(answers[i]&3)<<shift}
+  bytes[5]=checksum(bytes.slice(0,5));
+  let bin='';bytes.forEach(b=>bin+=String.fromCharCode(b));
+  const body=btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  return 'D1-'+body;
+}
+document.getElementById('getCode').onclick=()=>{const code=makeCode();if(!code)return;document.getElementById('codeOut').textContent=code;document.getElementById('modal').classList.add('show');save(true)};
+document.getElementById('closeModal').onclick=()=>document.getElementById('modal').classList.remove('show');
+document.getElementById('copyCode').onclick=async()=>{const code=document.getElementById('codeOut').textContent;await navigator.clipboard.writeText(code);document.getElementById('copyCode').textContent='COPIED';setTimeout(()=>document.getElementById('copyCode').textContent='COPY CODE',1000)};
+
 function save(show=true){localStorage.setItem(STORAGE,JSON.stringify({photo:photoText.value,answers,flashIndex,currentPanel,savedAt:new Date().toISOString()}));if(show){saveStatus.textContent='saved';setTimeout(()=>saveStatus.textContent='autosaved',1100)}}
 function autosave(){save(false);saveStatus.textContent='autosaved'}
 document.getElementById('saveBtn').onclick=()=>save(true);
 
 const cards=[
-['get on well with','хорошо ладить с','She gets on well with her colleagues.'],
-['keep in touch','поддерживать связь','We keep in touch online.'],
-['have a lot in common','иметь много общего','They have a lot in common.'],
-['confident','уверенный в себе','She looks confident.'],
-['outgoing','общительный','He is friendly and outgoing.'],
-['slim','стройный','She is slim and quite tall.'],
-['fitted','приталенный','She is wearing a fitted jacket.'],
-['oversized','свободного, увеличенного кроя','He likes oversized hoodies.'],
-['high-waisted','с высокой талией','These are high-waisted trousers.'],
-['suit someone','идти кому-то','That colour really suits you.'],
-['go with','сочетаться с','These shoes go with the jacket.'],
-['colleague','коллега','I get on well with my colleagues.'],
-['relationship','отношения','They are talking about their relationship.'],
-['appearance','внешность','Describe her appearance.'],
-['in the foreground','на переднем плане','In the foreground, I can see a table.'],
-['in the background','на заднем плане','There is a window in the background.']
+['get on well with','хорошо ладить с','She gets on well with her colleagues.'],['keep in touch','поддерживать связь','We keep in touch online.'],['have a lot in common','иметь много общего','They have a lot in common.'],['confident','уверенный в себе','She looks confident.'],['outgoing','общительный','He is friendly and outgoing.'],['slim','стройный','She is slim and quite tall.'],['fitted','приталенный','She is wearing a fitted jacket.'],['oversized','свободного, увеличенного кроя','He likes oversized hoodies.'],['high-waisted','с высокой талией','These are high-waisted trousers.'],['suit someone','идти кому-то','That colour really suits you.'],['go with','сочетаться с','These shoes go with the jacket.'],['colleague','коллега','I get on well with my colleagues.'],['relationship','отношения','They are talking about their relationship.'],['appearance','внешность','Describe her appearance.'],['in the foreground','на переднем плане','In the foreground, I can see a table.'],['in the background','на заднем плане','There is a window in the background.']
 ];
 let flashIndex=Number.isInteger(saved.flashIndex)?saved.flashIndex:0,currentPanel=saved.currentPanel||'photo';
 const flash=document.getElementById('flash'),front=document.getElementById('front'),back=document.getElementById('back'),counter=document.getElementById('counter');
 function renderFlash(){flashIndex=(flashIndex+cards.length)%cards.length;front.textContent=cards[flashIndex][0];back.innerHTML='<div><b>'+cards[flashIndex][1]+'</b><div style="margin-top:16px">'+cards[flashIndex][2]+'</div></div>';counter.textContent=(flashIndex+1)+' / '+cards.length;flash.classList.remove('flipped');autosave()}
 flash.onclick=()=>flash.classList.toggle('flipped');document.getElementById('prev').onclick=()=>{flashIndex--;renderFlash()};document.getElementById('next').onclick=()=>{flashIndex++;renderFlash()};
 document.getElementById('audio').onclick=()=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(cards[flashIndex][0]);u.lang='en-GB';u.rate=.88;speechSynthesis.speak(u)};
-document.getElementById('full').onclick=()=>{const el=document.getElementById('vocab');if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.()};
-renderFlash();
+document.getElementById('full').onclick=()=>{const el=document.getElementById('vocab');if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.()};renderFlash();
 
 function openPanel(id){currentPanel=id;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.p===id));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===id));autosave()}
 document.querySelectorAll('.tab').forEach(x=>x.onclick=()=>openPanel(x.dataset.p));if(!document.getElementById(currentPanel))currentPanel='photo';openPanel(currentPanel);
