@@ -99,6 +99,23 @@ body{background:var(--bg-main);color:var(--text-dark);display:flex;min-height:10
   box-shadow:0 2px 12px rgba(0,0,0,.01)
 }
 .exercise-box h2{font-size:1.3rem;margin-bottom:15px;border-bottom:2px solid var(--bg-main);padding-bottom:10px}
+.match-item{background:#f8fafc;padding:14px 20px;border-radius:10px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;border:1px solid #edf2f7;gap:15px}
+.match-item select{padding:8px;border-radius:6px;border:1px solid var(--border-color);background:#fff}
+.bool-item{margin-bottom:20px;padding:15px;background:#f8fafc;border-radius:10px}
+.bool-btns{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.btn-opt{background:#fff;border:1px solid var(--border-color);padding:8px 20px;border-radius:6px;cursor:pointer;font-weight:600}
+.btn-opt.correct{background:var(--correct-green);color:#fff;border-color:var(--correct-green)}
+.btn-opt.wrong{background:var(--wrong-red);color:#fff;border-color:var(--wrong-red)}
+.cards-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:15px}
+.flip-card{height:140px;perspective:1000px;cursor:pointer}
+.flip-card-inner{position:relative;width:100%;height:100%;text-align:center;transition:transform .5s;transform-style:preserve-3d;border-radius:12px}
+.flip-card.flipped .flip-card-inner{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;border:1px solid var(--border-color);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:15px;box-shadow:0 4px 8px rgba(0,0,0,.02)}
+.card-front{background:#fff;color:#1e3a8a;font-weight:700;font-size:1.1rem}
+.card-back{background:#f0fdf4;color:#166534;transform:rotateY(180deg);border:1px dashed var(--correct-green)}
+.text-highlight{background:linear-gradient(120deg,#fef08a 0%,#fef08a 100%);background-repeat:no-repeat;background-size:100% 40%;background-position:0 85%;font-weight:600}
+.notebook-textarea{width:100%;height:120px;padding:15px;border:1px solid #cbd5e1;border-radius:8px;background:repeating-linear-gradient(#fff,#fff 31px,#e5e7eb 32px);line-height:32px;resize:vertical}
+
 .fullscreen-panel{
   position:fixed;inset:0;background:#f3ece3;z-index:50;display:none;overflow:auto;padding:28px
 }
