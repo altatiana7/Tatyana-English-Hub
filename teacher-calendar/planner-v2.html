@@ -122,7 +122,8 @@ function renderSchedule(){
     DAYS.forEach((d,di)=>{
       if(di<5&&r<4){p+='<div class="cell blocked"></div>';return}
       const k=cellKey('p',r,di);
-      const name=schedule[k]||'';\n      p+='<div class="cell personalcell '+(di>4?'weekendcell ':'')+(editing?'editing':'')+'">'+(name?'<div class="slot-time">'+t+'</div>':'')+'<div class="slot-name" data-k="'+k+'" '+(editing?'contenteditable="true"':'')+'>'+esc(name)+'</div></div>';
+      const name=schedule[k]||'';
+      p+='<div class="cell personalcell '+(di>4?'weekendcell ':'')+(editing?'editing':'')+'">'+(name?'<div class="slot-time">'+t+'</div>':'')+'<div class="slot-name" data-k="'+k+'" '+(editing?'contenteditable="true"':'')+'>'+esc(name)+'</div></div>';
     });
   });
   document.getElementById('personalGrid').innerHTML=p;
