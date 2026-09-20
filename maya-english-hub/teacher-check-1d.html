@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>Maya 1D · Teacher Check</title>
+<style>
+:root{--p:#4b35ae;--teal:#0a9db4;--ink:#201a45;--line:#e2dbf0;--ok:#15845b;--bad:#c4435d}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,#f3efff,#eefaff 55%,#f4fff2)}
+.wrap{max-width:1180px;margin:auto;padding:18px}.top{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap}.top h1{margin:0;color:var(--p);font-size:30px}.top p{margin:5px 0 0;color:#69647a}
+.checker{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 10px 28px rgba(70,49,135,.08)}
+.form{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.form input{flex:1;min-width:260px;border:2px solid #cfc5ea;border-radius:12px;padding:12px 14px;font:900 20px Consolas,monospace;letter-spacing:.06em;text-transform:uppercase}.form button{border:0;border-radius:12px;background:var(--teal);color:#fff;padding:12px 18px;font-weight:900;cursor:pointer}.hint{font-size:13px;color:#777181;margin-top:7px}
+.summary{display:none;margin-top:14px;padding:12px;border-radius:14px;background:#f7f4ff}.summary.show{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.score{font-size:28px;font-weight:950;color:var(--p)}.meta{font-size:13px;color:#6e6880}
+.results{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.row{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px}.row.ok{border-color:#8bd1b4;background:#f4fff9}.row.bad{border-color:#e8a5b3;background:#fff6f8}.q{font-weight:850;margin-bottom:7px}.ans{font-size:14px;display:grid;gap:3px}.ans b{color:#5143a5}.ok .status{color:var(--ok)}.bad .status{color:var(--bad)}.status{font-weight:950}
+.err{display:none;margin-top:10px;color:var(--bad);font-weight:850}.err.show{display:block}
+@media(max-width:800px){.results{grid-template-columns:1fr}.top h1{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div><h1>Maya 1D · Teacher Check</h1><p>Вставь короткий код Майи — все 20 ответов расшифруются автоматически.</p></div></div>
+  <div class="checker">
+    <div class="form"><input id="codeInput" maxlength="11" placeholder="D1-XXXXXXXX" autocomplete="off"><button id="checkBtn">ПРОВЕРИТЬ</button></div>
+    <div class="hint">Код состоит из 11 символов и содержит ответы на все 20 вопросов.</div>
+    <div class="err" id="err"></div>
+    <div class="summary" id="summary"><div><div class="score" id="score"></div><div class="meta">Maya · Homework 1D · Present Simple vs Present Continuous</div></div><div id="percent" style="font-weight:900"></div></div>
+    <div class="results" id="results"></div>
+  </div>
+</div>
+<script>
+const questions=[
+{q:'Maya usually ___ in touch with her friends online.',o:['keeps','is keeping','keep','does keep'],a:0},
+{q:'Look at the picture: the woman ___ near the window.',o:['stands','is standing','stand','standing'],a:1},
+{q:'This dark jacket really ___ her.',o:['is suiting','suit','suits','is suit'],a:2},
+{q:'I ___ why he is upset.',o:["don't understand","am not understanding","doesn't understand","not understand"],a:0},
+{q:'We ___ our old classmates tonight; the table is already booked.',o:['meet','meets','are meeting','meeting'],a:2},
+{q:'Her style ___ more confident these days.',o:['becomes','is becoming','become','does becoming'],a:1},
+{q:'He often ___ smart clothes to work.',o:['is wearing','wear','wears','wearing'],a:2},
+{q:'Why ___ at me like that?',o:['do you look','are you looking','you are looking','does you look'],a:1},
+{q:'She ___ fitted jackets to oversized ones.',o:['is preferring','prefer','prefers','is prefer'],a:2},
+{q:'At the moment they ___ about their relationship.',o:['talk','talks','are talking','is talking'],a:2},
+{q:'My best friend and I ___ a lot in common.',o:['are having','has','have','having'],a:2},
+{q:'This month Maya ___ to use more English outside lessons.',o:['tries','is trying','try','does trying'],a:1},
+{q:'The man in the picture ___ in a chair.',o:['sits','is sitting','sit','sitting'],a:1},
+{q:'She ___ that expensive clothes always look better.',o:["doesn't believe","isn't believing","don't believe","not believes"],a:0},
+{q:'More people ___ second-hand clothes these days.',o:['buy','buys','are buying','is buying'],a:2},
+{q:'Her colleague usually ___ on well with everyone.',o:['get','is getting','gets','getting'],a:2},
+{q:'You ___ your mind at the last minute!',o:['always change','are always changing','always changes','is always changing'],a:1},
+{q:'My sister ___ abroad, so we mostly keep in touch online.',o:['is living','live','lives','living'],a:2},
+{q:'I ___ a comfortable outfit for the trip.',o:['am needing','need','needs','needing'],a:1},
+{q:'Listen! Someone ___ at the door.',o:['knocks','knock','is knocking','are knocking'],a:2}
+];
+function checksum(bytes){let c=73;for(const b of bytes)c=(c*131+b)%256;return c}
+function decode(code){
+  code=code.trim().toUpperCase();
+  if(!/^D1-[A-Z0-9_-]{8}$/.test(code))throw new Error('Неверный формат кода.');
+  const body=code.slice(3).replace(/-/g,'+').replace(/_/g,'/');
+  let bin;try{bin=atob(body)}catch(e){throw new Error('Код повреждён.')}
+  if(bin.length!==6)throw new Error('Код повреждён.');
+  const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
+  if(checksum(bytes.slice(0,5))!==bytes[5])throw new Error('Код не прошёл проверку. Проверь, нет ли опечатки.');
+  const answers=[];
+  for(let i=0;i<20;i++){const bi=Math.floor(i/4),shift=(i%4)*2;answers.push((bytes[bi]>>shift)&3)}
+  return answers;
+}
+function render(){
+  const err=document.getElementById('err');err.classList.remove('show');
+  let ans;try{ans=decode(document.getElementById('codeInput').value)}catch(e){err.textContent=e.message;err.classList.add('show');document.getElementById('summary').classList.remove('show');document.getElementById('results').innerHTML='';return}
+  let score=0;
+  document.getElementById('results').innerHTML=questions.map((q,i)=>{
+    const ok=ans[i]===q.a;if(ok)score++;
+    return '<div class="row '+(ok?'ok':'bad')+'"><div class="q">'+(i+1)+'. '+q.q+'</div><div class="ans"><div><b>Ответ Майи:</b> '+q.o[ans[i]]+'</div><div><b>Правильный:</b> '+q.o[q.a]+'</div><div class="status">'+(ok?'✓ Верно':'✗ Ошибка')+'</div></div></div>';
+  }).join('');
+  document.getElementById('score').textContent=score+' / 20';
+  document.getElementById('percent').textContent=Math.round(score/20*100)+'%';
+  document.getElementById('summary').classList.add('show');
+}
+document.getElementById('checkBtn').onclick=render;
+document.getElementById('codeInput').addEventListener('keydown',e=>{if(e.key==='Enter')render()});
+</script>
+</body>
+</html>
