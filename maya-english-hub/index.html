@@ -20,7 +20,7 @@
 <button class="currentHomework" id="currentHomework"><span><span class="hwLabel" id="currentHwLabel"></span><span class="hwTitle" id="currentHwTitle"></span></span><span class="hwHint">CLICK HERE TO START →</span></button>
 <section class="daily"><div class="dailyHead"><div><b>3 EXPRESSIONS FOR THIS HOMEWORK</b><div class="lessonTag" id="expressionLessonTag"></div></div><button class="phraseToggle" id="byToggle">Useful phrases</button></div><div class="exprRow" id="dailyExpressions"></div><div class="byBank" id="byBank"></div></section>
 <div class="sectionHead"><h2>Your Modules</h2></div>
-<section class="modules"><article class="moduleCard" data-module="1A"><div class="moduleTop mPurple"><strong>1A</strong><span>Getting started</span></div><div class="moduleImg"><img src="https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg?auto=compress&cs=tinysrgb&w=700"></div><div class="moduleFoot">Introductions · communication</div></article><article class="moduleCard" data-module="1B"><div class="moduleTop mGreen"><strong>1B</strong><span>People</span></div><div class="moduleImg"><img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=700"></div><div class="moduleFoot">Appearance · style · relationships</div></article><article class="moduleCard current" data-module="1C"><div class="moduleTop mPurple"><strong>1C</strong><span>Remakes</span></div><div class="moduleImg"><img src="https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=700"></div><div class="moduleFoot">Present tenses · clothes · dating</div></article><article class="moduleCard" data-module="1D"><div class="moduleTop mTeal"><strong>1D</strong><span>Practical English</span></div><div class="moduleImg"><img src="https://images.pexels.com/photos/3768131/pexels-photo-3768131.jpeg?auto=compress&cs=tinysrgb&w=700"></div><div class="moduleFoot">Useful real-life English</div></article><article class="moduleCard" data-module="1E"><div class="moduleTop mGreen"><strong>1E</strong><span>Culture</span></div><div class="moduleImg"><img src="https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg?auto=compress&cs=tinysrgb&w=700"></div><div class="moduleFoot">Reading · culture</div></article></section>
+<section class="modules"><article class="moduleCard" data-module="1A"><div class="moduleTop mPurple"><strong>1A</strong><span>Getting started</span></div><div class="moduleImg"><img src="https://images.pexels.com/photos/3184325/pexels-photo-3184325.jpeg?auto=compress&cs=tinysrgb&w=700"></div><div class="moduleFoot">Introductions · communication</div></article><article class="moduleCard" data-module="1B"><div class="moduleTop mGreen"><strong>1B</strong><span>People</span></div><div class="moduleImg"><img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=700"></div><div class="moduleFoot">Appearance · style · relationships</div></article><article class="moduleCard" data-module="1C"><div class="moduleTop mPurple"><strong>1C</strong><span>Remakes</span></div><div class="moduleImg"><img src="https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=700"></div><div class="moduleFoot">Present tenses · clothes · dating</div></article><article class="moduleCard current" data-module="1D"><div class="moduleTop mTeal"><strong>1D</strong><span>Practical English</span></div><div class="moduleImg"><img src="https://images.pexels.com/photos/3768131/pexels-photo-3768131.jpeg?auto=compress&cs=tinysrgb&w=700"></div><div class="moduleFoot">Useful real-life English</div></article><article class="moduleCard" data-module="1E"><div class="moduleTop mGreen"><strong>1E</strong><span>Culture</span></div><div class="moduleImg"><img src="https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg?auto=compress&cs=tinysrgb&w=700"></div><div class="moduleFoot">Reading · culture</div></article></section>
 <section class="workspace" id="workspace"><div class="workspaceTop"><h3 id="workspaceTitle"></h3><button class="closeBtn" id="closeWorkspace">×</button></div><div id="lessonMount"></div></section>
 <div class="tipRow"><div class="tip"><b>Study tip</b>First decide why the speaker uses the tense, then choose the form.</div><div class="tip"><b>Remember</b>Simple = routine/fact; Continuous = now/temporary/change — but always check the meaning.</div></div>
 </main></div>
@@ -28,13 +28,22 @@
 const qs=s=>document.querySelector(s),qsa=s=>[...document.querySelectorAll(s)];
 const homeworkArchive={
   'maya-1c-2026-09-06':{
-    module:'1C',date:'06 SEP 2026',title:'Present Simple vs Present Continuous',sub:'Appearance · clothes · dating · work · travel · Georgia',href:'1c-present-tenses-homework.html',current:true,
+    module:'1C',date:'06 SEP 2026',title:'Present Simple vs Present Continuous',sub:'Appearance · clothes · dating · work · travel · Georgia',href:'1c-present-tenses-homework.html',current:false,
     expressions:[
       ['suit someone','идти кому-то / подходить','That colour really suits you.'],
       ['go with','сочетаться с','These shoes go with your new jacket.'],
       ['get on well with','хорошо ладить с','She gets on well with her colleagues.']
     ],
     useful:[['by heart','наизусть'],['by accident','нечаянно'],['by chance','случайно'],['by the way','кстати']]
+  },
+  'maya-1d-2026-09-20':{
+    module:'1D',date:'20 SEP 2026',title:'Photo Description + Present Tenses',sub:'Photo description · Present Simple vs Present Continuous · vocabulary 1A–1C',href:'1d-homework.html',current:true,
+    expressions:[
+      ['get on well with','хорошо ладить с','She gets on well with her colleagues.'],
+      ['have a lot in common','иметь много общего','They have a lot in common.'],
+      ['suit someone','идти кому-то / подходить','That colour really suits you.']
+    ],
+    useful:[['in the foreground','на переднем плане'],['in the background','на заднем плане'],['next to','рядом с'],['in front of','перед']]
   }
 };
 const currentHomeworkId=Object.keys(homeworkArchive).find(id=>homeworkArchive[id].current);
