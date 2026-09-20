@@ -106,6 +106,7 @@
 <div class="modal" id="modal"><div class="codeCard"><h2>Homework code</h2><p>Send this short code to your teacher. It contains all 20 test answers.</p><div class="code" id="codeOut"></div><div class="codeBtns"><button class="close" id="closeModal">Close</button><button class="copy" id="copyCode">COPY CODE</button></div></div></div>
 
 <script>
+if(new URLSearchParams(location.search).get('from')!=='hub'){location.replace('./');}
 const STORAGE='maya_1d_homework_v2';
 let saved={};try{saved=JSON.parse(localStorage.getItem(STORAGE)||'{}')||{}}catch(e){saved={}}
 const photoText=document.getElementById('photoText'),saveStatus=document.getElementById('saveStatus');
