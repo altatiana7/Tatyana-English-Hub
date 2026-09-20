@@ -6,54 +6,54 @@
 <title>Kate's English Hub</title>
 <style>
 :root{
-  --bg-main:#dbe2e9;--bg-sidebar:#f1f5f9;--text-dark:#1e293b;
-  --accent-mint:#a7f3d0;--accent-blue:#bae6fd;--accent-pink:#fbcfe8;
-  --border-color:#cbd5e1;--correct-green:#10b981;--wrong-red:#ef4444;
+  --bg-main:#f3ece3;--bg-sidebar:#e8dfd5;--text-dark:#2c2a29;
+  --accent-mint:#bce3db;--accent-blue:#bfdbfe;--accent-pink:#f7d6dc;
+  --border-color:#cac2b7;--correct-green:#22c55e;--wrong-red:#ef4444;
 }
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
 body{background:var(--bg-main);color:var(--text-dark);display:flex;min-height:100vh}
 .sidebar{
-  width:280px;background:var(--bg-sidebar);border-right:1px solid var(--border-color);
-  padding:20px;display:flex;flex-direction:column;gap:20px;flex-shrink:0
+  width:280px;background:var(--bg-sidebar);border-right:2px dashed var(--border-color);
+  padding:25px;display:flex;flex-direction:column;gap:20px;flex-shrink:0
 }
 .logo-area{
-  background:#fff;padding:15px;border-radius:12px;border:2px dashed #94a3b8;
-  text-align:center;box-shadow:2px 2px 8px rgba(0,0,0,.05)
+  background:#fff;padding:20px;border-radius:12px;border:2px dashed #b5ae1a;
+  text-align:center;box-shadow:3px 3px 12px rgba(0,0,0,.03)
 }
 .logo-area h2{font-size:1.3rem;color:#0f172a;font-weight:800}
 .logo-area p{margin-top:6px;font-size:.82rem;color:#64748b}
-.nav-list{list-style:none;display:flex;flex-direction:column;gap:4px;max-height:60vh;overflow-y:auto;padding-right:5px}
+.nav-list{list-style:none;display:flex;flex-direction:column;gap:6px;max-height:60vh;overflow-y:auto;padding-right:5px}
 .nav-item{
-  padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.95rem;
-  transition:.2s;background:#fff;border:1px solid var(--border-color);
+  padding:12px 16px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.95rem;
+  transition:.2s;background:rgba(255,255,255,.7);border:1px solid var(--border-color);
   display:flex;justify-content:space-between;align-items:center
 }
-.nav-item:hover,.nav-item.active{background:#e2e8f0;border-color:#94a3b8}
+.nav-item:hover,.nav-item.active{background:#fff;border-color:#b8afa3;transform:translateX(3px)}
 .sub-menu{margin-left:15px;margin-top:4px;display:none;flex-direction:column;gap:4px}
 .sub-menu.open{display:flex}
 .sub-item{
   padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;
   font-size:.85rem;cursor:pointer;transition:.2s
 }
-.sub-item:hover{background:var(--accent-blue)}
+.sub-item:hover{background:var(--accent-mint)}
 .main-content{flex-grow:1;padding:40px;position:relative;overflow-y:auto;max-height:100vh}
 .screen{display:none;animation:fadeIn .35s ease-in-out forwards}
 .screen.active{display:block}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .sticker-note{
-  background:#fef08a;color:#713f12;padding:15px;border-radius:4px;box-shadow:3px 3px 10px rgba(0,0,0,.08);
-  transform:rotate(-1deg);display:inline-block;margin:15px 0;font-weight:600;border-left:4px solid #facc15
+  background:#fef08a;color:#713f12;padding:15px;border-radius:4px;box-shadow:3px 5px 15px rgba(0,0,0,.06);
+  transform:rotate(-1deg);display:inline-block;margin:15px 0;font-weight:600;border-left:5px solid #eab308
 }
 .welcome-banner{
   background:#fff;padding:40px;border-radius:20px;border:1px solid var(--border-color);
-  box-shadow:0 4px 20px rgba(0,0,0,.02);position:relative;margin-bottom:30px;min-height:220px
+  box-shadow:0 4px 15px rgba(0,0,0,.02);position:relative;margin-bottom:30px;min-height:220px
 }
 .welcome-banner h1{font-size:2.4rem;margin-bottom:10px;color:#0f172a}
 .welcome-banner p{max-width:620px;line-height:1.55;color:#475569}
 .deco-photo{
-  position:absolute;right:40px;top:-20px;background:#fff;padding:10px 10px 30px;
-  box-shadow:0 8px 24px rgba(0,0,0,.15);border-radius:4px;transform:rotate(3deg);
-  width:150px;text-align:center;font-size:.8rem;font-weight:bold
+  position:absolute;right:40px;top:-15px;background:#fff;padding:10px 10px 30px;
+  box-shadow:0 8px 25px rgba(0,0,0,.1);border-radius:4px;transform:rotate(3deg);
+  width:140px;text-align:center;font-size:.8rem;font-weight:bold
 }
 .deco-photo .photo-placeholder{
   width:100%;height:120px;border-radius:2px;
@@ -65,8 +65,8 @@ body{background:var(--bg-main);color:var(--text-dark);display:flex;min-height:10
   border:none;padding:14px 24px;border-radius:12px;font-size:1rem;font-weight:800;cursor:pointer;
   transition:.25s;display:inline-flex;align-items:center;gap:8px
 }
-.btn-homework{background:#0f172a;color:#fff;box-shadow:0 4px 15px rgba(15,23,42,.25)}
-.btn-homework:hover{transform:translateY(-2px);background:#1e293b}
+.btn-homework{background:#2c2a29;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,.15);border-radius:25px}
+.btn-homework:hover{transform:scale(1.02);background:#4a4744}
 .btn-secondary{background:#fff;color:#1e293b;border:1px solid var(--border-color)}
 .btn-secondary:hover{background:#f8fafc}
 .quick-grid{
@@ -81,12 +81,12 @@ body{background:var(--bg-main);color:var(--text-dark);display:flex;min-height:10
 .quick-card p{font-size:.9rem;color:#64748b;line-height:1.45}
 .polaroid-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:22px;margin:25px 0}
 .polaroid-card{
-  background:#fff;padding:12px 12px 24px;box-shadow:0 4px 15px rgba(0,0,0,.06);
-  border-radius:4px;border:1px solid #e2e8f0;text-align:center;transition:.3s
+  background:#fff;padding:15px 15px 30px;box-shadow:0 6px 18px rgba(0,0,0,.05);
+  border-radius:4px;border:1px solid #e2e8f0;text-align:center;transition:.3s;transform:rotate(-1deg)
 }
-.polaroid-card:hover{transform:scale(1.03) rotate(1deg)}
+.polaroid-card:nth-child(even){transform:rotate(2deg)}.polaroid-card:hover{transform:scale(1.04) rotate(0deg)}
 .polaroid-img-placeholder{
-  height:110px;background:#f1f5f9;border-radius:4px;display:flex;align-items:center;
+  height:120px;background:#f1f5f9;border-radius:4px;display:flex;align-items:center;
   justify-content:center;font-size:2.2rem;margin-bottom:12px
 }
 .polaroid-card h3{font-size:1.05rem;margin-bottom:4px}
@@ -100,12 +100,12 @@ body{background:var(--bg-main);color:var(--text-dark);display:flex;min-height:10
 }
 .exercise-box h2{font-size:1.3rem;margin-bottom:15px;border-bottom:2px solid var(--bg-main);padding-bottom:10px}
 .fullscreen-panel{
-  position:fixed;inset:0;background:#eef2f6;z-index:50;display:none;overflow:auto;padding:28px
+  position:fixed;inset:0;background:#f3ece3;z-index:50;display:none;overflow:auto;padding:28px
 }
 .fullscreen-panel.active{display:block}
 .panel-head{
   display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px;
-  position:sticky;top:0;background:#eef2f6;padding:8px 0 14px;z-index:2
+  position:sticky;top:0;background:#f3ece3;padding:8px 0 14px;z-index:2
 }
 .panel-head h2{font-size:1.6rem}
 .close-btn{border:1px solid var(--border-color);background:#fff;padding:10px 16px;border-radius:10px;cursor:pointer;font-weight:700}
