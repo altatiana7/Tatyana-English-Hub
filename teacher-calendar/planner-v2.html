@@ -69,6 +69,7 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
     <button class="tab" data-panel="payments">Payments</button>
     <button class="tab" data-panel="attendance">Attendance</button>
     <button class="tab" data-panel="notes">Notes</button>
+    <button class="tab" data-panel="egetests">EGE Tests</button>
   </div>
 
   <section id="schedule" class="panel active">
@@ -129,6 +130,17 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
   </section>
   <section id="attendance" class="panel"><div class="notice">Посещаемость сохраняется в резервной и облачной копии планнера.</div></section>
   <section id="notes" class="panel"><div class="card section"><textarea id="notesBox" placeholder="Notes..."></textarea></div></section>
+  <section id="egetests" class="panel">
+    <div class="card section">
+      <div class="cardhead">ЕГЭ • ПРОВЕРКА ТЕСТОВ <small>Teacher only</small></div>
+      <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin:12px 0">
+        <div class="filterbox" style="width:220px"><label>Код ученика</label><input id="egeResultCode" maxlength="6" autocomplete="off" placeholder="Например: A7K9Q2" style="text-transform:uppercase;font-size:18px;font-weight:900;letter-spacing:.12em"></div>
+        <button class="primary" type="button" onclick="checkEgeCode()">Проверить код</button>
+      </div>
+      <div id="egeCheckStatus" class="notice">Введите 6-значный код, который Арина получит после теста.</div>
+      <div id="egeCheckResult" style="display:none;margin-top:10px"></div>
+    </div>
+  </section>
 </div>
 
 <script>
@@ -435,6 +447,26 @@ function downloadBackup(){
 function restoreBackup(input){
   const file=input.files&&input.files[0];if(!file)return;
   const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);applyState(x.state||x);queueCloudSave();setStatus('Восстановлено')}catch(e){alert('Не удалось прочитать файл')}};r.readAsText(file);input.value='';
+}
+
+async function checkEgeCode(){
+  const code=(document.getElementById('egeResultCode').value||'').trim().toUpperCase();
+  const status=document.getElementById('egeCheckStatus');
+  const box=document.getElementById('egeCheckResult');
+  if(!/^[A-Z2-9]{6}$/.test(code)){status.textContent='Введите полный код из 6 символов.';box.style.display='none';return}
+  const token=(localStorage.getItem(CLOUD_TOKEN)||'').trim();
+  if(!token){status.textContent='Сначала подключите Cloud в верхней панели — используется тот же ключ.';box.style.display='none';return}
+  status.textContent='Проверяю…'; box.style.display='none';
+  try{
+    const r=await fetch(SUPABASE_URL+'/functions/v1/ege-test-results?code='+encodeURIComponent(code),{headers:{'x-planner-key':token}});
+    const out=await r.json();
+    if(!r.ok||!out.ok){status.textContent=out.error==='not_found'?'Код не найден. Проверьте символы.':'Не удалось получить результат.';return}
+    const x=out.result;
+    const when=x.created_at?new Date(x.created_at).toLocaleString('ru-RU'):'';
+    const rows=(x.details||[]).map((d,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(d.prompt)+'</td><td>'+esc(d.chosen)+'</td><td>'+esc(d.correct)+'</td><td style="font-weight:900;color:'+(d.is_correct?'#25713f':'#a2462d')+'">'+(d.is_correct?'✓':'✗')+'</td></tr>').join('');
+    box.innerHTML='<div class="summary-grid"><div class="summary-card"><div class="k">Ученик</div><div class="v" style="font-size:17px">'+esc(x.student)+'</div></div><div class="summary-card"><div class="k">Тест</div><div class="v" style="font-size:15px">'+esc(x.test_title)+'</div></div><div class="summary-card"><div class="k">Результат</div><div class="v">'+x.score+' / '+x.max_score+'</div></div><div class="summary-card"><div class="k">Код / время</div><div class="v" style="font-size:14px">'+esc(x.code)+'<br><span style="font-size:10px;color:var(--muted)">'+esc(when)+'</span></div></div></div><div class="scroll"><table class="finance-table"><thead><tr><th>№</th><th>Задание</th><th>Ответ Арины</th><th>Правильно</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    box.style.display='block'; status.textContent='Результат найден.';
+  }catch(e){status.textContent='Ошибка соединения. Повторите проверку.'}
 }
 
 loadLocal();
