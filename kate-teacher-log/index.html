@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0d8d99">
+<title>Kate — Teacher's Log</title>
+<style>
+:root{
+  --teal:#1399a6;
+  --teal-dark:#0b7480;
+  --teal-soft:#dff4f5;
+  --ink:#153044;
+  --muted:#6b7f8d;
+  --line:#dce8ec;
+  --panel:#ffffff;
+  --bg:#eef4f6;
+  --rose:#c87988;
+  --sand:#d9a94b;
+  --blue:#637cdf;
+  --green:#3f9b73;
+  --red:#c25f62;
+  --shadow:0 18px 50px rgba(24,56,71,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid rgba(19,153,166,.28);outline-offset:2px}
+a{text-decoration:none;color:inherit}
+.shell{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
+.sidebar{
+  position:sticky;top:0;height:100vh;background:rgba(255,255,255,.98);
+  border-right:1px solid var(--line);padding:20px 16px 18px;overflow:auto;z-index:20;
+}
+.brand{padding:0 10px 18px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.brand-script{font-family:"Brush Script MT","Segoe Script",cursive;font-size:48px;line-height:.9;color:#0f7188;transform:rotate(-2deg);display:inline-block}
+.brand-heart{font-family:Georgia,serif;color:var(--teal);font-size:24px;margin-left:3px}
+.brand-sub{font-size:12px;letter-spacing:.26em;font-weight:800;color:#23455d;margin:6px 0 0 8px}
+.teacher-pill{margin:12px 0 8px;padding:11px 12px;border-radius:14px;background:#f5fafb;border:1px solid var(--line);font-size:12px;color:var(--muted)}
+.teacher-pill strong{display:block;color:var(--ink);font-size:13px;margin-bottom:2px}
+.side-title{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:#80919d;font-weight:800;margin:15px 8px 8px}
+.nav-btn{
+  width:100%;border:0;background:transparent;color:#254359;padding:10px 11px;border-radius:12px;
+  display:flex;align-items:center;gap:10px;text-align:left;font-weight:800;margin:3px 0
+}
+.nav-btn:hover{background:#f2f8f9}.nav-btn.active{background:linear-gradient(135deg,var(--teal),#32aab5);color:#fff}
+.nav-mark{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:rgba(19,153,166,.12);font-size:12px;font-weight:900;flex:none}
+.nav-btn.active .nav-mark{background:rgba(255,255,255,.2)}
+.module-list{display:grid;gap:5px}
+.module-btn{
+  width:100%;border:1px solid transparent;background:#f7fafb;border-radius:12px;padding:7px 9px;
+  display:grid;grid-template-columns:30px minmax(0,1fr) 40px;align-items:center;gap:7px;text-align:left;color:#29465a
+}
+.module-btn:hover{border-color:#cfe3e6;background:#fff}
+.module-btn.selected{border-color:#8dd1d7;background:#eaf8f9}
+.mod-num{width:28px;height:28px;border-radius:50%;background:#e3f5f6;color:#0b7f8b;display:grid;place-items:center;font-weight:900;font-size:12px}
+.mod-name{font-size:12px;font-weight:800;line-height:1.15;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mod-progress{font-size:11px;color:#7d909b;text-align:right}
+.side-footer{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);display:grid;gap:7px}
+.side-link{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 10px;text-align:center;font-size:12px;font-weight:800;color:#34566b}
+.side-link:hover{background:#f6fbfb}
+.main{min-width:0}
+.topbar{
+  height:66px;background:rgba(255,255,255,.95);border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:15;backdrop-filter:blur(10px)
+}
+.top-left{display:flex;align-items:center;gap:22px;min-width:0}
+.top-kicker{font-size:11px;letter-spacing:.28em;font-weight:800;color:#33546a;white-space:nowrap}
+.top-tabs{display:flex;gap:4px}
+.tab-btn{border:0;background:transparent;padding:9px 12px;border-radius:10px;color:#587080;font-weight:800;font-size:13px}
+.tab-btn:hover{background:#f0f7f8}.tab-btn.active{background:#e1f4f5;color:#0b7782}
+.top-actions{display:flex;align-items:center;gap:9px}
+.top-action{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 10px;font-size:12px;font-weight:800;color:#34566b}
+.profile{display:flex;align-items:center;gap:9px;padding-left:7px}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#d5f0f2,#91cfd5);display:grid;place-items:center;color:#0a7480;font-weight:900;border:2px solid white;box-shadow:0 0 0 1px #d5e6e9}
+.profile strong{font-size:13px}
+.content{padding:18px 20px 34px;max-width:1500px;margin:0 auto}
+.view{display:none}.view.active{display:block}
+.hero{
+  position:relative;min-height:475px;border-radius:24px;overflow:hidden;background:#53666c;box-shadow:var(--shadow);
+  border:1px solid rgba(255,255,255,.85)
+}
+.hero-bg{position:absolute;inset:0;background:
+  linear-gradient(90deg,rgba(9,37,47,.55) 0%,rgba(15,44,52,.18) 44%,rgba(11,37,47,.32) 100%),
+  radial-gradient(circle at 70% 30%,#afc0bb,#4c6264 72%);
+  background-position:center;background-size:cover;transform:scale(1.01)}
+.hero-copy{position:absolute;left:34px;top:34px;z-index:2;color:#fff;width:min(560px,calc(100% - 420px));text-shadow:0 2px 10px rgba(0,0,0,.22)}
+.hero-copy .eyebrow{font-size:12px;letter-spacing:.22em;font-weight:800;opacity:.92;margin-bottom:8px}
+.hero-copy h1{font-family:Georgia,serif;font-weight:500;font-style:italic;font-size:42px;line-height:1.02;margin:0 0 10px}
+.hero-copy p{font-size:15px;line-height:1.5;margin:0;max-width:490px}
+.hero-summary{
+  position:absolute;left:34px;bottom:34px;z-index:3;width:min(650px,calc(100% - 410px));
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px
+}
+.hero-stat{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.95);backdrop-filter:blur(9px);border-radius:16px;padding:14px 13px;box-shadow:0 9px 28px rgba(0,0,0,.10)}
+.hero-stat strong{display:block;color:#17394e;font-size:23px}
+.hero-stat span{display:block;color:#6b7c87;font-size:11px;font-weight:800;margin-top:4px;line-height:1.2}
+.hero-actions{position:absolute;right:26px;top:80px;z-index:4;width:315px;display:grid;gap:11px}
+.hero-action{
+  border:1px solid rgba(255,255,255,.8);background:rgba(255,255,255,.95);border-radius:17px;padding:14px 15px;
+  display:grid;grid-template-columns:46px 1fr 20px;gap:12px;align-items:center;text-align:left;box-shadow:0 13px 30px rgba(0,0,0,.13)
+}
+.hero-action:hover{transform:translateY(-1px)}
+.action-icon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:20px;font-weight:900;color:#fff;background:var(--teal)}
+.hero-action:nth-child(2) .action-icon{background:var(--sand)}
+.hero-action:nth-child(3) .action-icon{background:var(--blue)}
+.action-copy strong{display:block;font-size:15px}.action-copy span{display:block;font-size:11px;color:#6a7e89;margin-top:3px;line-height:1.25}
+.action-arrow{font-size:22px;color:#2d5268}
+.dashboard-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;margin-top:17px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:19px;padding:17px;box-shadow:0 8px 24px rgba(25,57,72,.05);min-width:0}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+.panel-head h2{font-size:17px;margin:0}.panel-head p{margin:3px 0 0;color:var(--muted);font-size:12px}
+.small-btn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 10px;font-size:11px;font-weight:800;color:#3a5b70}
+.small-btn.primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+.next-card{border:1px solid #cfe8ea;background:linear-gradient(135deg,#f6fdfd,#edf8f9);border-radius:15px;padding:14px}
+.next-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.badge{display:inline-flex;align-items:center;border-radius:999px;padding:5px 8px;background:#edf4f6;color:#496475;font-size:10px;font-weight:900}
+.badge.teal{background:#daf2f4;color:#087986}.badge.green{background:#e2f3ea;color:#347859}.badge.red{background:#fae7e8;color:#a34f55}.badge.sand{background:#fbf0d9;color:#987124}
+.next-title{font-size:19px;font-weight:900;margin:9px 0 5px}.next-focus{color:#617985;font-size:12px;line-height:1.45;white-space:pre-wrap}
+.recent-list{display:grid;gap:8px}
+.recent-row{display:grid;grid-template-columns:88px minmax(0,1fr) 86px 48px;gap:10px;align-items:center;border-top:1px solid #eef3f4;padding:10px 0}
+.recent-row:first-child{border-top:0;padding-top:1px}
+.recent-date{font-size:11px;color:#728692}.recent-topic{font-weight:800;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.recent-sub{font-size:10px;color:#81929c;margin-top:3px}.score-pill{justify-self:end;padding:5px 8px;border-radius:999px;background:#e7f3fb;color:#356d95;font-weight:900;font-size:11px}.edit-mini{border:0;background:#eef6f7;color:#0b7a85;border-radius:8px;width:40px;height:32px;font-size:10px;font-weight:900}
+.empty{border:1px dashed #cbdde1;border-radius:14px;padding:18px;text-align:center;color:#7d909a;font-size:12px;background:#fbfdfd}
+.skill-list{display:grid;gap:10px}
+.skill-row{display:grid;grid-template-columns:96px minmax(0,1fr) 38px;gap:10px;align-items:center}
+.skill-name{font-size:11px;font-weight:800;color:#36566a}.skill-track{height:9px;border-radius:999px;background:#edf3f4;overflow:hidden}.skill-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#1595a2,#65c6cc);width:0}.skill-val{text-align:right;font-size:11px;font-weight:900;color:#486273}
+.focus-list{display:grid;gap:9px}.focus-item{border-left:3px solid var(--teal);background:#f8fbfc;border-radius:0 12px 12px 0;padding:10px 11px}.focus-item strong{display:block;font-size:11px}.focus-item span{display:block;font-size:11px;color:#657b87;margin-top:4px;line-height:1.35}
+.section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin:2px 0 14px}
+.section-title h1{font-size:26px;margin:0}.section-title p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.primary-btn{border:0;background:linear-gradient(135deg,var(--teal),#2baab6);color:#fff;border-radius:12px;padding:10px 14px;font-weight:900;font-size:12px}
+.filters{display:grid;grid-template-columns:minmax(180px,1fr) 165px 150px 150px auto;gap:9px;margin-bottom:12px}
+.input,select,textarea{width:100%;border:1px solid #cfdee3;background:#fff;border-radius:10px;padding:9px 10px;color:#203f53}
+.input::placeholder,textarea::placeholder{color:#94a4ad}
+.lesson-table-wrap{background:#fff;border:1px solid var(--line);border-radius:17px;overflow:auto}
+.lesson-table{width:100%;border-collapse:collapse;min-width:900px}
+.lesson-table th{position:sticky;top:0;background:#f5f9fa;padding:10px 11px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#728590;border-bottom:1px solid var(--line)}
+.lesson-table td{padding:11px;border-bottom:1px solid #edf2f4;font-size:12px;vertical-align:middle}
+.lesson-table tr:hover td{background:#fbfefe}
+.topic-main{font-weight:900;color:#214459}.topic-sub{font-size:10px;color:#80929c;margin-top:3px}
+.row-actions{display:flex;gap:6px}.row-btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 8px;font-size:10px;font-weight:900}.row-btn.danger{color:#a65055}
+.progress-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.progress-big{padding:20px}
+.progress-big .skill-row{grid-template-columns:120px minmax(0,1fr) 45px;margin:14px 0}
+.progress-big .skill-track{height:12px}
+.modules-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.module-card{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}
+.module-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.module-card strong{font-size:12px}.module-card .mini{font-size:10px;color:#80929d}.mini-track{height:7px;border-radius:999px;background:#edf3f4;margin-top:9px;overflow:hidden}.mini-fill{height:100%;background:var(--teal)}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.insight-card{border:1px solid var(--line);border-radius:14px;padding:13px;background:#fbfdfd}.insight-card h3{font-size:12px;margin:0 0 7px}.insight-card p{font-size:11px;color:#667d89;line-height:1.45;margin:0;white-space:pre-wrap}
+.backup-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.backup-card{border:1px solid var(--line);background:#fff;border-radius:17px;padding:17px}.backup-card h2{font-size:16px;margin:0 0 6px}.backup-card p{font-size:11px;color:#6f838e;line-height:1.45;margin:0 0 13px}.backup-actions{display:flex;gap:8px;flex-wrap:wrap}.backup-btn{border:1px solid var(--line);background:#f9fcfc;border-radius:10px;padding:9px 11px;font-weight:900;font-size:11px}.backup-btn.danger{color:#9f4b51;border-color:#efd0d3;background:#fffafa}
+.storage-note{margin-top:14px;border-radius:14px;padding:13px 14px;background:#fff8e9;border:1px solid #eedebc;color:#7c6540;font-size:11px;line-height:1.45}
+.modal{position:fixed;inset:0;background:rgba(12,32,42,.60);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal.on{display:flex}
+.modal-card{width:min(980px,96vw);max-height:92vh;overflow:auto;background:#fff;border-radius:22px;box-shadow:0 25px 80px rgba(0,0,0,.26)}
+.modal-head{position:sticky;top:0;z-index:2;background:#fff;border-bottom:1px solid var(--line);padding:15px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.modal-head h2{margin:0;font-size:18px}.modal-close{border:0;background:#edf4f5;border-radius:9px;width:36px;height:34px;font-weight:900;color:#36566a}
+.form-body{padding:17px 18px 20px}
+.form-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.field{min-width:0}.field.span2{grid-column:span 2}.field.span4{grid-column:span 4}.field label{display:block;font-size:10px;font-weight:900;color:#5f7683;text-transform:uppercase;letter-spacing:.07em;margin:0 0 5px}
+textarea{min-height:74px;resize:vertical;line-height:1.4}
+.form-section{font-size:12px;font-weight:900;color:#1e5067;border-top:1px solid #edf2f4;padding-top:14px;margin:15px 0 10px}
+.rating-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.rating{border:1px solid var(--line);background:#f9fcfc;border-radius:12px;padding:10px}.rating label{display:flex;justify-content:space-between;align-items:center;font-size:11px;font-weight:800;color:#436171;margin-bottom:6px}.rating output{font-weight:900;color:#0b7e89}.rating input[type=range]{width:100%;accent-color:var(--teal)}
+.modal-foot{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);padding:12px 18px;display:flex;justify-content:space-between;gap:10px}
+.foot-left,.foot-right{display:flex;gap:8px}.danger-btn{border:1px solid #efd0d2;background:#fff7f7;color:#a04d52;border-radius:10px;padding:9px 12px;font-weight:900;font-size:11px}.neutral-btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-weight:900;font-size:11px}
+.toast{position:fixed;right:20px;bottom:20px;z-index:150;background:#153c4d;color:#fff;border-radius:12px;padding:10px 13px;font-size:11px;font-weight:800;box-shadow:0 12px 35px rgba(0,0,0,.2);opacity:0;transform:translateY(10px);pointer-events:none;transition:.2s}
+.toast.on{opacity:1;transform:translateY(0)}
+@media(max-width:1120px){
+  .shell{grid-template-columns:210px 1fr}.hero-copy{width:calc(100% - 360px)}.hero-summary{width:calc(100% - 360px);grid-template-columns:repeat(2,1fr)}.hero-actions{width:285px}
+  .top-kicker{display:none}.modules-grid{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:1fr 145px 135px auto}.filters .date-filter{display:none}
+}
+@media(max-width:820px){
+  .shell{display:block}.sidebar{position:relative;height:auto;border-right:0;border-bottom:1px solid var(--line)}.module-list{grid-template-columns:repeat(2,1fr)}
+  .topbar{top:0;padding:0 12px}.top-tabs{overflow:auto}.top-action.hide-mobile,.profile span{display:none}.content{padding:12px}
+  .hero{min-height:640px}.hero-copy{left:20px;top:24px;width:calc(100% - 40px)}.hero-copy h1{font-size:34px}.hero-actions{left:20px;right:20px;top:210px;width:auto}
+  .hero-summary{left:20px;right:20px;bottom:20px;width:auto;grid-template-columns:repeat(2,1fr)}.dashboard-grid,.progress-layout,.backup-grid{grid-template-columns:1fr}
+  .filters{grid-template-columns:1fr 1fr}.filters .date-filter{display:block}.form-grid{grid-template-columns:1fr 1fr}.field.span2{grid-column:span 2}.field.span4{grid-column:span 2}.rating-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:520px){
+  .module-list{grid-template-columns:1fr}.top-tabs .tab-btn{padding:8px 8px;font-size:11px}.top-actions .top-action{display:none}.hero{min-height:690px}.hero-actions{top:235px}.hero-summary{grid-template-columns:1fr 1fr}
+  .filters{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.span2,.field.span4{grid-column:span 1}.rating-grid,.insight-grid{grid-template-columns:1fr}.modules-grid{grid-template-columns:1fr}
+}
+@media print{
+  .sidebar,.topbar,.hero-actions,.primary-btn,.small-btn,.row-actions,.filters,.backup-actions,.storage-note{display:none!important}
+  .shell{display:block}.content{padding:0}.view{display:block!important}.hero{min-height:250px;box-shadow:none}.hero-copy{width:60%}.hero-summary{width:70%;grid-template-columns:repeat(4,1fr)}
+  .panel,.lesson-table-wrap{box-shadow:none;break-inside:avoid}.lesson-table{min-width:0;font-size:9px}
+  #lessonsView,#progressView{page-break-before:always}#backupView{display:none!important}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div><span class="brand-script">Kate</span><span class="brand-heart">♡</span></div>
+      <div class="brand-sub">TEACHER'S LOG</div>
+    </div>
+    <div class="teacher-pill"><strong>Private teaching workspace</strong>Lesson history, notes and progress tracking for Kate.</div>
+
+    <div class="side-title">Workspace</div>
+    <button class="nav-btn active" data-view="dashboard"><span class="nav-mark">H</span><span>Home</span></button>
+    <button class="nav-btn" data-view="lessons"><span class="nav-mark">L</span><span>Lessons</span></button>
+    <button class="nav-btn" data-view="progress"><span class="nav-mark">P</span><span>Progress</span></button>
+    <button class="nav-btn" data-view="backup"><span class="nav-mark">B</span><span>Backup</span></button>
+
+    <div class="side-title">Modules</div>
+    <div class="module-list" id="moduleList"></div>
+
+    <div class="side-footer">
+      <a class="side-link" href="../kate-english-hub/" target="_blank" rel="noopener">Open Kate's Homework</a>
+      <button class="side-link" id="sideAddBtn">+ Add lesson record</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="top-left">
+        <div class="top-kicker">LEARN · PRACTICE · TRACK · ACHIEVE</div>
+        <nav class="top-tabs" aria-label="Teacher log sections">
+          <button class="tab-btn active" data-view="dashboard">Dashboard</button>
+          <button class="tab-btn" data-view="lessons">Lessons</button>
+          <button class="tab-btn" data-view="progress">Progress</button>
+          <button class="tab-btn" data-view="backup">Backup</button>
+        </nav>
+      </div>
+      <div class="top-actions">
+        <button class="top-action hide-mobile" id="fullscreenBtn">Full screen</button>
+        <button class="top-action" id="quickAddTop">+ Lesson</button>
+        <div class="profile"><div class="avatar">K</div><span><strong>Kate</strong></span></div>
+      </div>
+    </header>
+
+    <div class="content">
+      <section class="view active" id="dashboardView">
+        <div class="hero">
+          <div class="hero-bg" id="heroBg"></div>
+          <div class="hero-copy">
+            <div class="eyebrow">KATE · TEACHER'S LOG</div>
+            <h1>Progress over perfection.</h1>
+            <p>Keep every lesson, weak point, homework result and next-step decision in one place.</p>
+          </div>
+          <div class="hero-summary">
+            <div class="hero-stat"><strong id="statLessons">0</strong><span>LESSONS LOGGED</span></div>
+            <div class="hero-stat"><strong id="statAttendance">—</strong><span>ATTENDANCE</span></div>
+            <div class="hero-stat"><strong id="statHomework">—</strong><span>HOMEWORK DONE</span></div>
+            <div class="hero-stat"><strong id="statScore">—</strong><span>AVERAGE SCORE</span></div>
+          </div>
+          <div class="hero-actions">
+            <button class="hero-action" id="heroAddBtn">
+              <span class="action-icon">+</span><span class="action-copy"><strong>Add lesson</strong><span>Record date, topic, homework and notes</span></span><span class="action-arrow">›</span>
+            </button>
+            <button class="hero-action" data-view="progress">
+              <span class="action-icon">P</span><span class="action-copy"><strong>Progress</strong><span>See skills and module completion</span></span><span class="action-arrow">›</span>
+            </button>
+            <button class="hero-action" data-view="backup">
+              <span class="action-icon">B</span><span class="action-copy"><strong>Backup</strong><span>Export JSON or CSV before changing devices</span></span><span class="action-arrow">›</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="panel">
+            <div class="panel-head">
+              <div><h2>Next lesson focus</h2><p>Automatically taken from the most recent lesson record.</p></div>
+              <button class="small-btn primary" id="nextAddBtn">Add lesson</button>
+            </div>
+            <div id="nextFocusBox"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <div><h2>Skill snapshot</h2><p>Average confidence scores from logged lessons.</p></div>
+              <button class="small-btn" data-view="progress">Details</button>
+            </div>
+            <div class="skill-list" id="dashboardSkills"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <div><h2>Recent lessons</h2><p>Latest records first.</p></div>
+              <button class="small-btn" data-view="lessons">All lessons</button>
+            </div>
+            <div class="recent-list" id="recentLessons"></div>
+          </section>
+
+          <section class="panel">
+            <div class="panel-head">
+              <div><h2>Teaching focus</h2><p>Weak points and the next action to take.</p></div>
+            </div>
+            <div class="focus-list" id="focusList"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="lessonsView">
+        <div class="section-title">
+          <div><h1>Lesson history</h1><p>Search, filter, edit and review every lesson with Kate.</p></div>
+          <button class="primary-btn" id="addLessonBtn">+ Add lesson</button>
+        </div>
+        <div class="filters">
+          <input class="input" id="searchInput" type="search" placeholder="Search topic, notes, vocabulary...">
+          <select id="moduleFilter"><option value="">All modules</option></select>
+          <select id="attendanceFilter">
+            <option value="">Any attendance</option>
+            <option value="present">Present</option><option value="late">Late</option><option value="absent">Absent</option>
+          </select>
+          <input class="input date-filter" id="dateFilter" type="date">
+          <button class="small-btn" id="clearFiltersBtn">Clear filters</button>
+        </div>
+        <div class="lesson-table-wrap">
+          <table class="lesson-table">
+            <thead><tr><th>Date</th><th>Module</th><th>Lesson / Topic</th><th>Attendance</th><th>Homework</th><th>Score</th><th>Next focus</th><th>Actions</th></tr></thead>
+            <tbody id="lessonTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="view" id="progressView">
+        <div class="section-title">
+          <div><h1>Progress</h1><p>Skill confidence, module completion and teaching insights.</p></div>
+          <button class="primary-btn" id="progressAddBtn">+ Add evidence</button>
+        </div>
+        <div class="progress-layout">
+          <section class="panel progress-big">
+            <div class="panel-head"><div><h2>Skill confidence</h2><p>0–100 averages from your lesson ratings.</p></div></div>
+            <div id="progressSkills"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><div><h2>Module completion</h2><p>A lesson slot counts as complete once it has a record.</p></div></div>
+            <div class="modules-grid" id="modulesProgress"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><div><h2>Latest weak points</h2><p>Use these to plan retrieval practice and revision.</p></div></div>
+            <div class="insight-grid" id="weakPointCards"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><div><h2>Latest next-step decisions</h2><p>What to prioritise in upcoming lessons.</p></div></div>
+            <div class="insight-grid" id="nextFocusCards"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="view" id="backupView">
+        <div class="section-title">
+          <div><h1>Backup & export</h1><p>Keep a portable copy of Kate's teacher log.</p></div>
+        </div>
+        <div class="backup-grid">
+          <section class="backup-card">
+            <h2>Full backup</h2>
+            <p>Export all lesson records and settings as JSON. Use this file to restore the log in another browser or computer.</p>
+            <div class="backup-actions"><button class="backup-btn" id="exportJsonBtn">Export JSON</button><button class="backup-btn" id="importJsonBtn">Import JSON</button><input id="importFile" type="file" accept="application/json,.json" hidden></div>
+          </section>
+          <section class="backup-card">
+            <h2>Spreadsheet export</h2>
+            <p>Download a CSV file with one row per lesson for Excel, Google Sheets or your records.</p>
+            <div class="backup-actions"><button class="backup-btn" id="exportCsvBtn">Export CSV</button><button class="backup-btn" id="printBtn">Print / PDF</button></div>
+          </section>
+          <section class="backup-card">
+            <h2>Storage status</h2>
+            <p id="storageStatus">No records stored yet.</p>
+            <div class="backup-actions"><button class="backup-btn" id="seedBtn">Add sample template</button></div>
+          </section>
+          <section class="backup-card">
+            <h2>Reset</h2>
+            <p>Delete all Kate teacher-log records from this browser. This cannot be undone unless you exported a backup first.</p>
+            <div class="backup-actions"><button class="backup-btn danger" id="resetBtn">Delete all records</button></div>
+          </section>
+        </div>
+        <div class="storage-note"><strong>Important:</strong> this GitHub Pages log stores data in this browser using localStorage. Data does not automatically sync between devices. Export a JSON backup before changing browser, clearing site data or working from another computer.</div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<div class="modal" id="lessonModal" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="lessonModalTitle">
+    <div class="modal-head"><h2 id="lessonModalTitle">Add lesson record</h2><button class="modal-close" id="closeModalBtn" aria-label="Close">×</button></div>
+    <form id="lessonForm">
+      <div class="form-body">
+        <input type="hidden" id="recordId">
+        <div class="form-grid">
+          <div class="field"><label for="dateField">Date</label><input class="input" id="dateField" type="date" required></div>
+          <div class="field"><label for="moduleField">Module</label><select id="moduleField" required></select></div>
+          <div class="field"><label for="lessonNoField">Lesson</label><select id="lessonNoField"><option value="1">Lesson 1</option><option value="2">Lesson 2</option><option value="3">Lesson 3</option></select></div>
+          <div class="field"><label for="durationField">Minutes</label><input class="input" id="durationField" type="number" min="10" max="240" step="5" value="60"></div>
+          <div class="field span2"><label for="topicField">Topic</label><input class="input" id="topicField" type="text" maxlength="120" placeholder="Lesson topic" required></div>
+          <div class="field"><label for="attendanceField">Attendance</label><select id="attendanceField"><option value="present">Present</option><option value="late">Late</option><option value="absent">Absent</option></select></div>
+          <div class="field"><label for="homeworkStatusField">Homework status</label><select id="homeworkStatusField"><option value="not-set">Not set</option><option value="done">Done</option><option value="partial">Partly done</option><option value="missing">Missing</option></select></div>
+          <div class="field"><label for="scoreField">Score %</label><input class="input" id="scoreField" type="number" min="0" max="100" step="1" placeholder="0–100"></div>
+          <div class="field span2"><label for="homeworkField">Homework</label><textarea id="homeworkField" placeholder="What Kate needs to do before the next lesson"></textarea></div>
+          <div class="field"><label for="nextDateField">Next lesson date</label><input class="input" id="nextDateField" type="date"></div>
+        </div>
+
+        <div class="form-section">Lesson content</div>
+        <div class="form-grid">
+          <div class="field span2"><label for="vocabField">Vocabulary</label><textarea id="vocabField" placeholder="Target words, phrases, collocations"></textarea></div>
+          <div class="field span2"><label for="grammarField">Grammar</label><textarea id="grammarField" placeholder="Grammar focus, errors, structures"></textarea></div>
+          <div class="field span2"><label for="speakingField">Speaking</label><textarea id="speakingField" placeholder="Speaking tasks and performance"></textarea></div>
+          <div class="field span2"><label for="teacherNotesField">Teacher notes</label><textarea id="teacherNotesField" placeholder="What happened in the lesson, useful observations"></textarea></div>
+          <div class="field span2"><label for="weakPointsField">Weak points</label><textarea id="weakPointsField" placeholder="What needs reinforcement"></textarea></div>
+          <div class="field span2"><label for="nextFocusField">Next lesson focus</label><textarea id="nextFocusField" placeholder="Priority for the next lesson"></textarea></div>
+        </div>
+
+        <div class="form-section">Confidence scores</div>
+        <div class="rating-grid" id="ratingGrid"></div>
+      </div>
+      <div class="modal-foot">
+        <div class="foot-left"><button type="button" class="danger-btn" id="deleteRecordBtn" hidden>Delete record</button></div>
+        <div class="foot-right"><button type="button" class="neutral-btn" id="cancelBtn">Cancel</button><button type="submit" class="primary-btn">Save lesson</button></div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../kate-english-hub/bg1.js"></script>
+<script src="../kate-english-hub/bg2.js"></script>
+<script src="../kate-english-hub/bg3.js"></script>
+<script src="../kate-english-hub/bg4.js"></script>
+<script src="../kate-english-hub/bg5.js"></script>
+<script>
+(function(){
+'use strict';
+
+var STORAGE_KEY='kateTeacherLog.v1';
+var MODULES=[
+  'Me and My World','People','Daily Life','Education','Free Time','Travel',
+  'Health & Wellbeing','Culture','Science & Technology','Global Issues','Work & Future','Review'
+];
+var SKILLS=['Vocabulary','Grammar','Speaking','Listening','Reading','Writing'];
+var state=loadState();
+var activeModuleFilter='';
+
+function emptyState(){return {version:1,lessons:[]};}
+function loadState(){
+  try{
+    var raw=localStorage.getItem(STORAGE_KEY);
+    if(!raw) return emptyState();
+    var parsed=JSON.parse(raw);
+    if(!parsed || !Array.isArray(parsed.lessons)) return emptyState();
+    parsed.version=1;
+    return parsed;
+  }catch(err){return emptyState();}
+}
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+    updateStorageStatus();
+  }catch(err){
+    toast('Could not save in this browser.');
+  }
+}
+function uid(){return 'L'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function esc(value){
+  return String(value==null?'':value).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];});
+}
+function localISODate(){
+  var d=new Date(),y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');
+  return y+'-'+m+'-'+day;
+}
+function prettyDate(value){
+  if(!value) return '—';
+  var p=value.split('-');
+  if(p.length!==3) return value;
+  return p[2]+'.'+p[1]+'.'+p[0];
+}
+function latestLessons(){
+  return state.lessons.slice().sort(function(a,b){
+    var ad=(a.date||'')+'-'+(a.id||''),bd=(b.date||'')+'-'+(b.id||'');
+    return bd.localeCompare(ad);
+  });
+}
+function getSkillAverage(skill){
+  var key=skill.toLowerCase();
+  var vals=state.lessons.map(function(l){return Number((l.skills||{})[key]);}).filter(function(n){return Number.isFinite(n) && n>0;});
+  if(!vals.length) return 0;
+  return Math.round(vals.reduce(function(a,b){return a+b;},0)/vals.length);
+}
+function attendanceText(v){return v==='present'?'Present':v==='late'?'Late':v==='absent'?'Absent':'—';}
+function homeworkText(v){return v==='done'?'Done':v==='partial'?'Partly done':v==='missing'?'Missing':'Not set';}
+function badgeClass(type,value){
+  if(type==='attendance') return value==='present'?'green':value==='absent'?'red':'sand';
+  if(type==='homework') return value==='done'?'green':value==='missing'?'red':value==='partial'?'sand':'';
+  return '';
+}
+function lessonLabel(l){return 'Module '+l.module+' · Lesson '+l.lessonNo;}
+
+function setupBackground(){
+  var bg=document.getElementById('heroBg');
+  if(window.KATE_BG){
+    bg.style.backgroundImage='linear-gradient(90deg,rgba(9,37,47,.62) 0%,rgba(15,44,52,.15) 44%,rgba(11,37,47,.30) 100%),url("data:image/webp;base64,'+window.KATE_BG+'")';
+  }
+}
+function fillModuleControls(){
+  var list=document.getElementById('moduleList');
+  var filter=document.getElementById('moduleFilter');
+  var field=document.getElementById('moduleField');
+  list.innerHTML='';
+  filter.innerHTML='<option value="">All modules</option>';
+  field.innerHTML='';
+  MODULES.forEach(function(name,idx){
+    var n=idx+1;
+    var btn=document.createElement('button');
+    btn.className='module-btn';
+    btn.dataset.module=String(n);
+    btn.innerHTML='<span class="mod-num">'+n+'</span><span class="mod-name">'+esc(name)+'</span><span class="mod-progress" id="sideMod'+n+'">0/3</span>';
+    btn.addEventListener('click',function(){
+      activeModuleFilter=String(n);
+      document.getElementById('moduleFilter').value=String(n);
+      switchView('lessons');
+      renderLessonTable();
+      updateModuleSelection();
+    });
+    list.appendChild(btn);
+    filter.insertAdjacentHTML('beforeend','<option value="'+n+'">Module '+n+' · '+esc(name)+'</option>');
+    field.insertAdjacentHTML('beforeend','<option value="'+n+'">Module '+n+' · '+esc(name)+'</option>');
+  });
+}
+function updateModuleSelection(){
+  document.querySelectorAll('.module-btn').forEach(function(b){
+    b.classList.toggle('selected',activeModuleFilter && b.dataset.module===activeModuleFilter);
+  });
+}
+function buildRatings(){
+  var grid=document.getElementById('ratingGrid');
+  grid.innerHTML='';
+  SKILLS.forEach(function(skill){
+    var key=skill.toLowerCase();
+    var wrap=document.createElement('div');
+    wrap.className='rating';
+    wrap.innerHTML='<label for="skill_'+key+'"><span>'+skill+'</span><output id="out_'+key+'">70</output></label><input id="skill_'+key+'" type="range" min="0" max="100" value="70" step="5">';
+    grid.appendChild(wrap);
+    var input=wrap.querySelector('input');
+    var out=wrap.querySelector('output');
+    input.addEventListener('input',function(){out.textContent=input.value;});
+  });
+}
+function switchView(name){
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
+  var target=document.getElementById(name+'View');
+  if(target) target.classList.add('active');
+  document.querySelectorAll('[data-view]').forEach(function(btn){
+    btn.classList.toggle('active',btn.dataset.view===name && (btn.classList.contains('nav-btn')||btn.classList.contains('tab-btn')));
+  });
+  if(name==='lessons') renderLessonTable();
+  if(name==='progress') renderProgress();
+  if(name==='backup') updateStorageStatus();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function stats(){
+  var total=state.lessons.length;
+  var attended=state.lessons.filter(function(l){return l.attendance==='present'||l.attendance==='late';}).length;
+  var attendanceBase=state.lessons.filter(function(l){return !!l.attendance;}).length;
+  var hwBase=state.lessons.filter(function(l){return l.homeworkStatus && l.homeworkStatus!=='not-set';}).length;
+  var hwDone=state.lessons.filter(function(l){return l.homeworkStatus==='done';}).length;
+  var scores=state.lessons.map(function(l){return Number(l.score);}).filter(function(n){return Number.isFinite(n)&&n>=0&&n<=100;});
+  return {
+    total:total,
+    attendance:attendanceBase?Math.round(attended/attendanceBase*100):null,
+    homework:hwBase?Math.round(hwDone/hwBase*100):null,
+    score:scores.length?Math.round(scores.reduce(function(a,b){return a+b;},0)/scores.length):null
+  };
+}
+function renderDashboard(){
+  var s=stats();
+  document.getElementById('statLessons').textContent=s.total;
+  document.getElementById('statAttendance').textContent=s.attendance==null?'—':s.attendance+'%';
+  document.getElementById('statHomework').textContent=s.homework==null?'—':s.homework+'%';
+  document.getElementById('statScore').textContent=s.score==null?'—':s.score+'%';
+
+  var skills=document.getElementById('dashboardSkills');
+  skills.innerHTML='';
+  SKILLS.forEach(function(skill){
+    var val=getSkillAverage(skill);
+    skills.insertAdjacentHTML('beforeend','<div class="skill-row"><div class="skill-name">'+skill+'</div><div class="skill-track"><div class="skill-fill" style="width:'+val+'%"></div></div><div class="skill-val">'+(val?val+'%':'—')+'</div></div>');
+  });
+
+  var latest=latestLessons();
+  var next=document.getElementById('nextFocusBox');
+  if(!latest.length){
+    next.innerHTML='<div class="empty">No lesson records yet. Add the first lesson to start Kate’s log.</div>';
+  }else{
+    var l=latest[0];
+    next.innerHTML='<div class="next-card"><div class="next-meta"><span class="badge teal">'+lessonLabel(l)+'</span><span class="badge">'+prettyDate(l.nextDate||l.date)+'</span></div><div class="next-title">'+esc(l.nextFocus||'Plan the next lesson')+'</div><div class="next-focus">'+esc(l.weakPoints?'Weak point to revisit: '+l.weakPoints:'Add weak points in the lesson record to make planning faster.')+'</div></div>';
+  }
+
+  var recent=document.getElementById('recentLessons');
+  recent.innerHTML='';
+  latest.slice(0,5).forEach(function(l){
+    var row=document.createElement('div');
+    row.className='recent-row';
+    row.innerHTML='<div class="recent-date">'+prettyDate(l.date)+'</div><div><div class="recent-topic">'+esc(l.topic||'Untitled lesson')+'</div><div class="recent-sub">'+lessonLabel(l)+' · '+attendanceText(l.attendance)+'</div></div><div class="score-pill">'+(l.score===''||l.score==null?'—':esc(l.score)+'%')+'</div><button class="edit-mini" type="button">Edit</button>';
+    row.querySelector('button').addEventListener('click',function(){openLessonModal(l.id);});
+    recent.appendChild(row);
+  });
+  if(!latest.length) recent.innerHTML='<div class="empty">Recent lessons will appear here.</div>';
+
+  var focus=document.getElementById('focusList');
+  focus.innerHTML='';
+  var focusItems=[];
+  latest.forEach(function(l){
+    if(focusItems.length<3 && (l.weakPoints||l.nextFocus)) focusItems.push(l);
+  });
+  focusItems.forEach(function(l){
+    focus.insertAdjacentHTML('beforeend','<div class="focus-item"><strong>'+esc(l.topic||lessonLabel(l))+'</strong><span>'+esc(l.nextFocus||l.weakPoints||'No focus added')+'</span></div>');
+  });
+  if(!focusItems.length) focus.innerHTML='<div class="empty">Add weak points or next-focus notes to see teaching priorities here.</div>';
+
+  renderSideProgress();
+}
+function renderSideProgress(){
+  MODULES.forEach(function(_,idx){
+    var n=idx+1;
+    var unique={};
+    state.lessons.filter(function(l){return Number(l.module)===n;}).forEach(function(l){unique[String(l.lessonNo)]=true;});
+    var count=Math.min(3,Object.keys(unique).length);
+    var el=document.getElementById('sideMod'+n);
+    if(el) el.textContent=count+'/3';
+  });
+}
+function getFilteredLessons(){
+  var q=document.getElementById('searchInput').value.trim().toLowerCase();
+  var moduleVal=document.getElementById('moduleFilter').value;
+  var attendance=document.getElementById('attendanceFilter').value;
+  var date=document.getElementById('dateFilter').value;
+  return latestLessons().filter(function(l){
+    if(moduleVal && String(l.module)!==moduleVal) return false;
+    if(attendance && l.attendance!==attendance) return false;
+    if(date && l.date!==date) return false;
+    if(q){
+      var hay=[l.topic,l.vocabulary,l.grammar,l.speaking,l.teacherNotes,l.weakPoints,l.nextFocus,l.homework].join(' ').toLowerCase();
+      if(hay.indexOf(q)===-1) return false;
+    }
+    return true;
+  });
+}
+function renderLessonTable(){
+  var body=document.getElementById('lessonTableBody');
+  var list=getFilteredLessons();
+  body.innerHTML='';
+  list.forEach(function(l){
+    var tr=document.createElement('tr');
+    tr.innerHTML=
+      '<td>'+prettyDate(l.date)+'</td>'+
+      '<td><div class="topic-main">M'+esc(l.module)+'</div><div class="topic-sub">'+esc(MODULES[Number(l.module)-1]||'')+'</div></td>'+
+      '<td><div class="topic-main">Lesson '+esc(l.lessonNo)+' · '+esc(l.topic||'Untitled')+'</div><div class="topic-sub">'+esc(l.duration||60)+' min</div></td>'+
+      '<td><span class="badge '+badgeClass('attendance',l.attendance)+'">'+attendanceText(l.attendance)+'</span></td>'+
+      '<td><span class="badge '+badgeClass('homework',l.homeworkStatus)+'">'+homeworkText(l.homeworkStatus)+'</span></td>'+
+      '<td>'+(l.score===''||l.score==null?'—':esc(l.score)+'%')+'</td>'+
+      '<td>'+esc((l.nextFocus||'—').slice(0,75))+'</td>'+
+      '<td><div class="row-actions"><button class="row-btn edit">Edit</button><button class="row-btn danger delete">Delete</button></div></td>';
+    tr.querySelector('.edit').addEventListener('click',function(){openLessonModal(l.id);});
+    tr.querySelector('.delete').addEventListener('click',function(){deleteRecord(l.id);});
+    body.appendChild(tr);
+  });
+  if(!list.length){
+    body.innerHTML='<tr><td colspan="8"><div class="empty">No lesson records match these filters.</div></td></tr>';
+  }
+  activeModuleFilter=document.getElementById('moduleFilter').value;
+  updateModuleSelection();
+}
+function renderProgress(){
+  var skills=document.getElementById('progressSkills');
+  skills.innerHTML='';
+  SKILLS.forEach(function(skill){
+    var val=getSkillAverage(skill);
+    skills.insertAdjacentHTML('beforeend','<div class="skill-row"><div class="skill-name">'+skill+'</div><div class="skill-track"><div class="skill-fill" style="width:'+val+'%"></div></div><div class="skill-val">'+(val?val+'%':'—')+'</div></div>');
+  });
+
+  var mp=document.getElementById('modulesProgress');
+  mp.innerHTML='';
+  MODULES.forEach(function(name,idx){
+    var n=idx+1,unique={};
+    state.lessons.filter(function(l){return Number(l.module)===n;}).forEach(function(l){unique[String(l.lessonNo)]=true;});
+    var count=Math.min(3,Object.keys(unique).length),pct=Math.round(count/3*100);
+    mp.insertAdjacentHTML('beforeend','<div class="module-card"><div class="module-card-top"><strong>Module '+n+'</strong><span class="mini">'+count+'/3</span></div><div class="mini">'+esc(name)+'</div><div class="mini-track"><div class="mini-fill" style="width:'+pct+'%"></div></div></div>');
+  });
+
+  renderInsightCards('weakPointCards','weakPoints','No weak points logged yet.');
+  renderInsightCards('nextFocusCards','nextFocus','No next-step decisions logged yet.');
+}
+function renderInsightCards(id,key,emptyText){
+  var box=document.getElementById(id);
+  box.innerHTML='';
+  var arr=latestLessons().filter(function(l){return String(l[key]||'').trim();}).slice(0,4);
+  arr.forEach(function(l){
+    box.insertAdjacentHTML('beforeend','<div class="insight-card"><h3>'+esc(l.topic||lessonLabel(l))+'</h3><p>'+esc(l[key])+'</p></div>');
+  });
+  if(!arr.length) box.innerHTML='<div class="empty" style="grid-column:1/-1">'+emptyText+'</div>';
+}
+function updateStorageStatus(){
+  var el=document.getElementById('storageStatus');
+  if(!el) return;
+  var bytes=0;
+  try{bytes=(localStorage.getItem(STORAGE_KEY)||'').length*2;}catch(e){}
+  var kb=Math.max(0,Math.round(bytes/1024));
+  el.textContent=state.lessons.length+' lesson record'+(state.lessons.length===1?'':'s')+' stored locally · approximately '+kb+' KB.';
+}
+function renderAll(){
+  renderDashboard();
+  renderLessonTable();
+  renderProgress();
+  updateStorageStatus();
+}
+
+function openLessonModal(id){
+  var modal=document.getElementById('lessonModal');
+  var form=document.getElementById('lessonForm');
+  form.reset();
+  document.getElementById('recordId').value='';
+  document.getElementById('lessonModalTitle').textContent='Add lesson record';
+  document.getElementById('deleteRecordBtn').hidden=true;
+  document.getElementById('dateField').value=localISODate();
+  document.getElementById('durationField').value='60';
+  document.getElementById('attendanceField').value='present';
+  document.getElementById('homeworkStatusField').value='not-set';
+  SKILLS.forEach(function(skill){
+    var key=skill.toLowerCase(),input=document.getElementById('skill_'+key),out=document.getElementById('out_'+key);
+    input.value='70';out.textContent='70';
+  });
+  if(id){
+    var l=state.lessons.find(function(x){return x.id===id;});
+    if(!l) return;
+    document.getElementById('lessonModalTitle').textContent='Edit lesson record';
+    document.getElementById('recordId').value=l.id;
+    document.getElementById('dateField').value=l.date||'';
+    document.getElementById('moduleField').value=String(l.module||1);
+    document.getElementById('lessonNoField').value=String(l.lessonNo||1);
+    document.getElementById('durationField').value=l.duration||60;
+    document.getElementById('topicField').value=l.topic||'';
+    document.getElementById('attendanceField').value=l.attendance||'present';
+    document.getElementById('homeworkStatusField').value=l.homeworkStatus||'not-set';
+    document.getElementById('scoreField').value=l.score==null?'':l.score;
+    document.getElementById('homeworkField').value=l.homework||'';
+    document.getElementById('nextDateField').value=l.nextDate||'';
+    document.getElementById('vocabField').value=l.vocabulary||'';
+    document.getElementById('grammarField').value=l.grammar||'';
+    document.getElementById('speakingField').value=l.speaking||'';
+    document.getElementById('teacherNotesField').value=l.teacherNotes||'';
+    document.getElementById('weakPointsField').value=l.weakPoints||'';
+    document.getElementById('nextFocusField').value=l.nextFocus||'';
+    SKILLS.forEach(function(skill){
+      var key=skill.toLowerCase(),val=Number((l.skills||{})[key]);
+      if(!Number.isFinite(val)) val=70;
+      document.getElementById('skill_'+key).value=String(val);
+      document.getElementById('out_'+key).textContent=String(val);
+    });
+    document.getElementById('deleteRecordBtn').hidden=false;
+  }else if(activeModuleFilter){
+    document.getElementById('moduleField').value=activeModuleFilter;
+  }
+  modal.classList.add('on');modal.setAttribute('aria-hidden','false');
+  setTimeout(function(){document.getElementById('topicField').focus();},40);
+}
+function closeLessonModal(){
+  var modal=document.getElementById('lessonModal');
+  modal.classList.remove('on');modal.setAttribute('aria-hidden','true');
+}
+function collectForm(){
+  var skills={};
+  SKILLS.forEach(function(skill){var key=skill.toLowerCase();skills[key]=Number(document.getElementById('skill_'+key).value)||0;});
+  var rawScore=document.getElementById('scoreField').value;
+  return {
+    id:document.getElementById('recordId').value||uid(),
+    date:document.getElementById('dateField').value,
+    module:Number(document.getElementById('moduleField').value)||1,
+    lessonNo:Number(document.getElementById('lessonNoField').value)||1,
+    duration:Number(document.getElementById('durationField').value)||60,
+    topic:document.getElementById('topicField').value.trim(),
+    attendance:document.getElementById('attendanceField').value,
+    homeworkStatus:document.getElementById('homeworkStatusField').value,
+    score:rawScore===''?'':Math.max(0,Math.min(100,Number(rawScore))),
+    homework:document.getElementById('homeworkField').value.trim(),
+    nextDate:document.getElementById('nextDateField').value,
+    vocabulary:document.getElementById('vocabField').value.trim(),
+    grammar:document.getElementById('grammarField').value.trim(),
+    speaking:document.getElementById('speakingField').value.trim(),
+    teacherNotes:document.getElementById('teacherNotesField').value.trim(),
+    weakPoints:document.getElementById('weakPointsField').value.trim(),
+    nextFocus:document.getElementById('nextFocusField').value.trim(),
+    skills:skills,
+    updatedAt:new Date().toISOString()
+  };
+}
+function deleteRecord(id){
+  var l=state.lessons.find(function(x){return x.id===id;});
+  if(!l) return;
+  if(!confirm('Delete the lesson "'+(l.topic||'Untitled lesson')+'"?')) return;
+  state.lessons=state.lessons.filter(function(x){return x.id!==id;});
+  saveState();renderAll();closeLessonModal();toast('Lesson deleted.');
+}
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('on');
+  clearTimeout(toast.timer);toast.timer=setTimeout(function(){t.classList.remove('on');},2200);
+}
+function downloadFile(name,type,textContent){
+  var blob=new Blob([textContent],{type:type});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(function(){URL.revokeObjectURL(url);},1000);
+}
+function exportJson(){
+  var payload={app:'Kate Teacher Log',version:1,exportedAt:new Date().toISOString(),data:state};
+  downloadFile('kate-teacher-log-backup-'+localISODate()+'.json','application/json;charset=utf-8',JSON.stringify(payload,null,2));
+  toast('JSON backup exported.');
+}
+function csvCell(v){
+  var s=String(v==null?'':v).replace(/\r?\n/g,' ');
+  return '"'+s.replace(/"/g,'""')+'"';
+}
+function exportCsv(){
+  var headers=['Date','Module','Module name','Lesson','Topic','Attendance','Homework status','Score','Duration','Vocabulary','Grammar','Speaking','Homework','Teacher notes','Weak points','Next focus','Next lesson date','Vocabulary score','Grammar score','Speaking score','Listening score','Reading score','Writing score'];
+  var rows=[headers.map(csvCell).join(',')];
+  latestLessons().forEach(function(l){
+    var s=l.skills||{};
+    rows.push([
+      l.date,l.module,MODULES[Number(l.module)-1]||'',l.lessonNo,l.topic,l.attendance,l.homeworkStatus,l.score,l.duration,l.vocabulary,l.grammar,l.speaking,l.homework,l.teacherNotes,l.weakPoints,l.nextFocus,l.nextDate,
+      s.vocabulary,s.grammar,s.speaking,s.listening,s.reading,s.writing
+    ].map(csvCell).join(','));
+  });
+  downloadFile('kate-teacher-log-'+localISODate()+'.csv','text/csv;charset=utf-8','\ufeff'+rows.join('\n'));
+  toast('CSV exported.');
+}
+function importJsonFile(file){
+  if(!file) return;
+  var reader=new FileReader();
+  reader.onload=function(){
+    try{
+      var parsed=JSON.parse(reader.result);
+      var incoming=parsed.data||parsed;
+      if(!incoming||!Array.isArray(incoming.lessons)) throw new Error('Invalid backup');
+      if(!confirm('Import this backup and replace the current Kate teacher log in this browser?')) return;
+      state={version:1,lessons:incoming.lessons};
+      saveState();renderAll();toast('Backup imported.');
+    }catch(e){alert('This file is not a valid Kate Teacher Log backup.');}
+  };
+  reader.readAsText(file);
+}
+function addSampleTemplate(){
+  if(state.lessons.length && !confirm('Add one blank planning example to the existing log?')) return;
+  var today=localISODate();
+  state.lessons.push({
+    id:uid(),date:today,module:1,lessonNo:1,duration:60,topic:'Planning template',
+    attendance:'present',homeworkStatus:'not-set',score:'',homework:'',nextDate:'',
+    vocabulary:'Add target vocabulary here.',grammar:'Add the grammar focus here.',speaking:'Add speaking practice here.',
+    teacherNotes:'Replace this sample with your real lesson notes.',weakPoints:'Add 1–3 points to revisit.',
+    nextFocus:'Write the priority for the next lesson.',
+    skills:{vocabulary:70,grammar:70,speaking:70,listening:70,reading:70,writing:70},updatedAt:new Date().toISOString()
+  });
+  saveState();renderAll();switchView('lessons');toast('Sample template added.');
+}
+
+document.querySelectorAll('[data-view]').forEach(function(btn){
+  btn.addEventListener('click',function(){switchView(btn.dataset.view);});
+});
+['heroAddBtn','quickAddTop','sideAddBtn','nextAddBtn','addLessonBtn','progressAddBtn'].forEach(function(id){
+  var el=document.getElementById(id);if(el) el.addEventListener('click',function(){openLessonModal();});
+});
+document.getElementById('lessonForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var record=collectForm();
+  if(!record.date||!record.topic){alert('Add the lesson date and topic.');return;}
+  var idx=state.lessons.findIndex(function(x){return x.id===record.id;});
+  if(idx>=0) state.lessons[idx]=record; else state.lessons.push(record);
+  saveState();renderAll();closeLessonModal();toast(idx>=0?'Lesson updated.':'Lesson saved.');
+});
+document.getElementById('closeModalBtn').addEventListener('click',closeLessonModal);
+document.getElementById('cancelBtn').addEventListener('click',closeLessonModal);
+document.getElementById('lessonModal').addEventListener('click',function(e){if(e.target===this) closeLessonModal();});
+document.getElementById('deleteRecordBtn').addEventListener('click',function(){var id=document.getElementById('recordId').value;if(id) deleteRecord(id);});
+document.getElementById('searchInput').addEventListener('input',renderLessonTable);
+document.getElementById('moduleFilter').addEventListener('change',function(){activeModuleFilter=this.value;renderLessonTable();updateModuleSelection();});
+document.getElementById('attendanceFilter').addEventListener('change',renderLessonTable);
+document.getElementById('dateFilter').addEventListener('change',renderLessonTable);
+document.getElementById('clearFiltersBtn').addEventListener('click',function(){
+  document.getElementById('searchInput').value='';
+  document.getElementById('moduleFilter').value='';
+  document.getElementById('attendanceFilter').value='';
+  document.getElementById('dateFilter').value='';
+  activeModuleFilter='';renderLessonTable();updateModuleSelection();
+});
+document.getElementById('exportJsonBtn').addEventListener('click',exportJson);
+document.getElementById('exportCsvBtn').addEventListener('click',exportCsv);
+document.getElementById('importJsonBtn').addEventListener('click',function(){document.getElementById('importFile').click();});
+document.getElementById('importFile').addEventListener('change',function(){importJsonFile(this.files&&this.files[0]);this.value='';});
+document.getElementById('printBtn').addEventListener('click',function(){window.print();});
+document.getElementById('seedBtn').addEventListener('click',addSampleTemplate);
+document.getElementById('resetBtn').addEventListener('click',function(){
+  if(!state.lessons.length){toast('There are no records to delete.');return;}
+  if(!confirm('Delete ALL Kate teacher-log records from this browser?')) return;
+  state=emptyState();saveState();renderAll();toast('All records deleted.');
+});
+document.getElementById('fullscreenBtn').addEventListener('click',async function(){
+  try{
+    if(document.fullscreenElement) await document.exitFullscreen();
+    else await document.documentElement.requestFullscreen();
+  }catch(e){}
+});
+document.addEventListener('keydown',function(e){if(e.key==='Escape') closeLessonModal();});
+
+fillModuleControls();
+buildRatings();
+setupBackground();
+renderAll();
+})();
+</script>
+</body>
+</html>
