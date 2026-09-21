@@ -82,26 +82,6 @@ button{cursor:pointer}
 }
 .top-note .line1{font-family:Georgia,serif;font-style:italic;font-size:21px;line-height:1.05}
 .top-note .line2{font-size:11px;font-weight:700;color:#53656b;margin-top:8px}
-.quick-homework{
-  position:absolute;z-index:5;right:32px;top:170px;width:245px;background:rgba(255,255,255,.95);
-  border-radius:18px;padding:16px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.85)
-}
-.quick-homework .eyebrow{font-size:11px;letter-spacing:.12em;font-weight:900;color:var(--teal-dark)}
-.quick-homework h3{margin:6px 0 6px;font-size:22px}
-.quick-homework p{font-size:12px;line-height:1.45;color:var(--muted);margin:0 0 11px}
-.hw-open{
-  display:block;text-decoration:none;text-align:center;background:var(--teal);color:#fff;font-weight:900;
-  border-radius:10px;padding:10px 12px
-}
-.hw-open:hover{background:var(--teal-dark)}
-.center-card{
-  position:absolute;z-index:4;left:38px;bottom:195px;width:min(520px,calc(100% - 360px));
-  background:rgba(255,255,255,.88);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.9);
-  border-radius:22px;padding:18px 20px;box-shadow:0 14px 32px rgba(0,0,0,.15)
-}
-.center-card h2{margin:0 0 7px;color:#155e67;font-size:25px}
-.center-card p{margin:0;color:#4d676d;line-height:1.5;font-size:14px}
-.center-card strong{color:#155e67}
 .bottom-nav{
   position:absolute;z-index:5;left:28px;right:25px;bottom:18px;height:150px;
   background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);
@@ -149,16 +129,12 @@ body.lesson-open{overflow:hidden}
 
 @media(max-width:1000px){
   .app{grid-template-columns:190px 1fr}
-  .quick-homework{right:18px;width:215px}
   .top-note{right:18px;width:220px}
-  .center-card{width:calc(100% - 280px)}
   .skill strong{font-size:13px}.skill small{font-size:10px}
 }
 @media(max-width:760px){
   .app{display:block}.sidebar{position:relative;width:100%;height:auto;max-height:none}
-  .workspace{min-height:980px}.top-note{display:none}
-  .welcome{left:18px}.quick-homework{left:18px;right:18px;top:110px;width:auto}
-  .center-card{left:18px;right:18px;bottom:335px;width:auto}
+  .workspace{min-height:980px}.top-note{display:none}  .welcome{left:18px}
   .bottom-nav{left:18px;right:18px;height:auto;grid-template-columns:repeat(2,1fr)}
 }
 </style>
@@ -177,7 +153,13 @@ body.lesson-open{overflow:hidden}
 
     <div class="modules-panel" id="modulesPanel"></div>
 
-    <button class="big-btn homework" onclick="location.href='module2-lesson1-homework-generations.html'">★ <span>Homework</span><span>›</span></button>
+    <button class="big-btn homework" id="homeworkBtn" onclick="toggleHomeworkPanel()">★ <span>Homework</span><span>⌄</span></button>
+    <div class="modules-panel" id="homeworkPanel">
+      <div class="lesson-list open" style="display:grid;padding:3px 4px 6px 9px">
+        <button onclick="openInfo('Homework · Lesson 1')"><span>Lesson 1</span><span>›</span></button>
+        <button onclick="location.href='module2-lesson1-homework-generations.html'"><span>Lesson 2 · Generations</span><span>›</span></button>
+      </div>
+    </div>
 
     <div class="side-bottom">
       <button class="side-simple" onclick="openInfo('Extra Practice')">★ Extra Practice</button>
@@ -198,18 +180,6 @@ body.lesson-open{overflow:hidden}
       <div class="line1">Same language<br>A bigger world ♡</div>
       <div class="line2">EXPLORE · LEARN · GROW</div>
     </div>
-
-    <section class="center-card">
-      <h2>Modules</h2>
-      <p>Open the <strong>Modules</strong> button on the left. There are <strong>12 modules</strong>, and each module contains <strong>3 lessons</strong>. Module 2 · Lesson 1 is <strong>Generations</strong>.</p>
-    </section>
-
-    <aside class="quick-homework">
-      <div class="eyebrow">CURRENT HOMEWORK</div>
-      <h3>Generations</h3>
-      <p>Facts, stereotypes, vocabulary, reading and speaking practice for Module 2 · Lesson 1.</p>
-      <a class="hw-open" href="module2-lesson1-homework-generations.html">OPEN HOMEWORK</a>
-    </aside>
 
     <nav class="bottom-nav">
       <button class="skill" onclick="openInfo('Listening')"><div class="ico">◉</div><strong>Listening</strong><small>Real English<br>Real Life</small></button>
@@ -274,8 +244,12 @@ function buildModules(){
 function toggleModulesPanel(){
   document.getElementById('modulesPanel').classList.toggle('open');
 }
+function toggleHomeworkPanel(){
+  document.getElementById('homeworkPanel').classList.toggle('open');
+}
 function closeModules(){
   document.getElementById('modulesPanel').classList.remove('open');
+  document.getElementById('homeworkPanel').classList.remove('open');
   document.querySelectorAll('.lesson-list').forEach(x=>x.classList.remove('open'));
   document.querySelectorAll('.module-toggle').forEach(x=>x.classList.remove('open'));
 }
