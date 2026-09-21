@@ -229,7 +229,7 @@ function buildModules(){
   const panel=document.getElementById('modulesPanel');
   let html='';
   for(let m=1;m<=12;m++){
-    const lesson1=m===2?'Lesson 1 · Generations':'Lesson 1';
+    const lesson1='Lesson 1';
     html += '<div class="module-item">';
     html += '<button class="module-toggle" id="moduleToggle'+m+'" onclick="toggleModule('+m+')"><span>Module '+m+'</span><span>⌄</span></button>';
     html += '<div class="lesson-list" id="module-'+m+'">';
@@ -273,11 +273,7 @@ function openLesson(module,lesson){
   view.classList.add('on');
   view.setAttribute('aria-hidden','false');
 
-  if(module===2 && lesson===1){
-    title.textContent='Module 2 · Lesson 1 — Generations';
-    frame.removeAttribute('srcdoc');
-    frame.src='module2-lesson1-generations.html';
-  }else{
+  {
     title.textContent='Module '+module+' · Lesson '+lesson;
     frame.removeAttribute('src');
     frame.srcdoc='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,sans-serif;background:linear-gradient(#fbfefe,#edf6f7);color:#17343a}.wrap{min-height:100vh;display:grid;place-items:center;padding:30px}.card{width:min(900px,92vw);background:#fff;border:1px solid #d8e8e9;border-radius:26px;padding:34px;box-shadow:0 16px 38px rgba(23,54,67,.10);text-align:center}h1{margin:0 0 10px;color:#0f7782;font-size:34px}p{color:#62787d;font-size:17px;line-height:1.55}</style></head><body><div class="wrap"><div class="card"><h1>Module '+module+' · Lesson '+lesson+'</h1><p>This lesson opens in a full-screen workspace and is ready for future materials.</p></div></div></body></html>';
