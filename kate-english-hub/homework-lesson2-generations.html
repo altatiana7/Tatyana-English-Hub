@@ -1,125 +1,179 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kate · Homework Lesson 2</title>
+<title>Kate · Generations Homework</title>
 <style>
-:root{--navy:#10345f;--blue:#eaf6ff;--line:#dce9f1;--ink:#173042;--muted:#667784;--ok:#dff5e7;--bad:#ffe5e5}
-*{box-sizing:border-box}html,body{margin:0;background:#f5f9fc;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
-body{padding:14px}.page{max-width:1320px;margin:auto}
-.hero{background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.hero h1{margin:0;color:var(--navy);font-size:28px}.hero p{margin:4px 0 0;color:var(--muted);font-size:14px}
-.pill{white-space:nowrap;background:#fff2a8;border-radius:999px;padding:8px 12px;font-weight:900;color:#5c4a00}
-.timeline{background:#fff;border:1px solid var(--line);border-radius:22px;padding:10px;box-shadow:0 8px 24px rgba(25,62,86,.06)}
-.timeline img{display:block;width:100%;height:auto;border-radius:15px;cursor:zoom-in}
-.studyrow{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:14px;margin-top:14px;align-items:start}
-.sheet,.quiz{background:#fff;border:1px solid var(--line);border-radius:22px;padding:12px;box-shadow:0 8px 24px rgba(25,62,86,.06)}
-.sheet img{display:block;width:100%;height:auto;max-height:820px;object-fit:contain;border-radius:14px;cursor:zoom-in}
-.quiz{padding:18px}.quiz h2{margin:0 0 5px;color:var(--navy);font-size:24px}.quiz .intro{margin:0 0 12px;color:var(--muted);font-size:14px}
-.q{padding:13px 0;border-top:1px solid #e8eff4}.q p{margin:0 0 9px;font-weight:800;line-height:1.35}.opts{display:grid;gap:7px}
-.opt{border:1px solid #cfdee7;background:#f9fcfe;border-radius:11px;padding:9px 11px;text-align:left;font-weight:700;cursor:pointer;color:var(--ink)}
-.opt:hover{background:#eef7fc}.opt.selected{outline:2px solid #6ca8ce;background:#edf7fd}.opt.correct{background:var(--ok);border-color:#78bf8f;outline:none}.opt.wrong{background:var(--bad);border-color:#df8b8b;outline:none}
-.actions{display:flex;gap:8px;margin-top:14px;position:sticky;bottom:8px;background:#fff;padding-top:8px}.actions button{border:0;border-radius:11px;padding:10px 15px;font-weight:900;cursor:pointer}.check{background:var(--navy);color:#fff}.reset{background:#eaf1f5;color:var(--navy)}.result{margin-top:11px;font-weight:900;color:var(--navy)}
-.tip{margin-top:12px;background:var(--blue);border-radius:13px;padding:11px 12px;font-size:13px;line-height:1.4}
-.lightbox{position:fixed;inset:0;z-index:100;background:rgba(5,17,31,.92);display:none;align-items:center;justify-content:center;padding:18px}.lightbox.on{display:flex}.lightbox img{max-width:97vw;max-height:95vh;object-fit:contain;background:#fff;border-radius:12px}.close{position:absolute;top:16px;right:16px;border:0;border-radius:10px;padding:10px 13px;font-weight:900;cursor:pointer}
-@media(max-width:950px){.studyrow{grid-template-columns:1fr}.sheet img{max-height:none}}
-@media(max-width:620px){body{padding:8px}.hero{padding:12px}.hero h1{font-size:23px}.pill{display:none}.quiz{padding:14px}}
+:root{--navy:#103b68;--ink:#173246;--muted:#6a7b87;--line:#d9e8ef;--bg:#f6fbfd;--pink:#ffe2e7;--orange:#fff0d5;--green:#e5f7e9;--blue:#e3f3ff;--purple:#eee5ff;--yellow:#fff5c9}
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg)}
+body{overflow:hidden}.app{height:100dvh;display:grid;grid-template-rows:auto auto 1fr}
+header{background:#fff;border-bottom:1px solid var(--line);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand h1{margin:0;color:var(--navy);font-size:27px;letter-spacing:.2px}.brand p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.badge{background:var(--yellow);border-radius:999px;padding:8px 12px;font-weight:900;color:#5d4a00}
+.tabs{display:flex;gap:8px;padding:9px 14px;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{border:1px solid #cfe0e8;background:#f8fcfe;color:var(--navy);border-radius:999px;padding:8px 13px;font-weight:900;white-space:nowrap;cursor:pointer}.tab.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.stage{min-height:0;overflow:auto;padding:14px}.panel{display:none;max-width:1280px;margin:0 auto}.panel.on{display:block}
+.intro{display:flex;justify-content:space-between;gap:16px;align-items:end;margin:0 0 12px}.intro h2{margin:0;color:var(--navy);font-size:24px}.intro p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.generations{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px}
+.gen{border-radius:20px;overflow:hidden;border:1px solid rgba(16,59,104,.10);box-shadow:0 8px 22px rgba(24,65,88,.07);min-width:0}
+.gen-head{padding:12px 12px 9px;text-align:center}.gen h3{margin:0;font-size:18px}.years{font-weight:900;margin-top:3px}
+.gen img{display:block;width:100%;height:235px;object-fit:cover;background:#edf3f6}
+.gen-body{padding:11px 12px 13px}.traits{display:flex;flex-wrap:wrap;gap:6px}.trait{background:rgba(255,255,255,.78);border-radius:999px;padding:6px 8px;font-size:12px;font-weight:800}
+.gen small{display:block;margin-top:9px;line-height:1.35;color:#51636f}
+.boomer{background:var(--pink)}.genx{background:var(--orange)}.mill{background:var(--green)}.genz{background:var(--blue)}.alpha{background:var(--purple)}
+.remember{margin-top:11px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:10px 13px;font-size:13px}.remember b{color:var(--navy)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 8px 22px rgba(24,65,88,.05)}.card h3{margin:0 0 11px;color:var(--navy);font-size:19px}
+.vocab{display:grid;grid-template-columns:170px 1fr;gap:7px 12px;font-size:14px}.vocab b{color:#102f4f}.mini{border-radius:14px;padding:12px;margin-top:9px}.mini:first-of-type{margin-top:0}.sim{background:#e5f8f1}.dif{background:#ffe6eb}.trend{background:#e6f4ff}.gap{background:#eee9ff}.mini h4{margin:0 0 7px;font-size:16px}.mini ul{margin:0;padding-left:19px}.mini li{margin:5px 0;line-height:1.35;font-size:14px}
+.topics{display:grid;grid-template-columns:1fr 1fr;gap:9px}.topic{background:#f7fbfd;border:1px solid var(--line);border-radius:13px;padding:11px}.topic b{color:var(--navy)}.topic span{display:block;margin-top:5px;font-size:13px;line-height:1.4}
+.safe{display:grid;grid-template-columns:1fr 1fr;gap:9px}.dont,.say{border-radius:13px;padding:11px;font-size:13px;line-height:1.4}.dont{background:#ffe7e7}.say{background:#e4f7e9}.formula{background:linear-gradient(90deg,#ffe0e8,#fff2d7);border-radius:16px;padding:13px;font-weight:900;color:#173b5b;margin-top:10px}
+.questions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.dq{border:1px solid var(--line);border-radius:12px;padding:10px;background:#f9fcfe;font-size:13px;line-height:1.35}
+.quizgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.q{background:#fff;border:1px solid var(--line);border-radius:15px;padding:12px}.q p{margin:0 0 8px;font-weight:800;line-height:1.35}.opts{display:flex;flex-wrap:wrap;gap:6px}.opt{border:1px solid #cddde6;background:#f8fcfe;border-radius:9px;padding:7px 9px;cursor:pointer;font-weight:700;font-size:13px}.opt.selected{outline:2px solid #6da8cf}.opt.correct{background:#dff5e7;border-color:#77bf8c;outline:0}.opt.wrong{background:#ffe3e3;border-color:#df8585;outline:0}
+.actions{display:flex;align-items:center;gap:8px;margin-top:12px}.actions button{border:0;border-radius:10px;padding:9px 14px;font-weight:900;cursor:pointer}.check{background:var(--navy);color:#fff}.reset{background:#e7f0f5;color:var(--navy)}#result{font-weight:900;color:var(--navy)}
+.credit{font-size:10px;color:#7a8992;margin-top:8px;text-align:right}
+@media(max-width:1050px){.generations{grid-template-columns:repeat(3,1fr)}.gen img{height:210px}}
+@media(max-width:760px){body{overflow:auto}.app{height:auto;min-height:100dvh}.stage{overflow:visible}.generations{grid-template-columns:1fr 1fr}.cols,.quizgrid{grid-template-columns:1fr}.gen img{height:230px}.vocab{grid-template-columns:1fr}.questions{grid-template-columns:1fr}}
+@media(max-width:480px){.generations{grid-template-columns:1fr}.brand h1{font-size:22px}.badge{display:none}.gen img{height:270px}}
 </style>
 </head>
 <body>
-<main class="page">
-  <section class="hero">
-    <div><h1>Generations · Homework</h1><p>Study the visuals first. Then complete the quick check.</p></div>
-    <div class="pill">B1–B2</div>
-  </section>
+<div class="app">
+<header>
+  <div class="brand"><h1>GENERATIONS</h1><p>Talking about age groups, attitudes and lifestyles · Kate's Homework</p></div>
+  <div class="badge">B1–B2</div>
+</header>
 
-  <section class="timeline">
-    <img src="assets/generations-timeline.webp" alt="Generations Timeline" onclick="zoom(this.src)">
-  </section>
+<nav class="tabs">
+  <button class="tab on" data-tab="timeline">1 · Timeline</button>
+  <button class="tab" data-tab="language">2 · Useful Language</button>
+  <button class="tab" data-tab="speaking">3 · Speaking</button>
+  <button class="tab" data-tab="check">4 · Quick Check</button>
+</nav>
 
-  <section class="studyrow">
-    <div class="sheet">
-      <img src="assets/generations-cheat-sheet.webp" alt="Generations ESL Cheat Sheet" onclick="zoom(this.src)">
+<div class="stage">
+<section class="panel on" id="timeline">
+  <div class="intro"><div><h2>Generations Timeline</h2><p>Look at the people, dates and typical themes. These are broad patterns — not labels for individuals.</p></div></div>
+  <div class="generations">
+    <article class="gen boomer">
+      <div class="gen-head"><h3>Baby Boomers</h3><div class="years">1946–1964</div></div>
+      <img src="https://images.pexels.com/photos/5473068/pexels-photo-5473068.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Senior woman portrait">
+      <div class="gen-body"><div class="traits"><span class="trait">stability</span><span class="trait">hard work</span><span class="trait">traditional careers</span></div><small>Often associated with long-term employment and stability.</small></div>
+    </article>
+    <article class="gen genx">
+      <div class="gen-head"><h3>Generation X</h3><div class="years">1965–1980</div></div>
+      <img src="https://images.pexels.com/photos/32585362/pexels-photo-32585362.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Middle-aged man portrait">
+      <div class="gen-body"><div class="traits"><span class="trait">independence</span><span class="trait">work–life balance</span><span class="trait">adaptability</span></div><small>Often described as independent and comfortable bridging analogue and digital life.</small></div>
+    </article>
+    <article class="gen mill">
+      <div class="gen-head"><h3>Millennials · Gen Y</h3><div class="years">1981–1996</div></div>
+      <img src="https://images.pexels.com/photos/4492126/pexels-photo-4492126.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Young woman working on a laptop">
+      <div class="gen-body"><div class="traits"><span class="trait">technology</span><span class="trait">flexibility</span><span class="trait">experiences</span></div><small>Grew up while the internet and mobile technology became mainstream.</small></div>
+    </article>
+    <article class="gen genz">
+      <div class="gen-head"><h3>Generation Z</h3><div class="years">1997–2012</div></div>
+      <img src="https://images.pexels.com/photos/17889246/pexels-photo-17889246.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Teenage boy with headphones">
+      <div class="gen-body"><div class="traits"><span class="trait">social media</span><span class="trait">digital life</span><span class="trait">diversity</span></div><small>Often described as digital natives who grew up with smartphones and social media.</small></div>
+    </article>
+    <article class="gen alpha">
+      <div class="gen-head"><h3>Generation Alpha</h3><div class="years">2013 onwards</div></div>
+      <img src="https://images.pexels.com/photos/6482241/pexels-photo-6482241.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Young child using a tablet">
+      <div class="gen-body"><div class="traits"><span class="trait">AI</span><span class="trait">smart technology</span><span class="trait">online learning</span></div><small>Growing up with touchscreens, AI tools and connected learning from early childhood.</small></div>
+    </article>
+  </div>
+  <div class="remember"><b>Remember:</b> generation boundaries vary by source, and people from the same generation can be very different. Use these labels as discussion tools, not fixed rules.</div>
+  <div class="credit">Portrait photos: Pexels · free to use under the Pexels License.</div>
+</section>
+
+<section class="panel" id="language">
+  <div class="intro"><div><h2>Useful Language</h2><p>Language from your cheat sheet, rebuilt as usable study material.</p></div></div>
+  <div class="cols">
+    <div class="card">
+      <h3>Vocabulary</h3>
+      <div class="vocab">
+        <b>tech-savvy</b><span>good at using technology</span>
+        <b>open-minded</b><span>willing to consider new ideas</span>
+        <b>career-driven</b><span>strongly focused on professional success</span>
+        <b>financially independent</b><span>able to support yourself financially</span>
+        <b>traditional</b><span>preferring established ideas or customs</span>
+        <b>adaptable</b><span>able to change easily when circumstances change</span>
+        <b>socially conscious</b><span>concerned about social and environmental issues</span>
+        <b>competitive</b><span>wanting to be more successful than others</span>
+        <b>independent</b><span>able to make decisions without relying on others</span>
+        <b>digital native</b><span>familiar with digital technology from childhood</span>
+      </div>
     </div>
-
-    <div class="quiz">
-      <h2>Quick Check</h2>
-      <p class="intro">No notes now — check what you remember.</p>
-
-      <div class="q" data-answer="b"><p>1. Which generation is commonly dated 1997–2012?</p><div class="opts">
-        <button class="opt" data-v="a">Generation X</button>
-        <button class="opt" data-v="b">Generation Z</button>
-        <button class="opt" data-v="c">Millennials</button>
-      </div></div>
-
-      <div class="q" data-answer="a"><p>2. Which phrase means “good at using technology”?</p><div class="opts">
-        <button class="opt" data-v="a">tech-savvy</button>
-        <button class="opt" data-v="b">career-driven</button>
-        <button class="opt" data-v="c">traditional</button>
-      </div></div>
-
-      <div class="q" data-answer="c"><p>3. Complete: “Compared ___ previous generations, people marry later.”</p><div class="opts">
-        <button class="opt" data-v="a">from</button>
-        <button class="opt" data-v="b">than</button>
-        <button class="opt" data-v="c">with</button>
-      </div></div>
-
-      <div class="q" data-answer="b"><p>4. “We don’t always see eye to eye” means…</p><div class="opts">
-        <button class="opt" data-v="a">we look similar</button>
-        <button class="opt" data-v="b">we don’t always agree</button>
-        <button class="opt" data-v="c">we are the same age</button>
-      </div></div>
-
-      <div class="q" data-answer="c"><p>5. Which is the best way to avoid a stereotype?</p><div class="opts">
-        <button class="opt" data-v="a">Gen Z are lazy.</button>
-        <button class="opt" data-v="b">Older people don’t understand technology.</button>
-        <button class="opt" data-v="c">Some people argue that Gen Z has a different attitude towards work.</button>
-      </div></div>
-
-      <div class="q" data-answer="a"><p>6. Which phrase is useful for talking about a trend?</p><div class="opts">
-        <button class="opt" data-v="a">tend to + verb</button>
-        <button class="opt" data-v="b">be stuck in your ways</button>
-        <button class="opt" data-v="c">see eye to eye</button>
-      </div></div>
-
-      <div class="tip"><b>Speaking mini-task:</b> Choose two generations. Give one similarity and one difference. Use <i>tend to</i>, <i>whereas</i> or <i>compared with</i>.</div>
-
-      <div class="actions"><button class="check" onclick="checkAll()">CHECK</button><button class="reset" onclick="resetAll()">RESET</button></div>
-      <div class="result" id="result">6 questions · choose one answer each.</div>
+    <div>
+      <div class="mini sim"><h4>Similarities</h4><ul><li>Both generations tend to …</li><li>They have a lot in common when it comes to …</li><li>One thing they share is …</li><li>Neither generation is particularly …</li></ul></div>
+      <div class="mini dif"><h4>Differences</h4><ul><li>Unlike older generations, younger people tend to …</li><li>Whereas Baby Boomers often …, Gen Z tends to …</li><li>Compared with previous generations, …</li><li>Younger generations are more likely to …, while older generations may …</li></ul></div>
+      <div class="mini trend"><h4>Talking about trends</h4><ul><li><b>tend to + verb:</b> Millennials tend to value experiences.</li><li><b>be more / less likely to + verb</b></li><li><b>increasingly:</b> People are increasingly working remotely.</li><li><b>no longer:</b> Many people no longer expect one job for life.</li><li><b>these days / compared with</b></li></ul></div>
+      <div class="mini gap"><h4>Generation gap</h4><ul><li><b>see eye to eye</b> = agree</li><li><b>be stuck in your ways</b> = be unwilling to change habits or opinions</li><li><b>keep up with the times</b> = change as society changes</li><li><b>have something in common</b> = share an interest, opinion or characteristic</li></ul></div>
     </div>
-  </section>
-</main>
+  </div>
+</section>
 
-<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeZoom()"><button class="close" onclick="closeZoom()">✕</button><img id="zoomImg" alt="Expanded visual"></div>
+<section class="panel" id="speaking">
+  <div class="intro"><div><h2>Speaking Lab</h2><p>Use careful language: compare people without turning generalisations into facts.</p></div></div>
+  <div class="cols">
+    <div class="card">
+      <h3>Avoid stereotypes</h3>
+      <div class="safe">
+        <div class="dont"><b>Don't say:</b><br>“Gen Z are lazy.”<br><br>“Older people don't understand technology.”</div>
+        <div class="say"><b>Say:</b><br>“Some people argue that Gen Z has a different attitude towards work.”<br><br>“Some older adults may feel less confident using new technology.”</div>
+      </div>
+      <div class="mini trend" style="margin-top:10px"><h4>Natural speaking phrases</h4><ul><li>From my experience, …</li><li>Personally, I don't think age matters that much.</li><li>I can see both sides.</li><li>That depends on the individual.</li><li>There may be some truth in that.</li><li>I'm not sure I'd generalise like that.</li></ul></div>
+      <div class="formula">Opinion → Reason → Example → Contrast</div>
+    </div>
+    <div class="card">
+      <h3>Discussion Questions</h3>
+      <div class="questions">
+        <div class="dq">1. Which generation do you belong to?</div>
+        <div class="dq">2. What stereotypes exist about your generation?</div>
+        <div class="dq">3. Are any of them accurate?</div>
+        <div class="dq">4. How are you different from your parents' generation?</div>
+        <div class="dq">5. Which generation has experienced the biggest technological changes?</div>
+        <div class="dq">6. Is there a generation gap in your workplace or family?</div>
+        <div class="dq">7. Do younger people have different attitudes towards work?</div>
+        <div class="dq">8. Are younger generations better with money than older generations?</div>
+        <div class="dq">9. Has social media increased the generation gap?</div>
+        <div class="dq">10. What can different generations learn from each other?</div>
+      </div>
+      <div class="topics" style="margin-top:10px">
+        <div class="topic"><b>WORK</b><span>job security · flexible working · career progression · changing careers</span></div>
+        <div class="topic"><b>MONEY</b><span>save money · rent a flat · financial stability · cost of living</span></div>
+        <div class="topic"><b>TECHNOLOGY</b><span>social media · AI · smartphones · digital skills</span></div>
+        <div class="topic"><b>FAMILY & LIFESTYLE</b><span>get married · live independently · travel · personal freedom</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="check">
+  <div class="intro"><div><h2>Quick Check</h2><p>Check the timeline, vocabulary and speaking language.</p></div></div>
+  <div class="quizgrid">
+    <div class="q" data-answer="b"><p>1. Which generation is commonly dated 1997–2012?</p><div class="opts"><button class="opt" data-v="a">Gen X</button><button class="opt" data-v="b">Gen Z</button><button class="opt" data-v="c">Millennials</button></div></div>
+    <div class="q" data-answer="a"><p>2. “Good at using technology” means …</p><div class="opts"><button class="opt" data-v="a">tech-savvy</button><button class="opt" data-v="b">traditional</button><button class="opt" data-v="c">career-driven</button></div></div>
+    <div class="q" data-answer="c"><p>3. Compared ___ previous generations …</p><div class="opts"><button class="opt" data-v="a">from</button><button class="opt" data-v="b">than</button><button class="opt" data-v="c">with</button></div></div>
+    <div class="q" data-answer="b"><p>4. “See eye to eye” means …</p><div class="opts"><button class="opt" data-v="a">look similar</button><button class="opt" data-v="b">agree</button><button class="opt" data-v="c">be the same age</button></div></div>
+    <div class="q" data-answer="c"><p>5. Which sentence avoids a stereotype?</p><div class="opts"><button class="opt" data-v="a">Gen Z are lazy.</button><button class="opt" data-v="b">Older people hate technology.</button><button class="opt" data-v="c">Some people argue that Gen Z has a different attitude towards work.</button></div></div>
+    <div class="q" data-answer="a"><p>6. Which phrase describes a general trend?</p><div class="opts"><button class="opt" data-v="a">tend to + verb</button><button class="opt" data-v="b">see eye to eye</button><button class="opt" data-v="c">be stuck in your ways</button></div></div>
+  </div>
+  <div class="actions"><button class="check" onclick="checkAll()">CHECK</button><button class="reset" onclick="resetAll()">RESET</button><span id="result">Choose one answer for each question.</span></div>
+</section>
+</div>
+</div>
 <script>
-document.querySelectorAll('.q').forEach(q=>{
-  q.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{
-    q.querySelectorAll('.opt').forEach(x=>{x.classList.remove('selected','correct','wrong');x.dataset.chosen='0'});
-    b.dataset.chosen='1'; b.classList.add('selected');
-  }));
-});
-function checkAll(){
-  let score=0,total=0;
-  document.querySelectorAll('.q').forEach(q=>{
-    total++;
-    const chosen=[...q.querySelectorAll('.opt')].find(x=>x.dataset.chosen==='1');
-    q.querySelectorAll('.opt').forEach(x=>x.classList.remove('correct','wrong'));
-    if(chosen){
-      chosen.classList.remove('selected');
-      if(chosen.dataset.v===q.dataset.answer){chosen.classList.add('correct');score++}
-      else chosen.classList.add('wrong');
-    }
-  });
-  document.getElementById('result').textContent='Score: '+score+' / '+total+(score===total?' · Excellent!':' · Look at the visuals and try again.');
-}
-function resetAll(){
-  document.querySelectorAll('.opt').forEach(x=>{x.classList.remove('selected','correct','wrong');x.dataset.chosen='0'});
-  document.getElementById('result').textContent='6 questions · choose one answer each.';
-}
-function zoom(src){document.getElementById('zoomImg').src=src;document.getElementById('lightbox').classList.add('on')}
-function closeZoom(){document.getElementById('lightbox').classList.remove('on')}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeZoom()});
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');document.getElementById(b.dataset.tab).classList.add('on');
+  document.querySelector('.stage').scrollTop=0;
+}));
+document.querySelectorAll('.q').forEach(q=>q.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{
+  q.querySelectorAll('.opt').forEach(x=>{x.classList.remove('selected','correct','wrong');x.dataset.chosen='0'});
+  b.dataset.chosen='1';b.classList.add('selected');
+})));
+function checkAll(){let score=0,total=0;document.querySelectorAll('.q').forEach(q=>{total++;const chosen=[...q.querySelectorAll('.opt')].find(x=>x.dataset.chosen==='1');q.querySelectorAll('.opt').forEach(x=>x.classList.remove('correct','wrong'));if(chosen){chosen.classList.remove('selected');if(chosen.dataset.v===q.dataset.answer){chosen.classList.add('correct');score++}else chosen.classList.add('wrong')}});document.getElementById('result').textContent='Score: '+score+' / '+total+(score===total?' · Excellent!':' · Review and try again.')}
+function resetAll(){document.querySelectorAll('.opt').forEach(x=>{x.classList.remove('selected','correct','wrong');x.dataset.chosen='0'});document.getElementById('result').textContent='Choose one answer for each question.'}
 </script>
 </body>
 </html>
