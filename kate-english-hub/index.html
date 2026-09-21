@@ -162,7 +162,12 @@ body.lesson-open{overflow:hidden}
     </div>
 
     <div class="side-bottom">
-      <button class="side-simple" onclick="openInfo('Extra Practice')">★ Extra Practice</button>
+      <button class="side-simple" id="extraPracticeBtn" onclick="toggleExtraPractice()">★ Extra Practice ▾</button>
+      <div class="modules-panel" id="extraPracticePanel" style="padding:0 0 4px 6px">
+        <div class="lesson-list open" style="display:grid;padding:3px 4px 4px 4px">
+          <button onclick="openExtraPractice('elections')"><span>Elections in Russia</span><span>›</span></button>
+        </div>
+      </div>
       <button class="side-simple" onclick="openInfo('Useful Tools')">⚒ Useful Tools</button>
       <button class="side-simple" onclick="openInfo('My Progress')">♥ My Progress</button>
     </div>
@@ -247,6 +252,9 @@ function toggleModulesPanel(){
 function toggleHomeworkPanel(){
   document.getElementById('homeworkPanel').classList.toggle('open');
 }
+function toggleExtraPractice(){
+  document.getElementById('extraPracticePanel').classList.toggle('open');
+}
 function closeModules(){
   document.getElementById('modulesPanel').classList.remove('open');
   document.getElementById('homeworkPanel').classList.remove('open');
@@ -262,6 +270,20 @@ function toggleModule(n){
   if(willOpen){
     list.classList.add('open');
     toggle.classList.add('open');
+  }
+}
+
+function openExtraPractice(type){
+  const view=document.getElementById('lessonView');
+  const frame=document.getElementById('lessonFrame');
+  const title=document.getElementById('lessonViewTitle');
+  document.body.classList.add('lesson-open');
+  view.classList.add('on');
+  view.setAttribute('aria-hidden','false');
+  if(type==='elections'){
+    title.textContent='Extra Practice — Elections in Russia';
+    frame.removeAttribute('srcdoc');
+    frame.src='extra-practice-elections-russia.html';
   }
 }
 
