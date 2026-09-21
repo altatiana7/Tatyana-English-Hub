@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Arina · EGE English Hub</title>
+<style>
+:root{--bg:#f4f8f7;--card:#fff;--ink:#18302f;--muted:#6e817f;--line:#dce8e6;--teal:#12998f;--deep:#0f625d;--soft:#e6f6f4;--sand:#f6efe5;--ok:#e7f6eb;--warn:#fff4dc;--r:22px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif}button,input,textarea{font:inherit}.wrap{width:min(1180px,calc(100% - 28px));margin:auto}.top{position:sticky;top:0;z-index:10;background:rgba(244,248,247,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.topin{min-height:66px;display:flex;align-items:center;gap:16px}.brand{font-weight:900;white-space:nowrap}.brand span{color:var(--deep)}nav{display:flex;gap:7px;overflow:auto;margin-left:auto;padding:8px 0}nav button{border:0;background:transparent;color:var(--muted);padding:10px 13px;border-radius:12px;font-weight:800;white-space:nowrap;cursor:pointer}nav button.on{background:var(--ink);color:#fff}.hero{padding:30px 0 16px}.heroBox{padding:34px;border-radius:30px;color:#fff;background:linear-gradient(135deg,#102d2c,#174a47 58%,#19736d);box-shadow:0 18px 52px rgba(20,45,44,.12)}.eyebrow{text-transform:uppercase;letter-spacing:1.5px;font-size:12px;font-weight:900;opacity:.75}h1{font-size:clamp(34px,5vw,58px);line-height:.98;margin:10px 0 12px}.hero p{font-size:17px;line-height:1.5;max-width:760px;margin:0;opacity:.9}.pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.pill{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);padding:8px 11px;border-radius:999px;font-size:13px;font-weight:800}.section{display:none;padding:16px 0 45px}.section.on{display:block}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:0 8px 30px rgba(20,45,44,.035)}.s3{grid-column:span 3}.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s8{grid-column:span 8}.s12{grid-column:span 12}.accent{background:var(--soft);border-color:#cbe9e6}.sand{background:var(--sand);border-color:#ebdfd0}.stat{min-height:126px;display:flex;flex-direction:column;justify-content:space-between}.stat small{font-weight:800;color:var(--muted)}.stat strong{font-size:30px}.muted{color:var(--muted)}h2{margin:0 0 12px;font-size:23px}h3{margin:0 0 10px;font-size:17px}.week{display:grid;gap:10px}.row{display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:center;border:1px solid var(--line);background:#fff;border-radius:15px;padding:13px}.day{width:56px;height:56px;border-radius:15px;background:var(--bg);display:grid;place-items:center;text-align:center;font-weight:900;line-height:1.1}.day.done{background:var(--ok);color:#267047}.row b{display:block;margin-bottom:4px}.badge{font-size:12px;font-weight:900;padding:7px 10px;border-radius:999px;background:#eef2f2;color:#667}.badge.done{background:var(--ok);color:#287149}.badge.next{background:var(--warn);color:#8a6214}.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.btn{border:0;border-radius:13px;padding:12px 14px;font-weight:900;background:var(--ink);color:#fff;cursor:pointer}.btn.alt{background:var(--soft);color:var(--deep)}.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}.phase{border-left:4px solid var(--teal);padding:9px 0 9px 15px}.phase b{display:block;margin-bottom:5px}.checklist{display:grid;gap:8px}.check{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:13px}.check input{margin-top:3px;accent-color:var(--teal)}.lesson{padding:0;overflow:hidden}.lessonHead{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:14px}.lessonBody{padding:18px 20px}.tags{display:flex;gap:6px;flex-wrap:wrap}.tag{background:var(--soft);color:var(--deep);font-size:12px;font-weight:900;padding:6px 9px;border-radius:999px}.notice{background:var(--warn);padding:13px 14px;border-radius:13px;font-size:13px;line-height:1.45}.hw{border:1px solid var(--line);border-radius:18px;background:#fff;padding:18px;margin-bottom:14px}.hwtop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.hwNum{font-size:12px;text-transform:uppercase;letter-spacing:.8px;font-weight:900;color:var(--deep)}.hwTitle{font-size:20px;font-weight:900;margin:5px 0 8px}.taskState{display:flex;gap:7px;align-items:center;font-size:13px;font-weight:900}.taskState input{width:18px;height:18px;accent-color:var(--teal)}.verbs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.verb{background:var(--bg);border-radius:11px;padding:10px;font-size:13px}.verb b{display:block}.quiz{display:grid;gap:12px;margin-top:14px}.q{border:1px solid var(--line);border-radius:14px;padding:14px}.q p{margin:0 0 10px;line-height:1.4}.opts{display:grid;gap:7px}.opt{display:flex;gap:8px}.opt input{accent-color:var(--teal)}.feedback{margin-top:8px;font-size:13px;font-weight:900}.good{color:#287149}.bad{color:#a23d3d}.note{width:100%;min-height:150px;border:1px solid var(--line);border-radius:14px;padding:14px;background:#fbfdfd;resize:vertical;outline:none}.skillList{display:grid;gap:10px}.skill{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:12px}.skill b{display:block}.skill span{font-size:12px;color:var(--muted)}.level{border:0;border-radius:999px;padding:8px 11px;font-weight:900;min-width:105px;cursor:pointer}.l0{background:#eff2f2;color:#667}.l1{background:#fff1d8;color:#946414}.l2{background:#e9f4ff;color:#256494}.l3{background:var(--ok);color:#287149}.table{width:100%;border-collapse:collapse;font-size:14px}.table th,.table td{text-align:left;padding:11px 9px;border-bottom:1px solid var(--line);vertical-align:top}.table th{font-size:12px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}.resources{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.resource{border:1px solid var(--line);border-radius:16px;padding:17px;text-decoration:none;background:#fff}.resource b{display:block;margin-bottom:6px}.resource span{font-size:13px;line-height:1.4;color:var(--muted)}footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 0 40px}
+@media(max-width:900px){.s3,.s4,.s5,.s6,.s7,.s8{grid-column:span 12}.verbs{grid-template-columns:repeat(2,1fr)}.resources{grid-template-columns:1fr}.topin{align-items:flex-start;flex-direction:column;gap:0;padding:9px 0}nav{margin-left:0;width:100%}.heroBox{padding:26px}.buttons{grid-template-columns:1fr}}
+@media(max-width:520px){.row{grid-template-columns:48px 1fr}.badge{grid-column:2}.day{width:48px;height:48px}.verbs{grid-template-columns:1fr}h1{font-size:36px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap topin"><div class="brand">Arina · <span>EGE English Hub</span></div><nav>
+<button class="on" data-tab="dashboard">Dashboard</button><button data-tab="lessons">Lessons</button><button data-tab="homework">Homework</button><button data-tab="progress">Progress</button><button data-tab="resources">Resources</button>
+</nav></div></header>
+
+<main>
+<section class="hero"><div class="wrap"><div class="heroBox"><div class="eyebrow">English · ЕГЭ 2027</div><h1>Arina's high-score track</h1><p>Персональный рабочий хаб: уроки, домашние задания, материалы, ссылки и контроль прогресса. Ритм подготовки — 3 занятия по 60 минут в неделю.</p><div class="pills"><span class="pill">Start: 21 Sep 2026</span><span class="pill">3 × 60 min / week</span><span class="pill">Current focus: Grammar foundation</span><span class="pill">Teacher: Tatyana</span></div></div></div></section>
+
+<section id="dashboard" class="section on"><div class="wrap grid">
+<div class="card s3 stat accent"><small>Lessons completed</small><strong>1</strong><span class="muted">из опубликованных уроков</span></div>
+<div class="card s3 stat"><small>Current block</small><strong>01</strong><span class="muted">Grammar foundations</span></div>
+<div class="card s3 stat sand"><small>Weekly rhythm</small><strong>3×60</strong><span class="muted">minutes per lesson</span></div>
+<div class="card s3 stat"><small>Next focus</small><strong style="font-size:21px">Present → Past</strong><span class="muted">accuracy + irregular verbs</span></div>
+
+<div class="card s8"><h2>This week</h2><p class="muted">Фундаментальная неделя: выстраиваем систему времён и одновременно начинаем экзаменационную грамматику.</p><div class="week">
+<div class="row"><div class="day done">21<br>SEP</div><div><b>Lesson 1 · Irregular Verbs + Present Tenses</b><span class="muted">Present Simple / Continuous / Perfect / Perfect Continuous. База неправильных глаголов.</span></div><span class="badge done">DONE</span></div>
+<div class="row"><div class="day">L2</div><div><b>Lesson 2 · Present Tenses Intensive</b><span class="muted">Contrast practice, signal words, stative verbs, short EGE grammar set.</span></div><span class="badge next">NEXT</span></div>
+<div class="row"><div class="day">L3</div><div><b>Lesson 3 · Past Tenses + Reading Diagnostic</b><span class="muted">Past Simple / Continuous / Perfect + short reading and vocabulary check.</span></div><span class="badge">PLANNED</span></div>
+</div></div>
+
+<div class="card s4"><h2>Teacher shortcuts</h2><p class="muted">Заметки и статусы сохраняются в браузере.</p><div class="buttons">
+<button class="btn" onclick="openTab('progress')">Update progress</button><button class="btn alt" onclick="openTab('homework')">Open homework</button>
+<button class="btn ghost" onclick="exportData()">Export progress</button><label class="btn ghost" style="text-align:center">Import<input id="importFile" type="file" accept="application/json" hidden></label>
+</div></div>
+
+<div class="card s7"><h2>Preparation architecture</h2><div class="phase"><b>Phase 1 · Foundation</b><span class="muted">Tenses, irregular verbs, articles, pronouns, modals, passive voice, conditionals, word formation.</span></div><div class="phase"><b>Phase 2 · Exam mechanics</b><span class="muted">Listening, reading, grammar & vocabulary, Task 37, Task 38, speaking Tasks 1–4.</span></div><div class="phase"><b>Phase 3 · Accuracy & speed</b><span class="muted">Timed sets, error log, weak-point cycles, vocabulary recycling.</span></div><div class="phase"><b>Phase 4 · Full simulations</b><span class="muted">Complete variants, oral simulations, scoring by criteria, final correction cycles.</span></div></div>
+
+<div class="card s5"><h2>Non-negotiables</h2><div class="checklist">
+<label class="check"><input type="checkbox" data-save="rule1"><span><b>Irregular verbs</b><br><span class="muted">small daily batches + cumulative revision</span></span></label>
+<label class="check"><input type="checkbox" data-save="rule2"><span><b>Error log</b><br><span class="muted">rule, wrong form, corrected example</span></span></label>
+<label class="check"><input type="checkbox" data-save="rule3"><span><b>Exam format every week</b><br><span class="muted">at least one FIPI-style timed task</span></span></label>
+<label class="check"><input type="checkbox" data-save="rule4"><span><b>Active vocabulary</b><br><span class="muted">phrases and collocations, not isolated words</span></span></label>
+</div></div>
+</div></section>
+
+<section id="lessons" class="section"><div class="wrap grid">
+<div class="card s12"><h2>Lesson log</h2><p class="muted">Опубликованные уроки и краткий результат каждого занятия.</p></div>
+<article class="card lesson s12"><div class="lessonHead"><div><div class="eyebrow" style="color:var(--deep);opacity:1">21 September 2026 · Lesson 01</div><h2 style="margin-top:7px">Irregular Verbs + Present Tenses</h2></div><div class="tags"><span class="tag">Grammar</span><span class="tag">Vocabulary</span><span class="tag">Foundation</span></div></div>
+<div class="lessonBody grid"><div class="s7"><h3>Covered</h3><ul><li>Present Simple — facts, routines, states.</li><li>Present Continuous — actions in progress and temporary situations.</li><li>Present Perfect — result, experience, unfinished time.</li><li>Present Perfect Continuous — duration and ongoing activity.</li><li>First systematic revision of common irregular verbs.</li></ul></div><div class="s5"><h3>Teacher focus for next lesson</h3><div class="notice">Не добавлять новый тяжёлый грамматический блок, пока Арина не начнёт уверенно различать четыре Present forms в контексте. Приоритет: contrast, markers, transformations, объяснение выбора формы.</div></div></div></article>
+<article class="card lesson s6"><div class="lessonHead"><div><div class="eyebrow" style="color:var(--muted);opacity:1">Lesson 02</div><h2 style="margin-top:7px">Present Tenses Intensive</h2></div><span class="badge next">NEXT</span></div><div class="lessonBody"><p class="muted">Stative verbs, signal words, transformations, short EGE grammar practice, error analysis.</p></div></article>
+<article class="card lesson s6"><div class="lessonHead"><div><div class="eyebrow" style="color:var(--muted);opacity:1">Lesson 03</div><h2 style="margin-top:7px">Past Tenses + Reading</h2></div><span class="badge">PLANNED</span></div><div class="lessonBody"><p class="muted">Past Simple / Continuous / Perfect, irregular verb retrieval, short reading diagnostic and vocabulary extraction.</p></div></article>
+</div></section>
+
+<section id="homework" class="section"><div class="wrap grid"><div class="card s12"><h2>Homework · after Lesson 01</h2><p class="muted">Компактный обязательный блок: формы глаголов + контраст Present Tenses + экзаменационная привычка.</p></div>
+<div class="s12"><div class="hw"><div class="hwtop"><div><div class="hwNum">Task 1</div><div class="hwTitle">Irregular verbs · core 20</div><div class="muted">Выучи три формы и значение. Затем воспроизведи их без подсказки.</div></div><label class="taskState"><input type="checkbox" data-save="hw1"> completed</label></div><div class="verbs" id="verbs"></div></div>
+
+<div class="hw"><div class="hwtop"><div><div class="hwNum">Task 2</div><div class="hwTitle">Present Tenses · mini check</div><div class="muted">Выбери форму, которая подходит по смыслу. После выполнения нажми Check.</div></div><label class="taskState"><input type="checkbox" data-save="hw2"> completed</label></div><div class="quiz" id="quiz"></div><button class="btn" style="margin-top:14px" onclick="checkQuiz()">Check answers</button> <b id="score"></b></div>
+
+<div class="hw"><div class="hwtop"><div><div class="hwNum">Task 3</div><div class="hwTitle">Micro-writing</div><div class="muted">Напиши 8 предложений о своей неделе: 2 Present Simple, 2 Present Continuous, 2 Present Perfect, 2 Present Perfect Continuous.</div></div><label class="taskState"><input type="checkbox" data-save="hw3"> completed</label></div><textarea id="micro" class="note" placeholder="Write here..."></textarea><div class="muted" style="font-size:12px;margin-top:7px">Текст сохраняется автоматически на этом устройстве.</div></div></div>
+</div></section>
+
+<section id="progress" class="section"><div class="wrap grid">
+<div class="card s7"><h2>Skill tracker</h2><p class="muted">Нажимай на статус справа, чтобы двигать навык по шкале: Start → Building → Stable → Exam-ready.</p><div id="skills" class="skillList"></div></div>
+<div class="card s5"><h2>Teacher notes</h2><textarea id="teacherNotes" class="note" placeholder="Сильные стороны, ошибки, что повторить, что дать на следующем занятии..."></textarea><div class="muted" style="font-size:12px;margin-top:7px">Заметки сохраняются локально в браузере и не публикуются в GitHub.</div></div>
+<div class="card s12"><h2>Error log</h2><table class="table"><thead><tr><th>Date</th><th>Area</th><th>Problem</th><th>Correction strategy</th></tr></thead><tbody><tr><td>21.09.2026</td><td>Grammar</td><td>Present forms introduced; contrast needs automation.</td><td>Short context choices + transformations + explain why alternatives are wrong.</td></tr><tr><td>21.09.2026</td><td>Vocabulary / forms</td><td>Irregular verbs require systematic retrieval.</td><td>20-word core set → cumulative review → use inside tense sentences.</td></tr></tbody></table></div>
+</div></section>
+
+<section id="resources" class="section"><div class="wrap grid"><div class="card s12"><h2>Official exam resources</h2><p class="muted">Приоритет — официальные материалы ФИПИ. Ссылки открываются в новой вкладке.</p><div class="resources">
+<a class="resource" href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener"><b>ФИПИ · Демоверсии, спецификации, кодификаторы</b><span>Структура ЕГЭ и официальные документы текущего экзаменационного цикла.</span></a>
+<a class="resource" href="https://ege.fipi.ru/bank/" target="_blank" rel="noopener"><b>ФИПИ · Открытый банк ЕГЭ</b><span>Официальные задания для системной тренировки по разделам.</span></a>
+<a class="resource" href="https://fipi.ru/ege/analiticheskie-i-metodicheskie-materialy" target="_blank" rel="noopener"><b>ФИПИ · Методические материалы</b><span>Типичные ошибки участников и рекомендации для подготовки.</span></a>
+<a class="resource" href="https://fipi.ru/" target="_blank" rel="noopener"><b>ФИПИ · Главная</b><span>Актуальные публикации и обновления экзаменационных материалов.</span></a>
+</div></div></div></section>
+</main>
+<footer><div class="wrap">Arina · EGE English Hub · maintained by Tatyana</div></footer>
+
+<script>
+var key='arinaEgeHub.v1',data={};
+try{data=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){data={}}
+function save(){localStorage.setItem(key,JSON.stringify(data))}
+function openTab(id){document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('on',s.id===id)});document.querySelectorAll('nav button').forEach(function(b){b.classList.toggle('on',b.dataset.tab===id)});scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('nav button').forEach(function(b){b.onclick=function(){openTab(b.dataset.tab)}})
+document.querySelectorAll('[data-save]').forEach(function(el){var k=el.dataset.save;el.checked=!!data[k];el.onchange=function(){data[k]=el.checked;save()}})
+
+var verbs=[
+['be','was/were','been','быть'],['become','became','become','становиться'],['begin','began','begun','начинать'],['break','broke','broken','ломать'],['bring','brought','brought','приносить'],['buy','bought','bought','покупать'],['come','came','come','приходить'],['do','did','done','делать'],['drink','drank','drunk','пить'],['drive','drove','driven','водить'],['eat','ate','eaten','есть'],['feel','felt','felt','чувствовать'],['find','found','found','находить'],['get','got','got','получать'],['give','gave','given','давать'],['go','went','gone','идти'],['know','knew','known','знать'],['make','made','made','делать / создавать'],['see','saw','seen','видеть'],['take','took','taken','брать']
+];
+document.getElementById('verbs').innerHTML=verbs.map(function(v){return '<div class="verb"><b>'+v[0]+' — '+v[1]+' — '+v[2]+'</b>'+v[3]+'</div>'}).join('');
+
+var quiz=[
+['My sister usually ___ to school by bus.',['goes','is going','has gone'],0],
+['Be quiet! I ___ to an important voice message.',['listen','am listening','have listened'],1],
+['We ___ this film twice already.',['see','are seeing','have seen'],2],
+['She ___ English for three years and still enjoys it.',['studies','has been studying','is studying'],1],
+['I can’t talk now. I ___ dinner.',['cook','am cooking','have cooked'],1],
+['Tom ___ his homework, so he can go out now.',['finishes','has finished','has been finishing'],1],
+['My parents ___ in this town since 2018.',['live','have lived','are living'],1],
+['Why are your hands dirty? — I ___ the bike.',['repair','have repaired','have been repairing'],2],
+['The train ___ at 7:30 every morning.',['leaves','is leaving','has left'],0],
+['This month we ___ a lot of grammar because the exam is getting closer.',['revise','are revising','have revised'],1]
+];
+document.getElementById('quiz').innerHTML=quiz.map(function(x,i){return '<div class="q" data-q="'+i+'"><p><b>'+(i+1)+'.</b> '+x[0]+'</p><div class="opts">'+x[1].map(function(o,j){return '<label class="opt"><input type="radio" name="q'+i+'" value="'+j+'"> '+o+'</label>'}).join('')+'</div><div class="feedback"></div></div>'}).join('');
+function checkQuiz(){var n=0;quiz.forEach(function(x,i){var box=document.querySelector('[data-q="'+i+'"]'),sel=box.querySelector('input:checked'),fb=box.querySelector('.feedback');if(!sel){fb.textContent='Choose an answer.';fb.className='feedback bad';return}if(Number(sel.value)===x[2]){n++;fb.textContent='Correct';fb.className='feedback good'}else{fb.textContent='Check the time meaning and marker.';fb.className='feedback bad'}});document.getElementById('score').textContent='  '+n+'/10';data.lastQuizScore=n;save()}
+
+var skillData=[['Grammar','Tenses, structures, transformations'],['Vocabulary','Word formation, collocations, phrasal verbs'],['Reading','Main idea, detail, inference, logic'],['Listening','Gist, detail, distractors'],['Writing','Task 37 + Task 38'],['Speaking','Tasks 1–4, fluency and accuracy']],labels=['Start','Building','Stable','Exam-ready'];
+function renderSkills(){var root=document.getElementById('skills');root.innerHTML='';skillData.forEach(function(s,i){var k='skill'+i,l=Number(data[k]||0),row=document.createElement('div');row.className='skill';row.innerHTML='<div><b>'+s[0]+'</b><span>'+s[1]+'</span></div><button class="level l'+l+'">'+labels[l]+'</button>';row.querySelector('button').onclick=function(){data[k]=(l+1)%4;save();renderSkills()};root.appendChild(row)})}
+renderSkills();
+var notes=document.getElementById('teacherNotes');notes.value=data.teacherNotes||'';notes.oninput=function(){data.teacherNotes=notes.value;save()}
+var micro=document.getElementById('micro');micro.value=data.micro||'';micro.oninput=function(){data.micro=micro.value;save()}
+function exportData(){var blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),data:data},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='arina-ege-progress.json';a.click();URL.revokeObjectURL(a.href)}
+document.getElementById('importFile').onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{var x=JSON.parse(r.result);localStorage.setItem(key,JSON.stringify(x.data||x));location.reload()}catch(err){alert('Invalid progress file')}};r.readAsText(f)}
+</script>
+</body></html>
