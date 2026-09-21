@@ -168,7 +168,21 @@ body.lesson-open{overflow:hidden}
           <button onclick="openExtraPractice('elections')"><span>Elections in Russia</span><span>›</span></button>
         </div>
       </div>
-      <button class="side-simple" onclick="openInfo('Useful Tools')">⚒ Useful Tools</button>
+      <button class="side-simple" id="usefulToolsBtn" onclick="toggleUsefulTools()">⚒ Useful Tools ▾</button>
+      <div class="modules-panel" id="usefulToolsPanel" style="padding:0 0 4px 6px">
+        <div style="font-size:10px;font-weight:900;color:#0b6872;padding:5px 6px 2px;text-transform:uppercase;letter-spacing:.08em">Vocabulary</div>
+        <div class="lesson-list open" style="display:grid;padding:2px 4px 4px 4px">
+          <button onclick="openUsefulTool('false-synonyms')"><span>False Synonyms · EGE</span><span>›</span></button>
+        </div>
+        <div style="font-size:10px;font-weight:900;color:#0b6872;padding:5px 6px 2px;text-transform:uppercase;letter-spacing:.08em">Grammar</div>
+        <div class="lesson-list open" style="display:grid;padding:2px 4px 4px 4px">
+          <button onclick="openInfo('Useful Tools · Grammar')"><span>Grammar Tools</span><span>›</span></button>
+        </div>
+        <div style="font-size:10px;font-weight:900;color:#0b6872;padding:5px 6px 2px;text-transform:uppercase;letter-spacing:.08em">Exam Skills</div>
+        <div class="lesson-list open" style="display:grid;padding:2px 4px 4px 4px">
+          <button onclick="openInfo('Useful Tools · Exam Skills')"><span>EGE Tools</span><span>›</span></button>
+        </div>
+      </div>
       <button class="side-simple" onclick="openInfo('My Progress')">♥ My Progress</button>
     </div>
   </aside>
@@ -255,9 +269,14 @@ function toggleHomeworkPanel(){
 function toggleExtraPractice(){
   document.getElementById('extraPracticePanel').classList.toggle('open');
 }
+function toggleUsefulTools(){
+  document.getElementById('usefulToolsPanel').classList.toggle('open');
+}
 function closeModules(){
   document.getElementById('modulesPanel').classList.remove('open');
   document.getElementById('homeworkPanel').classList.remove('open');
+  const u=document.getElementById('usefulToolsPanel'); if(u) u.classList.remove('open');
+  const e=document.getElementById('extraPracticePanel'); if(e) e.classList.remove('open');
   document.querySelectorAll('.lesson-list').forEach(x=>x.classList.remove('open'));
   document.querySelectorAll('.module-toggle').forEach(x=>x.classList.remove('open'));
 }
@@ -270,6 +289,20 @@ function toggleModule(n){
   if(willOpen){
     list.classList.add('open');
     toggle.classList.add('open');
+  }
+}
+
+function openUsefulTool(type){
+  const view=document.getElementById('lessonView');
+  const frame=document.getElementById('lessonFrame');
+  const title=document.getElementById('lessonViewTitle');
+  document.body.classList.add('lesson-open');
+  view.classList.add('on');
+  view.setAttribute('aria-hidden','false');
+  if(type==='false-synonyms'){
+    title.textContent='Useful Tools — False Synonyms · EGE';
+    frame.removeAttribute('srcdoc');
+    frame.src='useful-tools-false-synonyms.html';
   }
 }
 
