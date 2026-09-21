@@ -3,111 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kate's Homework · Lesson 2</title>
+<title>Kate · Homework Lesson 2</title>
 <style>
-:root{--navy:#0e3562;--blue:#2b8bd8;--green:#58b976;--orange:#f0a12f;--pink:#ef5675;--purple:#8a55d7;--ink:#173042;--muted:#667784;--paper:#f7fbfe}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#eef8fd,#f8fbfd);color:var(--ink)}
-.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;background:#fff;border-bottom:1px solid #dbe7ee}
-.top a{text-decoration:none;color:var(--navy);font-weight:800}.top strong{font-size:18px}
-.wrap{max-width:1160px;margin:0 auto;padding:22px}
-.hero{background:#fff;border-radius:24px;padding:22px;box-shadow:0 14px 36px rgba(24,65,88,.10);margin-bottom:18px}
-.hero h1{margin:0;color:var(--navy);font-size:38px}.hero p{margin:8px 0 0;color:var(--muted);font-size:16px}
-.note{margin-top:12px;padding:10px 12px;border-radius:12px;background:#fff7d7;font-size:13px;color:#635322}
-.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px}
-.gen{border-radius:18px;padding:16px;background:#fff;min-height:210px;border:1px solid #dfeaf0}
-.gen h3{margin:0 0 4px;font-size:18px}.gen .years{font-weight:900;margin-bottom:12px}.gen ul{margin:0;padding-left:18px;line-height:1.55}
-.gen:nth-child(1){border-top:8px solid var(--pink)}.gen:nth-child(2){border-top:8px solid var(--orange)}.gen:nth-child(3){border-top:8px solid var(--green)}.gen:nth-child(4){border-top:8px solid var(--blue)}.gen:nth-child(5){border-top:8px solid var(--purple)}
-.section{background:#fff;border-radius:22px;padding:22px;margin-top:18px;box-shadow:0 10px 28px rgba(24,65,88,.08)}
-.section h2{margin:0 0 14px;color:var(--navy)}
-.q{padding:14px 0;border-top:1px solid #e7eef3}.q:first-of-type{border-top:0}
-.q p{margin:0 0 10px;font-weight:800}.opts{display:flex;flex-wrap:wrap;gap:8px}
-.opt{border:1px solid #cbdbe4;background:#f8fbfd;border-radius:10px;padding:9px 12px;font-weight:700;cursor:pointer}
-.opt:hover{background:#eef7fb}.opt.correct{background:#dff5e6;border-color:#78c68e}.opt.wrong{background:#ffe4e4;border-color:#e38a8a}
-.result{margin-top:16px;font-weight:900;color:var(--navy)}
-.actions{display:flex;gap:10px;margin-top:16px}.actions button{border:0;border-radius:10px;padding:10px 14px;font-weight:900;cursor:pointer}.check{background:var(--navy);color:#fff}.reset{background:#eaf2f6;color:var(--navy)}
-@media(max-width:900px){.timeline{grid-template-columns:1fr 1fr}.hero h1{font-size:30px}}
-@media(max-width:560px){.timeline{grid-template-columns:1fr}.wrap{padding:12px}}
-.visuals{display:grid;grid-template-columns:1.35fr .85fr;gap:14px;margin-top:18px}
-.visual-card{background:#fff;border:1px solid #dfeaf0;border-radius:20px;padding:10px;box-shadow:0 10px 28px rgba(24,65,88,.08)}
-.visual-card h2{margin:4px 6px 10px;color:var(--navy);font-size:18px}
-.visual-card img{display:block;width:100%;height:auto;border-radius:14px;cursor:zoom-in}
-.visual-card p{margin:8px 6px 3px;color:var(--muted);font-size:12px}
-.lightbox{position:fixed;inset:0;z-index:50;background:rgba(5,20,35,.88);display:none;align-items:center;justify-content:center;padding:18px}
-.lightbox.on{display:flex}.lightbox img{max-width:96vw;max-height:94vh;object-fit:contain;border-radius:12px;background:#fff}.lightbox button{position:absolute;right:18px;top:18px;border:0;border-radius:10px;padding:10px 13px;font-weight:900;cursor:pointer}
-@media(max-width:800px){.visuals{grid-template-columns:1fr}}
+:root{--navy:#10345f;--blue:#eaf6ff;--line:#dce9f1;--ink:#173042;--muted:#667784;--ok:#dff5e7;--bad:#ffe5e5}
+*{box-sizing:border-box}html,body{margin:0;background:#f5f9fc;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+body{padding:14px}.page{max-width:1320px;margin:auto}
+.hero{background:#fff;border:1px solid var(--line);border-radius:22px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.hero h1{margin:0;color:var(--navy);font-size:28px}.hero p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.pill{white-space:nowrap;background:#fff2a8;border-radius:999px;padding:8px 12px;font-weight:900;color:#5c4a00}
+.timeline{background:#fff;border:1px solid var(--line);border-radius:22px;padding:10px;box-shadow:0 8px 24px rgba(25,62,86,.06)}
+.timeline img{display:block;width:100%;height:auto;border-radius:15px;cursor:zoom-in}
+.studyrow{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr);gap:14px;margin-top:14px;align-items:start}
+.sheet,.quiz{background:#fff;border:1px solid var(--line);border-radius:22px;padding:12px;box-shadow:0 8px 24px rgba(25,62,86,.06)}
+.sheet img{display:block;width:100%;height:auto;max-height:820px;object-fit:contain;border-radius:14px;cursor:zoom-in}
+.quiz{padding:18px}.quiz h2{margin:0 0 5px;color:var(--navy);font-size:24px}.quiz .intro{margin:0 0 12px;color:var(--muted);font-size:14px}
+.q{padding:13px 0;border-top:1px solid #e8eff4}.q p{margin:0 0 9px;font-weight:800;line-height:1.35}.opts{display:grid;gap:7px}
+.opt{border:1px solid #cfdee7;background:#f9fcfe;border-radius:11px;padding:9px 11px;text-align:left;font-weight:700;cursor:pointer;color:var(--ink)}
+.opt:hover{background:#eef7fc}.opt.selected{outline:2px solid #6ca8ce;background:#edf7fd}.opt.correct{background:var(--ok);border-color:#78bf8f;outline:none}.opt.wrong{background:var(--bad);border-color:#df8b8b;outline:none}
+.actions{display:flex;gap:8px;margin-top:14px;position:sticky;bottom:8px;background:#fff;padding-top:8px}.actions button{border:0;border-radius:11px;padding:10px 15px;font-weight:900;cursor:pointer}.check{background:var(--navy);color:#fff}.reset{background:#eaf1f5;color:var(--navy)}.result{margin-top:11px;font-weight:900;color:var(--navy)}
+.tip{margin-top:12px;background:var(--blue);border-radius:13px;padding:11px 12px;font-size:13px;line-height:1.4}
+.lightbox{position:fixed;inset:0;z-index:100;background:rgba(5,17,31,.92);display:none;align-items:center;justify-content:center;padding:18px}.lightbox.on{display:flex}.lightbox img{max-width:97vw;max-height:95vh;object-fit:contain;background:#fff;border-radius:12px}.close{position:absolute;top:16px;right:16px;border:0;border-radius:10px;padding:10px 13px;font-weight:900;cursor:pointer}
+@media(max-width:950px){.studyrow{grid-template-columns:1fr}.sheet img{max-height:none}}
+@media(max-width:620px){body{padding:8px}.hero{padding:12px}.hero h1{font-size:23px}.pill{display:none}.quiz{padding:14px}}
 </style>
 </head>
 <body>
-<div class="top"><a href="index.html">← Kate's Homework</a><strong>Homework · Lesson 2</strong><span></span></div>
-<main class="wrap">
-<section class="hero">
-<h1>Generations Timeline</h1>
-<p>Read the short guide, then check what you remember.</p>
-<div class="note">The dates below are commonly used ranges. Generation labels are broad generalisations, so individuals can be very different.</div>
-<div class="timeline">
-<div class="gen"><h3>Baby Boomers</h3><div class="years">1946–1964</div><ul><li>stability</li><li>hard work</li><li>traditional careers</li></ul></div>
-<div class="gen"><h3>Generation X</h3><div class="years">1965–1980</div><ul><li>independence</li><li>work-life balance</li><li>adaptability</li></ul></div>
-<div class="gen"><h3>Millennials / Gen Y</h3><div class="years">1981–1996</div><ul><li>technology</li><li>flexibility</li><li>experiences</li></ul></div>
-<div class="gen"><h3>Generation Z</h3><div class="years">1997–2012</div><ul><li>social media</li><li>digital life</li><li>diversity</li></ul></div>
-<div class="gen"><h3>Generation Alpha</h3><div class="years">2013 onwards</div><ul><li>AI</li><li>smart technology</li><li>online learning</li></ul></div>
-</div>
-</section>
+<main class="page">
+  <section class="hero">
+    <div><h1>Generations · Homework</h1><p>Study the visuals first. Then complete the quick check.</p></div>
+    <div class="pill">B1–B2</div>
+  </section>
 
-<section class="visuals">
-  <div class="visual-card">
-    <h2>Visual 1 · Generations Timeline</h2>
-    <img src="assets/generations-timeline.webp" alt="Generations timeline with Baby Boomers, Generation X, Millennials, Generation Z and Generation Alpha" onclick="zoom(this.src)">
-    <p>Tap the picture to open it larger. Use it before the Quick Check.</p>
-  </div>
-  <div class="visual-card">
-    <h2>Visual 2 · Generations Cheat Sheet</h2>
-    <img src="assets/generations-cheat-sheet.webp" alt="Generations ESL cheat sheet with vocabulary, speaking phrases and discussion topics" onclick="zoom(this.src)">
-    <p>Keep this visual open while doing the speaking and vocabulary review.</p>
-  </div>
-</section>
+  <section class="timeline">
+    <img src="assets/generations-timeline.webp" alt="Generations Timeline" onclick="zoom(this.src)">
+  </section>
 
-<section class="section">
-<h2>Quick Check</h2>
-<div class="q" data-answer="b"><p>1. Which generation is usually linked with 1997–2012?</p><div class="opts">
-<button class="opt" data-v="a">Millennials</button><button class="opt" data-v="b">Generation Z</button><button class="opt" data-v="c">Generation X</button></div></div>
-<div class="q" data-answer="c"><p>2. Which group is associated with independence and adaptability?</p><div class="opts">
-<button class="opt" data-v="a">Baby Boomers</button><button class="opt" data-v="b">Generation Alpha</button><button class="opt" data-v="c">Generation X</button></div></div>
-<div class="q" data-answer="a"><p>3. Which generation is commonly linked with AI and online learning?</p><div class="opts">
-<button class="opt" data-v="a">Generation Alpha</button><button class="opt" data-v="b">Baby Boomers</button><button class="opt" data-v="c">Millennials</button></div></div>
-<div class="q" data-answer="b"><p>4. Which statement is the safest way to talk about generations?</p><div class="opts">
-<button class="opt" data-v="a">Everyone in a generation is the same.</button><button class="opt" data-v="b">These are broad patterns, not rules for every person.</button><button class="opt" data-v="c">Age explains everything about a person.</button></div></div>
-<div class="q" data-answer="c"><p>5. Which group comes directly before Generation Z?</p><div class="opts">
-<button class="opt" data-v="a">Generation Alpha</button><button class="opt" data-v="b">Generation X</button><button class="opt" data-v="c">Millennials / Gen Y</button></div></div>
-<div class="actions"><button class="check" onclick="checkAll()">CHECK</button><button class="reset" onclick="resetAll()">RESET</button></div>
-<div class="result" id="result">Choose one answer for each question.</div>
-</section>
+  <section class="studyrow">
+    <div class="sheet">
+      <img src="assets/generations-cheat-sheet.webp" alt="Generations ESL Cheat Sheet" onclick="zoom(this.src)">
+    </div>
+
+    <div class="quiz">
+      <h2>Quick Check</h2>
+      <p class="intro">No notes now — check what you remember.</p>
+
+      <div class="q" data-answer="b"><p>1. Which generation is commonly dated 1997–2012?</p><div class="opts">
+        <button class="opt" data-v="a">Generation X</button>
+        <button class="opt" data-v="b">Generation Z</button>
+        <button class="opt" data-v="c">Millennials</button>
+      </div></div>
+
+      <div class="q" data-answer="a"><p>2. Which phrase means “good at using technology”?</p><div class="opts">
+        <button class="opt" data-v="a">tech-savvy</button>
+        <button class="opt" data-v="b">career-driven</button>
+        <button class="opt" data-v="c">traditional</button>
+      </div></div>
+
+      <div class="q" data-answer="c"><p>3. Complete: “Compared ___ previous generations, people marry later.”</p><div class="opts">
+        <button class="opt" data-v="a">from</button>
+        <button class="opt" data-v="b">than</button>
+        <button class="opt" data-v="c">with</button>
+      </div></div>
+
+      <div class="q" data-answer="b"><p>4. “We don’t always see eye to eye” means…</p><div class="opts">
+        <button class="opt" data-v="a">we look similar</button>
+        <button class="opt" data-v="b">we don’t always agree</button>
+        <button class="opt" data-v="c">we are the same age</button>
+      </div></div>
+
+      <div class="q" data-answer="c"><p>5. Which is the best way to avoid a stereotype?</p><div class="opts">
+        <button class="opt" data-v="a">Gen Z are lazy.</button>
+        <button class="opt" data-v="b">Older people don’t understand technology.</button>
+        <button class="opt" data-v="c">Some people argue that Gen Z has a different attitude towards work.</button>
+      </div></div>
+
+      <div class="q" data-answer="a"><p>6. Which phrase is useful for talking about a trend?</p><div class="opts">
+        <button class="opt" data-v="a">tend to + verb</button>
+        <button class="opt" data-v="b">be stuck in your ways</button>
+        <button class="opt" data-v="c">see eye to eye</button>
+      </div></div>
+
+      <div class="tip"><b>Speaking mini-task:</b> Choose two generations. Give one similarity and one difference. Use <i>tend to</i>, <i>whereas</i> or <i>compared with</i>.</div>
+
+      <div class="actions"><button class="check" onclick="checkAll()">CHECK</button><button class="reset" onclick="resetAll()">RESET</button></div>
+      <div class="result" id="result">6 questions · choose one answer each.</div>
+    </div>
+  </section>
 </main>
-<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeZoom()">
-  <button onclick="closeZoom()">✕ Close</button>
-  <img id="zoomImg" alt="Expanded lesson visual">
-</div>
+
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeZoom()"><button class="close" onclick="closeZoom()">✕</button><img id="zoomImg" alt="Expanded visual"></div>
 <script>
+document.querySelectorAll('.q').forEach(q=>{
+  q.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{
+    q.querySelectorAll('.opt').forEach(x=>{x.classList.remove('selected','correct','wrong');x.dataset.chosen='0'});
+    b.dataset.chosen='1'; b.classList.add('selected');
+  }));
+});
+function checkAll(){
+  let score=0,total=0;
+  document.querySelectorAll('.q').forEach(q=>{
+    total++;
+    const chosen=[...q.querySelectorAll('.opt')].find(x=>x.dataset.chosen==='1');
+    q.querySelectorAll('.opt').forEach(x=>x.classList.remove('correct','wrong'));
+    if(chosen){
+      chosen.classList.remove('selected');
+      if(chosen.dataset.v===q.dataset.answer){chosen.classList.add('correct');score++}
+      else chosen.classList.add('wrong');
+    }
+  });
+  document.getElementById('result').textContent='Score: '+score+' / '+total+(score===total?' · Excellent!':' · Look at the visuals and try again.');
+}
+function resetAll(){
+  document.querySelectorAll('.opt').forEach(x=>{x.classList.remove('selected','correct','wrong');x.dataset.chosen='0'});
+  document.getElementById('result').textContent='6 questions · choose one answer each.';
+}
 function zoom(src){document.getElementById('zoomImg').src=src;document.getElementById('lightbox').classList.add('on')}
 function closeZoom(){document.getElementById('lightbox').classList.remove('on')}
-
-document.querySelectorAll('.q').forEach(q=>q.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{
- q.querySelectorAll('.opt').forEach(x=>{x.classList.remove('correct','wrong');x.dataset.chosen='0'});
- b.dataset.chosen='1';
-})));
-function checkAll(){
- let score=0,total=0;
- document.querySelectorAll('.q').forEach(q=>{
-  total++;
-  const chosen=[...q.querySelectorAll('.opt')].find(x=>x.dataset.chosen==='1');
-  q.querySelectorAll('.opt').forEach(x=>x.classList.remove('correct','wrong'));
-  if(chosen){
-   if(chosen.dataset.v===q.dataset.answer){chosen.classList.add('correct');score++}
-   else chosen.classList.add('wrong');
-  }
- });
- document.getElementById('result').textContent='Score: '+score+' / '+total+(score===total?' — Excellent!':' — Try the timeline again.');
-}
-function resetAll(){document.querySelectorAll('.opt').forEach(x=>{x.classList.remove('correct','wrong');x.dataset.chosen='0'});document.getElementById('result').textContent='Choose one answer for each question.'}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeZoom()});
 </script>
 </body>
 </html>
