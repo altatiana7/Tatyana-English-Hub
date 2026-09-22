@@ -6,7 +6,7 @@ const verbs=[
 ["know","knew","known","знать"],["make","made","made","делать / создавать"],["read","read","read","читать"],["run","ran","run","бежать"],["say","said","said","говорить / сказать"],
 ["see","saw","seen","видеть"],["speak","spoke","spoken","говорить"],["take","took","taken","брать"],["think","thought","thought","думать"],["write","wrote","written","писать"]
 ].map(x=>({v1:x[0],v2:x[1],v3:x[2],ru:x[3]}));
-let queue=[],idx=0,correct=0,mistakes=[],checked=false;
+let queue=[],idx=0,correct=0,firstTryCorrect=0,mistakes=[],checked=false,seen=new Set();
 
 const css=document.createElement("style");
 css.textContent=`
@@ -63,14 +63,14 @@ function render(){
  $("verbCheck").style.display="inline-block";$("verbNext").style.display="none";checked=false;setTimeout(()=>$("verbV2").focus(),0);
 }
 function start(){
- queue=shuffle(verbs).slice(0,20);idx=0;correct=0;mistakes=[];checked=false;$("verbCard").style.display="block";$("verbDone").classList.remove("show");render();
+ queue=shuffle(verbs).slice(0,20);idx=0;correct=0;firstTryCorrect=0;mistakes=[];checked=false;seen=new Set();$("verbCard").style.display="block";$("verbDone").classList.remove("show");render();
 }
 function check(){
  if(checked)return;const v=queue[idx],a=$("verbV2").value,b=$("verbV3").value,fb=$("verbFeedback");
  if(!a.trim()||!b.trim()){fb.className="trainerFeedback bad";fb.textContent="Enter both V2 and V3.";return}
  const ok=match(a,v.v2)&&match(b,v.v3);checked=true;
- if(ok){correct++;fb.className="trainerFeedback ok";fb.textContent="Correct: "+v.v1+" — "+v.v2+" — "+v.v3}
- else{if(!mistakes.some(x=>x.v1===v.v1))mistakes.push(v);fb.className="trainerFeedback bad";fb.textContent="Correct forms: "+v.v1+" — "+v.v2+" — "+v.v3}
+ if(ok){correct++;if(!seen.has(v.v1))firstTryCorrect++;fb.className="trainerFeedback ok";fb.textContent="Correct: "+v.v1+" — "+v.v2+" — "+v.v3}
+ else{if(!mistakes.some(x=>x.v1===v.v1))mistakes.push(v);fb.className="trainerFeedback bad";fb.textContent="Correct forms: "+v.v1+" — "+v.v2+" — "+v.v3}seen.add(v.v1);
  $("verbCorrect").textContent=correct;$("verbMistakes").textContent=mistakes.length;$("verbCheck").style.display="none";$("verbNext").style.display="inline-block";
 }
 function next(){
@@ -78,7 +78,7 @@ function next(){
  if(idx>=queue.length&&mistakes.length){const repeat=shuffle(mistakes);mistakes=[];queue=queue.concat(repeat)}
  render();
 }
-function finish(){$("verbCard").style.display="none";$("verbDone").classList.add("show");$("verbDoneText").textContent="Correct on first attempt: "+correct+" / 20. All mistakes were repeated before finishing."}
+function finish(){$("verbCard").style.display="none";$("verbDone").classList.add("show");const pct=Math.round(firstTryCorrect/20*100);$("verbDoneText").textContent="First attempt: "+firstTryCorrect+" / 20 ("+pct+"%). All mistakes were repeated until correct."}
 function hint(){const v=queue[idx];if(!v)return;$("verbFeedback").className="trainerFeedback";$("verbFeedback").textContent="Hint: V2 starts with “"+v.v2[0].toUpperCase()+"”, V3 starts with “"+v.v3[0].toUpperCase()+"”."}
 function listen(){const v=queue[idx];if(!v||!("speechSynthesis" in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(v.v1);u.lang="en-GB";u.rate=.82;speechSynthesis.speak(u)}
 window.openVerbTrainer=()=>{start();show("verbTrainer")};
