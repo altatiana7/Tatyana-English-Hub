@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tatyana • Arina EGE Teacher Hub</title>
+<style>
+:root{--ink:#17324d;--teal:#159eaa;--teal2:#087b88;--paper:#f4fafb;--line:#d8e8eb;--gold:#f0b94d;--coral:#ef7e6d}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:linear-gradient(135deg,#e8f7f8,#fff 48%,#f4f7fb);color:var(--ink)}
+button,a{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:235px minmax(0,1fr) 285px;gap:10px;padding:10px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 30px #17435c12;overflow:hidden}.left,.right{height:calc(100vh - 20px);overflow:auto}
+.brand{padding:18px;border-bottom:1px solid var(--line)}.brand b{font-size:21px;color:var(--teal2)}.brand small{display:block;margin-top:4px;color:#78909c}.nav{padding:9px}.nav button{width:100%;border:0;background:transparent;text-align:left;padding:11px;border-radius:11px;color:var(--ink);font-weight:700;cursor:pointer}.nav button:hover,.nav button.active{background:#eaf7f8;color:var(--teal2)}.nav button.locked,.week>button:disabled,.subbtn.locked{opacity:.42;cursor:not-allowed;background:#f4f6f7;color:#8fa0a8}.lock{font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#9aaab1}.week.locked{opacity:.68;background:#fafbfb}
+.main{height:calc(100vh - 20px);overflow:auto;padding:26px}.hero{min-height:260px;border-radius:22px;padding:30px;background:linear-gradient(125deg,#087b88,#20aab4 58%,#73cad0);color:white;position:relative;overflow:hidden}.hero:after{content:"A";position:absolute;right:20px;bottom:-62px;font:900 250px/1 Georgia,serif;color:#ffffff16}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:900}.hero h1{font-size:44px;line-height:1;margin:12px 0}.hero p{max-width:580px;font-size:17px;line-height:1.45}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{background:#ffffff22;border:1px solid #ffffff55;border-radius:999px;padding:7px 11px;font-size:12px}
+.section{margin-top:18px}.section h2{font-size:22px}.week{border:1px solid var(--line);border-radius:15px;margin:9px 0;background:#fff;overflow:hidden}.week>button{width:100%;border:0;background:#fff;padding:15px;display:flex;justify-content:space-between;text-align:left;cursor:pointer}.week strong{color:var(--teal2)}.inside{display:none;padding:0 15px 15px}.week.open .inside{display:block}.task{padding:10px 12px;background:var(--paper);border-radius:10px;margin-top:7px}.tag{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#718c98;font-weight:900}
+.right{padding:14px}.right h3{margin:5px 4px 12px}.card{border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:9px;background:#fff}.card b{display:block;margin-bottom:5px}.score{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px dashed #e3ecee}.score:last-child{border:0}.pill{font-weight:900;color:var(--teal2)}.action{display:block;text-decoration:none;text-align:center;padding:11px;border-radius:11px;background:var(--teal);color:white;font-weight:800;margin-top:8px}.action.alt{background:#edf7f8;color:var(--teal2);border:1px solid var(--line)}
+.view{display:none}.view.active{display:block}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tile{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}.tile h3{margin:0 0 8px}.subbtn{border:1px solid var(--line);background:var(--paper);padding:8px 10px;border-radius:9px;margin:4px 3px 0 0;cursor:pointer}.note{font-size:12px;color:#6e8792;line-height:1.45}
+
+.quizWrap{max-width:860px;margin:0 auto}.quizTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}.quizTop h1{margin:4px 0 6px}.quizQ{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:9px 0;background:#fff}.quizQ b{display:block;margin-bottom:9px}.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid #dfecef;background:#f8fcfd;border-radius:10px;padding:9px 10px;cursor:pointer}.opt:hover{border-color:#9bcfd4}.opt input{margin-top:3px}.submitTest{border:0;border-radius:11px;background:var(--teal);color:white;font-weight:900;padding:12px 18px;cursor:pointer;margin-top:10px}.testMsg{font-size:13px;color:#6e8792;margin-top:8px}.resultBox{display:none;margin:14px 0 20px;border:1px solid #b9dfe2;background:#effafb;border-radius:14px;padding:16px}.resultBox.show{display:block}.resultScore{font-size:28px;font-weight:900;color:var(--teal2);margin:6px 0}.resultCode{font-size:32px;font-weight:900;letter-spacing:.16em;color:var(--teal2);margin:8px 0}
+@media(max-width:900px){.app{grid-template-columns:190px 1fr}.right{display:none}.hero h1{font-size:34px}}@media(max-width:620px){.opts{grid-template-columns:1fr}.quizTop{display:block}.app{display:block;padding:6px}.left{height:auto;margin-bottom:6px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;width:auto}.main{height:auto;padding:14px}.grid{grid-template-columns:1fr}.hero{min-height:220px}}
+</style></head><body><div class="app">
+<aside class="panel left"><div class="brand"><b>TATYANA • ARINA EGE</b><small>Teacher hub • full access</small></div><div class="nav">
+<button class="active" data-v="home">Главная</button>
+<button data-v="weeks">Week 1</button>
+<button data-v="week2">Week 2</button>
+<button data-v="week3">Week 3</button>
+<button data-v="week4">Week 4</button>
+<button data-v="week5">Week 5</button>
+<button data-v="week6">Week 6</button>
+<button data-v="week7">Week 7</button>
+<button data-v="week8">Week 8</button>
+<button data-v="reference">Reference Materials</button>
+<button data-v="trainers">Trainers</button>
+</div></aside>
+<main class="panel main">
+<section id="home" class="view active"><div class="hero"><div class="eyebrow">Teacher Hub • 2026/27</div><h1>Arina • Teacher Control</h1><p>Полная учительская версия: все недели, материалы, тренажёры, практика и тесты доступны заранее.</p><div class="chips"><span class="chip">Goal: high score</span><span class="chip">3 lessons / week</span><span class="chip">EGE 2027</span></div></div>
+<div class="section"><h2>Сейчас в работе</h2><div class="grid"><div class="tile"><div class="tag">Week 1</div><h3>Present Tenses + Irregular Verbs</h3><p>Повторяем Present Tenses и закрепляем формы неправильных глаголов.</p><button class="subbtn" onclick="show('weeks')">Открыть Week 1 →</button></div><div class="tile"><div class="tag">Week 1 tools</div><h3>Reference + Trainers</h3><p>Справочный материал и тренажёры доступны отдельно, но только по уже открытой теме.</p><button class="subbtn" onclick="show('reference')">Reference</button><button class="subbtn" onclick="show('trainers')">Trainers</button></div></div></div></section>
+<section id="weeks" class="view"><h1>Week 1</h1><p class="note">Каждую неделю сначала открываем материалы, затем Practice, затем итоговый Test. Следующая неделя станет активной после проверки.</p>
+<div class="week open"><button><span><strong>Week 1</strong> • Present Tenses & Irregular Verbs</span><span>⌄</span></button><div class="inside">
+<div class="task"><span class="tag">Reference material</span><br><b>Present Tenses + Irregular Verbs</b><br>Краткие правила, маркеры времени и таблица форм.<br><button class="subbtn" type="button" onclick="show('reference')">Open reference →</button></div>
+<div class="task"><span class="tag">Trainer</span><br><b>Irregular Verbs Trainer</b><br>V1 → V2 + V3, повтор ошибок до правильного ответа.<br><button class="subbtn" type="button" onclick="openVerbTrainer()">Start trainer →</button></div>
+<div class="task"><span class="tag">Practice</span><br><b>Week 1 Practice</b><br>Короткая практика перед тестом.<br><button class="subbtn" type="button" onclick="show('practice')">Open practice →</button></div>
+<div class="task"><span class="tag">Final test</span><br><b>Present Tenses + Irregular Verbs</b><br>После отправки — балл и код для преподавателя.<br><button class="subbtn" onclick="show('presentTest')">Start test →</button></div>
+</div></div>
+</div></div></div></div></div></div></div></section>
+<section id="week2" class="view"><h1>Week 2</h1><p class="note">Teacher workspace. Здесь можно готовить материалы до открытия недели для Арины.</p><div class="grid">
+<div class="tile"><div class="tag">Reference material</div><h3>Week 2 Reference</h3><p>Справочный материал по теме недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Trainer</div><h3>Week 2 Trainer</h3><p>Интерактивный тренажёр по теме.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Practice</div><h3>Week 2 Practice</h3><p>Практика после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Final test</div><h3>Week 2 Test</h3><p>Контроль после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+</div></section><section id="week3" class="view"><h1>Week 3</h1><p class="note">Teacher workspace. Здесь можно готовить материалы до открытия недели для Арины.</p><div class="grid">
+<div class="tile"><div class="tag">Reference material</div><h3>Week 3 Reference</h3><p>Справочный материал по теме недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Trainer</div><h3>Week 3 Trainer</h3><p>Интерактивный тренажёр по теме.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Practice</div><h3>Week 3 Practice</h3><p>Практика после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Final test</div><h3>Week 3 Test</h3><p>Контроль после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+</div></section><section id="week4" class="view"><h1>Week 4</h1><p class="note">Teacher workspace. Здесь можно готовить материалы до открытия недели для Арины.</p><div class="grid">
+<div class="tile"><div class="tag">Reference material</div><h3>Week 4 Reference</h3><p>Справочный материал по теме недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Trainer</div><h3>Week 4 Trainer</h3><p>Интерактивный тренажёр по теме.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Practice</div><h3>Week 4 Practice</h3><p>Практика после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Final test</div><h3>Week 4 Test</h3><p>Контроль после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+</div></section><section id="week5" class="view"><h1>Week 5</h1><p class="note">Teacher workspace. Здесь можно готовить материалы до открытия недели для Арины.</p><div class="grid">
+<div class="tile"><div class="tag">Reference material</div><h3>Week 5 Reference</h3><p>Справочный материал по теме недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Trainer</div><h3>Week 5 Trainer</h3><p>Интерактивный тренажёр по теме.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Practice</div><h3>Week 5 Practice</h3><p>Практика после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Final test</div><h3>Week 5 Test</h3><p>Контроль после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+</div></section><section id="week6" class="view"><h1>Week 6</h1><p class="note">Teacher workspace. Здесь можно готовить материалы до открытия недели для Арины.</p><div class="grid">
+<div class="tile"><div class="tag">Reference material</div><h3>Week 6 Reference</h3><p>Справочный материал по теме недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Trainer</div><h3>Week 6 Trainer</h3><p>Интерактивный тренажёр по теме.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Practice</div><h3>Week 6 Practice</h3><p>Практика после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Final test</div><h3>Week 6 Test</h3><p>Контроль после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+</div></section><section id="week7" class="view"><h1>Week 7</h1><p class="note">Teacher workspace. Здесь можно готовить материалы до открытия недели для Арины.</p><div class="grid">
+<div class="tile"><div class="tag">Reference material</div><h3>Week 7 Reference</h3><p>Справочный материал по теме недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Trainer</div><h3>Week 7 Trainer</h3><p>Интерактивный тренажёр по теме.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Practice</div><h3>Week 7 Practice</h3><p>Практика после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Final test</div><h3>Week 7 Test</h3><p>Контроль после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+</div></section><section id="week8" class="view"><h1>Week 8</h1><p class="note">Teacher workspace. Здесь можно готовить материалы до открытия недели для Арины.</p><div class="grid">
+<div class="tile"><div class="tag">Reference material</div><h3>Week 8 Reference</h3><p>Справочный материал по теме недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Trainer</div><h3>Week 8 Trainer</h3><p>Интерактивный тренажёр по теме.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Practice</div><h3>Week 8 Practice</h3><p>Практика после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+<div class="tile"><div class="tag">Final test</div><h3>Week 8 Test</h3><p>Контроль после недели.</p><button class="subbtn" type="button">Prepare / edit</button></div>
+</div></section><section id="reference" class="view"><h1>Reference Materials</h1><p class="note">Учительская библиотека: материалы для всех недель можно готовить заранее.</p><div class="grid">
+<div class="tile"><div class="tag">Week 1</div><h3>Present Simple</h3><p>Habits, routines, facts. Markers: usually, often, every day, sometimes, never.</p><p><b>Form:</b> I/you/we/they work • he/she/it works.</p></div>
+<div class="tile"><div class="tag">Week 1</div><h3>Present Continuous</h3><p>Actions happening now or around now. Markers: now, at the moment, currently, look!, listen!</p><p><b>Form:</b> am/is/are + V-ing.</p></div>
+<div class="tile"><div class="tag">Week 1</div><h3>Present Perfect</h3><p>Result/experience connected with the present. Markers: already, just, yet, ever, never.</p><p><b>Form:</b> have/has + V3.</p></div>
+<div class="tile"><div class="tag">Week 1</div><h3>Present Perfect Continuous</h3><p>Duration or recent activity with a visible result. Markers: for, since, all day, lately.</p><p><b>Form:</b> have/has been + V-ing.</p></div>
+<div class="tile"><div class="tag">Week 1</div><h3>Irregular Verbs</h3><p>Remember three forms: V1 • V2 • V3. V2 is used in Past Simple; V3 is used in Perfect forms and Passive Voice.</p><button class="subbtn" type="button" onclick="openVerbTrainer()">Train forms →</button></div>
+</div></section>
+<section id="practice" class="view"><h1>Week 1 • Practice</h1><p class="note">Сначала тренировка, затем итоговый тест.</p><div class="grid">
+<div class="tile"><div class="tag">Practice 1</div><h3>Choose the tense</h3><p>Определи по контексту: Present Simple, Continuous, Perfect или Perfect Continuous.</p><button class="subbtn" type="button" onclick="show('presentTest')">Open mixed practice/test →</button></div>
+<div class="tile"><div class="tag">Practice 2</div><h3>Irregular Verbs</h3><p>Введи V2 и V3 без вариантов ответа.</p><button class="subbtn" type="button" onclick="openVerbTrainer()">Start trainer →</button></div>
+</div></section>
+<section id="trainers" class="view"><h1>Trainers</h1><p class="note">Учительская библиотека тренажёров: можно готовить следующие недели заранее.</p><div class="grid">
+<div class="tile"><div class="tag">Week 1 • Active</div><h3>Irregular Verbs Trainer</h3><p>20 случайных глаголов, мгновенная проверка, повтор ошибок.</p><button class="subbtn" type="button" onclick="openVerbTrainer()">Start →</button></div>
+<div class="tile" style="opacity:.45"><div class="tag">Future</div><h3>Grammar Trainer</h3><p>Откроется с одной из следующих недель.</p><button class="subbtn locked" disabled>Locked</button></div>
+<div class="tile" style="opacity:.45"><div class="tag">Future</div><h3>Word Formation Trainer</h3><p>Откроется после прохождения темы.</p><button class="subbtn locked" disabled>Locked</button></div>
+</div></section>
+<section id="presentTest" class="view">
+  <div class="quizWrap">
+    <div class="quizTop">
+      <div><div class="tag">Week 1 • Test 1</div><h1>Present Tenses + Irregular Verbs</h1><p class="note">12 заданий. После проверки появится балл и короткий код для преподавателя. Правильные ответы здесь не показываются.</p></div>
+      <button class="subbtn" type="button" onclick="show('weeks')">← Grammar Lab</button>
+    </div>
+    <form id="testForm">
+<div class="quizQ"><b>1. Arina usually ___ her homework after dinner.</b><div class="opts"><label class="opt"><input type="radio" name="q1" value="does">does</label><label class="opt"><input type="radio" name="q1" value="is doing">is doing</label><label class="opt"><input type="radio" name="q1" value="has done">has done</label><label class="opt"><input type="radio" name="q1" value="has been doing">has been doing</label></div></div>
+<div class="quizQ"><b>2. Look! It ___ heavily now.</b><div class="opts"><label class="opt"><input type="radio" name="q2" value="rains">rains</label><label class="opt"><input type="radio" name="q2" value="is raining">is raining</label><label class="opt"><input type="radio" name="q2" value="has rained">has rained</label><label class="opt"><input type="radio" name="q2" value="has been raining">has been raining</label></div></div>
+<div class="quizQ"><b>3. I ___ this book already, so you can borrow it.</b><div class="opts"><label class="opt"><input type="radio" name="q3" value="read">read</label><label class="opt"><input type="radio" name="q3" value="am reading">am reading</label><label class="opt"><input type="radio" name="q3" value="have read">have read</label><label class="opt"><input type="radio" name="q3" value="have been reading">have been reading</label></div></div>
+<div class="quizQ"><b>4. She ___ English for three years, and she still studies every week.</b><div class="opts"><label class="opt"><input type="radio" name="q4" value="learns">learns</label><label class="opt"><input type="radio" name="q4" value="is learning">is learning</label><label class="opt"><input type="radio" name="q4" value="has learned">has learned</label><label class="opt"><input type="radio" name="q4" value="has been learning">has been learning</label></div></div>
+<div class="quizQ"><b>5. We ___ to school by bus every day.</b><div class="opts"><label class="opt"><input type="radio" name="q5" value="go">go</label><label class="opt"><input type="radio" name="q5" value="are going">are going</label><label class="opt"><input type="radio" name="q5" value="have gone">have gone</label><label class="opt"><input type="radio" name="q5" value="have been going">have been going</label></div></div>
+<div class="quizQ"><b>6. Why are your hands dirty? — I ___ my bike.</b><div class="opts"><label class="opt"><input type="radio" name="q6" value="repair">repair</label><label class="opt"><input type="radio" name="q6" value="am repairing">am repairing</label><label class="opt"><input type="radio" name="q6" value="have repaired">have repaired</label><label class="opt"><input type="radio" name="q6" value="have been repairing">have been repairing</label></div></div>
+<div class="quizQ"><b>7. He ___ never ___ sushi before.</b><div class="opts"><label class="opt"><input type="radio" name="q7" value="has eaten">has eaten</label><label class="opt"><input type="radio" name="q7" value="is eating">is eating</label><label class="opt"><input type="radio" name="q7" value="eats">eats</label><label class="opt"><input type="radio" name="q7" value="has been eating">has been eating</label></div></div>
+<div class="quizQ"><b>8. Listen! Someone ___ at the door.</b><div class="opts"><label class="opt"><input type="radio" name="q8" value="knocks">knocks</label><label class="opt"><input type="radio" name="q8" value="is knocking">is knocking</label><label class="opt"><input type="radio" name="q8" value="has knocked">has knocked</label><label class="opt"><input type="radio" name="q8" value="has been knocking">has been knocking</label></div></div>
+<div class="quizQ"><b>9. Choose the correct three forms of GO.</b><div class="opts"><label class="opt"><input type="radio" name="q9" value="go — went — gone">go — went — gone</label><label class="opt"><input type="radio" name="q9" value="go — goed — gone">go — goed — gone</label><label class="opt"><input type="radio" name="q9" value="go — went — went">go — went — went</label><label class="opt"><input type="radio" name="q9" value="go — gone — went">go — gone — went</label></div></div>
+<div class="quizQ"><b>10. Choose the correct three forms of WRITE.</b><div class="opts"><label class="opt"><input type="radio" name="q10" value="write — wrote — written">write — wrote — written</label><label class="opt"><input type="radio" name="q10" value="write — writed — written">write — writed — written</label><label class="opt"><input type="radio" name="q10" value="write — wrote — wrote">write — wrote — wrote</label><label class="opt"><input type="radio" name="q10" value="write — written — wrote">write — written — wrote</label></div></div>
+<div class="quizQ"><b>11. Choose the correct three forms of TAKE.</b><div class="opts"><label class="opt"><input type="radio" name="q11" value="take — took — taken">take — took — taken</label><label class="opt"><input type="radio" name="q11" value="take — taked — taken">take — taked — taken</label><label class="opt"><input type="radio" name="q11" value="take — took — took">take — took — took</label><label class="opt"><input type="radio" name="q11" value="take — taken — took">take — taken — took</label></div></div>
+<div class="quizQ"><b>12. Choose the correct three forms of SEE.</b><div class="opts"><label class="opt"><input type="radio" name="q12" value="see — saw — seen">see — saw — seen</label><label class="opt"><input type="radio" name="q12" value="see — seed — seen">see — seed — seen</label><label class="opt"><input type="radio" name="q12" value="see — saw — saw">see — saw — saw</label><label class="opt"><input type="radio" name="q12" value="see — seen — saw">see — seen — saw</label></div></div>
+<button class="submitTest" type="button" onclick="submitTest()">Проверить и получить код</button>
+<div id="msg" class="testMsg"></div>
+</form>
+    <div id="result" class="resultBox"><div class="tag">Результат сохранён</div><div id="score" class="resultScore"></div><div>Код для преподавателя:</div><div id="code" class="resultCode"></div><div class="note">Передай код преподавателю. Проверка и полный разбор доступны только в учительской панели.</div><button class="subbtn" type="button" onclick="show('practice')">← Вернуться к Tests & Practice</button></div>
+  </div>
+</section>
+
+</main>
+<aside class="panel right"><h3>ЕГЭ 2027 • структура</h3><div class="card"><b>42 задания • 82 первичных</b><div class="score"><span>Listening 1–9</span><span class="pill">12</span></div><div class="score"><span>Reading 10–18</span><span class="pill">12</span></div><div class="score"><span>Grammar & Lexis 19–36</span><span class="pill">18</span></div><div class="score"><span>Writing 37–38</span><span class="pill">20</span></div><div class="score"><span>Speaking 39–42</span><span class="pill">20</span></div></div>
+<div class="card"><b>Развёрнутые задания</b><div class="score"><span>37 • Email</span><span class="pill">6</span></div><div class="score"><span>38 • Essay</span><span class="pill">14</span></div><div class="score"><span>39 • Reading</span><span class="pill">1</span></div><div class="score"><span>40 • Questions</span><span class="pill">4</span></div><div class="score"><span>41 • Interview</span><span class="pill">5</span></div><div class="score"><span>42 • Photo project</span><span class="pill">10</span></div></div>
+<a class="action" href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener">Пробная версия ЕГЭ 2027</a><a class="action alt" href="https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege" target="_blank" rel="noopener">Открытый банк ФИПИ</a><p class="note">Сейчас опубликован проект КИМ-2027; после утверждения данные на хабе нужно сверить ещё раз.</p></aside>
+</div><script>
+function show(id){const target=document.getElementById(id);if(!target)return;document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav button[data-v]').forEach(x=>x.classList.toggle('active',x.dataset.v===id));document.querySelector('main.main').scrollTop=0}
+document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>show(b.dataset.v));document.querySelectorAll('.week>button').forEach(b=>b.onclick=()=>b.parentElement.classList.toggle('open'));
+async function submitTest(){
+  const form=document.getElementById("testForm"),msg=document.getElementById("msg"),answers={};
+  for(let i=1;i<=12;i++){
+    const x=form.querySelector('input[name="q'+i+'"]:checked');
+    if(!x){msg.textContent="Ответь на все 12 вопросов.";form.querySelector('input[name="q'+i+'"]').closest(".quizQ").scrollIntoView({behavior:"smooth",block:"center"});return}
+    answers["q"+i]=x.value;
+  }
+  msg.textContent="Сохраняю результат…";
+  try{
+    const r=await fetch("https://lzxcmrlubhjfdhtqvqzt.supabase.co/functions/v1/ege-test-results",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({test_id:"present-1",answers})});
+    const out=await r.json();
+    if(!r.ok||!out.ok) throw new Error(out.error||"save_failed");
+    document.getElementById("score").textContent=out.score+" / "+out.max_score;
+    document.getElementById("code").textContent=out.code;
+    document.getElementById("result").classList.add("show");
+    msg.textContent="Готово.";
+    document.getElementById("result").scrollIntoView({behavior:"smooth",block:"center"});
+  }catch(e){msg.textContent="Не удалось отправить результат. Попробуй ещё раз."}
+}
+</script><script src="irregular-trainer.js?v=20260922"></script></body></html>
