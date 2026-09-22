@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nikita Homework · 22 September 2026</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;background:#f3f0eb;color:#17212b}
+body{display:grid;place-items:center}.wrap{width:min(1100px,96vw);padding:16px}
+.hero{background:linear-gradient(120deg,#071b27,#123e54);color:#fff;border-radius:18px;padding:14px 20px;box-shadow:0 10px 26px #0002;margin-bottom:12px}
+.hero span{display:inline-block;background:#e9b23b;color:#211707;font-weight:950;padding:6px 9px;border-radius:8px;font-size:11px;letter-spacing:.04em}
+.hero h1{font:800 30px/1.1 Georgia,serif;margin:8px 0 4px}.hero p{margin:0;color:#d5e2e8;font-size:13px}
+.board{background:#fffdfa;border:1px solid #ded8cf;border-radius:18px;padding:16px;box-shadow:0 8px 24px #0001}
+.quizlet{display:grid;grid-template-columns:minmax(0,680px) 170px;gap:14px;justify-content:center;align-items:stretch}
+.card{height:340px;background:#fff;border:1px solid #d8dde3;border-radius:18px;box-shadow:0 10px 28px #00000012;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:30px;cursor:pointer}
+.front .word{font:800 42px/1.15 Georgia,serif;color:#123e54}.back{display:none;max-width:540px}.card.flipped .front{display:none}.card.flipped .back{display:block}
+.translation{font-size:27px;font-weight:950;color:#a15f05;margin-bottom:10px}.meaning{font-size:16px;color:#5c6670;margin-bottom:12px;line-height:1.45}.example{font-size:18px;font-weight:750;line-height:1.45}
+.sound{position:absolute;top:14px;left:14px;border:0;background:#eef4f7;border-radius:999px;width:44px;height:44px;font-size:20px;cursor:pointer}.card.flipped .sound{display:none}
+.counter{position:absolute;bottom:13px;left:50%;transform:translateX(-50%);font-size:13px;color:#6c737a;font-weight:850}
+.side{display:flex;flex-direction:column;gap:9px}.btn{border:1px solid #d5dde2;background:#fff;color:#123e54;border-radius:11px;padding:13px 10px;font-weight:900;cursor:pointer}.flip{background:#e9b23b;color:#211707;border-color:#e9b23b}.btn:disabled{opacity:.4}.hint{margin-top:auto;background:#f5efe3;border:1px solid #dfd2bd;border-radius:10px;padding:10px;font-size:11px;color:#62594d;line-height:1.4}
+.backlink{display:inline-block;margin-top:12px;text-decoration:none;color:#123e54;font-weight:900}
+@media(max-width:800px){.quizlet{grid-template-columns:1fr}.side{display:grid;grid-template-columns:repeat(3,1fr)}.hint{display:none}.card{height:280px}.front .word{font-size:32px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<section class="hero"><span>HOMEWORK · 22 SEPTEMBER 2026</span><h1>Elections · EGE Vocabulary</h1><p>Quizlet-style cards. Listen to the word or phrase on the front, then flip for translation, meaning and example.</p></section>
+<section class="board">
+<div class="quizlet">
+<div class="card" id="card" onclick="flipCard()">
+<button class="sound" onclick="event.stopPropagation();speakCard()" aria-label="Listen">🔊</button>
+<div class="front"><div class="word" id="word"></div></div>
+<div class="back"><div class="translation" id="translation"></div><div class="meaning" id="meaning"></div><div class="example" id="example"></div></div>
+<div class="counter" id="counter"></div>
+</div>
+<div class="side">
+<button class="btn flip" onclick="flipCard()">Flip</button>
+<button class="btn" id="backBtn" onclick="prevCard()">← Back</button>
+<button class="btn" id="nextBtn" onclick="nextCard()">Next →</button>
+<div class="hint">Audio is only on the English side. Say the phrase aloud before you flip the card.</div>
+</div>
+</div>
+<a class="backlink" href="index.html">← Back to Nikita Homework</a>
+</section>
+</main>
+<script>
+const cards=[
+['election','выборы','a formal process of choosing a person for a public position','The election will take place in September.'],
+['to vote','голосовать','to choose a candidate or option in an election','Citizens vote for their preferred candidate.'],
+['cast a vote','отдать голос / проголосовать','to formally record your choice in an election','Millions of citizens cast their votes on election day.'],
+['voter','избиратель','a person who has the right to vote','Every voter receives a ballot paper.'],
+['candidate','кандидат','a person who is standing in an election','Each candidate presents a programme to voters.'],
+['stand for election','баллотироваться','to be a candidate in an election','She decided to stand for election.'],
+['be eligible to vote','иметь право голосовать','to meet the legal conditions for voting','Citizens aged 18 or over are generally eligible to vote.'],
+['electoral rights','избирательные права','legal rights connected with voting and being elected','The law protects citizens’ electoral rights.'],
+['polling station','избирательный участок','a place where people go to vote','The polling station opened early in the morning.'],
+['voting booth','кабина для голосования','a private place where a voter marks a ballot','The voter entered the voting booth.'],
+['ballot paper','избирательный бюллетень','the paper used to record a vote','She marked the ballot paper privately.'],
+['ballot box','урна для голосования','a sealed container for completed ballots','The voter put the ballot into the ballot box.'],
+['secret ballot','тайное голосование','a voting system in which a person’s choice is private','The election is held by secret ballot.'],
+['voter turnout','явка избирателей','the percentage or number of eligible voters who vote','Voter turnout was higher than expected.'],
+['election results','результаты выборов','the official outcome of an election','The election results were announced the next day.'],
+['referendum','референдум','a direct vote in which citizens decide a specific question','The issue was put to a national referendum.'],
+['nominate a candidate','выдвинуть кандидата','to officially propose someone as a candidate','The party nominated a candidate for the election.'],
+['self-nomination','самовыдвижение','becoming a candidate without being nominated by a political party','The law may allow self-nomination in some elections.']
+];
+let i=0;
+function render(){const x=cards[i];card.classList.remove('flipped');word.textContent=x[0];translation.textContent=x[1];meaning.textContent=x[2];example.textContent=x[3];counter.textContent=(i+1)+' / '+cards.length;backBtn.disabled=i===0;nextBtn.disabled=i===cards.length-1}
+function flipCard(){card.classList.toggle('flipped')}
+function prevCard(){if(i>0){i--;render()}}
+function nextCard(){if(i<cards.length-1){i++;render()}}
+function speakCard(){if(!('speechSynthesis' in window)||card.classList.contains('flipped'))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(cards[i][0]);u.lang='en-GB';u.rate=.86;speechSynthesis.speak(u)}
+render();
+</script>
+</body></html>
