@@ -30,6 +30,22 @@ header{background:#fff;border-bottom:1px solid var(--line);padding:12px 18px;dis
 .questions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.dq{border:1px solid var(--line);border-radius:12px;padding:10px;background:#f9fcfe;font-size:13px;line-height:1.35}
 .quizgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.q{background:#fff;border:1px solid var(--line);border-radius:15px;padding:12px}.q p{margin:0 0 8px;font-weight:800;line-height:1.35}.opts{display:flex;flex-wrap:wrap;gap:6px}.opt{border:1px solid #cddde6;background:#f8fcfe;border-radius:9px;padding:7px 9px;cursor:pointer;font-weight:700;font-size:13px}.opt.selected{outline:2px solid #6da8cf}.opt.correct{background:#dff5e7;border-color:#77bf8c;outline:0}.opt.wrong{background:#ffe3e3;border-color:#df8585;outline:0}
 .actions{display:flex;align-items:center;gap:8px;margin-top:12px}.actions button{border:0;border-radius:10px;padding:9px 14px;font-weight:900;cursor:pointer}.check{background:var(--navy);color:#fff}.reset{background:#e7f0f5;color:var(--navy)}#result{font-weight:900;color:var(--navy)}
+.quizlet-wrap{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 8px 22px rgba(24,65,88,.06)}
+.quizlet-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.quizlet-head h3{margin:0;color:var(--navy);font-size:19px}
+.quizlet-tools{display:flex;gap:6px}
+.quizlet-tools button{width:30px;height:30px;border:1px solid #d6e4ec;background:#fff;border-radius:9px;cursor:pointer;font-size:14px}
+.flashcard-shell{perspective:1000px}
+.quizlet-card{height:260px;position:relative;transform-style:preserve-3d;transition:transform .45s;cursor:pointer}
+.quizlet-card.flipped{transform:rotateY(180deg)}
+.qface{position:absolute;inset:0;border:1px solid #d8e5ec;border-radius:18px;background:#fff;display:flex;align-items:center;justify-content:center;padding:24px;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 8px 22px rgba(24,65,88,.07);text-align:center}
+.qface.front{font-size:34px;font-weight:900;color:#173b66}
+.qface.back{transform:rotateY(180deg);flex-direction:column;gap:10px}
+.qface.back .translation{font-size:24px;font-weight:900;color:#173b66}
+.qface.back .example{font-size:14px;color:#60727f;line-height:1.45}
+.quizlet-nav{display:grid;grid-template-columns:1fr auto auto auto 1fr;align-items:center;gap:8px;margin-top:10px}
+.quizlet-nav button{border:1px solid #d4e1e9;background:#fff;border-radius:10px;padding:8px 10px;font-weight:900;color:#214a68;cursor:pointer}
+.quizlet-nav .prev{justify-self:end}.quizlet-nav .next{justify-self:start}.quizlet-counter{font-size:13px;font-weight:900;color:#5e7180;min-width:58px;text-align:center}
 .credit{font-size:10px;color:#7a8992;margin-top:8px;text-align:right}
 @media(max-width:1050px){.generations{grid-template-columns:repeat(3,1fr)}.gen img{height:210px}}
 @media(max-width:760px){body{overflow:auto}.app{height:auto;min-height:100dvh}.stage{overflow:visible}.generations{grid-template-columns:1fr 1fr}.cols,.quizgrid{grid-template-columns:1fr}.gen img{height:230px}.vocab{grid-template-columns:1fr}.questions{grid-template-columns:1fr}}
@@ -87,19 +103,29 @@ header{background:#fff;border-bottom:1px solid var(--line);padding:12px 18px;dis
 <section class="panel" id="language">
   <div class="intro"><div><h2>Useful Language</h2><p>Language from your cheat sheet, rebuilt as usable study material.</p></div></div>
   <div class="cols">
-    <div class="card">
-      <h3>Vocabulary</h3>
-      <div class="vocab">
-        <b>tech-savvy</b><span>good at using technology</span>
-        <b>open-minded</b><span>willing to consider new ideas</span>
-        <b>career-driven</b><span>strongly focused on professional success</span>
-        <b>financially independent</b><span>able to support yourself financially</span>
-        <b>traditional</b><span>preferring established ideas or customs</span>
-        <b>adaptable</b><span>able to change easily when circumstances change</span>
-        <b>socially conscious</b><span>concerned about social and environmental issues</span>
-        <b>competitive</b><span>wanting to be more successful than others</span>
-        <b>independent</b><span>able to make decisions without relying on others</span>
-        <b>digital native</b><span>familiar with digital technology from childhood</span>
+    <div class="quizlet-wrap">
+      <div class="quizlet-head">
+        <h3>Vocabulary · Quizlet Cards</h3>
+        <div class="quizlet-tools">
+          <button title="Sound" onclick="event.stopPropagation();speakCurrent()">🔊</button>
+          <button title="Favourite" onclick="event.stopPropagation();toggleFav(this)">☆</button>
+        </div>
+      </div>
+      <div class="flashcard-shell">
+        <div class="quizlet-card" id="generationFlashcard" onclick="flipGenerationCard()">
+          <div class="qface front" id="generationFront">tech-savvy</div>
+          <div class="qface back">
+            <div class="translation" id="generationTranslation">технически подкованный</div>
+            <div class="example" id="generationExample">Gen Z is often described as tech-savvy.</div>
+          </div>
+        </div>
+      </div>
+      <div class="quizlet-nav">
+        <button class="prev" onclick="event.stopPropagation();prevGenerationCard()">←</button>
+        <button onclick="event.stopPropagation();autoPlayCards()" title="Play">▶</button>
+        <div class="quizlet-counter" id="generationCounter">1 / 10</div>
+        <button onclick="event.stopPropagation();flipGenerationCard()" title="Flip">↻</button>
+        <button class="next" onclick="event.stopPropagation();nextGenerationCard()">→</button>
       </div>
     </div>
     <div>
@@ -162,6 +188,46 @@ header{background:#fff;border-bottom:1px solid var(--line);padding:12px 18px;dis
 </div>
 </div>
 <script>
+const generationCards=[
+  {en:'tech-savvy',ru:'технически подкованный',ex:'Gen Z is often described as tech-savvy.'},
+  {en:'open-minded',ru:'непредубеждённый, открытый новому',ex:'Younger people are often seen as more open-minded.'},
+  {en:'career-driven',ru:'ориентированный на карьеру',ex:'Some Millennials are highly career-driven.'},
+  {en:'financially independent',ru:'финансово независимый',ex:'Many young adults want to become financially independent.'},
+  {en:'traditional',ru:'традиционный, консервативный',ex:'Older generations may have more traditional views.'},
+  {en:'adaptable',ru:'легко приспосабливающийся',ex:'Generation X is often described as adaptable.'},
+  {en:'socially conscious',ru:'социально ответственный',ex:'Many young people are socially conscious.'},
+  {en:'competitive',ru:'конкурентный, стремящийся победить',ex:'A competitive environment can influence career choices.'},
+  {en:'independent',ru:'независимый',ex:'Generation X is often associated with independence.'},
+  {en:'digital native',ru:'цифровой абориген',ex:'A digital native has grown up using digital technology.'}
+];
+let generationCardIndex=0,generationTimer=null;
+function renderGenerationCard(){
+  const d=generationCards[generationCardIndex];
+  const card=document.getElementById('generationFlashcard');
+  if(!card)return;
+  card.classList.remove('flipped');
+  document.getElementById('generationFront').textContent=d.en;
+  document.getElementById('generationTranslation').textContent=d.ru;
+  document.getElementById('generationExample').textContent=d.ex;
+  document.getElementById('generationCounter').textContent=(generationCardIndex+1)+' / '+generationCards.length;
+}
+function flipGenerationCard(){document.getElementById('generationFlashcard')?.classList.toggle('flipped')}
+function nextGenerationCard(){generationCardIndex=(generationCardIndex+1)%generationCards.length;renderGenerationCard()}
+function prevGenerationCard(){generationCardIndex=(generationCardIndex-1+generationCards.length)%generationCards.length;renderGenerationCard()}
+function speakCurrent(){
+  if(!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(generationCards[generationCardIndex].en);
+  u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u);
+}
+function toggleFav(btn){btn.textContent=btn.textContent==='☆'?'★':'☆'}
+function autoPlayCards(){
+  if(generationTimer){clearInterval(generationTimer);generationTimer=null;return}
+  speakCurrent();
+  generationTimer=setInterval(()=>{nextGenerationCard();speakCurrent()},3000);
+}
+renderGenerationCard();
+
 document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
