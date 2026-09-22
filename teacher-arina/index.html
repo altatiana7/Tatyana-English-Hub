@@ -4,19 +4,30 @@
 <style>
 :root{--ink:#3f3650;--teal:#9b72cf;--teal2:#6f4aa8;--paper:#f7f2fb;--line:#e5d9f0;--gold:#d3b36a;--coral:#c88aa8}
 *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:linear-gradient(135deg,#f1e8f8,#fff 48%,#f8f3fb);color:var(--ink)}
-button,a{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:235px minmax(0,1fr) 285px;gap:10px;padding:10px}
+button,a{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:220px minmax(0,1fr) 360px;gap:10px;padding:10px}
 .panel{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 10px 30px #654b7d14;overflow:hidden}.left,.right{height:calc(100vh - 20px);overflow:auto}
 .brand{padding:18px;border-bottom:1px solid var(--line)}.brand b{font-size:21px;color:var(--teal2)}.brand small{display:block;margin-top:4px;color:#8d7a9b}.nav{padding:9px}.nav button{width:100%;border:0;background:transparent;text-align:left;padding:11px;border-radius:11px;color:var(--ink);font-weight:700;cursor:pointer}.nav button:hover,.nav button.active{background:#f1e7f8;color:var(--teal2)}.nav button.locked,.week>button:disabled,.subbtn.locked{opacity:.42;cursor:not-allowed;background:#f4f6f7;color:#8fa0a8}.lock{font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#9aaab1}.week.locked{opacity:.68;background:#fafbfb}
 .main{height:calc(100vh - 20px);overflow:auto;padding:26px}.hero{min-height:260px;border-radius:22px;padding:30px;background:linear-gradient(125deg,#6f4aa8,#9b72cf 58%,#c4a8e6);color:white;position:relative;overflow:hidden}.hero:after{content:"A";position:absolute;right:20px;bottom:-62px;font:900 250px/1 Georgia,serif;color:#ffffff16}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:900}.hero h1{font-size:44px;line-height:1;margin:12px 0}.hero p{max-width:580px;font-size:17px;line-height:1.45}.chips{display:flex;gap:8px;flex-wrap:wrap}.chip{background:#ffffff22;border:1px solid #ffffff55;border-radius:999px;padding:7px 11px;font-size:12px}
 .section{margin-top:18px}.section h2{font-size:22px}.week{border:1px solid var(--line);border-radius:15px;margin:9px 0;background:#fff;overflow:hidden}.week>button{width:100%;border:0;background:#fff;padding:15px;display:flex;justify-content:space-between;text-align:left;cursor:pointer}.week strong{color:var(--teal2)}.inside{display:none;padding:0 15px 15px}.week.open .inside{display:block}.task{padding:10px 12px;background:var(--paper);border-radius:10px;margin-top:7px}.tag{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#8d7a9b;font-weight:900}
 .right{padding:14px}.right h3{margin:5px 4px 12px}.card{border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:9px;background:#fff}.card b{display:block;margin-bottom:5px}.score{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px dashed #eadff1}.score:last-child{border:0}.pill{font-weight:900;color:var(--teal2)}.action{display:block;text-decoration:none;text-align:center;padding:11px;border-radius:11px;background:var(--teal);color:white;font-weight:800;margin-top:8px}.action.alt{background:#f3ebf8;color:var(--teal2);border:1px solid var(--line)}
-.view{display:none}.view.active{display:block}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tile{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}.tile h3{margin:0 0 8px}.subbtn{border:1px solid var(--line);background:var(--paper);padding:8px 10px;border-radius:9px;margin:4px 3px 0 0;cursor:pointer}.note{font-size:12px;color:#85758f;line-height:1.45}
+.view{display:none}
+.dash{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:10px}.span4{grid-column:span 4}.span6{grid-column:span 6}.span8{grid-column:span 8}.span12{grid-column:1/-1}
+.metric{border:1px solid var(--line);border-radius:15px;padding:14px;background:#fff}.metric .k{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#8d7a9b;font-weight:900}.metric .v{font-size:27px;font-weight:900;color:var(--teal2);margin-top:4px}.bar{height:8px;background:#eee7f2;border-radius:99px;overflow:hidden;margin-top:8px}.bar>i{display:block;height:100%;background:var(--teal);border-radius:99px}
+.checkline{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px}.checkline:last-child{border:0}.checkline input{margin-top:3px}
+.lessonPlan{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.lessonCard{border:1px solid var(--line);border-radius:13px;padding:12px;background:var(--paper)}.lessonCard h4{margin:4px 0 6px}
+.miniTable{width:100%;border-collapse:collapse;font-size:12px}.miniTable th,.miniTable td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left}.miniTable th{color:#8d7a9b;font-size:10px;text-transform:uppercase}
+.editField{width:100%;border:1px solid var(--line);border-radius:9px;padding:8px;background:#fff;color:var(--ink);font:inherit}.smallbtn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 8px;cursor:pointer;font-weight:800}
+.right .card h4{margin:0 0 8px}.right .mini{font-size:11px;color:#85758f}.right .rightbar{margin:7px 0}.right .rightbar b{font-size:11px;margin:0 0 3px}.right .rightbar .bar{margin-top:3px}
+.quickLinks{display:grid;grid-template-columns:1fr 1fr;gap:6px}.quickLinks a{display:block;text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:8px;background:var(--paper);color:var(--ink);font-size:11px;font-weight:800}
+.view.active{display:block}.view.active{display:block}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.tile{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff}.tile h3{margin:0 0 8px}.subbtn{border:1px solid var(--line);background:var(--paper);padding:8px 10px;border-radius:9px;margin:4px 3px 0 0;cursor:pointer}.note{font-size:12px;color:#85758f;line-height:1.45}
 
 .quizWrap{max-width:860px;margin:0 auto}.quizTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}.quizTop h1{margin:4px 0 6px}.quizQ{border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:9px 0;background:#fff}.quizQ b{display:block;margin-bottom:9px}.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid #e5d9f0;background:#fbf8fd;border-radius:10px;padding:9px 10px;cursor:pointer}.opt:hover{border-color:#bfa0df}.opt input{margin-top:3px}.submitTest{border:0;border-radius:11px;background:var(--teal);color:white;font-weight:900;padding:12px 18px;cursor:pointer;margin-top:10px}.testMsg{font-size:13px;color:#6e8792;margin-top:8px}.resultBox{display:none;margin:14px 0 20px;border:1px solid #d8c4e8;background:#f7f0fb;border-radius:14px;padding:16px}.resultBox.show{display:block}.resultScore{font-size:28px;font-weight:900;color:var(--teal2);margin:6px 0}.resultCode{font-size:32px;font-weight:900;letter-spacing:.16em;color:var(--teal2);margin:8px 0}
-@media(max-width:900px){.app{grid-template-columns:190px 1fr}.right{display:none}.hero h1{font-size:34px}}@media(max-width:620px){.opts{grid-template-columns:1fr}.quizTop{display:block}.app{display:block;padding:6px}.left{height:auto;margin-bottom:6px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;width:auto}.main{height:auto;padding:14px}.grid{grid-template-columns:1fr}.hero{min-height:220px}}
+@media(max-width:1050px){.app{grid-template-columns:190px 1fr}.right{display:none}.hero h1{font-size:34px}}@media(max-width:760px){.dash{grid-template-columns:1fr}.span4,.span6,.span8,.span12{grid-column:1}.lessonPlan{grid-template-columns:1fr}.opts{grid-template-columns:1fr}.quizTop{display:block}.app{display:block;padding:6px}.left{height:auto;margin-bottom:6px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;width:auto}.main{height:auto;padding:14px}.grid{grid-template-columns:1fr}.hero{min-height:220px}}
 </style></head><body><div class="app">
 <aside class="panel left"><div class="brand"><b>TATYANA • ARINA EGE</b><small>Teacher hub • full access</small></div><div class="nav">
-<button class="active" data-v="home">Главная</button>
+<button class="active" data-v="home">Dashboard</button>
+<button data-v="progress">Progress</button>
+<button data-v="roadmap">8-week Roadmap</button>
 <button data-v="weeks">Week 1</button>
 <button data-v="week2">Week 2</button>
 <button data-v="week3">Week 3</button>
@@ -25,12 +36,73 @@ button,a{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:2
 <button data-v="week6">Week 6</button>
 <button data-v="week7">Week 7</button>
 <button data-v="week8">Week 8</button>
+<button data-v="results">Tests & Results</button>
+<button data-v="egemap">EGE Map</button>
 <button data-v="reference">Reference Materials</button>
 <button data-v="trainers">Trainers</button>
 </div></aside>
 <main class="panel main">
-<section id="home" class="view active"><div class="hero"><div class="eyebrow">Teacher Hub • 2026/27</div><h1>Arina • Teacher Control</h1><p>Полная учительская версия: все недели, материалы, тренажёры, практика и тесты доступны заранее.</p><div class="chips"><span class="chip">Goal: high score</span><span class="chip">3 lessons / week</span><span class="chip">EGE 2027</span></div></div>
-<div class="section"><h2>Сейчас в работе</h2><div class="grid"><div class="tile"><div class="tag">Week 1</div><h3>Present Tenses + Irregular Verbs</h3><p>Повторяем Present Tenses и закрепляем формы неправильных глаголов.</p><button class="subbtn" onclick="show('weeks')">Открыть Week 1 →</button></div><div class="tile"><div class="tag">Week 1 tools</div><h3>Reference + Trainers</h3><p>Справочный материал и тренажёры доступны отдельно, но только по уже открытой теме.</p><button class="subbtn" onclick="show('reference')">Reference</button><button class="subbtn" onclick="show('trainers')">Trainers</button></div></div></div></section>
+<section id="home" class="view active">
+<div class="hero"><div class="eyebrow">Teacher Control Center • 2026/27</div><h1>Arina • EGE Dashboard</h1><p>Диагностика, недельный план, прогресс, слабые зоны, тесты, тренажёры и вся методическая база — в одном месте.</p><div class="chips"><span class="chip">3 × 60 min / week</span><span class="chip">Current: Week 1</span><span class="chip">Target: high score</span></div></div>
+<div class="section"><div class="dash">
+<div class="metric span4"><div class="k">Current stage</div><div class="v">Week 1</div><div class="note">Present Tenses + Irregular Verbs</div></div>
+<div class="metric span4"><div class="k">Course progress</div><div class="v"><span id="overallPct">12</span>%</div><div class="bar"><i id="overallBar" style="width:12%"></i></div></div>
+<div class="metric span4"><div class="k">Lessons per week</div><div class="v">3 × 60</div><div class="note">Grammar • EGE skill • controlled practice</div></div>
+
+<div class="tile span8"><div class="tag">This week</div><h3>Detailed 3-lesson plan</h3><div class="lessonPlan">
+<div class="lessonCard"><div class="tag">Lesson 1</div><h4>Irregular Verbs</h4><p>Диагностика форм → группы глаголов → trainer → 5-min retrieval.</p><label class="checkline"><input type="checkbox" data-track="l1"> completed</label></div>
+<div class="lessonCard"><div class="tag">Lesson 2</div><h4>Present Simple vs Continuous</h4><p>Form/markers → contrast → EGE-style transformations → error clinic.</p><label class="checkline"><input type="checkbox" data-track="l2"> completed</label></div>
+<div class="lessonCard"><div class="tag">Lesson 3</div><h4>Perfect vs PPC</h4><p>Result vs duration → mixed practice → mini test → homework.</p><label class="checkline"><input type="checkbox" data-track="l3"> completed</label></div>
+</div></div>
+
+<div class="tile span4"><div class="tag">Teacher focus</div><h3>Weak spots to watch</h3>
+<label class="checkline"><input type="checkbox" data-track="weak1"> V2 / V3 confusion</label>
+<label class="checkline"><input type="checkbox" data-track="weak2"> tense markers</label>
+<label class="checkline"><input type="checkbox" data-track="weak3"> Perfect vs PPC</label>
+<label class="checkline"><input type="checkbox" data-track="weak4"> slow retrieval under time pressure</label>
+</div>
+
+<div class="tile span6"><div class="tag">Control points</div><h3>Week 1 sequence</h3>
+<table class="miniTable"><thead><tr><th>Stage</th><th>Tool</th><th>Status</th></tr></thead><tbody>
+<tr><td>Reference</td><td>Present Tenses summary</td><td>Ready</td></tr>
+<tr><td>Trainer</td><td>Irregular Verbs</td><td>Ready</td></tr>
+<tr><td>Practice</td><td>Mixed Present</td><td>Ready</td></tr>
+<tr><td>Final Test</td><td>12 questions + teacher code</td><td>Ready</td></tr>
+</tbody></table></div>
+
+<div class="tile span6"><div class="tag">Teacher notes</div><h3>After-lesson notes</h3>
+<textarea id="teacherNotes" class="editField" rows="7" placeholder="Ошибки, что повторить, что дать на следующем занятии..."></textarea>
+<div style="margin-top:7px"><button class="smallbtn" type="button" onclick="saveTeacherNotes()">Save notes</button> <span id="notesSaved" class="note"></span></div></div>
+</div></div></section><section id="progress" class="view"><h1>Progress Tracker</h1><p class="note">Отмечайте фактический уровень по каждому блоку. Данные сохраняются на этом устройстве.</p><div class="dash">
+<div class="tile span6"><div class="tag">Grammar 19–24</div><h3>Present/Past/Future, forms & transformations</h3><input class="editField progInput" data-prog="0" type="range" min="0" max="100" step="5"><div><b class="progValue" data-progval="0">0%</b></div></div><div class="tile span6"><div class="tag">Word Formation 25–29</div><h3>prefixes, suffixes, parts of speech</h3><input class="editField progInput" data-prog="1" type="range" min="0" max="100" step="5"><div><b class="progValue" data-progval="1">0%</b></div></div><div class="tile span6"><div class="tag">Vocabulary 30–36</div><h3>collocations, phrasal verbs, context</h3><input class="editField progInput" data-prog="2" type="range" min="0" max="100" step="5"><div><b class="progValue" data-progval="2">0%</b></div></div><div class="tile span6"><div class="tag">Reading 10–18</div><h3>matching + multiple choice</h3><input class="editField progInput" data-prog="3" type="range" min="0" max="100" step="5"><div><b class="progValue" data-progval="3">0%</b></div></div><div class="tile span6"><div class="tag">Listening 1–9</div><h3>matching + multiple choice</h3><input class="editField progInput" data-prog="4" type="range" min="0" max="100" step="5"><div><b class="progValue" data-progval="4">0%</b></div></div><div class="tile span6"><div class="tag">Writing 37–38</div><h3>email + data essay</h3><input class="editField progInput" data-prog="5" type="range" min="0" max="100" step="5"><div><b class="progValue" data-progval="5">0%</b></div></div><div class="tile span6"><div class="tag">Speaking 39–42</div><h3>reading, questions, interview, photo project</h3><input class="editField progInput" data-prog="6" type="range" min="0" max="100" step="5"><div><b class="progValue" data-progval="6">0%</b></div></div>
+</div></section>
+
+<section id="roadmap" class="view"><h1>8-week Roadmap</h1><p class="note">Рабочий план на 3 занятия в неделю. Его можно корректировать после каждой диагностики.</p><div class="grid">
+<div class="tile"><div class="tag">Week 1 • current</div><h3>Present + Irregular Verbs</h3><p>L1 irregular verbs • L2 Simple/Continuous • L3 Perfect/PPC • trainer • practice • final test.</p></div>
+<div class="tile"><div class="tag">Week 2</div><h3>Past Tenses + Grammar 19–24</h3><p>L1 Past Simple/Continuous • L2 Past Perfect • L3 mixed EGE grammar + test.</p></div>
+<div class="tile"><div class="tag">Week 3</div><h3>Future / Passive / Modals</h3><p>Form control, transformations, common traps, timed grammar set.</p></div>
+<div class="tile"><div class="tag">Week 4</div><h3>Word Formation 25–29</h3><p>Parts of speech, affixes, negative prefixes, continuous-text practice.</p></div>
+<div class="tile"><div class="tag">Week 5</div><h3>Reading 10–18</h3><p>Matching strategy, distractors, evidence finding, timed reading.</p></div>
+<div class="tile"><div class="tag">Week 6</div><h3>Listening 1–9</h3><p>Prediction, distractor control, note-taking, timed listening sets.</p></div>
+<div class="tile"><div class="tag">Week 7</div><h3>Writing 37–38</h3><p>Email criteria, data essay structure, language bank, timed writing.</p></div>
+<div class="tile"><div class="tag">Week 8</div><h3>Speaking 39–42 + Mini Mock</h3><p>Timers, automaticity, interview/photo project, mixed mini mock and review.</p></div>
+</div></section>
+
+<section id="results" class="view"><h1>Tests & Results</h1><div class="grid">
+<div class="tile"><div class="tag">Week 1</div><h3>Present Tenses + Irregular Verbs</h3><p>12 questions • result code workflow.</p><button class="subbtn" type="button" onclick="show('presentTest')">Open teacher copy</button></div>
+<div class="tile"><div class="tag">Result log</div><h3>Manual score history</h3><div id="resultLog"></div><div style="display:grid;grid-template-columns:1fr 100px;gap:6px;margin-top:8px"><input id="resultName" class="editField" placeholder="Test name"><input id="resultScore" class="editField" placeholder="%"></div><button class="smallbtn" type="button" onclick="addResult()">Add result</button></div>
+</div></section>
+
+<section id="egemap" class="view"><h1>EGE Map</h1><div class="grid">
+<div class="tile"><h3>Listening 1–9</h3><p>Matching • multiple choice • distractors • timing.</p></div>
+<div class="tile"><h3>Reading 10–18</h3><p>Headings / matching / multiple choice • evidence-based reading.</p></div>
+<div class="tile"><h3>Grammar 19–24</h3><p>Grammar transformations in continuous text.</p></div>
+<div class="tile"><h3>Word Formation 25–29</h3><p>Required change of the source word in brackets.</p></div>
+<div class="tile"><h3>Vocabulary 30–36</h3><p>Context, collocations, phrasal verbs, lexical choice.</p></div>
+<div class="tile"><h3>Writing 37–38</h3><p>Email + data-based essay: structure, criteria, error bank.</p></div>
+<div class="tile"><h3>Speaking 39–42</h3><p>Reading aloud • direct questions • interview • photo project.</p></div>
+<div class="tile"><h3>Mock Exams</h3><p>Section mocks → mixed mini mocks → full timed simulation.</p></div>
+</div></section>
 <section id="weeks" class="view"><h1>Week 1</h1><p class="note">Каждую неделю сначала открываем материалы, затем Practice, затем итоговый Test. Следующая неделя станет активной после проверки.</p>
 <div class="week open"><button><span><strong>Week 1</strong> • Present Tenses & Irregular Verbs</span><span>⌄</span></button><div class="inside">
 <div class="task"><span class="tag">Reference material</span><br><b>Present Tenses + Irregular Verbs</b><br>Краткие правила, маркеры времени и таблица форм.<br><button class="subbtn" type="button" onclick="show('reference')">Open reference →</button></div>
@@ -117,9 +189,40 @@ button,a{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:2
 </section>
 
 </main>
-<aside class="panel right"><h3>ЕГЭ 2027 • структура</h3><div class="card"><b>42 задания • 82 первичных</b><div class="score"><span>Listening 1–9</span><span class="pill">12</span></div><div class="score"><span>Reading 10–18</span><span class="pill">12</span></div><div class="score"><span>Grammar & Lexis 19–36</span><span class="pill">18</span></div><div class="score"><span>Writing 37–38</span><span class="pill">20</span></div><div class="score"><span>Speaking 39–42</span><span class="pill">20</span></div></div>
-<div class="card"><b>Развёрнутые задания</b><div class="score"><span>37 • Email</span><span class="pill">6</span></div><div class="score"><span>38 • Essay</span><span class="pill">14</span></div><div class="score"><span>39 • Reading</span><span class="pill">1</span></div><div class="score"><span>40 • Questions</span><span class="pill">4</span></div><div class="score"><span>41 • Interview</span><span class="pill">5</span></div><div class="score"><span>42 • Photo project</span><span class="pill">10</span></div></div>
-<a class="action" href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener">Пробная версия ЕГЭ 2027</a><a class="action alt" href="https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege" target="_blank" rel="noopener">Открытый банк ФИПИ</a><p class="note">Сейчас опубликован проект КИМ-2027; после утверждения данные на хабе нужно сверить ещё раз.</p></aside>
+<aside class="panel right">
+<h3>Arina • Control Panel</h3>
+<div class="card"><div class="tag">Student snapshot</div><h4>Current status</h4>
+<div class="score"><span>Stage</span><span class="pill">Week 1</span></div>
+<div class="score"><span>Schedule</span><span class="pill">3×60</span></div>
+<div class="score"><span>Main focus</span><span class="pill">Grammar base</span></div>
+<div class="score"><span>Target</span><span class="pill">High score</span></div></div>
+
+<div class="card"><div class="tag">Skill monitor</div><h4>Current estimate</h4>
+<div class="rightbar"><b>Grammar</b><div class="bar"><i style="width:20%"></i></div></div>
+<div class="rightbar"><b>Vocabulary</b><div class="bar"><i style="width:10%"></i></div></div>
+<div class="rightbar"><b>Reading</b><div class="bar"><i style="width:5%"></i></div></div>
+<div class="rightbar"><b>Listening</b><div class="bar"><i style="width:5%"></i></div></div>
+<div class="rightbar"><b>Writing</b><div class="bar"><i style="width:0%"></i></div></div>
+<div class="rightbar"><b>Speaking</b><div class="bar"><i style="width:0%"></i></div></div>
+<div class="mini">Use Progress Tracker for editable percentages.</div></div>
+
+<div class="card"><div class="tag">Next actions</div><h4>Teacher checklist</h4>
+<label class="checkline"><input type="checkbox" data-track="ra1"> finish Present contrast</label>
+<label class="checkline"><input type="checkbox" data-track="ra2"> drill irregular verbs</label>
+<label class="checkline"><input type="checkbox" data-track="ra3"> give Week 1 practice</label>
+<label class="checkline"><input type="checkbox" data-track="ra4"> run final test</label>
+<label class="checkline"><input type="checkbox" data-track="ra5"> analyse mistakes</label>
+</div>
+
+<div class="card"><div class="tag">Quick access</div><h4>Teacher resources</h4><div class="quickLinks">
+<a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener">FIPI Demo</a>
+<a href="https://fipi.ru/ege/otkrytyy-bank-zadaniy-ege" target="_blank" rel="noopener">Open Bank</a>
+<a href="../arina/" target="_blank">Arina site</a>
+<a href="../teacher-calendar/planner-v2.html" target="_blank">Planner</a>
+</div></div>
+
+<div class="card"><div class="tag">Methodology</div><h4>Lesson formula</h4><div class="mini">10 min retrieval → 15 min rule/strategy → 20 min controlled EGE practice → 10 min timed task → 5 min error log/homework.</div></div>
+</aside>
 </div><script>
 function show(id){const target=document.getElementById(id);if(!target)return;document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav button[data-v]').forEach(x=>x.classList.toggle('active',x.dataset.v===id));document.querySelector('main.main').scrollTop=0}
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>show(b.dataset.v));document.querySelectorAll('.week>button').forEach(b=>b.onclick=()=>b.parentElement.classList.toggle('open'));
@@ -142,4 +245,21 @@ async function submitTest(){
     document.getElementById("result").scrollIntoView({behavior:"smooth",block:"center"});
   }catch(e){msg.textContent="Не удалось отправить результат. Попробуй ещё раз."}
 }
+
+const TEACHER_STORE='arina_teacher_hub_v2';
+function teacherState(){try{return JSON.parse(localStorage.getItem(TEACHER_STORE)||'{}')}catch(e){return {}}}
+function saveTeacherState(s){localStorage.setItem(TEACHER_STORE,JSON.stringify(s))}
+function saveTeacherNotes(){const s=teacherState();s.notes=document.getElementById('teacherNotes').value;saveTeacherState(s);document.getElementById('notesSaved').textContent='saved';setTimeout(()=>document.getElementById('notesSaved').textContent='',1200)}
+function loadTeacherDashboard(){
+ const s=teacherState();
+ const notes=document.getElementById('teacherNotes');if(notes)notes.value=s.notes||'';
+ document.querySelectorAll('[data-track]').forEach(el=>{el.checked=!!(s.track&&s.track[el.dataset.track]);el.addEventListener('change',()=>{const x=teacherState();x.track=x.track||{};x.track[el.dataset.track]=el.checked;saveTeacherState(x)})});
+ document.querySelectorAll('.progInput').forEach(el=>{const key=el.dataset.prog;const v=(s.progress&&s.progress[key])||0;el.value=v;const out=document.querySelector('[data-progval="'+key+'"]');if(out)out.textContent=v+'%';el.addEventListener('input',()=>{const x=teacherState();x.progress=x.progress||{};x.progress[key]=Number(el.value);saveTeacherState(x);if(out)out.textContent=el.value+'%';updateOverall()})});
+ renderResults();updateOverall();
+}
+function updateOverall(){const vals=[...document.querySelectorAll('.progInput')].map(x=>Number(x.value||0));if(!vals.length)return;const avg=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);const p=document.getElementById('overallPct'),b=document.getElementById('overallBar');if(p)p.textContent=avg;if(b)b.style.width=avg+'%'}
+function renderResults(){const box=document.getElementById('resultLog');if(!box)return;const rows=(teacherState().results||[]);box.innerHTML=rows.length?'<table class="miniTable"><tbody>'+rows.map(r=>'<tr><td>'+escHtml(r.name)+'</td><td><b>'+escHtml(r.score)+'%</b></td></tr>').join('')+'</tbody></table>':'<div class="note">Пока нет записей.</div>'}
+function addResult(){const n=document.getElementById('resultName'),sc=document.getElementById('resultScore');const name=n.value.trim(),score=Math.max(0,Math.min(100,Number(sc.value)));if(!name||!Number.isFinite(score))return;const s=teacherState();s.results=s.results||[];s.results.unshift({name,score,date:new Date().toISOString()});saveTeacherState(s);n.value='';sc.value='';renderResults()}
+function escHtml(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+setTimeout(loadTeacherDashboard,0);
 </script><script src="irregular-trainer.js?v=20260922"></script></body></html>
