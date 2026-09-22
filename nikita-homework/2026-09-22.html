@@ -25,6 +25,10 @@ body{display:grid;place-items:center}.wrap{width:min(1100px,96vw);padding:16px}
 <main class="wrap">
 <section class="hero"><span>HOMEWORK · 22 SEPTEMBER 2026</span><h1>Elections · EGE Vocabulary</h1><p>Quizlet-style cards. Listen to the word or phrase on the front, then flip for translation, meaning and example.</p></section>
 <section class="board">
+<div style="display:flex;justify-content:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+<button class="btn flip" id="tabElection" onclick="setDeck('election')">Election words</button>
+<button class="btn" id="tabPhrasal" onclick="setDeck('phrasal')">Phrasal verbs</button>
+</div>
 <div class="quizlet">
 <div class="card" id="card" onclick="flipCard()">
 <button class="sound" onclick="event.stopPropagation();speakCard()" aria-label="Listen">🔊</button>
@@ -41,22 +45,8 @@ body{display:grid;place-items:center}.wrap{width:min(1100px,96vw);padding:16px}
 </div>
 
 <section class="section">
-<h2>Phrasal verbs for elections & public debate</h2>
-<p>Useful verbs that can appear in election, news and discussion contexts.</p>
-<div class="phrasal-grid">
-<div class="phrasal-chip"><b>stand for</b> — баллотироваться</div>
-<div class="phrasal-chip"><b>turn out</b> — прийти голосовать / явиться</div>
-<div class="phrasal-chip"><b>step down</b> — уйти с должности</div>
-<div class="phrasal-chip"><b>take over</b> — занять должность / принять управление</div>
-<div class="phrasal-chip"><b>call for</b> — призывать к чему-либо</div>
-<div class="phrasal-chip"><b>put forward</b> — выдвигать идею / кандидата</div>
-<div class="phrasal-chip"><b>carry out</b> — проводить / осуществлять</div>
-<div class="phrasal-chip"><b>bring in</b> — вводить новый закон / правило</div>
-<div class="phrasal-chip"><b>back down</b> — отступить от позиции</div>
-<div class="phrasal-chip"><b>speak out</b> — публично высказаться</div>
-<div class="phrasal-chip"><b>rule out</b> — исключать возможность</div>
-<div class="phrasal-chip"><b>set out</b> — изложить план / позицию</div>
-</div>
+<h2>Vocabulary practice</h2>
+<p>Use the two buttons above the Quizlet card to switch between <b>Election words</b> and <b>Phrasal verbs</b>. Audio stays only on the English side.</p>
 </section>
 
 <section class="section">
@@ -90,7 +80,7 @@ body{display:grid;place-items:center}.wrap{width:min(1100px,96vw);padding:16px}
 </section>
 </main>
 <script>
-const cards=[
+const electionCards=[
 ['election','выборы','a formal process of choosing a person for a public position','The election will take place in September.'],
 ['to vote','голосовать','to choose a candidate or option in an election','Citizens vote for their preferred candidate.'],
 ['cast a vote','отдать голос / проголосовать','to formally record your choice in an election','Millions of citizens cast their votes on election day.'],
@@ -110,7 +100,28 @@ const cards=[
 ['nominate a candidate','выдвинуть кандидата','to officially propose someone as a candidate','The party nominated a candidate for the election.'],
 ['self-nomination','самовыдвижение','becoming a candidate without being nominated by a political party','The law may allow self-nomination in some elections.']
 ];
-let i=0;
+const phrasalCards=[
+['stand for','баллотироваться','to be a candidate in an election','She decided to stand for parliament.'],
+['turn out','прийти голосовать / явиться','to go and take part in an election or public event','Thousands of voters turned out despite the rain.'],
+['step down','уйти с должности','to leave an important job or position','The minister agreed to step down.'],
+['take over','занять должность / принять управление','to begin to have control or responsibility','The new mayor will take over next month.'],
+['call for','призывать к чему-либо','to publicly demand or request something','The group called for stricter campaign rules.'],
+['put forward','выдвинуть кандидата / идею','to formally suggest a person or proposal','The party put forward a new candidate.'],
+['carry out','проводить / осуществлять','to perform or complete an official action','Officials carried out the final checks.'],
+['bring in','вводить новый закон / правило','to introduce a new law, rule or system','The government plans to bring in new regulations.'],
+['back down','отступить от позиции','to stop defending a position after opposition','The candidate refused to back down.'],
+['speak out','публично высказаться','to express an opinion publicly','Several politicians spoke out against the proposal.'],
+['rule out','исключить возможность','to say that something will not happen or be considered','The party has not ruled out a coalition.'],
+['set out','изложить план / позицию','to explain ideas or plans clearly and formally','The candidate set out the main priorities.']
+];
+let cards=electionCards;let i=0;
+function setDeck(type){
+  cards=type==='phrasal'?phrasalCards:electionCards;
+  i=0;
+  tabElection.classList.toggle('flip',type==='election');
+  tabPhrasal.classList.toggle('flip',type==='phrasal');
+  render();
+}
 function render(){const x=cards[i];card.classList.remove('flipped');word.textContent=x[0];translation.textContent=x[1];meaning.textContent=x[2];example.textContent=x[3];counter.textContent=(i+1)+' / '+cards.length;backBtn.disabled=i===0;nextBtn.disabled=i===cards.length-1}
 function flipCard(){card.classList.toggle('flipped')}
 function prevCard(){if(i>0){i--;render()}}
