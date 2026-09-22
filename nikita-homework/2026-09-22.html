@@ -17,7 +17,7 @@ body{display:grid;place-items:center}.wrap{width:min(1100px,96vw);padding:16px}
 .sound{position:absolute;top:14px;left:14px;border:0;background:#eef4f7;border-radius:999px;width:44px;height:44px;font-size:20px;cursor:pointer}.card.flipped .sound{display:none}
 .counter{position:absolute;bottom:13px;left:50%;transform:translateX(-50%);font-size:13px;color:#6c737a;font-weight:850}
 .side{display:flex;flex-direction:column;gap:9px}.btn{border:1px solid #d5dde2;background:#fff;color:#123e54;border-radius:11px;padding:13px 10px;font-weight:900;cursor:pointer}.flip{background:#e9b23b;color:#211707;border-color:#e9b23b}.btn:disabled{opacity:.4}.hint{margin-top:auto;background:#f5efe3;border:1px solid #dfd2bd;border-radius:10px;padding:10px;font-size:11px;color:#62594d;line-height:1.4}
-.backlink{display:inline-block;margin-top:12px;text-decoration:none;color:#123e54;font-weight:900}
+.section{margin-top:14px;background:#fffdfa;border:1px solid #ded8cf;border-radius:18px;padding:16px;box-shadow:0 8px 24px #0001}.section h2{font:800 24px Georgia,serif;color:#123e54;margin:0 0 8px}.section p{margin:0 0 10px;color:#59636d}.phrasal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.phrasal-chip{background:#f5efe3;border:1px solid #dfd2bd;border-radius:10px;padding:9px 10px;font-size:13px}.exercise{margin-top:12px}.ex-row{padding:9px 0;border-bottom:1px solid #ece7df;font-size:14px}.ex-row:last-child{border-bottom:0}.ex-row select,.ex-row input{margin-left:6px;padding:7px 9px;border:1px solid #cbd1d7;border-radius:8px;font:inherit}.check{margin-top:10px;border:0;background:#123e54;color:#fff;border-radius:10px;padding:9px 13px;font-weight:900;cursor:pointer}.result{margin-left:10px;font-weight:900}.good{border-color:#5c9a68!important;background:#eef8f0}.bad{border-color:#b85b63!important;background:#fff1f2}.backlink{display:inline-block;margin-top:12px;text-decoration:none;color:#123e54;font-weight:900}@media(max-width:800px){.phrasal-grid{grid-template-columns:1fr}}
 @media(max-width:800px){.quizlet{grid-template-columns:1fr}.side{display:grid;grid-template-columns:repeat(3,1fr)}.hint{display:none}.card{height:280px}.front .word{font-size:32px}}
 </style>
 </head>
@@ -39,6 +39,53 @@ body{display:grid;place-items:center}.wrap{width:min(1100px,96vw);padding:16px}
 <div class="hint">Audio is only on the English side. Say the phrase aloud before you flip the card.</div>
 </div>
 </div>
+
+<section class="section">
+<h2>Phrasal verbs for elections & public debate</h2>
+<p>Useful verbs that can appear in election, news and discussion contexts.</p>
+<div class="phrasal-grid">
+<div class="phrasal-chip"><b>stand for</b> — баллотироваться</div>
+<div class="phrasal-chip"><b>turn out</b> — прийти голосовать / явиться</div>
+<div class="phrasal-chip"><b>step down</b> — уйти с должности</div>
+<div class="phrasal-chip"><b>take over</b> — занять должность / принять управление</div>
+<div class="phrasal-chip"><b>call for</b> — призывать к чему-либо</div>
+<div class="phrasal-chip"><b>put forward</b> — выдвигать идею / кандидата</div>
+<div class="phrasal-chip"><b>carry out</b> — проводить / осуществлять</div>
+<div class="phrasal-chip"><b>bring in</b> — вводить новый закон / правило</div>
+<div class="phrasal-chip"><b>back down</b> — отступить от позиции</div>
+<div class="phrasal-chip"><b>speak out</b> — публично высказаться</div>
+<div class="phrasal-chip"><b>rule out</b> — исключать возможность</div>
+<div class="phrasal-chip"><b>set out</b> — изложить план / позицию</div>
+</div>
+</section>
+
+<section class="section">
+<h2>Exercise 1 · Choose the phrasal verb</h2>
+<p>Choose the best option for each sentence.</p>
+<div class="exercise" id="ex1">
+<div class="ex-row">1. The candidate decided to <select data-a="stand for"><option value="">— choose —</option><option>step down</option><option>stand for</option><option>back down</option></select> election.</div>
+<div class="ex-row">2. The party plans to <select data-a="put forward"><option value="">— choose —</option><option>put forward</option><option>turn out</option><option>take over</option></select> a new candidate.</div>
+<div class="ex-row">3. Thousands of voters <select data-a="turned out"><option value="">— choose —</option><option>spoke out</option><option>turned out</option><option>stepped down</option></select> despite the bad weather.</div>
+<div class="ex-row">4. The minister refused to <select data-a="back down"><option value="">— choose —</option><option>carry out</option><option>back down</option><option>set out</option></select> after criticism.</div>
+<div class="ex-row">5. The government plans to <select data-a="bring in"><option value="">— choose —</option><option>bring in</option><option>rule out</option><option>speak out</option></select> new election rules.</div>
+<div class="ex-row">6. The president <select data-a="set out"><option value="">— choose —</option><option>set out</option><option>take over</option><option>stand for</option></select> the main priorities in a speech.</div>
+<button class="check" onclick="checkSelectExercise('ex1','res1')">Check</button><span class="result" id="res1"></span>
+</div>
+</section>
+
+<section class="section">
+<h2>Exercise 2 · Complete in context</h2>
+<p>Type the correct phrasal verb. Use the form that fits the sentence.</p>
+<div class="exercise" id="ex2">
+<div class="ex-row">1. Several organisations ________ stricter rules on campaign finance. <input data-a="called for" placeholder="phrasal verb"></div>
+<div class="ex-row">2. The election commission will ________ the final checks before voting begins. <input data-a="carry out" placeholder="phrasal verb"></div>
+<div class="ex-row">3. The opposition leader has ________ corruption several times this year. <input data-a="spoken out against" placeholder="phrasal verb"></div>
+<div class="ex-row">4. After the result, the defeated leader agreed to ________. <input data-a="step down" placeholder="phrasal verb"></div>
+<div class="ex-row">5. The party has not ________ joining a coalition after the election. <input data-a="ruled out" placeholder="phrasal verb"></div>
+<div class="ex-row">6. The new mayor will ________ from the current administration next month. <input data-a="take over" placeholder="phrasal verb"></div>
+<button class="check" onclick="checkInputExercise('ex2','res2')">Check</button><span class="result" id="res2"></span>
+</div>
+</section>
 <a class="backlink" href="index.html">← Back to Nikita Homework</a>
 </section>
 </main>
@@ -69,6 +116,9 @@ function flipCard(){card.classList.toggle('flipped')}
 function prevCard(){if(i>0){i--;render()}}
 function nextCard(){if(i<cards.length-1){i++;render()}}
 function speakCard(){if(!('speechSynthesis' in window)||card.classList.contains('flipped'))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(cards[i][0]);u.lang='en-GB';u.rate=.86;speechSynthesis.speak(u)}
+function norm(s){return (s||'').toLowerCase().trim().replace(/\s+/g,' ')}
+function checkSelectExercise(id,resId){const box=document.getElementById(id),qs=[...box.querySelectorAll('select[data-a]')];let ok=0;qs.forEach(q=>{const good=norm(q.value)===norm(q.dataset.a);q.classList.toggle('good',good);q.classList.toggle('bad',!good);if(good)ok++});document.getElementById(resId).textContent=ok+'/'+qs.length+' correct'}
+function checkInputExercise(id,resId){const box=document.getElementById(id),qs=[...box.querySelectorAll('input[data-a]')];let ok=0;qs.forEach(q=>{const good=norm(q.value)===norm(q.dataset.a);q.classList.toggle('good',good);q.classList.toggle('bad',!good);if(good)ok++});document.getElementById(resId).textContent=ok+'/'+qs.length+' correct'}
 render();
 </script>
 </body></html>
