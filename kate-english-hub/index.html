@@ -59,6 +59,24 @@ button{cursor:pointer}
 .side-bottom{margin-top:auto;display:grid;gap:4px}
 .side-simple{border:0;background:transparent;text-align:left;padding:7px 7px;border-radius:8px;font-weight:700;color:#263238}
 .side-simple:hover{background:#eef4f4}
+.homework-focus{
+  position:relative;background:linear-gradient(135deg,#fff1a8,#ffd85e)!important;
+  color:#4b3a00!important;border:2px solid #f0bd24!important;font-weight:900!important;
+  box-shadow:0 0 0 0 rgba(240,189,36,.45);animation:homeworkPulse 1.8s infinite
+}
+.hw-badge{
+  display:inline-block;margin-left:5px;padding:2px 5px;border-radius:999px;
+  background:#c72b3d;color:#fff;font-size:8px;letter-spacing:.07em;vertical-align:1px
+}
+.today-homework{
+  position:absolute;z-index:6;left:34px;top:96px;width:300px;background:rgba(255,255,255,.96);
+  border:2px solid #f0bd24;border-radius:16px;padding:13px 14px;box-shadow:0 15px 34px rgba(0,0,0,.17)
+}
+.today-homework .eyebrow{font-size:9px;font-weight:900;letter-spacing:.12em;color:#a56d00}
+.today-homework h3{margin:4px 0 3px;font-size:18px;color:#263238}
+.today-homework p{margin:0 0 9px;font-size:11px;line-height:1.35;color:#5c686c}
+.today-homework button{border:0;border-radius:9px;padding:8px 11px;background:#c72b3d;color:#fff;font-weight:900;cursor:pointer}
+@keyframes homeworkPulse{0%,100%{box-shadow:0 0 0 0 rgba(240,189,36,.42)}50%{box-shadow:0 0 0 8px rgba(240,189,36,0)}}
 
 .workspace{position:relative;min-height:100vh;overflow:hidden;background:#253036}
 .photo-bg{
@@ -162,10 +180,10 @@ body.lesson-open{overflow:hidden}
     </div>
 
     <div class="side-bottom">
-      <button class="side-simple" id="extraPracticeBtn" onclick="toggleExtraPractice()">★ Extra Practice ▾</button>
-      <div class="modules-panel" id="extraPracticePanel" style="padding:0 0 4px 6px">
+      <button class="side-simple homework-focus" id="extraPracticeBtn" onclick="toggleExtraPractice()">★ Extra Practice · HOMEWORK ▾</button>
+      <div class="modules-panel open" id="extraPracticePanel" style="padding:0 0 4px 6px">
         <div class="lesson-list open" style="display:grid;padding:3px 4px 4px 4px">
-          <button onclick="openExtraPractice('elections')"><span>Elections in Russia</span><span>›</span></button>
+          <button onclick="openExtraPractice('elections')" style="border:2px solid #efc12c;background:#fffbea"><span>Elections in Russia <b class="hw-badge">HOMEWORK</b></span><span>›</span></button>
         </div>
       </div>
       <button class="side-simple" id="usefulToolsBtn" onclick="toggleUsefulTools()">⚒ Useful Tools ▾</button>
@@ -193,6 +211,13 @@ body.lesson-open{overflow:hidden}
     <div class="welcome">
       <h1>Welcome back, Kate!</h1>
       <p>Same language. A bigger world.</p>
+    </div>
+
+    <div class="today-homework">
+      <div class="eyebrow">TODAY'S HOMEWORK</div>
+      <h3>Elections in Russia</h3>
+      <p>Open Extra Practice and complete the highlighted assignment.</p>
+      <button onclick="openExtraPractice('elections')">START HOMEWORK →</button>
     </div>
 
     <div class="top-note">
