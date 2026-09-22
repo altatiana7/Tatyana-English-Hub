@@ -20,7 +20,14 @@ body{display:grid;place-items:center}.wrap{width:min(1100px,96vw);padding:16px}
 .section{margin-top:14px;background:#fffdfa;border:1px solid #ded8cf;border-radius:18px;padding:16px;box-shadow:0 8px 24px #0001}.section h2{font:800 24px Georgia,serif;color:#123e54;margin:0 0 8px}.section p{margin:0 0 10px;color:#59636d}.phrasal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.phrasal-chip{background:#f5efe3;border:1px solid #dfd2bd;border-radius:10px;padding:9px 10px;font-size:13px}.exercise{margin-top:12px}.ex-row{padding:9px 0;border-bottom:1px solid #ece7df;font-size:14px}.ex-row:last-child{border-bottom:0}.ex-row select,.ex-row input{margin-left:6px;padding:7px 9px;border:1px solid #cbd1d7;border-radius:8px;font:inherit}.check{margin-top:10px;border:0;background:#123e54;color:#fff;border-radius:10px;padding:9px 13px;font-weight:900;cursor:pointer}.result{margin-left:10px;font-weight:900}.good{border-color:#5c9a68!important;background:#eef8f0}.bad{border-color:#b85b63!important;background:#fff1f2}.backlink{display:inline-block;margin-top:12px;text-decoration:none;color:#123e54;font-weight:900}@media(max-width:800px){.phrasal-grid{grid-template-columns:1fr}}
 @media(max-width:800px){.quizlet{grid-template-columns:1fr}.side{display:grid;grid-template-columns:repeat(3,1fr)}.hint{display:none}.card{height:280px}.front .word{font-size:32px}}
 </style>
-</head>
+<script>
+(function(){
+  const p=new URLSearchParams(location.search);
+  if(p.get('open')!=='1'){
+    location.replace('index.html');
+  }
+})();
+</script></head>
 <body>
 <main class="wrap">
 <section class="hero"><span>HOMEWORK · 22 SEPTEMBER 2026</span><h1>Elections · EGE Vocabulary</h1><p>Quizlet-style cards. Listen to the word or phrase on the front, then flip for translation, meaning and example.</p></section>
