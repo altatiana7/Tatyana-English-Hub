@@ -45,8 +45,6 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
 .total-row td{font-weight:900;background:#fcfaf8}
 @media(max-width:900px){.payment-form{grid-template-columns:1fr 1fr 1fr}.payment-form .wide{grid-column:span 2}.student-form{grid-template-columns:1fr 1fr}.summary-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.top{align-items:flex-start;flex-direction:column}.actions{width:100%}.payment-form{grid-template-columns:1fr 1fr}.payment-form .wide{grid-column:1/-1}}
-
-.arina-control{display:grid;grid-template-columns:190px minmax(0,1fr);gap:10px}.arina-side{border:1px solid var(--line);border-radius:12px;padding:8px;background:#fcfaf8}.arina-side button{width:100%;text-align:left;margin-bottom:5px}.arina-side button.active{background:#f3e8f8;color:#7f2aa6}.arina-stage{border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff;min-width:0}.arina-week-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.arina-box{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fcfaf8}.arina-box h4{margin:0 0 5px}.arina-tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.arina-tools button,.arina-tools a{font:inherit;border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 8px;font-weight:800;text-decoration:none;color:var(--text)}.arina-current{background:#edf8f1;border-color:#cfe8d6}@media(max-width:760px){.arina-control{grid-template-columns:1fr}.arina-side{display:flex;overflow:auto}.arina-side button{width:auto;white-space:nowrap}.arina-week-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -71,7 +69,6 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
     <button class="tab" data-panel="payments">Payments</button>
     <button class="tab" data-panel="attendance">Attendance</button>
     <button class="tab" data-panel="notes">Notes</button>
-    <button class="tab" data-panel="arinahub">Arina Hub</button>
     <button class="tab" data-panel="egetests">EGE Tests</button>
   </div>
 
@@ -133,25 +130,7 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
   </section>
   <section id="attendance" class="panel"><div class="notice">Посещаемость сохраняется в резервной и облачной копии планнера.</div></section>
   <section id="notes" class="panel"><div class="card section"><textarea id="notesBox" placeholder="Notes..."></textarea></div></section>
-  <section id="arinahub" class="panel">
-<div class="card section">
-<div class="cardhead">АРИНА • EGE 2027 <small>Teacher copy • all weeks available</small></div>
-<div class="notice" style="margin:10px 0">Ваша рабочая копия: все недели доступны заранее. На ученическом сайте сейчас открыта только Week 1.</div>
-<div class="arina-control">
-<div class="arina-side">
-<button type="button" class="active" data-aw="1" onclick="showArinaWeek(1)">Week 1</button>
-<button type="button" data-aw="2" onclick="showArinaWeek(2)">Week 2</button>
-<button type="button" data-aw="3" onclick="showArinaWeek(3)">Week 3</button>
-<button type="button" data-aw="4" onclick="showArinaWeek(4)">Week 4</button>
-<button type="button" data-aw="5" onclick="showArinaWeek(5)">Week 5</button>
-<button type="button" data-aw="6" onclick="showArinaWeek(6)">Week 6</button>
-<button type="button" data-aw="7" onclick="showArinaWeek(7)">Week 7</button>
-<button type="button" data-aw="8" onclick="showArinaWeek(8)">Week 8</button>
-<button type="button" data-aw="ref" onclick="showArinaTeacherView('ref')">Reference Materials</button>
-<button type="button" data-aw="train" onclick="showArinaTeacherView('train')">Trainers</button>
-</div>
-<div class="arina-stage" id="arinaTeacherStage"></div>
-</div></div></section><section id="egetests" class="panel">
+  <section id="egetests" class="panel">
     <div class="card section">
       <div class="cardhead">ЕГЭ • ПРОВЕРКА ТЕСТОВ <small>Teacher only</small></div>
       <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin:12px 0">
@@ -178,8 +157,7 @@ const DEFAULT_STUDENTS=[
   {id:3,name:'Gabi',time:'12:00',color:'#ffc8bd',level:''},
   {id:4,name:'Катя',time:'',color:'#ead0f6',level:''},
   {id:5,name:'Соня Баш',time:'',color:'#ffe0b5',level:''},
-  {id:6,name:'Тимофей',time:'',color:'#cfe5ff',level:''},
-  {id:7,name:'Арина',time:'',color:'#bfe8f0',level:'EGE 2027'}
+  {id:6,name:'Тимофей',time:'',color:'#cfe5ff',level:''}
 ];
 
 const STORE='tp_schedule_v4';
@@ -471,47 +449,6 @@ function restoreBackup(input){
   const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);applyState(x.state||x);queueCloudSave();setStatus('Восстановлено')}catch(e){alert('Не удалось прочитать файл')}};r.readAsText(file);input.value='';
 }
 
-
-const ARINA_WEEKS={
-1:{title:'Present Tenses + Irregular Verbs',status:'Current',reference:'Present Tenses + irregular verb forms',trainer:'Irregular Verbs Trainer',practice:'Week 1 mixed practice',test:'Present Tenses + Irregular Verbs test with code'},
-2:{title:'Week 2',status:'Teacher planning',reference:'Reference material',trainer:'Trainer',practice:'Practice after Week 2',test:'Final Week 2 test'},
-3:{title:'Week 3',status:'Teacher planning',reference:'Reference material',trainer:'Trainer',practice:'Practice after Week 3',test:'Final Week 3 test'},
-4:{title:'Week 4',status:'Teacher planning',reference:'Reference material',trainer:'Trainer',practice:'Practice after Week 4',test:'Final Week 4 test'},
-5:{title:'Week 5',status:'Teacher planning',reference:'Reference material',trainer:'Trainer',practice:'Practice after Week 5',test:'Final Week 5 test'},
-6:{title:'Week 6',status:'Teacher planning',reference:'Reference material',trainer:'Trainer',practice:'Practice after Week 6',test:'Final Week 6 test'},
-7:{title:'Week 7',status:'Teacher planning',reference:'Reference material',trainer:'Trainer',practice:'Practice after Week 7',test:'Final Week 7 test'},
-8:{title:'Week 8',status:'Teacher planning',reference:'Reference material',trainer:'Trainer',practice:'Practice after Week 8',test:'Final Week 8 test'}
-};
-function setArinaSideActive(v){
- document.querySelectorAll('.arina-side [data-aw]').forEach(function(b){b.classList.toggle('active',String(b.dataset.aw)===String(v));});
-}
-function showArinaWeek(n){
- var w=ARINA_WEEKS[n],stage=document.getElementById('arinaTeacherStage');if(!w||!stage)return;
- setArinaSideActive(n);
- var testAction=n===1?'<button type="button" onclick="openEgeTestsTab()">Check result code</button>':'<button type="button">Prepare test</button>';
- var trainerAction=n===1?'<a href="../arina/" target="_blank">Open student hub</a>':'<button type="button">Prepare trainer</button>';
- stage.innerHTML=
- '<div class="cardhead" style="padding:0 0 10px;border:0"><span>Week '+n+' • '+esc(w.title)+'</span><small>'+esc(w.status)+'</small></div>'+
- '<div class="arina-week-grid">'+
- '<div class="arina-box '+(n===1?'arina-current':'')+'"><h4>Reference material</h4><div>'+esc(w.reference)+'</div><div class="arina-tools"><button type="button">Open / prepare</button></div></div>'+
- '<div class="arina-box '+(n===1?'arina-current':'')+'"><h4>Trainer</h4><div>'+esc(w.trainer)+'</div><div class="arina-tools">'+trainerAction+'</div></div>'+
- '<div class="arina-box '+(n===1?'arina-current':'')+'"><h4>Practice</h4><div>'+esc(w.practice)+'</div><div class="arina-tools"><button type="button">Open / prepare</button></div></div>'+
- '<div class="arina-box '+(n===1?'arina-current':'')+'"><h4>Final test</h4><div>'+esc(w.test)+'</div><div class="arina-tools">'+testAction+'</div></div>'+
- '</div>';
-}
-function openEgeTestsTab(){
- var b=document.querySelector('.tab[data-panel="egetests"]');if(b)b.click();
-}
-function showArinaTeacherView(kind){
- var stage=document.getElementById('arinaTeacherStage');if(!stage)return;
- setArinaSideActive(kind==='ref'?'ref':'train');
- var html='<div class="cardhead" style="padding:0 0 10px;border:0">'+(kind==='ref'?'Reference Materials':'Trainers')+' <small>Teacher library</small></div><div class="arina-week-grid">';
- Object.keys(ARINA_WEEKS).forEach(function(n){
-  var w=ARINA_WEEKS[n],txt=kind==='ref'?w.reference:w.trainer;
-  html+='<div class="arina-box '+(n==='1'?'arina-current':'')+'"><h4>Week '+n+'</h4><div>'+esc(txt)+'</div><div class="arina-tools"><button type="button" onclick="showArinaWeek('+n+')">Open week</button></div></div>';
- });
- stage.innerHTML=html+'</div>';
-}
 async function checkEgeCode(){
   const code=(document.getElementById('egeResultCode').value||'').trim().toUpperCase();
   const status=document.getElementById('egeCheckStatus');
@@ -534,7 +471,6 @@ async function checkEgeCode(){
 
 loadLocal();
 renderSchedule();
-setTimeout(function(){showArinaWeek(1);},0);
 renderStudents();
 const now=new Date();
 const ym=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
