@@ -13,7 +13,7 @@
 <script>
 (()=>{
 'use strict';
-const V='20260923-compact-sharenting-v2',frame=document.getElementById('lesson'),lesson=new URLSearchParams(location.search).get('lesson')||'1';
+const V='20260923-textbook-fit-v3',frame=document.getElementById('lesson'),lesson=new URLSearchParams(location.search).get('lesson')||'1';
 frame.src=`stages-of-life-original.html?v=${V}&lesson=${lesson}`;
 const CSS=`
 :root{--page:#edf5f6;--card:#f9fcfc;--line:#bfd6dd;--navy:#0b3f70;--teal:#0b6578;--muted:#637d8a}
@@ -23,6 +23,44 @@ html,body{background:linear-gradient(145deg,#edf5f6,#f4f8f3 55%,#eaf3f6)!importa
 .combo34{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.8fr);gap:10px}.lava{border:1px solid #efb08c;border-radius:14px;background:linear-gradient(145deg,#fff4e9,#ffe4d4);padding:12px}.lavaTop{display:flex;justify-content:space-between;align-items:center;gap:8px}.lavaLives{font-weight:900;color:#b84b22}.lavaQ{min-height:74px;display:grid;place-items:center;text-align:center;border-radius:11px;background:#fff9f4;padding:10px;margin:8px 0;font-size:18px;font-weight:900;color:#77351c}.lavaBtns{display:grid;grid-template-columns:1fr 1fr;gap:6px}.lavaBtns button{border:0;border-radius:9px;padding:9px;font-weight:900;background:#f4b07d;color:#52230f}.lavaBtns button:nth-child(2){background:#f6cf8d}.lavaFeedback{min-height:34px;text-align:center;font-weight:900;padding:7px}.lavaNext{width:100%;border:0;border-radius:8px;background:#b94c24;color:#fff;padding:8px;font-weight:900}.quote{border-left:4px solid #4da1b2;background:#eaf4f5;border-radius:0 10px 10px 0;padding:11px;font-weight:800;line-height:1.45}.quote input{width:100px;max-width:28%;border:1px solid #acc7cf;border-radius:6px;padding:4px}
 .sideQuiz{position:sticky;top:55px;background:linear-gradient(155deg,#eef7f7,#f5f8ef)}.sideQuiz h2{margin:0 0 7px;color:var(--navy);font-size:19px}.qMeta{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:900}.qText{min-height:80px;display:grid;place-items:center;text-align:center;border:1px solid #d2e2e6;border-radius:12px;background:#fff;padding:10px;margin:7px 0;font-size:18px;font-weight:900}.qAnswers{display:grid;grid-template-columns:1fr 1fr;gap:6px}.qAnswers button{border:0;border-radius:9px;padding:9px;min-height:46px;font-weight:900;background:#dceef1;color:#143e51}.qAnswers button.good{outline:3px solid #55a978}.qAnswers button.bad{outline:3px solid #d96f7d}.qFeed{min-height:34px;text-align:center;font-weight:900;padding:7px}.qNext{width:100%;border:0;border-radius:8px;background:var(--teal);color:#fff;padding:8px;font-weight:900}
 .sharePage{max-width:1180px;margin:auto}.shareGrid{display:grid;grid-template-columns:minmax(270px,.78fr) minmax(0,1.7fr);gap:12px}.shareVisual{min-height:460px;border-radius:17px;background:linear-gradient(145deg,#dcecf1,#eef6ef);display:flex;align-items:center;justify-content:center;padding:18px;text-align:center}.shareVisual h2{font-size:33px;margin:0;color:var(--navy)}.shareVisual p{color:#587583;line-height:1.45}.shareMain{min-height:460px}.shareText{font-size:16px;line-height:1.55;max-height:390px;overflow:auto;padding-right:5px}.shareText p{margin:0 0 12px}.matchGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.matchWord,.matchDef{border:1px solid #c7dbe1;border-radius:9px;background:#f7fbfb;padding:8px}.matchDef select{width:100%;border:1px solid #bcd2da;border-radius:7px;padding:6px;background:#fff}.shareMC{display:grid;grid-template-columns:1fr 1fr;gap:7px}.shareMC .item{min-height:120px}.shareMC .opts{display:grid;grid-template-columns:1fr}.shareMC .opts button{text-align:left}.smallHint{font-size:12px;color:var(--muted);margin:0 0 8px}
+
+/* Celebrity Kids + Family Dinners: picture left, text right, no page scrolling */
+#textbook{height:calc(100vh - 44px)!important;min-height:0!important;overflow:hidden!important;padding:7px 3%!important}
+#textbook>.title{font-size:24px!important;margin:1px 0 2px!important;line-height:1.05!important}
+#textbook>.hint{font-size:11px!important;margin:0 0 4px!important;line-height:1.2!important}
+#textbook .textTabs{margin:4px 0 6px!important;gap:5px!important}
+#textbook .textTabs button{padding:5px 9px!important;font-size:12px!important}
+#textbook .textPane{height:calc(100vh - 126px)!important;overflow:hidden!important}
+#textbook .textbookCard{height:100%!important;max-width:1180px!important;margin:0 auto!important;padding:10px 12px!important;display:grid!important;grid-template-columns:205px minmax(0,1fr)!important;grid-auto-rows:min-content!important;column-gap:14px!important;row-gap:2px!important;align-content:start!important;overflow:hidden!important}
+#textbook .textbookHead{grid-column:2!important;margin:0 0 3px!important;gap:7px!important}
+#textbook .textbookHead h2{font-size:21px!important;line-height:1!important}
+#textbook .textBadge{padding:4px 7px!important;font-size:9px!important}
+#textbook .topicVisual{grid-column:1!important;grid-row:1 / span 20!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:7px!important;margin:0!important;padding:0!important;align-self:stretch!important}
+#textbook .topicVisual img{width:100%!important;height:210px!important;max-height:31vh!important;object-fit:cover!important;border-radius:13px!important;display:block!important}
+#textbook .topicVisual>div{padding:8px!important;border-radius:11px!important;background:#eef6f7!important;font-size:11px!important;line-height:1.25!important}
+#textbook .topicVisual>div b{display:block!important;font-size:12px!important;line-height:1.2!important;margin-bottom:3px!important}
+#textbook .topicVisual>div span{display:block!important;font-size:10px!important;line-height:1.25!important}
+#textbook .textbookCard>p{grid-column:2!important;font-size:clamp(11px,1.25vh,14px)!important;line-height:1.22!important;margin:2px 0!important;color:#24465b!important}
+#textbook .inlineChoice{gap:2px!important;margin:0 1px!important}
+#textbook .inlineChoice button{padding:2px 5px!important;font-size:clamp(10px,1.15vh,13px)!important;line-height:1.15!important}
+#textbook .textCheck{grid-column:2!important;margin-top:3px!important;padding-top:5px!important;gap:5px!important}
+#textbook .textCheck button{padding:5px 9px!important;font-size:11px!important}
+#textbook .textCheck span{font-size:11px!important}
+@media(max-height:720px){
+ #textbook .textbookCard{grid-template-columns:180px minmax(0,1fr)!important;padding:7px 9px!important;column-gap:10px!important}
+ #textbook .topicVisual img{height:155px!important}
+ #textbook .textbookCard>p{font-size:11px!important;line-height:1.16!important;margin:1px 0!important}
+ #textbook .inlineChoice button{font-size:10px!important;padding:1px 4px!important}
+ #textbook .textbookHead h2{font-size:18px!important}
+}
+@media(max-width:760px){
+ #textbook{overflow:auto!important;height:auto!important}
+ #textbook .textPane{height:auto!important;overflow:visible!important}
+ #textbook .textbookCard{height:auto!important;grid-template-columns:125px minmax(0,1fr)!important;overflow:visible!important}
+ #textbook .topicVisual img{height:120px!important}
+ #textbook .textbookCard>p{font-size:11px!important}
+}
+
 @media(max-width:900px){.listenGrid,.shareGrid,.combo34{grid-template-columns:1fr}.sideQuiz{position:static}.people{grid-template-columns:repeat(3,1fr)}.shareMC{grid-template-columns:1fr}}@media(max-width:600px){.top{padding:4px 5px!important;grid-template-columns:repeat(3,max-content) minmax(120px,1fr) max-content!important}.top button,.top select{font-size:11px!important;padding:5px!important}.page{padding:8px!important}.people{grid-template-columns:1fr 1fr}.row,.matchGrid{grid-template-columns:1fr}.qAnswers,.lavaBtns{grid-template-columns:1fr}}
 `;
 const shareText=`<p>Right now a toddler is shouting because he doesn’t want to eat his lunch. What are the parents doing? They’re filming the scene on a smartphone. Soon after, they’re posting the video on social media. A teenage boy is playing a new song on his guitar. His mother is filming him. Two days later, the boy discovers that other people are watching the video online.</p><p>Parents in the UK post approximately 1,000 photos of their children online from when they are born until their fifth birthday, a phenomenon called ‘sharenting’. Babies and toddlers don’t care about this at the time. But a study by the University of Michigan suggests that there is a difference with 10- to 17-year-olds. Teenagers don’t always like parents posting some photos. All babies cry, but adolescents don’t want people to see old photos of themselves doing this.</p>`;
