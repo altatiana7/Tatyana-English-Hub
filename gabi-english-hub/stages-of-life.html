@@ -106,11 +106,11 @@ function fixMenuNumbers(doc){
     listen:'8. Listening Lab',
     use:'9. Final Kahoot Revision'
   };
-  [...sel.options].forEach(o=>{if(labels[o.value])o.textContent=labels[o.value]});
+  [...sel.options].forEach(o=>{const label=labels[o.value];if(label&&o.textContent!==label)o.textContent=label});
 }
 function findShare(doc){return [...doc.querySelectorAll('.page')].find(p=>/Sharenting/i.test(p.textContent||'')&&!/Word Formation/i.test(p.textContent||''))}
 function upgrade(doc){style(doc);fixMenuNumbers(doc);let ap=doc.getElementById('listen')||[...doc.querySelectorAll('.page')].find(p=>/Listening Lab/i.test(p.textContent||''));if(ap&&!ap.dataset.v2){ap.dataset.v2='1';setListening(ap)}let sp=findShare(doc);if(sp&&!sp.dataset.v2){sp.dataset.v2='1';setShare(sp)}}
-frame.onload=()=>{let d=frame.contentDocument;upgrade(d);document.getElementById('loading').classList.add('hide');let n=0,t=setInterval(()=>{upgrade(d);if(++n>30)clearInterval(t)},300);new MutationObserver(()=>upgrade(d)).observe(d.documentElement,{childList:true,subtree:true})};
+frame.onload=()=>{const d=frame.contentDocument;const loading=document.getElementById('loading');if(!d){loading.textContent='The lesson could not be opened. Reload the page.';return}try{upgrade(d)}catch(err){console.error('Gabi lesson upgrade failed:',err)}loading.classList.add('hide');let n=0;const t=setInterval(()=>{try{upgrade(d)}catch(err){console.error('Gabi lesson refresh failed:',err)}if(++n>=8)clearInterval(t)},250)};
 window.addEventListener('message',e=>{if(e.source===frame.contentWindow)parent.postMessage(e.data,location.origin);else if(e.source===parent&&parent!==window)frame.contentWindow?.postMessage(e.data,location.origin)});
 })();
 </script>
