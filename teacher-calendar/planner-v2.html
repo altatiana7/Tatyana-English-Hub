@@ -182,6 +182,7 @@ function loadLocal(){
   try{
     const s=JSON.parse(localStorage.getItem(STORE)||'{}');
     if(s&&typeof s==='object') schedule={...DEFAULT_SCHEDULE,...s};
+    Object.keys(schedule).forEach(k=>schedule[k]=cleanPlannerText(schedule[k]));
     const st=JSON.parse(localStorage.getItem(STUDENTS_STORE)||'null');
     if(Array.isArray(st)&&st.length) students=st;
     notes=localStorage.getItem(NOTES_STORE)||'';
@@ -208,7 +209,7 @@ function renderSchedule(){
     DAYS.forEach((d,di)=>{
       if(di<5&&r<4){p+='<div class="cell blocked"></div>';return}
       const k=cellKey('p',r,di);
-      const name=schedule[k]||'';
+      const name=cleanPlannerText(schedule[k]||'');
       p+='<div class="cell personalcell '+(di>4?'weekendcell ':'')+(editing?'editing':'')+'">'+(name?'<div class="slot-time">'+t+'</div>':'')+'<div class="slot-name" data-k="'+k+'" '+(editing?'contenteditable="true"':'')+'>'+esc(name)+'</div></div>';
     });
   });
@@ -219,7 +220,7 @@ function renderSchedule(){
     s+='<div class="time">'+t+'</div>';
     SCHOOL_DAYS.forEach((d,di)=>{
       const k=cellKey('s',r,di);
-      s+='<div class="cell schoolcell '+(editing?'editing':'')+'" data-k="'+k+'" '+(editing?'contenteditable="true"':'')+'>'+esc(schedule[k]||'')+'</div>';
+      s+='<div class="cell schoolcell '+(editing?'editing':'')+'" data-k="'+k+'" '+(editing?'contenteditable="true"':'')+'>'+esc(cleanPlannerText(schedule[k]||''))+'</div>';
     });
   });
   document.getElementById('schoolGrid').innerHTML=s;
@@ -364,7 +365,7 @@ function toggleEdit(){
 }
 
 function saveChanges(){
-  document.querySelectorAll('.slot-name[data-k], .schoolcell[data-k]').forEach(el=>{schedule[el.dataset.k]=el.innerText.trim()});
+  document.querySelectorAll('.slot-name[data-k], .schoolcell[data-k]').forEach(el=>{schedule[el.dataset.k]=cleanPlannerText(el.innerText.trim())});
   editing=false;
   document.getElementById('editBtn').textContent='Edit';
   syncStudentsFromSchedule();
@@ -374,7 +375,7 @@ function saveChanges(){
 }
 
 document.addEventListener('input',e=>{
-  if(e.target&&e.target.matches('[data-k]')&&editing){schedule[e.target.dataset.k]=e.target.innerText.trim();saveLocal()}
+  if(e.target&&e.target.matches('[data-k]')&&editing){schedule[e.target.dataset.k]=cleanPlannerText(e.target.innerText.trim());saveLocal()}
   if(e.target&&e.target.id==='notesBox'){notes=e.target.value;saveLocal()}
 });
 
@@ -386,7 +387,7 @@ document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>
 function collectState(){return {version:5,schedule,students,notes,payments}}
 function applyState(state){
   if(!state||typeof state!=='object')return;
-  if(state.schedule&&typeof state.schedule==='object')schedule={...DEFAULT_SCHEDULE,...state.schedule};
+  if(state.schedule&&typeof state.schedule==='object'){schedule={...DEFAULT_SCHEDULE,...state.schedule};Object.keys(schedule).forEach(k=>schedule[k]=cleanPlannerText(schedule[k]));}
   if(Array.isArray(state.students)&&state.students.length)students=state.students;
   if(typeof state.notes==='string')notes=state.notes;
   if(Array.isArray(state.payments))payments=state.payments;
