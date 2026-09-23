@@ -175,6 +175,7 @@ let notes='';
 let payments=[];
 
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function cleanPlannerText(v){return String(v??'').replace(/\*\*\\n\*\*/g,'\n').replace(/\\n/g,'\n').replace(/\*\*/g,'')}
 function setStatus(s){const el=document.getElementById('saveStatus');el.textContent=s;clearTimeout(setStatus.t);setStatus.t=setTimeout(()=>el.textContent='Готово',1500)}
 function cellKey(kind,r,d){return kind+'|'+r+'|'+d}
 
