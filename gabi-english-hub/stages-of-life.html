@@ -5,271 +5,44 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <title>Gabi · Life Stages</title>
-<style>
-  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#edf5f6}
-  #lesson{display:block;width:100%;height:100%;border:0;background:#edf5f6}
-  #loading{position:fixed;inset:0;display:grid;place-items:center;background:#edf5f6;color:#0b3f70;font:800 15px Arial,sans-serif;z-index:5}
-  #loading.hide{display:none}
-</style>
+<style>html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#edf5f6}#lesson{display:block;width:100%;height:100%;border:0;background:#edf5f6}#loading{position:fixed;inset:0;display:grid;place-items:center;background:#edf5f6;color:#0b3f70;font:800 15px Arial;z-index:5}#loading.hide{display:none}</style>
 </head>
 <body>
 <div id="loading">Loading Gabi’s lesson…</div>
 <iframe id="lesson" title="Gabi · Life Stages" allow="autoplay; fullscreen"></iframe>
 <script>
-(() => {
-  'use strict';
-  const VERSION = '20260923-ben-audio-v1';
-  const frame = document.getElementById('lesson');
-  const params = new URLSearchParams(location.search);
-  const lessonNo = params.get('lesson') || '1';
-  frame.src = `stages-of-life-original.html?v=${VERSION}&lesson=${encodeURIComponent(lessonNo)}`;
-
-  const THEME_CSS = `
-    :root{--soft-page:#edf5f6;--soft-card:#f9fcfc;--soft-blue:#e5f1f5;--soft-mint:#eaf6ef;--soft-line:#bfd6dd}
-    html,body{background:var(--soft-page)!important}
-    body{background:linear-gradient(145deg,#edf5f6 0%,#f4f8f3 52%,#eaf3f6 100%)!important}
-    .top{background:#e8f2f4!important;border-bottom-color:#bfd6dd!important;padding:5px 3%!important;grid-template-columns:repeat(3,max-content) minmax(180px,320px) repeat(2,max-content)!important;gap:5px!important}
-    .top button,.top select{width:auto!important;min-width:0!important;max-width:320px!important;padding:6px 8px!important;font-size:13px!important;border-radius:7px!important;background:#f7fbfb!important}
-    .top select{justify-self:start!important}
-    .page{background:transparent!important;padding:12px 5% 24px!important}
-    .card,.ql,.qcard,.fact,.mcQ,.fillList label,.rewriteList label{background:rgba(249,252,252,.96)!important}
-    .tabs button,.listenTabs button,.grammarTabs button,.actions button{padding:6px 8px!important;font-size:13px!important}
-    .tabs,.listenTabs,.grammarTabs{gap:5px!important}
-    @media(max-width:760px){.top{grid-template-columns:repeat(3,max-content) minmax(140px,1fr) max-content!important;padding:4px 6px!important}.top button,.top select{font-size:11px!important;padding:5px 6px!important}.page{padding:9px 10px 20px!important}}
-
-    .benListenPage{max-width:1320px;margin:0 auto;color:#123f59}
-    .benListenHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
-    .benListenHead h1{margin:0;font-size:clamp(24px,3vw,36px);color:#0b3f70}
-    .benListenHead p{margin:5px 0 0;color:#5f7988;line-height:1.4}
-    .benBadge{white-space:nowrap;border:1px solid #b9d4dc;background:#e4f2f5;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:900;color:#0b687b}
-    .benListenGrid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.72fr);gap:14px;align-items:start}
-    .benPanel{border:1px solid var(--soft-line);border-radius:18px;background:rgba(249,252,252,.98);box-shadow:0 10px 30px rgba(17,69,88,.07);padding:14px}
-    .benAudioBar{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:11px;border-radius:14px;background:#e5f1f5;margin-bottom:12px}
-    .benAudioBar strong{display:block;color:#0b3f70}.benAudioBar span{display:block;color:#68818d;font-size:12px;margin-top:3px}
-    .benAudioBar audio{width:100%;min-width:0}
-    .benTaskTabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
-    .benTaskTabs button{border:1px solid #b8d2da;background:#edf6f7;color:#174e65;border-radius:9px;padding:7px 9px;font-weight:900;font-size:13px}
-    .benTaskTabs button.on{background:#0b6578;color:#fff;border-color:#0b6578}
-    .benTask{display:none}.benTask.on{display:block}
-    .benTask h2,.benQuiz h2{font-size:20px;margin:2px 0 5px;color:#0b3f70}.benTaskHint{font-size:13px;color:#657f8c;margin:0 0 10px}
-    .benRows{display:grid;gap:7px}.benRow{display:grid;grid-template-columns:minmax(140px,.75fr) minmax(180px,1.25fr);gap:8px;align-items:center;border:1px solid #d4e3e7;border-radius:11px;padding:8px 10px;background:#f8fbfb}
-    .benRow b{color:#123f59}.benRow select,.benRow input{width:100%;border:1px solid #bcd2da;border-radius:8px;background:#fff;padding:7px 8px;color:#173f52}
-    .benMC{display:grid;gap:7px}.benMCItem{border:1px solid #d4e3e7;border-radius:11px;padding:9px;background:#f8fbfb}.benMCItem p{margin:0 0 7px;font-weight:800}.benOptions{display:flex;gap:6px;flex-wrap:wrap}.benOptions button{border:1px solid #bdd3da;background:#fff;border-radius:8px;padding:6px 9px;color:#164c62;font-weight:800}.benOptions button.selected{outline:2px solid #67a9b8}.benOptions button.good{background:#ddf4e7;border-color:#56a879}.benOptions button.bad{background:#ffe5e8;border-color:#d96f7d}
-    .benCheckRow{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin-top:10px}.benCheck,.benReset{border:0;border-radius:9px;padding:8px 12px;font-weight:900}.benCheck{background:#0b6578;color:#fff}.benReset{background:#dcebed;color:#174e65}.benResult{font-weight:900;color:#0b6578;min-height:20px}
-    .benPeople{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:10px 0}.benPerson{border:1px solid #d2e1e5;border-radius:12px;padding:9px;text-align:center;background:#f7fbfb}.benPerson b{display:block;color:#0b3f70}.benPerson span{display:block;font-size:12px;color:#68818d;margin-top:2px}
-    .benQuote{border-left:4px solid #4da1b2;background:#eaf4f5;border-radius:0 12px 12px 0;padding:12px 14px;font-weight:800;line-height:1.45}
-    .benQuiz{position:sticky;top:58px;background:linear-gradient(155deg,#eef7f7,#f5f8ef)}
-    .benQuizMeta{display:flex;justify-content:space-between;gap:8px;color:#647f8c;font-size:12px;font-weight:800;margin-bottom:8px}.benQuizQuestion{min-height:86px;display:grid;place-items:center;text-align:center;border-radius:14px;background:#fff;border:1px solid #d2e2e6;padding:12px;font-size:20px;font-weight:900;color:#123f59}.benQuizAnswers{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}.benQuizAnswers button{border:0;border-radius:10px;padding:10px 8px;min-height:50px;font-weight:900;color:#143e51;background:#dceef1}.benQuizAnswers button:nth-child(2){background:#e8edf8}.benQuizAnswers button:nth-child(3){background:#eef1dc}.benQuizAnswers button:nth-child(4){background:#f5e7df}.benQuizAnswers button.good{outline:3px solid #55a978}.benQuizAnswers button.bad{outline:3px solid #d96f7d}.benQuizFeedback{min-height:36px;text-align:center;font-weight:900;padding:8px 2px}.benQuizNext{width:100%;border:0;border-radius:9px;background:#0b6578;color:#fff;padding:9px;font-weight:900}
-
-    .overallKahoot{max-width:1050px;margin:0 auto;color:#143f56}.overallHero{border:1px solid #b9d4dc;border-radius:20px;padding:18px;background:linear-gradient(135deg,#e4f2f5,#f0f6e9);display:flex;justify-content:space-between;gap:14px;align-items:center}.overallHero h1{font-size:clamp(25px,3vw,38px);margin:0;color:#0b3f70}.overallHero p{margin:6px 0 0;color:#607c89}.overallScore{border-radius:16px;background:#fff;padding:11px 15px;text-align:center;min-width:110px}.overallScore b{display:block;font-size:28px;color:#0b6578}.overallScore span{font-size:11px;color:#68818d;font-weight:800}.overallCard{margin-top:12px;border:1px solid #bfd6dd;border-radius:20px;background:#f9fcfc;padding:16px}.overallProgress{height:8px;border-radius:999px;background:#dcebed;overflow:hidden}.overallProgress i{display:block;height:100%;width:0;background:#0b6578;transition:.25s}.overallQuestion{min-height:96px;display:grid;place-items:center;text-align:center;font-size:clamp(21px,2.4vw,31px);font-weight:900;color:#123f59;padding:14px}.overallAnswers{display:grid;grid-template-columns:1fr 1fr;gap:9px}.overallAnswers button{border:1px solid #c3d8de;border-radius:12px;background:#edf5f6;padding:13px 10px;min-height:58px;font-size:16px;font-weight:900;color:#143f56}.overallAnswers button.good{background:#dff4e8;border-color:#4fa274}.overallAnswers button.bad{background:#ffe4e8;border-color:#d46a78}.overallFeedback{text-align:center;min-height:42px;padding:10px;font-weight:900}.overallNext{display:block;margin:auto;border:0;border-radius:10px;padding:10px 18px;background:#0b6578;color:#fff;font-weight:900}.overallTopicTags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.overallTopicTags span{border-radius:999px;background:#e7f1f3;padding:6px 9px;font-size:12px;font-weight:900;color:#27566a}
-    @media(max-width:900px){.benListenGrid{grid-template-columns:1fr}.benQuiz{position:static}.benPeople{grid-template-columns:repeat(3,1fr)}}
-    @media(max-width:580px){.benListenHead{display:block}.benBadge{display:inline-block;margin-top:8px}.benRow{grid-template-columns:1fr}.benPeople{grid-template-columns:1fr 1fr}.benQuizAnswers,.overallAnswers{grid-template-columns:1fr}}
-  `;
-
-  const listeningQuestions = [
-    {q:'Who is two years old?',a:['Ben','Max','Jake','Tom'],correct:1,why:'Max is two and has just started walking confidently.'},
-    {q:'What is Ben interested in?',a:['Fishing','Computers and design','Engineering only','Gardening'],correct:1,why:'Ben says he is interested in computers and design.'},
-    {q:'Where does Jake live?',a:['With his parents','Alone','With two friends','With Grandpa Tom'],correct:2,why:'Jake shares a flat with two friends.'},
-    {q:'Why did Ben’s dad change jobs?',a:['He retired','He wanted a new challenge','He moved abroad','He started university'],correct:1,why:'He wanted a new challenge.'},
-    {q:'What does Grandpa Tom do now?',a:['He studies engineering','He goes fishing and rides his bike','He works at school','He looks for a flat'],correct:1,why:'Retirement gives Tom time for fishing, cycling and gardening.'},
-    {q:'What does Ben realise at the end?',a:['Adults have no problems','Every stage of life is different','Growing up is always easy','Independence solves everything'],correct:1,why:'Some things get easier, but new problems appear too.'}
-  ];
-
-  const overallQuestions = [
-    {topic:'Vocabulary',q:'A two-year-old child who has started walking is a…',a:['teenager','toddler','young adult','senior'],c:1,e:'Toddler is the life-stage word for a very young child learning to walk.'},
-    {topic:'Vocabulary',q:'Someone who has stopped working because of age is…',a:['independent','retired','middle-aged','confident'],c:1,e:'Retired describes a person who has finished their working life.'},
-    {topic:'Expression',q:'Jake cooks, cleans and controls his spending. He can…',a:['manage his own money','get everyone’s attention','change life stages','follow Ben around'],c:0,e:'Manage your own money means organise and control your personal finances.'},
-    {topic:'Word formation',q:'Choose the noun formed from “independent”.',a:['independently','independence','independency','dependenceful'],c:1,e:'Independent → independence.'},
-    {topic:'Present tenses',q:'Choose the correct sentence about a regular habit.',a:['Max is loving cupboards.','Grandpa Tom goes fishing.','Ben is knowing the answer.','Jake study engineering now.'],c:1,e:'Present Simple describes Grandpa Tom’s regular activity.'},
-    {topic:'Present tenses',q:'Choose the correct sentence about a current temporary situation.',a:['Jake studies engineering this year.','Jake is studying engineering at university.','Jake knowing how to cook.','Jake study with friends.'],c:1,e:'Present Continuous highlights his current course of study.'},
-    {topic:'Stative verbs',q:'Which verb is normally stative in this meaning?',a:['walk','cook','know','ride'],c:2,e:'Know usually describes a state, not an action in progress.'},
-    {topic:'Stative verbs',q:'Which sentence is correct?',a:['Ben is wanting a job in design.','Ben wants a job in design.','Ben want a job in design.','Ben does wanting a job.'],c:1,e:'Want is normally stative, so use Present Simple.'},
-    {topic:'Articles',q:'Complete: Jake is studying engineering ___ university.',a:['at','at the','in a','on'],c:0,e:'The fixed expression is “at university”.'},
-    {topic:'Articles',q:'Complete: He lives in ___ flat with two friends.',a:['a','an','the','—'],c:0,e:'Use “a” when the flat is mentioned for the first time.'},
-    {topic:'Sharenting',q:'What is a sensible concern about sharing children’s photos online?',a:['privacy','retirement','graduation','engineering'],c:0,e:'Privacy is the key concern in the sharenting topic.'},
-    {topic:'Family',q:'Your uncle’s son is your…',a:['brother','nephew','cousin','grandson'],c:2,e:'Your aunt’s or uncle’s child is your cousin.'},
-    {topic:'Expression',q:'Choose the best meaning of “a new challenge”.',a:['a repeated routine','a difficult but motivating new goal','a life stage','a family argument'],c:1,e:'A new challenge is a new goal or situation that requires effort.'},
-    {topic:'Grammar',q:'Choose the correct contrast.',a:['Ben thinks about his future, but he does not know his future job yet.','Ben is thinking about his future, but he is not knowing his future job yet.','Ben think about future and not knows.','Ben thinking and knows not.'],c:0,e:'Think as an opinion and know as a state take Present Simple here.'},
-    {topic:'Lesson review',q:'Which sentence best summarises the whole lesson?',a:['Only teenagers face problems.','Every life stage has advantages and challenges.','Adults always have everything planned.','Independence means living alone.'],c:1,e:'The lesson compares changing responsibilities, freedom and challenges across life stages.'}
-  ];
-
-  function addTheme(doc){
-    if(doc.getElementById('ben-theme-20260923')) return;
-    const style=doc.createElement('style');
-    style.id='ben-theme-20260923';
-    style.textContent=THEME_CSS;
-    doc.head.appendChild(style);
-  }
-
-  function button(text, cls=''){
-    const b=document.createElement('button'); b.type='button'; b.textContent=text; if(cls)b.className=cls; return b;
-  }
-
-  function listeningMarkup(){
-    return `
-      <div class="benListenPage" data-ben-upgraded="true">
-        <div class="benListenHead">
-          <div><h1>Listening Lab · Ben’s Family</h1><p>Listen to Ben describe five people at different stages of life. Complete the tasks without reading the transcript.</p></div>
-          <span class="benBadge">B1+ · 5 people · 1:09</span>
-        </div>
-        <div class="benListenGrid">
-          <section class="benPanel">
-            <div class="benAudioBar"><div><strong>Teenage Life</strong><span>Ben, Max, Jake, Dad and Grandpa Tom</span></div><audio controls preload="metadata" src="assets/teenage-life.mp3?v=${VERSION}"></audio></div>
-            <div class="benPeople">
-              <div class="benPerson"><b>Max · 2</b><span>toddler</span></div>
-              <div class="benPerson"><b>Ben · 15</b><span>teenager</span></div>
-              <div class="benPerson"><b>Jake · 22</b><span>young adult</span></div>
-              <div class="benPerson"><b>Dad · 46</b><span>middle-aged adult</span></div>
-              <div class="benPerson"><b>Tom · 70</b><span>retired senior</span></div>
-            </div>
-            <nav class="benTaskTabs">
-              <button type="button" class="on" data-ben-tab="match">1 · Match</button>
-              <button type="button" data-ben-tab="details">2 · Details</button>
-              <button type="button" data-ben-tab="tf">3 · True / False</button>
-              <button type="button" data-ben-tab="message">4 · Main message</button>
-            </nav>
-            <div class="benTask on" data-ben-pane="match">
-              <h2>Match each person to the correct description</h2><p class="benTaskHint">Select one description for every person.</p>
-              <div class="benRows" data-task="match">
-                ${[
-                  ['Max','has just started walking and follows Ben around the house'],
-                  ['Ben','is interested in computers and design but has not chosen a career'],
-                  ['Jake','studies engineering and shares a flat with two friends'],
-                  ['Dad','recently changed jobs because he wanted a new challenge'],
-                  ['Grandpa Tom','is retired and now has time for fishing and cycling']
-                ].map(([n,a],i)=>`<div class="benRow"><b>${n}</b><select data-answer="${i}"><option value="">Choose…</option>${[
-                  'is retired and now has time for fishing and cycling',
-                  'studies engineering and shares a flat with two friends',
-                  'has just started walking and follows Ben around the house',
-                  'recently changed jobs because he wanted a new challenge',
-                  'is interested in computers and design but has not chosen a career'
-                ].map(x=>`<option value="${x}" ${x===a?'data-correct="1"':''}>${x}</option>`).join('')}</select></div>`).join('')}
-              </div><div class="benCheckRow"><button class="benCheck" data-check="match">Check</button><button class="benReset" data-reset="match">Reset</button><span class="benResult"></span></div>
-            </div>
-            <div class="benTask" data-ben-pane="details">
-              <h2>Choose the detail you hear</h2><p class="benTaskHint">One answer is correct in each row.</p>
-              <div class="benMC" data-task="details">
-                ${[
-                  ['What does Max love doing?',['Reading books','Opening cupboards','Riding a bike'],1],
-                  ['What are Ben’s parents asking about?',['University','A new flat','A driving test'],0],
-                  ['What does Jake sometimes miss?',['His old school','Living at home','Fishing with Tom'],1],
-                  ['What surprised Ben about adults?',['They dislike work','They do not have everything planned','They never change jobs'],1],
-                  ['Who sometimes helps Ben’s uncle in the garden?',['Max','Jake','Grandpa Tom'],2]
-                ].map((x,qi)=>`<div class="benMCItem" data-correct="${x[2]}"><p>${qi+1}. ${x[0]}</p><div class="benOptions">${x[1].map((a,ai)=>`<button type="button" data-choice="${ai}">${a}</button>`).join('')}</div></div>`).join('')}
-              </div><div class="benCheckRow"><button class="benCheck" data-check="details">Check</button><button class="benReset" data-reset="details">Reset</button><span class="benResult"></span></div>
-            </div>
-            <div class="benTask" data-ben-pane="tf">
-              <h2>True or false?</h2><p class="benTaskHint">Correct the false statements orally.</p>
-              <div class="benMC" data-task="tf">
-                ${[
-                  ['Max already speaks in long sentences.',1],
-                  ['Ben knows exactly which job he wants.',1],
-                  ['Jake has to cook, clean and manage his own money.',0],
-                  ['Ben’s dad recently changed jobs.',0],
-                  ['Grandpa Tom retired a few years ago.',0]
-                ].map((x,qi)=>`<div class="benMCItem" data-correct="${x[1]}"><p>${qi+1}. ${x[0]}</p><div class="benOptions"><button type="button" data-choice="0">True</button><button type="button" data-choice="1">False</button></div></div>`).join('')}
-              </div><div class="benCheckRow"><button class="benCheck" data-check="tf">Check</button><button class="benReset" data-reset="tf">Reset</button><span class="benResult"></span></div>
-            </div>
-            <div class="benTask" data-ben-pane="message">
-              <h2>Complete Ben’s conclusion</h2><p class="benTaskHint">Use the ideas from the final part of the audio.</p>
-              <div class="benQuote">Every stage of life is <input data-main-answer="different" aria-label="gap 1" style="width:120px;border:1px solid #a9c8d1;border-radius:7px;padding:5px">. Some things get <input data-main-answer="easier" aria-label="gap 2" style="width:105px;border:1px solid #a9c8d1;border-radius:7px;padding:5px">, but new <input data-main-answer="problems" aria-label="gap 3" style="width:115px;border:1px solid #a9c8d1;border-radius:7px;padding:5px"> appear too.</div>
-              <div class="benCheckRow"><button class="benCheck" data-check="message">Check</button><button class="benReset" data-reset="message">Reset</button><span class="benResult"></span></div>
-            </div>
-          </section>
-          <aside class="benPanel benQuiz" aria-label="Listening Kahoot Challenge">
-            <div class="benQuizMeta"><span>LISTENING KAHOOT CHALLENGE</span><span data-lq-count>1 / ${listeningQuestions.length}</span></div>
-            <h2>Quick audio check</h2>
-            <div class="benQuizQuestion" data-lq-question></div>
-            <div class="benQuizAnswers" data-lq-answers></div>
-            <div class="benQuizFeedback" data-lq-feedback></div>
-            <button type="button" class="benQuizNext" data-lq-next>Next question →</button>
-          </aside>
-        </div>
-      </div>`;
-  }
-
-  function setupListening(root){
-    root.querySelectorAll('[data-ben-tab]').forEach(b=>b.addEventListener('click',()=>{
-      root.querySelectorAll('[data-ben-tab]').forEach(x=>x.classList.toggle('on',x===b));
-      root.querySelectorAll('[data-ben-pane]').forEach(x=>x.classList.toggle('on',x.dataset.benPane===b.dataset.benTab));
-    }));
-    root.querySelectorAll('.benOptions button').forEach(b=>b.addEventListener('click',()=>{
-      const row=b.closest('.benMCItem'); row.querySelectorAll('button').forEach(x=>x.classList.remove('selected','good','bad')); b.classList.add('selected');
-    }));
-    root.querySelectorAll('[data-check]').forEach(b=>b.addEventListener('click',()=>checkTask(root,b.dataset.check)));
-    root.querySelectorAll('[data-reset]').forEach(b=>b.addEventListener('click',()=>resetTask(root,b.dataset.reset)));
-    let qi=0,answered=false,score=0;
-    const qEl=root.querySelector('[data-lq-question]'), aEl=root.querySelector('[data-lq-answers]'), fEl=root.querySelector('[data-lq-feedback]'), cEl=root.querySelector('[data-lq-count]'), nEl=root.querySelector('[data-lq-next]');
-    const draw=()=>{answered=false;const q=listeningQuestions[qi];cEl.textContent=`${qi+1} / ${listeningQuestions.length}`;qEl.textContent=q.q;fEl.textContent='';aEl.innerHTML='';q.a.forEach((x,i)=>{const b=button(x);b.addEventListener('click',()=>{if(answered)return;answered=true;if(i===q.correct){b.classList.add('good');score++;fEl.textContent='Correct. '+q.why}else{b.classList.add('bad');aEl.children[q.correct].classList.add('good');fEl.textContent='Not quite. '+q.why}});aEl.appendChild(b)});nEl.textContent=qi===listeningQuestions.length-1?'Restart challenge':'Next question →'};
-    nEl.addEventListener('click',()=>{if(qi===listeningQuestions.length-1){qi=0;score=0}else qi++;draw()}); draw();
-  }
-
-  function checkTask(root,name){
-    const pane=root.querySelector(`[data-ben-pane="${name}"]`), result=pane.querySelector('.benResult'); let score=0,total=0;
-    if(name==='match'){
-      pane.querySelectorAll('select').forEach(s=>{total++;const good=s.selectedOptions[0]?.dataset.correct==='1';s.style.borderColor=good?'#55a978':'#d96f7d';if(good)score++});
-    }else if(name==='details'||name==='tf'){
-      pane.querySelectorAll('.benMCItem').forEach(row=>{total++;const selected=row.querySelector('button.selected'),correct=Number(row.dataset.correct);row.querySelectorAll('button').forEach((b,i)=>{b.classList.toggle('good',i===correct);b.classList.toggle('bad',b===selected&&i!==correct)});if(selected&&Number(selected.dataset.choice)===correct)score++});
-    }else{
-      pane.querySelectorAll('[data-main-answer]').forEach(i=>{total++;const good=i.value.trim().toLowerCase()===i.dataset.mainAnswer;i.style.borderColor=good?'#55a978':'#d96f7d';if(good)score++});
-    }
-    result.textContent=`${score} / ${total} correct`;
-  }
-  function resetTask(root,name){
-    const pane=root.querySelector(`[data-ben-pane="${name}"]`);pane.querySelectorAll('select').forEach(x=>{x.value='';x.style.borderColor=''});pane.querySelectorAll('input').forEach(x=>{x.value='';x.style.borderColor=''});pane.querySelectorAll('.benOptions button').forEach(x=>x.classList.remove('selected','good','bad'));pane.querySelector('.benResult').textContent='';
-  }
-
-  function overallMarkup(){
-    return `<div class="overallKahoot" data-overall-upgraded="true">
-      <div class="overallHero"><div><h1>Final Kahoot Challenge</h1><p>Complete review of the lesson: life-stage vocabulary, family expressions, word formation, Present Simple / Present Continuous, stative verbs, articles and sharenting.</p><div class="overallTopicTags"><span>Vocabulary</span><span>Expressions</span><span>Grammar</span><span>Word formation</span><span>Sharenting</span></div></div><div class="overallScore"><b data-oq-score>0</b><span>CORRECT ANSWERS</span></div></div>
-      <div class="overallCard"><div class="overallProgress"><i data-oq-progress></i></div><div class="overallQuestion" data-oq-question></div><div class="overallAnswers" data-oq-answers></div><div class="overallFeedback" data-oq-feedback></div><button type="button" class="overallNext" data-oq-next>Next question →</button></div>
-    </div>`;
-  }
-  function setupOverall(root){
-    let qn=0,score=0,answered=false;
-    const qEl=root.querySelector('[data-oq-question]'),aEl=root.querySelector('[data-oq-answers]'),fEl=root.querySelector('[data-oq-feedback]'),sEl=root.querySelector('[data-oq-score]'),pEl=root.querySelector('[data-oq-progress]'),nEl=root.querySelector('[data-oq-next]');
-    const draw=()=>{answered=false;const q=overallQuestions[qn];qEl.textContent=`${qn+1}. ${q.q}`;fEl.textContent=`${q.topic} · choose one answer`;aEl.innerHTML='';pEl.style.width=`${(qn/overallQuestions.length)*100}%`;q.a.forEach((x,i)=>{const b=button(x);b.addEventListener('click',()=>{if(answered)return;answered=true;if(i===q.c){b.classList.add('good');score++;sEl.textContent=score;fEl.textContent='Correct. '+q.e}else{b.classList.add('bad');aEl.children[q.c].classList.add('good');fEl.textContent='Review: '+q.e}});aEl.appendChild(b)});nEl.textContent=qn===overallQuestions.length-1?'Restart full challenge':'Next question →'};
-    nEl.addEventListener('click',()=>{if(qn===overallQuestions.length-1){qn=0;score=0;sEl.textContent='0'}else qn++;draw()});draw();
-  }
-
-  function findTeenAudio(doc){
-    const audios=[...doc.querySelectorAll('audio')];
-    return audios.find(a=>`${a.getAttribute('src')||''} ${[...a.querySelectorAll('source')].map(s=>s.src).join(' ')}`.toLowerCase().includes('teenage-life')) || audios.find(a=>/teenage life|ben|life stages/i.test(a.closest('.page')?.textContent||''));
-  }
-  function upgradeListening(doc){
-    if(doc.querySelector('[data-ben-upgraded="true"]')) return true;
-    const audio=findTeenAudio(doc); if(!audio)return false;
-    const page=audio.closest('.page')||audio.closest('section')||audio.parentElement; if(!page)return false;
-    page.innerHTML=listeningMarkup(); setupListening(page); return true;
-  }
-  function upgradeFinal(doc){
-    if(doc.querySelector('[data-overall-upgraded="true"]')) return true;
-    const pages=[...doc.querySelectorAll('.page')];
-    const candidates=pages.filter(p=>/kahoot|final challenge|final review/i.test(p.textContent||'')&&!p.querySelector('[data-ben-upgraded="true"]'));
-    const page=candidates[candidates.length-1]; if(!page)return false;
-    page.innerHTML=overallMarkup(); setupOverall(page); return true;
-  }
-  function refreshAudio(doc){
-    doc.querySelectorAll('audio').forEach(a=>{const raw=a.getAttribute('src')||'';if(raw.toLowerCase().includes('teenage-life')){a.src=`assets/teenage-life.mp3?v=${VERSION}`;a.load()}});
-  }
-  function compactTop(doc){
-    doc.querySelectorAll('.top button,.top select').forEach(el=>{el.style.maxWidth='320px';el.style.width='auto'});
-  }
-  function upgrade(doc){
-    addTheme(doc);compactTop(doc);refreshAudio(doc);upgradeListening(doc);upgradeFinal(doc);
-    let attempts=0;
-    const timer=setInterval(()=>{attempts++;addTheme(doc);compactTop(doc);refreshAudio(doc);const l=upgradeListening(doc),k=upgradeFinal(doc);if((l&&k)||attempts>30)clearInterval(timer)},300);
-    const observer=new MutationObserver(()=>{addTheme(doc);compactTop(doc);refreshAudio(doc);upgradeListening(doc);upgradeFinal(doc)});
-    observer.observe(doc.documentElement,{childList:true,subtree:true});
-  }
-
-  frame.addEventListener('load',()=>{
-    try{upgrade(frame.contentDocument);document.getElementById('loading').classList.add('hide')}catch(err){console.error(err);document.getElementById('loading').classList.add('hide')}
-  });
-  window.addEventListener('message',event=>{
-    if(event.source===frame.contentWindow){parent.postMessage(event.data,location.origin)}
-    else if(event.source===parent&&parent!==window){frame.contentWindow?.postMessage(event.data,location.origin)}
-  });
+(()=>{
+'use strict';
+const V='20260923-compact-sharenting-v2',frame=document.getElementById('lesson'),lesson=new URLSearchParams(location.search).get('lesson')||'1';
+frame.src=`stages-of-life-original.html?v=${V}&lesson=${lesson}`;
+const CSS=`
+:root{--page:#edf5f6;--card:#f9fcfc;--line:#bfd6dd;--navy:#0b3f70;--teal:#0b6578;--muted:#637d8a}
+html,body{background:linear-gradient(145deg,#edf5f6,#f4f8f3 55%,#eaf3f6)!important}.top{background:#e8f2f4!important;border-bottom-color:#bfd6dd!important;padding:5px 3%!important;grid-template-columns:repeat(3,max-content) minmax(170px,300px) repeat(2,max-content)!important;gap:5px!important}.top button,.top select{width:auto!important;min-width:0!important;max-width:300px!important;padding:6px 8px!important;font-size:13px!important;background:#f7fbfb!important}.page{background:transparent!important;padding:10px 4% 20px!important}.card,.qcard,.fact{background:#f9fcfc!important}.tabs,.listenTabs,.grammarTabs{gap:5px!important}.tabs button,.listenTabs button,.grammarTabs button,.actions button{padding:6px 8px!important;font-size:13px!important}
+.upPage{max-width:1320px;margin:auto;color:#153f54}.upHead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}.upHead h1{margin:0;color:var(--navy);font-size:clamp(25px,3vw,36px)}.upHead p{margin:4px 0;color:var(--muted)}.badge{border:1px solid #b8d2da;background:#e5f1f5;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:900;color:#0b6578;white-space:nowrap}.panel{border:1px solid var(--line);border-radius:17px;background:rgba(249,252,252,.98);padding:13px;box-shadow:0 8px 24px rgba(20,70,90,.06)}
+.listenGrid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(300px,.72fr);gap:12px}.audioBar{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;background:#e4f0f3;border-radius:13px;padding:9px;margin-bottom:9px}.audioBar strong{display:block;color:var(--navy)}.audioBar small{color:var(--muted)}.audioBar audio{width:100%}.people{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:9px}.person{border:1px solid #d1e0e4;border-radius:10px;background:#f7fbfb;padding:7px;text-align:center}.person b{display:block;color:var(--navy)}.person span{font-size:11px;color:var(--muted)}.taskTabs,.shareTabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px}.taskTabs button,.shareTabs button{border:1px solid #bad2da;background:#edf6f7;color:#174e65;border-radius:8px;padding:6px 9px;font-weight:900;font-size:12px}.taskTabs button.on,.shareTabs button.on{background:var(--teal);color:#fff}.taskPane,.sharePane{display:none}.taskPane.on,.sharePane.on{display:block}.rows,.mc{display:grid;gap:6px}.row{display:grid;grid-template-columns:minmax(120px,.6fr) minmax(180px,1.4fr);gap:7px;align-items:center;border:1px solid #d5e3e7;border-radius:10px;background:#f8fbfb;padding:7px 9px}.row select{width:100%;padding:6px;border:1px solid #bcd2da;border-radius:7px;background:#fff}.item{border:1px solid #d5e3e7;border-radius:10px;background:#f8fbfb;padding:8px}.item p{margin:0 0 6px;font-weight:800}.opts{display:flex;gap:5px;flex-wrap:wrap}.opts button{border:1px solid #bdd3da;background:#fff;border-radius:7px;padding:6px 8px;color:#164c62;font-weight:800}.opts button.sel{outline:2px solid #67a9b8}.opts button.good{background:#ddf4e7;border-color:#56a879}.opts button.bad{background:#ffe5e8;border-color:#d96f7d}.checkRow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px}.checkRow button{border:0;border-radius:8px;padding:7px 11px;font-weight:900}.check{background:var(--teal);color:#fff}.reset{background:#dcebed;color:#174e65}.result{font-weight:900;color:var(--teal)}
+.combo34{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.8fr);gap:10px}.lava{border:1px solid #efb08c;border-radius:14px;background:linear-gradient(145deg,#fff4e9,#ffe4d4);padding:12px}.lavaTop{display:flex;justify-content:space-between;align-items:center;gap:8px}.lavaLives{font-weight:900;color:#b84b22}.lavaQ{min-height:74px;display:grid;place-items:center;text-align:center;border-radius:11px;background:#fff9f4;padding:10px;margin:8px 0;font-size:18px;font-weight:900;color:#77351c}.lavaBtns{display:grid;grid-template-columns:1fr 1fr;gap:6px}.lavaBtns button{border:0;border-radius:9px;padding:9px;font-weight:900;background:#f4b07d;color:#52230f}.lavaBtns button:nth-child(2){background:#f6cf8d}.lavaFeedback{min-height:34px;text-align:center;font-weight:900;padding:7px}.lavaNext{width:100%;border:0;border-radius:8px;background:#b94c24;color:#fff;padding:8px;font-weight:900}.quote{border-left:4px solid #4da1b2;background:#eaf4f5;border-radius:0 10px 10px 0;padding:11px;font-weight:800;line-height:1.45}.quote input{width:100px;max-width:28%;border:1px solid #acc7cf;border-radius:6px;padding:4px}
+.sideQuiz{position:sticky;top:55px;background:linear-gradient(155deg,#eef7f7,#f5f8ef)}.sideQuiz h2{margin:0 0 7px;color:var(--navy);font-size:19px}.qMeta{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:900}.qText{min-height:80px;display:grid;place-items:center;text-align:center;border:1px solid #d2e2e6;border-radius:12px;background:#fff;padding:10px;margin:7px 0;font-size:18px;font-weight:900}.qAnswers{display:grid;grid-template-columns:1fr 1fr;gap:6px}.qAnswers button{border:0;border-radius:9px;padding:9px;min-height:46px;font-weight:900;background:#dceef1;color:#143e51}.qAnswers button.good{outline:3px solid #55a978}.qAnswers button.bad{outline:3px solid #d96f7d}.qFeed{min-height:34px;text-align:center;font-weight:900;padding:7px}.qNext{width:100%;border:0;border-radius:8px;background:var(--teal);color:#fff;padding:8px;font-weight:900}
+.sharePage{max-width:1180px;margin:auto}.shareGrid{display:grid;grid-template-columns:minmax(270px,.78fr) minmax(0,1.7fr);gap:12px}.shareVisual{min-height:460px;border-radius:17px;background:linear-gradient(145deg,#dcecf1,#eef6ef);display:flex;align-items:center;justify-content:center;padding:18px;text-align:center}.shareVisual h2{font-size:33px;margin:0;color:var(--navy)}.shareVisual p{color:#587583;line-height:1.45}.shareMain{min-height:460px}.shareText{font-size:16px;line-height:1.55;max-height:390px;overflow:auto;padding-right:5px}.shareText p{margin:0 0 12px}.matchGrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}.matchWord,.matchDef{border:1px solid #c7dbe1;border-radius:9px;background:#f7fbfb;padding:8px}.matchDef select{width:100%;border:1px solid #bcd2da;border-radius:7px;padding:6px;background:#fff}.shareMC{display:grid;grid-template-columns:1fr 1fr;gap:7px}.shareMC .item{min-height:120px}.shareMC .opts{display:grid;grid-template-columns:1fr}.shareMC .opts button{text-align:left}.smallHint{font-size:12px;color:var(--muted);margin:0 0 8px}
+@media(max-width:900px){.listenGrid,.shareGrid,.combo34{grid-template-columns:1fr}.sideQuiz{position:static}.people{grid-template-columns:repeat(3,1fr)}.shareMC{grid-template-columns:1fr}}@media(max-width:600px){.top{padding:4px 5px!important;grid-template-columns:repeat(3,max-content) minmax(120px,1fr) max-content!important}.top button,.top select{font-size:11px!important;padding:5px!important}.page{padding:8px!important}.people{grid-template-columns:1fr 1fr}.row,.matchGrid{grid-template-columns:1fr}.qAnswers,.lavaBtns{grid-template-columns:1fr}}
+`;
+const shareText=`<p>Right now a toddler is shouting because he doesn’t want to eat his lunch. What are the parents doing? They’re filming the scene on a smartphone. Soon after, they’re posting the video on social media. A teenage boy is playing a new song on his guitar. His mother is filming him. Two days later, the boy discovers that other people are watching the video online.</p><p>Parents in the UK post approximately 1,000 photos of their children online from when they are born until their fifth birthday, a phenomenon called ‘sharenting’. Babies and toddlers don’t care about this at the time. But a study by the University of Michigan suggests that there is a difference with 10- to 17-year-olds. Teenagers don’t always like parents posting some photos. All babies cry, but adolescents don’t want people to see old photos of themselves doing this.</p>`;
+const listenQuiz=[['Who is two years old?',['Ben','Max','Jake','Tom'],1],['What is Ben interested in?',['Fishing','Computers and design','Engineering','Gardening'],1],['Where does Jake live?',['At home','Alone','With two friends','With Tom'],2],['Why did Dad change jobs?',['To retire','For a new challenge','To travel','To study'],1],['What does Tom do now?',['Studies','Fishes and cycles','Works at school','Moves house'],1]];
+const lavaQs=[['Max already speaks in long sentences.',['TRUE','FALSE'],1,'False. He can say only a few words.'],['Ben knows exactly which career he wants.',['TRUE','FALSE'],1,'False. He is still thinking about his future.'],['Jake manages his own money.',['TRUE','FALSE'],0,'True. Independent living includes managing money.'],['Dad recently changed jobs.',['TRUE','FALSE'],0,'True. He wanted a new challenge.'],['Grandpa Tom is retired.',['TRUE','FALSE'],0,'True. Retirement gives him more free time.']];
+const shareMC=[['What are the toddler’s parents doing?',['Giving him lunch','Filming him','Calling relatives'],1],['What happens to the guitar video?',['It stays private','It is deleted','Other people watch it online'],2],['How many photos may UK parents post by age five?',['About 100','About 1,000','About 10,000'],1],['Who may feel differently about old posts?',['Babies','Teenagers','Only parents'],1],['What does “sharenting” describe?',['Children using phones','Parents posting about children','Teenagers sharing music'],1],['Why can old crying photos cause embarrassment?',['Adolescents may not want others to see them','The photos are always false','The children cannot remember them'],0]];
+const vocab=[['sharenting','parents sharing information or images of their children online'],['phenomenon','something that exists or happens and can be observed'],['approximately','about; not exactly'],['adolescent','a person between childhood and adulthood'],['post','put content online'],['discover','find out something new'],['social media','online platforms for sharing content'],['online','connected to the Internet']];
+function style(doc){if(doc.getElementById('patchStyle'))return;let s=doc.createElement('style');s.id='patchStyle';s.textContent=CSS;doc.head.appendChild(s)}
+function pick(root){root.querySelectorAll('.opts button').forEach(b=>b.onclick=()=>{let r=b.closest('.item');r.querySelectorAll('button').forEach(x=>x.classList.remove('sel','good','bad'));b.classList.add('sel')})}
+function checkMC(box){let n=0,t=0;box.querySelectorAll('.item').forEach(r=>{t++;let c=+r.dataset.c,s=r.querySelector('.sel');r.querySelectorAll('.opts button').forEach((b,i)=>{b.classList.toggle('good',i===c);b.classList.toggle('bad',b===s&&i!==c)});if(s&&+s.dataset.i===c)n++});box.querySelector('.result').textContent=`${n} / ${t} correct`}
+function resetMC(box){box.querySelectorAll('.opts button').forEach(b=>b.classList.remove('sel','good','bad'));box.querySelector('.result').textContent=''}
+function listenHTML(){return `<div class="upPage"><div class="upHead"><div><h1>Listening Lab · Ben’s Family</h1><p>Tasks 3 and 4 are combined on one compact screen.</p></div><span class="badge">B1+ · 1:09</span></div><div class="listenGrid"><section class="panel"><div class="audioBar"><div><strong>Teenage Life</strong><small>Ben, Max, Jake, Dad and Grandpa Tom</small></div><audio controls src="assets/teenage-life.mp3?v=${V}"></audio></div><div class="people"><div class="person"><b>Max · 2</b><span>toddler</span></div><div class="person"><b>Ben · 15</b><span>teenager</span></div><div class="person"><b>Jake · 22</b><span>young adult</span></div><div class="person"><b>Dad · 46</b><span>middle-aged</span></div><div class="person"><b>Tom · 70</b><span>retired senior</span></div></div><nav class="taskTabs"><button class="on" data-t="m">1 · Match</button><button data-t="d">2 · Details</button><button data-t="c">3 + 4 · T/F + Floor Is Lava</button></nav><div class="taskPane on" data-p="m"><div class="rows">${[['Max','has just started walking'],['Ben','likes computers and design'],['Jake','studies engineering and shares a flat'],['Dad','changed jobs for a new challenge'],['Tom','is retired and enjoys fishing']].map((x,i)=>`<div class="row"><b>${x[0]}</b><select><option value="">Choose…</option>${[['is retired and enjoys fishing'],['studies engineering and shares a flat'],['has just started walking'],['changed jobs for a new challenge'],['likes computers and design']].map(y=>`<option ${y[0]===x[1]?'data-ok="1"':''}>${y[0]}</option>`).join('')}</select></div>`).join('')}</div><div class="checkRow"><button class="check" data-match-check>Check</button><button class="reset" data-match-reset>Reset</button><span class="result"></span></div></div><div class="taskPane" data-p="d"><div class="mc">${[['What does Max love doing?',['Reading','Opening cupboards','Cycling'],1],['What do Ben’s parents ask about?',['University','A flat','Driving'],0],['What does Jake sometimes miss?',['School','Living at home','Fishing'],1],['What surprised Ben?',['Adults dislike work','Adults do not have everything planned','Adults never change jobs'],1]].map(x=>`<div class="item" data-c="${x[2]}"><p>${x[0]}</p><div class="opts">${x[1].map((a,i)=>`<button data-i="${i}">${a}</button>`).join('')}</div></div>`).join('')}</div><div class="checkRow"><button class="check">Check</button><button class="reset">Reset</button><span class="result"></span></div></div><div class="taskPane" data-p="c"><div class="combo34"><div><h2 style="margin:0 0 6px;color:var(--navy)">Task 3 · True / False</h2><div class="mc">${lavaQs.slice(0,4).map(x=>`<div class="item" data-c="${x[2]}"><p>${x[0]}</p><div class="opts">${x[1].map((a,i)=>`<button data-i="${i}">${a}</button>`).join('')}</div></div>`).join('')}</div><div class="checkRow"><button class="check">Check</button><button class="reset">Reset</button><span class="result"></span></div></div><div class="lava"><div class="lavaTop"><b>Task 4 · FLOOR IS LAVA</b><span class="lavaLives">Lives: <span data-lives>3</span></span></div><div class="lavaQ" data-lava-q></div><div class="lavaBtns" data-lava-a></div><div class="lavaFeedback" data-lava-f>Choose before the lava rises.</div><button class="lavaNext" data-lava-next>Next →</button><div class="quote" style="margin-top:9px">Final message: Every stage of life is <input data-a="different">. Some things get <input data-a="easier">, but new <input data-a="problems"> appear too.</div><div class="checkRow"><button class="check" data-gap-check>Check message</button><span class="result" data-gap-result></span></div></div></div></div></section><aside class="panel sideQuiz"><div class="qMeta"><span>LISTENING CHALLENGE</span><span data-qn></span></div><h2>Quick audio check</h2><div class="qText" data-qq></div><div class="qAnswers" data-qa></div><div class="qFeed" data-qf></div><button class="qNext" data-qnext>Next →</button></aside></div></div>`}
+function setListening(page){page.innerHTML=listenHTML();let root=page;root.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{root.querySelectorAll('[data-t]').forEach(x=>x.classList.toggle('on',x===b));root.querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('on',x.dataset.p===b.dataset.t))});pick(root);root.querySelectorAll('.taskPane .check:not([data-gap-check])').forEach(b=>b.onclick=()=>checkMC(b.closest('.taskPane')));root.querySelectorAll('.taskPane .reset').forEach(b=>b.onclick=()=>resetMC(b.closest('.taskPane')));root.querySelector('[data-match-check]').onclick=()=>{let n=0,t=0;root.querySelectorAll('[data-p="m"] select').forEach(s=>{t++;let ok=s.selectedOptions[0]?.dataset.ok==='1';s.style.borderColor=ok?'#55a978':'#d96f7d';if(ok)n++});root.querySelector('[data-p="m"] .result').textContent=`${n} / ${t} correct`};root.querySelector('[data-match-reset]').onclick=()=>{root.querySelectorAll('[data-p="m"] select').forEach(s=>{s.value='';s.style.borderColor=''});root.querySelector('[data-p="m"] .result').textContent=''};root.querySelector('[data-gap-check]').onclick=()=>{let n=0;root.querySelectorAll('[data-a]').forEach(i=>{let ok=i.value.trim().toLowerCase()===i.dataset.a;i.style.borderColor=ok?'#55a978':'#d96f7d';if(ok)n++});root.querySelector('[data-gap-result]').textContent=`${n} / 3 correct`};let li=0,lives=3,locked=false;const drawL=()=>{locked=false;let q=lavaQs[li];root.querySelector('[data-lava-q]').textContent=q[0];let a=root.querySelector('[data-lava-a]');a.innerHTML='';q[1].forEach((x,i)=>{let b=document.createElement('button');b.textContent=x;b.onclick=()=>{if(locked)return;locked=true;if(i===q[2])root.querySelector('[data-lava-f]').textContent='SAFE! '+q[3];else{lives=Math.max(0,lives-1);root.querySelector('[data-lives]').textContent=lives;root.querySelector('[data-lava-f]').textContent=lives?'LAVA HIT! '+q[3]:'GAME OVER — restart and try again.'}};a.appendChild(b)})};root.querySelector('[data-lava-next]').onclick=()=>{if(lives===0){lives=3;li=0}else li=(li+1)%lavaQs.length;root.querySelector('[data-lives]').textContent=lives;drawL()};drawL();let qi=0,done=false;const drawQ=()=>{done=false;let q=listenQuiz[qi];root.querySelector('[data-qn]').textContent=`${qi+1}/${listenQuiz.length}`;root.querySelector('[data-qq]').textContent=q[0];root.querySelector('[data-qf]').textContent='';let a=root.querySelector('[data-qa]');a.innerHTML='';q[1].forEach((x,i)=>{let b=document.createElement('button');b.textContent=x;b.onclick=()=>{if(done)return;done=true;if(i===q[2]){b.classList.add('good');root.querySelector('[data-qf]').textContent='Correct.'}else{b.classList.add('bad');a.children[q[2]].classList.add('good');root.querySelector('[data-qf]').textContent='Check the detail and listen again.'}};a.appendChild(b)})};root.querySelector('[data-qnext]').onclick=()=>{qi=(qi+1)%listenQuiz.length;drawQ()};drawQ()}
+function shareHTML(){let defs=[...vocab].sort(()=>Math.random()-.5);return `<div class="sharePage"><div class="upHead"><div><h1>Sharenting · Reading Lab</h1><p>Full text and two compact checked activities under buttons.</p></div><span class="badge">Reading · Vocabulary · Multiple Choice</span></div><div class="shareGrid"><aside class="shareVisual"><div><h2>SHARENTING</h2><p>When family life goes online</p><p><b>Think first:</b> Should parents ask children before posting their photos?</p></div></aside><section class="panel shareMain"><nav class="shareTabs"><button class="on" data-s="text">Read full text</button><button data-s="vocab">Vocabulary Matching</button><button data-s="mc">Multiple Choice</button></nav><div class="sharePane on" data-sp="text"><div class="shareText"><h2 style="margin-top:0;color:var(--navy)">Sharenting: when family life goes online</h2>${shareText}</div></div><div class="sharePane" data-sp="vocab"><p class="smallHint">Match every word with its definition.</p><div class="matchGrid">${vocab.map((x,i)=>`<div class="matchWord"><b>${i+1}. ${x[0]}</b></div><div class="matchDef"><select data-ok="${x[1]}"><option value="">Choose definition…</option>${defs.map(d=>`<option>${d[1]}</option>`).join('')}</select></div>`).join('')}</div><div class="checkRow"><button class="check" data-vcheck>Check</button><button class="reset" data-vreset>Reset</button><span class="result" data-vres></span></div></div><div class="sharePane" data-sp="mc"><p class="smallHint">Choose one answer. All questions are based directly on the text.</p><div class="shareMC">${shareMC.map((x,n)=>`<div class="item" data-c="${x[2]}"><p>${n+1}. ${x[0]}</p><div class="opts">${x[1].map((a,i)=>`<button data-i="${i}">${a}</button>`).join('')}</div></div>`).join('')}</div><div class="checkRow"><button class="check">Check</button><button class="reset">Reset</button><span class="result"></span></div></div></section></div></div>`}
+function setShare(page){page.innerHTML=shareHTML();let r=page;r.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{r.querySelectorAll('[data-s]').forEach(x=>x.classList.toggle('on',x===b));r.querySelectorAll('[data-sp]').forEach(x=>x.classList.toggle('on',x.dataset.sp===b.dataset.s))});pick(r);r.querySelector('[data-sp="mc"] .check').onclick=()=>checkMC(r.querySelector('[data-sp="mc"]'));r.querySelector('[data-sp="mc"] .reset').onclick=()=>resetMC(r.querySelector('[data-sp="mc"]'));r.querySelector('[data-vcheck]').onclick=()=>{let n=0,t=0;r.querySelectorAll('[data-sp="vocab"] select').forEach(s=>{t++;let ok=s.value===s.dataset.ok;s.style.borderColor=ok?'#55a978':'#d96f7d';if(ok)n++});r.querySelector('[data-vres]').textContent=`${n} / ${t} correct`};r.querySelector('[data-vreset]').onclick=()=>{r.querySelectorAll('[data-sp="vocab"] select').forEach(s=>{s.value='';s.style.borderColor=''});r.querySelector('[data-vres]').textContent=''}}
+function findAudio(doc){return [...doc.querySelectorAll('audio')].find(a=>(a.getAttribute('src')||'').includes('teenage-life')||/Ben|Grandpa Tom|Listening Lab/i.test(a.closest('.page')?.textContent||''))}
+function findShare(doc){return [...doc.querySelectorAll('.page')].find(p=>/Sharenting/i.test(p.textContent||'')&&!/Word Formation/i.test(p.textContent||''))}
+function upgrade(doc){style(doc);let a=findAudio(doc),ap=a&&(a.closest('.page')||a.closest('section'));if(ap&&!ap.dataset.v2){ap.dataset.v2='1';setListening(ap)}let sp=findShare(doc);if(sp&&!sp.dataset.v2){sp.dataset.v2='1';setShare(sp)}}
+frame.onload=()=>{let d=frame.contentDocument;upgrade(d);document.getElementById('loading').classList.add('hide');let n=0,t=setInterval(()=>{upgrade(d);if(++n>30)clearInterval(t)},300);new MutationObserver(()=>upgrade(d)).observe(d.documentElement,{childList:true,subtree:true})};
+window.addEventListener('message',e=>{if(e.source===frame.contentWindow)parent.postMessage(e.data,location.origin);else if(e.source===parent&&parent!==window)frame.contentWindow?.postMessage(e.data,location.origin)});
 })();
 </script>
 </body>
