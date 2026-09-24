@@ -214,8 +214,6 @@ function setFamousAudio(doc){
    box.querySelector('.focusCount').textContent=(i+1)+' / '+famousMinds.length;box.querySelector('.focusScore').textContent='Score '+score+' / '+famousMinds.length;
  }
  listen.onclick=speak; box.querySelector('.focusNext').onclick=()=>{i=(i+1)%famousMinds.length;draw()}; speechSynthesis.getVoices(); draw();
- const quick=doc.createElement('div');quick.style.marginTop='9px';quick.innerHTML='<div style="font-weight:900;color:#0b3f70;margin-bottom:6px">Track 1.24 · Quick Check</div><div class="mc focusQuick"></div><div class="checkRow"><button class="check">Check 1.24</button><button class="reset">Reset</button><span class="result"></span></div>';box.appendChild(quick);
- const mc=quick.querySelector('.mc');focusQuick.forEach((x,n)=>{const item=doc.createElement('div');item.className='item';item.dataset.c=x.o.indexOf(x.a);item.innerHTML='<p>'+(n+1)+'. '+x.q+'</p><div class="opts">'+x.o.map((a,j)=>'<button data-i="'+j+'">'+a+'</button>').join('')+'</div>';mc.appendChild(item)});pick(quick);quick.querySelector('.check').onclick=()=>checkMC(quick);quick.querySelector('.reset').onclick=()=>resetMC(quick);
 }
 \nfunction fixMenuNumbers(doc){
   const sel=doc.getElementById('sel');
