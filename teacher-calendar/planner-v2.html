@@ -109,15 +109,6 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
         <div class="summary-card"><div class="k">Получено всего</div><div class="v" id="sumPaidAll">0 ₽</div></div>
       </div>
 
-      <div class="payment-form">
-        <div><label>Ученик</label><select id="payStudent"></select></div>
-        <div><label>Месяц</label><input id="payMonth" type="month"></div>
-        <div><label>Фактически оплачено</label><input id="payAmount" type="number" min="0" step="1" placeholder="0"></div>
-        <div><label>Дата оплаты</label><input id="payDate" type="date"></div>
-        <div class="wide"><label>Комментарий</label><input id="payNote" type="text" placeholder="например: 8 занятий"></div>
-        <button class="primary" type="button" onclick="addPayment()">Добавить</button>
-      </div>
-
       <div class="scroll">
         <table class="finance-table">
           <thead><tr><th>Ученик</th><th>План на месяц</th><th>Фактически оплачено</th><th>Осталось</th></tr></thead>
@@ -125,8 +116,7 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
         </table>
       </div>
 
-      <div class="scroll" style="margin-top:10px"><table class="payment-list"><thead><tr><th>Месяц</th><th>Ученик</th><th>Фактическая оплата</th><th>Дата</th><th>Комментарий</th><th></th></tr></thead><tbody id="paymentsBody"></tbody></table></div>
-      <div class="notice" style="margin-top:10px">В колонке «План на месяц» укажите, сколько примерно ожидаете от каждого ученика. «Фактически оплачено» считается только по реально внесённым платежам. Всё сохраняется локально, в Backup и в Cloud.</div>
+      <div class="notice" style="margin-top:10px">Каждый ученик показывается один раз. План и фактическую оплату вводите прямо в строке ученика. Итоги пересчитываются автоматически и сохраняются в Cloud.</div>
     </div>
   </section>
   <section id="attendance" class="panel"><div class="notice">Посещаемость сохраняется в резервной и облачной копии планнера.</div></section>
@@ -166,6 +156,7 @@ const STUDENTS_STORE='crm_students_v4';
 const NOTES_STORE='tp_notes_v4';
 const PAYMENTS_STORE='tp_payments_v1';
 const PAYMENT_PLANS_STORE='tp_payment_plans_v1';
+const ACTUAL_PAYMENTS_STORE='tp_actual_payments_v1';
 const CLOUD_TOKEN='tp_cloud_token_v1';
 const CLOUD_STAMP='tp_cloud_stamp_v2';
 const SUPABASE_URL='https://lzxcmrlubhjfdhtqvqzt.supabase.co';
@@ -176,6 +167,7 @@ let students=[...DEFAULT_STUDENTS];
 let notes='';
 let payments=[];
 let paymentPlans={};
+let actualPayments={};
 
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function cleanPlannerText(v){return String(v??'').replace(/\*\*\\n\*\*/g,'\n').replace(/\\n/g,'\n').replace(/\*\*/g,'')}
@@ -194,6 +186,8 @@ function loadLocal(){
     if(Array.isArray(p)) payments=p;
     const pp=JSON.parse(localStorage.getItem(PAYMENT_PLANS_STORE)||'{}');
     if(pp&&typeof pp==='object'&&!Array.isArray(pp)) paymentPlans=pp;
+    const ap=JSON.parse(localStorage.getItem(ACTUAL_PAYMENTS_STORE)||'{}');
+    if(ap&&typeof ap==='object'&&!Array.isArray(ap)) actualPayments=ap;
   }catch(e){}
 }
 
@@ -204,6 +198,7 @@ function saveLocal(){
     localStorage.setItem(NOTES_STORE,notes);
     localStorage.setItem(PAYMENTS_STORE,JSON.stringify(payments));
     localStorage.setItem(PAYMENT_PLANS_STORE,JSON.stringify(paymentPlans));
+    localStorage.setItem(ACTUAL_PAYMENTS_STORE,JSON.stringify(actualPayments));
   }catch(e){}
   setStatus('Сохранено');
   queueCloudSave();
@@ -240,6 +235,7 @@ function money(v){return Number(String(v??'').replace(',','.'))||0}
 function fmtMoney(v){return new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(v)+' ₽'}
 function planKey(studentId,month){return String(month||'')+'|'+String(studentId||'')}
 function getPlan(studentId,month){return money(paymentPlans[planKey(studentId,month)]||0)}
+function getActual(studentId,month){return money(actualPayments[planKey(studentId,month)]||0)}
 function setPlan(studentId,value){
   const month=(document.getElementById('payFilterMonth')||{}).value||'';
   if(!month)return;
@@ -249,34 +245,87 @@ function setPlan(studentId,value){
   saveLocal();
   renderPayments();
 }
-function migrateLegacyPayments(){
-  const totals={};
-  const keep=[];
-  payments.forEach(p=>{
-    if(!p.date&&p.month&&money(p.amount)>0){
-      const k=planKey(p.studentId,p.month);
-      totals[k]=(totals[k]||0)+money(p.amount);
-    }else if(p.date&&money(p.amount)>0){
-      keep.push(p);
+function setActual(studentId,value){
+  const month=(document.getElementById('payFilterMonth')||{}).value||'';
+  if(!month)return;
+  const v=Math.max(0,money(value));
+  const k=planKey(studentId,month);
+  if(v) actualPayments[k]=v; else delete actualPayments[k];
+  saveLocal();
+  renderPayments();
+}
+function canonicalStudentName(v){
+  return normalizeName(v).toLowerCase().replace(/ё/g,'е').replace(/[.,;:()]/g,' ')
+    .replace(/\b(егэ|огэ)\b/gi,' ')
+    .replace(/\b\d+\s*(?:кл|класс(?:а|е|ов)?)[.]?\b/gi,' ')
+    .replace(/\s+/g,' ').trim();
+}
+function remapFinanceId(fromId,toId){
+  const from='|'+String(fromId), to='|'+String(toId);
+  Object.keys(paymentPlans).forEach(k=>{
+    if(k.endsWith(from)){
+      const nk=k.slice(0,-from.length)+to;
+      paymentPlans[nk]=Math.max(money(paymentPlans[nk]),money(paymentPlans[k]));
+      delete paymentPlans[k];
     }
   });
-  Object.entries(totals).forEach(([k,v])=>{if(getPlan(k.split('|').slice(1).join('|'),k.split('|')[0])<v) paymentPlans[k]=v});
-  const changed=keep.length!==payments.length;
-  payments=keep;
-  return changed||Object.keys(totals).length>0;
+  Object.keys(actualPayments).forEach(k=>{
+    if(k.endsWith(from)){
+      const nk=k.slice(0,-from.length)+to;
+      actualPayments[nk]=money(actualPayments[nk])+money(actualPayments[k]);
+      delete actualPayments[k];
+    }
+  });
+  payments.forEach(p=>{if(String(p.studentId)===String(fromId))p.studentId=toId});
+}
+function dedupeStudents(){
+  const byKey=new Map();
+  const unique=[];
+  students.forEach(st=>{
+    const key=canonicalStudentName(st.name);
+    if(!key){unique.push(st);return}
+    const primary=byKey.get(key);
+    if(!primary){byKey.set(key,st);unique.push(st);return}
+    remapFinanceId(st.id,primary.id);
+    if(normalizeName(st.name).length>normalizeName(primary.name).length) primary.name=normalizeName(st.name);
+  });
+  const changed=unique.length!==students.length;
+  students=unique;
+  return changed;
+}
+function migrateLegacyPayments(){
+  const planned={};
+  const actual={};
+  payments.forEach(p=>{
+    if(!p.month||money(p.amount)<=0)return;
+    const k=planKey(p.studentId,p.month);
+    if(p.date) actual[k]=(actual[k]||0)+money(p.amount);
+    else planned[k]=Math.max(planned[k]||0,money(p.amount));
+  });
+  Object.entries(planned).forEach(([k,v])=>{paymentPlans[k]=Math.max(money(paymentPlans[k]),v)});
+  Object.entries(actual).forEach(([k,v])=>{actualPayments[k]=Math.max(money(actualPayments[k]),v)});
+  const changed=payments.length>0;
+  payments=[];
+  return changed;
 }
 
 function syncStudentsFromSchedule(){
-  let changed=false;
+  let changed=dedupeStudents();
   Object.entries(schedule).forEach(([k,v])=>{
     if(!k.startsWith('p|'))return;
     const name=normalizeName(v);
     if(!name)return;
-    if(!students.some(x=>normalizeName(x.name).toLowerCase()===name.toLowerCase())){
+    const key=canonicalStudentName(name);
+    const existing=students.find(x=>canonicalStudentName(x.name)===key);
+    if(!existing){
       students.push({id:'stu'+Date.now()+Math.random().toString(16).slice(2,6),name,time:'',color:STUDENT_COLORS[students.length%STUDENT_COLORS.length],level:''});
+      changed=true;
+    }else if(name.length>normalizeName(existing.name).length){
+      existing.name=name;
       changed=true;
     }
   });
+  if(dedupeStudents()) changed=true;
   return changed;
 }
 
@@ -285,7 +334,7 @@ function addStudent(){
   const time=normalizeName(document.getElementById('studentTime').value);
   const level=normalizeName(document.getElementById('studentLevel').value);
   if(!name){alert('Введите имя ученика.');return}
-  const existing=students.find(x=>normalizeName(x.name).toLowerCase()===name.toLowerCase());
+  const existing=students.find(x=>canonicalStudentName(x.name)===canonicalStudentName(name));
   if(existing){alert('Этот ученик уже есть.');return}
   students.push({id:'stu'+Date.now(),name,time,level,color:STUDENT_COLORS[students.length%STUDENT_COLORS.length]});
   document.getElementById('studentName').value='';
@@ -299,7 +348,8 @@ function deleteStudent(id){
   const st=students.find(x=>String(x.id)===String(id));
   if(!st)return;
   const hasPlan=Object.keys(paymentPlans).some(k=>k.endsWith('|'+String(id))&&money(paymentPlans[k])>0);
-  if(payments.some(p=>String(p.studentId)===String(id))||hasPlan){alert('У ученика есть финансовые записи. Сначала удалите платежи и план оплаты или оставьте ученика в списке.');return}
+  const hasActual=Object.keys(actualPayments).some(k=>k.endsWith('|'+String(id))&&money(actualPayments[k])>0);
+  if(hasPlan||hasActual){alert('У ученика есть финансовые записи. Сначала очистите план и фактическую оплату или оставьте ученика в списке.');return}
   if(!confirm('Удалить ученика «'+st.name+'» из списка?'))return;
   students=students.filter(x=>String(x.id)!==String(id));
   saveLocal();
@@ -315,20 +365,13 @@ function renderStudents(){
 
 function renderPayments(){
   syncStudentsFromSchedule();
-  const sel=document.getElementById('payStudent');
-  if(sel){
-    const old=sel.value;
-    sel.innerHTML=students.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join('');
-    if(old&&[...sel.options].some(o=>o.value===old)) sel.value=old;
-  }
 
   const filterEl=document.getElementById('payFilterMonth');
   const filterMonth=filterEl?filterEl.value:'';
-  const monthRows=filterMonth?payments.filter(p=>p.month===filterMonth):payments;
-  const paidMonth=monthRows.reduce((a,p)=>a+money(p.amount),0);
   const planMonth=students.reduce((a,st)=>a+getPlan(st.id,filterMonth),0);
+  const paidMonth=students.reduce((a,st)=>a+getActual(st.id,filterMonth),0);
   const remainMonth=Math.max(0,planMonth-paidMonth);
-  const paidAll=payments.reduce((a,p)=>a+money(p.amount),0);
+  const paidAll=Object.values(actualPayments).reduce((a,v)=>a+money(v),0);
 
   const setText=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=fmtMoney(v)};
   setText('sumPlanMonth',planMonth);
@@ -340,55 +383,12 @@ function renderPayments(){
   if(byStudent){
     const rows=students.map(st=>{
       const plan=getPlan(st.id,filterMonth);
-      const paid=monthRows.filter(p=>String(p.studentId)===String(st.id)).reduce((a,p)=>a+money(p.amount),0);
+      const paid=getActual(st.id,filterMonth);
       const balance=Math.max(0,plan-paid);
       return {st,plan,paid,balance};
     });
-    byStudent.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x.st.name)+'</b></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(x.plan||'')+'" placeholder="0" onchange="setPlan(\''+esc(x.st.id)+'\',this.value)"></td><td>'+fmtMoney(x.paid)+'</td><td>'+fmtMoney(x.balance)+'</td></tr>').join('')+'<tr class="total-row"><td>ИТОГО</td><td>'+fmtMoney(planMonth)+'</td><td>'+fmtMoney(paidMonth)+'</td><td>'+fmtMoney(remainMonth)+'</td></tr>';
+    byStudent.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x.st.name)+'</b></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(x.plan||'')+'" placeholder="0" onchange="setPlan(\''+esc(x.st.id)+'\',this.value)"></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(x.paid||'')+'" placeholder="0" onchange="setActual(\''+esc(x.st.id)+'\',this.value)"></td><td>'+fmtMoney(x.balance)+'</td></tr>').join('')+'<tr class="total-row"><td>ИТОГО</td><td>'+fmtMoney(planMonth)+'</td><td>'+fmtMoney(paidMonth)+'</td><td>'+fmtMoney(remainMonth)+'</td></tr>';
   }
-
-  const body=document.getElementById('paymentsBody');
-  if(!body)return;
-  const ordered=[...payments].sort((a,b)=>String(b.month||'').localeCompare(String(a.month||''))||String(b.date||'').localeCompare(String(a.date||'')));
-  body.innerHTML=ordered.length?ordered.map(p=>{
-    const st=students.find(x=>String(x.id)===String(p.studentId));
-    return '<tr><td>'+esc(p.month||'—')+'</td><td><b>'+esc(st?st.name:'—')+'</b></td><td>'+fmtMoney(money(p.amount))+'</td><td>'+esc(p.date||'—')+'</td><td>'+esc(p.note||'')+'</td><td><button class="iconbtn" type="button" onclick="deletePayment(\''+esc(p.id)+'\')">×</button></td></tr>';
-  }).join(''):'<tr><td colspan="6" style="color:var(--muted);padding:14px 6px">Пока нет фактических оплат.</td></tr>';
-}
-
-function addPayment(){
-  const studentId=document.getElementById('payStudent').value;
-  const month=document.getElementById('payMonth').value;
-  const amount=document.getElementById('payAmount').value.trim();
-  let date=document.getElementById('payDate').value;
-  const note=document.getElementById('payNote').value.trim();
-  if(!studentId||!month){alert('Выберите ученика и месяц.');return}
-  if(money(amount)<=0){alert('Введите фактически оплаченную сумму.');return}
-  if(!date){
-    const d=new Date();
-    date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-  }
-  payments.push({id:'p'+Date.now(),studentId,month,amount:String(money(amount)),date,note});
-  document.getElementById('payAmount').value='';
-  document.getElementById('payDate').value=date;
-  document.getElementById('payNote').value='';
-  saveLocal();
-  renderPayments();
-}
-
-function markPaymentPaid(id){
-  const p=payments.find(x=>x.id===id);
-  if(!p)return;
-  const d=new Date();
-  p.date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-  saveLocal();
-  renderPayments();
-}
-
-function deletePayment(id){
-  payments=payments.filter(x=>x.id!==id);
-  saveLocal();
-  renderPayments();
 }
 
 function toggleSchool(){
@@ -423,7 +423,7 @@ document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>
   document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===btn.dataset.panel));
 }));
 
-function collectState(){return {version:6,schedule,students,notes,payments,paymentPlans}}
+function collectState(){return {version:7,schedule,students,notes,payments,paymentPlans,actualPayments}}
 function applyState(state){
   if(!state||typeof state!=='object')return;
   if(state.schedule&&typeof state.schedule==='object'){schedule={...DEFAULT_SCHEDULE,...state.schedule};Object.keys(schedule).forEach(k=>schedule[k]=cleanPlannerText(schedule[k]));}
@@ -431,6 +431,8 @@ function applyState(state){
   if(typeof state.notes==='string')notes=state.notes;
   if(Array.isArray(state.payments))payments=state.payments;
   if(state.paymentPlans&&typeof state.paymentPlans==='object'&&!Array.isArray(state.paymentPlans)) paymentPlans=state.paymentPlans;
+  if(state.actualPayments&&typeof state.actualPayments==='object'&&!Array.isArray(state.actualPayments)) actualPayments=state.actualPayments;
+  dedupeStudents();
   migrateLegacyPayments();
   syncStudentsFromSchedule();
   saveLocal();renderSchedule();renderStudents();
@@ -512,14 +514,13 @@ async function checkEgeCode(){
 }
 
 loadLocal();
+dedupeStudents();
 migrateLegacyPayments();
 renderSchedule();
 renderStudents();
 const now=new Date();
 const ym=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-if(document.getElementById('payMonth')) document.getElementById('payMonth').value=ym;
 if(document.getElementById('payFilterMonth')) document.getElementById('payFilterMonth').value=ym;
-if(document.getElementById('payDate')) document.getElementById('payDate').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
 syncStudentsFromSchedule();
 saveLocal();
 renderStudents();
