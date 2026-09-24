@@ -79,7 +79,7 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
     </div>
 
     <div class="card">
-      <div class="cardhead">ЛИЧНЫЕ УРОКИ <small>Пн–Пт с 14.00 · Сб–Вс с 10.00 · по 1 часу</small></div>
+      <div class="cardhead">ЛИЧНЫЕ УРОКИ <small>Пн–Чт с 14.00 · Пт с 13.00 · Сб–Вс с 10.00 · по 1 часу</small></div>
       <div class="scroll"><div class="grid personal" id="personalGrid"></div></div>
     </div>
   </section>
@@ -208,7 +208,7 @@ function renderSchedule(){
   PERSONAL_TIMES.forEach((t,r)=>{
     p+='<div class="time">'+t+'</div>';
     DAYS.forEach((d,di)=>{
-      if(di<5&&r<4){p+='<div class="cell blocked"></div>';return}
+      if((di<4&&r<4)||(di===4&&r<3)){p+='<div class="cell blocked"></div>';return}
       const k=cellKey('p',r,di);
       const name=cleanPlannerText(schedule[k]||'');
       p+='<div class="cell personalcell '+(di>4?'weekendcell ':'')+(editing?'editing':'')+'">'+(name?'<div class="slot-time">'+t+'</div>':'')+'<div class="slot-name" data-k="'+k+'" '+(editing?'contenteditable="true"':'')+'>'+esc(name)+'</div></div>';
