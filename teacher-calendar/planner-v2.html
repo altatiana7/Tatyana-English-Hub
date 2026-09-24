@@ -357,16 +357,8 @@ function deleteStudent(id){
 }
 
 function renderStudents(){
-  const changed=syncStudentsFromSchedule();
-  if(changed) saveLocal();
-  const seen=new Set();
-  const uniqueStudents=students.filter(x=>{
-    const key=canonicalStudentName(x.name);
-    if(!key||seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-  document.getElementById('studentsList').innerHTML=uniqueStudents.map(x=>'<div class="student" style="background:'+esc(x.color||'#eee')+'"><button class="remove-student" type="button" onclick="deleteStudent(\''+esc(x.id)+'\')">×</button>'+esc(x.name)+(x.time?'<div style="font-size:10px;margin-top:4px;color:#5f5853">'+esc(x.time)+'</div>':'')+(x.level?'<div style="font-size:10px;margin-top:2px;color:#5f5853">'+esc(x.level)+'</div>':'')+'</div>').join('');
+  syncStudentsFromSchedule();
+  document.getElementById('studentsList').innerHTML=students.map(x=>'<div class="student" style="background:'+esc(x.color||'#eee')+'"><button class="remove-student" type="button" onclick="deleteStudent(\''+esc(x.id)+'\')">×</button>'+esc(x.name)+(x.time?'<div style="font-size:10px;margin-top:4px;color:#5f5853">'+esc(x.time)+'</div>':'')+(x.level?'<div style="font-size:10px;margin-top:2px;color:#5f5853">'+esc(x.level)+'</div>':'')+'</div>').join('');
   document.getElementById('notesBox').value=notes;
   renderPayments();
 }
