@@ -243,17 +243,27 @@
   <div class="checkRow"><button onclick="checkInputs('s-ex3')">Check</button><button onclick="resetInputs('s-ex3')">Reset</button></div>
 </div>
 </section><section class="page" id="textbook">
+<style>
+#textbook{padding-top:10px}
+#textbook .dualTextGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:1180px;margin:8px auto 0;align-items:start}
+#textbook .textbookCard{max-width:none;margin:0;padding:14px 15px}
+#textbook .textbookHead{margin-bottom:7px}
+#textbook .textbookHead h2{font-size:25px}
+#textbook .topicVisual{grid-template-columns:135px 1fr;margin:6px 0 9px;padding:7px}
+#textbook .topicVisual img{width:135px;height:100px;object-fit:cover;border-radius:10px}
+#textbook .topicVisual span{font-size:12px}
+#textbook .textbookCard p{font-size:16.5px;line-height:1.48;margin:7px 0}
+#textbook .inlineChoice button{font-size:14px;padding:3px 6px}
+#textbook .textCheck{margin-top:9px;padding-top:8px}
+@media(max-width:950px){#textbook .dualTextGrid{grid-template-columns:1fr}#textbook .textbookCard p{font-size:17px;line-height:1.58}}
+</style>
 <h1 class="title">Celebrity Kids + Family Dinners</h1>
-<div class="hint">Texts from the textbook, rebuilt cleanly as interactive tasks. Celebrity Kids opens first.</div>
-<div class="textTabs">
-  <button class="on" data-txt="celebrityText">Celebrity Kids</button>
-  <button data-txt="familyDinnerText">Family Dinners</button>
-</div>
+<div class="hint">Both textbook activities are on one page. Complete each text and check it separately.</div>
 
-<div class="textPane on" id="celebrityText">
-  <div class="textbookCard celebrityCard">
+<div class="dualTextGrid">
+  <div id="celebrityText" class="textbookCard celebrityCard">
     <div class="textbookHead"><span class="textBadge">Grammar in context</span><h2>Celebrity Kids</h2></div>
-    <div class="topicVisual"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Lily_Donaldson_paparazzi_Cannes_2012.jpg?width=700" alt="Celebrity photographed by paparazzi"><div><b>Celebrity life = cameras + little privacy</b><span>Use the image only as context. Read the text to solve the grammar.</span></div></div>
+    <div class="topicVisual"><img src="assets/celebrity-kids-user.webp" alt="Celebrity child and photographers"><div><b>Celebrity life = cameras + little privacy</b><span>Choose the correct present form in each sentence.</span></div></div>
     <p>Some kids <span class="inlineChoice" data-answer="hate"><button>hate</button><button>are hating</button></span> it when their parents <span class="inlineChoice" data-answer="post"><button>post</button><button>are posting</button></span> photos of them on social media.</p>
     <p>But what <span class="inlineChoice" data-answer="do you think"><button>do you think</button><button>are you thinking</button></span> life is like as the son or daughter of a celebrity?</p>
     <p>Paparazzi <span class="inlineChoice" data-answer="want"><button>want</button><button>are wanting</button></span> to take your photo all the time.</p>
@@ -264,12 +274,10 @@
     <p>Is it possible that some famous parents <span class="inlineChoice" data-answer="care"><button>care</button><button>are caring</button></span> about money but not about their children's privacy?</p>
     <div class="textCheck"><button onclick="checkInlineChoices('celebrityText')">Check</button><button onclick="resetInlineChoices('celebrityText')">Reset</button><span id="celebrityTextScore"></span></div>
   </div>
-</div>
 
-<div class="textPane" id="familyDinnerText">
-  <div class="textbookCard dinnerCard">
+  <div id="familyDinnerText" class="textbookCard dinnerCard">
     <div class="textbookHead"><span class="textBadge">Culture exchange</span><h2>Family Dinners</h2></div>
-    <div class="topicVisual"><img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Family_eating_at_a_table.jpg?width=900" alt="Family eating together at a table"><div><b>Family time vs screen time</b><span>Think: what can stop real conversation at the table?</span></div></div>
+    <div class="topicVisual"><img src="assets/family.jpg" alt="Family having dinner together"><div><b>Family time vs screen time</b><span>Choose the correct article or zero article.</span></div></div>
     <p>Domino's is <span class="inlineChoice" data-answer="an"><button>a</button><button>an</button></span> Australian-British company that makes <span class="inlineChoice" data-answer="—"><button>the</button><button>—</button></span> Italian food.</p>
     <p>The company discovered some interesting information about <span class="inlineChoice" data-answer="—"><button>the</button><button>—</button></span> family dinners.</p>
     <p>They found that at dinner time in the UK 67% of <span class="inlineChoice" data-answer="—"><button>the</button><button>—</button></span> family arguments are because of <span class="inlineChoice" data-answer="—"><button>a</button><button>—</button></span> technology.</p>
