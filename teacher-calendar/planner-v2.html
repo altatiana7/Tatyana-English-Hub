@@ -43,6 +43,7 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
 .finance-table th,.finance-table td{border-bottom:1px solid #eee6df;padding:7px 6px;text-align:left}
 .finance-table th{font-size:10px;color:var(--muted);text-transform:uppercase}
 .total-row td{font-weight:900;background:#fcfaf8}
+.plan-input{width:120px;border:1px solid var(--line);border-radius:7px;padding:6px 7px;font:inherit;font-weight:800;background:#fff}
 @media(max-width:900px){.payment-form{grid-template-columns:1fr 1fr 1fr}.payment-form .wide{grid-column:span 2}.student-form{grid-template-columns:1fr 1fr}.summary-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.top{align-items:flex-start;flex-direction:column}.actions{width:100%}.payment-form{grid-template-columns:1fr 1fr}.payment-form .wide{grid-column:1/-1}}
 </style>
@@ -102,16 +103,16 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
         <div class="filterbox"><label>Финансы за месяц</label><input id="payFilterMonth" type="month" onchange="renderPayments()"></div>
       </div>
       <div class="summary-grid">
-        <div class="summary-card"><div class="k">Получено за месяц</div><div class="v" id="sumPaidMonth">0 ₽</div></div>
-        <div class="summary-card"><div class="k">К получению</div><div class="v" id="sumUnpaidMonth">0 ₽</div></div>
-        <div class="summary-card"><div class="k">Начислено за месяц</div><div class="v" id="sumBilledMonth">0 ₽</div></div>
+        <div class="summary-card"><div class="k">План на месяц</div><div class="v" id="sumPlanMonth">0 ₽</div></div>
+        <div class="summary-card"><div class="k">Фактически получено</div><div class="v" id="sumPaidMonth">0 ₽</div></div>
+        <div class="summary-card"><div class="k">Осталось получить</div><div class="v" id="sumRemainMonth">0 ₽</div></div>
         <div class="summary-card"><div class="k">Получено всего</div><div class="v" id="sumPaidAll">0 ₽</div></div>
       </div>
 
       <div class="payment-form">
         <div><label>Ученик</label><select id="payStudent"></select></div>
         <div><label>Месяц</label><input id="payMonth" type="month"></div>
-        <div><label>Сумма</label><input id="payAmount" type="number" min="0" step="1" placeholder="0"></div>
+        <div><label>Фактически оплачено</label><input id="payAmount" type="number" min="0" step="1" placeholder="0"></div>
         <div><label>Дата оплаты</label><input id="payDate" type="date"></div>
         <div class="wide"><label>Комментарий</label><input id="payNote" type="text" placeholder="например: 8 занятий"></div>
         <button class="primary" type="button" onclick="addPayment()">Добавить</button>
@@ -119,13 +120,13 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
 
       <div class="scroll">
         <table class="finance-table">
-          <thead><tr><th>Ученик</th><th>Начислено</th><th>Получено</th><th>Остаток</th></tr></thead>
+          <thead><tr><th>Ученик</th><th>План на месяц</th><th>Фактически оплачено</th><th>Осталось</th></tr></thead>
           <tbody id="financeByStudent"></tbody>
         </table>
       </div>
 
-      <div class="scroll" style="margin-top:10px"><table class="payment-list"><thead><tr><th>Месяц</th><th>Ученик</th><th>Сумма</th><th>Дата</th><th>Статус</th><th>Комментарий</th><th></th></tr></thead><tbody id="paymentsBody"></tbody></table></div>
-      <div class="notice" style="margin-top:10px">Финансы считаются автоматически. В «Получено» попадают записи с датой оплаты. Оплаты сохраняются локально, в Backup и в Cloud.</div>
+      <div class="scroll" style="margin-top:10px"><table class="payment-list"><thead><tr><th>Месяц</th><th>Ученик</th><th>Фактическая оплата</th><th>Дата</th><th>Комментарий</th><th></th></tr></thead><tbody id="paymentsBody"></tbody></table></div>
+      <div class="notice" style="margin-top:10px">В колонке «План на месяц» укажите, сколько примерно ожидаете от каждого ученика. «Фактически оплачено» считается только по реально внесённым платежам. Всё сохраняется локально, в Backup и в Cloud.</div>
     </div>
   </section>
   <section id="attendance" class="panel"><div class="notice">Посещаемость сохраняется в резервной и облачной копии планнера.</div></section>
@@ -164,6 +165,7 @@ const STORE='tp_schedule_v4';
 const STUDENTS_STORE='crm_students_v4';
 const NOTES_STORE='tp_notes_v4';
 const PAYMENTS_STORE='tp_payments_v1';
+const PAYMENT_PLANS_STORE='tp_payment_plans_v1';
 const CLOUD_TOKEN='tp_cloud_token_v1';
 const CLOUD_STAMP='tp_cloud_stamp_v2';
 const SUPABASE_URL='https://lzxcmrlubhjfdhtqvqzt.supabase.co';
@@ -173,6 +175,7 @@ let schedule={...DEFAULT_SCHEDULE};
 let students=[...DEFAULT_STUDENTS];
 let notes='';
 let payments=[];
+let paymentPlans={};
 
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function cleanPlannerText(v){return String(v??'').replace(/\*\*\\n\*\*/g,'\n').replace(/\\n/g,'\n').replace(/\*\*/g,'')}
@@ -189,6 +192,8 @@ function loadLocal(){
     notes=localStorage.getItem(NOTES_STORE)||'';
     const p=JSON.parse(localStorage.getItem(PAYMENTS_STORE)||'[]');
     if(Array.isArray(p)) payments=p;
+    const pp=JSON.parse(localStorage.getItem(PAYMENT_PLANS_STORE)||'{}');
+    if(pp&&typeof pp==='object'&&!Array.isArray(pp)) paymentPlans=pp;
   }catch(e){}
 }
 
@@ -198,6 +203,7 @@ function saveLocal(){
     localStorage.setItem(STUDENTS_STORE,JSON.stringify(students));
     localStorage.setItem(NOTES_STORE,notes);
     localStorage.setItem(PAYMENTS_STORE,JSON.stringify(payments));
+    localStorage.setItem(PAYMENT_PLANS_STORE,JSON.stringify(paymentPlans));
   }catch(e){}
   setStatus('Сохранено');
   queueCloudSave();
@@ -232,6 +238,33 @@ const STUDENT_COLORS=['#c9b8ff','#bfe8db','#ffc8bd','#ead0f6','#ffe0b5','#cfe5ff
 function normalizeName(v){return String(v||'').trim().replace(/\s+/g,' ')}
 function money(v){return Number(String(v??'').replace(',','.'))||0}
 function fmtMoney(v){return new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(v)+' ₽'}
+function planKey(studentId,month){return String(month||'')+'|'+String(studentId||'')}
+function getPlan(studentId,month){return money(paymentPlans[planKey(studentId,month)]||0)}
+function setPlan(studentId,value){
+  const month=(document.getElementById('payFilterMonth')||{}).value||'';
+  if(!month)return;
+  const v=Math.max(0,money(value));
+  const k=planKey(studentId,month);
+  if(v) paymentPlans[k]=v; else delete paymentPlans[k];
+  saveLocal();
+  renderPayments();
+}
+function migrateLegacyPayments(){
+  const totals={};
+  const keep=[];
+  payments.forEach(p=>{
+    if(!p.date&&p.month&&money(p.amount)>0){
+      const k=planKey(p.studentId,p.month);
+      totals[k]=(totals[k]||0)+money(p.amount);
+    }else if(p.date&&money(p.amount)>0){
+      keep.push(p);
+    }
+  });
+  Object.entries(totals).forEach(([k,v])=>{if(getPlan(k.split('|').slice(1).join('|'),k.split('|')[0])<v) paymentPlans[k]=v});
+  const changed=keep.length!==payments.length;
+  payments=keep;
+  return changed||Object.keys(totals).length>0;
+}
 
 function syncStudentsFromSchedule(){
   let changed=false;
@@ -265,7 +298,8 @@ function addStudent(){
 function deleteStudent(id){
   const st=students.find(x=>String(x.id)===String(id));
   if(!st)return;
-  if(payments.some(p=>String(p.studentId)===String(id))){alert('У ученика есть записи об оплате. Сначала удалите их или оставьте ученика в списке.');return}
+  const hasPlan=Object.keys(paymentPlans).some(k=>k.endsWith('|'+String(id))&&money(paymentPlans[k])>0);
+  if(payments.some(p=>String(p.studentId)===String(id))||hasPlan){alert('У ученика есть финансовые записи. Сначала удалите платежи и план оплаты или оставьте ученика в списке.');return}
   if(!confirm('Удалить ученика «'+st.name+'» из списка?'))return;
   students=students.filter(x=>String(x.id)!==String(id));
   saveLocal();
@@ -291,26 +325,26 @@ function renderPayments(){
   const filterEl=document.getElementById('payFilterMonth');
   const filterMonth=filterEl?filterEl.value:'';
   const monthRows=filterMonth?payments.filter(p=>p.month===filterMonth):payments;
-  const paidMonth=monthRows.filter(p=>p.date).reduce((a,p)=>a+money(p.amount),0);
-  const unpaidMonth=monthRows.filter(p=>!p.date).reduce((a,p)=>a+money(p.amount),0);
-  const billedMonth=monthRows.reduce((a,p)=>a+money(p.amount),0);
-  const paidAll=payments.filter(p=>p.date).reduce((a,p)=>a+money(p.amount),0);
+  const paidMonth=monthRows.reduce((a,p)=>a+money(p.amount),0);
+  const planMonth=students.reduce((a,st)=>a+getPlan(st.id,filterMonth),0);
+  const remainMonth=Math.max(0,planMonth-paidMonth);
+  const paidAll=payments.reduce((a,p)=>a+money(p.amount),0);
 
   const setText=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=fmtMoney(v)};
+  setText('sumPlanMonth',planMonth);
   setText('sumPaidMonth',paidMonth);
-  setText('sumUnpaidMonth',unpaidMonth);
-  setText('sumBilledMonth',billedMonth);
+  setText('sumRemainMonth',remainMonth);
   setText('sumPaidAll',paidAll);
 
   const byStudent=document.getElementById('financeByStudent');
   if(byStudent){
     const rows=students.map(st=>{
-      const ps=monthRows.filter(p=>String(p.studentId)===String(st.id));
-      const billed=ps.reduce((a,p)=>a+money(p.amount),0);
-      const paid=ps.filter(p=>p.date).reduce((a,p)=>a+money(p.amount),0);
-      return {st,billed,paid,balance:billed-paid};
-    }).filter(x=>x.billed||x.paid);
-    byStudent.innerHTML=rows.length?rows.map(x=>'<tr><td><b>'+esc(x.st.name)+'</b></td><td>'+fmtMoney(x.billed)+'</td><td>'+fmtMoney(x.paid)+'</td><td>'+fmtMoney(x.balance)+'</td></tr>').join('')+'<tr class="total-row"><td>ИТОГО</td><td>'+fmtMoney(billedMonth)+'</td><td>'+fmtMoney(paidMonth)+'</td><td>'+fmtMoney(unpaidMonth)+'</td></tr>':'<tr><td colspan="4" style="color:var(--muted);padding:14px 6px">За выбранный месяц пока нет записей.</td></tr>';
+      const plan=getPlan(st.id,filterMonth);
+      const paid=monthRows.filter(p=>String(p.studentId)===String(st.id)).reduce((a,p)=>a+money(p.amount),0);
+      const balance=Math.max(0,plan-paid);
+      return {st,plan,paid,balance};
+    });
+    byStudent.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x.st.name)+'</b></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(x.plan||'')+'" placeholder="0" onchange="setPlan(\''+esc(x.st.id)+'\',this.value)"></td><td>'+fmtMoney(x.paid)+'</td><td>'+fmtMoney(x.balance)+'</td></tr>').join('')+'<tr class="total-row"><td>ИТОГО</td><td>'+fmtMoney(planMonth)+'</td><td>'+fmtMoney(paidMonth)+'</td><td>'+fmtMoney(remainMonth)+'</td></tr>';
   }
 
   const body=document.getElementById('paymentsBody');
@@ -318,21 +352,25 @@ function renderPayments(){
   const ordered=[...payments].sort((a,b)=>String(b.month||'').localeCompare(String(a.month||''))||String(b.date||'').localeCompare(String(a.date||'')));
   body.innerHTML=ordered.length?ordered.map(p=>{
     const st=students.find(x=>String(x.id)===String(p.studentId));
-    const action=p.date?'':'<button class="iconbtn" type="button" onclick="markPaymentPaid(\''+esc(p.id)+'\')">Оплачено</button> ';
-    return '<tr><td>'+esc(p.month||'—')+'</td><td><b>'+esc(st?st.name:'—')+'</b></td><td>'+fmtMoney(money(p.amount))+'</td><td>'+esc(p.date||'—')+'</td><td><span class="'+(p.date?'paid-badge':'unpaid-badge')+'">'+(p.date?'Оплачено':'Не оплачено')+'</span></td><td>'+esc(p.note||'')+'</td><td>'+action+'<button class="iconbtn" type="button" onclick="deletePayment(\''+esc(p.id)+'\')">×</button></td></tr>';
-  }).join(''):'<tr><td colspan="7" style="color:var(--muted);padding:14px 6px">Пока нет записей об оплате.</td></tr>';
+    return '<tr><td>'+esc(p.month||'—')+'</td><td><b>'+esc(st?st.name:'—')+'</b></td><td>'+fmtMoney(money(p.amount))+'</td><td>'+esc(p.date||'—')+'</td><td>'+esc(p.note||'')+'</td><td><button class="iconbtn" type="button" onclick="deletePayment(\''+esc(p.id)+'\')">×</button></td></tr>';
+  }).join(''):'<tr><td colspan="6" style="color:var(--muted);padding:14px 6px">Пока нет фактических оплат.</td></tr>';
 }
 
 function addPayment(){
   const studentId=document.getElementById('payStudent').value;
   const month=document.getElementById('payMonth').value;
   const amount=document.getElementById('payAmount').value.trim();
-  const date=document.getElementById('payDate').value;
+  let date=document.getElementById('payDate').value;
   const note=document.getElementById('payNote').value.trim();
   if(!studentId||!month){alert('Выберите ученика и месяц.');return}
-  payments.push({id:'p'+Date.now(),studentId,month,amount,date,note});
+  if(money(amount)<=0){alert('Введите фактически оплаченную сумму.');return}
+  if(!date){
+    const d=new Date();
+    date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  payments.push({id:'p'+Date.now(),studentId,month,amount:String(money(amount)),date,note});
   document.getElementById('payAmount').value='';
-  document.getElementById('payDate').value='';
+  document.getElementById('payDate').value=date;
   document.getElementById('payNote').value='';
   saveLocal();
   renderPayments();
@@ -385,13 +423,15 @@ document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>
   document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===btn.dataset.panel));
 }));
 
-function collectState(){return {version:5,schedule,students,notes,payments}}
+function collectState(){return {version:6,schedule,students,notes,payments,paymentPlans}}
 function applyState(state){
   if(!state||typeof state!=='object')return;
   if(state.schedule&&typeof state.schedule==='object'){schedule={...DEFAULT_SCHEDULE,...state.schedule};Object.keys(schedule).forEach(k=>schedule[k]=cleanPlannerText(schedule[k]));}
   if(Array.isArray(state.students)&&state.students.length)students=state.students;
   if(typeof state.notes==='string')notes=state.notes;
   if(Array.isArray(state.payments))payments=state.payments;
+  if(state.paymentPlans&&typeof state.paymentPlans==='object'&&!Array.isArray(state.paymentPlans)) paymentPlans=state.paymentPlans;
+  migrateLegacyPayments();
   syncStudentsFromSchedule();
   saveLocal();renderSchedule();renderStudents();
 }
@@ -472,12 +512,14 @@ async function checkEgeCode(){
 }
 
 loadLocal();
+migrateLegacyPayments();
 renderSchedule();
 renderStudents();
 const now=new Date();
 const ym=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
 if(document.getElementById('payMonth')) document.getElementById('payMonth').value=ym;
 if(document.getElementById('payFilterMonth')) document.getElementById('payFilterMonth').value=ym;
+if(document.getElementById('payDate')) document.getElementById('payDate').value=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
 syncStudentsFromSchedule();
 saveLocal();
 renderStudents();
