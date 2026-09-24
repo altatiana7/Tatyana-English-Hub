@@ -1,1 +1,487 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0"><title>Tatyana Planner</title><style>:root{--bg:#f6f3f1;--card:#fff;--line:#e4ddd8;--text:#29252a;--muted:#807770;--accent:#9c43c5;--soft:#f5ebfa;--school:#eef3f8;--private:#fbf0ff;--weekend:#fff7e9;--ok:#eaf5ee}*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{font:13px/1.3 Arial,system-ui,sans-serif;background:var(--bg);color:var(--text)}button,input,textarea{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:145px 1fr;gap:8px;padding:8px}.side,.top,.card,.block{background:#fff;border:1px solid var(--line);border-radius:14px}.side{padding:10px 7px}.brand{font-weight:900;font-size:15px;padding:5px 8px 12px}.brand b{color:var(--accent)}.nav button{width:100%;border:0;background:none;text-align:left;padding:9px 8px;border-radius:8px;margin:2px 0;color:#6e6762;font-weight:800;cursor:pointer}.nav button.active{background:var(--soft);color:#812fa8}.view{display:none}.view.active{display:block}.top{padding:8px 10px;margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}.top h2{font-size:14px;margin:0}.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 10px;font-weight:800;cursor:pointer}.primary{background:var(--accent);color:#fff;border-color:var(--accent)}.schedwrap{display:grid;gap:8px}.block{overflow:hidden}.blocktitle{padding:7px 10px;font-weight:900;font-size:12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.blocktitle small{font-weight:700;color:var(--muted)}.gridwrap{overflow:auto}.sched{display:grid;background:#fff}.personalgrid{grid-template-columns:98px repeat(7,minmax(112px,1fr));min-width:920px}.schoolgrid{grid-template-columns:102px repeat(5,minmax(120px,1fr));min-width:760px}.cell,.timecell,.dayhead{border-right:1px solid #eee7e2;border-bottom:1px solid #eee7e2;min-height:38px;padding:5px}.dayhead{font-weight:900;text-align:center;background:#fff;display:flex;align-items:center;justify-content:center}.dayhead.weekend{background:#fff3df}.timecell{font-size:10px;font-weight:900;color:#5f5853;background:#fcfaf8;display:flex;align-items:center;justify-content:center;text-align:center;white-space:nowrap}.cell{white-space:pre-wrap;outline:none;font-weight:700}.privatecell{background:var(--private)}.privatecell.weekend{background:var(--weekend)}.schoolcell{background:var(--school)}.blocked{background:#eee;color:#aaa;pointer-events:none}.cell.editing{box-shadow:inset 0 0 0 2px #c889e5;background:#fff}.schoolbox{display:none}.schoolbox.open{display:block}.schooltoggle{display:flex;gap:8px;align-items:center}.section{padding:10px}.students{display:grid;grid-template-columns:280px 1fr;gap:8px}.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:8px}.tile{border:0;border-radius:9px;min-height:54px;font-weight:850;cursor:pointer}.input{width:100%;padding:7px;border:1px solid var(--line);border-radius:8px}.detail{padding:12px}.boxgrid{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:6px}.box{border:1px solid var(--line);border-radius:9px;padding:8px;background:#fff}.box span{display:block;color:var(--muted);font-size:10px}.table{display:grid;grid-template-columns:180px 120px 1fr 130px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}.table>div{padding:7px;border-right:1px solid #eee7e2;border-bottom:1px solid #eee7e2}.head{font-size:10px;font-weight:900;color:var(--muted);background:#fcfaf8}.marks{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}.mark{border:1px solid var(--line);border-radius:7px;padding:4px;text-align:center}.mark input[type=text]{width:100%;border:0;border-bottom:1px solid #eee;text-align:center}.mark.done{background:var(--ok)}.attendance{display:grid;grid-template-columns:170px repeat(8,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}.attendance>div{padding:7px;border-right:1px solid #eee7e2;border-bottom:1px solid #eee7e2}.attbox{text-align:center}.toolbar{display:flex;gap:6px;justify-content:flex-end;margin-bottom:7px}.muted{color:var(--muted);font-size:11px}@media(max-width:900px){.app{grid-template-columns:108px 1fr}.students{grid-template-columns:1fr}.table,.attendance{min-width:850px}.scroll{overflow:auto}}</style></head><body><div class="app"><aside class="side"><div class="brand">Tatyana <b>Planner</b></div><div class="nav"><button class="active" data-v="schedule">Schedule</button><button data-v="students">Students</button><button data-v="payments">Payments</button><button data-v="attendance">Attendance</button><button data-v="notes">Notes</button></div></aside><main><section id="schedule" class="view active"><div class="top"><h2>Личные уроки</h2><div class="schooltoggle"><button id="schoolBtn" class="btn" onclick="toggleSchool()">Школьное расписание</button><button id="editBtn" class="btn primary" onclick="toggleEdit()">Edit</button></div></div><div class="schedwrap"><div id="schoolBox" class="block schoolbox"><div class="blocktitle">ШКОЛА <small>Пн–Пт</small></div><div class="gridwrap"><div id="schoolGrid" class="sched schoolgrid"></div></div></div><div class="block"><div class="blocktitle">ЛИЧНЫЕ УРОКИ <small>Пн–Пт с 14.00 · Сб–Вс с 10.00 · по 1 часу</small></div><div class="gridwrap"><div id="personalGrid" class="sched personalgrid"></div></div></div></div></section><section id="students" class="view"><div class="top"><span></span><button class="btn primary" onclick="addStudent()">+ Student</button></div><div class="students"><div class="card section"><input id="search" class="input" placeholder="Search" oninput="renderStudents()"><div id="tiles" class="tiles"></div></div><div id="detail" class="card detail"></div></div></section><section id="payments" class="view"><div class="toolbar"><input id="payMonth" type="month" class="btn" onchange="renderPayments()"></div><div class="scroll"><div id="payTable" class="table"></div></div></section><section id="attendance" class="view"><div class="toolbar"><input id="attMonth" type="month" class="btn" onchange="renderAttendance()"></div><div class="scroll"><div id="attTable" class="attendance"></div></div></section><section id="notes" class="view"><div class="card section"><textarea id="notesBox" class="input" style="min-height:420px;resize:vertical" placeholder="Notes..." oninput="localStorage.setItem('tp_notes',this.value)"></textarea></div></section></main></div><script>const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];const schoolDays=days.slice(0,5);const personalTimes=['10.00-11.00','11.00-12.00','12.00-13.00','13.00-14.00','14.00-15.00','15.00-16.00','16.00-17.00','17.00-18.00','18.00-19.00','19.00-20.00','20.00-21.00'];const school=['08:00–08:40','08:50–09:30','09:40–10:20','10:30–11:10','11:20–12:00','12:10–12:50','13:00–13:40','13:50–14:30'];const key='tp_schedule_v3';let sched=JSON.parse(localStorage.getItem(key)||'{}'),editing=false;const mig='tp_personal_unified_v1';if(!localStorage.getItem(mig)){let moved={};for(let r=0;r<7;r++){for(let d=0;d<5;d++){let old='t|'+r+'|'+d;if(sched[old])moved['p|'+(r+4)+'|'+d]=sched[old]}}for(let r=0;r<11;r++){for(let d=0;d<2;d++){let old='w|'+r+'|'+d;if(sched[old])moved['p|'+r+'|'+(d+5)]=sched[old]}}Object.assign(sched,moved);localStorage.setItem(key,JSON.stringify(sched));localStorage.setItem(mig,'1')}const seed=[{id:1,name:'Maya',time:'18:00',color:'#c9b8ff',level:'A2'},{id:2,name:'Nikita',time:'17:00',color:'#bfe8db',level:'A2+/B1'},{id:3,name:'Gabi',time:'12:00',color:'#ffc8bd',level:''}];let students=JSON.parse(localStorage.getItem('crm_students')||'null')||seed;let ledger=JSON.parse(localStorage.getItem('crm_ledger')||'{}');let selected=students[0]?.id;const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function sk(kind,r,d){return kind+'|'+r+'|'+d}function renderPersonal(){let h='<div class="timecell"></div>'+days.map((d,di)=>`<div class="dayhead ${di>4?'weekend':''}">${d}</div>`).join('');personalTimes.forEach((t,r)=>{h+=`<div class="timecell">${t}</div>`;days.forEach((d,di)=>{if(di<5&&r<4){h+='<div class="cell blocked"></div>';return}let k=sk('p',r,di);h+=`<div class="cell privatecell ${di>4?'weekend':''} ${editing?'editing':''}" data-k="${k}" ${editing?'contenteditable="true"':''}>${esc(sched[k]||'')}</div>`})});$('personalGrid').innerHTML=h}function renderSchool(){let h='<div class="timecell"></div>'+schoolDays.map(d=>`<div class="dayhead">${d}</div>`).join('');school.forEach((t,r)=>{h+=`<div class="timecell">${t}</div>`;schoolDays.forEach((d,di)=>{let k=sk('s',r,di);h+=`<div class="cell schoolcell ${editing?'editing':''}" data-k="${k}" ${editing?'contenteditable="true"':''}>${esc(sched[k]||'')}</div>`})});$('schoolGrid').innerHTML=h}function renderSchedule(){renderPersonal();renderSchool()}function toggleSchool(){let b=$('schoolBox');b.classList.toggle('open');$('schoolBtn').textContent=b.classList.contains('open')?'Скрыть школьное':'Школьное расписание'}function toggleEdit(){if(!editing){editing=true;$('editBtn').textContent='Save';renderSchedule();return}document.querySelectorAll('[data-k]').forEach(el=>sched[el.dataset.k]=el.innerText.trim());localStorage.setItem(key,JSON.stringify(sched));editing=false;$('editBtn').textContent='Edit';renderSchedule()}function renderStudents(){let q=($('search').value||'').toLowerCase(),a=students.filter(s=>s.name.toLowerCase().includes(q));$('tiles').innerHTML=a.map(s=>`<button class="tile" style="background:${s.color||'#eee'}" onclick="selected=${s.id};renderDetail()">${esc(s.name)}</button>`).join('');renderDetail()}function renderDetail(){let s=students.find(x=>x.id==selected)||students[0];if(!s)return $('detail').innerHTML='<span class="muted">No students yet.</span>';$('detail').innerHTML=`<h2 style="margin-top:0">${esc(s.name)}</h2><div class="boxgrid"><div class="box"><span>Regular time</span><b>${esc(s.time||'—')}</b></div><div class="box"><span>Level</span><b>${esc(s.level||'—')}</b></div><div class="box"><span>Contact</span><b>${esc(s.contact||'—')}</b></div><div class="box"><span>Notes</span><b>${esc(s.note||'—')}</b></div></div>`}function addStudent(){let name=prompt('Student name');if(!name)return;let time=prompt('Regular time','');students.push({id:Date.now(),name,time,color:'#d7c3f0',level:'',contact:'',note:''});selected=students.at(-1).id;localStorage.setItem('crm_students',JSON.stringify(students));renderStudents();renderPayments();renderAttendance()}function monthNow(){let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}function sessions(x){let a=Array.isArray(x.sessions)?x.sessions.slice(0,8):[];while(a.length<8)a.push({day:'',done:false});return a}function renderPayments(){let m=$('payMonth').value||monthNow();$('payMonth').value=m;let h='<div class="head">Student</div><div class="head">Price / lesson</div><div class="head">8 lessons</div><div class="head">Paid</div>';students.forEach(s=>{let k=m+'|'+s.id,x=ledger[k]||{},a=sessions(x);h+=`<div><b>${esc(s.name)}</b></div><div><input class="input" type="number" value="${x.price||''}" onchange="setLedger('${k}','price',this.value)"></div><div><div class="marks">${a.map((z,i)=>`<div class="mark ${z.done?'done':''}"><input type="text" maxlength="2" value="${z.day||''}" placeholder="${i+1}" onchange="setDay('${k}',${i},this.value)"><div><input type="checkbox" ${z.done?'checked':''} onchange="setDone('${k}',${i},this.checked)"></div></div>`).join('')}</div></div><div><input class="input" type="number" value="${x.amount||''}" onchange="setLedger('${k}','amount',this.value)"></div>`});$('payTable').innerHTML=h}function setLedger(k,f,v){ledger[k]=ledger[k]||{};ledger[k][f]=+v||0;saveLedger()}function setDay(k,i,v){ledger[k]=ledger[k]||{};ledger[k].sessions=sessions(ledger[k]);ledger[k].sessions[i].day=String(v).replace(/\D/g,'').slice(0,2);saveLedger();renderAttendance()}function setDone(k,i,v){ledger[k]=ledger[k]||{};ledger[k].sessions=sessions(ledger[k]);ledger[k].sessions[i].done=v;saveLedger();renderPayments();renderAttendance()}function saveLedger(){localStorage.setItem('crm_ledger',JSON.stringify(ledger))}function renderAttendance(){let m=$('attMonth').value||monthNow();$('attMonth').value=m;let h='<div class="head">Student</div>'+Array.from({length:8},(_,i)=>`<div class="head">#${i+1}</div>`).join('');students.forEach(s=>{let k=m+'|'+s.id,a=sessions(ledger[k]||{});h+=`<div><b>${esc(s.name)}</b></div>`+a.map((z,i)=>`<div class="attbox"><div class="muted">${z.day?z.day:''}</div><input type="checkbox" ${z.done?'checked':''} onchange="setDone('${k}',${i},this.checked)"></div>`).join('')});$('attTable').innerHTML=h}function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.v===id));if(id==='students')renderStudents();if(id==='payments')renderPayments();if(id==='attendance')renderAttendance()}document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>show(b.dataset.v));$('notesBox').value=localStorage.getItem('tp_notes')||'';renderSchedule();renderStudents();renderPayments();renderAttendance();</script></body></html>
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+<title>Tatyana Planner</title>
+<style>
+:root{--bg:#f7f3ef;--card:#fff;--line:#e7ded7;--text:#201d1b;--muted:#756e68;--accent:#9d45c7;--personal:#fbf0ff;--weekend:#fff6e5;--school:#edf4f9;--blocked:#ededed}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.app{max-width:1500px;margin:0 auto;padding:10px}.top{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:10px}
+.title{font-size:17px;font-weight:900}.actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}.status{font-size:11px;color:var(--muted)}
+button{font:inherit;border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 10px;font-weight:800;cursor:pointer}.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:10px}.cardhead{padding:8px 10px;font-size:12px;font-weight:900;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.cardhead small{color:var(--muted);font-weight:700}
+.scroll{overflow:auto}.grid{display:grid;min-width:940px}.personal{grid-template-columns:96px repeat(7,minmax(118px,1fr))}.school{grid-template-columns:100px repeat(5,minmax(130px,1fr));min-width:800px}
+.cell,.day,.time{border-right:1px solid #eee6df;border-bottom:1px solid #eee6df;min-height:38px;padding:6px}.day{font-weight:900;text-align:center;background:#fff}.day.weekend{background:#fff0d5}.time{font-size:10px;font-weight:900;background:#fcfaf8;display:flex;align-items:center;justify-content:center;white-space:nowrap}.cell{font-weight:700;white-space:pre-wrap;outline:none}.personalcell{background:var(--personal);position:relative;font-size:12px}.slot-time{font-size:9px;font-weight:800;color:var(--muted);line-height:1;margin-bottom:3px}.slot-name{min-height:16px;outline:none;font-size:12px;line-height:1.15}.personalcell.editing .slot-name{min-height:24px}.weekendcell{background:var(--weekend)}.schoolcell{background:var(--school);font-size:12px;line-height:1.15;font-weight:700}.blocked{background:var(--blocked);pointer-events:none}.editing{box-shadow:inset 0 0 0 2px #c98ce5;background:#fff!important}
+.schoolbox{display:none}.schoolbox.open{display:block}.tabs{display:flex;gap:6px;margin-bottom:10px}.tab{background:#fff}.tab.active{background:#f3e8f8;color:#7f2aa6}
+.panel{display:none}.panel.active{display:block}.section{padding:12px}.students{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px}.student{padding:12px;border-radius:10px;font-weight:900}
+textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
+.notice{font-size:12px;color:var(--muted);padding:10px;background:#fff;border:1px solid var(--line);border-radius:10px}
+.tutor-note{font-size:10px;color:var(--muted);font-weight:800;padding:0 2px 7px}
+.payment-form{display:grid;grid-template-columns:minmax(130px,1.2fr) 130px 110px 135px minmax(150px,1fr) auto;gap:7px;align-items:end;margin-bottom:10px}
+.payment-form label{font-size:10px;font-weight:800;color:var(--muted);display:block;margin-bottom:3px}
+.payment-form input,.payment-form select{width:100%;border:1px solid var(--line);border-radius:8px;padding:7px 8px;font:inherit;background:#fff}
+.payment-list{width:100%;border-collapse:collapse;font-size:12px}
+.payment-list th,.payment-list td{border-bottom:1px solid #eee6df;padding:7px 6px;text-align:left;vertical-align:middle}
+.payment-list th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+.paid-badge{font-size:10px;font-weight:900;padding:3px 6px;border-radius:999px;background:#e8f7ed;color:#25713f;white-space:nowrap}
+.unpaid-badge{font-size:10px;font-weight:900;padding:3px 6px;border-radius:999px;background:#fff0e9;color:#9b4827;white-space:nowrap}
+.iconbtn{padding:4px 7px;font-size:11px}
+.student-form{display:grid;grid-template-columns:minmax(160px,1.4fr) 120px 120px auto;gap:7px;align-items:end;margin-bottom:12px}
+.student-form label,.filterbox label{font-size:10px;font-weight:800;color:var(--muted);display:block;margin-bottom:3px}
+.student-form input,.filterbox input{width:100%;border:1px solid var(--line);border-radius:8px;padding:7px 8px;font:inherit;background:#fff}
+.student{position:relative;padding-right:38px}
+.student .remove-student{position:absolute;right:7px;top:7px;padding:3px 7px;font-size:10px;background:rgba(255,255,255,.75)}
+.finance-toolbar{display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin:4px 0 10px}
+.filterbox{width:160px}
+.summary-grid{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:8px;margin-bottom:12px}
+.summary-card{border:1px solid var(--line);border-radius:10px;padding:10px;background:#fcfaf8}
+.summary-card .k{font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+.summary-card .v{font-size:20px;font-weight:900;margin-top:4px}
+.finance-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.finance-table th,.finance-table td{border-bottom:1px solid #eee6df;padding:7px 6px;text-align:left}
+.finance-table th{font-size:10px;color:var(--muted);text-transform:uppercase}
+.total-row td{font-weight:900;background:#fcfaf8}
+@media(max-width:900px){.payment-form{grid-template-columns:1fr 1fr 1fr}.payment-form .wide{grid-column:span 2}.student-form{grid-template-columns:1fr 1fr}.summary-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.top{align-items:flex-start;flex-direction:column}.actions{width:100%}.payment-form{grid-template-columns:1fr 1fr}.payment-form .wide{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="title">Tatyana Planner</div>
+    <div class="actions">
+      <span id="saveStatus" class="status">Готово</span>
+      <button onclick="toggleSchool()" id="schoolBtn">Школьное расписание</button>
+      <button onclick="connectCloud()" id="cloudBtn">Cloud</button>
+      <button onclick="downloadBackup()">Backup</button>
+      <button onclick="document.getElementById('restoreFile').click()">Restore</button>
+      <input id="restoreFile" type="file" accept=".json,application/json" hidden onchange="restoreBackup(this)">
+      <button onclick="toggleEdit()" id="editBtn">Edit</button>
+      <button class="primary" onclick="saveChanges()" id="saveBtn">Сохранить</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-panel="schedule">Schedule</button>
+    <button class="tab" data-panel="students">Students</button>
+    <button class="tab" data-panel="payments">Payments</button>
+    <button class="tab" data-panel="attendance">Attendance</button>
+    <button class="tab" data-panel="notes">Notes</button>
+    <button class="tab" data-panel="egetests">EGE Tests</button>
+  </div>
+
+  <section id="schedule" class="panel active">
+    <div id="schoolBox" class="card schoolbox">
+      <div class="cardhead">ШКОЛА <small>Пн–Пт</small></div>
+      <div class="scroll"><div class="grid school" id="schoolGrid"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="cardhead">ЛИЧНЫЕ УРОКИ <small>Пн–Чт с 14.00 · Пт с 13.00 · Сб–Вс с 10.00 · по 1 часу</small></div>
+      <div class="scroll"><div class="grid personal" id="personalGrid"></div></div>
+    </div>
+  </section>
+
+  <section id="students" class="panel">
+    <div class="card section">
+      <div class="tutor-note">Репетиторство · новые имена из личного расписания автоматически добавляются сюда и в оплату</div>
+      <div class="student-form">
+        <div><label>Имя ученика</label><input id="studentName" type="text" placeholder="Например: Арина ЕГЭ"></div>
+        <div><label>Время</label><input id="studentTime" type="text" placeholder="18:00"></div>
+        <div><label>Уровень / класс</label><input id="studentLevel" type="text" placeholder="B1 / 8 класс"></div>
+        <button class="primary" type="button" onclick="addStudent()">Добавить</button>
+      </div>
+      <div class="students" id="studentsList"></div>
+    </div>
+  </section>
+  <section id="payments" class="panel">
+    <div class="card section">
+      <div class="finance-toolbar">
+        <div class="filterbox"><label>Финансы за месяц</label><input id="payFilterMonth" type="month" onchange="renderPayments()"></div>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-card"><div class="k">Получено за месяц</div><div class="v" id="sumPaidMonth">0 ₽</div></div>
+        <div class="summary-card"><div class="k">К получению</div><div class="v" id="sumUnpaidMonth">0 ₽</div></div>
+        <div class="summary-card"><div class="k">Начислено за месяц</div><div class="v" id="sumBilledMonth">0 ₽</div></div>
+        <div class="summary-card"><div class="k">Получено всего</div><div class="v" id="sumPaidAll">0 ₽</div></div>
+      </div>
+
+      <div class="payment-form">
+        <div><label>Ученик</label><select id="payStudent"></select></div>
+        <div><label>Месяц</label><input id="payMonth" type="month"></div>
+        <div><label>Сумма</label><input id="payAmount" type="number" min="0" step="1" placeholder="0"></div>
+        <div><label>Дата оплаты</label><input id="payDate" type="date"></div>
+        <div class="wide"><label>Комментарий</label><input id="payNote" type="text" placeholder="например: 8 занятий"></div>
+        <button class="primary" type="button" onclick="addPayment()">Добавить</button>
+      </div>
+
+      <div class="scroll">
+        <table class="finance-table">
+          <thead><tr><th>Ученик</th><th>Начислено</th><th>Получено</th><th>Остаток</th></tr></thead>
+          <tbody id="financeByStudent"></tbody>
+        </table>
+      </div>
+
+      <div class="scroll" style="margin-top:10px"><table class="payment-list"><thead><tr><th>Месяц</th><th>Ученик</th><th>Сумма</th><th>Дата</th><th>Статус</th><th>Комментарий</th><th></th></tr></thead><tbody id="paymentsBody"></tbody></table></div>
+      <div class="notice" style="margin-top:10px">Финансы считаются автоматически. В «Получено» попадают записи с датой оплаты. Оплаты сохраняются локально, в Backup и в Cloud.</div>
+    </div>
+  </section>
+  <section id="attendance" class="panel"><div class="notice">Посещаемость сохраняется в резервной и облачной копии планнера.</div></section>
+  <section id="notes" class="panel"><div class="card section"><textarea id="notesBox" placeholder="Notes..."></textarea></div></section>
+  <section id="egetests" class="panel">
+    <div class="card section">
+      <div class="cardhead">ЕГЭ • ПРОВЕРКА ТЕСТОВ <small>Teacher only</small></div>
+      <div style="display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin:12px 0">
+        <div class="filterbox" style="width:220px"><label>Код ученика</label><input id="egeResultCode" maxlength="6" autocomplete="off" placeholder="Например: A7K9Q2" style="text-transform:uppercase;font-size:18px;font-weight:900;letter-spacing:.12em"></div>
+        <button class="primary" type="button" onclick="checkEgeCode()">Проверить код</button>
+      </div>
+      <div id="egeCheckStatus" class="notice">Введите 6-значный код, который Арина получит после теста.</div>
+      <div id="egeCheckResult" style="display:none;margin-top:10px"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+const DAYS=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const SCHOOL_DAYS=DAYS.slice(0,5);
+const PERSONAL_TIMES=['10.00-11.00','11.00-12.00','12.00-13.00','13.00-14.00','14.00-15.00','15.00-16.00','16.00-17.00','17.00-18.00','18.00-19.00','19.00-20.00','20.00-21.00'];
+const SCHOOL_TIMES=['08:00–08:40','08:50–09:30','09:40–10:20','10:30–11:10','11:20–12:00','12:10–12:50','13:00–13:40','13:50–14:30'];
+
+const DEFAULT_SCHEDULE={"p|2|5":"Тимофей","p|2|6":"Соня Баш","p|4|0":"Катя","p|4|2":"Катя","p|5|3":"Катя","p|6|2":"Габи","p|6|3":"Габи","p|7|0":"Габи","p|7|1":"Соня Баш","s|1|0":"9А\nАнгл. яз.","s|2|0":"11А\nАнгл. яз.","s|3|0":"7Г\nАнгл. яз.\nЗамена урока","s|4|0":"9Г\nАнгл. яз.","s|5|0":"9В\nАнгл. яз.","s|6|0":"10А\nАнгл. яз.","s|0|1":"9Б\nАнгл. яз.","s|1|1":"11А\nАнгл. яз.","s|2|1":"9Г\nАнгл. яз.","s|3|1":"7В\nАнгл. яз.","s|5|1":"10А\nАнгл. яз.","s|6|1":"10А\nАнгл. яз.","s|7|1":"11А\nПодготовка к ЕГЭ","s|0|2":"7Г\nАнгл. яз.\nЗамена урока","s|1|2":"9В\nАнгл. яз.","s|2|2":"9Б\nАнгл. яз.","s|3|2":"7В\nАнгл. яз.","s|4|2":"9А\nАнгл. яз.","s|5|2":"11А\nАнгл. яз.","s|6|2":"11А\nАнгл. яз.","s|1|3":"10А\nАнгл. яз.","s|2|3":"9В\nАнгл. яз.","s|3|3":"7Г\nАнгл. яз.\nЗамена урока","s|5|3":"11А\nАнгл. яз.","s|6|3":"9А\nАнгл. яз.","s|7|3":"10А\nАнгл. яз.","s|0|4":"7В\nАнгл. яз.","s|1|4":"9Г\nАнгл. яз.","s|2|4":"9Б\nАнгл. яз.","s|3|4":"11А\nАнгл. яз.","s|4|4":"10А\nАнгл. яз."};
+
+const DEFAULT_STUDENTS=[
+  {id:1,name:'Maya',time:'18:00',color:'#c9b8ff',level:'A2'},
+  {id:2,name:'Nikita',time:'17:00',color:'#bfe8db',level:'A2+/B1'},
+  {id:3,name:'Gabi',time:'12:00',color:'#ffc8bd',level:''},
+  {id:4,name:'Катя',time:'',color:'#ead0f6',level:''},
+  {id:5,name:'Соня Баш',time:'',color:'#ffe0b5',level:''},
+  {id:6,name:'Тимофей',time:'',color:'#cfe5ff',level:''}
+];
+
+const STORE='tp_schedule_v4';
+const STUDENTS_STORE='crm_students_v4';
+const NOTES_STORE='tp_notes_v4';
+const PAYMENTS_STORE='tp_payments_v1';
+const CLOUD_TOKEN='tp_cloud_token_v1';
+const CLOUD_STAMP='tp_cloud_stamp_v2';
+const SUPABASE_URL='https://lzxcmrlubhjfdhtqvqzt.supabase.co';
+
+let editing=false;
+let schedule={...DEFAULT_SCHEDULE};
+let students=[...DEFAULT_STUDENTS];
+let notes='';
+let payments=[];
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function cleanPlannerText(v){return String(v??'').replace(/\*\*\\n\*\*/g,'\n').replace(/\\n/g,'\n').replace(/\*\*/g,'')}
+function setStatus(s){const el=document.getElementById('saveStatus');el.textContent=s;clearTimeout(setStatus.t);setStatus.t=setTimeout(()=>el.textContent='Готово',1500)}
+function cellKey(kind,r,d){return kind+'|'+r+'|'+d}
+
+function loadLocal(){
+  try{
+    const s=JSON.parse(localStorage.getItem(STORE)||'{}');
+    if(s&&typeof s==='object') schedule={...DEFAULT_SCHEDULE,...s};
+    Object.keys(schedule).forEach(k=>schedule[k]=cleanPlannerText(schedule[k]));
+    const st=JSON.parse(localStorage.getItem(STUDENTS_STORE)||'null');
+    if(Array.isArray(st)&&st.length) students=st;
+    notes=localStorage.getItem(NOTES_STORE)||'';
+    const p=JSON.parse(localStorage.getItem(PAYMENTS_STORE)||'[]');
+    if(Array.isArray(p)) payments=p;
+  }catch(e){}
+}
+
+function saveLocal(){
+  try{
+    localStorage.setItem(STORE,JSON.stringify(schedule));
+    localStorage.setItem(STUDENTS_STORE,JSON.stringify(students));
+    localStorage.setItem(NOTES_STORE,notes);
+    localStorage.setItem(PAYMENTS_STORE,JSON.stringify(payments));
+  }catch(e){}
+  setStatus('Сохранено');
+  queueCloudSave();
+}
+
+function renderSchedule(){
+  let p='<div class="time"></div>'+DAYS.map((d,i)=>'<div class="day '+(i>4?'weekend':'')+'">'+d+'</div>').join('');
+  PERSONAL_TIMES.forEach((t,r)=>{
+    p+='<div class="time">'+t+'</div>';
+    DAYS.forEach((d,di)=>{
+      if((di<4&&r<4)||(di===4&&r<3)){p+='<div class="cell blocked"></div>';return}
+      const k=cellKey('p',r,di);
+      const name=cleanPlannerText(schedule[k]||'');
+      p+='<div class="cell personalcell '+(di>4?'weekendcell ':'')+(editing?'editing':'')+'">'+(name?'<div class="slot-time">'+t+'</div>':'')+'<div class="slot-name" data-k="'+k+'" '+(editing?'contenteditable="true"':'')+'>'+esc(name)+'</div></div>';
+    });
+  });
+  document.getElementById('personalGrid').innerHTML=p;
+
+  let s='<div class="time"></div>'+SCHOOL_DAYS.map(d=>'<div class="day">'+d+'</div>').join('');
+  SCHOOL_TIMES.forEach((t,r)=>{
+    s+='<div class="time">'+t+'</div>';
+    SCHOOL_DAYS.forEach((d,di)=>{
+      const k=cellKey('s',r,di);
+      s+='<div class="cell schoolcell '+(editing?'editing':'')+'" data-k="'+k+'" '+(editing?'contenteditable="true"':'')+'>'+esc(cleanPlannerText(schedule[k]||''))+'</div>';
+    });
+  });
+  document.getElementById('schoolGrid').innerHTML=s;
+}
+
+const STUDENT_COLORS=['#c9b8ff','#bfe8db','#ffc8bd','#ead0f6','#ffe0b5','#cfe5ff','#d7efc5','#ffd1e8','#d5e8ff','#f6d6ad'];
+
+function normalizeName(v){return String(v||'').trim().replace(/\s+/g,' ')}
+function money(v){return Number(String(v??'').replace(',','.'))||0}
+function fmtMoney(v){return new Intl.NumberFormat('ru-RU',{maximumFractionDigits:0}).format(v)+' ₽'}
+
+function syncStudentsFromSchedule(){
+  let changed=false;
+  Object.entries(schedule).forEach(([k,v])=>{
+    if(!k.startsWith('p|'))return;
+    const name=normalizeName(v);
+    if(!name)return;
+    if(!students.some(x=>normalizeName(x.name).toLowerCase()===name.toLowerCase())){
+      students.push({id:'stu'+Date.now()+Math.random().toString(16).slice(2,6),name,time:'',color:STUDENT_COLORS[students.length%STUDENT_COLORS.length],level:''});
+      changed=true;
+    }
+  });
+  return changed;
+}
+
+function addStudent(){
+  const name=normalizeName(document.getElementById('studentName').value);
+  const time=normalizeName(document.getElementById('studentTime').value);
+  const level=normalizeName(document.getElementById('studentLevel').value);
+  if(!name){alert('Введите имя ученика.');return}
+  const existing=students.find(x=>normalizeName(x.name).toLowerCase()===name.toLowerCase());
+  if(existing){alert('Этот ученик уже есть.');return}
+  students.push({id:'stu'+Date.now(),name,time,level,color:STUDENT_COLORS[students.length%STUDENT_COLORS.length]});
+  document.getElementById('studentName').value='';
+  document.getElementById('studentTime').value='';
+  document.getElementById('studentLevel').value='';
+  saveLocal();
+  renderStudents();
+}
+
+function deleteStudent(id){
+  const st=students.find(x=>String(x.id)===String(id));
+  if(!st)return;
+  if(payments.some(p=>String(p.studentId)===String(id))){alert('У ученика есть записи об оплате. Сначала удалите их или оставьте ученика в списке.');return}
+  if(!confirm('Удалить ученика «'+st.name+'» из списка?'))return;
+  students=students.filter(x=>String(x.id)!==String(id));
+  saveLocal();
+  renderStudents();
+}
+
+function renderStudents(){
+  syncStudentsFromSchedule();
+  document.getElementById('studentsList').innerHTML=students.map(x=>'<div class="student" style="background:'+esc(x.color||'#eee')+'"><button class="remove-student" type="button" onclick="deleteStudent(\''+esc(x.id)+'\')">×</button>'+esc(x.name)+(x.time?'<div style="font-size:10px;margin-top:4px;color:#5f5853">'+esc(x.time)+'</div>':'')+(x.level?'<div style="font-size:10px;margin-top:2px;color:#5f5853">'+esc(x.level)+'</div>':'')+'</div>').join('');
+  document.getElementById('notesBox').value=notes;
+  renderPayments();
+}
+
+function renderPayments(){
+  syncStudentsFromSchedule();
+  const sel=document.getElementById('payStudent');
+  if(sel){
+    const old=sel.value;
+    sel.innerHTML=students.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+'</option>').join('');
+    if(old&&[...sel.options].some(o=>o.value===old)) sel.value=old;
+  }
+
+  const filterEl=document.getElementById('payFilterMonth');
+  const filterMonth=filterEl?filterEl.value:'';
+  const monthRows=filterMonth?payments.filter(p=>p.month===filterMonth):payments;
+  const paidMonth=monthRows.filter(p=>p.date).reduce((a,p)=>a+money(p.amount),0);
+  const unpaidMonth=monthRows.filter(p=>!p.date).reduce((a,p)=>a+money(p.amount),0);
+  const billedMonth=monthRows.reduce((a,p)=>a+money(p.amount),0);
+  const paidAll=payments.filter(p=>p.date).reduce((a,p)=>a+money(p.amount),0);
+
+  const setText=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=fmtMoney(v)};
+  setText('sumPaidMonth',paidMonth);
+  setText('sumUnpaidMonth',unpaidMonth);
+  setText('sumBilledMonth',billedMonth);
+  setText('sumPaidAll',paidAll);
+
+  const byStudent=document.getElementById('financeByStudent');
+  if(byStudent){
+    const rows=students.map(st=>{
+      const ps=monthRows.filter(p=>String(p.studentId)===String(st.id));
+      const billed=ps.reduce((a,p)=>a+money(p.amount),0);
+      const paid=ps.filter(p=>p.date).reduce((a,p)=>a+money(p.amount),0);
+      return {st,billed,paid,balance:billed-paid};
+    }).filter(x=>x.billed||x.paid);
+    byStudent.innerHTML=rows.length?rows.map(x=>'<tr><td><b>'+esc(x.st.name)+'</b></td><td>'+fmtMoney(x.billed)+'</td><td>'+fmtMoney(x.paid)+'</td><td>'+fmtMoney(x.balance)+'</td></tr>').join('')+'<tr class="total-row"><td>ИТОГО</td><td>'+fmtMoney(billedMonth)+'</td><td>'+fmtMoney(paidMonth)+'</td><td>'+fmtMoney(unpaidMonth)+'</td></tr>':'<tr><td colspan="4" style="color:var(--muted);padding:14px 6px">За выбранный месяц пока нет записей.</td></tr>';
+  }
+
+  const body=document.getElementById('paymentsBody');
+  if(!body)return;
+  const ordered=[...payments].sort((a,b)=>String(b.month||'').localeCompare(String(a.month||''))||String(b.date||'').localeCompare(String(a.date||'')));
+  body.innerHTML=ordered.length?ordered.map(p=>{
+    const st=students.find(x=>String(x.id)===String(p.studentId));
+    const action=p.date?'':'<button class="iconbtn" type="button" onclick="markPaymentPaid(\''+esc(p.id)+'\')">Оплачено</button> ';
+    return '<tr><td>'+esc(p.month||'—')+'</td><td><b>'+esc(st?st.name:'—')+'</b></td><td>'+fmtMoney(money(p.amount))+'</td><td>'+esc(p.date||'—')+'</td><td><span class="'+(p.date?'paid-badge':'unpaid-badge')+'">'+(p.date?'Оплачено':'Не оплачено')+'</span></td><td>'+esc(p.note||'')+'</td><td>'+action+'<button class="iconbtn" type="button" onclick="deletePayment(\''+esc(p.id)+'\')">×</button></td></tr>';
+  }).join(''):'<tr><td colspan="7" style="color:var(--muted);padding:14px 6px">Пока нет записей об оплате.</td></tr>';
+}
+
+function addPayment(){
+  const studentId=document.getElementById('payStudent').value;
+  const month=document.getElementById('payMonth').value;
+  const amount=document.getElementById('payAmount').value.trim();
+  const date=document.getElementById('payDate').value;
+  const note=document.getElementById('payNote').value.trim();
+  if(!studentId||!month){alert('Выберите ученика и месяц.');return}
+  payments.push({id:'p'+Date.now(),studentId,month,amount,date,note});
+  document.getElementById('payAmount').value='';
+  document.getElementById('payDate').value='';
+  document.getElementById('payNote').value='';
+  saveLocal();
+  renderPayments();
+}
+
+function markPaymentPaid(id){
+  const p=payments.find(x=>x.id===id);
+  if(!p)return;
+  const d=new Date();
+  p.date=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  saveLocal();
+  renderPayments();
+}
+
+function deletePayment(id){
+  payments=payments.filter(x=>x.id!==id);
+  saveLocal();
+  renderPayments();
+}
+
+function toggleSchool(){
+  const box=document.getElementById('schoolBox');
+  box.classList.toggle('open');
+  document.getElementById('schoolBtn').textContent=box.classList.contains('open')?'Скрыть школьное':'Школьное расписание';
+}
+
+function toggleEdit(){
+  editing=!editing;
+  document.getElementById('editBtn').textContent=editing?'Отмена':'Edit';
+  renderSchedule();
+}
+
+function saveChanges(){
+  document.querySelectorAll('.slot-name[data-k], .schoolcell[data-k]').forEach(el=>{schedule[el.dataset.k]=cleanPlannerText(el.innerText.trim())});
+  editing=false;
+  document.getElementById('editBtn').textContent='Edit';
+  syncStudentsFromSchedule();
+  saveLocal();
+  renderSchedule();
+  renderStudents();
+}
+
+document.addEventListener('input',e=>{
+  if(e.target&&e.target.matches('[data-k]')&&editing){schedule[e.target.dataset.k]=cleanPlannerText(e.target.innerText.trim());saveLocal()}
+  if(e.target&&e.target.id==='notesBox'){notes=e.target.value;saveLocal()}
+});
+
+document.querySelectorAll('.tab').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===btn));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===btn.dataset.panel));
+}));
+
+function collectState(){return {version:5,schedule,students,notes,payments}}
+function applyState(state){
+  if(!state||typeof state!=='object')return;
+  if(state.schedule&&typeof state.schedule==='object'){schedule={...DEFAULT_SCHEDULE,...state.schedule};Object.keys(schedule).forEach(k=>schedule[k]=cleanPlannerText(schedule[k]));}
+  if(Array.isArray(state.students)&&state.students.length)students=state.students;
+  if(typeof state.notes==='string')notes=state.notes;
+  if(Array.isArray(state.payments))payments=state.payments;
+  syncStudentsFromSchedule();
+  saveLocal();renderSchedule();renderStudents();
+}
+
+async function cloudRequest(method,data){
+  const token=(localStorage.getItem(CLOUD_TOKEN)||'').trim();
+  if(!token)throw new Error('no token');
+  const res=await fetch(SUPABASE_URL+'/functions/v1/planner-sync',{
+    method,
+    headers:{'Content-Type':'application/json','x-planner-key':token},
+    body:method==='POST'?JSON.stringify({data}):undefined
+  });
+  if(!res.ok)throw new Error('cloud '+res.status);
+  return await res.json();
+}
+
+let cloudTimer=null;
+function queueCloudSave(){
+  if(!(localStorage.getItem(CLOUD_TOKEN)||'').trim())return;
+  clearTimeout(cloudTimer);
+  cloudTimer=setTimeout(async()=>{
+    try{
+      setStatus('Сохраняю в облако…');
+      const out=await cloudRequest('POST',collectState());
+      if(out&&out.ok){localStorage.setItem(CLOUD_STAMP,String(Date.now()));document.getElementById('cloudBtn').textContent='Cloud ✓';setStatus('Сохранено в облаке')}
+    }catch(e){document.getElementById('cloudBtn').textContent='Cloud !';setStatus('Ошибка облака')}
+  },500);
+}
+
+async function syncCloud(){
+  if(!(localStorage.getItem(CLOUD_TOKEN)||'').trim())return;
+  try{
+    setStatus('Загружаю облако…');
+    const out=await cloudRequest('GET');
+    if(out&&out.data&&Object.keys(out.data).length){applyState(out.data);localStorage.setItem(CLOUD_STAMP,String(Date.parse(out.updated_at)||Date.now()))}
+    else queueCloudSave();
+    document.getElementById('cloudBtn').textContent='Cloud ✓';
+    setStatus('Облако подключено');
+  }catch(e){document.getElementById('cloudBtn').textContent='Cloud !';setStatus('Проверьте ключ Cloud')}
+}
+
+function connectCloud(){
+  const token=prompt('Вставьте ключ облачного сохранения:');
+  if(token===null)return;
+  if(!token.trim())return;
+  localStorage.setItem(CLOUD_TOKEN,token.trim());
+  syncCloud();
+}
+
+function downloadBackup(){
+  const blob=new Blob([JSON.stringify({exported_at:new Date().toISOString(),state:collectState()},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='tatyana-planner-backup-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();
+}
+
+function restoreBackup(input){
+  const file=input.files&&input.files[0];if(!file)return;
+  const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);applyState(x.state||x);queueCloudSave();setStatus('Восстановлено')}catch(e){alert('Не удалось прочитать файл')}};r.readAsText(file);input.value='';
+}
+
+async function checkEgeCode(){
+  const code=(document.getElementById('egeResultCode').value||'').trim().toUpperCase();
+  const status=document.getElementById('egeCheckStatus');
+  const box=document.getElementById('egeCheckResult');
+  if(!/^[A-Z2-9]{6}$/.test(code)){status.textContent='Введите полный код из 6 символов.';box.style.display='none';return}
+  const token=(localStorage.getItem(CLOUD_TOKEN)||'').trim();
+  if(!token){status.textContent='Сначала подключите Cloud в верхней панели — используется тот же ключ.';box.style.display='none';return}
+  status.textContent='Проверяю…'; box.style.display='none';
+  try{
+    const r=await fetch(SUPABASE_URL+'/functions/v1/ege-test-results?code='+encodeURIComponent(code),{headers:{'x-planner-key':token}});
+    const out=await r.json();
+    if(!r.ok||!out.ok){status.textContent=out.error==='not_found'?'Код не найден. Проверьте символы.':'Не удалось получить результат.';return}
+    const x=out.result;
+    const when=x.created_at?new Date(x.created_at).toLocaleString('ru-RU'):'';
+    const rows=(x.details||[]).map((d,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(d.prompt)+'</td><td>'+esc(d.chosen)+'</td><td>'+esc(d.correct)+'</td><td style="font-weight:900;color:'+(d.is_correct?'#25713f':'#a2462d')+'">'+(d.is_correct?'✓':'✗')+'</td></tr>').join('');
+    box.innerHTML='<div class="summary-grid"><div class="summary-card"><div class="k">Ученик</div><div class="v" style="font-size:17px">'+esc(x.student)+'</div></div><div class="summary-card"><div class="k">Тест</div><div class="v" style="font-size:15px">'+esc(x.test_title)+'</div></div><div class="summary-card"><div class="k">Результат</div><div class="v">'+x.score+' / '+x.max_score+'</div></div><div class="summary-card"><div class="k">Код / время</div><div class="v" style="font-size:14px">'+esc(x.code)+'<br><span style="font-size:10px;color:var(--muted)">'+esc(when)+'</span></div></div></div><div class="scroll"><table class="finance-table"><thead><tr><th>№</th><th>Задание</th><th>Ответ Арины</th><th>Правильно</th><th></th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    box.style.display='block'; status.textContent='Результат найден.';
+  }catch(e){status.textContent='Ошибка соединения. Повторите проверку.'}
+}
+
+loadLocal();
+renderSchedule();
+renderStudents();
+const now=new Date();
+const ym=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+if(document.getElementById('payMonth')) document.getElementById('payMonth').value=ym;
+if(document.getElementById('payFilterMonth')) document.getElementById('payFilterMonth').value=ym;
+syncStudentsFromSchedule();
+saveLocal();
+renderStudents();
+setTimeout(syncCloud,100);
+</script>
+</body>
+</html>
