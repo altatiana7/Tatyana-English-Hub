@@ -6,233 +6,190 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Gateway to the World B1 — Gabi</title>
+<title>Gabi English Hub · Gateway B1</title>
 <style>
+:root{--ink:#082d59;--blue:#158edf;--line:#d7e6f2}
 *{box-sizing:border-box}
-:root{
-  --ink:#082b54;--sky:#eaf7ff;--paper:#fff;--line:#d8e8f4;
-  --shadow:0 16px 42px rgba(5,41,73,.22);
-}
-html,body{margin:0;min-height:100%;background:#dff1fb;font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
-body{min-height:100vh;display:grid;place-items:center;overflow:hidden}
-button{font:inherit}
-#stage{
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#e9f6ff;font-family:Arial,Helvetica,sans-serif}
+body{display:grid;place-items:center}
+.board{
   position:relative;
   width:min(100vw,calc(100vh * 16 / 9));
+  height:min(100vh,calc(100vw * 9 / 16));
   aspect-ratio:16/9;
-  background:linear-gradient(180deg,#dff4ff,#fff);
   overflow:hidden;
-  box-shadow:0 0 0 1px rgba(9,68,112,.08);
+  background:#fff;
+  box-shadow:0 0 0 1px rgba(12,60,100,.08);
+  touch-action:manipulation;
 }
-#cover{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  display:block;opacity:0;transition:opacity .22s ease;
-  user-select:none;-webkit-user-drag:none
-}
-#stage.ready #cover{opacity:1}
-.loading{
-  position:absolute;inset:0;display:grid;place-items:center;
-  background:linear-gradient(135deg,#e9f7ff,#fff);
-  font-weight:800;font-size:clamp(16px,2vw,28px);letter-spacing:.02em;color:#0c4f7c
-}
-#stage.ready .loading{display:none}
+.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block;user-select:none;-webkit-user-drag:none}
+.homeHot,.moduleHot{position:absolute;z-index:5;border:0;background:transparent;cursor:pointer;padding:0}
+.homeHot{left:2.0%;top:7.25%;width:3.8%;height:5.7%;border-radius:18%}
+.moduleHot{left:2.0%;width:24.4%;height:6.45%;border-radius:14px}
+.moduleHot:focus-visible,.homeHot:focus-visible{outline:4px solid rgba(21,142,223,.72);outline-offset:2px}
+.m1{top:13.6%}.m2{top:21.45%}.m3{top:29.25%}.m4{top:37.05%}.m5{top:44.85%}
+.m6{top:52.65%}.m7{top:60.45%}.m8{top:68.25%}.m9{top:76.05%}.m10{top:83.85%}
 
-/* Invisible module click zones placed exactly over the ten picture tiles. */
-.hotspot{
-  position:absolute;left:1.38%;width:18.15%;
-  border:0;border-radius:clamp(8px,1vw,16px);
-  background:transparent;cursor:pointer;z-index:4;
-  outline:0;transition:box-shadow .15s ease,background .15s ease
+.lessonMenu{
+  position:absolute;z-index:20;left:5.55%;width:20.6%;
+  display:none;background:rgba(255,255,255,.985);
+  border:1px solid rgba(15,79,128,.12);
+  border-radius:0 0 16px 16px;
+  box-shadow:0 16px 38px rgba(4,48,83,.22);
+  overflow:hidden;
+  backdrop-filter:blur(10px);
 }
-.hotspot:hover,.hotspot:focus-visible{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 3px rgba(255,255,255,.92),0 0 0 3px rgba(19,126,203,.45)}
-.hotspot.active{box-shadow:inset 0 0 0 3px rgba(255,255,255,.96),0 0 0 4px var(--accent)}
-.h1{top:2.25%;height:8.55%}.h2{top:11.85%;height:7.95%}.h3{top:20.85%;height:8.05%}
-.h4{top:30.15%;height:8.00%}.h5{top:39.35%;height:8.00%}.h6{top:48.55%;height:8.00%}
-.h7{top:57.75%;height:8.00%}.h8{top:66.95%;height:8.00%}.h9{top:76.10%;height:8.00%}
-.h10{top:85.30%;height:8.65%}
-
-#flyout{
-  position:absolute;z-index:12;left:5.55%;width:14.25%;
-  display:none;background:rgba(255,255,255,.97);border:1px solid rgba(10,69,111,.14);
-  border-radius:clamp(9px,1vw,16px);box-shadow:var(--shadow);overflow:hidden;
-  backdrop-filter:blur(10px);transform-origin:top left
-}
-#flyout.open{display:block;animation:drop .16s ease-out both}
-@keyframes drop{from{opacity:0;transform:translateY(-5px) scale(.985)}to{opacity:1;transform:none}}
-.flyHead{padding:.62em .72em .5em;border-bottom:1px solid #e5eef5;background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 14%,white),white)}
-.flyHead small{display:block;font-weight:800;font-size:clamp(8px,.72vw,13px);letter-spacing:.08em;text-transform:uppercase;color:#587087}
-.flyHead b{display:block;margin-top:.12em;font-size:clamp(10px,.92vw,16px);line-height:1.12}
+.lessonMenu.open{display:block;animation:openMenu .15s ease-out}
+@keyframes openMenu{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+.menuTitle{padding:9px 12px 8px;border-bottom:1px solid #e5edf3;background:#f8fcff}
+.menuTitle small{display:block;color:#688197;font-weight:800;font-size:clamp(8px,.66vw,12px);letter-spacing:.08em;text-transform:uppercase}
+.menuTitle b{display:block;color:var(--ink);margin-top:2px;font-size:clamp(10px,.88vw,16px)}
 .lessonBtn{
-  width:100%;border:0;border-bottom:1px solid #edf2f6;background:#fff;color:#123856;
-  text-align:left;padding:.58em .72em;cursor:pointer;display:flex;gap:.48em;align-items:center;
-  font-size:clamp(9px,.80vw,14px);line-height:1.15;font-weight:700
+  width:100%;border:0;border-bottom:1px solid #edf2f6;background:#fff;
+  display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;align-items:center;
+  text-align:left;padding:8px 11px;color:#173f61;cursor:pointer;
 }
 .lessonBtn:last-child{border-bottom:0}
-.lessonBtn span{display:grid;place-items:center;flex:0 0 1.8em;aspect-ratio:1;border-radius:50%;background:var(--accent);color:#fff;font-size:.88em}
-.lessonBtn:hover,.lessonBtn:focus-visible{background:#f4faff;outline:none}
-.lessonBtn em{font-style:normal;font-weight:800}
-.lessonBtn small{display:block;font-size:.84em;color:#6b8192;font-weight:600;margin-top:.08em}
+.lessonBtn:hover,.lessonBtn:focus-visible{background:#edf8ff;outline:none}
+.lessonNo{width:27px;height:27px;border-radius:9px;display:grid;place-items:center;background:var(--accent,#168edf);color:#fff;font-weight:900;font-size:12px}
+.lessonBtn b{display:block;font-size:clamp(9px,.78vw,14px);line-height:1.08}
+.lessonBtn span.note{display:block;font-size:clamp(7px,.62vw,11px);color:#748b9c;margin-top:2px;line-height:1.12}
 
-/* Full lesson workspace for modules whose content has not yet been built. */
-#lessonView{position:fixed;inset:0;z-index:30;background:#f4f9fc;display:none;overflow:auto}
+#lessonView{position:fixed;inset:0;z-index:50;display:none;background:#f2f8fc;overflow:auto}
 #lessonView.on{display:block}
-.lessonTop{
-  position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:14px;
-  min-height:74px;padding:12px 22px;background:rgba(255,255,255,.96);
-  border-bottom:1px solid var(--line);backdrop-filter:blur(12px)
-}
-.backBtn{
-  width:48px;height:48px;border:0;border-radius:15px;background:#0f77bd;color:#fff;
-  font-size:25px;cursor:pointer;box-shadow:0 8px 18px rgba(15,119,189,.22)
-}
-.lessonTop small{font-size:12px;font-weight:800;letter-spacing:.08em;color:#738b9e}
-.lessonTop h1{font-size:clamp(19px,2.1vw,31px);margin:2px 0 0}
-.lessonWorkspace{padding:clamp(18px,3vw,44px);max-width:1180px;margin:auto}
-.topicStrip{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
-.topicStrip button{
-  border:1px solid #cfe0ec;background:#fff;border-radius:999px;padding:10px 15px;
-  color:#174665;font-weight:800;cursor:pointer
-}
-.topicStrip button:hover{border-color:#1689d4;background:#eef8ff}
-.lessonCard{
-  min-height:54vh;background:#fff;border:1px solid #dbe8f0;border-radius:24px;padding:clamp(24px,4vw,56px);
-  box-shadow:0 18px 50px rgba(28,73,103,.10)
-}
-.lessonCard .unit{font-size:13px;font-weight:900;letter-spacing:.1em;color:#1689d4;text-transform:uppercase}
-.lessonCard h2{font-size:clamp(32px,5vw,68px);line-height:1.03;margin:14px 0}
-.lessonCard p{font-size:clamp(16px,1.5vw,22px);line-height:1.55;color:#557084;max-width:760px}
+.topbar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:13px;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line)}
+.back{width:42px;height:42px;border:0;border-radius:12px;background:#138bd7;color:#fff;font-size:23px;font-weight:900;cursor:pointer}
+.topbar small{display:block;color:#6b8498;font-weight:800;font-size:10px;letter-spacing:.08em}
+.topbar h1{margin:2px 0 0;color:var(--ink);font-size:clamp(18px,2vw,29px)}
+.workspace{max-width:1180px;margin:auto;padding:24px}
+.topicTabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.topicTabs button{border:1px solid #cfe0ec;background:#fff;border-radius:999px;padding:9px 13px;color:#194c70;font-weight:800;cursor:pointer}
+.lessonCard{background:#fff;border:1px solid #dce9f2;border-radius:24px;padding:clamp(25px,4vw,56px);min-height:62vh;box-shadow:0 15px 42px rgba(27,74,107,.09)}
+.lessonCard small{font-weight:900;color:#168edf;letter-spacing:.1em}
+.lessonCard h2{font-size:clamp(32px,5vw,66px);line-height:1.02;color:#082d59;margin:13px 0}
+.lessonCard p{max-width:760px;color:#5c7487;font-size:clamp(16px,1.5vw,22px);line-height:1.55}
 
-@media (max-aspect-ratio:16/9){
-  body{align-items:start}
-  #stage{width:100vw;height:auto}
-}
 @media (max-width:760px){
-  #flyout{left:5.2%;width:28%;min-width:150px}
+  .lessonMenu{left:5.2%;width:34%}
+  .lessonBtn{grid-template-columns:23px 1fr;padding:6px 8px}
+  .lessonNo{width:22px;height:22px}
 }
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 </head>
 <body>
-<main id="stage" aria-label="Gateway to the World B1 — Gabi English lessons">
-  <div class="loading">Loading Gabi English Hub…</div>
-  <img id="cover" alt="Gateway to the World B1 interactive English course cover with ten module pictures and teenagers in London">
-
-  <button class="hotspot h1" data-module="1" aria-label="Module 1 — Happy families"></button>
-  <button class="hotspot h2" data-module="2" aria-label="Module 2 — Law and order"></button>
-  <button class="hotspot h3" data-module="3" aria-label="Module 3 — Plurilingual"></button>
-  <button class="hotspot h4" data-module="4" aria-label="Module 4 — Take care!"></button>
-  <button class="hotspot h5" data-module="5" aria-label="Module 5 — Screen time"></button>
-  <button class="hotspot h6" data-module="6" aria-label="Module 6 — Changing climates"></button>
-  <button class="hotspot h7" data-module="7" aria-label="Module 7 — Get to the top!"></button>
-  <button class="hotspot h8" data-module="8" aria-label="Module 8 — Friendly advice"></button>
-  <button class="hotspot h9" data-module="9" aria-label="Module 9 — Facts about fiction"></button>
-  <button class="hotspot h10" data-module="10" aria-label="Module 10 — Computer update"></button>
-
-  <section id="flyout" aria-live="polite"></section>
+<main class="board" id="board" aria-label="Gabi English Hub Gateway B1 interactive board">
+  <img class="cover" src="gabi-board-exact-16x9.png?v=20260925-exact" alt="Gabi English Hub Gateway B1">
+  <button class="homeHot" id="homeHot" aria-label="Home"></button>
+  <button class="moduleHot m1" data-module="1" aria-label="A fresh start"></button>
+  <button class="moduleHot m2" data-module="2" aria-label="People and relationships"></button>
+  <button class="moduleHot m3" data-module="3" aria-label="Lifestyles"></button>
+  <button class="moduleHot m4" data-module="4" aria-label="The world around us"></button>
+  <button class="moduleHot m5" data-module="5" aria-label="Culture and communication"></button>
+  <button class="moduleHot m6" data-module="6" aria-label="Getting there"></button>
+  <button class="moduleHot m7" data-module="7" aria-label="Health and well-being"></button>
+  <button class="moduleHot m8" data-module="8" aria-label="Science and technology"></button>
+  <button class="moduleHot m9" data-module="9" aria-label="The working world"></button>
+  <button class="moduleHot m10" data-module="10" aria-label="Global challenges"></button>
+  <section class="lessonMenu" id="lessonMenu" aria-live="polite"></section>
 </main>
 
 <section id="lessonView" aria-hidden="true">
-  <header class="lessonTop">
-    <button class="backBtn" id="backBtn" aria-label="Back to module cover">←</button>
-    <div><small id="crumb">GATEWAY TO THE WORLD · B1</small><h1 id="topTitle">Lesson</h1></div>
+  <header class="topbar">
+    <button class="back" id="backBtn">←</button>
+    <div><small id="crumb">GATEWAY B1</small><h1 id="lessonHeading">Lesson</h1></div>
   </header>
-  <div class="lessonWorkspace" id="lessonWorkspace"></div>
+  <div class="workspace" id="workspace"></div>
 </section>
 
 <script>
-const coverParts=[1,2,3,4,5,6,7].map(n=>'cover-data/gateway-b1-'+String(n).padStart(2,'0')+'.b64');
-(async()=>{
-  try{
-    const chunks=await Promise.all(coverParts.map(p=>fetch(p+'?v=20260925-gateway-b1').then(r=>{
-      if(!r.ok)throw new Error(p+' '+r.status);return r.text();
-    })));
-    const b64=chunks.join('').replace(/\s+/g,'');
-    const raw=window.atob(b64);
-    const bytes=new Uint8Array(raw.length);
-    for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
-    const url=URL.createObjectURL(new Blob([bytes],{type:'image/webp'}));
-    const img=document.getElementById('cover');
-    img.onload=()=>document.getElementById('stage').classList.add('ready');
-    img.src=url;
-  }catch(err){
-    console.error(err);
-    document.querySelector('.loading').textContent='Gateway B1';
-  }
-})();
-
-const COLORS=['#2b8ed0','#4dbf92','#ff9a22','#7754db','#ff4055','#15b9c2','#ffbd09','#209ae5','#ec1490','#a8d900'];
-const data=[
-{n:1,t:'Happy families',l:['Ages and stages of life','The family','Words connected with the family','Noun suffixes -ment, -ion, -ence','Present simple and present continuous','State and action verbs','Articles','Culture exchange: Family dinners','Sharing images on social media','Arguments between teenagers and parents']},
-{n:2,t:'Law and order',l:['Crimes','Detective work','Phrasal verbs connected with investigating and finding','Past simple','Past continuous','Used to','Surprising true crimes','An actor involved in a crime']},
-{n:3,t:'Plurilingual',l:['Languages, countries and nationalities','Learning languages','Negative prefixes un-, in-, im-, ir-, il-','Countable and uncountable nouns','Quantifiers','Defining and non-defining relative clauses','Culture exchange: International English','English: The language that never sleeps','Toki Pona: an artificial language']},
-{n:4,t:'Take care!',l:['Parts of the body','Health problems','Compound nouns connected with health and healthcare','Present perfect with ever, never, for, since','Present perfect with just, yet, already','Is technology bad for your health?','BASE jumping']},
-{n:5,t:'Screen time',l:['TV programmes and series','Words connected with TV and online video','Adjectives describing TV programmes','Adjectives ending in -ing and -ed','Comparatives and superlatives','so and such','too and (not) enough','Culture exchange: TV in the UK','Reality TV','Binge-watching']},
-{n:6,t:'Changing climates',l:['Geographical features','The environment','Different uses of get','will, be going to and present continuous for future','will, may, might','Zero conditional','First conditional','Understanding climate change','Plogging']},
-{n:7,t:'Get to the top!',l:['Jobs and words connected with work','Personal qualities','Compound adjectives','Modal verbs of obligation, prohibition and advice','Second conditional','unless','Alan Geaam, chef and Ami Vitale, photographer','Unusual jobs']},
-{n:8,t:'Friendly advice',l:['Feelings','Friendships','Noun suffixes -ness, -ship, -dom','Culture exchange: Positive messages','Past perfect','Gerunds and infinitives','My best friend is a robot','Friendship']},
-{n:9,t:'Facts about fiction',l:['Things we read','Genres','Book reviews','Phrasal verbs connected with reading and writing','Reported speech – statements','Reported speech – questions','Culture exchange: Three great British writers','Books on the move','Using a pen name']},
-{n:10,t:'Computer update',l:['Computers and accessories','Using a computer and the Internet','Collocations with email and document','The passive – present simple','The passive – other tenses','have something done','Culture exchange: The Science Museum, London','Switching off the Internet','The Museum of Failure']}
+const modules=[
+ {title:'A fresh start',lessons:[
+   {title:'Vocabulary & Listening',note:'Life stages · family · listening'},
+   {title:'Reading & Grammar',note:'Sharenting · habits · stative verbs'},
+   {title:'Speaking & Review',note:'Celebrity Kids · Family Dinners · review'}]},
+ {title:'People and relationships',lessons:[
+   {title:'Vocabulary & Listening',note:'People · relationships · feelings'},
+   {title:'Reading & Grammar',note:'Stories · past forms · used to'},
+   {title:'Speaking & Review',note:'Discussion · role-play · revision'}]},
+ {title:'Lifestyles',lessons:[
+   {title:'Vocabulary & Listening',note:'Daily life · free time · routines'},
+   {title:'Reading & Grammar',note:'Habits · quantifiers · relative clauses'},
+   {title:'Speaking & Review',note:'Lifestyle choices · challenge'}]},
+ {title:'The world around us',lessons:[
+   {title:'Vocabulary & Listening',note:'Places · nature · geography'},
+   {title:'Reading & Grammar',note:'Travel texts · present perfect'},
+   {title:'Speaking & Review',note:'Places to explore · review'}]},
+ {title:'Culture and communication',lessons:[
+   {title:'Vocabulary & Listening',note:'Culture · media · communication'},
+   {title:'Reading & Grammar',note:'Comparisons · adjectives · articles'},
+   {title:'Speaking & Review',note:'Culture exchange · speaking'}]},
+ {title:'Getting there',lessons:[
+   {title:'Vocabulary & Listening',note:'Transport · journeys · directions'},
+   {title:'Reading & Grammar',note:'Future forms · conditionals'},
+   {title:'Speaking & Review',note:'Travel situations · review'}]},
+ {title:'Health and well-being',lessons:[
+   {title:'Vocabulary & Listening',note:'Health · body · habits'},
+   {title:'Reading & Grammar',note:'Advice · obligation · present perfect'},
+   {title:'Speaking & Review',note:'Healthy choices · challenge'}]},
+ {title:'Science and technology',lessons:[
+   {title:'Vocabulary & Listening',note:'Devices · science · innovation'},
+   {title:'Reading & Grammar',note:'Technology texts · passive voice'},
+   {title:'Speaking & Review',note:'Future tech · discussion'}]},
+ {title:'The working world',lessons:[
+   {title:'Vocabulary & Listening',note:'Jobs · skills · qualities'},
+   {title:'Reading & Grammar',note:'Work texts · modals · conditionals'},
+   {title:'Speaking & Review',note:'Career ideas · interview game'}]},
+ {title:'Global challenges',lessons:[
+   {title:'Vocabulary & Listening',note:'Environment · society · change'},
+   {title:'Reading & Grammar',note:'Global issues · future forms'},
+   {title:'Speaking & Review',note:'Solutions · project · review'}]}
 ];
-const grouping={1:[[0,1,2],[8,4,5,3,6],[7,9]],2:[[0,1,2],[3,4,5],[6,7]],3:[[0,1,2],[3,4,5],[6,7,8]],4:[[0,1,2],[3,4],[5,6]],5:[[0,1,2],[3,4,5,6],[7,8,9]],6:[[0,1,2],[3,4,5,6],[7,8]],7:[[0,1,2],[3,4,5],[6,7]],8:[[0,1,2],[4,5],[3,6,7]],9:[[0,1,2,3],[4,5],[6,7,8]],10:[[0,1,2],[3,4,5],[6,7,8]]};
-const lessonTitles=['Vocabulary & Listening','Reading & Grammar','Speaking & Review'];
-const lessonSub=['Words · audio · quick practice','Text · language focus · practice','Speaking · games · revision'];
-const flyout=document.getElementById('flyout');
-let openModule=0,activeModule=0,activeLesson=0;
+const colors=['#188ee0','#4ec497','#ff9a20','#7554dd','#ff3f56','#13bac6','#ffbd08','#209ce6','#ec1490','#a6d600'];
+const menu=document.getElementById('lessonMenu');
+let openModule=0;
 
-function closeFlyout(){
-  openModule=0;flyout.classList.remove('open');flyout.innerHTML='';
-  document.querySelectorAll('.hotspot').forEach(b=>b.classList.remove('active'));
-}
-function openFlyout(n){
-  if(openModule===n){closeFlyout();return}
+function closeMenu(){openModule=0;menu.classList.remove('open');menu.innerHTML=''}
+function openMenu(n){
+  if(openModule===n){closeMenu();return}
   openModule=n;
-  const u=data[n-1],button=document.querySelector('.hotspot[data-module="'+n+'"]');
-  document.querySelectorAll('.hotspot').forEach(b=>b.classList.remove('active'));
-  button.classList.add('active');
-  const accent=COLORS[n-1];
-  flyout.style.setProperty('--accent',accent);
-  button.style.setProperty('--accent',accent);
-  flyout.innerHTML='<div class="flyHead"><small>Module '+n+'</small><b>'+u.t+'</b></div>'+
-    lessonTitles.map((title,i)=>'<button class="lessonBtn" data-lesson="'+i+'"><span>'+(i+1)+'</span><div><em>'+title+'</em><small>'+lessonSub[i]+'</small></div></button>').join('');
-  const stageRect=document.getElementById('stage').getBoundingClientRect();
-  const btnRect=button.getBoundingClientRect();
-  const desired=((btnRect.bottom-stageRect.top)/stageRect.height)*100+.55;
-  flyout.style.top=Math.min(desired,n>=9?69:n===8?72:82)+'%';
-  flyout.classList.add('open');
-  flyout.querySelectorAll('.lessonBtn').forEach(b=>b.addEventListener('click',e=>{
-    e.stopPropagation();openLesson(n,Number(b.dataset.lesson));
-  }));
+  const mod=modules[n-1],btn=document.querySelector('[data-module="'+n+'"]');
+  const board=document.getElementById('board').getBoundingClientRect();
+  const r=btn.getBoundingClientRect();
+  const rawTop=((r.bottom-board.top)/board.height)*100;
+  const top=Math.min(rawTop, n>=9?68.5:n===8?71.5:89);
+  menu.style.top=top+'%';
+  menu.style.setProperty('--accent',colors[n-1]);
+  menu.innerHTML='<div class="menuTitle"><small>Module '+n+'</small><b>'+mod.title+'</b></div>'+
+    mod.lessons.map((l,i)=>'<button class="lessonBtn" data-lesson="'+i+'"><span class="lessonNo">'+(i+1)+'</span><span><b>'+l.title+'</b><span class="note">'+l.note+'</span></span></button>').join('');
+  menu.classList.add('open');
+  menu.querySelectorAll('[data-lesson]').forEach(b=>b.onclick=(e)=>{e.stopPropagation();openLesson(n,Number(b.dataset.lesson));});
 }
-document.querySelectorAll('.hotspot').forEach(b=>b.addEventListener('click',e=>{
-  e.stopPropagation();openFlyout(Number(b.dataset.module));
-}));
-document.getElementById('stage').addEventListener('click',closeFlyout);
+document.querySelectorAll('[data-module]').forEach(b=>b.onclick=(e)=>{e.stopPropagation();openMenu(Number(b.dataset.module));});
+document.getElementById('homeHot').onclick=(e)=>{e.stopPropagation();closeMenu()};
+document.getElementById('board').onclick=closeMenu;
 
 function openLesson(n,i){
-  activeModule=n;activeLesson=i;
+  closeMenu();
   if(n===1){
-    location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20260925-gateway-design';
+    location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20260925-exact-board';
     return;
   }
-  const u=data[n-1],topics=grouping[n][i].map(j=>u.l[j]);
-  document.getElementById('crumb').textContent='MODULE '+n+' · '+u.t.toUpperCase();
-  document.getElementById('topTitle').textContent='Lesson '+(i+1)+' · '+lessonTitles[i];
-  document.getElementById('lessonWorkspace').innerHTML=
-    '<nav class="topicStrip">'+topics.map((t,j)=>'<button data-topic="'+j+'">'+t+'</button>').join('')+'</nav>'+
-    '<article class="lessonCard"><div class="unit">Module '+n+' · B1</div><h2 id="futureTopic">'+topics[0]+'</h2>'+
-    '<p>This lesson slot is preserved for the next interactive activity. The Gateway B1 module structure and all original topics remain in place.</p></article>';
-  document.querySelectorAll('[data-topic]').forEach(b=>b.addEventListener('click',()=>{
-    document.getElementById('futureTopic').textContent=topics[Number(b.dataset.topic)];
-  }));
+  const m=modules[n-1];
+  document.getElementById('crumb').textContent='MODULE '+n+' · '+m.title.toUpperCase();
+  document.getElementById('lessonHeading').textContent=m.lessons[i].title;
+  const topics=m.lessons.map(x=>x.note);
+  document.getElementById('workspace').innerHTML=
+   '<nav class="topicTabs">'+topics.map((t,j)=>'<button data-topic="'+j+'">'+t+'</button>').join('')+'</nav>'+
+   '<article class="lessonCard"><small>GATEWAY B1 · MODULE '+n+'</small><h2 id="topicTitle">'+m.lessons[i].title+'</h2>'+
+   '<p>This module is ready for the next interactive lesson. The main Gabi hub design stays unchanged.</p></article>';
+  document.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>document.getElementById('topicTitle').textContent=topics[Number(b.dataset.topic)]);
   const view=document.getElementById('lessonView');
-  view.classList.add('on');view.setAttribute('aria-hidden','false');closeFlyout();
+  view.classList.add('on');view.setAttribute('aria-hidden','false');
 }
-function closeLesson(){
-  const view=document.getElementById('lessonView');
-  view.classList.remove('on');view.setAttribute('aria-hidden','true');
-}
-document.getElementById('backBtn').addEventListener('click',closeLesson);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('lessonView').classList.contains('on'))closeLesson();else closeFlyout();}});
+function closeLesson(){const v=document.getElementById('lessonView');v.classList.remove('on');v.setAttribute('aria-hidden','true')}
+document.getElementById('backBtn').onclick=closeLesson;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('lessonView').classList.contains('on')?closeLesson():closeMenu()}});
 </script>
 </body>
 </html>
