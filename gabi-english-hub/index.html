@@ -2,74 +2,165 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Gateway to the Future — Gabi</title>
+<title>Gateway to the World B1 — Gabi</title>
 <style>
-:root{--navy:#073862;--cyan:#0da5b9;--blue:#167bd3;--ink:#183c55;--muted:#738997;--line:#dbe8f0;--paper:#eef6fb;--warm:#f5b544;--mint:#dff6ef}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:#eaf6fb;color:var(--ink);overflow:hidden}button{font:inherit}
-#home{position:fixed;inset:0;display:grid;grid-template-columns:248px minmax(0,1fr);gap:0;padding:0;background:#dceef5;overflow:hidden}
-.sidebar{position:relative;z-index:5;min-width:0;height:100%;display:flex;flex-direction:column;overflow:hidden;background:rgba(250,253,255,.96);border-right:1px solid rgba(177,208,221,.8);box-shadow:12px 0 32px rgba(18,70,96,.09)}
-.sideHead{padding:16px 13px 12px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#fff,#eef9fb)}
-.sideHead b{display:block;font-size:17px;color:var(--navy);line-height:1.05}.sideHead span{display:block;font-size:9px;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:#1595a7;margin-top:5px}
-.modules{flex:1;overflow:auto;padding:7px}.module{border:1px solid #dce9ef;border-radius:11px;margin-bottom:6px;background:rgba(255,255,255,.94);overflow:hidden;box-shadow:0 2px 8px rgba(23,75,100,.035)}
-.moduleBtn{width:100%;border:0;background:transparent;display:grid;grid-template-columns:29px minmax(0,1fr) 14px;align-items:center;gap:7px;text-align:left;padding:7px;cursor:pointer}.moduleBtn:hover{background:#eff9fb}.num{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--cyan),var(--blue));color:#fff;display:grid;place-items:center;font-weight:900;font-size:10px}.name b{display:block;color:var(--navy);font-size:13px}.name span{display:block;color:#7891a0;font-size:10px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.arrow{font-size:15px;color:#7891a0;transition:.18s}.module.open .arrow{transform:rotate(90deg)}
-.lessons{display:none;border-top:1px solid #edf3f6;background:#fbfdfe;padding:4px}.module.open .lessons{display:block}.lessonBtn{width:100%;border:0;background:transparent;border-radius:8px;text-align:left;padding:8px 5px 8px 14px;cursor:pointer;color:#34596f;font-size:11px;line-height:1.2;position:relative}.lessonBtn:before{content:"";position:absolute;left:5px;top:12px;width:4px;height:4px;border-radius:50%;background:#19a4b6}.lessonBtn:hover{background:#eaf6fb}.lessonBtn strong{color:var(--navy);margin-right:2px}
-.coverShell{position:relative;min-width:0;height:100%;overflow:hidden;background:#0d3854}
-.coverStage{position:absolute;inset:0;overflow:hidden}.coverStage:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,36,55,.38) 0%,rgba(4,36,55,.10) 42%,rgba(4,36,55,.03) 68%,rgba(4,36,55,.20) 100%),linear-gradient(0deg,rgba(3,32,50,.50) 0%,transparent 42%)}
-.coverStage img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
-.hubTop{position:absolute;z-index:3;left:22px;right:22px;top:18px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.hubBrand{display:flex;align-items:center;gap:10px;padding:9px 13px;border:1px solid rgba(255,255,255,.55);border-radius:14px;background:rgba(255,255,255,.84);backdrop-filter:blur(14px);box-shadow:0 8px 24px rgba(0,32,50,.12)}
-.hubLogo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,#0da5b9,#167bd3);color:#fff;font-weight:1000;font-size:15px}.hubBrand b{display:block;color:#073862;font-size:15px}.hubBrand span{display:block;color:#5e7e8e;font-size:9px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;margin-top:2px}
-.hubStatus{display:flex;gap:6px}.statusPill{border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.84);backdrop-filter:blur(14px);border-radius:999px;padding:8px 11px;color:#164e68;font-size:10px;font-weight:900}
-.hubDashboard{position:absolute;z-index:3;left:24px;right:24px;bottom:22px;display:grid;grid-template-columns:minmax(300px,1.25fr) minmax(320px,.9fr);gap:12px;align-items:end}
-.heroCopy{color:#fff;text-shadow:0 2px 14px rgba(0,26,42,.35);padding:8px 4px}.heroEyebrow{font-size:10px;font-weight:1000;letter-spacing:.17em;text-transform:uppercase;color:#c9f7ff}.heroCopy h1{font-size:clamp(30px,4.2vw,58px);line-height:.96;margin:7px 0 9px;max-width:680px}.heroCopy p{font-size:14px;line-height:1.4;max-width:590px;margin:0;color:#f0fbff;font-weight:650}
-.launchPanel{background:rgba(255,255,255,.91);border:1px solid rgba(255,255,255,.8);backdrop-filter:blur(18px);border-radius:19px;padding:13px;box-shadow:0 18px 42px rgba(0,31,48,.22)}
-.launchHead{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:9px}.launchHead small{display:block;font-size:8px;font-weight:1000;letter-spacing:.13em;text-transform:uppercase;color:#1595a7}.launchHead h2{font-size:18px;color:#073862;margin:3px 0 0}.progressRing{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#0da5b9 0 33%,#e4eef2 33% 100%);position:relative}.progressRing:after{content:"";position:absolute;inset:5px;border-radius:50%;background:#fff}.progressRing b{position:relative;z-index:1;font-size:9px;color:#0b6073}
-.quickLessons{display:grid;gap:6px}.quickLesson{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:8px;align-items:center;border:1px solid #dce9ef;background:#fff;border-radius:11px;padding:7px 8px;cursor:pointer;text-align:left;color:#264e63}.quickLesson:hover{border-color:#75c8d5;background:#f4fcfd;transform:translateY(-1px)}.quickNo{width:28px;height:28px;border-radius:8px;background:#e7f7fa;color:#087d90;display:grid;place-items:center;font-size:10px;font-weight:1000}.quickLesson b{display:block;font-size:12px;color:#073862}.quickLesson span{display:block;font-size:9px;color:#7891a0;margin-top:1px}.quickGo{font-size:17px;color:#0da5b9;font-weight:900}.continueBtn{width:100%;margin-top:8px;border:0;border-radius:11px;padding:10px 12px;background:linear-gradient(135deg,#0b8fa5,#167bd3);color:#fff;font-weight:1000;font-size:12px;cursor:pointer;box-shadow:0 7px 18px rgba(17,128,168,.22)}
-.hubHint{position:absolute;z-index:3;right:24px;top:76px;background:rgba(7,56,98,.74);color:#fff;border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(12px);border-radius:11px;padding:7px 10px;font-size:9px;font-weight:800;letter-spacing:.04em}
-@media(max-width:900px){#home{grid-template-columns:205px minmax(0,1fr)}.hubDashboard{grid-template-columns:1fr;bottom:14px}.heroCopy{display:none}.hubTop{left:14px;right:14px;top:12px}.hubHint{display:none}.launchPanel{max-width:520px;margin-left:auto}.coverStage img{object-position:58% center}}
-@media(max-width:650px){#home{grid-template-columns:150px minmax(0,1fr)}.sideHead{padding:11px 8px}.sideHead b{font-size:13px}.sideHead span{font-size:7px}.moduleBtn{grid-template-columns:25px minmax(0,1fr) 10px;padding:5px}.num{width:24px;height:24px}.name b{font-size:11px}.name span{font-size:8px}.lessonBtn{font-size:9px;padding:6px 3px 6px 11px}.hubStatus{display:none}.hubBrand{padding:7px 9px}.hubLogo{width:29px;height:29px}.hubDashboard{left:10px;right:10px}.launchPanel{padding:9px}.quickLesson{padding:6px}.coverStage img{object-position:62% center}}
-#lessonView{position:fixed;inset:0;display:none;background:var(--paper);z-index:30}.lessonViewOn{display:flex!important;flex-direction:column}.lessonTop{height:58px;min-height:58px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 16px}.backBtn{width:38px;height:38px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--navy);font-size:21px;cursor:pointer}.lessonTop small{display:block;font-size:8px;letter-spacing:.13em;text-transform:uppercase;color:#1097aa;font-weight:900}.lessonTop h1{margin:2px 0 0;font-size:17px;color:var(--navy)}.lessonWorkspace{flex:1;padding:0;overflow:auto}.lessonPage{min-height:calc(100vh - 58px);background:#fff;padding:24px}.unitLine{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#0d98ab;font-weight:900}.lessonPage h2{margin:8px 0 0;color:var(--navy);font-size:34px;line-height:1.05}.blank{min-height:calc(100vh - 170px)}.lessonFrame{display:block;width:100%;height:calc(100vh - 58px);border:0;background:#fff}
+*{box-sizing:border-box}
+:root{
+  --ink:#082b54;--sky:#eaf7ff;--paper:#fff;--line:#d8e8f4;
+  --shadow:0 16px 42px rgba(5,41,73,.22);
+}
+html,body{margin:0;min-height:100%;background:#dff1fb;font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+body{min-height:100vh;display:grid;place-items:center;overflow:hidden}
+button{font:inherit}
+#stage{
+  position:relative;
+  width:min(100vw,calc(100vh * 16 / 9));
+  aspect-ratio:16/9;
+  background:linear-gradient(180deg,#dff4ff,#fff);
+  overflow:hidden;
+  box-shadow:0 0 0 1px rgba(9,68,112,.08);
+}
+#cover{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  display:block;opacity:0;transition:opacity .22s ease;
+  user-select:none;-webkit-user-drag:none
+}
+#stage.ready #cover{opacity:1}
+.loading{
+  position:absolute;inset:0;display:grid;place-items:center;
+  background:linear-gradient(135deg,#e9f7ff,#fff);
+  font-weight:800;font-size:clamp(16px,2vw,28px);letter-spacing:.02em;color:#0c4f7c
+}
+#stage.ready .loading{display:none}
 
+/* Invisible module click zones placed exactly over the ten picture tiles. */
+.hotspot{
+  position:absolute;left:1.38%;width:18.15%;
+  border:0;border-radius:clamp(8px,1vw,16px);
+  background:transparent;cursor:pointer;z-index:4;
+  outline:0;transition:box-shadow .15s ease,background .15s ease
+}
+.hotspot:hover,.hotspot:focus-visible{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 3px rgba(255,255,255,.92),0 0 0 3px rgba(19,126,203,.45)}
+.hotspot.active{box-shadow:inset 0 0 0 3px rgba(255,255,255,.96),0 0 0 4px var(--accent)}
+.h1{top:2.25%;height:8.55%}.h2{top:11.85%;height:7.95%}.h3{top:20.85%;height:8.05%}
+.h4{top:30.15%;height:8.00%}.h5{top:39.35%;height:8.00%}.h6{top:48.55%;height:8.00%}
+.h7{top:57.75%;height:8.00%}.h8{top:66.95%;height:8.00%}.h9{top:76.10%;height:8.00%}
+.h10{top:85.30%;height:8.65%}
 
-.lessonTop[hidden]{display:none!important}.lessonTop{height:36px;min-height:36px;padding:0 8px;gap:8px}.lessonTop h1{font-size:14px}.lessonTop small{display:none}.backBtn{width:28px;height:28px;font-size:18px}.lessonWorkspace{overflow:hidden;min-height:0}.lessonFrame{height:100%;width:100%}.lessonBtn{font-size:13px;padding:10px 6px 10px 14px}.lessonBtn strong{display:block}.futureLesson{height:100%;display:flex;flex-direction:column}.activityStrip{display:flex;gap:6px;overflow:auto;padding:6px;background:#fff;border-bottom:1px solid var(--line)}.activityStrip button{font:inherit;font-size:14px;white-space:nowrap;border:1px solid var(--line);background:#eef8fb;border-radius:7px;padding:7px 12px;cursor:pointer}.futureLesson .lessonPage{flex:1;min-height:0}.notReady{color:#607e90}
+#flyout{
+  position:absolute;z-index:12;left:5.55%;width:14.25%;
+  display:none;background:rgba(255,255,255,.97);border:1px solid rgba(10,69,111,.14);
+  border-radius:clamp(9px,1vw,16px);box-shadow:var(--shadow);overflow:hidden;
+  backdrop-filter:blur(10px);transform-origin:top left
+}
+#flyout.open{display:block;animation:drop .16s ease-out both}
+@keyframes drop{from{opacity:0;transform:translateY(-5px) scale(.985)}to{opacity:1;transform:none}}
+.flyHead{padding:.62em .72em .5em;border-bottom:1px solid #e5eef5;background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 14%,white),white)}
+.flyHead small{display:block;font-weight:800;font-size:clamp(8px,.72vw,13px);letter-spacing:.08em;text-transform:uppercase;color:#587087}
+.flyHead b{display:block;margin-top:.12em;font-size:clamp(10px,.92vw,16px);line-height:1.12}
+.lessonBtn{
+  width:100%;border:0;border-bottom:1px solid #edf2f6;background:#fff;color:#123856;
+  text-align:left;padding:.58em .72em;cursor:pointer;display:flex;gap:.48em;align-items:center;
+  font-size:clamp(9px,.80vw,14px);line-height:1.15;font-weight:700
+}
+.lessonBtn:last-child{border-bottom:0}
+.lessonBtn span{display:grid;place-items:center;flex:0 0 1.8em;aspect-ratio:1;border-radius:50%;background:var(--accent);color:#fff;font-size:.88em}
+.lessonBtn:hover,.lessonBtn:focus-visible{background:#f4faff;outline:none}
+.lessonBtn em{font-style:normal;font-weight:800}
+.lessonBtn small{display:block;font-size:.84em;color:#6b8192;font-weight:600;margin-top:.08em}
+
+/* Full lesson workspace for modules whose content has not yet been built. */
+#lessonView{position:fixed;inset:0;z-index:30;background:#f4f9fc;display:none;overflow:auto}
+#lessonView.on{display:block}
+.lessonTop{
+  position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:14px;
+  min-height:74px;padding:12px 22px;background:rgba(255,255,255,.96);
+  border-bottom:1px solid var(--line);backdrop-filter:blur(12px)
+}
+.backBtn{
+  width:48px;height:48px;border:0;border-radius:15px;background:#0f77bd;color:#fff;
+  font-size:25px;cursor:pointer;box-shadow:0 8px 18px rgba(15,119,189,.22)
+}
+.lessonTop small{font-size:12px;font-weight:800;letter-spacing:.08em;color:#738b9e}
+.lessonTop h1{font-size:clamp(19px,2.1vw,31px);margin:2px 0 0}
+.lessonWorkspace{padding:clamp(18px,3vw,44px);max-width:1180px;margin:auto}
+.topicStrip{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.topicStrip button{
+  border:1px solid #cfe0ec;background:#fff;border-radius:999px;padding:10px 15px;
+  color:#174665;font-weight:800;cursor:pointer
+}
+.topicStrip button:hover{border-color:#1689d4;background:#eef8ff}
+.lessonCard{
+  min-height:54vh;background:#fff;border:1px solid #dbe8f0;border-radius:24px;padding:clamp(24px,4vw,56px);
+  box-shadow:0 18px 50px rgba(28,73,103,.10)
+}
+.lessonCard .unit{font-size:13px;font-weight:900;letter-spacing:.1em;color:#1689d4;text-transform:uppercase}
+.lessonCard h2{font-size:clamp(32px,5vw,68px);line-height:1.03;margin:14px 0}
+.lessonCard p{font-size:clamp(16px,1.5vw,22px);line-height:1.55;color:#557084;max-width:760px}
+
+@media (max-aspect-ratio:16/9){
+  body{align-items:start}
+  #stage{width:100vw;height:auto}
+}
+@media (max-width:760px){
+  #flyout{left:5.2%;width:28%;min-width:150px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<section id="home">
-  <aside class="sidebar">
-    <div class="sideHead"><b>Gabi English Hub</b><span>10 modules · interactive course</span></div>
-    <nav class="modules" id="modules"></nav>
-  </aside>
-  <main class="coverShell">
-    <div class="coverStage"><img src="gabi-cover-final.webp?v=20260921-hub" fetchpriority="high" alt="Gateway to the Future — Interactive English Course"></div>
-    <div class="hubTop">
-      <div class="hubBrand"><div class="hubLogo">G</div><div><b>Gabi English Hub</b><span>Gateway to the Future</span></div></div>
-      <div class="hubStatus"><span class="statusPill">B1+ → B2</span><span class="statusPill">Interactive · 10 modules</span></div>
-    </div>
-    <div class="hubHint">Choose a module on the left or continue Module 1</div>
-    <div class="hubDashboard">
-      <div class="heroCopy"><div class="heroEyebrow">English that grows with you</div><h1>Learn. Explore.<br>Level up.</h1><p>Vocabulary, grammar, listening, reading and game-based revision — connected inside one course hub.</p></div>
-      <div class="launchPanel">
-        <div class="launchHead"><div><small>Now learning · Module 1</small><h2>Happy families</h2></div><div class="progressRing"><b>1/10</b></div></div>
-        <div class="quickLessons">
-          <button class="quickLesson" onclick="openLesson(1,0)"><span class="quickNo">01</span><span><b>Vocabulary & Listening</b><span>Life stages · family · listening</span></span><span class="quickGo">›</span></button>
-          <button class="quickLesson" onclick="openLesson(1,1)"><span class="quickNo">02</span><span><b>Reading & Grammar</b><span>Sharenting · habits · stative verbs</span></span><span class="quickGo">›</span></button>
-          <button class="quickLesson" onclick="openLesson(1,2)"><span class="quickNo">03</span><span><b>Speaking & Review</b><span>Celebrity Kids · Family Dinners · Kahoot</span></span><span class="quickGo">›</span></button>
-        </div>
-        <button class="continueBtn" onclick="openLesson(1,0)">Continue Module 1 →</button>
-      </div>
-    </div>
-  </main>
+<main id="stage" aria-label="Gateway to the World B1 — Gabi English lessons">
+  <div class="loading">Loading Gabi English Hub…</div>
+  <img id="cover" alt="Gateway to the World B1 interactive English course cover with ten module pictures and teenagers in London">
+
+  <button class="hotspot h1" data-module="1" aria-label="Module 1 — Happy families"></button>
+  <button class="hotspot h2" data-module="2" aria-label="Module 2 — Law and order"></button>
+  <button class="hotspot h3" data-module="3" aria-label="Module 3 — Plurilingual"></button>
+  <button class="hotspot h4" data-module="4" aria-label="Module 4 — Take care!"></button>
+  <button class="hotspot h5" data-module="5" aria-label="Module 5 — Screen time"></button>
+  <button class="hotspot h6" data-module="6" aria-label="Module 6 — Changing climates"></button>
+  <button class="hotspot h7" data-module="7" aria-label="Module 7 — Get to the top!"></button>
+  <button class="hotspot h8" data-module="8" aria-label="Module 8 — Friendly advice"></button>
+  <button class="hotspot h9" data-module="9" aria-label="Module 9 — Facts about fiction"></button>
+  <button class="hotspot h10" data-module="10" aria-label="Module 10 — Computer update"></button>
+
+  <section id="flyout" aria-live="polite"></section>
+</main>
+
+<section id="lessonView" aria-hidden="true">
+  <header class="lessonTop">
+    <button class="backBtn" id="backBtn" aria-label="Back to module cover">←</button>
+    <div><small id="crumb">GATEWAY TO THE WORLD · B1</small><h1 id="topTitle">Lesson</h1></div>
+  </header>
+  <div class="lessonWorkspace" id="lessonWorkspace"></div>
 </section>
-<section id="lessonView">
-  <header class="lessonTop"><button class="backBtn" onclick="closeLesson()">←</button><div><small id="crumb">Gateway to the World B1</small><h1 id="topTitle">Lesson</h1></div></header>
-  <div class="lessonWorkspace" id="lessonWorkspace"><article class="lessonPage"><div class="unitLine" id="unitLine"></div><h2 id="lessonTitle"></h2><div class="blank"></div></article></div>
-</section>
+
 <script>
+const coverParts=[1,2,3,4,5,6,7].map(n=>'cover-data/gateway-b1-'+String(n).padStart(2,'0')+'.b64');
+(async()=>{
+  try{
+    const chunks=await Promise.all(coverParts.map(p=>fetch(p+'?v=20260925-gateway-b1').then(r=>{
+      if(!r.ok)throw new Error(p+' '+r.status);return r.text();
+    })));
+    const b64=chunks.join('').replace(/\s+/g,'');
+    const raw=window.atob(b64);
+    const bytes=new Uint8Array(raw.length);
+    for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+    const url=URL.createObjectURL(new Blob([bytes],{type:'image/webp'}));
+    const img=document.getElementById('cover');
+    img.onload=()=>document.getElementById('stage').classList.add('ready');
+    img.src=url;
+  }catch(err){
+    console.error(err);
+    document.querySelector('.loading').textContent='Gateway B1';
+  }
+})();
+
+const COLORS=['#2b8ed0','#4dbf92','#ff9a22','#7754db','#ff4055','#15b9c2','#ffbd09','#209ae5','#ec1490','#a8d900'];
 const data=[
 {n:1,t:'Happy families',l:['Ages and stages of life','The family','Words connected with the family','Noun suffixes -ment, -ion, -ence','Present simple and present continuous','State and action verbs','Articles','Culture exchange: Family dinners','Sharing images on social media','Arguments between teenagers and parents']},
 {n:2,t:'Law and order',l:['Crimes','Detective work','Phrasal verbs connected with investigating and finding','Past simple','Past continuous','Used to','Surprising true crimes','An actor involved in a crime']},
@@ -82,22 +173,66 @@ const data=[
 {n:9,t:'Facts about fiction',l:['Things we read','Genres','Book reviews','Phrasal verbs connected with reading and writing','Reported speech – statements','Reported speech – questions','Culture exchange: Three great British writers','Books on the move','Using a pen name']},
 {n:10,t:'Computer update',l:['Computers and accessories','Using a computer and the Internet','Collocations with email and document','The passive – present simple','The passive – other tenses','have something done','Culture exchange: The Science Museum, London','Switching off the Internet','The Museum of Failure']}
 ];
-// Every original topic belongs to exactly one of three lessons.
 const grouping={1:[[0,1,2],[8,4,5,3,6],[7,9]],2:[[0,1,2],[3,4,5],[6,7]],3:[[0,1,2],[3,4,5],[6,7,8]],4:[[0,1,2],[3,4],[5,6]],5:[[0,1,2],[3,4,5,6],[7,8,9]],6:[[0,1,2],[3,4,5,6],[7,8]],7:[[0,1,2],[3,4,5],[6,7]],8:[[0,1,2],[4,5],[3,6,7]],9:[[0,1,2,3],[4,5],[6,7,8]],10:[[0,1,2],[3,4,5],[6,7,8]]};
 const lessonTitles=['Vocabulary & Listening','Reading & Grammar','Speaking & Review'];
-let openUnit=null,activeModule=1,activeLesson=0;
-function render(){document.getElementById('modules').innerHTML=data.map(u=>`<div class="module ${openUnit===u.n?'open':''}"><button class="moduleBtn" onclick="toggle(${u.n})"><span class="num">${u.n}</span><span class="name"><b>Module ${u.n}</b><span>${u.t}</span></span><span class="arrow">›</span></button><div class="lessons">${lessonTitles.map((x,i)=>`<button class="lessonBtn" onclick="openLesson(${u.n},${i})"><strong>Lesson ${i+1}</strong> ${x}</button>`).join('')}</div></div>`).join('')}
-function toggle(n){openUnit=openUnit===n?null:n;render()}
-function openLesson(n,i){activeModule=n;activeLesson=i;const u=data.find(x=>x.n===n);const ws=document.getElementById('lessonWorkspace');document.getElementById('crumb').textContent='MODULE '+n+' — '+u.t;document.getElementById('topTitle').textContent='Lesson '+(i+1)+' · '+lessonTitles[i];document.querySelector('.lessonTop').hidden=n===1;
-if(n===1){location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20260924-texts-together;return}
-else{const topics=grouping[n][i].map(j=>u.l[j]);ws.innerHTML=`<div class="futureLesson"><nav class="activityStrip">${topics.map((t,j)=>`<button onclick="selectFutureTopic(${j})">${t}</button>`).join('')}</nav><article class="lessonPage"><div class="unitLine">MODULE ${n} · ${u.t}</div><h2 id="futureTopic">${topics[0]}</h2><p class="notReady">Materials for this activity have not been added yet.</p></article></div>`}
-document.getElementById('lessonView').classList.add('lessonViewOn');}
-function selectFutureTopic(j){const u=data.find(x=>x.n===activeModule);document.getElementById('futureTopic').textContent=u.l[grouping[activeModule][activeLesson][j]]}
-function closeLesson(){const ws=document.getElementById('lessonWorkspace');ws.querySelector('iframe')?.remove();document.getElementById('lessonView').classList.remove('lessonViewOn')}
-window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==document.querySelector('.lessonFrame')?.contentWindow)return;if(e.data==='gabi-close-lesson')closeLesson();if(e.data?.type==='gabi-lesson'&&[1,2,3].includes(e.data.lesson))openLesson(1,e.data.lesson-1)});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});render();
+const lessonSub=['Words · audio · quick practice','Text · language focus · practice','Speaking · games · revision'];
+const flyout=document.getElementById('flyout');
+let openModule=0,activeModule=0,activeLesson=0;
+
+function closeFlyout(){
+  openModule=0;flyout.classList.remove('open');flyout.innerHTML='';
+  document.querySelectorAll('.hotspot').forEach(b=>b.classList.remove('active'));
+}
+function openFlyout(n){
+  if(openModule===n){closeFlyout();return}
+  openModule=n;
+  const u=data[n-1],button=document.querySelector('.hotspot[data-module="'+n+'"]');
+  document.querySelectorAll('.hotspot').forEach(b=>b.classList.remove('active'));
+  button.classList.add('active');
+  const accent=COLORS[n-1];
+  flyout.style.setProperty('--accent',accent);
+  button.style.setProperty('--accent',accent);
+  flyout.innerHTML='<div class="flyHead"><small>Module '+n+'</small><b>'+u.t+'</b></div>'+
+    lessonTitles.map((title,i)=>'<button class="lessonBtn" data-lesson="'+i+'"><span>'+(i+1)+'</span><div><em>'+title+'</em><small>'+lessonSub[i]+'</small></div></button>').join('');
+  const stageRect=document.getElementById('stage').getBoundingClientRect();
+  const btnRect=button.getBoundingClientRect();
+  const desired=((btnRect.bottom-stageRect.top)/stageRect.height)*100+.55;
+  flyout.style.top=Math.min(desired,n>=9?69:n===8?72:82)+'%';
+  flyout.classList.add('open');
+  flyout.querySelectorAll('.lessonBtn').forEach(b=>b.addEventListener('click',e=>{
+    e.stopPropagation();openLesson(n,Number(b.dataset.lesson));
+  }));
+}
+document.querySelectorAll('.hotspot').forEach(b=>b.addEventListener('click',e=>{
+  e.stopPropagation();openFlyout(Number(b.dataset.module));
+}));
+document.getElementById('stage').addEventListener('click',closeFlyout);
+
+function openLesson(n,i){
+  activeModule=n;activeLesson=i;
+  if(n===1){
+    location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20260925-gateway-design';
+    return;
+  }
+  const u=data[n-1],topics=grouping[n][i].map(j=>u.l[j]);
+  document.getElementById('crumb').textContent='MODULE '+n+' · '+u.t.toUpperCase();
+  document.getElementById('topTitle').textContent='Lesson '+(i+1)+' · '+lessonTitles[i];
+  document.getElementById('lessonWorkspace').innerHTML=
+    '<nav class="topicStrip">'+topics.map((t,j)=>'<button data-topic="'+j+'">'+t+'</button>').join('')+'</nav>'+
+    '<article class="lessonCard"><div class="unit">Module '+n+' · B1</div><h2 id="futureTopic">'+topics[0]+'</h2>'+
+    '<p>This lesson slot is preserved for the next interactive activity. The Gateway B1 module structure and all original topics remain in place.</p></article>';
+  document.querySelectorAll('[data-topic]').forEach(b=>b.addEventListener('click',()=>{
+    document.getElementById('futureTopic').textContent=topics[Number(b.dataset.topic)];
+  }));
+  const view=document.getElementById('lessonView');
+  view.classList.add('on');view.setAttribute('aria-hidden','false');closeFlyout();
+}
+function closeLesson(){
+  const view=document.getElementById('lessonView');
+  view.classList.remove('on');view.setAttribute('aria-hidden','true');
+}
+document.getElementById('backBtn').addEventListener('click',closeLesson);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('lessonView').classList.contains('on'))closeLesson();else closeFlyout();}});
 </script>
 </body>
 </html>
-
-
