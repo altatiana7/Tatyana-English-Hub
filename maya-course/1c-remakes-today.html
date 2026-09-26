@@ -38,12 +38,12 @@ textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:
 <button class="nav" data-id="hockney">3 · HOMEWORK<small>Mr & Mrs Clark</small></button>
 <button class="nav" data-id="real">4 · REAL PEOPLE<small>compare photo & painting</small></button>
 <button class="nav" data-id="prep">5 · PREPOSITIONS<small>English File</small></button>
-<button class="nav" data-id="listen">6 · LISTENING<small>T / F + evidence</small></button>
+<button class="nav" data-id="listen">6 · HOCKNEY STORY<small>listen + video + evidence</small></button>
 <button class="nav" data-id="contrast">7 · SIMPLE vs CONT.<small>usually / right now</small></button>
-<button class="nav" data-id="hvideo">8 · HOCKNEY VIDEO<small>predict + check</small></button>
-<button class="nav" data-id="gothic">9 · AMERICAN GOTHIC<small>remake video</small></button>
-<button class="nav" data-id="secrets">10 · ART SECRETS<small>quick quiz</small></button>
-<button class="nav" data-id="final">11 · FINAL<small>60-second challenge</small></button>
+
+<button class="nav" data-id="gothic">8 · AMERICAN GOTHIC<small>remake video</small></button>
+<button class="nav" data-id="secrets">9 · ART SECRETS<small>quick quiz</small></button>
+<button class="nav" data-id="final">10 · FINAL<small>60-second challenge</small></button>
 </aside>
 
 <main class="stage">
@@ -67,15 +67,42 @@ textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:
 <div class="grid2"><div class="card"><img class="photo" src="https://www.mot-art-museum.jp/exhibitions/images/4_MrandMrsClarkandPercy_low.jpg" alt="Hockney painting"></div><div class="card" id="prepRows"></div></div>
 <div class="card" style="margin-top:10px"><b>30-second Point & Describe:</b> Where are the telephone, lamp, window, flowers and cat?</div></section>
 
-<section class="panel" id="listen"><div class="kicker">LISTENING · 7 MIN</div><h1>Mr and Mrs Clark and Percy · True or False</h1><p class="lead">Load track 1.24 if you have it. First listen: T/F. Second listen: evidence.</p>
-<div class="card"><input type="file" id="audioFile" accept="audio/*"><audio id="audioPlayer" controls style="width:100%;margin-top:8px"></audio></div><div id="tfList" class="card" style="margin-top:10px"></div><div class="score" id="tfScore"></div></section>
+<section class="panel" id="listen"><div class="kicker">HOCKNEY STORY · 10–12 MIN</div><h1>Mr and Mrs Clark and Percy · Listen, watch, discover</h1><p class="lead">One continuous block: first Maya listens for facts about the painting, then watches the same story visually and checks what happened to the couple.</p>
+<div class="grid2">
+  <div class="card">
+    <h3>1 · BEFORE</h3>
+    <p>Look at the painting again. What can we see, and what can we only guess?</p>
+    <div class="pills"><span class="pill">what they are doing</span><span class="pill">what they are wearing</span><span class="pill">where things are</span><span class="pill">their relationship?</span><span class="pill">what happened later?</span></div>
+    <p style="margin-top:12px"><b>Prediction:</b> Do you think this was a happy marriage? Why / why not?</p>
+  </div>
+  <div class="card">
+    <h3>2 · LISTEN · 1.24</h3>
+    <p class="lead">Load the English File audio if you have it. First listen: T/F. Second listen: evidence.</p>
+    <input type="file" id="audioFile" accept="audio/*">
+    <audio id="audioPlayer" controls style="width:100%;margin-top:8px"></audio>
+  </div>
+</div>
+<div id="tfList" class="card" style="margin-top:10px"></div>
+<div class="score" id="tfScore"></div>
+<div class="grid2" style="margin-top:10px">
+  <div class="card">
+    <h3>3 · NOW WATCH</h3>
+    <div class="videoWrap"><iframe src="https://www.youtube.com/embed/8vGMYoeDcbU" title="Mr and Mrs Clark and Percy story" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
+  </div>
+  <div class="card">
+    <h3>4 · WHAT HAPPENED TO THE COUPLE?</h3>
+    <p>Were Maya's predictions correct?</p>
+    <p>What new fact did the video add?</p>
+    <p>What happened to their relationship later?</p>
+    <p>Which detail in the painting feels different after you know the story?</p>
+    <textarea placeholder="Maya's evidence / best answer"></textarea>
+  </div>
+</div>
+<div class="card" style="margin-top:10px"><b>Language bridge:</b> <i>In the painting they are… / In real life they were… / The painting looks…, but we now know…</i></div>
+</section>
 
 <section class="panel" id="contrast"><div class="kicker">GRAMMAR · 8 MIN</div><h1>Present Simple vs Present Continuous</h1><p class="lead">USUALLY or RIGHT NOW? Click a sentence, then choose the correct side.</p>
 <div class="twoCol"><div class="zone"><h3>USUALLY · Present Simple</h3><div id="usually"></div></div><div class="zone"><h3>RIGHT NOW · Present Continuous</h3><div id="now"></div></div></div><div class="card" style="margin-top:10px"><div id="sentenceBank"></div><div class="score" id="sortScore">0 / 8</div></div></section>
-
-<section class="panel" id="hvideo"><div class="kicker">VIDEO · 6 MIN</div><h1>Hockney · What happened to the couple?</h1><p class="lead">Predict first, then watch and check.</p>
-<div class="grid2"><div class="card"><h3>Before watching</h3><p>Do you think their marriage was happy?</p><p>Why are they separated by the window?</p><p>What might the cat symbolize?</p><p>What do you think happened later?</p><textarea placeholder="Maya's predictions"></textarea></div>
-<div class="videoWrap"><iframe src="https://www.youtube.com/embed/8vGMYoeDcbU" title="Mr and Mrs Clark and Percy video" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div></div><div class="card" style="margin-top:10px"><b>After watching:</b> Were your predictions right? What surprised you?</div></section>
 
 <section class="panel" id="gothic"><div class="kicker">VIDEO SPEAKING · 8 MIN</div><h1>American Gothic · Remake</h1><p class="lead">Use the exact video you uploaded: choose it below and it plays inside the lesson.</p>
 <div class="grid2"><div class="card"><img class="photo" src="https://upload.wikimedia.org/wikipedia/commons/7/71/Grant_DeVolson_Wood_-_American_Gothic.jpg" alt="American Gothic"><h3>Before watching</h3><p>Who are the people? What is the man holding? What are they wearing?</p></div>
