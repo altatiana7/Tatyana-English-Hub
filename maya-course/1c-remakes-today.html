@@ -5,13 +5,13 @@
 <title>Maya · Lesson 1C · Art Detective</title>
 <style>
 :root{--p:#5142a6;--teal:#0d8793;--ink:#1d2636;--mut:#657184;--line:#dde3eb;--ok:#247a50;--bad:#b53b4a;--bg:#f5f7fb}
-*{box-sizing:border-box}html,body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg);overflow-y:auto!important;-webkit-overflow-scrolling:touch}
 button,input,select{font:inherit}.app{display:grid;grid-template-columns:210px minmax(0,1fr);min-height:100vh}
 .side{background:#263348;color:white;padding:14px 10px;position:sticky;top:0;height:100vh;overflow:auto}
 .brand{font-size:20px;font-weight:900;padding:4px 7px 12px}.brand small{display:block;font-size:11px;opacity:.75;margin-top:3px}
 .nav{display:block;width:100%;border:0;border-radius:10px;background:transparent;color:#fff;padding:10px;text-align:left;font-weight:800;font-size:12px;margin:3px 0}
 .nav.active{background:white;color:#263348}.nav small{display:block;font-weight:600;opacity:.7}
-.stage{padding:14px;min-width:0}.panel{display:none;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;min-height:calc(100vh - 28px)}
+.stage{padding:14px;min-width:0;overflow:visible}.panel{display:none;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 16px 92px;min-height:calc(100vh - 28px);height:auto;overflow:visible}
 .panel.active{display:block}.kicker{font-size:11px;font-weight:900;letter-spacing:.08em;color:var(--teal)}h1{margin:4px 0 6px;font-size:28px;color:#352c7f}
 .lead{margin:0 0 14px;color:var(--mut)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .card{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.photo{width:100%;border-radius:13px;display:block;max-height:520px;object-fit:contain;background:#eee}
@@ -28,6 +28,10 @@ button,input,select{font:inherit}.app{display:grid;grid-template-columns:210px m
 .bigline{font-size:20px;font-weight:900;padding:10px;border-radius:10px;background:#f4f2ff;margin:8px 0}.score{font-weight:900;color:var(--p)}
 .quizlet{display:inline-block;text-decoration:none;background:#4255ff;color:white;padding:10px 14px;border-radius:10px;font-weight:900}
 textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
+.slideNav{position:fixed;right:18px;bottom:16px;z-index:1000;display:flex;align-items:center;gap:8px;background:rgba(38,51,72,.96);padding:8px 10px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.slideNav button{border:0;border-radius:10px;background:#fff;color:#263348;padding:10px 14px;font-weight:900;cursor:pointer}
+.slideNav span{color:#fff;font-size:12px;font-weight:900;min-width:48px;text-align:center}
+@media(max-width:900px){.slideNav{left:8px;right:8px;bottom:8px;justify-content:space-between}.slideNav button{padding:11px 13px}}
 @media(max-width:900px){.app{display:block}.side{height:auto;position:sticky;z-index:10;display:grid;grid-template-columns:repeat(3,1fr)}.brand{grid-column:1/-1}.nav{font-size:11px}.panel{min-height:auto}.grid2,.grid3,.twoCol{grid-template-columns:1fr}.stage{padding:8px}.cover{width:52%}}
 </style></head>
 <body>
@@ -211,10 +215,23 @@ textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:
 
 <section class="panel" id="final"><div class="kicker">FINAL · 4 MIN</div><h1>60-Second Art Detective Challenge</h1><p class="lead">Five locks. One minute.</p>
 <div class="grid2"><div class="card"><div class="timer" id="finalTimer">60</div><button class="btn" id="startFinal">START 60 SEC</button></div><div class="card"><ol><li>Say one Present Continuous sentence.</li><li>Say one Present Simple sentence.</li><li>Use three prepositions of place.</li><li>Give one American Gothic similarity.</li><li>Give one Hockney photo/painting difference.</li></ol><div class="bigline">CASE CLOSED · MAYA ART DETECTIVE</div></div></div></section>
+<nav class="slideNav" aria-label="Lesson navigation">
+  <button type="button" id="prevSlide">← PREVIOUS</button>
+  <span id="slideCount">1 / 10</span>
+  <button type="button" id="nextSlide">NEXT →</button>
+</nav>
 </main></div>
 <script>
 const root=document;
-document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.id));window.scrollTo(0,0)}));
+const slideButtons=[...document.querySelectorAll('.nav')];
+const slidePanels=[...document.querySelectorAll('.panel')];
+const slideCount=document.getElementById('slideCount');
+function currentSlideIndex(){return Math.max(0,slideButtons.findIndex(b=>b.classList.contains('active')))}
+function goSlide(i){i=Math.max(0,Math.min(slideButtons.length-1,i));slideButtons[i].click();slidePanels[i]?.scrollTo?.(0,0);document.scrollingElement.scrollTop=0;slideCount.textContent=(i+1)+' / '+slideButtons.length;document.getElementById('prevSlide').disabled=i===0;document.getElementById('nextSlide').disabled=i===slideButtons.length-1}
+document.getElementById('prevSlide').addEventListener('click',()=>goSlide(currentSlideIndex()-1));
+document.getElementById('nextSlide').addEventListener('click',()=>goSlide(currentSlideIndex()+1));
+slideCount.textContent='1 / '+slideButtons.length;document.getElementById('prevSlide').disabled=true;
+document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.id));window.scrollTo(0,0);const i=slideButtons.indexOf(b);slideCount.textContent=(i+1)+' / '+slideButtons.length;document.getElementById('prevSlide').disabled=i===0;document.getElementById('nextSlide').disabled=i===slideButtons.length-1;}));
 document.querySelectorAll('[data-reveal]').forEach(b=>b.addEventListener('click',()=>document.getElementById(b.dataset.reveal).classList.toggle('show')));
 document.getElementById('revealPhoto').addEventListener('click',()=>{document.getElementById('photoCover').classList.toggle('open');document.getElementById('warmReveal').classList.toggle('show')});
 const errors=[['She standing near the window.','She is standing near the window.'],['He is sit in a chair.','He is sitting in a chair.'],['The cat sitting on his lap.','The cat is sitting on his lap.'],['They are wear dark clothes.','They are wearing dark clothes.'],['What she is doing?','What is she doing?']];
