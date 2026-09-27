@@ -18,12 +18,15 @@
 .testHead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}.progress{font-weight:900;color:var(--p);white-space:nowrap}.qgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.q{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;font-size:14.5px;line-height:1.35}.stem{font-weight:800;margin-bottom:7px}.opts{display:grid;gap:5px}.opt{display:flex;gap:8px;align-items:flex-start;border:1px solid #e7e1f2;border-radius:9px;padding:7px 8px;cursor:pointer;background:#fff}.opt:hover{background:#faf8ff}.opt:has(input:checked){border-color:#8b75d4;background:#f4f0ff}.opt input{margin-top:2px}.letter{font-weight:900;color:#5b47b3;min-width:18px}
 .submitArea{margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.submitArea small{color:#777186}.getCode{border:0;border-radius:12px;background:linear-gradient(110deg,var(--pink),var(--p2));color:#fff;padding:11px 17px;font-weight:900;cursor:pointer}
 .flashWrap{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px}.flashTools{width:min(760px,94%);display:flex;justify-content:flex-end;gap:7px}.tool{border:1px solid #d9d0ef;background:#fff;border-radius:10px;padding:7px 10px;font-weight:900;color:#513aad;cursor:pointer}.flash{width:min(760px,94%);height:min(380px,52vh);perspective:1200px;cursor:pointer}.inner{position:relative;width:100%;height:100%;transition:.38s;transform-style:preserve-3d}.flash.flipped .inner{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 10px 28px rgba(70,49,135,.10);display:flex;align-items:center;justify-content:center;text-align:center;padding:28px}.front{font-size:38px;font-weight:900;color:var(--p)}.back{transform:rotateY(180deg);font-size:20px;line-height:1.5}.back b{color:var(--teal)}.nav{display:flex;align-items:center;gap:15px}.nav button{width:42px;height:42px;border:1px solid #d9d0ef;border-radius:50%;background:#fff;font-size:18px;font-weight:900;color:var(--p);cursor:pointer}.counter{min-width:65px;text-align:center;font-weight:900}
+.extraRemakesBtn{position:fixed;left:8px;top:50%;transform:translateY(-50%);z-index:15;border:0;border-radius:0 12px 12px 0;background:linear-gradient(180deg,var(--pink),var(--p2));color:#fff;padding:12px 10px;font-weight:950;writing-mode:vertical-rl;cursor:pointer;box-shadow:0 8px 22px rgba(70,49,135,.18)}
+.extraVideo{max-width:980px;margin:10px auto;display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.videoBox{background:#111;border-radius:16px;overflow:hidden}.videoBox iframe{width:100%;aspect-ratio:16/9;border:0;display:block}.transcriptBox{display:none;margin-top:10px;background:#f8f6ff;border:1px solid var(--line);border-radius:12px;padding:12px;line-height:1.5}.transcriptBox.show{display:block}.remakeTask{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}.sameDiff{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.sameDiff textarea{height:120px;resize:vertical}
+@media(max-width:900px){.extraRemakesBtn{position:static;transform:none;writing-mode:horizontal-tb;border-radius:10px;margin:0 12px 8px}.extraVideo,.sameDiff{grid-template-columns:1fr}}
 .modal{position:fixed;inset:0;background:rgba(26,18,58,.5);display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.show{display:flex}.codeCard{width:min(520px,94vw);background:#fff;border-radius:20px;padding:20px;text-align:center;box-shadow:0 18px 50px rgba(42,29,91,.2)}.codeCard h2{margin:0 0 6px;color:var(--p)}.codeCard p{margin:4px 0 13px;color:#666176}.code{font:900 30px/1.1 Consolas,monospace;letter-spacing:.08em;background:#f3efff;border:2px dashed #9b88d8;border-radius:14px;padding:14px;margin:10px 0}.codeBtns{display:flex;gap:8px;justify-content:center}.codeBtns button{border:0;border-radius:10px;padding:9px 13px;font-weight:900;cursor:pointer}.copy{background:var(--teal);color:#fff}.close{background:#eee}
 @media(max-width:900px){.app{height:auto}.photoGrid,.ruleGrid,.qgrid{grid-template-columns:1fr}.photoBox img{max-height:420px}.bar{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
 <body>
-<div class="app">
+<button class="extraRemakesBtn" id="extraRemakesBtn">ДОП К REMAKES</button><div class="app">
   <div class="bar">
     <div class="title"><h1>Homework 1D · Photo + Present Tenses</h1><p>Revision: 1A–1C vocabulary · Present Simple vs Present Continuous</p></div>
     <div class="tabs">
@@ -91,6 +94,32 @@
     <div class="testHead"><div><h2>Choose the correct answer · 11–20</h2><small>Think about meaning: routine, now, temporary, change or state.</small></div><div class="progress" id="progress2"></div></div>
     <div class="qgrid" id="q2"></div>
     <div class="submitArea"><small>Answer all 20 questions. Then get a short code and send it to your teacher.</small><button class="getCode" id="getCode">FINISH & GET CODE</button></div>
+  </section>
+
+  <section class="panel" id="remakesExtra">
+    <div class="task">
+      <h2>Extra · Remakes</h2>
+      <p>Watch the <b>American Gothic remake</b>. Then compare the modern photo with Grant Wood's painting.</p>
+      <div class="extraVideo">
+        <div class="videoBox">
+          <iframe src="https://rutube.ru/play/embed/c989677a8bcc286c8deabe842aef5e80/" title="American Gothic remake" allow="clipboard-write; autoplay" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
+        <div class="remakeTask">
+          <h3 style="margin-top:0;color:var(--p)">After watching</h3>
+          <p><b>Remember:</b> 3 things that are the same and 3 things that are different.</p>
+          <div class="sameDiff">
+            <div><b>SAME</b><textarea id="remakeSame" placeholder="1.&#10;2.&#10;3."></textarea></div>
+            <div><b>DIFFERENT</b><textarea id="remakeDifferent" placeholder="1.&#10;2.&#10;3."></textarea></div>
+          </div>
+          <button class="tab" type="button" id="showTranscript" style="margin-top:10px">TRANSCRIPT</button>
+          <div class="transcriptBox" id="remakeTranscript">
+            <b>Video transcript · support version</b><br><br>
+            This photo is a modern remake of Grant Wood's <i>American Gothic</i>. Two young people are standing outside on a balcony or roof. The man is on the right. He is wearing jeans and holding a garden fork. The woman is standing next to him. In the background, you can see the city.<br><br>
+            In both images, a man and a woman are standing together and the man is holding a garden fork. In the remake, however, the people are much younger, they are wearing modern clothes, and they are smiling and holding hands. The original figures look serious and do not touch. The modern photo has a city behind the couple, while the painting shows a house.
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="panel" id="vocab">
@@ -176,7 +205,7 @@ document.getElementById('getCode').onclick=()=>{const code=makeCode();if(!code)r
 document.getElementById('closeModal').onclick=()=>document.getElementById('modal').classList.remove('show');
 document.getElementById('copyCode').onclick=async()=>{const code=document.getElementById('codeOut').textContent;await navigator.clipboard.writeText(code);document.getElementById('copyCode').textContent='COPIED';setTimeout(()=>document.getElementById('copyCode').textContent='COPY CODE',1000)};
 
-function save(show=true){localStorage.setItem(STORAGE,JSON.stringify({photo:photoText.value,answers,flashIndex,currentPanel,savedAt:new Date().toISOString()}));if(show){saveStatus.textContent='saved';setTimeout(()=>saveStatus.textContent='autosaved',1100)}}
+function save(show=true){localStorage.setItem(STORAGE,JSON.stringify({photo:photoText.value,answers,flashIndex,currentPanel,remakeSame:document.getElementById('remakeSame')?.value||'',remakeDifferent:document.getElementById('remakeDifferent')?.value||'',savedAt:new Date().toISOString()}));if(show){saveStatus.textContent='saved';setTimeout(()=>saveStatus.textContent='autosaved',1100)}}
 function autosave(){save(false);saveStatus.textContent='autosaved'}
 document.getElementById('saveBtn').onclick=()=>save(true);
 
@@ -192,6 +221,12 @@ document.getElementById('full').onclick=()=>{const el=document.getElementById('v
 
 function openPanel(id){currentPanel=id;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.p===id));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===id));autosave()}
 document.querySelectorAll('.tab').forEach(x=>x.onclick=()=>openPanel(x.dataset.p));if(!document.getElementById(currentPanel))currentPanel='photo';openPanel(currentPanel);
+document.getElementById('extraRemakesBtn').onclick=()=>openPanel('remakesExtra');
+document.getElementById('showTranscript').onclick=()=>document.getElementById('remakeTranscript').classList.toggle('show');
+document.getElementById('remakeSame').value=saved.remakeSame||'';
+document.getElementById('remakeDifferent').value=saved.remakeDifferent||'';
+document.getElementById('remakeSame').addEventListener('input',autosave);
+document.getElementById('remakeDifferent').addEventListener('input',autosave);
 if(saved.savedAt)saveStatus.textContent='saved';
 </script>
 </body>
