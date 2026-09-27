@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
-<title>Teacher Workspace · Katya</title>
+<title>Katya · Teacher Hub</title>
 <style>
 :root{
   --teal:#0f7f84;--teal2:#43aeb0;--navy:#173b5b;--ink:#17323b;
@@ -12,106 +12,134 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;background:#e9f0ef;color:var(--ink)}
-button,a,input,textarea{font:inherit}
+button,textarea{font:inherit}
 button{cursor:pointer}
-/* APP */
-#app{height:100%;display:grid;grid-template-columns:220px 1fr}
+#app{height:100%;display:grid;grid-template-columns:230px 1fr}
+
+/* SIDEBAR */
 .sidebar{
-  background:rgba(255,255,255,.98);border-right:1px solid var(--line);padding:13px 11px;
-  display:flex;flex-direction:column;gap:7px;overflow:auto
+  background:rgba(255,255,255,.985);border-right:1px solid var(--line);
+  padding:10px 9px 12px;display:flex;flex-direction:column;overflow-y:auto
 }
-.brand{padding:7px 7px 13px;border-bottom:1px solid var(--line);margin-bottom:2px}
-.brand b{display:block;color:var(--teal);font-size:18px}
-.brand span{display:block;color:var(--muted);font-size:10.5px;font-weight:700;margin-top:3px}
-.nav{
-  width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 10px;
-  text-align:left;font-size:12px;font-weight:900;color:#29464d
+.brand{padding:7px 8px 11px;border-bottom:1px solid var(--line);margin-bottom:7px}
+.brand b{display:block;color:var(--teal);font-size:17px}
+.brand span{display:block;color:var(--muted);font-size:9.5px;font-weight:700;margin-top:3px}
+.home-btn{
+  width:100%;border:0;border-radius:9px;padding:8px 10px;text-align:left;
+  background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;
+  font-size:11px;font-weight:900;margin-bottom:7px
 }
-.nav:hover{background:#f3f8f7}.nav.active{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;border-color:transparent}
+.module{margin-bottom:5px}
+.module-toggle{
+  width:100%;border:1px solid #d4e5e3;background:#edf7f6;color:#244a50;border-radius:9px;
+  padding:7px 9px;display:flex;align-items:center;justify-content:space-between;
+  font-size:11px;font-weight:900;text-align:left
+}
+.module-toggle.open{background:#d9eeec;color:#0c666b}
+.module-toggle .arrow{font-size:10px;transition:.2s}
+.module-toggle.open .arrow{transform:rotate(90deg)}
+.lesson-list{display:none;padding:4px 2px 1px 8px}
+.lesson-list.open{display:grid;gap:3px}
+.lesson-btn{
+  width:100%;border:1px solid #e0eaea;background:#fff;color:#3c565d;border-radius:8px;
+  padding:6px 7px;text-align:left;font-size:10.5px;font-weight:800
+}
+.lesson-btn:hover{background:#f3f8f7}
+.lesson-btn.current{border-color:#94c9c7;background:#eff9f8;color:#0f6f73}
+.lesson-btn.empty{color:#829195;background:#fafcfc}
 .private-note{
-  margin-top:auto;background:#edf6f5;border:1px solid #d2e7e4;border-radius:12px;padding:10px;
-  font-size:10.5px;line-height:1.4;color:#4a676b
+  margin-top:auto;background:#edf6f5;border:1px solid #d2e7e4;border-radius:10px;padding:8px;
+  font-size:9.5px;line-height:1.35;color:#4a676b
 }
+
+/* HOME */
 .workspace{
   position:relative;overflow:hidden;background:
-    linear-gradient(90deg,rgba(13,31,35,.68),rgba(13,31,35,.14) 58%,rgba(13,31,35,.22)),
-    url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat
+  linear-gradient(90deg,rgba(13,31,35,.72),rgba(13,31,35,.18) 58%,rgba(13,31,35,.27)),
+  url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat
 }
-.home{position:absolute;inset:0;padding:25px 28px;overflow:auto}
-.hero{color:#fff;max-width:760px;text-shadow:0 2px 13px rgba(0,0,0,.25)}
-.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.15em;font-weight:900;color:#dff7f4}
-.hero h1{margin:6px 0 5px;font-size:36px;line-height:1}.hero p{margin:0;font-size:14px;font-weight:700}
-.cards{margin-top:22px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:1100px}
-.card{
-  background:rgba(255,255,255,.96);border:1px solid rgba(255,255,255,.8);border-radius:17px;padding:15px;
-  min-height:185px;display:flex;flex-direction:column;box-shadow:0 15px 40px rgba(0,0,0,.16)
+.home{position:absolute;inset:0;padding:28px 32px;overflow:auto}
+.hero{color:#fff;max-width:760px;text-shadow:0 2px 13px rgba(0,0,0,.26)}
+.eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:.15em;font-weight:900;color:#dff7f4}
+.hero h1{margin:6px 0 5px;font-size:38px;line-height:1}
+.hero p{margin:0;font-size:14px;font-weight:700;line-height:1.45}
+.home-panel{
+  margin-top:24px;max-width:760px;background:rgba(255,255,255,.95);border-radius:18px;
+  padding:17px;box-shadow:0 16px 42px rgba(0,0,0,.16)
 }
-.tag{font-size:9.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
-.card h2{margin:7px 0 6px;font-size:19px}.card p{margin:0 0 13px;color:var(--muted);font-size:11.5px;line-height:1.45}
-.openbtn{margin-top:auto;border:0;border-radius:10px;background:var(--navy);color:#fff;padding:10px 11px;font-weight:900;font-size:12px}
-.openbtn.alt{background:#eaf4f3;color:#176c70;border:1px solid #cce3e1}
-.teacher{
-  margin-top:13px;max-width:1100px;background:rgba(255,255,255,.95);border-radius:16px;padding:13px;
-  box-shadow:0 12px 34px rgba(0,0,0,.12)
-}
-.teacher h3{margin:0 0 8px;color:var(--navy);font-size:16px}
+.home-panel h2{margin:0 0 5px;color:var(--navy);font-size:20px}
+.home-panel p{margin:0;color:var(--muted);font-size:12px;line-height:1.45}
+.teacher{margin-top:12px}
+.teacher h3{margin:0 0 7px;color:var(--navy);font-size:15px}
 textarea{
-  width:100%;min-height:105px;border:1px solid var(--line);border-radius:11px;padding:10px;resize:vertical;
-  background:#fbfdfd;font-size:12px;outline:0
+  width:100%;min-height:125px;border:1px solid var(--line);border-radius:10px;padding:10px;
+  resize:vertical;background:#fbfdfd;font-size:12px;outline:0
 }
-.note-actions{display:flex;gap:7px;margin-top:8px}
-.note-actions button{border:0;border-radius:9px;padding:8px 10px;font-weight:900;font-size:11px}
+.note-actions{display:flex;gap:7px;margin-top:7px}
+.note-actions button{border:0;border-radius:8px;padding:7px 10px;font-size:10.5px;font-weight:900}
 .save{background:var(--teal);color:#fff}.clear{background:#edf3f2;color:#38545a}
 .small{margin-top:6px;color:var(--muted);font-size:9.5px}
 
 /* LESSON VIEW */
-.lesson-view{position:absolute;inset:0;z-index:30;background:#fff;display:none}
-.lesson-view.on{display:grid;grid-template-rows:44px 1fr}
+.lesson-view{position:absolute;inset:0;z-index:20;background:#fff;display:none}
+.lesson-view.on{display:grid;grid-template-rows:42px 1fr}
 .lessonbar{
-  display:flex;align-items:center;gap:8px;padding:6px 10px;background:#fff;border-bottom:1px solid var(--line)
+  display:flex;align-items:center;gap:8px;padding:5px 9px;background:#fff;border-bottom:1px solid var(--line)
 }
-.back{
-  border:0;border-radius:9px;background:var(--navy);color:#fff;padding:8px 12px;font-size:11px;font-weight:900
-}
-.lesson-title{font-size:12px;font-weight:900;color:var(--navy)}
+.back{border:0;border-radius:8px;background:var(--navy);color:#fff;padding:7px 11px;font-size:10.5px;font-weight:900}
+.lesson-title{font-size:11px;font-weight:900;color:var(--navy)}
 .lessonbar .spacer{flex:1}
-.notes-toggle{border:1px solid var(--line);border-radius:9px;background:#f4f8f7;padding:7px 10px;font-size:11px;font-weight:900;color:#35545a}
+.notes-toggle{
+  border:1px solid var(--line);border-radius:8px;background:#f4f8f7;padding:6px 9px;
+  font-size:10.5px;font-weight:900;color:#35545a
+}
 .framewrap{position:relative;min-height:0}
 iframe{width:100%;height:100%;border:0;display:block;background:#fff}
+.placeholder{
+  position:absolute;inset:0;display:none;place-items:center;background:#f3f7f6;padding:30px
+}
+.placeholder.on{display:grid}
+.placeholder-card{
+  width:min(560px,90%);background:#fff;border:1px solid var(--line);border-radius:18px;
+  padding:25px;text-align:center;box-shadow:0 14px 35px rgba(20,55,60,.09)
+}
+.placeholder-card .m{font-size:10px;font-weight:900;color:var(--teal);letter-spacing:.12em;text-transform:uppercase}
+.placeholder-card h2{margin:8px 0 7px;color:var(--navy)}
+.placeholder-card p{margin:0;color:var(--muted);font-size:12px}
 .notes-panel{
-  position:absolute;right:10px;top:10px;bottom:10px;width:min(340px,42vw);z-index:4;
-  background:rgba(255,255,255,.98);border:1px solid var(--line);border-radius:14px;padding:11px;
+  position:absolute;right:10px;top:10px;bottom:10px;width:min(340px,42vw);z-index:5;
+  background:rgba(255,255,255,.98);border:1px solid var(--line);border-radius:13px;padding:10px;
   box-shadow:0 14px 35px rgba(0,0,0,.18);display:none
 }
 .notes-panel.on{display:flex;flex-direction:column}
-.notes-panel h3{margin:0 0 7px;color:var(--navy);font-size:14px}
+.notes-panel h3{margin:0 0 7px;color:var(--navy);font-size:13px}
 .notes-panel textarea{flex:1;min-height:0}
 
-@media(max-width:900px){
-  #app{grid-template-columns:175px 1fr}.cards{grid-template-columns:1fr 1fr}.hero h1{font-size:30px}
+@media(max-width:860px){
+  #app{grid-template-columns:190px 1fr}
+  .hero h1{font-size:31px}
 }
-@media(max-width:680px){
-  #app{display:block}.sidebar{position:relative;height:auto}.workspace{min-height:100vh}.cards{grid-template-columns:1fr}
+@media(max-width:650px){
+  #app{grid-template-columns:165px 1fr}
+  .home{padding:20px}
 }
 </style>
 </head>
 <body>
-
 <div id="app">
   <aside class="sidebar">
     <div class="brand">
       <b>Katya · Teacher Hub</b>
-      <span>Твоя отдельная рабочая панель</span>
+      <span>Отдельная рабочая панель преподавателя</span>
     </div>
 
-    <button class="nav active" onclick="goHome()">Главная</button>
-    <button class="nav" onclick="openLesson('elections')">Lesson 1 · Elections</button>
-    <button class="nav" onclick="openLesson('generations')">Lesson 2 · Generations</button>
-    <button class="nav" onclick="openLesson('tools')">Useful Tools</button>
+    <button class="home-btn" onclick="goHome()">Главная</button>
+
+    <div id="modules"></div>
 
     <div class="private-note">
       <b>Teacher workspace.</b><br>
-      Эта страница не добавлена в меню сайта Кати и закрыта отдельным входом.
+      Сайт не связан навигацией с сайтом Кати.
     </div>
   </aside>
 
@@ -120,40 +148,22 @@ iframe{width:100%;height:100%;border:0;display:block;background:#fff}
       <div class="hero">
         <div class="eyebrow">Adult ESL · Teacher Workspace</div>
         <h1>Lessons with Katya</h1>
-        <p>Уроки, тренажёры и приватные заметки преподавателя в одном месте.</p>
+        <p>Все уроки находятся только в левой панели. На главном экране они больше не дублируются.</p>
       </div>
 
-      <div class="cards">
-        <article class="card">
-          <div class="tag">Lesson 1</div>
-          <h2>Elections in Russia</h2>
-          <p>Vocabulary, grammar, reading и интерактивная практика по теме выборов.</p>
-          <button class="openbtn" onclick="openLesson('elections')">Открыть урок</button>
-        </article>
+      <section class="home-panel">
+        <h2>Course workspace</h2>
+        <p>8 модулей × 3 урока. Открывай нужный модуль слева. Module 1 уже содержит текущие материалы; остальные слоты готовы для следующих уроков.</p>
 
-        <article class="card">
-          <div class="tag">Lesson 2</div>
-          <h2>Generations</h2>
-          <p>Vocabulary, generations overview, discussion prompts и quiz.</p>
-          <button class="openbtn" onclick="openLesson('generations')">Открыть урок</button>
-        </article>
-
-        <article class="card">
-          <div class="tag">Trainer</div>
-          <h2>Useful Tools</h2>
-          <p>False Synonyms и дополнительная лексическая практика.</p>
-          <button class="openbtn alt" onclick="openLesson('tools')">Открыть тренажёр</button>
-        </article>
-      </div>
-
-      <section class="teacher">
-        <h3>Teacher Notes · General</h3>
-        <textarea id="generalNotes" placeholder="План следующего урока, ошибки Кати, homework, follow-up..."></textarea>
-        <div class="note-actions">
-          <button class="save" onclick="saveGeneral()">Сохранить</button>
-          <button class="clear" onclick="clearGeneral()">Очистить</button>
+        <div class="teacher">
+          <h3>Teacher Notes · General</h3>
+          <textarea id="generalNotes" placeholder="План следующего урока, ошибки Кати, homework, follow-up..."></textarea>
+          <div class="note-actions">
+            <button class="save" onclick="saveGeneral()">Сохранить</button>
+            <button class="clear" onclick="clearGeneral()">Очистить</button>
+          </div>
+          <div class="small">Заметки сохраняются локально в этом браузере.</div>
         </div>
-        <div class="small">Заметки сохраняются только в браузере на твоём устройстве.</div>
       </section>
     </section>
 
@@ -164,8 +174,18 @@ iframe{width:100%;height:100%;border:0;display:block;background:#fff}
         <div class="spacer"></div>
         <button class="notes-toggle" onclick="toggleLessonNotes()">Teacher Notes</button>
       </div>
+
       <div class="framewrap">
         <iframe id="lessonFrame" title="Katya lesson"></iframe>
+
+        <div class="placeholder" id="placeholder">
+          <div class="placeholder-card">
+            <div class="m" id="placeholderModule">Module</div>
+            <h2 id="placeholderTitle">Lesson</h2>
+            <p>Слот создан и готов для наполнения следующим материалом.</p>
+          </div>
+        </div>
+
         <aside class="notes-panel" id="notesPanel">
           <h3 id="notesHeading">Teacher Notes</h3>
           <textarea id="lessonNotes" placeholder="Ответы, ошибки, идеи, что повторить..."></textarea>
@@ -180,21 +200,100 @@ iframe{width:100%;height:100%;border:0;display:block;background:#fff}
 </div>
 
 <script>
-function openLesson(key){
-  currentLesson=key;
-  const item=LESSONS[key];
-  document.getElementById('lessonTitle').textContent=item.title;
-  document.getElementById('lessonFrame').src=item.url;
+const COURSE = [
+  {
+    module:'Module 1',
+    lessons:[
+      {id:'m1l1',title:'Lesson 1 · Elections in Russia',url:'../kate-english-hub/extra-practice-elections-russia.html'},
+      {id:'m1l2',title:'Lesson 2 · Generations',url:'../kate-english-hub/homework-lesson2-generations.html'},
+      {id:'m1l3',title:'Lesson 3 · Useful Tools',url:'../kate-english-hub/useful-tools-false-synonyms.html'}
+    ]
+  },
+  ...Array.from({length:7},(_,i)=>({
+    module:'Module '+(i+2),
+    lessons:[
+      {id:'m'+(i+2)+'l1',title:'Lesson 1',url:''},
+      {id:'m'+(i+2)+'l2',title:'Lesson 2',url:''},
+      {id:'m'+(i+2)+'l3',title:'Lesson 3',url:''}
+    ]
+  }))
+];
+
+let currentLesson='';
+
+function renderModules(){
+  const root=document.getElementById('modules');
+  root.innerHTML='';
+  COURSE.forEach((mod,mi)=>{
+    const wrap=document.createElement('div');
+    wrap.className='module';
+
+    const toggle=document.createElement('button');
+    toggle.className='module-toggle'+(mi===0?' open':'');
+    toggle.innerHTML='<span>'+mod.module+'</span><span class="arrow">›</span>';
+
+    const list=document.createElement('div');
+    list.className='lesson-list'+(mi===0?' open':'');
+
+    toggle.onclick=()=>{
+      toggle.classList.toggle('open');
+      list.classList.toggle('open');
+    };
+
+    mod.lessons.forEach(lesson=>{
+      const b=document.createElement('button');
+      b.className='lesson-btn'+(!lesson.url?' empty':'');
+      b.textContent=lesson.title;
+      b.dataset.lesson=lesson.id;
+      b.onclick=()=>openLesson(mi,lesson);
+      list.appendChild(b);
+    });
+
+    wrap.appendChild(toggle);
+    wrap.appendChild(list);
+    root.appendChild(wrap);
+  });
+}
+
+function openLesson(moduleIndex,lesson){
+  currentLesson=lesson.id;
+
+  document.querySelectorAll('.lesson-btn').forEach(b=>b.classList.remove('current'));
+  const active=document.querySelector('[data-lesson="'+lesson.id+'"]');
+  if(active) active.classList.add('current');
+
+  document.getElementById('lessonTitle').textContent=COURSE[moduleIndex].module+' · '+lesson.title;
   document.getElementById('lessonView').classList.add('on');
   document.getElementById('notesPanel').classList.remove('on');
-  document.getElementById('notesHeading').textContent=item.title+' · Notes';
-  document.getElementById('lessonNotes').value=localStorage.getItem('kt_teacher_notes_'+key)||'';
+  document.getElementById('notesHeading').textContent=lesson.title+' · Notes';
+  document.getElementById('lessonNotes').value=localStorage.getItem('kt_teacher_notes_'+lesson.id)||'';
+
+  const frame=document.getElementById('lessonFrame');
+  const placeholder=document.getElementById('placeholder');
+
+  if(lesson.url){
+    placeholder.classList.remove('on');
+    frame.style.display='block';
+    frame.src=lesson.url;
+  }else{
+    frame.src='about:blank';
+    frame.style.display='none';
+    document.getElementById('placeholderModule').textContent=COURSE[moduleIndex].module;
+    document.getElementById('placeholderTitle').textContent=lesson.title;
+    placeholder.classList.add('on');
+  }
 }
+
 function goHome(){
   document.getElementById('lessonView').classList.remove('on');
   document.getElementById('lessonFrame').src='about:blank';
+  document.getElementById('lessonFrame').style.display='block';
+  document.getElementById('placeholder').classList.remove('on');
+  document.getElementById('notesPanel').classList.remove('on');
+  document.querySelectorAll('.lesson-btn').forEach(b=>b.classList.remove('current'));
   currentLesson='';
 }
+
 function toggleLessonNotes(){
   document.getElementById('notesPanel').classList.toggle('on');
 }
@@ -207,10 +306,13 @@ function clearLessonNotes(){
   document.getElementById('lessonNotes').value='';
   localStorage.removeItem('kt_teacher_notes_'+currentLesson);
 }
+
 const general=document.getElementById('generalNotes');
 general.value=localStorage.getItem('kt_teacher_general')||'';
 function saveGeneral(){localStorage.setItem('kt_teacher_general',general.value)}
 function clearGeneral(){general.value='';localStorage.removeItem('kt_teacher_general')}
+
+renderModules();
 </script>
 </body>
 </html>
