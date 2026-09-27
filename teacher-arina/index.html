@@ -90,6 +90,7 @@ button,a{font:inherit}.app{min-height:100vh;display:grid;grid-template-columns:2
 
 <section id="results" class="view"><h1>Tests & Results</h1><div class="grid">
 <div class="tile"><div class="tag">Week 1</div><h3>Present Tenses + Irregular Verbs</h3><p>12 questions • result code workflow.</p><button class="subbtn" type="button" onclick="show('presentTest')">Open teacher copy</button></div>
+<div class="tile"><div class="tag">Arina · Cloud</div><h3>Результаты Арины</h3><p class="note">После Submit новые тесты появляются здесь автоматически.</p><div id="cloudResults"><div class="note">Загрузка результатов…</div></div><div id="cloudKeyBox" style="display:none;margin-top:9px"><input id="cloudTeacherKey" class="editField" type="password" placeholder="Ключ учителя"><button class="smallbtn" type="button" onclick="saveCloudTeacherKey()">Открыть результаты</button></div><button class="smallbtn" type="button" onclick="loadCloudResults()">Обновить</button></div>
 <div class="tile"><div class="tag">Result log</div><h3>Manual score history</h3><div id="resultLog"></div><div style="display:grid;grid-template-columns:1fr 100px;gap:6px;margin-top:8px"><input id="resultName" class="editField" placeholder="Test name"><input id="resultScore" class="editField" placeholder="%"></div><button class="smallbtn" type="button" onclick="addResult()">Add result</button></div>
 </div></section>
 
@@ -255,9 +256,33 @@ function loadTeacherDashboard(){
  const notes=document.getElementById('teacherNotes');if(notes)notes.value=s.notes||'';
  document.querySelectorAll('[data-track]').forEach(el=>{el.checked=!!(s.track&&s.track[el.dataset.track]);el.addEventListener('change',()=>{const x=teacherState();x.track=x.track||{};x.track[el.dataset.track]=el.checked;saveTeacherState(x)})});
  document.querySelectorAll('.progInput').forEach(el=>{const key=el.dataset.prog;const v=(s.progress&&s.progress[key])||0;el.value=v;const out=document.querySelector('[data-progval="'+key+'"]');if(out)out.textContent=v+'%';el.addEventListener('input',()=>{const x=teacherState();x.progress=x.progress||{};x.progress[key]=Number(el.value);saveTeacherState(x);if(out)out.textContent=el.value+'%';updateOverall()})});
- renderResults();updateOverall();
+ renderResults();loadCloudResults();updateOverall();
 }
 function updateOverall(){const vals=[...document.querySelectorAll('.progInput')].map(x=>Number(x.value||0));if(!vals.length)return;const avg=Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);const p=document.getElementById('overallPct'),b=document.getElementById('overallBar');if(p)p.textContent=avg;if(b)b.style.width=avg+'%'}
+const ARINA_RESULTS_URL='https://lzxcmrlubhjfdhtqvqzt.supabase.co/functions/v1/ege-test-results';
+const ARINA_CLOUD_KEY='tp_cloud_token_v1';
+async function loadCloudResults(){
+  const box=document.getElementById('cloudResults'),keyBox=document.getElementById('cloudKeyBox');
+  if(!box)return;
+  const key=(localStorage.getItem(ARINA_CLOUD_KEY)||'').trim();
+  if(!key){box.innerHTML='<div class="note">Введите ваш облачный ключ учителя один раз.</div>';if(keyBox)keyBox.style.display='block';return}
+  box.innerHTML='<div class="note">Загрузка…</div>';
+  try{
+    const r=await fetch(ARINA_RESULTS_URL,{headers:{'x-planner-key':key}});
+    const out=await r.json();
+    if(!r.ok||!out.ok)throw new Error(out.error||'load_failed');
+    if(keyBox)keyBox.style.display='none';
+    const rows=out.results||[];
+    if(!rows.length){box.innerHTML='<div class="note">Пока нет отправленных результатов. Следующий Submit Арины появится здесь автоматически.</div>';return}
+    box.innerHTML='<table class="miniTable"><tbody>'+rows.map(x=>{
+      const pct=x.max_score?Math.round(x.score/x.max_score*100):0;
+      const date=new Date(x.created_at).toLocaleString('ru-RU');
+      const mistakes=(x.details||[]).filter(d=>!d.is_correct);
+      return '<tr><td><b>'+escHtml(x.test_title||x.test_id)+'</b><br><span class="note">'+escHtml(date)+'</span>'+(mistakes.length?'<details style="margin-top:5px"><summary>Ошибки: '+mistakes.length+'</summary>'+mistakes.map(d=>'<div class="note" style="margin-top:4px"><b>'+escHtml(d.prompt)+'</b><br>Ответ: '+escHtml(d.chosen)+' · Правильно: '+escHtml(d.correct)+'</div>').join('')+'</details>':'<div class="note">Без ошибок</div>')+'</td><td><b>'+x.score+'/'+x.max_score+'</b><br>'+pct+'%</td></tr>'
+    }).join('')+'</tbody></table>';
+  }catch(e){box.innerHTML='<div class="note">Не удалось открыть облачные результаты. Проверьте ключ учителя.</div>';if(keyBox)keyBox.style.display='block'}
+}
+function saveCloudTeacherKey(){const el=document.getElementById('cloudTeacherKey');if(!el||!el.value.trim())return;localStorage.setItem(ARINA_CLOUD_KEY,el.value.trim());el.value='';loadCloudResults()}
 function renderResults(){const box=document.getElementById('resultLog');if(!box)return;const rows=(teacherState().results||[]);box.innerHTML=rows.length?'<table class="miniTable"><tbody>'+rows.map(r=>'<tr><td>'+escHtml(r.name)+'</td><td><b>'+escHtml(r.score)+'%</b></td></tr>').join('')+'</tbody></table>':'<div class="note">Пока нет записей.</div>'}
 function addResult(){const n=document.getElementById('resultName'),sc=document.getElementById('resultScore');const name=n.value.trim(),score=Math.max(0,Math.min(100,Number(sc.value)));if(!name||!Number.isFinite(score))return;const s=teacherState();s.results=s.results||[];s.results.unshift({name,score,date:new Date().toISOString()});saveTeacherState(s);n.value='';sc.value='';renderResults()}
 function escHtml(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
