@@ -7,7 +7,7 @@
 .wrap{max-width:1180px;margin:auto;padding:16px}.top{display:flex;justify-content:space-between;gap:12px;align-items:center}.top h1{margin:0;color:var(--p);font-size:30px}.back{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-weight:900;color:var(--p);text-decoration:none}
 .tabs{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0}.tab{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:8px 12px;font-weight:900;color:#513aad;cursor:pointer}.tab.active{background:var(--p2);color:#fff}
 .panel{display:none;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}.panel.active{display:block}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card,.task{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.videoBox{background:#111;border-radius:14px;overflow:hidden}.videoBox video{width:100%;aspect-ratio:16/9;display:block}.upload{display:block;margin-top:8px;padding:10px;border:1px dashed #b7a8dd;border-radius:10px;background:#f7f4ff;font-weight:850}.upload input{display:block;margin-top:6px}.miniGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.miniQ{border:1px solid #e7e1f2;border-radius:10px;padding:9px;background:#faf9ff}.miniQ input{width:100%;margin-top:6px;padding:7px;border:1px solid #ddd5ed;border-radius:8px}
+.grid2{display:grid;grid-template-columns:38% 1fr;gap:14px;align-items:start}.card,.task{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.videoBox{background:#111;border-radius:14px;overflow:hidden}.videoBox video{width:100%;aspect-ratio:16/9;display:block;max-height:270px;object-fit:contain}.upload{display:block;margin-top:8px;padding:10px;border:1px dashed #b7a8dd;border-radius:10px;background:#f7f4ff;font-weight:850}.upload input{display:block;margin-top:6px}.miniGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.shortTest{display:grid;gap:8px}.testQ{border:1px solid #e7e1f2;border-radius:10px;padding:9px;background:#faf9ff}.testQ b{display:block;margin-bottom:6px}.testOpts{display:grid;grid-template-columns:1fr 1fr;gap:6px}.testOpts button{border:1px solid #d9d0ef;background:#fff;border-radius:8px;padding:7px;text-align:left;cursor:pointer}.testOpts button.ok{background:#eaf8f0;border-color:#7abb98}.testOpts button.bad{background:#fff0f3;border-color:#d98b9a}.miniQ{border:1px solid #e7e1f2;border-radius:10px;padding:9px;background:#faf9ff}.miniQ input{width:100%;margin-top:6px;padding:7px;border:1px solid #ddd5ed;border-radius:8px}
 textarea{width:100%;height:120px;border:1px solid #d7d0e8;border-radius:10px;padding:9px;font:inherit}.reveal{display:none;margin-top:9px;background:#eef8ed;border:1px solid #cee5d2;border-radius:10px;padding:10px}.reveal.show{display:block}
 .flash{width:min(760px,95%);height:280px;perspective:1000px;margin:14px auto}.inner{position:relative;width:100%;height:100%;transition:.35s;transform-style:preserve-3d}.flash.flipped .inner{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:#fff;display:grid;place-items:center;text-align:center;padding:24px}.front{font-size:38px;font-weight:900;color:var(--p)}.back{transform:rotateY(180deg);font-size:24px;color:var(--teal);font-weight:900}.nav{display:flex;justify-content:center;align-items:center;gap:14px}.nav button,.tool{border:1px solid #d9d0ef;background:#fff;border-radius:10px;padding:8px 11px;font-weight:900;color:#513aad;cursor:pointer}.switch{display:flex;justify-content:center;gap:7px;flex-wrap:wrap}.switch button{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:8px 11px;font-weight:900;color:#513aad}.switch button.active{background:var(--p2);color:#fff}.mediaSaveBar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0;padding:10px 12px;background:#f7f4ff;border:1px solid var(--line);border-radius:12px}.mediaSaveBar button{border:0;border-radius:10px;background:var(--teal);color:#fff;padding:9px 12px;font-weight:900;cursor:pointer}.mediaStatus{font-size:13px;font-weight:800;color:#68627d}.audioRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.audioCard{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.audioCard audio{width:100%;margin-top:7px}@media(max-width:850px){.audioRow{grid-template-columns:1fr}}
 @media(max-width:850px){.grid2,.miniGrid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
@@ -27,25 +27,42 @@ textarea{width:100%;height:120px;border:1px solid #d7d0e8;border-radius:10px;pad
 
 <section class="panel active" id="gothic">
 <h2>American Gothic · Remake</h2>
-<div><div class="videoBox"><video id="gVideo" controls></video></div><label class="upload">LOAD VIDEO<input id="gFile" type="file" accept="video/mp4,video/*"><small>ef5e_preint_1c_6_speaking(3).mp4</small></label></div>
-<div class="task"><h3>While watching</h3><div class="miniGrid"><div class="miniQ">Where are they standing?<input></div><div class="miniQ">What is the woman wearing?<input></div><div class="miniQ">What is the man wearing?<input></div><div class="miniQ">What is he holding?<input></div><div class="miniQ">What is in the background?<input></div><div class="miniQ">How is the pose different?<input></div></div></div>
-<div class="grid2" style="margin-top:10px"><div class="card"><h3>3 SAME</h3><textarea></textarea></div><div class="card"><h3>3 DIFFERENT</h3><textarea></textarea></div></div>
-<div class="task"><h3>Language from the video</h3><div class="miniGrid"><div class="miniQ">On the right of the photo, ______ a man.<input></div><div class="miniQ">He ______ jeans.<input></div><div class="miniQ">He ______ a garden fork.<input></div><div class="miniQ">In the background, you ______ the city.<input></div></div><button class="tab" id="gKey">CHECK</button><div class="reveal" id="gAns"><b>there is · is wearing · is holding · can see</b></div></div>
+<div class="grid2">
+  <div>
+    <div class="videoBox"><video id="gVideo" controls></video></div>
+    <label class="upload">LOAD VIDEO<input id="gFile" type="file" accept="video/mp4,video/*"><small>ef5e_preint_1c_6_speaking(3).mp4</small></label>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0;color:var(--p)">SHORT TEST</h3>
+    <div class="shortTest">
+      <div class="testQ"><b>1. Where is the man standing?</b><div class="testOpts"><button data-correct="1">On the right</button><button>On the left</button></div></div>
+      <div class="testQ"><b>2. What is he wearing?</b><div class="testOpts"><button>Shorts</button><button data-correct="1">Jeans</button></div></div>
+      <div class="testQ"><b>3. What is he holding?</b><div class="testOpts"><button data-correct="1">A garden fork</button><button>A camera</button></div></div>
+      <div class="testQ"><b>4. What can you see in the background?</b><div class="testOpts"><button>A farmhouse</button><button data-correct="1">The city</button></div></div>
+    </div>
+  </div>
+</div>
+<div class="task" style="margin-top:10px"><h3>3 SAME · 3 DIFFERENT</h3><div class="grid2"><textarea placeholder="3 things the same"></textarea><textarea placeholder="3 things different"></textarea></div></div>
 </section>
 
 <section class="panel" id="hockney">
 <h2>Mr and Mrs Clark and Percy · Story behind the painting</h2>
-<div><div class="videoBox"><video id="hVideo" controls></video></div><label class="upload">LOAD VIDEO<input id="hFile" type="file" accept="video/mp4,video/*"><small>He was killed by his lover… Mr and Mrs Clark and Percy…</small></label></div>
-<div class="task" style="margin-top:10px"><h3>Watch and answer</h3><div class="miniGrid">
-<div class="miniQ">Who painted <i>Mr and Mrs Clark and Percy</i>?<input></div>
-<div class="miniQ">What did Ossie and Celia do for a living?<input></div>
-<div class="miniQ">Where did Hockney paint them?<input></div>
-<div class="miniQ">Why is Ossie not wearing shoes?<input></div>
-<div class="miniQ">What does the open window symbolize?<input></div>
-<div class="miniQ">What does Percy symbolize?<input></div>
-<div class="miniQ">When did the couple get divorced?<input></div>
-<div class="miniQ">What happened to Ossie later?<input></div>
-</div></div>
+<div class="grid2">
+  <div>
+    <div class="videoBox"><video id="hVideo" controls></video></div>
+    <label class="upload">LOAD VIDEO<input id="hFile" type="file" accept="video/mp4,video/*"><small>He was killed by his lover… Mr and Mrs Clark and Percy…</small></label>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0;color:var(--p)">SHORT TEST</h3>
+    <div class="shortTest">
+      <div class="testQ"><b>1. Who painted the picture?</b><div class="testOpts"><button data-correct="1">David Hockney</button><button>Grant Wood</button></div></div>
+      <div class="testQ"><b>2. What did Ossie and Celia do?</b><div class="testOpts"><button data-correct="1">They were fashion designers</button><button>They were actors</button></div></div>
+      <div class="testQ"><b>3. What does the open window symbolize?</b><div class="testOpts"><button>Their love</button><button data-correct="1">The distance between them</button></div></div>
+      <div class="testQ"><b>4. What happened to the couple later?</b><div class="testOpts"><button data-correct="1">They got divorced</button><button>They moved to America</button></div></div>
+      <div class="testQ"><b>5. What happened to Ossie Clark in 1996?</b><div class="testOpts"><button data-correct="1">He was murdered by his lover</button><button>He became a famous actor</button></div></div>
+    </div>
+  </div>
+</div>
 </section>
 
 <section class="panel" id="vocab">
@@ -73,7 +90,8 @@ async function clearSavedMedia(){const db=await openDB();const tx=db.transaction
 document.getElementById('saveMedia').onclick=saveAllMedia;
 document.getElementById('clearMedia').onclick=clearSavedMedia;
 loadSavedMedia();
-document.getElementById('gKey').onclick=()=>document.getElementById('gAns').classList.toggle('show');
+
+document.querySelectorAll('.testOpts button').forEach(b=>b.onclick=()=>{const box=b.parentElement;box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));if(b.dataset.correct==='1'){b.classList.add('ok')}else{b.classList.add('bad');const right=[...box.querySelectorAll('button')].find(x=>x.dataset.correct==='1');if(right)right.classList.add('ok')}});
 const sets={gothic:[['remake','ремейк'],['garden fork','садовые вилы'],['hold hands','держаться за руки'],['rooftop garden','сад на крыше'],['city skyline','городской пейзаж'],['background','задний план'],['pose','поза'],['serious','серьёзный'],['relaxed','расслабленный'],['modern clothes','современная одежда'],['hoodie','толстовка с капюшоном'],['similar','похожий'],['different','отличающийся']],hockney:[['portrait','портрет'],['fashion designer','модельер'],['flat','квартира'],['bedroom','спальня'],['carpet','ковёр'],['relationship','отношения'],['symbolize','символизировать'],['distance','дистанция / отчуждение'],['infidelity','неверность'],['pregnant','беременная'],['get divorced','развестись'],['lover','любовник / возлюбленный'],['murder','убийство'],['be murdered','быть убитым']]};
 let set='gothic',i=0;const flash=document.getElementById('flash'),front=document.getElementById('front'),back=document.getElementById('back'),count=document.getElementById('count');
 function render(){const a=sets[set];i=(i+a.length)%a.length;front.textContent=a[i][0];back.textContent=a[i][1];count.textContent=(i+1)+' / '+a.length;flash.classList.remove('flipped')}
