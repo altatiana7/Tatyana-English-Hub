@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teacher · Katya · Elections</title>
+<style>
+:root{
+  --navy:#123b72;--red:#c73043;--blue:#2b6db0;--ink:#162f45;--muted:#667784;
+  --line:#d9e5ef;--paper:#fff;--bg:#f5f8fc;--soft:#eef5fb;--ok:#dff4e6;--bad:#ffe2e2
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg)}
+body{overflow:hidden}
+.app{height:100dvh;display:grid;grid-template-rows:70px 43px 1fr}
+.hero{
+  position:relative;overflow:hidden;background:#edf3f8;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 18px
+}
+.hero:before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.97),rgba(255,255,255,.80) 45%,rgba(255,255,255,.28)),
+    url("https://upload.wikimedia.org/wikipedia/commons/1/17/Moscow_Kremlin_and_Bolshoy_Kamenny_Bridge_late_evening_01.JPG") center 45%/cover no-repeat
+}
+.hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:7px;background:linear-gradient(#fff 0 33%,#1f62af 33% 66%,#cf2f3c 66%)}
+.hero-text{position:relative;z-index:2}
+.hero h1{margin:0;color:#0e2f63;font-size:22px;line-height:1;letter-spacing:.02em}
+.hero h1 span{color:var(--red)}
+.hero p{margin:4px 0 0;font-size:10.5px;font-weight:800;color:#405a73}
+.hero-note{position:relative;z-index:2;background:rgba(255,255,255,.9);border:1px solid #d7e3ec;border-radius:13px;padding:7px 10px;font-size:10.5px;max-width:245px;line-height:1.3}
+.tabs{display:flex;gap:7px;padding:8px 12px;background:#fff;border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{border:1px solid #cddce7;background:#f8fbfe;color:var(--navy);border-radius:9px;padding:6px 11px;font-size:12px;font-weight:900;white-space:nowrap;cursor:pointer}
+.tab.on{background:var(--red);color:#fff;border-color:var(--red)}
+.stage{min-height:0;overflow:auto;padding:12px}
+.panel{display:none;max-width:1340px;margin:0 auto}.panel.on{display:block}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:10px}
+.section-head h2{margin:0;color:var(--navy);font-size:19px}.section-head p{margin:2px 0 0;color:var(--muted);font-size:11.5px}
+.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:14px;box-shadow:0 7px 20px rgba(24,48,71,.05)}
+.drag-layout{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:12px}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.photo-card{border:1px solid #d9e4ed;border-radius:14px;background:#fff;overflow:hidden;min-width:0}
+.photo-card img{display:block;width:100%;height:145px;object-fit:cover;background:#edf2f5}
+.dropzone{min-height:44px;margin:8px;border:2px dashed #b9cbd8;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:6px;text-align:center;font-size:13px;font-weight:900;color:#486178;background:#f8fbfd}
+.dropzone.filled{border-style:solid;background:#eef6fb}.dropzone.correct{background:var(--ok);border-color:#73b789;color:#23693b}.dropzone.wrong{background:var(--bad);border-color:#df8787;color:#a23232}
+.wordbank{position:sticky;top:0;align-self:start;background:#edf4fb;border:1px solid #d4e2ec;border-radius:14px;padding:11px}
+.wordbank h3{margin:0 0 8px;color:var(--navy);font-size:16px}.chips{display:grid;gap:7px}
+.chip{border:1px solid #c7d9e6;background:#fff;border-radius:9px;padding:7px 8px;font-size:12.5px;font-weight:900;cursor:grab;text-align:center;user-select:none}.chip.used{opacity:.35}.chip.selected{outline:3px solid #84b2d3}
+.activity-tabs{display:flex;gap:7px;margin:0 0 10px;flex-wrap:wrap}
+.activity-btn{border:1px solid #cbdce7;background:#fff;color:var(--navy);border-radius:9px;padding:7px 10px;font-size:12px;font-weight:900;cursor:pointer}
+.activity-btn.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.activity-pane{display:none}.activity-pane.on{display:block}
+.task{margin-top:0;background:#fff;border:1px solid var(--line);border-radius:15px;padding:12px}
+.task h3{margin:0 0 8px;color:var(--navy);font-size:15px}
+.sentences{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px}
+.line{font-size:13px;line-height:1.55}.line select{min-width:145px;border:1px solid #cbdce7;border-radius:7px;background:#fff;padding:4px 6px;font-size:12px}
+.checkbar{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}.btn{border:0;border-radius:9px;padding:9px 13px;font-weight:900;cursor:pointer;font-size:13px}.check{background:var(--navy);color:#fff}.reset{background:#e9f1f7;color:var(--navy)}.score{font-size:14px;font-weight:900;color:var(--navy)}
+.colloc{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.colloc-item{background:#f8fbfe;border:1px solid #dce7ef;border-radius:11px;padding:8px;font-size:12.5px}.colloc-item select{width:100%;margin-top:5px;border:1px solid #cbdce7;border-radius:7px;padding:5px;background:#fff;font-size:12px}
+.grammar-text{font-size:13px;line-height:1.75;color:#29465f}.grammar-text select{border:1px solid #cbdbe6;border-radius:6px;padding:3px 5px;background:#fff;font-size:11.5px;color:#203d55}
+.wf-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 18px}.wf-row{font-size:16px;line-height:1.65}.wf-row input{width:160px;border:0;border-bottom:1px solid #9fb4c5;outline:0;background:transparent;font-size:16px}
+.reading-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,.95fr);gap:14px;align-items:start}
+.reading{font-size:16px;line-height:1.75;color:#2d4b63;background:#f8fbfd;border-left:5px solid var(--blue);padding:16px;border-radius:11px;max-width:720px}
+.quizcol{display:grid;gap:9px}.q{border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}.q p{margin:0 0 8px;font-size:15px;font-weight:800;line-height:1.4}.opts{display:flex;gap:7px;flex-wrap:wrap}.opt{border:1px solid #cadbe6;background:#f9fcfe;border-radius:8px;padding:7px 9px;font-size:14px;font-weight:700;cursor:pointer}.opt.selected{outline:2px solid #6e9ec7}.opt.correct{background:var(--ok);border-color:#79be8d;outline:0}.opt.wrong{background:var(--bad);border-color:#dc8686;outline:0}
+.speaking{display:grid;grid-template-columns:1fr 1fr;gap:10px}.prompt{border-radius:12px;background:#f8fbfe;border:1px solid var(--line);padding:12px;font-size:16px;line-height:1.45}
+.small-note{font-size:13px;color:var(--muted);margin-top:9px}
+.quiz-shell{display:grid;grid-template-columns:90px 1fr 90px;gap:14px;align-items:center;min-height:390px}
+.navq{border:0;border-radius:14px;background:#eaf2f8;color:var(--navy);height:70px;font-size:26px;font-weight:900;cursor:pointer}.navq:disabled{opacity:.35}
+.quiz-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 10px 28px rgba(23,48,69,.07)}
+.quiz-count{font-size:13px;font-weight:900;color:var(--red);letter-spacing:.06em}.quiz-card h3{font-size:21px;line-height:1.4;margin:9px 0 16px;color:var(--navy)}
+.quiz-options{display:grid;gap:10px}.quiz-answer{border:1px solid #cbdbe6;background:#f9fcfe;border-radius:11px;padding:11px 12px;text-align:left;font-size:16px;font-weight:800;cursor:pointer}.quiz-answer.on{outline:3px solid #84afd0}.quiz-answer.good{background:var(--ok);border-color:#70b887;outline:0}.quiz-answer.bad{background:var(--bad);border-color:#df8787;outline:0}
+.quiz-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:15px}.progress{height:8px;background:#e8eff4;border-radius:999px;overflow:hidden;flex:1}.progress span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--red));width:0}
+@media(max-width:1050px){.drag-layout{grid-template-columns:1fr}.wordbank{position:static}.chips{grid-template-columns:repeat(3,1fr)}.reading-layout{grid-template-columns:1fr}.reading{max-width:none}.sentences,.wf-grid{grid-template-columns:1fr}.photo-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){body{overflow:auto}.app{height:auto;min-height:100dvh}.stage{overflow:visible}.hero-note{display:none}.photo-grid{grid-template-columns:1fr}.chips{grid-template-columns:1fr 1fr}.colloc,.speaking{grid-template-columns:1fr}.quiz-shell{grid-template-columns:1fr}.navq{height:48px}.quiz-shell .navq:first-child{order:2}.quiz-shell .quiz-card{order:1}.quiz-shell .navq:last-child{order:3}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="hero">
+  <div class="hero-text"><h1>ELECTIONS <span>IN RUSSIA</span></h1><p>EXTRA PRACTICE · EGE VOCABULARY · GRAMMAR · WORD FORMATION</p></div>
+  <div class="hero-note">Neutral English practice: vocabulary, grammar, reading and speaking about the electoral process.</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab on" data-tab="vocab">Vocabulary</button>
+  <button class="tab" data-tab="grammar">Grammar</button>
+  <button class="tab" data-tab="wordformation">Word Formation</button>
+  <button class="tab" data-tab="reading">Reading</button>
+  <button class="tab" data-tab="speaking">Speaking</button>
+  <button class="tab" data-tab="quiz">Quiz</button>
+</nav>
+
+<main class="stage">
+<section class="panel on" id="vocab">
+  <div class="section-head"><div><h2>Vocabulary · Drag & Match</h2><p>Drag a word under the correct photo. On touch screens, tap a word and then tap a picture.</p></div></div>
+  <div class="activity-tabs">
+      <button class="activity-btn on" data-activity="vocab-match">1 · Picture Match</button>
+      <button class="activity-btn" data-activity="vocab-complete">2 · Complete the Exercise</button>
+      <button class="activity-btn" data-activity="vocab-colloc">3 · Collocations</button>
+    </div>
+    <div class="activity-pane on" id="vocab-match">
+    <div class="drag-layout">
+    <div class="photo-grid">
+      <div class="photo-card" data-answer="polling station"><img src="https://images.pexels.com/photos/7103096/pexels-photo-7103096.jpeg?auto=compress&cs=tinysrgb&w=700" alt="polling station"><div class="dropzone">Drop word here</div></div>
+      <div class="photo-card" data-answer="ballot paper"><img src="https://images.pexels.com/photos/8846759/pexels-photo-8846759.jpeg?auto=compress&cs=tinysrgb&w=700" alt="ballot paper"><div class="dropzone">Drop word here</div></div>
+      <div class="photo-card" data-answer="ballot box"><img src="https://images.pexels.com/photos/7103191/pexels-photo-7103191.jpeg?auto=compress&cs=tinysrgb&w=700" alt="ballot box"><div class="dropzone">Drop word here</div></div>
+      <div class="photo-card" data-answer="voter"><img src="https://images.pexels.com/photos/7103132/pexels-photo-7103132.jpeg?auto=compress&cs=tinysrgb&w=700" alt="voter"><div class="dropzone">Drop word here</div></div>
+      <div class="photo-card" data-answer="candidate"><img src="https://images.pexels.com/photos/8730783/pexels-photo-8730783.jpeg?auto=compress&cs=tinysrgb&w=700" alt="candidate speaking"><div class="dropzone">Drop word here</div></div>
+      <div class="photo-card" data-answer="campaign"><img src="https://images.pexels.com/photos/8730761/pexels-photo-8730761.jpeg?auto=compress&cs=tinysrgb&w=700" alt="campaign speech"><div class="dropzone">Drop word here</div></div>
+      <div class="photo-card" data-answer="cast a vote"><img src="https://images.pexels.com/photos/1550337/pexels-photo-1550337.jpeg?auto=compress&cs=tinysrgb&w=700" alt="casting a vote"><div class="dropzone">Drop word here</div></div>
+      <div class="photo-card" data-answer="referendum"><img src="https://images.pexels.com/photos/8846407/pexels-photo-8846407.jpeg?auto=compress&cs=tinysrgb&w=700" alt="marking a ballot"><div class="dropzone">Drop word here</div></div>
+      <div class="photo-card" data-answer="voter turnout"><img src="https://images.pexels.com/photos/7103170/pexels-photo-7103170.jpeg?auto=compress&cs=tinysrgb&w=700" alt="people voting"><div class="dropzone">Drop word here</div></div>
+    </div>
+    <aside class="wordbank">
+      <h3>Word Bank</h3>
+      <div class="chips" id="chips">
+        <div class="chip" draggable="true">candidate</div>
+        <div class="chip" draggable="true">ballot paper</div>
+        <div class="chip" draggable="true">polling station</div>
+        <div class="chip" draggable="true">referendum</div>
+        <div class="chip" draggable="true">voter</div>
+        <div class="chip" draggable="true">campaign</div>
+        <div class="chip" draggable="true">voter turnout</div>
+        <div class="chip" draggable="true">cast a vote</div>
+        <div class="chip" draggable="true">ballot box</div>
+      </div>
+      <div class="checkbar"><button class="btn check" onclick="checkDrag()">CHECK</button><button class="btn reset" onclick="resetDrag()">RESET</button><span class="score" id="dragScore"></span></div>
+    </aside>
+  </div>
+  </div>
+
+  <div class="activity-pane" id="vocab-complete">
+  <div class="task">
+    <h3>Exercise 2 · Complete the sentences</h3>
+    <div class="sentences">
+      <div class="line">1. A person who takes part in an election is a <select id="v1"><option value="">choose…</option><option>voter</option><option>ballot paper</option><option>ballot box</option><option>candidate</option><option>eligible</option><option>turnout</option><option>referendum</option><option>cast a vote</option></select>.</div>
+      <div class="line">2. You usually receive a <select id="v2"><option value="">choose…</option><option>voter</option><option>ballot paper</option><option>ballot box</option><option>candidate</option><option>eligible</option><option>turnout</option><option>referendum</option><option>cast a vote</option></select> before marking your choice.</div>
+      <div class="line">3. The paper is placed in a <select id="v3"><option value="">choose…</option><option>voter</option><option>ballot paper</option><option>ballot box</option><option>candidate</option><option>eligible</option><option>turnout</option><option>referendum</option><option>cast a vote</option></select>.</div>
+      <div class="line">4. A person who wants to be elected is a <select id="v4"><option value="">choose…</option><option>voter</option><option>ballot paper</option><option>ballot box</option><option>candidate</option><option>eligible</option><option>turnout</option><option>referendum</option><option>cast a vote</option></select>.</div>
+      <div class="line">5. If you meet the legal conditions, you are <select id="v5"><option value="">choose…</option><option>voter</option><option>ballot paper</option><option>ballot box</option><option>candidate</option><option>eligible</option><option>turnout</option><option>referendum</option><option>cast a vote</option></select> to vote.</div>
+      <div class="line">6. The percentage of eligible voters who participate is voter <select id="v6"><option value="">choose…</option><option>voter</option><option>ballot paper</option><option>ballot box</option><option>candidate</option><option>eligible</option><option>turnout</option><option>referendum</option><option>cast a vote</option></select>.</div>
+      <div class="line">7. A nationwide vote on a specific question can be a <select id="v7"><option value="">choose…</option><option>voter</option><option>ballot paper</option><option>ballot box</option><option>candidate</option><option>eligible</option><option>turnout</option><option>referendum</option><option>cast a vote</option></select>.</div>
+      <div class="line">8. Citizens may <select id="v8"><option value="">choose…</option><option>voter</option><option>ballot paper</option><option>ballot box</option><option>candidate</option><option>eligible</option><option>turnout</option><option>referendum</option><option>cast a vote</option></select> at a polling station.</div>
+    </div>
+    <div class="checkbar"><button class="btn check" onclick="checkVocab()">CHECK</button><span class="score" id="vocabScore"></span></div>
+  </div>
+  </div>
+
+  <div class="activity-pane" id="vocab-colloc">
+  <div class="task">
+    <h3>Exercise 3 · Election collocations</h3>
+    <div class="colloc">
+      <div class="colloc-item">___ an election<select data-a="hold"><option></option><option>hold</option><option>make</option><option>do</option></select></div>
+      <div class="colloc-item">stand ___ election<select data-a="for"><option></option><option>for</option><option>at</option><option>on</option></select></div>
+      <div class="colloc-item">be ___<select data-a="elected"><option></option><option>elected</option><option>electing</option><option>elective</option></select></div>
+      <div class="colloc-item">have the right ___ vote<select data-a="to"><option></option><option>for</option><option>to</option><option>of</option></select></div>
+      <div class="colloc-item">be eligible ___ vote<select data-a="to"><option></option><option>to</option><option>for</option><option>at</option></select></div>
+      <div class="colloc-item">secret ___<select data-a="ballot"><option></option><option>ballot</option><option>paper</option><option>station</option></select></div>
+      <div class="colloc-item">election ___<select data-a="results"><option></option><option>results</option><option>answers</option><option>totals</option></select></div>
+      <div class="colloc-item">voter ___<select data-a="turnout"><option></option><option>turnout</option><option>output</option><option>entry</option></select></div>
+      <div class="colloc-item">electoral ___<select data-a="rights"><option></option><option>rights</option><option>rules</option><option>papers</option></select></div>
+    </div>
+    <div class="checkbar"><button class="btn check" onclick="checkColloc()">CHECK</button><span class="score" id="collocScore"></span></div>
+  </div>
+  </div>
+</section>
+
+<section class="panel" id="grammar">
+  <div class="section-head"><div><h2>Grammar in Context</h2><p>Relative clauses + passive forms. One continuous text, more practice.</p></div></div>
+  <div class="card">
+    <div class="grammar-text">
+      Elections are events <select data-g="that"><option></option><option>who</option><option>which</option><option>that</option></select> give citizens an opportunity to choose representatives. A voter is a person <select data-g="who"><option></option><option>who</option><option>which</option><option>where</option></select> takes part in the process. Before voting begins, polling stations <select data-g="are prepared"><option></option><option>prepare</option><option>are prepared</option><option>prepared</option></select> and ballot papers <select data-g="are provided"><option></option><option>provide</option><option>are provided</option><option>provided</option></select>. A polling station is a place <select data-g="where"><option></option><option>who</option><option>where</option><option>what</option></select> voters can cast their votes. A candidate is a person <select data-g="who"><option></option><option>who</option><option>which</option><option>whose</option></select> stands for election. During a campaign, ideas and policies <select data-g="are discussed"><option></option><option>discuss</option><option>are discussed</option><option>discussed</option></select> publicly. On election day, each voter receives a ballot paper <select data-g="which"><option></option><option>which</option><option>who</option><option>where</option></select> is marked in private. The completed paper <select data-g="is placed"><option></option><option>places</option><option>is placed</option><option>place</option></select> in a ballot box. After voting closes, the votes <select data-g="are counted"><option></option><option>count</option><option>are counted</option><option>counted</option></select>. The final figures show voter turnout, <select data-g="which"><option></option><option>which</option><option>who</option><option>where</option></select> describes how many eligible voters participated. Election results <select data-g="are announced"><option></option><option>announce</option><option>are announced</option><option>announced</option></select> after the count. A referendum is a vote <select data-g="that"><option></option><option>that</option><option>who</option><option>where</option></select> asks citizens to decide a specific question. Electoral rights are rules and protections <select data-g="that"><option></option><option>that</option><option>who</option><option>where</option></select> define participation in the electoral process. People <select data-g="who"><option></option><option>who</option><option>which</option><option>where</option></select> work at polling stations help organise the process. Documents <select data-g="that"><option></option><option>that</option><option>who</option><option>where</option></select> are used during voting must be handled carefully.
+    </div>
+    <div class="checkbar"><button class="btn check" onclick="checkGrammar()">CHECK</button><button class="btn reset" onclick="resetSelects('#grammar')">RESET</button><span class="score" id="grammarScore"></span></div>
+  </div>
+</section>
+
+<section class="panel" id="wordformation">
+  <div class="section-head"><div><h2>Word Formation</h2><p>Change the word in brackets. The answer must be a different form.</p></div></div>
+  <div class="card">
+    <div class="wf-grid">
+      <div class="wf-row">1. The national <input id="w1"> attracted public attention. <b>(ELECT)</b></div>
+      <div class="wf-row">2. The law aims to promote greater <input id="w2">. <b>(EQUAL)</b></div>
+      <div class="wf-row">3. Voters make a personal <input id="w3">. <b>(CHOOSE)</b></div>
+      <div class="wf-row">4. Candidates must meet certain legal <input id="w4">. <b>(REQUIRE)</b></div>
+      <div class="wf-row">5. Polling places should be <input id="w5"> to eligible voters. <b>(ACCESS)</b></div>
+      <div class="wf-row">6. Clear information can improve voter <input id="w6">. <b>(AWARE)</b></div>
+      <div class="wf-row">7. Public <input id="w7"> is important in civic life. <b>(PARTICIPATE)</b></div>
+      <div class="wf-row">8. A fair process depends on clear and <input id="w8"> rules. <b>(TRANSPARENCY)</b></div>
+      <div class="wf-row">9. Citizens may have different political <input id="w9">. <b>(BELIEVE)</b></div>
+      <div class="wf-row">10. Election workers have important <input id="w10">. <b>(RESPONSIBLE)</b></div>
+    </div>
+    <div class="checkbar"><button class="btn check" onclick="checkWF()">CHECK</button><span class="score" id="wfScore"></span></div>
+  </div>
+</section>
+
+<section class="panel" id="reading">
+  <div class="section-head"><div><h2>Reading</h2><p>Text on the left, tasks on the right — compact, no unnecessary stretching.</p></div></div>
+  <div class="reading-layout">
+    <div class="reading">
+      Elections involve several stages. Before election day, candidates present their ideas and voters receive information about the issues being discussed. On election day, eligible voters go to polling stations, receive ballot papers and cast their votes. Voting procedures are designed to keep individual choices private. After polling stations close, ballots are counted and results are announced. Voter turnout is used to describe the proportion of eligible voters who took part. A referendum differs from an election because citizens vote directly on a specific question rather than choosing a representative. The vocabulary connected with elections is useful in news reports, formal discussions and exam tasks because it allows speakers to describe the process accurately without expressing support for a particular political choice.
+    </div>
+    <div class="quizcol">
+      <div class="q" data-answer="b"><p>1. What happens before election day?</p><div class="opts"><button class="opt" data-v="a">Votes are counted.</button><button class="opt" data-v="b">Candidates present ideas.</button><button class="opt" data-v="c">Polling stations close.</button></div></div>
+      <div class="q" data-answer="c"><p>2. What does voter turnout describe?</p><div class="opts"><button class="opt" data-v="a">The number of candidates.</button><button class="opt" data-v="b">The number of ballot boxes.</button><button class="opt" data-v="c">The proportion of eligible voters who participated.</button></div></div>
+      <div class="q" data-answer="a"><p>3. How is a referendum different?</p><div class="opts"><button class="opt" data-v="a">People vote on a specific question.</button><button class="opt" data-v="b">There is no ballot paper.</button><button class="opt" data-v="c">Only candidates vote.</button></div></div>
+      <div class="q" data-answer="b"><p>4. Why is privacy mentioned?</p><div class="opts"><button class="opt" data-v="a">To make counting faster.</button><button class="opt" data-v="b">To protect individual choices.</button><button class="opt" data-v="c">To increase turnout.</button></div></div>
+      <div class="q" data-answer="c"><p>5. Why is election vocabulary useful for English learners?</p><div class="opts"><button class="opt" data-v="a">It predicts results.</button><button class="opt" data-v="b">It replaces grammar.</button><button class="opt" data-v="c">It helps describe the process accurately.</button></div></div>
+      <div class="checkbar"><button class="btn check" onclick="checkQuiz('#reading','readingScore')">CHECK</button><span class="score" id="readingScore"></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="speaking">
+  <div class="section-head"><div><h2>Speaking Practice</h2><p>Use the target vocabulary and neutral descriptive language.</p></div></div>
+  <div class="speaking">
+    <div class="prompt">1. Explain the difference between a voter and a candidate.</div>
+    <div class="prompt">2. Describe what normally happens at a polling station.</div>
+    <div class="prompt">3. Why might voter turnout vary from one election to another?</div>
+    <div class="prompt">4. What is the purpose of a secret ballot?</div>
+    <div class="prompt">5. Explain the difference between an election and a referendum.</div>
+    <div class="prompt">6. Use at least five election collocations from this lesson in a short summary.</div>
+    <div class="prompt">7. Which words from this topic could appear in an EGE reading text?</div>
+    <div class="prompt">8. Give a neutral 30-second explanation of how an election process works.</div>
+  </div>
+</section>
+
+<section class="panel" id="quiz">
+  <div class="section-head"><div><h2>Interactive Final Quiz</h2><p>15 B2/EGE-style questions. Context, grammar, collocations and precise vocabulary.</p></div></div>
+  <div class="quiz-shell">
+    <button class="navq" id="prevQ" onclick="moveQuiz(-1)">‹</button>
+    <div class="quiz-card">
+      <div class="quiz-count" id="quizCount"></div>
+      <h3 id="quizQuestion"></h3>
+      <div class="quiz-options" id="quizOptions"></div>
+      <div class="quiz-bottom">
+        <div class="progress"><span id="quizProgress"></span></div>
+        <button class="btn check" onclick="checkCurrentQuiz()">CHECK</button>
+        <span class="score" id="quizFeedback"></span>
+      </div>
+    </div>
+    <button class="navq" id="nextQ" onclick="moveQuiz(1)">›</button>
+  </div>
+</section>
+</main>
+</div>
+
+<script>
+document.querySelectorAll('.activity-btn').forEach(b=>b.addEventListener('click',()=>{
+  const panel=b.closest('.panel');
+  panel.querySelectorAll('.activity-btn').forEach(x=>x.classList.remove('on'));
+  panel.querySelectorAll('.activity-pane').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  document.getElementById(b.dataset.activity).classList.add('on');
+}));
+
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');document.getElementById(b.dataset.tab).classList.add('on');
+  document.querySelector('.stage').scrollTop=0;
+}));
+
+let dragged=null,selectedChip=null;
+document.querySelectorAll('.chip').forEach(chip=>{
+  chip.addEventListener('dragstart',()=>{dragged=chip});
+  chip.addEventListener('click',()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('selected'));selectedChip=chip;chip.classList.add('selected')});
+});
+document.querySelectorAll('.photo-card').forEach(card=>{
+  const dz=card.querySelector('.dropzone');
+  dz.addEventListener('dragover',e=>e.preventDefault());
+  dz.addEventListener('drop',e=>{e.preventDefault();if(dragged)placeChip(card,dragged)});
+  card.addEventListener('click',e=>{if(selectedChip && !e.target.classList.contains('chip'))placeChip(card,selectedChip)});
+});
+function placeChip(card,chip){
+  document.querySelectorAll('.photo-card').forEach(c=>{if(c.dataset.choice===chip.textContent.trim())clearCard(c)});
+  card.dataset.choice=chip.textContent.trim();
+  const dz=card.querySelector('.dropzone');dz.textContent=chip.textContent.trim();dz.className='dropzone filled';
+  chip.classList.add('used');chip.classList.remove('selected');selectedChip=null;dragged=null;
+}
+function clearCard(card){const old=card.dataset.choice;if(old){document.querySelectorAll('.chip').forEach(c=>{if(c.textContent.trim()===old)c.classList.remove('used')})}delete card.dataset.choice;const dz=card.querySelector('.dropzone');dz.textContent='Drop word here';dz.className='dropzone'}
+function checkDrag(){let s=0,total=0;document.querySelectorAll('.photo-card').forEach(card=>{total++;const dz=card.querySelector('.dropzone');dz.classList.remove('correct','wrong');if(card.dataset.choice===card.dataset.answer){dz.classList.add('correct');s++}else dz.classList.add('wrong')});document.getElementById('dragScore').textContent='Score: '+s+' / '+total}
+function resetDrag(){document.querySelectorAll('.photo-card').forEach(clearCard);document.querySelectorAll('.chip').forEach(c=>c.classList.remove('used','selected'));document.getElementById('dragScore').textContent=''}
+
+function norm(s){return (s||'').trim().toLowerCase().replace(/\s+/g,' ')}
+function scoreInputs(ids,answers,target){let s=0;ids.forEach((id,i)=>{const el=document.getElementById(id);const ok=norm(el.value)===norm(answers[i]);el.style.borderColor=ok?'#4ca66a':'#d66a6a';if(ok)s++});document.getElementById(target).textContent='Score: '+s+' / '+ids.length}
+function checkVocab(){scoreInputs(['v1','v2','v3','v4','v5','v6','v7','v8'],['voter','ballot paper','ballot box','candidate','eligible','turnout','referendum','cast a vote'],'vocabScore')}
+function checkColloc(){let s=0,a=[...document.querySelectorAll('.colloc-item select')];a.forEach(x=>{const ok=x.value===x.dataset.a;x.style.borderColor=ok?'#4ca66a':'#d66a6a';if(ok)s++});document.getElementById('collocScore').textContent='Score: '+s+' / '+a.length}
+function checkGrammar(){let s=0,a=[...document.querySelectorAll('#grammar select[data-g]')];a.forEach(x=>{const ok=x.value===x.dataset.g;x.style.borderColor=ok?'#4ca66a':'#d66a6a';if(ok)s++});document.getElementById('grammarScore').textContent='Score: '+s+' / '+a.length}
+function resetSelects(sel){document.querySelectorAll(sel+' select').forEach(x=>{x.value='';x.style.borderColor=''})}
+function checkWF(){scoreInputs(['w1','w2','w3','w4','w5','w6','w7','w8','w9','w10'],['election','equality','choice','requirements','accessible','awareness','participation','transparent','beliefs','responsibilities'],'wfScore')}
+document.querySelectorAll('.q').forEach(q=>q.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>{q.querySelectorAll('.opt').forEach(x=>{x.classList.remove('selected','correct','wrong');x.dataset.chosen='0'});b.dataset.chosen='1';b.classList.add('selected')})));
+function checkQuiz(scope,target){let s=0,total=0;document.querySelectorAll(scope+' .q').forEach(q=>{total++;const chosen=[...q.querySelectorAll('.opt')].find(x=>x.dataset.chosen==='1');q.querySelectorAll('.opt').forEach(x=>x.classList.remove('correct','wrong'));if(chosen){chosen.classList.remove('selected');if(chosen.dataset.v===q.dataset.answer){chosen.classList.add('correct');s++}else chosen.classList.add('wrong')}});document.getElementById(target).textContent='Score: '+s+' / '+total}
+
+const quizData=[
+  {q:'A report states that 62% of eligible citizens participated. Which term most precisely describes this figure?',a:['voter turnout','electoral rights','polling capacity','campaign reach'],c:0},
+  {q:'Choose the only natural collocation in formal election English.',a:['conduct a candidate','hold an election','make a ballot','perform a turnout'],c:1},
+  {q:'Complete the sentence: “Anyone ___ meets the legal requirements may be eligible to vote.”',a:['which','whose','who','where'],c:2},
+  {q:'Choose the grammatically correct passive form: “After the polls close, the ballots ___ under established procedures.”',a:['are counted','have count','are counting','counted'],c:0},
+  {q:'Which sentence uses “candidate” correctly?',a:['The candidate was the building where people voted.','The candidate presented a policy proposal during the campaign.','The candidate describes the percentage of voters who participated.','The candidate is the paper placed in the ballot box.'],c:1},
+  {q:'Which option best paraphrases “to cast a vote”?',a:['to announce an election result','to register as a candidate','to take part in voting by recording your choice','to calculate voter turnout'],c:2},
+  {q:'Complete: “The polling station, ___ was located in a school building, opened early in the morning.”',a:['who','where','which','whose'],c:2},
+  {q:'Choose the correct word formation: “Public ___ in elections may vary from year to year.” (PARTICIPATE)',a:['participant','participation','participative','participating'],c:1},
+  {q:'Which sentence distinguishes a referendum from an election most accurately?',a:['A referendum always elects a candidate.','A referendum asks voters to decide a specific question directly.','A referendum measures only voter turnout.','A referendum is another word for polling station.'],c:1},
+  {q:'Choose the best completion: “Citizens should have access to clear information ___ they can understand the process.”',a:['so that','despite','unless','whereas'],c:0},
+  {q:'Which phrase is most appropriate in a neutral factual description?',a:['the obviously best candidate','a candidate standing for election','the candidate everyone should support','the only sensible political choice'],c:1},
+  {q:'Complete the sentence: “The final results ___ after the counting procedure had been completed.”',a:['announced','were announced','were announcing','have announce'],c:1},
+  {q:'Which option contains a correct election collocation?',a:['electoral rights · secret ballot · voter turnout','elective rights · hidden vote · voter output','electional rights · private paper · voting turn','elect rights · secret election · vote turnout'],c:0},
+  {q:'Choose the best word: “A person must satisfy the legal criteria to be ___ to vote.”',a:['elected','electoral','eligible','elective'],c:2},
+  {q:'Which sentence contains both an accurate relative clause and a passive construction?',a:['Voters which arrive early are giving ballots.','A ballot paper, which is provided to a voter, is marked before it is placed in the box.','A candidate where campaigns is elected by a paper.','Polling stations who open early are vote there.'],c:1}
+];
+let quizIndex=0,quizAnswers=Array(quizData.length).fill(null),quizChecked=Array(quizData.length).fill(false);
+function renderQuiz(){
+ const d=quizData[quizIndex];
+ document.getElementById('quizCount').textContent='QUESTION '+(quizIndex+1)+' OF '+quizData.length;
+ document.getElementById('quizQuestion').textContent=d.q;
+ document.getElementById('quizOptions').innerHTML=d.a.map((x,i)=>'<button class="quiz-answer '+(quizAnswers[quizIndex]===i?'on':'')+'" onclick="selectQuiz('+i+')">'+x+'</button>').join('');
+ document.getElementById('quizProgress').style.width=((quizIndex+1)/quizData.length*100)+'%';
+ document.getElementById('prevQ').disabled=quizIndex===0;document.getElementById('nextQ').disabled=quizIndex===quizData.length-1;
+ document.getElementById('quizFeedback').textContent='';
+ if(quizChecked[quizIndex])showQuizResult();
+}
+function selectQuiz(i){quizAnswers[quizIndex]=i;quizChecked[quizIndex]=false;renderQuiz()}
+function checkCurrentQuiz(){if(quizAnswers[quizIndex]===null){document.getElementById('quizFeedback').textContent='Choose an answer.';return}quizChecked[quizIndex]=true;showQuizResult()}
+function showQuizResult(){
+ const d=quizData[quizIndex],buttons=[...document.querySelectorAll('.quiz-answer')],sel=quizAnswers[quizIndex];
+ buttons.forEach((b,i)=>{b.classList.remove('good','bad');if(i===d.c)b.classList.add('good');if(i===sel&&i!==d.c)b.classList.add('bad')});
+ document.getElementById('quizFeedback').textContent=sel===d.c?'Correct':'Try again';
+}
+function moveQuiz(n){quizIndex=Math.max(0,Math.min(quizData.length-1,quizIndex+n));renderQuiz()}
+renderQuiz();
+</script>
+
+<style>
+#teacherHubBack{position:fixed;right:14px;bottom:14px;z-index:99999;border:0;border-radius:12px;padding:10px 14px;background:#173b5b;color:#fff;font:800 13px Arial,Helvetica,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.2);cursor:pointer}
+#teacherHubBack:hover{filter:brightness(1.08)}
+</style>
+<button id="teacherHubBack" onclick="location.href='index.html'">← Назад к сайту учителя</button>
+
+</body>
+</html>
