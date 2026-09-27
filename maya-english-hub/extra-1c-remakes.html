@@ -9,17 +9,25 @@
 .panel{display:none;background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}.panel.active{display:block}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card,.task{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.videoBox{background:#111;border-radius:14px;overflow:hidden}.videoBox video{width:100%;aspect-ratio:16/9;display:block}.upload{display:block;margin-top:8px;padding:10px;border:1px dashed #b7a8dd;border-radius:10px;background:#f7f4ff;font-weight:850}.upload input{display:block;margin-top:6px}.miniGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.miniQ{border:1px solid #e7e1f2;border-radius:10px;padding:9px;background:#faf9ff}.miniQ input{width:100%;margin-top:6px;padding:7px;border:1px solid #ddd5ed;border-radius:8px}
 textarea{width:100%;height:120px;border:1px solid #d7d0e8;border-radius:10px;padding:9px;font:inherit}.reveal{display:none;margin-top:9px;background:#eef8ed;border:1px solid #cee5d2;border-radius:10px;padding:10px}.reveal.show{display:block}
-.flash{width:min(760px,95%);height:280px;perspective:1000px;margin:14px auto}.inner{position:relative;width:100%;height:100%;transition:.35s;transform-style:preserve-3d}.flash.flipped .inner{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:#fff;display:grid;place-items:center;text-align:center;padding:24px}.front{font-size:38px;font-weight:900;color:var(--p)}.back{transform:rotateY(180deg);font-size:24px;color:var(--teal);font-weight:900}.nav{display:flex;justify-content:center;align-items:center;gap:14px}.nav button,.tool{border:1px solid #d9d0ef;background:#fff;border-radius:10px;padding:8px 11px;font-weight:900;color:#513aad;cursor:pointer}.switch{display:flex;justify-content:center;gap:7px;flex-wrap:wrap}.switch button{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:8px 11px;font-weight:900;color:#513aad}.switch button.active{background:var(--p2);color:#fff}
+.flash{width:min(760px,95%);height:280px;perspective:1000px;margin:14px auto}.inner{position:relative;width:100%;height:100%;transition:.35s;transform-style:preserve-3d}.flash.flipped .inner{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:#fff;display:grid;place-items:center;text-align:center;padding:24px}.front{font-size:38px;font-weight:900;color:var(--p)}.back{transform:rotateY(180deg);font-size:24px;color:var(--teal);font-weight:900}.nav{display:flex;justify-content:center;align-items:center;gap:14px}.nav button,.tool{border:1px solid #d9d0ef;background:#fff;border-radius:10px;padding:8px 11px;font-weight:900;color:#513aad;cursor:pointer}.switch{display:flex;justify-content:center;gap:7px;flex-wrap:wrap}.switch button{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:8px 11px;font-weight:900;color:#513aad}.switch button.active{background:var(--p2);color:#fff}.mediaSaveBar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0;padding:10px 12px;background:#f7f4ff;border:1px solid var(--line);border-radius:12px}.mediaSaveBar button{border:0;border-radius:10px;background:var(--teal);color:#fff;padding:9px 12px;font-weight:900;cursor:pointer}.mediaStatus{font-size:13px;font-weight:800;color:#68627d}.audioRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.audioCard{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}.audioCard audio{width:100%;margin-top:7px}@media(max-width:850px){.audioRow{grid-template-columns:1fr}}
 @media(max-width:850px){.grid2,.miniGrid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
 </style></head>
 <body><div class="wrap">
 <div class="top"><div><h1>EXTRA to 1C · Remakes</h1><div>Only the two videos, tasks and vocabulary.</div></div><a class="back" href="./">← HOMEWORK HUB</a></div>
 <div class="tabs"><button class="tab active" data-p="gothic">1 · AMERICAN GOTHIC</button><button class="tab" data-p="hockney">2 · HOCKNEY STORY</button><button class="tab" data-p="vocab">3 · VOCAB CARDS</button></div>
+<div class="mediaSaveBar">
+  <button id="saveMedia">SAVE ALL VIDEO & AUDIO ON THIS DEVICE</button>
+  <button id="clearMedia" style="background:#777">CLEAR SAVED MEDIA</button>
+  <span class="mediaStatus" id="mediaStatus">Media not saved yet.</span>
+</div>
+<div class="audioRow">
+  <div class="audioCard"><b>Listening 1.24</b><input id="audio24File" type="file" accept="audio/*"><audio id="audio24" controls></audio></div>
+  <div class="audioCard"><b>Listening 1.25</b><input id="audio25File" type="file" accept="audio/*"><audio id="audio25" controls></audio></div>
+</div>
 
 <section class="panel active" id="gothic">
 <h2>American Gothic · Remake</h2>
-<div class="grid2"><div><div class="videoBox"><video id="gVideo" controls></video></div><label class="upload">LOAD VIDEO<input id="gFile" type="file" accept="video/mp4,video/*"><small>ef5e_preint_1c_6_speaking(3).mp4</small></label></div>
-<div class="card"><h3>Before watching</h3><p>Predict what the remake will change.</p><div class="miniGrid"><div class="miniQ">Clothes<input placeholder="I think..."></div><div class="miniQ">Background<input placeholder="Maybe..."></div><div class="miniQ">Objects<input placeholder="They might..."></div><div class="miniQ">Mood<input placeholder="Perhaps..."></div></div></div></div>
+<div><div class="videoBox"><video id="gVideo" controls></video></div><label class="upload">LOAD VIDEO<input id="gFile" type="file" accept="video/mp4,video/*"><small>ef5e_preint_1c_6_speaking(3).mp4</small></label></div>
 <div class="task"><h3>While watching</h3><div class="miniGrid"><div class="miniQ">Where are they standing?<input></div><div class="miniQ">What is the woman wearing?<input></div><div class="miniQ">What is the man wearing?<input></div><div class="miniQ">What is he holding?<input></div><div class="miniQ">What is in the background?<input></div><div class="miniQ">How is the pose different?<input></div></div></div>
 <div class="grid2" style="margin-top:10px"><div class="card"><h3>3 SAME</h3><textarea></textarea></div><div class="card"><h3>3 DIFFERENT</h3><textarea></textarea></div></div>
 <div class="task"><h3>Language from the video</h3><div class="miniGrid"><div class="miniQ">On the right of the photo, ______ a man.<input></div><div class="miniQ">He ______ jeans.<input></div><div class="miniQ">He ______ a garden fork.<input></div><div class="miniQ">In the background, you ______ the city.<input></div></div><button class="tab" id="gKey">CHECK</button><div class="reveal" id="gAns"><b>there is · is wearing · is holding · can see</b></div></div>
@@ -27,9 +35,17 @@ textarea{width:100%;height:120px;border:1px solid #d7d0e8;border-radius:10px;pad
 
 <section class="panel" id="hockney">
 <h2>Mr and Mrs Clark and Percy · Story behind the painting</h2>
-<div class="grid2"><div><div class="videoBox"><video id="hVideo" controls></video></div><label class="upload">LOAD VIDEO<input id="hFile" type="file" accept="video/mp4,video/*"><small>He was killed by his lover… Mr and Mrs Clark and Percy…</small></label></div>
-<div class="card"><h3>Before watching</h3><p>Do you think the couple were happy?</p><p>Why are they standing so far apart?</p><p>What might the open window symbolize?</p><p>What might Percy symbolize?</p></div></div>
-<div class="task"><h3>After watching</h3><div class="miniGrid"><div class="miniQ">What happened to their marriage?<input></div><div class="miniQ">What did the open window symbolize?<input></div><div class="miniQ">What did Percy symbolize?<input></div><div class="miniQ">What happened to Ossie later?<input></div></div></div>
+<div><div class="videoBox"><video id="hVideo" controls></video></div><label class="upload">LOAD VIDEO<input id="hFile" type="file" accept="video/mp4,video/*"><small>He was killed by his lover… Mr and Mrs Clark and Percy…</small></label></div>
+<div class="task" style="margin-top:10px"><h3>Watch and answer</h3><div class="miniGrid">
+<div class="miniQ">Who painted <i>Mr and Mrs Clark and Percy</i>?<input></div>
+<div class="miniQ">What did Ossie and Celia do for a living?<input></div>
+<div class="miniQ">Where did Hockney paint them?<input></div>
+<div class="miniQ">Why is Ossie not wearing shoes?<input></div>
+<div class="miniQ">What does the open window symbolize?<input></div>
+<div class="miniQ">What does Percy symbolize?<input></div>
+<div class="miniQ">When did the couple get divorced?<input></div>
+<div class="miniQ">What happened to Ossie later?<input></div>
+</div></div>
 </section>
 
 <section class="panel" id="vocab">
@@ -42,8 +58,21 @@ textarea{width:100%;height:120px;border:1px solid #d7d0e8;border-radius:10px;pad
 </div>
 <script>
 document.querySelectorAll('.tab[data-p]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab[data-p]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.p));scrollTo(0,0)});
-document.getElementById('gFile').onchange=e=>{if(e.target.files[0])document.getElementById('gVideo').src=URL.createObjectURL(e.target.files[0])};
-document.getElementById('hFile').onchange=e=>{if(e.target.files[0])document.getElementById('hVideo').src=URL.createObjectURL(e.target.files[0])};
+const mediaEls={
+  gothic:{file:document.getElementById('gFile'),player:document.getElementById('gVideo')},
+  hockney:{file:document.getElementById('hFile'),player:document.getElementById('hVideo')},
+  audio24:{file:document.getElementById('audio24File'),player:document.getElementById('audio24')},
+  audio25:{file:document.getElementById('audio25File'),player:document.getElementById('audio25')}
+};
+let pendingMedia={};
+Object.entries(mediaEls).forEach(([k,v])=>v.file.onchange=e=>{const file=e.target.files[0];if(file){pendingMedia[k]=file;v.player.src=URL.createObjectURL(file)}});
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open('maya-extra-1c-media',1);req.onupgradeneeded=()=>req.result.createObjectStore('media');req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function saveAllMedia(){const db=await openDB();const tx=db.transaction('media','readwrite'),store=tx.objectStore('media');let n=0;for(const [k,file] of Object.entries(pendingMedia)){store.put(file,k);n++}await new Promise((res,rej)=>{tx.oncomplete=res;tx.onerror=()=>rej(tx.error)});document.getElementById('mediaStatus').textContent=n?('Saved '+n+' media file(s). They will auto-load next time on this device.'):'No new media selected.'}
+async function loadSavedMedia(){try{const db=await openDB();const tx=db.transaction('media','readonly'),store=tx.objectStore('media');for(const [k,v] of Object.entries(mediaEls)){const req=store.get(k);req.onsuccess=()=>{if(req.result)v.player.src=URL.createObjectURL(req.result)}}document.getElementById('mediaStatus').textContent='Saved media will auto-load on this device.'}catch(e){}}
+async function clearSavedMedia(){const db=await openDB();const tx=db.transaction('media','readwrite');tx.objectStore('media').clear();await new Promise((res,rej)=>{tx.oncomplete=res;tx.onerror=()=>rej(tx.error)});document.getElementById('mediaStatus').textContent='Saved media cleared.'}
+document.getElementById('saveMedia').onclick=saveAllMedia;
+document.getElementById('clearMedia').onclick=clearSavedMedia;
+loadSavedMedia();
 document.getElementById('gKey').onclick=()=>document.getElementById('gAns').classList.toggle('show');
 const sets={gothic:[['remake','ремейк'],['garden fork','садовые вилы'],['hold hands','держаться за руки'],['rooftop garden','сад на крыше'],['city skyline','городской пейзаж'],['background','задний план'],['pose','поза'],['serious','серьёзный'],['relaxed','расслабленный'],['modern clothes','современная одежда'],['hoodie','толстовка с капюшоном'],['similar','похожий'],['different','отличающийся']],hockney:[['portrait','портрет'],['fashion designer','модельер'],['flat','квартира'],['bedroom','спальня'],['carpet','ковёр'],['relationship','отношения'],['symbolize','символизировать'],['distance','дистанция / отчуждение'],['infidelity','неверность'],['pregnant','беременная'],['get divorced','развестись'],['lover','любовник / возлюбленный'],['murder','убийство'],['be murdered','быть убитым']]};
 let set='gothic',i=0;const flash=document.getElementById('flash'),front=document.getElementById('front'),back=document.getElementById('back'),count=document.getElementById('count');
