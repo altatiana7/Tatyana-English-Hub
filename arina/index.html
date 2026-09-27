@@ -7,6 +7,94 @@
 <aside class="side" id="side"><div class="sidehead">План по неделям</div><div class="weekBtns" id="weekBtns"></div><div class="sidehead" style="margin-top:14px">Структура ЕГЭ</div><div class="examBtns" id="examBtns"></div></aside>
 <main class="main"><section id="weekView" class="content on"></section><section id="examView" class="content"></section></main>
 <script>
+
+// HOMEWORK BRIDGE · PRESENT + PAST
+const bridgeHW = `
+<div class="box" style="margin-top:10px;border:2px solid #0039A6">
+<h3>HOMEWORK · PRESENT + PAST BRIDGE</h3>
+<p class="tiny">Past пока не убираем. Сначала определи временную точку и маркер, затем выбирай время.</p>
+
+<div class="task"><b>1 · PAST MARKERS · LEARN</b><br>
+<b>Past Simple:</b> yesterday · last week/month/year · ... ago · in 2024 · then · when I was...<br>
+<b>Past Continuous:</b> while · as · at 5 p.m. yesterday · at that moment · all evening (past context)<br>
+<b>Past Perfect:</b> before · after · by the time · already · just · never · until then <i>when the reference point is in the past</i><br>
+<b>Past Perfect Continuous:</b> for · since · how long · all day/morning + <i>duration before a past point</i>.
+</div>
+
+<div class="task"><b>2 · PAST MARKERS TRAINING</b><br>
+For each marker choose the most likely tense, then explain the reference point:<br>
+yesterday · while · by the time · two days ago · at 8 p.m. yesterday · before she arrived · for three hours before the lesson · last summer · when I called · since morning before he left · already before the meeting · all evening when I saw him.
+</div>
+
+<div class="task"><b>3 · ALL MARKERS · PRESENT + PAST</b><br>
+Sort into Present Simple / Present Continuous / Present Perfect / Present Perfect Continuous / Past Simple / Past Continuous / Past Perfect / Past Perfect Continuous:<br>
+usually · right now · since 2022 · for three hours · yesterday · while · by the time · last week · at the moment · already · ever · never · every Friday · these days · two years ago · before he arrived · all morning · at 6 yesterday · so far · recently · when I was a child · for an hour before she came.
+</div>
+
+<div class="task"><b>4 · PRESENT TENSES · 12 SENTENCES</b><br>
+1. My sister usually ___ (GO) to school by bus.<br>
+2. Be quiet! I ___ (LISTEN) to the recording.<br>
+3. We ___ already ___ (FINISH) the first task.<br>
+4. She ___ (STUDY) English for four years and is still learning.<br>
+5. I ___ (KNOW) him since primary school.<br>
+6. This week we ___ (WORK) especially hard.<br>
+7. How long ___ you ___ (WAIT) for me?<br>
+8. The train ___ (LEAVE) at 7:30 every morning.<br>
+9. Tom ___ never ___ (SEE) this film.<br>
+10. Why ___ you ___ (LOOK) at me like that?<br>
+11. My parents ___ (LIVE) here since 2018.<br>
+12. I can't talk now. I ___ (COOK).
+</div>
+
+<div class="task"><b>5 · PAST TENSES · 12 SENTENCES</b><br>
+1. I ___ (WALK) home when it started to rain.<br>
+2. She ___ already ___ (LEAVE) when I arrived.<br>
+3. We ___ (VISIT) London last summer.<br>
+4. At 8 yesterday I ___ (DO) my homework.<br>
+5. He was tired because he ___ (WORK) for six hours.<br>
+6. By the time the lesson started, Arina ___ (OPEN) all the files.<br>
+7. While Mum ___ (COOK), I was setting the table.<br>
+8. They ___ never ___ (FLY) before they went to Spain.<br>
+9. I ___ (SEE) him two days ago.<br>
+10. She ___ (WAIT) for an hour before the bus finally came.<br>
+11. When I called, they ___ (WATCH) a film.<br>
+12. After he ___ (FINISH) the task, he checked his answers.
+</div>
+
+<div class="task"><b>6 · PRESENT OR PAST? · REFERENCE POINT FIRST</b><br>
+1. I ___ (LOSE) my keys, so I can't open the door now.<br>
+2. I ___ (LOSE) my keys yesterday but found them later.<br>
+3. I realised that I ___ (LOSE) my keys before I reached the office.<br>
+4. She ___ (KNOW) him for ten years and they are still friends.<br>
+5. She ___ (KNOW) him for ten years before he moved abroad.<br>
+6. We ___ (WAIT) for forty minutes and the bus still hasn't come.<br>
+7. We ___ (WAIT) for forty minutes before the bus finally came.<br>
+8. He ___ already ___ (DO) three exercises today.<br>
+9. He ___ already ___ (DO) three exercises when the teacher entered.<br>
+10. They ___ (LIVE) here since 2020.<br>
+11. They ___ (LIVE) there for five years before they moved.<br>
+12. I ___ never ___ (SEE) snow before I went to Finland.
+</div>
+
+<div class="task"><b>7 · STATIVE VERBS</b><br>
+Choose Simple or Continuous and explain the meaning:<br>
+1. I ___ (THINK) this answer is correct.<br>
+2. I ___ (THINK) about changing my study plan.<br>
+3. This soup ___ (TASTE) strange.<br>
+4. The chef ___ (TASTE) the soup.<br>
+5. I ___ (HAVE) this laptop for three years.<br>
+6. We ___ (HAVE) dinner right now.<br>
+7. She ___ (SEE) what you mean.<br>
+8. She ___ (SEE) the dentist tomorrow.<br>
+9. He ___ (BE) very rude today.<br>
+10. This bag ___ (BELONG) to me.
+</div>
+
+<div class="task"><b>8 · IRREGULAR VERBS · 30</b><br>
+be · become · begin · break · bring · buy · come · do · drink · drive · eat · fall · feel · find · get · give · go · know · leave · make · meet · read · run · see · speak · take · teach · think · write · wear<br><br>
+<b>Task:</b> write V2 + V3 for all 30. Then make 5 Past Simple, 5 Present Perfect and 5 Past Perfect sentences using different verbs.
+</div>
+</div>`;
 const weeks=[
 {d:'21–27 Sep',g:'Различать 4 времени группы Present и начать системное повторение irregular verbs.',r:'80%+ в смешанном тесте Present; 20 irregular verbs без подсказки.',l:[
 ['Present Tenses: система 4 времён','Сравнить Present Simple / Continuous / Perfect / Perfect Continuous; составить таблицу meaning → form → marker; разобрать 12 контекстов; выучить 20 irregular verbs.','Тест 12 вопросов на 4 Present forms; 8 трансформаций; восстановить V2/V3 20 глаголов; написать 8 своих предложений (по 2 на каждое время).','quiz'],
@@ -97,7 +185,7 @@ Instead, they ask why the mistake happened. This habit <b>24 ______</b> them und
 </div>
 
 <div class="task" style="margin-top:8px;border-left:4px solid var(--deep)"><b>HOMEWORK</b><br>1. Повторить 20 irregular verbs.<br>2. Исправить все ошибки Lesson 3 по схеме answer → rule → new example.<br>3. Выполнить два новых мини-сета 19–24 без подсказок.<br>4. Перед Week 2 повторить Present Perfect и Present Perfect Continuous.</div>
-`:'';return '<details class="lesson" '+(i===0?'open':'')+'><summary><span class="lnum">'+(i+1)+'</span><span class="ltitle"><b>'+x[0]+'</b><small>60 минут · конкретные задачи и ДЗ</small></span><span class="chev">+</span></summary><div class="lessonbody"><div class="cols"><div class="box"><h3>На уроке</h3><ul>'+x[1].split('; ').map(s=>'<li>'+s+'</li>').join('')+'</ul></div><div class="box"><h3>Контроль результата</h3><ul><li>короткая проверка в конце урока</li><li>ошибки сразу в личный error log</li><li>следующий урок начинается с retrieval</li></ul></div></div><details class="hw"><summary>Домашняя работа · открыть</summary><div class="hwbody"><div class="task">'+x[2].split('; ').map((s,n)=>'<b>'+(n+1)+'.</b> '+s).join('<br>')+'</div>'+special+'<label class="check"><input type="checkbox" data-save="w'+w+'l'+i+'"> Домашняя работа выполнена</label></div></details></div></details>'}
+`:'';return '<details class="lesson" '+(i===0?'open':'')+'><summary><span class="lnum">'+(i+1)+'</span><span class="ltitle"><b>'+x[0]+'</b><small>60 минут · конкретные задачи и ДЗ</small></span><span class="chev">+</span></summary><div class="lessonbody"><div class="cols"><div class="box"><h3>На уроке</h3><ul>'+x[1].split('; ').map(s=>'<li>'+s+'</li>').join('')+'</ul></div><div class="box"><h3>Контроль результата</h3><ul><li>короткая проверка в конце урока</li><li>ошибки сразу в личный error log</li><li>следующий урок начинается с retrieval</li></ul></div></div><details class="hw"><summary>Домашняя работа · открыть</summary><div class="hwbody"><div class="task">'+x[2].split('; ').map((s,n)=>'<b>'+(n+1)+'.</b> '+s).join('<br>')+'</div>'+special+(w===1&&i===2?bridgeHW:'')+'<label class="check"><input type="checkbox" data-save="w'+w+'l'+i+'"> Домашняя работа выполнена</label></div></details></div></details>'}
 function renderWeek(i){document.getElementById('examView').classList.remove('on');document.getElementById('weekView').classList.add('on');document.querySelectorAll('.wbtn').forEach(b=>b.classList.toggle('active',+b.dataset.i===i));const w=weeks[i];document.getElementById('weekView').innerHTML='<div class="hero"><div class="eyebrow">Неделя '+(i+1)+' · '+w.d+'</div><h1>'+w.g+'</h1><p>Три занятия по 60 минут. Каждый урок заканчивается конкретной домашней работой.</p></div><div class="weekMeta"><div class="card"><div class="eyebrow">Цель недели</div><h2>'+w.g+'</h2></div><div class="card result"><div class="eyebrow">Критерий готовности</div><p><b>'+w.r+'</b></p></div></div>'+w.l.map((x,j)=>lessonHTML(x,j,i)).join('');restore();if(i===0){const c=document.getElementById('checkQuiz');if(c)c.onclick=checkQuiz}if(innerWidth<801)document.getElementById('side').classList.remove('open');scrollTo({top:0,behavior:'smooth'})}
 let saved={};try{saved=JSON.parse(localStorage.getItem('arinaPlanV4')||'{}')}catch(e){}function restore(){document.querySelectorAll('[data-save]').forEach(x=>{x.checked=!!saved[x.dataset.save];x.onchange=()=>{saved[x.dataset.save]=x.checked;localStorage.setItem('arinaPlanV4',JSON.stringify(saved))}})}
 async function checkQuiz(){
