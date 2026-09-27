@@ -266,7 +266,7 @@ document.getElementById('saveBtn').onclick=()=>save(true);
 const cards=[
 ['get on well with','хорошо ладить с','She gets on well with her colleagues.'],['keep in touch','поддерживать связь','We keep in touch online.'],['have a lot in common','иметь много общего','They have a lot in common.'],['confident','уверенный в себе','She looks confident.'],['outgoing','общительный','He is friendly and outgoing.'],['slim','стройный','She is slim and quite tall.'],['fitted','приталенный','She is wearing a fitted jacket.'],['oversized','свободного, увеличенного кроя','He likes oversized hoodies.'],['high-waisted','с высокой талией','These are high-waisted trousers.'],['suit someone','идти кому-то','That colour really suits you.'],['go with','сочетаться с','These shoes go with the jacket.'],['colleague','коллега','I get on well with my colleagues.'],['relationship','отношения','They are talking about their relationship.'],['appearance','внешность','Describe her appearance.'],['in the foreground','на переднем плане','In the foreground, I can see a table.'],['in the background','на заднем плане','There is a window in the background.']
 ];
-let flashIndex=Number.isInteger(saved.flashIndex)?saved.flashIndex:0,currentPanel=saved.currentPanel||'photo';
+let flashIndex=Number.isInteger(saved.flashIndex)?saved.flashIndex:0,currentPanel='photo';
 const flash=document.getElementById('flash'),front=document.getElementById('front'),back=document.getElementById('back'),counter=document.getElementById('counter');
 function renderFlash(){flashIndex=(flashIndex+cards.length)%cards.length;front.textContent=cards[flashIndex][0];back.innerHTML='<div><b>'+cards[flashIndex][1]+'</b><div style="margin-top:16px">'+cards[flashIndex][2]+'</div></div>';counter.textContent=(flashIndex+1)+' / '+cards.length;flash.classList.remove('flipped');autosave()}
 flash.onclick=()=>flash.classList.toggle('flipped');document.getElementById('prev').onclick=()=>{flashIndex--;renderFlash()};document.getElementById('next').onclick=()=>{flashIndex++;renderFlash()};
@@ -274,7 +274,7 @@ document.getElementById('audio').onclick=()=>{speechSynthesis.cancel();const u=n
 document.getElementById('full').onclick=()=>{const el=document.getElementById('vocab');if(!document.fullscreenElement)el.requestFullscreen?.();else document.exitFullscreen?.()};renderFlash();
 
 function openPanel(id){currentPanel=id;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.p===id));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===id));autosave()}
-document.querySelectorAll('.tab').forEach(x=>x.onclick=()=>openPanel(x.dataset.p));if(!document.getElementById(currentPanel))currentPanel='photo';openPanel(currentPanel);
+document.querySelectorAll('.tab').forEach(x=>x.onclick=()=>openPanel(x.dataset.p));currentPanel='photo';openPanel('photo');
 document.getElementById('extraRemakesBtn').onclick=()=>openPanel('remakesExtra');
 document.getElementById('extraRemakeFile').onchange=e=>{const f=e.target.files[0];if(f)document.getElementById('extraRemakeVideo').src=URL.createObjectURL(f)};
 document.getElementById('showTranscript').onclick=()=>document.getElementById('remakeTranscript').classList.toggle('show');
