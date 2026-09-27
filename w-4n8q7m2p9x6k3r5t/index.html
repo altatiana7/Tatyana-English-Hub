@@ -14,28 +14,6 @@
 html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;background:#e9f0ef;color:var(--ink)}
 button,a,input,textarea{font:inherit}
 button{cursor:pointer}
-.hidden{display:none!important}
-
-/* LOGIN */
-#gate{
-  position:fixed;inset:0;z-index:99999;display:grid;place-items:center;
-  background:
-    linear-gradient(110deg,rgba(12,33,37,.78),rgba(12,33,37,.35)),
-    url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
-}
-.login-card{
-  width:min(430px,90vw);background:rgba(255,255,255,.97);border:1px solid rgba(255,255,255,.75);
-  border-radius:22px;padding:26px;box-shadow:0 22px 65px rgba(0,0,0,.28)
-}
-.login-card .mini{font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:var(--teal)}
-.login-card h1{margin:7px 0 7px;font-size:28px;color:var(--navy)}
-.login-card p{margin:0 0 16px;color:var(--muted);font-size:13px;line-height:1.45}
-.login-row{display:flex;gap:8px}
-.login-row input{flex:1;border:1px solid #cddedd;border-radius:11px;padding:11px 12px;outline:0}
-.login-row input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,127,132,.12)}
-.login-row button{border:0;border-radius:11px;background:var(--navy);color:#fff;font-weight:900;padding:11px 16px}
-#error{min-height:18px;margin-top:8px;color:#a63d48;font-size:12px;font-weight:800}
-
 /* APP */
 #app{height:100%;display:grid;grid-template-columns:220px 1fr}
 .sidebar{
@@ -119,20 +97,7 @@ iframe{width:100%;height:100%;border:0;display:block;background:#fff}
 </head>
 <body>
 
-<div id="gate">
-  <div class="login-card">
-    <div class="mini">Teacher access</div>
-    <h1>Katya · Teacher Workspace</h1>
-    <p>Отдельная рабочая страница преподавателя. Введи пароль, чтобы открыть материалы.</p>
-    <div class="login-row">
-      <input id="password" type="password" autocomplete="current-password" placeholder="Пароль">
-      <button onclick="login()">Войти</button>
-    </div>
-    <div id="error"></div>
-  </div>
-</div>
-
-<div id="app" class="hidden">
+<div id="app">
   <aside class="sidebar">
     <div class="brand">
       <b>Katya · Teacher Hub</b>
@@ -215,48 +180,6 @@ iframe{width:100%;height:100%;border:0;display:block;background:#fff}
 </div>
 
 <script>
-const PASS_HASH='ba7931b184977a8f62cc19ca84d0ec451294b1da84968e3e422f4ca93aac6f0b';
-const LESSONS={
-  elections:{
-    title:'Lesson 1 · Elections in Russia',
-    url:'../kate-english-hub/extra-practice-elections-russia.html'
-  },
-  generations:{
-    title:'Lesson 2 · Generations',
-    url:'../kate-english-hub/homework-lesson2-generations.html'
-  },
-  tools:{
-    title:'Useful Tools · False Synonyms',
-    url:'../kate-english-hub/useful-tools-false-synonyms.html'
-  }
-};
-let currentLesson='';
-
-async function sha256(text){
-  const data=new TextEncoder().encode(text);
-  const digest=await crypto.subtle.digest('SHA-256',data);
-  return Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('');
-}
-async function login(){
-  const p=document.getElementById('password').value;
-  const h=await sha256(p);
-  if(h===PASS_HASH){
-    sessionStorage.setItem('kt_teacher_auth','1');
-    showApp();
-  }else{
-    document.getElementById('error').textContent='Неверный пароль';
-  }
-}
-function showApp(){
-  document.getElementById('gate').classList.add('hidden');
-  document.getElementById('app').classList.remove('hidden');
-}
-if(sessionStorage.getItem('kt_teacher_auth')==='1') showApp();
-
-document.getElementById('password').addEventListener('keydown',e=>{
-  if(e.key==='Enter') login();
-});
-
 function openLesson(key){
   currentLesson=key;
   const item=LESSONS[key];
