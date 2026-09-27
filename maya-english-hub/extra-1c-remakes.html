@@ -84,6 +84,14 @@ textarea{width:100%;height:120px;border:1px solid #d7d0e8;border-radius:10px;pad
 </section>
 </div>
 <script>
+function resetToStart(){
+  document.querySelectorAll('.tab[data-p]').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===0));
+  window.scrollTo(0,0);
+}
+window.addEventListener('DOMContentLoaded',resetToStart);
+window.addEventListener('pageshow',resetToStart);
+
 history.scrollRestoration='manual';
 function resetToStart(){
   document.querySelectorAll('.tab[data-p]').forEach((b,i)=>b.classList.toggle('active',i===0));
