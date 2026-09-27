@@ -63,6 +63,16 @@ textarea{width:100%;height:120px;border:1px solid #d7d0e8;border-radius:10px;pad
     </div>
   </div>
 </div>
+<div class="task" style="margin-top:10px">
+  <button class="tab" type="button" id="showHockneyScript">SCRIPT</button>
+  <div class="reveal" id="hockneyScript">
+    <b>Mr and Mrs Clark and Percy · Story script</b><br><br>
+    <b>Mr and Mrs Clark and Percy</b> was painted by the British artist David Hockney in 1971. It is a portrait of two of his friends, Ossie Clark and Celia Birtwell, and their cat Percy.<br><br>
+    Ossie and Celia were successful fashion designers in London. Hockney painted them in their flat in Notting Hill. Celia is standing and Ossie is sitting, which was unusual for a traditional portrait of a married couple.<br><br>
+    The couple are separated by a large open window. Hockney used this detail to suggest distance in their relationship. Percy, the white cat sitting on Ossie, has often been interpreted as a symbol of infidelity.<br><br>
+    The couple later divorced. Ossie Clark died in 1996. He was murdered by his former lover in his Kensington flat.
+  </div>
+</div>
 </section>
 
 <section class="panel" id="vocab">
@@ -99,6 +109,7 @@ document.getElementById('saveMedia').onclick=saveAllMedia;
 document.getElementById('clearMedia').onclick=clearSavedMedia;
 loadSavedMedia();
 
+document.getElementById('showHockneyScript').onclick=()=>document.getElementById('hockneyScript').classList.toggle('show');
 document.querySelectorAll('.testOpts button').forEach(b=>b.onclick=()=>{const box=b.parentElement;box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));if(b.dataset.correct==='1'){b.classList.add('ok')}else{b.classList.add('bad');const right=[...box.querySelectorAll('button')].find(x=>x.dataset.correct==='1');if(right)right.classList.add('ok')}});
 const sets={gothic:[['remake','ремейк'],['garden fork','садовые вилы'],['hold hands','держаться за руки'],['rooftop garden','сад на крыше'],['city skyline','городской пейзаж'],['background','задний план'],['pose','поза'],['serious','серьёзный'],['relaxed','расслабленный'],['modern clothes','современная одежда'],['hoodie','толстовка с капюшоном'],['similar','похожий'],['different','отличающийся']],hockney:[['portrait','портрет'],['fashion designer','модельер'],['flat','квартира'],['bedroom','спальня'],['carpet','ковёр'],['relationship','отношения'],['symbolize','символизировать'],['distance','дистанция / отчуждение'],['infidelity','неверность'],['pregnant','беременная'],['get divorced','развестись'],['lover','любовник / возлюбленный'],['murder','убийство'],['be murdered','быть убитым']]};
 let set='gothic',i=0;const flash=document.getElementById('flash'),front=document.getElementById('front'),back=document.getElementById('back'),count=document.getElementById('count');
