@@ -19,7 +19,7 @@
 .submitArea{margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.submitArea small{color:#777186}.getCode{border:0;border-radius:12px;background:linear-gradient(110deg,var(--pink),var(--p2));color:#fff;padding:11px 17px;font-weight:900;cursor:pointer}
 .flashWrap{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px}.flashTools{width:min(760px,94%);display:flex;justify-content:flex-end;gap:7px}.tool{border:1px solid #d9d0ef;background:#fff;border-radius:10px;padding:7px 10px;font-weight:900;color:#513aad;cursor:pointer}.flash{width:min(760px,94%);height:min(380px,52vh);perspective:1200px;cursor:pointer}.inner{position:relative;width:100%;height:100%;transition:.38s;transform-style:preserve-3d}.flash.flipped .inner{transform:rotateY(180deg)}.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 10px 28px rgba(70,49,135,.10);display:flex;align-items:center;justify-content:center;text-align:center;padding:28px}.front{font-size:38px;font-weight:900;color:var(--p)}.back{transform:rotateY(180deg);font-size:20px;line-height:1.5}.back b{color:var(--teal)}.nav{display:flex;align-items:center;gap:15px}.nav button{width:42px;height:42px;border:1px solid #d9d0ef;border-radius:50%;background:#fff;font-size:18px;font-weight:900;color:var(--p);cursor:pointer}.counter{min-width:65px;text-align:center;font-weight:900}
 .extraRemakesBtn{position:fixed;left:8px;top:50%;transform:translateY(-50%);z-index:15;border:0;border-radius:0 12px 12px 0;background:linear-gradient(180deg,var(--pink),var(--p2));color:#fff;padding:12px 10px;font-weight:950;writing-mode:vertical-rl;cursor:pointer;box-shadow:0 8px 22px rgba(70,49,135,.18)}
-.extraVideo{max-width:980px;margin:10px auto;display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.videoBox{background:#111;border-radius:16px;overflow:hidden}.videoBox iframe{width:100%;aspect-ratio:16/9;border:0;display:block}.transcriptBox{display:none;margin-top:10px;background:#f8f6ff;border:1px solid var(--line);border-radius:12px;padding:12px;line-height:1.5}.transcriptBox.show{display:block}.remakeTask{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}.sameDiff{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.sameDiff textarea{height:120px;resize:vertical}
+.extraVideo{max-width:980px;margin:10px auto;display:grid;grid-template-columns:1.1fr .9fr;gap:14px}.videoBox{background:#111;border-radius:16px;overflow:hidden}.videoBox iframe{width:100%;aspect-ratio:16/9;border:0;display:block}.transcriptBox{display:none;margin-top:10px;background:#f8f6ff;border:1px solid var(--line);border-radius:12px;padding:12px;line-height:1.5}.transcriptBox.show{display:block}.remakeTask{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}.taskBlock{margin-top:12px;border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.taskBlock h3{margin:0 0 8px;color:var(--p)}.miniGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.miniQ{border:1px solid #e7e1f2;border-radius:10px;padding:9px;background:#faf9ff}.miniQ input{width:100%;margin-top:6px;padding:7px;border:1px solid #ddd5ed;border-radius:8px}.vidUpload{display:block;padding:12px;background:#f7f4ff;border:1px dashed #b7a8dd;border-radius:12px;font-weight:850}.vidUpload input{display:block;margin-top:8px}.vocabSwitcher{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:14px}.vocabSwitcher button{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:8px 12px;font-weight:900;color:#513aad;cursor:pointer}.vocabSwitcher button.active{background:var(--p2);color:#fff}.videoVocab{margin-top:10px}.videoVocab .flash{height:min(300px,45vh)}.sameDiff{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.sameDiff textarea{height:120px;resize:vertical}
 @media(max-width:900px){.extraRemakesBtn{position:static;transform:none;writing-mode:horizontal-tb;border-radius:10px;margin:0 12px 8px}.extraVideo,.sameDiff{grid-template-columns:1fr}}
 .modal{position:fixed;inset:0;background:rgba(26,18,58,.5);display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.show{display:flex}.codeCard{width:min(520px,94vw);background:#fff;border-radius:20px;padding:20px;text-align:center;box-shadow:0 18px 50px rgba(42,29,91,.2)}.codeCard h2{margin:0 0 6px;color:var(--p)}.codeCard p{margin:4px 0 13px;color:#666176}.code{font:900 30px/1.1 Consolas,monospace;letter-spacing:.08em;background:#f3efff;border:2px dashed #9b88d8;border-radius:14px;padding:14px;margin:10px 0}.codeBtns{display:flex;gap:8px;justify-content:center}.codeBtns button{border:0;border-radius:10px;padding:9px 13px;font-weight:900;cursor:pointer}.copy{background:var(--teal);color:#fff}.close{background:#eee}
 @media(max-width:900px){.app{height:auto}.photoGrid,.ruleGrid,.qgrid{grid-template-columns:1fr}.photoBox img{max-height:420px}.bar{align-items:flex-start;flex-direction:column}}
@@ -98,26 +98,80 @@
 
   <section class="panel" id="remakesExtra">
     <div class="task">
-      <h2>Extra · Remakes</h2>
-      <p>Watch the <b>American Gothic remake</b>. Then compare the modern photo with Grant Wood's painting.</p>
+      <h2>Extra · Remakes · Two Videos</h2>
+      <p>Watch the <b>American Gothic remake</b>, complete the tasks, then review vocabulary from <b>both videos</b>: American Gothic + Mr and Mrs Clark and Percy.</p>
+
       <div class="extraVideo">
-        <div class="videoBox">
-          <iframe src="https://rutube.ru/play/embed/c989677a8bcc286c8deabe842aef5e80/" title="American Gothic remake" allow="clipboard-write; autoplay" webkitAllowFullScreen mozallowfullscreen allowfullscreen></iframe>
+        <div>
+          <div class="videoBox"><video id="extraRemakeVideo" controls style="width:100%;aspect-ratio:16/9;display:block;background:#111"></video></div>
+          <label class="vidUpload">LOAD THE VIDEO
+            <input type="file" id="extraRemakeFile" accept="video/mp4,video/*">
+            <small>Choose: ef5e_preint_1c_6_speaking(3).mp4</small>
+          </label>
         </div>
         <div class="remakeTask">
-          <h3 style="margin-top:0;color:var(--p)">After watching</h3>
-          <p><b>Remember:</b> 3 things that are the same and 3 things that are different.</p>
-          <div class="sameDiff">
-            <div><b>SAME</b><textarea id="remakeSame" placeholder="1.&#10;2.&#10;3."></textarea></div>
-            <div><b>DIFFERENT</b><textarea id="remakeDifferent" placeholder="1.&#10;2.&#10;3."></textarea></div>
-          </div>
-          <button class="tab" type="button" id="showTranscript" style="margin-top:10px">TRANSCRIPT</button>
-          <div class="transcriptBox" id="remakeTranscript">
-            <b>Video transcript · support version</b><br><br>
-            This photo is a modern remake of Grant Wood's <i>American Gothic</i>. Two young people are standing outside on a balcony or roof. The man is on the right. He is wearing jeans and holding a garden fork. The woman is standing next to him. In the background, you can see the city.<br><br>
-            In both images, a man and a woman are standing together and the man is holding a garden fork. In the remake, however, the people are much younger, they are wearing modern clothes, and they are smiling and holding hands. The original figures look serious and do not touch. The modern photo has a city behind the couple, while the painting shows a house.
+          <h3 style="margin-top:0;color:var(--p)">BEFORE WATCHING · Predict</h3>
+          <p>Look at the original <i>American Gothic</i>. What do you expect a modern remake to change?</p>
+          <div class="miniGrid">
+            <div class="miniQ">Clothes<input id="predClothes" placeholder="I think they will wear..."></div>
+            <div class="miniQ">Background<input id="predBg" placeholder="Maybe the background will be..."></div>
+            <div class="miniQ">Objects<input id="predObj" placeholder="They might use..."></div>
+            <div class="miniQ">Mood<input id="predMood" placeholder="They might look..."></div>
           </div>
         </div>
+      </div>
+
+      <div class="taskBlock">
+        <h3>WHILE WATCHING · Watch for details</h3>
+        <div class="miniGrid">
+          <div class="miniQ"><b>1.</b> Where are the couple standing?<input placeholder="Answer"></div>
+          <div class="miniQ"><b>2.</b> What is the woman wearing?<input placeholder="Answer"></div>
+          <div class="miniQ"><b>3.</b> What is the man wearing?<input placeholder="Answer"></div>
+          <div class="miniQ"><b>4.</b> What is the man holding?<input placeholder="Answer"></div>
+          <div class="miniQ"><b>5.</b> What can you see in the background?<input placeholder="Answer"></div>
+          <div class="miniQ"><b>6.</b> How is their pose different from the original?<input placeholder="Answer"></div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:10px">
+        <div class="card"><h3>3 THINGS THE SAME</h3><textarea id="remakeSame" placeholder="1.&#10;2.&#10;3."></textarea></div>
+        <div class="card"><h3>3 THINGS DIFFERENT</h3><textarea id="remakeDifferent" placeholder="1.&#10;2.&#10;3."></textarea></div>
+      </div>
+
+      <div class="taskBlock">
+        <h3>LANGUAGE FROM THE VIDEO · Complete</h3>
+        <div class="miniGrid">
+          <div class="miniQ">On the right of the photo, ______ a man.<input placeholder="Answer"></div>
+          <div class="miniQ">He ______ jeans.<input placeholder="Answer"></div>
+          <div class="miniQ">He ______ a garden fork in his hand.<input placeholder="Answer"></div>
+          <div class="miniQ">In the background, you ______ the city.<input placeholder="Answer"></div>
+        </div>
+        <button class="tab" type="button" id="showRemakeKey" style="margin-top:10px">CHECK</button>
+        <div class="transcriptBox" id="remakeKey"><b>Answers:</b> there is · is wearing · is holding · can see</div>
+      </div>
+
+      <div class="taskBlock">
+        <h3>AFTER WATCHING · Speak</h3>
+        <p><b>Which version do you prefer — the original or the remake? Why?</b></p>
+        <p>Use: <i>Both pictures show… / In the original… / In the remake… / The biggest difference is… / I prefer… because…</i></p>
+        <button class="tab" type="button" id="showTranscript">TRANSCRIPT / SUPPORT</button>
+        <div class="transcriptBox" id="remakeTranscript">
+          <b>Support text</b><br><br>
+          This is a modern remake of Grant Wood's <i>American Gothic</i>. A young woman and a young man are standing in a rooftop garden. The woman is wearing a blue hoodie and the man is wearing a red top, jeans and boots. He is holding a garden fork. The couple are standing close together and holding hands. In the background, we can see a modern city.<br><br>
+          In both images, there is a man and a woman and the man is holding a fork. However, the remake is much more relaxed and modern. The original figures look serious and formal, while the young couple are smiling. The original shows a house in the background, but the remake shows a city.
+        </div>
+      </div>
+
+      <div class="taskBlock videoVocab">
+        <h3>QUIZLET-STYLE CARDS · Vocabulary from BOTH videos</h3>
+        <div class="vocabSwitcher">
+          <button class="active" type="button" data-vset="gothic">AMERICAN GOTHIC</button>
+          <button type="button" data-vset="hockney">HOCKNEY · PERCY</button>
+        </div>
+        <div class="flashTools"><button class="tool" id="videoAudio">AUDIO</button></div>
+        <div class="flash" id="videoFlash"><div class="inner"><div class="face front" id="videoFront"></div><div class="face back" id="videoBack"></div></div></div>
+        <div class="nav"><button id="videoPrev">←</button><span class="counter" id="videoCounter"></span><button id="videoNext">→</button></div>
+        <div style="font-size:13px;color:#777186;text-align:center">Click the card to flip · Audio = English word / phrase only.</div>
       </div>
     </div>
   </section>
@@ -222,11 +276,30 @@ document.getElementById('full').onclick=()=>{const el=document.getElementById('v
 function openPanel(id){currentPanel=id;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.p===id));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===id));autosave()}
 document.querySelectorAll('.tab').forEach(x=>x.onclick=()=>openPanel(x.dataset.p));if(!document.getElementById(currentPanel))currentPanel='photo';openPanel(currentPanel);
 document.getElementById('extraRemakesBtn').onclick=()=>openPanel('remakesExtra');
+document.getElementById('extraRemakeFile').onchange=e=>{const f=e.target.files[0];if(f)document.getElementById('extraRemakeVideo').src=URL.createObjectURL(f)};
 document.getElementById('showTranscript').onclick=()=>document.getElementById('remakeTranscript').classList.toggle('show');
+document.getElementById('showRemakeKey').onclick=()=>document.getElementById('remakeKey').classList.toggle('show');
 document.getElementById('remakeSame').value=saved.remakeSame||'';
 document.getElementById('remakeDifferent').value=saved.remakeDifferent||'';
 document.getElementById('remakeSame').addEventListener('input',autosave);
 document.getElementById('remakeDifferent').addEventListener('input',autosave);
+
+const videoSets={
+gothic:[
+['remake','ремейк / новая версия'],['original','оригинал'],['garden fork','садовые вилы'],['hold','держать'],['hold hands','держаться за руки'],['rooftop garden','сад на крыше'],['city skyline','городской пейзаж'],['background','задний план'],['pose','поза'],['serious','серьёзный'],['relaxed','расслабленный'],['modern clothes','современная одежда'],['boots','ботинки / сапоги'],['hoodie','толстовка с капюшоном'],['similar','похожий'],['different','отличающийся']
+],
+hockney:[
+['portrait','портрет'],['fashion designer','модельер'],['pose','позировать / поза'],['flat','квартира'],['bedroom','спальня'],['carpet','ковёр'],['open window','открытое окно'],['relationship','отношения'],['symbolize','символизировать'],['distance','дистанция / отчуждение'],['infidelity','неверность'],['pregnant','беременная'],['get divorced','развестись'],['lover','любовник / возлюбленный'],['murder','убийство'],['be murdered','быть убитым']
+]};
+let videoSet='gothic',videoIndex=0;
+const vf=document.getElementById('videoFlash'),vfront=document.getElementById('videoFront'),vback=document.getElementById('videoBack'),vcounter=document.getElementById('videoCounter');
+function renderVideoCard(){const arr=videoSets[videoSet];videoIndex=(videoIndex+arr.length)%arr.length;vfront.textContent=arr[videoIndex][0];vback.innerHTML='<div><b>'+arr[videoIndex][1]+'</b></div>';vcounter.textContent=(videoIndex+1)+' / '+arr.length;vf.classList.remove('flipped')}
+vf.onclick=()=>vf.classList.toggle('flipped');
+document.getElementById('videoPrev').onclick=()=>{videoIndex--;renderVideoCard()};
+document.getElementById('videoNext').onclick=()=>{videoIndex++;renderVideoCard()};
+document.querySelectorAll('[data-vset]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-vset]').forEach(x=>x.classList.toggle('active',x===b));videoSet=b.dataset.vset;videoIndex=0;renderVideoCard()});
+document.getElementById('videoAudio').onclick=()=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(videoSets[videoSet][videoIndex][0]);u.lang='en-GB';u.rate=.88;speechSynthesis.speak(u)};
+renderVideoCard();
 if(saved.savedAt)saveStatus.textContent='saved';
 </script>
 </body>
