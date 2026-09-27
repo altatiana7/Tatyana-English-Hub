@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<title>Teacher Workspace · Katya</title>
+<style>
+:root{
+  --teal:#0f7f84;--teal2:#43aeb0;--navy:#173b5b;--ink:#17323b;
+  --muted:#66777c;--line:#d8e7e6;--paper:#fff;--soft:#eef5f4;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;background:#e9f0ef;color:var(--ink)}
+button,a,input,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+
+/* LOGIN */
+#gate{
+  position:fixed;inset:0;z-index:99999;display:grid;place-items:center;
+  background:
+    linear-gradient(110deg,rgba(12,33,37,.78),rgba(12,33,37,.35)),
+    url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;
+}
+.login-card{
+  width:min(430px,90vw);background:rgba(255,255,255,.97);border:1px solid rgba(255,255,255,.75);
+  border-radius:22px;padding:26px;box-shadow:0 22px 65px rgba(0,0,0,.28)
+}
+.login-card .mini{font-size:11px;text-transform:uppercase;letter-spacing:.14em;font-weight:900;color:var(--teal)}
+.login-card h1{margin:7px 0 7px;font-size:28px;color:var(--navy)}
+.login-card p{margin:0 0 16px;color:var(--muted);font-size:13px;line-height:1.45}
+.login-row{display:flex;gap:8px}
+.login-row input{flex:1;border:1px solid #cddedd;border-radius:11px;padding:11px 12px;outline:0}
+.login-row input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,127,132,.12)}
+.login-row button{border:0;border-radius:11px;background:var(--navy);color:#fff;font-weight:900;padding:11px 16px}
+#error{min-height:18px;margin-top:8px;color:#a63d48;font-size:12px;font-weight:800}
+
+/* APP */
+#app{height:100%;display:grid;grid-template-columns:220px 1fr}
+.sidebar{
+  background:rgba(255,255,255,.98);border-right:1px solid var(--line);padding:13px 11px;
+  display:flex;flex-direction:column;gap:7px;overflow:auto
+}
+.brand{padding:7px 7px 13px;border-bottom:1px solid var(--line);margin-bottom:2px}
+.brand b{display:block;color:var(--teal);font-size:18px}
+.brand span{display:block;color:var(--muted);font-size:10.5px;font-weight:700;margin-top:3px}
+.nav{
+  width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 10px;
+  text-align:left;font-size:12px;font-weight:900;color:#29464d
+}
+.nav:hover{background:#f3f8f7}.nav.active{background:linear-gradient(135deg,var(--teal),var(--teal2));color:#fff;border-color:transparent}
+.private-note{
+  margin-top:auto;background:#edf6f5;border:1px solid #d2e7e4;border-radius:12px;padding:10px;
+  font-size:10.5px;line-height:1.4;color:#4a676b
+}
+.workspace{
+  position:relative;overflow:hidden;background:
+    linear-gradient(90deg,rgba(13,31,35,.68),rgba(13,31,35,.14) 58%,rgba(13,31,35,.22)),
+    url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat
+}
+.home{position:absolute;inset:0;padding:25px 28px;overflow:auto}
+.hero{color:#fff;max-width:760px;text-shadow:0 2px 13px rgba(0,0,0,.25)}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.15em;font-weight:900;color:#dff7f4}
+.hero h1{margin:6px 0 5px;font-size:36px;line-height:1}.hero p{margin:0;font-size:14px;font-weight:700}
+.cards{margin-top:22px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:1100px}
+.card{
+  background:rgba(255,255,255,.96);border:1px solid rgba(255,255,255,.8);border-radius:17px;padding:15px;
+  min-height:185px;display:flex;flex-direction:column;box-shadow:0 15px 40px rgba(0,0,0,.16)
+}
+.tag{font-size:9.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.card h2{margin:7px 0 6px;font-size:19px}.card p{margin:0 0 13px;color:var(--muted);font-size:11.5px;line-height:1.45}
+.openbtn{margin-top:auto;border:0;border-radius:10px;background:var(--navy);color:#fff;padding:10px 11px;font-weight:900;font-size:12px}
+.openbtn.alt{background:#eaf4f3;color:#176c70;border:1px solid #cce3e1}
+.teacher{
+  margin-top:13px;max-width:1100px;background:rgba(255,255,255,.95);border-radius:16px;padding:13px;
+  box-shadow:0 12px 34px rgba(0,0,0,.12)
+}
+.teacher h3{margin:0 0 8px;color:var(--navy);font-size:16px}
+textarea{
+  width:100%;min-height:105px;border:1px solid var(--line);border-radius:11px;padding:10px;resize:vertical;
+  background:#fbfdfd;font-size:12px;outline:0
+}
+.note-actions{display:flex;gap:7px;margin-top:8px}
+.note-actions button{border:0;border-radius:9px;padding:8px 10px;font-weight:900;font-size:11px}
+.save{background:var(--teal);color:#fff}.clear{background:#edf3f2;color:#38545a}
+.small{margin-top:6px;color:var(--muted);font-size:9.5px}
+
+/* LESSON VIEW */
+.lesson-view{position:absolute;inset:0;z-index:30;background:#fff;display:none}
+.lesson-view.on{display:grid;grid-template-rows:44px 1fr}
+.lessonbar{
+  display:flex;align-items:center;gap:8px;padding:6px 10px;background:#fff;border-bottom:1px solid var(--line)
+}
+.back{
+  border:0;border-radius:9px;background:var(--navy);color:#fff;padding:8px 12px;font-size:11px;font-weight:900
+}
+.lesson-title{font-size:12px;font-weight:900;color:var(--navy)}
+.lessonbar .spacer{flex:1}
+.notes-toggle{border:1px solid var(--line);border-radius:9px;background:#f4f8f7;padding:7px 10px;font-size:11px;font-weight:900;color:#35545a}
+.framewrap{position:relative;min-height:0}
+iframe{width:100%;height:100%;border:0;display:block;background:#fff}
+.notes-panel{
+  position:absolute;right:10px;top:10px;bottom:10px;width:min(340px,42vw);z-index:4;
+  background:rgba(255,255,255,.98);border:1px solid var(--line);border-radius:14px;padding:11px;
+  box-shadow:0 14px 35px rgba(0,0,0,.18);display:none
+}
+.notes-panel.on{display:flex;flex-direction:column}
+.notes-panel h3{margin:0 0 7px;color:var(--navy);font-size:14px}
+.notes-panel textarea{flex:1;min-height:0}
+
+@media(max-width:900px){
+  #app{grid-template-columns:175px 1fr}.cards{grid-template-columns:1fr 1fr}.hero h1{font-size:30px}
+}
+@media(max-width:680px){
+  #app{display:block}.sidebar{position:relative;height:auto}.workspace{min-height:100vh}.cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="login-card">
+    <div class="mini">Teacher access</div>
+    <h1>Katya · Teacher Workspace</h1>
+    <p>Отдельная рабочая страница преподавателя. Введи пароль, чтобы открыть материалы.</p>
+    <div class="login-row">
+      <input id="password" type="password" autocomplete="current-password" placeholder="Пароль">
+      <button onclick="login()">Войти</button>
+    </div>
+    <div id="error"></div>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+  <aside class="sidebar">
+    <div class="brand">
+      <b>Katya · Teacher Hub</b>
+      <span>Твоя отдельная рабочая панель</span>
+    </div>
+
+    <button class="nav active" onclick="goHome()">Главная</button>
+    <button class="nav" onclick="openLesson('elections')">Lesson 1 · Elections</button>
+    <button class="nav" onclick="openLesson('generations')">Lesson 2 · Generations</button>
+    <button class="nav" onclick="openLesson('tools')">Useful Tools</button>
+
+    <div class="private-note">
+      <b>Teacher workspace.</b><br>
+      Эта страница не добавлена в меню сайта Кати и закрыта отдельным входом.
+    </div>
+  </aside>
+
+  <main class="workspace">
+    <section class="home" id="home">
+      <div class="hero">
+        <div class="eyebrow">Adult ESL · Teacher Workspace</div>
+        <h1>Lessons with Katya</h1>
+        <p>Уроки, тренажёры и приватные заметки преподавателя в одном месте.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="tag">Lesson 1</div>
+          <h2>Elections in Russia</h2>
+          <p>Vocabulary, grammar, reading и интерактивная практика по теме выборов.</p>
+          <button class="openbtn" onclick="openLesson('elections')">Открыть урок</button>
+        </article>
+
+        <article class="card">
+          <div class="tag">Lesson 2</div>
+          <h2>Generations</h2>
+          <p>Vocabulary, generations overview, discussion prompts и quiz.</p>
+          <button class="openbtn" onclick="openLesson('generations')">Открыть урок</button>
+        </article>
+
+        <article class="card">
+          <div class="tag">Trainer</div>
+          <h2>Useful Tools</h2>
+          <p>False Synonyms и дополнительная лексическая практика.</p>
+          <button class="openbtn alt" onclick="openLesson('tools')">Открыть тренажёр</button>
+        </article>
+      </div>
+
+      <section class="teacher">
+        <h3>Teacher Notes · General</h3>
+        <textarea id="generalNotes" placeholder="План следующего урока, ошибки Кати, homework, follow-up..."></textarea>
+        <div class="note-actions">
+          <button class="save" onclick="saveGeneral()">Сохранить</button>
+          <button class="clear" onclick="clearGeneral()">Очистить</button>
+        </div>
+        <div class="small">Заметки сохраняются только в браузере на твоём устройстве.</div>
+      </section>
+    </section>
+
+    <section class="lesson-view" id="lessonView">
+      <div class="lessonbar">
+        <button class="back" onclick="goHome()">← Назад</button>
+        <div class="lesson-title" id="lessonTitle">Lesson</div>
+        <div class="spacer"></div>
+        <button class="notes-toggle" onclick="toggleLessonNotes()">Teacher Notes</button>
+      </div>
+      <div class="framewrap">
+        <iframe id="lessonFrame" title="Katya lesson"></iframe>
+        <aside class="notes-panel" id="notesPanel">
+          <h3 id="notesHeading">Teacher Notes</h3>
+          <textarea id="lessonNotes" placeholder="Ответы, ошибки, идеи, что повторить..."></textarea>
+          <div class="note-actions">
+            <button class="save" onclick="saveLessonNotes()">Сохранить</button>
+            <button class="clear" onclick="clearLessonNotes()">Очистить</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+const PASS_HASH='ba7931b184977a8f62cc19ca84d0ec451294b1da84968e3e422f4ca93aac6f0b';
+const LESSONS={
+  elections:{
+    title:'Lesson 1 · Elections in Russia',
+    url:'../kate-english-hub/extra-practice-elections-russia.html'
+  },
+  generations:{
+    title:'Lesson 2 · Generations',
+    url:'../kate-english-hub/homework-lesson2-generations.html'
+  },
+  tools:{
+    title:'Useful Tools · False Synonyms',
+    url:'../kate-english-hub/useful-tools-false-synonyms.html'
+  }
+};
+let currentLesson='';
+
+async function sha256(text){
+  const data=new TextEncoder().encode(text);
+  const digest=await crypto.subtle.digest('SHA-256',data);
+  return Array.from(new Uint8Array(digest)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function login(){
+  const p=document.getElementById('password').value;
+  const h=await sha256(p);
+  if(h===PASS_HASH){
+    sessionStorage.setItem('kt_teacher_auth','1');
+    showApp();
+  }else{
+    document.getElementById('error').textContent='Неверный пароль';
+  }
+}
+function showApp(){
+  document.getElementById('gate').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+}
+if(sessionStorage.getItem('kt_teacher_auth')==='1') showApp();
+
+document.getElementById('password').addEventListener('keydown',e=>{
+  if(e.key==='Enter') login();
+});
+
+function openLesson(key){
+  currentLesson=key;
+  const item=LESSONS[key];
+  document.getElementById('lessonTitle').textContent=item.title;
+  document.getElementById('lessonFrame').src=item.url;
+  document.getElementById('lessonView').classList.add('on');
+  document.getElementById('notesPanel').classList.remove('on');
+  document.getElementById('notesHeading').textContent=item.title+' · Notes';
+  document.getElementById('lessonNotes').value=localStorage.getItem('kt_teacher_notes_'+key)||'';
+}
+function goHome(){
+  document.getElementById('lessonView').classList.remove('on');
+  document.getElementById('lessonFrame').src='about:blank';
+  currentLesson='';
+}
+function toggleLessonNotes(){
+  document.getElementById('notesPanel').classList.toggle('on');
+}
+function saveLessonNotes(){
+  if(!currentLesson)return;
+  localStorage.setItem('kt_teacher_notes_'+currentLesson,document.getElementById('lessonNotes').value);
+}
+function clearLessonNotes(){
+  if(!currentLesson)return;
+  document.getElementById('lessonNotes').value='';
+  localStorage.removeItem('kt_teacher_notes_'+currentLesson);
+}
+const general=document.getElementById('generalNotes');
+general.value=localStorage.getItem('kt_teacher_general')||'';
+function saveGeneral(){localStorage.setItem('kt_teacher_general',general.value)}
+function clearGeneral(){general.value='';localStorage.removeItem('kt_teacher_general')}
+</script>
+</body>
+</html>
