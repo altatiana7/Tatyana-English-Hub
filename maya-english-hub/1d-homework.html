@@ -26,7 +26,7 @@
 </style>
 </head>
 <body>
-<button class="extraRemakesBtn" id="extraRemakesBtn">ДОП К REMAKES</button><div class="app">
+<div class="app">
   <div class="bar">
     <div class="title"><h1>Homework 1D · Photo + Present Tenses</h1><p>Revision: 1A–1C vocabulary · Present Simple vs Present Continuous</p></div>
     <div class="tabs">
@@ -94,86 +94,6 @@
     <div class="testHead"><div><h2>Choose the correct answer · 11–20</h2><small>Think about meaning: routine, now, temporary, change or state.</small></div><div class="progress" id="progress2"></div></div>
     <div class="qgrid" id="q2"></div>
     <div class="submitArea"><small>Answer all 20 questions. Then get a short code and send it to your teacher.</small><button class="getCode" id="getCode">FINISH & GET CODE</button></div>
-  </section>
-
-  <section class="panel" id="remakesExtra">
-    <div class="task">
-      <h2>Extra · Remakes · Two Videos</h2>
-      <p>Watch the <b>American Gothic remake</b>, complete the tasks, then review vocabulary from <b>both videos</b>: American Gothic + Mr and Mrs Clark and Percy.</p>
-
-      <div class="extraVideo">
-        <div>
-          <div class="videoBox"><video id="extraRemakeVideo" controls style="width:100%;aspect-ratio:16/9;display:block;background:#111"></video></div>
-          <label class="vidUpload">LOAD THE VIDEO
-            <input type="file" id="extraRemakeFile" accept="video/mp4,video/*">
-            <small>Choose: ef5e_preint_1c_6_speaking(3).mp4</small>
-          </label>
-        </div>
-        <div class="remakeTask">
-          <h3 style="margin-top:0;color:var(--p)">BEFORE WATCHING · Predict</h3>
-          <p>Look at the original <i>American Gothic</i>. What do you expect a modern remake to change?</p>
-          <div class="miniGrid">
-            <div class="miniQ">Clothes<input id="predClothes" placeholder="I think they will wear..."></div>
-            <div class="miniQ">Background<input id="predBg" placeholder="Maybe the background will be..."></div>
-            <div class="miniQ">Objects<input id="predObj" placeholder="They might use..."></div>
-            <div class="miniQ">Mood<input id="predMood" placeholder="They might look..."></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="taskBlock">
-        <h3>WHILE WATCHING · Watch for details</h3>
-        <div class="miniGrid">
-          <div class="miniQ"><b>1.</b> Where are the couple standing?<input placeholder="Answer"></div>
-          <div class="miniQ"><b>2.</b> What is the woman wearing?<input placeholder="Answer"></div>
-          <div class="miniQ"><b>3.</b> What is the man wearing?<input placeholder="Answer"></div>
-          <div class="miniQ"><b>4.</b> What is the man holding?<input placeholder="Answer"></div>
-          <div class="miniQ"><b>5.</b> What can you see in the background?<input placeholder="Answer"></div>
-          <div class="miniQ"><b>6.</b> How is their pose different from the original?<input placeholder="Answer"></div>
-        </div>
-      </div>
-
-      <div class="grid2" style="margin-top:10px">
-        <div class="card"><h3>3 THINGS THE SAME</h3><textarea id="remakeSame" placeholder="1.&#10;2.&#10;3."></textarea></div>
-        <div class="card"><h3>3 THINGS DIFFERENT</h3><textarea id="remakeDifferent" placeholder="1.&#10;2.&#10;3."></textarea></div>
-      </div>
-
-      <div class="taskBlock">
-        <h3>LANGUAGE FROM THE VIDEO · Complete</h3>
-        <div class="miniGrid">
-          <div class="miniQ">On the right of the photo, ______ a man.<input placeholder="Answer"></div>
-          <div class="miniQ">He ______ jeans.<input placeholder="Answer"></div>
-          <div class="miniQ">He ______ a garden fork in his hand.<input placeholder="Answer"></div>
-          <div class="miniQ">In the background, you ______ the city.<input placeholder="Answer"></div>
-        </div>
-        <button class="tab" type="button" id="showRemakeKey" style="margin-top:10px">CHECK</button>
-        <div class="transcriptBox" id="remakeKey"><b>Answers:</b> there is · is wearing · is holding · can see</div>
-      </div>
-
-      <div class="taskBlock">
-        <h3>AFTER WATCHING · Speak</h3>
-        <p><b>Which version do you prefer — the original or the remake? Why?</b></p>
-        <p>Use: <i>Both pictures show… / In the original… / In the remake… / The biggest difference is… / I prefer… because…</i></p>
-        <button class="tab" type="button" id="showTranscript">TRANSCRIPT / SUPPORT</button>
-        <div class="transcriptBox" id="remakeTranscript">
-          <b>Support text</b><br><br>
-          This is a modern remake of Grant Wood's <i>American Gothic</i>. A young woman and a young man are standing in a rooftop garden. The woman is wearing a blue hoodie and the man is wearing a red top, jeans and boots. He is holding a garden fork. The couple are standing close together and holding hands. In the background, we can see a modern city.<br><br>
-          In both images, there is a man and a woman and the man is holding a fork. However, the remake is much more relaxed and modern. The original figures look serious and formal, while the young couple are smiling. The original shows a house in the background, but the remake shows a city.
-        </div>
-      </div>
-
-      <div class="taskBlock videoVocab">
-        <h3>QUIZLET-STYLE CARDS · Vocabulary from BOTH videos</h3>
-        <div class="vocabSwitcher">
-          <button class="active" type="button" data-vset="gothic">AMERICAN GOTHIC</button>
-          <button type="button" data-vset="hockney">HOCKNEY · PERCY</button>
-        </div>
-        <div class="flashTools"><button class="tool" id="videoAudio">AUDIO</button></div>
-        <div class="flash" id="videoFlash"><div class="inner"><div class="face front" id="videoFront"></div><div class="face back" id="videoBack"></div></div></div>
-        <div class="nav"><button id="videoPrev">←</button><span class="counter" id="videoCounter"></span><button id="videoNext">→</button></div>
-        <div style="font-size:13px;color:#777186;text-align:center">Click the card to flip · Audio = English word / phrase only.</div>
-      </div>
-    </div>
   </section>
 
   <section class="panel" id="vocab">
@@ -275,31 +195,6 @@ document.getElementById('full').onclick=()=>{const el=document.getElementById('v
 
 function openPanel(id){currentPanel=id;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.p===id));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===id));autosave()}
 document.querySelectorAll('.tab').forEach(x=>x.onclick=()=>openPanel(x.dataset.p));currentPanel='photo';openPanel('photo');
-document.getElementById('extraRemakesBtn').onclick=()=>openPanel('remakesExtra');
-document.getElementById('extraRemakeFile').onchange=e=>{const f=e.target.files[0];if(f)document.getElementById('extraRemakeVideo').src=URL.createObjectURL(f)};
-document.getElementById('showTranscript').onclick=()=>document.getElementById('remakeTranscript').classList.toggle('show');
-document.getElementById('showRemakeKey').onclick=()=>document.getElementById('remakeKey').classList.toggle('show');
-document.getElementById('remakeSame').value=saved.remakeSame||'';
-document.getElementById('remakeDifferent').value=saved.remakeDifferent||'';
-document.getElementById('remakeSame').addEventListener('input',autosave);
-document.getElementById('remakeDifferent').addEventListener('input',autosave);
-
-const videoSets={
-gothic:[
-['remake','ремейк / новая версия'],['original','оригинал'],['garden fork','садовые вилы'],['hold','держать'],['hold hands','держаться за руки'],['rooftop garden','сад на крыше'],['city skyline','городской пейзаж'],['background','задний план'],['pose','поза'],['serious','серьёзный'],['relaxed','расслабленный'],['modern clothes','современная одежда'],['boots','ботинки / сапоги'],['hoodie','толстовка с капюшоном'],['similar','похожий'],['different','отличающийся']
-],
-hockney:[
-['portrait','портрет'],['fashion designer','модельер'],['pose','позировать / поза'],['flat','квартира'],['bedroom','спальня'],['carpet','ковёр'],['open window','открытое окно'],['relationship','отношения'],['symbolize','символизировать'],['distance','дистанция / отчуждение'],['infidelity','неверность'],['pregnant','беременная'],['get divorced','развестись'],['lover','любовник / возлюбленный'],['murder','убийство'],['be murdered','быть убитым']
-]};
-let videoSet='gothic',videoIndex=0;
-const vf=document.getElementById('videoFlash'),vfront=document.getElementById('videoFront'),vback=document.getElementById('videoBack'),vcounter=document.getElementById('videoCounter');
-function renderVideoCard(){const arr=videoSets[videoSet];videoIndex=(videoIndex+arr.length)%arr.length;vfront.textContent=arr[videoIndex][0];vback.innerHTML='<div><b>'+arr[videoIndex][1]+'</b></div>';vcounter.textContent=(videoIndex+1)+' / '+arr.length;vf.classList.remove('flipped')}
-vf.onclick=()=>vf.classList.toggle('flipped');
-document.getElementById('videoPrev').onclick=()=>{videoIndex--;renderVideoCard()};
-document.getElementById('videoNext').onclick=()=>{videoIndex++;renderVideoCard()};
-document.querySelectorAll('[data-vset]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-vset]').forEach(x=>x.classList.toggle('active',x===b));videoSet=b.dataset.vset;videoIndex=0;renderVideoCard()});
-document.getElementById('videoAudio').onclick=()=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(videoSets[videoSet][videoIndex][0]);u.lang='en-GB';u.rate=.88;speechSynthesis.speak(u)};
-renderVideoCard();
 if(saved.savedAt)saveStatus.textContent='saved';
 </script>
 </body>
