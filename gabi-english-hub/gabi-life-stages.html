@@ -522,7 +522,7 @@ window.addEventListener('DOMContentLoaded',function(){
     {q:'“Come of age” most nearly means ...',a:['reach adulthood','start nursery','retire from work','become a toddler'],r:0,e:'To come of age means reaching legal or social adulthood.'},
     {q:'A difference in attitudes between younger and older people is a ...',a:['generation gap','life expectancy','birth rate','family tree'],r:0,e:'A generation gap is a difference in attitudes or values between generations.'}
   ];
-  root.dataset.version='20260928-floor-is-lava-tabs-timer-music';
+  root.dataset.version='20260928-floor-is-lava-kahoot-question-visible';
   root.innerHTML=
     '<div class="flHead">'+
       '<div><div class="flKicker">Mechanic 21 · Floor Is Lava · B1</div><h1>Age & Life Stages</h1></div>'+
@@ -574,7 +574,7 @@ window.addEventListener('DOMContentLoaded',function(){
     Array.from($('flAnswers').querySelectorAll('button')).forEach(function(b){
       var n=+b.dataset.i;
       if(s.answered){b.disabled=true;if(n===x.r)b.classList.add('correct');return}
-      b.onclick=function(){if(!s.q||s.answered||lives===0){$('flFeedback').textContent='Open the question first.';return}s.answered=true;stopTimer();if(n===x.r){s.score++;b.classList.add('correct');$('flFeedback').innerHTML='<strong>Correct.</strong>'}else{b.classList.add('wrong');loseLife('<strong>Wrong.</strong> Lava rises.')}s.e=true;draw()}
+      b.onclick=function(){if((mode!=='k'&&!s.q)||s.answered||lives===0){$('flFeedback').textContent='Open the question first.';return}s.answered=true;stopTimer();if(n===x.r){s.score++;b.classList.add('correct');$('flFeedback').innerHTML='<strong>Correct.</strong>'}else{b.classList.add('wrong');loseLife('<strong>Wrong.</strong> Lava rises.')}s.e=true;draw()}
     });
   }
   function draw(){
@@ -582,10 +582,10 @@ window.addEventListener('DOMContentLoaded',function(){
     $('flTabK').classList.toggle('on',mode==='k');$('flTabT').classList.toggle('on',mode==='t');
     $('flBadge').textContent=mode==='k'?'Game Show · 12':'B1 Test · 10 different questions';
     $('flScore').textContent='Score '+s.score+' / '+B.length;$('flCount').textContent=(s.i+1)+' / '+B.length;
-    $('flQuestion').textContent=x.q;$('flQBox').classList.toggle('show',s.q);
+    $('flQuestion').textContent=x.q;if(mode==='k')s.q=true;$('flQBox').classList.toggle('show',s.q);
     $('flExplain').innerHTML='<strong>Explanation:</strong> '+x.e;$('flExplain').classList.toggle('show',s.e);
-    $('flShowQ').textContent=s.q?'Hide question':'Show question';$('flShowE').textContent=s.e?'Hide explanation':'Show explanation';
-    $('flFeedback').textContent=s.answered?'Use Next or Previous.':'Open the question first.';
+    $('flShowQ').style.display=mode==='k'?'none':'';$('flShowQ').textContent=s.q?'Hide question':'Show question';$('flShowE').textContent=s.e?'Hide explanation':'Show explanation';
+    $('flFeedback').textContent=s.answered?'Use Next or Previous.':(mode==='k'?'Choose the correct answer.':'Open the question first.');
     renderAnswers(x);$('flPrev').disabled=s.i===0;$('flNext').disabled=s.i===B.length-1;
     if(!s.answered&&lives>0)startTimer();else stopTimer()
   }
