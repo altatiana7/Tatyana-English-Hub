@@ -136,6 +136,35 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
 .recall-actions button{border:0;border-radius:10px;padding:8px 10px;font-weight:900;cursor:pointer;background:#eee6e2}
 .wordbank{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.wordbank span{border:1px solid #ddc9bf;border-radius:999px;background:#fff;padding:6px 8px;font-size:11px;font-weight:800}
 
+
+.video-practice{height:100%;display:grid;grid-template-columns:.72fr 1.28fr;gap:12px}
+.video-left{display:grid;grid-template-rows:auto 1fr;gap:10px}
+.video-open{display:grid;place-items:center;text-align:center;min-height:170px;border-radius:18px;background:linear-gradient(135deg,#f5d9d2,#e8f5fb);border:1px solid #ddc8c2;padding:16px}
+.video-open h3{margin:0 0 8px;font:700 23px Georgia,serif}
+.exercise-shell{display:grid;grid-template-rows:auto 1fr;gap:9px;min-height:0}
+.exercise-tabs{display:flex;gap:7px;flex-wrap:wrap}
+.exercise-tabs button{border:0;border-radius:999px;padding:8px 10px;background:#eee6e2;font-size:11px;font-weight:900;cursor:pointer}
+.exercise-tabs button.active{background:#32728f;color:#fff}
+.video-ex{display:none;overflow:auto}.video-ex.on{display:block}
+.vlist{display:grid;gap:7px}
+.vitem{border:1px solid var(--line);border-radius:13px;background:#fff;padding:9px 10px;font-size:12px;line-height:1.32}
+.vitem .opts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.vitem .opts button{border:1px solid #dbc8bf;border-radius:9px;background:#fffaf7;padding:6px 8px;font-size:11px;cursor:pointer}
+.vitem .opts button.correct{background:#e5f3ec;border-color:#8fb9a7}.vitem .opts button.wrong{background:#f9e6e2;border-color:#d99d95}
+.vitem input{width:100%;margin-top:6px;border:1px solid #d8c7bf;border-radius:9px;padding:7px;font:inherit}
+.vcheck{margin-top:6px;border:0;border-radius:9px;background:#32728f;color:#fff;padding:6px 8px;font-size:11px;font-weight:900;cursor:pointer}
+.vfeed{margin-top:4px;font-size:11px;font-weight:900}.vfeed.good{color:#3f7561}.vfeed.bad{color:#a05048}
+.kw{display:inline-block;margin-left:5px;padding:2px 6px;border-radius:999px;background:#fff0c5;font-weight:900;color:#6b5420}
+.pros-screen{height:100%;display:grid;grid-template-columns:1fr 245px;gap:12px}
+.pros-image-card{min-height:0;border:1px solid var(--line);border-radius:20px;background:#fff;padding:8px;display:grid;place-items:center;overflow:hidden}
+.pros-image-card img{max-width:100%;max-height:100%;object-fit:contain;border-radius:12px;cursor:zoom-in}
+.pros-side{display:grid;align-content:start;gap:10px}
+.pros-side .card{padding:13px}
+.visual-overlay{position:fixed;inset:0;z-index:10020;background:rgba(12,18,20,.94);display:none;grid-template-rows:54px 1fr}
+.visual-overlay.on{display:grid}.visual-bar{display:flex;gap:8px;align-items:center;padding:7px 10px;background:#fff}
+.visual-bar b{flex:1;text-align:center;color:#32728f}.visual-bar button{border:0;border-radius:9px;padding:8px 10px;font-weight:900;cursor:pointer}
+.visual-body{min-height:0;display:grid;place-items:center;padding:10px;overflow:auto}.visual-body img{max-width:96vw;max-height:calc(100vh - 75px);object-fit:contain}
+
 </style>
 </head>
 <body>
@@ -151,7 +180,8 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
   <div class="nav" id="nav">
     <button class="active" data-screen="hook">1 · Video</button>
     <button data-screen="reading">2 · Reading text</button>
-    <button data-screen="study">3 · Vocabulary + Collocations</button>
+    <button data-screen="pros">3 · Pros & Cons</button>
+    <button data-screen="study">4 · Vocabulary + Collocations</button>
   </div>
   <div class="sidebox"><b>Homework focus</b><br>Understand the article first. Then learn the vocabulary and collocations from the same topic.</div>
 </aside>
@@ -161,43 +191,61 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
   <div class="stage">
 
     <section class="screen on" id="screen-hook">
-      <div class="grid2">
-        <div class="card blue">
-          <h3>What is your ideal study soundtrack?</h3>
-          <div class="choicegrid">
-            <button class="choice">Silence<small>I need total quiet.</small></button>
-            <button class="choice">Instrumental music<small>No lyrics, just background sound.</small></button>
-            <button class="choice">Familiar songs<small>I work better with known tracks.</small></button>
-            <button class="choice">It depends<small>The task decides everything.</small></button>
+      <div class="video-practice">
+        <section class="video-left">
+          <div class="card blue">
+            <h3 style="margin:0 0 8px">TED-Ed · 3 tips on how to study effectively</h3>
+            <p style="margin:0;font-size:13px;line-height:1.4">Watch once for the main idea, then complete all three tasks.</p>
           </div>
-          <div class="pills">
-            <span class="pill">I tend to…</span><span class="pill">I get distracted if…</span>
-            <span class="pill">For reading, I prefer…</span><span class="pill">It works best when…</span>
+          <div class="video-open">
+            <div>
+              <h3>Active recall · Interleaving · Spacing</h3>
+              <p style="font-size:12px;color:#706662">The three evidence-based study techniques from the video.</p>
+              <a class="primary" style="display:inline-block;margin-top:8px;border-radius:12px;padding:10px 13px;text-decoration:none;font-weight:900" href="https://www.ted.com/talks/ted_ed_3_tips_on_how_to_study_effectively" target="_blank" rel="noopener">▶ Open video</a>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div class="card video pink">
-          <div><h3>Short video</h3><p>TED-Ed · <b>3 tips on how to study effectively</b></p></div>
-          <div class="box"><b>Watch → choose one useful tip → compare it with your own routine.</b></div>
-          <div>
-            <div class="actions">
-              <a class="primary" href="https://www.ted.com/talks/ted_ed_3_tips_on_how_to_study_effectively" target="_blank" rel="noopener">Open video</a>
-              <button class="secondary vtask-btn" data-target="vtask1">1 · Main idea</button>
-              <button class="secondary vtask-btn" data-target="vtask2">2 · Detail check</button>
-              <button class="secondary vtask-btn" data-target="vtask3">3 · Apply it</button>
-            </div>
-            <div class="support" id="vtask1"><b>Main idea:</b> Which statement best matches the video?<br><br>
-              A. Good studying depends mostly on talent.<br>
-              B. Effective studying uses specific strategies and active practice.<br>
-              C. Music is necessary for concentration.
-            </div>
-            <div class="support" id="vtask2"><b>Detail check:</b> Choose the ideas mentioned in the video:<br><br>
-              □ spacing study sessions &nbsp; □ testing yourself &nbsp; □ studying everything at once &nbsp; □ mixing different kinds of practice
-            </div>
-            <div class="support" id="vtask3"><b>Apply it:</b> Choose one strategy from the video and write 3 sentences explaining how you could use it when preparing for English.
+        <section class="card exercise-shell">
+          <div class="exercise-tabs">
+            <button class="active" data-vex="tf">1 · True / False</button>
+            <button data-vex="word">2 · Missing word</button>
+            <button data-vex="transform">3 · Transformation</button>
+          </div>
+
+          <div class="video-ex on" id="vex-tf">
+            <div class="vlist">
+              <div class="vitem" data-answer="true"><b>1.</b> Both groups of surgical residents received the same study materials.<div class="opts"><button>TRUE</button><button>FALSE</button></div></div>
+              <div class="vitem" data-answer="false"><b>2.</b> The more successful residents crammed all their training into one day.<div class="opts"><button>TRUE</button><button>FALSE</button></div></div>
+              <div class="vitem" data-answer="true"><b>3.</b> Testing yourself forces you to actively retrieve information.<div class="opts"><button>TRUE</button><button>FALSE</button></div></div>
+              <div class="vitem" data-answer="false"><b>4.</b> Rereading gives the most accurate picture of what you really know.<div class="opts"><button>TRUE</button><button>FALSE</button></div></div>
+              <div class="vitem" data-answer="false"><b>5.</b> Interleaving means practising only one topic during a study session.<div class="opts"><button>TRUE</button><button>FALSE</button></div></div>
+              <div class="vitem" data-answer="true"><b>6.</b> Spacing review over several days allows rest and sleep between sessions.<div class="opts"><button>TRUE</button><button>FALSE</button></div></div>
             </div>
           </div>
-        </div>
+
+          <div class="video-ex" id="vex-word">
+            <div class="vlist">
+              <div class="vitem" data-answer="retrieve"><b>1.</b> Testing yourself forces you to actively ______ knowledge.<div class="opts"><button>retrieve</button><button>repeat</button><button>remove</button></div></div>
+              <div class="vitem" data-answer="competence"><b>2.</b> Rereading and highlighting can create a false sense of ______.<div class="opts"><button>competence</button><button>comfort</button><button>concentration</button></div></div>
+              <div class="vitem" data-answer="mistakes"><b>3.</b> Making ______ can actually improve learning in the long term.<div class="opts"><button>mistakes</button><button>notes</button><button>plans</button></div></div>
+              <div class="vitem" data-answer="interleaving"><b>4.</b> Mixing concepts in one study session is called ______.<div class="opts"><button>interleaving</button><button>highlighting</button><button>encoding</button></div></div>
+              <div class="vitem" data-answer="days"><b>5.</b> Spacing review across multiple ______ allows for rest and sleep.<div class="opts"><button>days</button><button>minutes</button><button>books</button></div></div>
+              <div class="vitem" data-answer="neocortex"><b>6.</b> Long-term knowledge involves a brain area called the ______.<div class="opts"><button>neocortex</button><button>hippocampus</button><button>artery</button></div></div>
+            </div>
+          </div>
+
+          <div class="video-ex" id="vex-transform">
+            <div class="vlist">
+              <div class="vitem"><b>1.</b> Students often choose to read the same material again.<br>Students often ______ their textbooks. <span class="kw">PREFER</span><input data-answer="prefer rereading" maxlength="40"><button class="vcheck">Check</button><div class="vfeed"></div></div>
+              <div class="vitem"><b>2.</b> Testing helps you measure what you really know.<br>Testing helps you ______ what you know. <span class="kw">GAUGE</span><input data-answer="accurately gauge" maxlength="40"><button class="vcheck">Check</button><div class="vfeed"></div></div>
+              <div class="vitem"><b>3.</b> Errors may make learning better in the long term.<br>Making mistakes can ______ long term. <span class="kw">IMPROVE</span><input data-answer="improve learning" maxlength="40"><button class="vcheck">Check</button><div class="vfeed"></div></div>
+              <div class="vitem"><b>4.</b> Mixing subjects can help you remember more.<br>______ can improve retention. <span class="kw">INTERLEAVING</span><input data-answer="interleaving subjects" maxlength="40"><button class="vcheck">Check</button><div class="vfeed"></div></div>
+              <div class="vitem"><b>5.</b> Crammed information may disappear quickly.<br>If you cram, information may not ______. <span class="kw">STICK</span><input data-answer="stick around" maxlength="40"><button class="vcheck">Check</button><div class="vfeed"></div></div>
+              <div class="vitem"><b>6.</b> The successful group trained over a period of four weeks.<br>Their training ______ four weeks. <span class="kw">SPREAD</span><input data-answer="was spread over" maxlength="40"><button class="vcheck">Check</button><div class="vfeed"></div></div>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
 
@@ -209,6 +257,19 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
           <p>Open the original reading in a clean full-screen view. Evidence Hunt and vocabulary stay separate from the text.</p>
           <button class="open-reading" id="openReading">Open Reading Text ⛶</button>
         </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-pros">
+      <div class="pros-screen">
+        <div class="pros-image-card">
+          <img id="prosImage" src="assets/music-pros-cons.webp?v=1" alt="Is It OK to Listen to Music While Studying? Pros and Cons for Adults">
+        </div>
+        <aside class="pros-side">
+          <div class="card blue"><h3 style="margin:0 0 7px">Use the visual</h3><p style="margin:0;font-size:12px;line-height:1.4">Read the Pros, Cons and Best Advice. Use it as a quick visual summary after the article.</p></div>
+          <button class="primary" id="openPros" style="border:0;border-radius:12px;padding:11px;font-weight:900;cursor:pointer">Open full screen ⛶</button>
+          <div class="card"><b style="font-size:12px">Quick retrieval</b><p style="font-size:12px;line-height:1.4">Without looking back, name <b>2 pros + 2 cons + 1 piece of advice</b>.</p></div>
+        </aside>
       </div>
     </section>
 
@@ -332,8 +393,9 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
 <script>
 const titles={
  hook:["Video","Start with your own study habits."],
- reading:["Reading text","Read first, then use Evidence Hunt."],
- study:["Vocabulary + Collocations","Flip the Quizlet card and use the chunks on the right."]
+ reading:["Reading text","Open the article in full-screen reading mode."],
+ pros:["Pros & Cons","Use the visual as a quick summary and retrieval prompt."],
+ study:["Vocabulary + Collocations","Learn the chunks, then drill them until retrieval is automatic."]
 };
 
 document.querySelectorAll("#nav button").forEach(function(btn){
@@ -421,6 +483,37 @@ document.getElementById("speakWord").onclick=function(e){
 render();
 
 
+
+document.querySelectorAll(".exercise-tabs button").forEach(function(btn){
+  btn.onclick=function(){
+    document.querySelectorAll(".exercise-tabs button").forEach(x=>x.classList.toggle("active",x===btn));
+    document.querySelectorAll(".video-ex").forEach(x=>x.classList.remove("on"));
+    document.getElementById("vex-"+btn.dataset.vex).classList.add("on");
+  };
+});
+document.querySelectorAll("#vex-tf .opts, #vex-word .opts").forEach(function(group){
+  group.querySelectorAll("button").forEach(function(btn){
+    btn.onclick=function(){
+      group.querySelectorAll("button").forEach(x=>x.classList.remove("correct","wrong"));
+      const item=group.closest(".vitem");
+      const picked=btn.textContent.trim().toLowerCase();
+      const ok=picked===item.dataset.answer;
+      btn.classList.add(ok?"correct":"wrong");
+    };
+  });
+});
+document.querySelectorAll(".vcheck").forEach(function(btn){
+  btn.onclick=function(){
+    const item=btn.closest(".vitem"),input=item.querySelector("input"),fb=item.querySelector(".vfeed");
+    const norm=s=>s.trim().toLowerCase().replace(/[’']/g,"'").replace(/\s+/g," ");
+    const answer=norm(input.dataset.answer);
+    const typed=norm(input.value);
+    const words=typed?typed.split(" ").length:0;
+    const ok=typed===answer && words<=4;
+    fb.textContent=ok?"✓ Correct":(words>4?"Maximum 4 words":"Try again");
+    fb.className="vfeed "+(ok?"good":"bad");
+  };
+});
 document.querySelectorAll(".practice-tabs button").forEach(function(btn){
   btn.onclick=function(){
     document.querySelectorAll(".practice-tabs button").forEach(x=>x.classList.toggle("active",x===btn));
@@ -549,6 +642,38 @@ if(readingFull) readingFull.onclick=async function(){
     </article>
   </div>
 </div>
+
+
+<div class="visual-overlay" id="visualOverlay" aria-hidden="true">
+  <div class="visual-bar"><button id="closePros">← Back</button><b>Pros & Cons for Adults</b><button id="fullPros">⛶ Full screen</button></div>
+  <div class="visual-body"><img src="assets/music-pros-cons.webp?v=1" alt="Pros and Cons for Adults"></div>
+</div>
+<script>
+(function(){
+  const openReadingBtn=document.getElementById("openReading");
+  if(openReadingBtn) openReadingBtn.onclick=function(){
+    const ov=document.getElementById("readingOverlay");
+    if(ov){ov.classList.add("on");ov.setAttribute("aria-hidden","false")}
+  };
+  const readingBackBtn=document.getElementById("readingBack");
+  if(readingBackBtn) readingBackBtn.onclick=async function(){
+    if(document.fullscreenElement){try{await document.exitFullscreen()}catch(e){}}
+    const ov=document.getElementById("readingOverlay");
+    if(ov){ov.classList.remove("on");ov.setAttribute("aria-hidden","true")}
+  };
+  const readingFullBtn=document.getElementById("readingFull");
+  if(readingFullBtn) readingFullBtn.onclick=async function(){
+    const ov=document.getElementById("readingOverlay");
+    try{if(document.fullscreenElement)await document.exitFullscreen();else if(ov)await ov.requestFullscreen()}catch(e){}
+  };
+
+  const pov=document.getElementById("visualOverlay");
+  document.getElementById("openPros").onclick=function(){pov.classList.add("on");pov.setAttribute("aria-hidden","false")};
+  document.getElementById("prosImage").onclick=function(){pov.classList.add("on");pov.setAttribute("aria-hidden","false")};
+  document.getElementById("closePros").onclick=async function(){if(document.fullscreenElement){try{await document.exitFullscreen()}catch(e){}}pov.classList.remove("on");pov.setAttribute("aria-hidden","true")};
+  document.getElementById("fullPros").onclick=async function(){try{if(document.fullscreenElement)await document.exitFullscreen();else await pov.requestFullscreen()}catch(e){}};
+})();
+</script>
 
 </body>
 </html>
