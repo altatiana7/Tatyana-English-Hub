@@ -148,6 +148,189 @@ body.lesson-open{overflow:hidden}
   .bottom-nav{left:18px;right:18px;height:auto;grid-template-columns:repeat(2,1fr)}
 }
 </style>
+
+<style id="teacherModeStyle">
+html.teacher-mode body > *{display:none!important}
+html.teacher-mode body{margin:0!important;overflow:hidden!important;background:#f4efea!important}
+html.teacher-mode #teacherRoot{display:grid!important}
+#teacherRoot{
+  position:fixed;inset:0;z-index:999999;
+  grid-template-columns:230px 1fr;
+  width:100vw;height:100vh;background:#f4efea;
+  font-family:Arial,Helvetica,sans-serif;color:#17323a
+}
+#teacherRoot *{box-sizing:border-box}
+#teacherRoot button,#teacherRoot textarea{font:inherit}
+#teacherRoot button{cursor:pointer}
+#teacherRoot .t-side{
+  background:linear-gradient(180deg,#173f49,#0f323a);color:#fff;
+  padding:14px 11px;overflow:auto
+}
+#teacherRoot .t-brand{padding:5px 6px 12px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:8px}
+#teacherRoot .t-brand b{display:block;font-family:Georgia,serif;font-size:18px}
+#teacherRoot .t-brand span{font-size:9px;opacity:.72}
+#teacherRoot .t-home,#teacherRoot .t-module,#teacherRoot .t-lesson{width:100%;border:0;text-align:left}
+#teacherRoot .t-home{background:#739faa;color:#fff;border-radius:10px;padding:9px 10px;font-weight:800;margin-bottom:7px}
+#teacherRoot .t-modwrap{margin-bottom:4px}
+#teacherRoot .t-module{
+  display:flex;align-items:center;justify-content:space-between;
+  background:transparent;color:#fff;padding:7px 8px;border-radius:9px;
+  font-weight:800;font-size:11px
+}
+#teacherRoot .t-module:hover,#teacherRoot .t-module.open{background:rgba(255,255,255,.10)}
+#teacherRoot .t-lessons{display:none;padding:3px 0 4px 12px}
+#teacherRoot .t-lessons.open{display:grid;gap:3px}
+#teacherRoot .t-lesson{
+  background:transparent;color:rgba(255,255,255,.78);
+  padding:6px 8px;border-radius:7px;font-size:10px
+}
+#teacherRoot .t-lesson:hover,#teacherRoot .t-lesson.active{background:rgba(255,255,255,.10);color:#fff}
+#teacherRoot .t-lesson.empty{opacity:.58}
+#teacherRoot .t-work{position:relative;overflow:hidden;background:#f6efe9}
+#teacherRoot .t-cover{
+  position:absolute;inset:0;
+  background:url("../katya-cover.webp") center center/cover no-repeat
+}
+#teacherRoot .t-cover:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(255,247,244,.05),transparent 45%,rgba(0,0,0,.04))
+}
+#teacherRoot .t-view{position:absolute;inset:0;display:none;background:#fff;z-index:4}
+#teacherRoot .t-view.on{display:grid;grid-template-rows:44px 1fr}
+#teacherRoot .t-top{display:flex;align-items:center;gap:8px;background:#173f49;color:#fff;padding:6px 9px}
+#teacherRoot .t-back,#teacherRoot .t-notesbtn{
+  border:0;border-radius:8px;padding:7px 10px;font-weight:800;font-size:11px
+}
+#teacherRoot .t-back{background:#719da8;color:#fff}
+#teacherRoot .t-notesbtn{margin-left:auto;background:rgba(255,255,255,.12);color:#fff}
+#teacherRoot .t-title{font-size:11px;font-weight:800}
+#teacherRoot .t-framewrap{position:relative;min-height:0}
+#teacherRoot iframe{width:100%;height:100%;border:0;background:#fff}
+#teacherRoot .t-placeholder{position:absolute;inset:0;display:none;place-items:center;background:#f5f7f6}
+#teacherRoot .t-placeholder.on{display:grid}
+#teacherRoot .t-placeholder>div{
+  background:#fff;border:1px solid #d8e2e1;border-radius:16px;
+  padding:24px;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.08)
+}
+#teacherRoot .t-placeholder h2{margin:0 0 7px}
+#teacherRoot .t-placeholder p{margin:0;color:#6b777a;font-size:12px}
+#teacherRoot .t-notes{
+  position:absolute;top:10px;right:10px;bottom:10px;width:min(340px,40vw);
+  background:#fff;border:1px solid #d8e2e1;border-radius:14px;padding:10px;
+  display:none;flex-direction:column;box-shadow:0 14px 35px rgba(0,0,0,.16)
+}
+#teacherRoot .t-notes.on{display:flex}
+#teacherRoot .t-notes h3{margin:0 0 7px;font-size:13px}
+#teacherRoot .t-notes textarea{
+  flex:1;min-height:0;border:1px solid #d8e2e1;border-radius:9px;padding:9px;resize:none
+}
+#teacherRoot .t-noteactions{display:flex;gap:6px;margin-top:7px}
+#teacherRoot .t-noteactions button{border:0;border-radius:8px;padding:7px 9px;font-size:10px;font-weight:800}
+#teacherRoot .t-save{background:#5f959f;color:#fff}
+#teacherRoot .t-clear{background:#eef2f1;color:#385158}
+@media(max-width:820px){#teacherRoot{grid-template-columns:185px 1fr}}
+</style>
+<script>
+(function(){
+  const teacherMode = new URLSearchParams(location.search).get('teacher') === 'tatiana-katya';
+  if(!teacherMode) return;
+  document.documentElement.classList.add('teacher-mode');
+
+  document.addEventListener('DOMContentLoaded', function(){
+    const root=document.createElement('div');
+    root.id='teacherRoot';
+    root.innerHTML = `
+      <aside class="t-side">
+        <div class="t-brand"><b>Katya · Teacher Hub</b><span>Teacher workspace</span></div>
+        <button class="t-home" id="tHome">Home</button>
+        <div id="tModules"></div>
+      </aside>
+      <main class="t-work">
+        <section class="t-cover"></section>
+        <section class="t-view" id="tView">
+          <div class="t-top">
+            <button class="t-back" id="tBack">← Назад</button>
+            <div class="t-title" id="tTitle">Lesson</div>
+            <button class="t-notesbtn" id="tNotesBtn">Teacher Notes</button>
+          </div>
+          <div class="t-framewrap">
+            <iframe id="tFrame" title="Katya teacher lesson"></iframe>
+            <div class="t-placeholder" id="tPlaceholder"><div><h2 id="tPhTitle">Lesson</h2><p>Этот слот готов для следующего урока.</p></div></div>
+            <aside class="t-notes" id="tNotes">
+              <h3 id="tNotesTitle">Teacher Notes</h3>
+              <textarea id="tNoteText" placeholder="Ошибки, ответы, идеи, homework..."></textarea>
+              <div class="t-noteactions">
+                <button class="t-save" id="tSave">Сохранить</button>
+                <button class="t-clear" id="tClear">Очистить</button>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>`;
+    document.body.appendChild(root);
+
+    const course=[
+      {module:'Module 1',lessons:[
+        {id:'m1l1',title:'Lesson 1 · Elections in Russia',url:'extra-practice-elections-russia.html'},
+        {id:'m1l2',title:'Lesson 2 · Generations',url:'homework-lesson2-generations.html'},
+        {id:'m1l3',title:'Lesson 3 · Useful Tools',url:'useful-tools-false-synonyms.html'}
+      ]},
+      ...Array.from({length:7},(_,i)=>({module:'Module '+(i+2),lessons:[
+        {id:'m'+(i+2)+'l1',title:'Lesson 1',url:''},
+        {id:'m'+(i+2)+'l2',title:'Lesson 2',url:''},
+        {id:'m'+(i+2)+'l3',title:'Lesson 3',url:''}
+      ]}))
+    ];
+
+    let current='';
+    const modules=document.getElementById('tModules');
+    course.forEach((m,mi)=>{
+      const wrap=document.createElement('div');wrap.className='t-modwrap';
+      const mb=document.createElement('button');mb.className='t-module'+(mi===0?' open':'');
+      mb.innerHTML='<span>'+m.module+'</span><span>›</span>';
+      const list=document.createElement('div');list.className='t-lessons'+(mi===0?' open':'');
+      mb.onclick=()=>{mb.classList.toggle('open');list.classList.toggle('open')};
+      m.lessons.forEach(l=>{
+        const b=document.createElement('button');
+        b.className='t-lesson'+(!l.url?' empty':'');
+        b.textContent=l.title;
+        b.dataset.id=l.id;
+        b.onclick=()=>openLesson(mi,l);
+        list.appendChild(b);
+      });
+      wrap.appendChild(mb);wrap.appendChild(list);modules.appendChild(wrap);
+    });
+
+    function openLesson(mi,l){
+      current=l.id;
+      document.querySelectorAll('#teacherRoot .t-lesson').forEach(x=>x.classList.remove('active'));
+      const active=document.querySelector('#teacherRoot [data-id="'+l.id+'"]');
+      if(active)active.classList.add('active');
+      document.getElementById('tTitle').textContent=course[mi].module+' · '+l.title;
+      document.getElementById('tNotesTitle').textContent=l.title+' · Notes';
+      document.getElementById('tNoteText').value=localStorage.getItem('katya_teacher_'+l.id)||'';
+      document.getElementById('tNotes').classList.remove('on');
+      document.getElementById('tView').classList.add('on');
+      const fr=document.getElementById('tFrame'), ph=document.getElementById('tPlaceholder');
+      if(l.url){ph.classList.remove('on');fr.style.display='block';fr.src=l.url}
+      else{fr.src='about:blank';fr.style.display='none';document.getElementById('tPhTitle').textContent=course[mi].module+' · '+l.title;ph.classList.add('on')}
+    }
+    function goHome(){
+      document.getElementById('tView').classList.remove('on');
+      document.getElementById('tFrame').src='about:blank';
+      document.getElementById('tNotes').classList.remove('on');
+      document.querySelectorAll('#teacherRoot .t-lesson').forEach(x=>x.classList.remove('active'));
+      current='';
+    }
+    document.getElementById('tHome').onclick=goHome;
+    document.getElementById('tBack').onclick=goHome;
+    document.getElementById('tNotesBtn').onclick=()=>document.getElementById('tNotes').classList.toggle('on');
+    document.getElementById('tSave').onclick=()=>{if(current)localStorage.setItem('katya_teacher_'+current,document.getElementById('tNoteText').value)};
+    document.getElementById('tClear').onclick=()=>{if(current){document.getElementById('tNoteText').value='';localStorage.removeItem('katya_teacher_'+current)}};
+  }, {once:true});
+})();
+</script>
+
 </head>
 <body>
 <div class="app">
