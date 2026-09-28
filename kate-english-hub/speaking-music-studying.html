@@ -23,7 +23,8 @@ main{min-height:0;padding:14px 20px;display:grid;grid-template-columns:1.02fr 1.
 .panel{min-height:0;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.94);box-shadow:0 12px 35px #6d4a3a15;overflow:hidden}
 .left{padding:18px;display:grid;grid-template-rows:auto auto 1fr;gap:12px}
 .right{padding:18px;display:grid;grid-template-rows:auto 1fr auto;gap:12px}
-.stepbar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stepbar{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.stepbar .step{padding:8px 7px;font-size:11px}
 .step{border:0;border-radius:999px;padding:10px 12px;background:#f2e9e4;color:#6b5d58;font-size:13px;font-weight:900}
 .step.active{background:var(--rose);color:#fff}
 .prompt{border-radius:18px;background:linear-gradient(135deg,#eaf7fd,#fff);padding:14px 16px;border:1px solid #cfe8f4}
@@ -52,6 +53,15 @@ footer{display:flex;align-items:center;gap:10px;padding:8px 20px;border-top:1px 
 .answerbox{display:none;border:1px dashed #d7b7ad;border-radius:14px;background:#fff8f4;padding:10px 12px;font-size:13px;line-height:1.35}
 .answerbox.on{display:block}
 .badge{display:inline-block;background:#fff0c5;padding:2px 7px;border-radius:999px;font-weight:900}
+.facttiles{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.facttile{border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px;font-size:12px;line-height:1.35}
+.facttile b{display:block;color:#8d5048;margin-bottom:3px}
+.vocabgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.vocabitem{border:1px solid var(--line);border-radius:13px;background:#fff;padding:9px;font-size:12px;font-weight:800}
+.collocs{display:flex;flex-wrap:wrap;gap:7px}
+.colloc{border:1px solid var(--rose2);border-radius:999px;background:#fff;padding:7px 9px;font-size:12px;font-weight:800;color:#6a4d46}
+.video-card{border:1px solid #cfe8f4;border-radius:16px;background:linear-gradient(135deg,#eaf7fd,#fff);padding:12px;margin-top:10px}
+.video-card a{display:inline-block;margin-top:8px;text-decoration:none;background:#2f6f8d;color:#fff;border-radius:10px;padding:8px 11px;font-size:12px;font-weight:900}
 @media(max-width:900px){
   .app{grid-template-rows:58px 1fr 50px}
   main{grid-template-columns:1fr 1.08fr;padding:8px;gap:8px}
@@ -75,9 +85,12 @@ footer{display:flex;align-items:center;gap:10px;padding:8px 20px;border-top:1px 
   <main>
     <section class="panel left">
       <div class="stepbar">
-        <button class="step active" data-step="1">1 · Your habit</button>
-        <button class="step" data-step="2">2 · Evidence</button>
-        <button class="step" data-step="3">3 · Advice</button>
+        <button class="step active" data-step="1">1 · Hook</button>
+        <button class="step" data-step="2">2 · Facts</button>
+        <button class="step" data-step="3">3 · Vocabulary</button>
+        <button class="step" data-step="4">4 · Collocations</button>
+        <button class="step" data-step="5">5 · Quick check</button>
+        <button class="step" data-step="6">6 · Speaking</button>
       </div>
 
       <div class="prompt" id="leftPrompt">
@@ -175,51 +188,103 @@ function renderStep(n){
   if(n===1){
     leftPrompt.innerHTML="<small>Quick choice</small><strong>What works best for you when you study?</strong>";
     leftContent.innerHTML=`
-      <div class="choices" id="choices">
+      <div class="choices">
         <button class="choice">Silence<span>I need zero background noise.</span></button>
         <button class="choice">Instrumental music<span>Music helps, but lyrics do not.</span></button>
-        <button class="choice">Pop / songs with lyrics<span>I concentrate better with familiar music.</span></button>
-        <button class="choice">It depends<span>The task, mood and place change my choice.</span></button>
+        <button class="choice">Familiar songs<span>I concentrate better with music I know.</span></button>
+        <button class="choice">It depends<span>The task decides everything.</span></button>
       </div>
-      <div class="stems" style="margin-top:12px">
-        <button class="stem">I tend to…</button><button class="stem">I find it easier to… when…</button>
-        <button class="stem">The main distraction for me is…</button><button class="stem">It depends on whether…</button>
-      </div>`;
+      <div class="stems" style="margin-top:10px">
+        <button class="stem">I tend to…</button><button class="stem">I get distracted if…</button>
+        <button class="stem">It works best when…</button><button class="stem">For reading, I prefer…</button>
+      </div>
+      <div class="video-card"><b>Short video extension</b><br><span style="font-size:12px">TED-Ed · 3 tips on how to study effectively</span><br><a target="_blank" rel="noopener" href="https://www.ted.com/talks/ted_ed_3_tips_on_how_to_study_effectively">▶ Open short video</a></div>`;
     bindChoices();
-    task.innerHTML="<b>Speak:</b> paraphrase the idea, say whether it matches your experience, and give one example.";
-    footerTip.innerHTML="<b>Target:</b> answer in 3–4 full sentences. Use one linker: <i>however, because, whereas, overall</i>.";
+    fact.textContent="Start with your real study habits. Then compare your experience with the article.";
+    task.innerHTML="<b>Speak:</b> 3–4 sentences. Give one example from your own study routine.";
+    footerTip.innerHTML="<b>Target:</b> I tend to… / I get distracted if… / It depends on…";
     nextStep.textContent="Next →";
   }else if(n===2){
-    leftPrompt.innerHTML="<small>Evidence challenge</small><strong>Use the article, not just your opinion.</strong>";
+    leftPrompt.innerHTML="<small>Interesting facts</small><strong>What does research suggest?</strong>";
     leftContent.innerHTML=`
-      <div class="prompt" style="background:#fff8dc;border-color:#efd66a">
-        <small>3-part answer</small>
-        <strong style="font-size:22px">1. Paraphrase the claim<br>2. React to it<br>3. Add a real example</strong>
-      </div>
-      <div class="stems" style="margin-top:12px">
-        <button class="stem">The article suggests that…</button><button class="stem">This seems convincing because…</button>
-        <button class="stem">On the other hand…</button><button class="stem">A good example would be…</button>
+      <div class="facttiles">
+        <div class="facttile"><b>Mood matters</b>Pleasant music may help you stay with a task longer.</div>
+        <div class="facttile"><b>Lyrics compete</b>Songs with words can interfere with reading and vocabulary learning.</div>
+        <div class="facttile"><b>Fast + loud</b>High-energy loud music can make demanding tasks harder.</div>
+        <div class="facttile"><b>Instrumental is safer</b>Low-volume instrumental music is often less distracting.</div>
+        <div class="facttile"><b>Personality matters</b>Some learners feel overstimulated more easily than others.</div>
+        <div class="facttile"><b>Task type matters</b>Routine practice and close reading may need different soundtracks.</div>
       </div>`;
-    task.innerHTML="<b>Challenge:</b> use one idea from the card as evidence in a 45-second answer.";
-    footerTip.innerHTML="<b>Target:</b> evidence + opinion. Avoid repeating the wording on the card.";
+    fact.textContent=evidence[idx].fact;
+    task.innerHTML="<b>Mini discussion:</b> choose one fact, paraphrase it and say whether it matches your experience.";
+    footerTip.innerHTML="<b>Target:</b> The research suggests… / This seems convincing because…";
     nextStep.textContent="Next →";
-  }else{
-    leftPrompt.innerHTML="<small>Advice challenge</small><strong>Robert is revising for exams. Give him a practical rule.</strong>";
+  }else if(n===3){
+    leftPrompt.innerHTML="<small>New vocabulary</small><strong>Build precise language for the topic.</strong>";
     leftContent.innerHTML=`
-      <div class="choices" id="adviceChoices">
-        <button class="choice">Reading a difficult text<span>Choose the safest music setup.</span></button>
-        <button class="choice">Doing routine exercises<span>Decide what music could help.</span></button>
-        <button class="choice">Feeling bored and unmotivated<span>Balance mood and distraction.</span></button>
-        <button class="choice">Studying in a noisy place<span>Compare music with background noise.</span></button>
+      <div class="vocabgrid">
+        <div class="vocabitem">working memory</div><div class="vocabitem">temporary memory used while thinking</div>
+        <div class="vocabitem">comprehension</div><div class="vocabitem">understanding what you read or hear</div>
+        <div class="vocabitem">overstimulated</div><div class="vocabitem">mentally overloaded by too much input</div>
+        <div class="vocabitem">caveat</div><div class="vocabitem">an important warning or limitation</div>
+        <div class="vocabitem">demanding task</div><div class="vocabitem">a task needing serious concentration</div>
+        <div class="vocabitem">background music</div><div class="vocabitem">music playing while you work</div>
       </div>
-      <div class="stems" style="margin-top:12px">
-        <button class="stem">If I were Robert, I’d…</button><button class="stem">The evidence suggests…</button>
-        <button class="stem">I’d avoid… because…</button><button class="stem">Overall, the best rule is…</button>
+      <div class="stems" style="margin-top:10px">
+        <button class="stem">Reading comprehension gets worse if…</button>
+        <button class="stem">A major caveat is that…</button>
+        <button class="stem">I feel overstimulated when…</button>
+      </div>`;
+    fact.textContent="Vocabulary challenge: explain one word without translating it.";
+    task.innerHTML="<b>Use it:</b> make 3 original sentences with the new vocabulary.";
+    footerTip.innerHTML="<b>Target:</b> working memory · comprehension · overstimulated · caveat · demanding task";
+    nextStep.textContent="Next →";
+  }else if(n===4){
+    leftPrompt.innerHTML="<small>Collocations</small><strong>Use chunks, not isolated words.</strong>";
+    leftContent.innerHTML=`
+      <div class="collocs">
+        <span class="colloc">boost your mood</span><span class="colloc">improve performance</span>
+        <span class="colloc">reduce comprehension</span><span class="colloc">interrupt your train of thought</span>
+        <span class="colloc">overload working memory</span><span class="colloc">listen at a low volume</span>
+        <span class="colloc">stay on task</span><span class="colloc">process information</span>
+        <span class="colloc">revise for an exam</span><span class="colloc">do a demanding task</span>
+        <span class="colloc">study in silence</span><span class="colloc">word-heavy songs</span>
+      </div>
+      <div class="prompt" style="margin-top:10px;background:#fff8dc;border-color:#efd66a">
+        <small>Challenge</small><strong style="font-size:20px">Choose any 3 collocations and connect them in one natural answer.</strong>
+      </div>`;
+    fact.textContent="Strong speaking uses natural collocations: boost your mood, reduce comprehension, stay on task, overload working memory.";
+    task.innerHTML="<b>Speak:</b> compare silence, instrumental music and songs with lyrics using at least 3 collocations.";
+    footerTip.innerHTML="<b>Target:</b> use 3 collocations correctly, not just list them.";
+    nextStep.textContent="Next →";
+  }else if(n===5){
+    leftPrompt.innerHTML="<small>Quick check</small><strong>True or false? Correct the false statements.</strong>";
+    leftContent.innerHTML=`
+      <div class="choices">
+        <button class="choice">Lyrics are usually less distracting than instrumental music.<span>True / False?</span></button>
+        <button class="choice">Fast and loud music may hurt concentration.<span>True / False?</span></button>
+        <button class="choice">Music always improves reading comprehension.<span>True / False?</span></button>
+        <button class="choice">Different tasks may need different soundtracks.<span>True / False?</span></button>
       </div>`;
     bindChoices();
+    fact.textContent="Correct the false ideas in full sentences.";
+    task.innerHTML="<b>Rule:</b> no one-word answers. Explain why.";
+    footerTip.innerHTML="<b>Target:</b> evidence + correction.";
+    nextStep.textContent="Next →";
+  }else{
+    leftPrompt.innerHTML="<small>Final speaking mission</small><strong>Should students listen to music while studying?</strong>";
+    leftContent.innerHTML=`
+      <div class="prompt" style="background:#fff8dc;border-color:#efd66a">
+        <small>Include all 5</small>
+        <strong style="font-size:20px">1. Your view<br>2. Two facts<br>3. Three collocations<br>4. One exception<br>5. Practical advice</strong>
+      </div>
+      <div class="stems" style="margin-top:10px">
+        <button class="stem">Overall, it depends on…</button><button class="stem">The evidence suggests…</button>
+        <button class="stem">However…</button><button class="stem">A safer option would be…</button>
+      </div>`;
     fact.textContent="Give balanced advice: mention one situation where music could help and one where it could distract.";
-    task.innerHTML="<b>Final speaking:</b> 30–45 seconds. Use at least two ideas from the article.";
-    footerTip.innerHTML="<b>Target:</b> recommendation + reason + exception + conclusion.";
+    task.innerHTML="<b>Final speaking:</b> 45 seconds. Use at least two ideas from the article and three collocations.";
+    footerTip.innerHTML="<b>Target:</b> opinion + evidence + collocations + exception + recommendation.";
     nextStep.textContent="Restart ↺";
   }
 }
@@ -243,7 +308,7 @@ function resetTimer(sec=45){
 }
 function startTimer(){
   clearInterval(timer);
-  const total=currentStep===3?30:45;
+  const total=45;
   if(remaining<=0 || remaining>total) remaining=total;
   timer=setInterval(()=>{
     remaining--;
@@ -254,13 +319,13 @@ function startTimer(){
 }
 document.getElementById("newCard").onclick=showCard;
 document.getElementById("showSupport").onclick=()=>{
-  answerBox.innerHTML=currentStep===3
+  answerBox.innerHTML=currentStep===6
     ? "<b>Teacher support:</b> Strong answer = practical recommendation + reference to working memory / lyrics / speed & volume / mood + one exception."
     : evidence[idx].support;
   answerBox.classList.toggle("on");
 };
-document.getElementById("startTimer").onclick=()=>{resetTimer(currentStep===3?30:45);startTimer();};
-nextStep.onclick=()=>renderStep(currentStep===3?1:currentStep+1);
+document.getElementById("startTimer").onclick=()=>{resetTimer(45);startTimer();};
+nextStep.onclick=()=>renderStep(currentStep===6?1:currentStep+1);
 steps.forEach(b=>b.onclick=()=>renderStep(Number(b.dataset.step)));
 bindChoices();
 resetTimer(45);
