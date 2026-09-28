@@ -113,6 +113,29 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
 .reading-inner .article-columns{column-count:2;column-gap:34px;font-size:18px;line-height:1.5}
 @media(max-width:900px){.reading-inner .article-columns{column-count:1}.reading-inner{padding:20px}}
 
+
+.practice{min-height:520px;display:grid;grid-template-rows:auto auto 1fr;gap:10px}
+.practice h3{margin:0;font-size:18px}
+.practice-note{font-size:12px;line-height:1.35;color:var(--muted);background:#eef7fb;border:1px solid #d3e8f2;border-radius:12px;padding:9px 10px}
+.practice-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.practice-tabs button{border:0;border-radius:999px;padding:7px 9px;background:#eee6e2;font-size:11px;font-weight:900;cursor:pointer}
+.practice-tabs button.active{background:#32728f;color:#fff}
+.practice-pane{display:none}.practice-pane.on{display:block}
+.drill{display:grid;gap:8px}
+.item{border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px;font-size:13px;line-height:1.35}
+.opts{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
+.opts button{border:1px solid #dbc8bf;border-radius:10px;background:#fffaf7;padding:7px 9px;font-size:12px;cursor:pointer}
+.opts button.correct{background:#e5f3ec;border-color:#8fb9a7}.opts button.wrong{background:#f9e6e2;border-color:#d99d95}
+.item input{width:100%;margin-top:7px;border:1px solid #d8c7bf;border-radius:9px;padding:8px;font:inherit}
+.check{margin-top:7px;border:0;border-radius:9px;background:#32728f;color:#fff;padding:7px 9px;font-weight:900;cursor:pointer}
+.feedback{margin-top:5px;font-size:11px;font-weight:800}.feedback.good{color:#3f7561}.feedback.bad{color:#a05048}
+.recall-card{border:1px dashed #d7bbb2;border-radius:16px;background:#fff8e6;padding:12px;text-align:center}
+.recall-term{font:700 25px Georgia,serif;color:#32728f;margin:10px 0}
+.recall-timer{font-size:28px;font-weight:900;color:#8d564c;margin:8px 0}
+.recall-actions{display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+.recall-actions button{border:0;border-radius:10px;padding:8px 10px;font-weight:900;cursor:pointer;background:#eee6e2}
+.wordbank{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.wordbank span{border:1px solid #ddc9bf;border-radius:999px;background:#fff;padding:6px 8px;font-size:11px;font-weight:800}
+
 </style>
 </head>
 <body>
@@ -225,22 +248,79 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
           </div>
         </section>
 
-        <section class="card collocations">
-          <h3>Collocations</h3>
-          <div class="colloc-list">
-            <div class="colloc">boost your mood</div>
-            <div class="colloc">stay on task</div>
-            <div class="colloc">reduce comprehension</div>
-            <div class="colloc">overload working memory</div>
-            <div class="colloc">interrupt your train of thought</div>
-            <div class="colloc">listen at a low volume</div>
-            <div class="colloc">do a demanding task</div>
-            <div class="colloc">process information</div>
-            <div class="colloc">revise for an exam</div>
-            <div class="colloc">background music</div>
-            <div class="challenge"><b>Mini challenge:</b> choose any 4 collocations and write four sentences about your real study habits.</div>
-          </div>
-        </section>
+        <section class="card practice">
+  <div>
+    <h3>Practice · Automatise the chunks</h3>
+    <div class="practice-note"><b>Goal:</b> retrieve the whole collocation quickly and use it without looking back at the article.</div>
+  </div>
+  <div class="practice-tabs">
+    <button class="active" data-practice="match">1 · Match</button>
+    <button data-practice="speed">2 · Speed Choice</button>
+    <button data-practice="gaps">3 · Gap Fill</button>
+    <button data-practice="transform">4 · Transform</button>
+    <button data-practice="recall">5 · 30-sec Recall</button>
+    <button data-practice="use">6 · Personal Use</button>
+  </div>
+  <div>
+    <section class="practice-pane on" id="practice-match">
+      <div class="drill">
+        <div class="item"><b>Match the halves mentally, then click the correct ending.</b></div>
+        <div class="item" data-answer="a better mood"><b>put you in...</b><div class="opts"><button>a better mood</button><button>large differences</button><button>working memory</button></div></div>
+        <div class="item" data-answer="challenging tasks"><b>stick with...</b><div class="opts"><button>challenging tasks</button><button>background music</button><button>performance</button></div></div>
+        <div class="item" data-answer="performance"><b>a decrease in...</b><div class="opts"><button>performance</button><button>lyrics</button><button>mood</button></div></div>
+        <div class="item" data-answer="some caveats"><b>with...</b><div class="opts"><button>some caveats</button><button>vocals</button><button>attention</button></div></div>
+      </div>
+    </section>
+
+    <section class="practice-pane" id="practice-speed">
+      <div class="drill">
+        <div class="item" data-answer="put you in a better mood"><p>Calm familiar music can ______ and make studying feel easier.</p><div class="opts"><button>put you in a better mood</button><button>reduce comprehension</button><button>fail to find large differences</button></div></div>
+        <div class="item" data-answer="reading comprehension decreases"><p>When lyrics compete for attention, ______.</p><div class="opts"><button>reading comprehension decreases</button><button>music gets softer</button><button>test scores always rise</button></div></div>
+        <div class="item" data-answer="aimed to figure out"><p>The researchers ______ the effect of mood and distraction.</p><div class="opts"><button>aimed to figure out</button><button>stuck with challenging tasks</button><button>put them in a better mood</button></div></div>
+        <div class="item" data-answer="failed to find large differences"><p>Other similar studies ______.</p><div class="opts"><button>failed to find large differences</button><button>reduced working memory</button><button>listened at a low volume</button></div></div>
+      </div>
+    </section>
+
+    <section class="practice-pane" id="practice-gaps">
+      <div class="drill">
+        <div class="item">1. Background music may ______ if it contains lyrics.<input data-answer="reduce comprehension"><button class="check">Check</button><div class="feedback"></div></div>
+        <div class="item">2. A better mood can help you ______.<input data-answer="stick with challenging tasks"><button class="check">Check</button><div class="feedback"></div></div>
+        <div class="item">3. Fast and loud music caused ______.<input data-answer="a decrease in performance"><button class="check">Check</button><div class="feedback"></div></div>
+        <div class="item">4. Music is probably fine while studying, ______.<input data-answer="with some caveats"><button class="check">Check</button><div class="feedback"></div></div>
+      </div>
+    </section>
+
+    <section class="practice-pane" id="practice-transform">
+      <div class="drill">
+        <div class="item"><b>Rewrite with the chunk:</b><br>Music makes me feel more positive. → Music can <u>______</u>.<input data-answer="put me in a better mood"><button class="check">Check</button><div class="feedback"></div></div>
+        <div class="item"><b>Rewrite with the chunk:</b><br>I continue even when the task is difficult. → I <u>______</u>.<input data-answer="stick with challenging tasks"><button class="check">Check</button><div class="feedback"></div></div>
+        <div class="item"><b>Rewrite with the chunk:</b><br>The result became worse. → There was <u>______</u>.<input data-answer="a decrease in performance"><button class="check">Check</button><div class="feedback"></div></div>
+      </div>
+    </section>
+
+    <section class="practice-pane" id="practice-recall">
+      <div class="recall-card">
+        <b>Say the full collocation before the timer ends.</b>
+        <div class="recall-term" id="recallCue">mood</div>
+        <div class="recall-timer" id="recallTimer">0:30</div>
+        <div class="recall-actions">
+          <button id="startRecall">Start</button>
+          <button id="showRecall">Show answer</button>
+          <button id="nextRecall">Next</button>
+        </div>
+        <div class="support" id="recallAnswer"></div>
+      </div>
+    </section>
+
+    <section class="practice-pane" id="practice-use">
+      <div class="item"><b>Write 4 true sentences about your own study habits.</b><br>Use at least 4 chunks. No copying from the article.
+        <div class="wordbank">
+          <span>put me in a better mood</span><span>stick with challenging tasks</span><span>music in the background</span><span>reduce comprehension</span><span>a decrease in performance</span><span>with some caveats</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</section>
       </div>
     </section>
 
@@ -291,15 +371,24 @@ document.querySelectorAll(".answer-btn").forEach(function(btn){
 });
 
 const vocab=[
- ["in a nutshell","Used to introduce a very short summary of the main point.","вкратце, в двух словах"],
+ ["in a nutshell","A phrase used to introduce a short summary.","вкратце"],
  ["complex","Complicated and made of many connected parts.","сложный"],
- ["conclusively debunk","To prove clearly and finally that an idea is false.","окончательно опровергнуть"],
+ ["conclusively debunk","Prove clearly and finally that an idea is false.","окончательно опровергнуть"],
  ["willing","Ready or prepared to do something.","готовый, желающий"],
- ["working memory","The mental system used to hold and manipulate information for a short time.","оперативная память"],
+ ["working memory","The system used to hold and manipulate information briefly.","оперативная память"],
  ["comprehension","The ability to understand what you read or hear.","понимание"],
  ["overstimulated","Affected by too much sound, activity or information.","перегруженный раздражителями"],
- ["aim to figure out","To try to understand or discover something.","стремиться выяснить"],
- ["caveat","An important warning, condition or limitation.","оговорка, важное ограничение"]
+ ["caveat","An important warning, condition or limitation.","оговорка"],
+ ["put you in a better mood","Make you feel more positive.","улучшить настроение"],
+ ["stick with challenging tasks","Continue even when a task is difficult.","не бросать сложные задания"],
+ ["music in the background","Music playing while another activity is primary.","фоновая музыка"],
+ ["working memory gets worse","Temporary mental processing becomes less effective.","оперативная память работает хуже"],
+ ["reading comprehension decreases","Understanding of a text becomes weaker.","понимание текста снижается"],
+ ["aim to figure out","Try to discover or understand something.","стремиться выяснить"],
+ ["a demanding comprehension task","A difficult task requiring careful understanding.","сложная задача на понимание"],
+ ["a decrease in performance","A drop in results or effectiveness.","снижение результата"],
+ ["fail to find large differences","Research does not show a strong difference.","не обнаружить значительных различий"],
+ ["with some caveats","With important conditions or limitations.","с некоторыми оговорками"]
 ];
 
 let idx=0;
@@ -330,6 +419,57 @@ document.getElementById("speakWord").onclick=function(e){
  window.speechSynthesis.speak(u);
 };
 render();
+
+
+document.querySelectorAll(".practice-tabs button").forEach(function(btn){
+  btn.onclick=function(){
+    document.querySelectorAll(".practice-tabs button").forEach(x=>x.classList.toggle("active",x===btn));
+    document.querySelectorAll(".practice-pane").forEach(x=>x.classList.remove("on"));
+    document.getElementById("practice-"+btn.dataset.practice).classList.add("on");
+  };
+});
+document.querySelectorAll(".opts").forEach(function(group){
+  group.querySelectorAll("button").forEach(function(btn){
+    btn.onclick=function(){
+      group.querySelectorAll("button").forEach(x=>x.classList.remove("correct","wrong"));
+      const item=group.closest(".item");
+      const ok=btn.textContent.trim()===item.dataset.answer;
+      btn.classList.add(ok?"correct":"wrong");
+      if(ok) group.querySelectorAll("button").forEach(x=>{if(x!==btn)x.disabled=true});
+    };
+  });
+});
+document.querySelectorAll(".check").forEach(function(btn){
+  btn.onclick=function(){
+    const item=btn.closest(".item"), input=item.querySelector("input"), fb=item.querySelector(".feedback");
+    const norm=s=>s.trim().toLowerCase().replace(/[’']/g,"'").replace(/\s+/g," ");
+    const ok=norm(input.value)===norm(input.dataset.answer);
+    fb.textContent=ok?"✓ Correct":"Try again";
+    fb.className="feedback "+(ok?"good":"bad");
+  };
+});
+const recall=[
+ ["mood","put you in a better mood"],
+ ["difficult tasks","stick with challenging tasks"],
+ ["text understanding","reading comprehension decreases"],
+ ["research goal","aim to figure out"],
+ ["lower result","a decrease in performance"],
+ ["limitations","with some caveats"]
+];
+let recallIndex=0,recallInterval=null,recallLeft=30;
+function renderRecall(){
+  document.getElementById("recallCue").textContent=recall[recallIndex][0];
+  document.getElementById("recallAnswer").textContent=recall[recallIndex][1];
+  document.getElementById("recallAnswer").classList.remove("on");
+  recallLeft=30;document.getElementById("recallTimer").textContent="0:30";
+}
+document.getElementById("startRecall").onclick=function(){
+  clearInterval(recallInterval);recallLeft=30;document.getElementById("recallTimer").textContent="0:30";
+  recallInterval=setInterval(function(){recallLeft--;document.getElementById("recallTimer").textContent="0:"+String(Math.max(0,recallLeft)).padStart(2,"0");if(recallLeft<=0)clearInterval(recallInterval)},1000);
+};
+document.getElementById("showRecall").onclick=function(){document.getElementById("recallAnswer").classList.add("on")};
+document.getElementById("nextRecall").onclick=function(){clearInterval(recallInterval);recallIndex=(recallIndex+1)%recall.length;renderRecall()};
+renderRecall();
 
 const readingOverlay=document.getElementById("readingOverlay");
 const openReading=document.getElementById("openReading");
