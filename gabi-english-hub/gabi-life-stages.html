@@ -404,6 +404,7 @@ const revBank=[
 {q:"Choose the correct sentence.",a:["She has lunch right now.","She is having lunch right now.","She is having a car.","She having lunch right now."],r:1,e:"HAVE is continuous when it describes an activity such as having lunch."},
 {q:"Choose the correct form: ‘Right now thousands of parents ___ photos online.’",a:["share","shares","are sharing","is sharing"],r:2,e:"RIGHT NOW signals Present Continuous."}
 ];let revItems=[],revI=0,revPts=0,revAnswered=false;function shuffleRev(){revItems=[...revBank].sort(()=>Math.random()-.5);revI=0;revPts=0;revScore.textContent='0';renderRev()}function renderRev(){const x=revItems[revI];revCount.textContent=(revI+1)+' / '+revItems.length;revQuestion.textContent=x.q;revAnswers.innerHTML=x.a.map((v,i)=>'<button data-i="'+i+'">'+v+'</button>').join('');revFeedback.textContent='Choose an answer.';revExplain.textContent='';revAnswered=false;revAnswers.querySelectorAll('button').forEach(b=>b.onclick=()=>{if(revAnswered)return;revAnswered=true;const i=+b.dataset.i;if(i===x.r){revPts++;b.classList.add('correct');revFeedback.textContent='Correct!'}else{b.classList.add('wrong');revAnswers.querySelector('[data-i="'+x.r+'"]').classList.add('correct');revFeedback.textContent='Not quite.'}revScore.textContent=revPts;revExplain.textContent=x.e})}function revNext(){if(revI<revItems.length-1){revI++;renderRev()}else{revFeedback.textContent='Final score · '+revPts+' / '+revItems.length;revExplain.textContent=revPts>=10?'Strong revision.':'Replay and beat your score.'}}function revPrev(){if(revI>0){revI--;renderRev()}}function revRestart(){shuffleRev()}shuffleRev();const teenScript=`Hi, I’m Emma and I’m fifteen. Life as a teenager is exciting, but it can also be confusing. I spend a lot of time at school, and after classes I usually chat with my friends online or listen to music. These days I’m learning the guitar, so I’m practising more than I used to. My parents say I’m becoming more independent because I make more decisions on my own and I sometimes look after my little brother. Teenagers also worry about exams, friendships and the future. I think this stage of life is about trying new things, making mistakes and slowly discovering who you are.`;function playTeen(){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(teenScript);u.lang='en-GB';u.rate=.92;speechSynthesis.speak(u)}let si;function start40(){clearInterval(si);let n=40;s40.textContent=n;si=setInterval(()=>{s40.textContent=--n;if(n<=0)clearInterval(si)},1000)}document.querySelectorAll('[data-img]').forEach(x=>x.src=window.GABI_IMG[x.dataset.img]);document.querySelectorAll('[data-bridge]').forEach(b=>b.onclick=()=>{const m={past:'He played football outside every evening. This was a past habit that is no longer true.',normal:'Waking up at 6:30 feels normal to him now.',adapting:'He is still adapting to lessons where English is used.'};bridgeAnswer.textContent=m[b.dataset.bridge]});document.querySelectorAll('[data-match]').forEach(b=>b.onclick=()=>{const m={'used to':'A · past habit/state that is no longer true','be used to':'B · something is normal/familiar now','get used to':'C · the process of adapting'};bridgeReveal.textContent=b.textContent+' → '+m[b.dataset.match]});document.querySelectorAll('[data-statecase]').forEach(b=>b.onclick=()=>{const m={think1:'STATE · THINK = opinion. Use Present Simple.',think2:'ACTION · THINK = mental activity happening now. Continuous is possible.',have1:'STATE · HAVE = possession. Use Present Simple.',have2:'ACTION · HAVE = activity. Continuous is possible.',see1:'STATE · SEE = understand. Use Present Simple.',see2:'ACTION · SEE = meet/visit. Continuous is possible.'};stateCaseAnswer.textContent=m[b.dataset.statecase]});document.querySelectorAll('[data-wrongpick]').forEach(b=>b.onclick=()=>{stateReveal.textContent=b.dataset.wrongpick==='wrong'?'Correct. “Know” describes a state, so we normally say: I know the answer.':'Yes. “I know the answer” is the natural form because KNOW is stative.'});document.querySelectorAll('.grammarTabs button').forEach(b=>b.onclick=()=>{const tabs=b.parentElement;tabs.querySelectorAll('button').forEach(x=>x.classList.remove('on'));b.classList.add('on');const page=b.closest('.page');page.querySelectorAll('.gPane').forEach(x=>x.classList.remove('on'));document.getElementById(b.dataset.gt).classList.add('on')});document.querySelectorAll('.mcBtns button').forEach(b=>b.onclick=()=>{const box=b.parentElement;box.querySelectorAll('button').forEach(x=>x.classList.remove('correct','wrong'));const ok=b.textContent.trim().toLowerCase()===box.dataset.answer.trim().toLowerCase();b.classList.add(ok?'correct':'wrong');if(!ok){box.querySelectorAll('button').forEach(x=>{if(x.textContent.trim().toLowerCase()===box.dataset.answer.trim().toLowerCase())x.classList.add('correct')})}});function normAnswer(s){return s.trim().toLowerCase().replace(/[’']/g,"'").replace(/[.?!]+$/,'').replace(/\s+/g,' ')}function checkInputs(id){document.querySelectorAll('#'+id+' input[data-answer]').forEach(inp=>{inp.classList.remove('checkedOk','checkedBad');inp.classList.add(normAnswer(inp.value)===normAnswer(inp.dataset.answer)?'checkedOk':'checkedBad')})}function resetInputs(id){document.querySelectorAll('#'+id+' input[data-answer]').forEach(inp=>{inp.value='';inp.classList.remove('checkedOk','checkedBad')})}</script>
+<script src="famous-audio.js?v=20260928"></script>
 <script>
 (()=>{
 const Q=[
@@ -420,30 +421,26 @@ const Q=[
 let i=0,score=0,heard=false;
 const names=Q.map(x=>x[1]), stage=document.getElementById('fmStage'), ans=document.getElementById('fmAnswers'), fb=document.getElementById('fmFeedback'), sc=document.getElementById('fmScore');
 function draw(){heard=false;stage.textContent=Q[i][0]+' · '+(i+1)+'/'+Q.length;fb.textContent='';sc.textContent='Score: '+score;let opts=[Q[i][1],...names.filter(x=>x!==Q[i][1]).sort(()=>Math.random()-.5).slice(0,3)].sort(()=>Math.random()-.5);ans.innerHTML=opts.map(x=>'<button style="padding:11px;border:1px solid #b9d4dc;border-radius:12px;background:white;font-weight:800;color:#183c55">'+x+'</button>').join('');[...ans.children].forEach(b=>b.onclick=()=>{if(!heard){fb.textContent='Listen first.';return} const ok=b.textContent===Q[i][1]; if(ok){score++;fb.textContent='Correct — '+Q[i][1]+'.'}else fb.textContent='Not quite. Correct answer: '+Q[i][1]+'.'; [...ans.children].forEach(x=>x.disabled=true);sc.textContent='Score: '+score;});}
-let fmUtterance=null,fmTimer=null,fmRun=0;
 const fmBtn=document.getElementById('fmListen');
-function stopFm(){fmRun++;clearTimeout(fmTimer);if('speechSynthesis' in window)speechSynthesis.cancel();fmUtterance=null;fmBtn.disabled=false;fmBtn.textContent='LISTEN';}
-function playFmNatural(text){
-  stopFm();const run=fmRun;
-  if(!('speechSynthesis' in window)){fb.textContent='Audio is not supported in this browser. Please open this lesson in Safari, Chrome or Edge.';return;}
-  const synth=window.speechSynthesis;
-  // Speak inside the click gesture: mobile browsers block delayed playback.
-  const u=new SpeechSynthesisUtterance(text);fmUtterance=u;
-  u.lang='en-GB';u.rate=.88;
-  const voices=synth.getVoices();
-  u.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>/^en[-_]/i.test(v.lang))||null;
-  fmBtn.textContent='STARTING…';fb.textContent='';
-  u.onstart=()=>{if(run!==fmRun)return;clearTimeout(fmTimer);heard=true;fmBtn.textContent='REPLAY';fb.textContent='Playing… Listen, then choose a name.';};
-  u.onend=()=>{if(run!==fmRun)return;clearTimeout(fmTimer);fmBtn.textContent='LISTEN AGAIN';fb.textContent='Choose a name.';};
-  u.onerror=()=>{if(run!==fmRun)return;clearTimeout(fmTimer);fmBtn.textContent='RETRY AUDIO';fb.textContent='The browser could not play its English voice. Check that an English speech voice is installed, then tap Retry audio.';};
-  synth.resume();synth.speak(u);
-  fmTimer=setTimeout(()=>{if(run!==fmRun||heard)return;stopFm();fmBtn.textContent='RETRY AUDIO';fb.textContent='No voice started. Check your browser’s English speech voice, then retry.';},6000);
+const fmPlayer=document.createElement('audio');
+fmPlayer.controls=true;fmPlayer.preload='auto';
+fmPlayer.setAttribute('aria-label','Famous Lives audio clue');
+fmPlayer.style.cssText='display:block;width:100%;margin:12px 0';
+fmBtn.after(fmPlayer);
+function loadFmAudio(){
+ fmPlayer.pause();fmPlayer.src=(window.GABI_FAMOUS_AUDIO||[])[i]||'';
+ fmBtn.disabled=false;fmBtn.textContent='LISTEN';
 }
-fmBtn.onclick=()=>playFmNatural(Q[i][2]);
-document.getElementById('fmNext').onclick=()=>{stopFm();i=(i+1)%Q.length;draw()};
-window.addEventListener('pagehide',stopFm);
-if('speechSynthesis' in window)speechSynthesis.getVoices();
-draw();
+fmPlayer.onplaying=()=>{heard=true;fmBtn.textContent='REPLAY';fb.textContent='Playing… Listen, then choose a name.';};
+fmPlayer.onended=()=>{fmBtn.textContent='LISTEN AGAIN';fb.textContent='Choose a name.';};
+fmPlayer.onerror=()=>{fmBtn.textContent='RETRY AUDIO';fb.textContent='Audio could not load. Refresh the page and try again.';};
+fmBtn.onclick=()=>{
+ fmPlayer.currentTime=0;
+ fmPlayer.play().catch(()=>{fb.textContent='Tap the play button on the audio player.';});
+};
+document.getElementById('fmNext').onclick=()=>{i=(i+1)%Q.length;draw();loadFmAudio()};
+window.addEventListener('pagehide',()=>fmPlayer.pause());
+draw();loadFmAudio();
 })();
 </script>
 <script>
