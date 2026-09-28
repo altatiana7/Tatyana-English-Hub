@@ -442,6 +442,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
       <div class="lesson-list open" style="display:grid;padding:3px 4px 6px 9px">
         <button onclick="openInfo('Homework · Lesson 1')"><span>Lesson 1</span><span>›</span></button>
         <button onclick="openHomeworkLesson(2)"><span>Lesson 2 · Generations</span><span>›</span></button>
+        <button onclick="openHomeworkLesson(3)"><span>Lesson 3 · Music & Study</span><span>›</span></button>
       </div>
     </div>
 
@@ -615,6 +616,10 @@ function openHomeworkLesson(lesson){
     title.textContent='Homework · Lesson 2 — Generations';
     frame.removeAttribute('srcdoc');
     frame.src='homework-lesson2-generations.html';
+  }else if(lesson===3){
+    title.textContent='Homework · Lesson 3 — Music & Study';
+    frame.removeAttribute('srcdoc');
+    frame.src='speaking-music-studying.html?v=20260928-hw3';
   }
 }
 
