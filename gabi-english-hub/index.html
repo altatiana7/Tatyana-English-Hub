@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Gabi English Hub · Focus 2 · B1</title>
+<title>Gabi English Hub · Gateway to the World B1</title>
 <style>
 :root{
   --ink:#0a315f;
@@ -111,13 +111,13 @@ button{font:inherit}
 </style>
 </head>
 <body>
-<main class="board" id="board" aria-label="Gabi English Hub Focus 2 B1 interactive board">
-  <img class="cover" src="bg-cover.png?v=20260928-fullscreen" alt="Gabi English Hub cover">
+<main class="board" id="board" aria-label="Gabi English Hub Gateway to the World B1 interactive board">
+  <img class="cover" id="mainCover" alt="Gabi English Hub cover">
   <div class="coverShade"></div>
   <div class="loader" id="loader">LOADING GABI HUB…</div>
 
   <aside class="sidebar" aria-label="Modules">
-    <div class="brand"><b>GABI</b><span>FOCUS 2 · B1</span></div>
+    <div class="brand"><b>GABI</b><span>GATEWAY B1 + FOCUS 2</span></div>
     <button class="homeBtn" id="homeBtn">HOME</button>
     <div id="moduleNav"></div>
   </aside>
@@ -126,7 +126,7 @@ button{font:inherit}
 <section id="lessonView" aria-hidden="true">
   <header class="topbar">
     <button class="back" id="backBtn" aria-label="Back">←</button>
-    <div><small id="crumb">FOCUS 2 · B1</small><h1 id="lessonHeading">Lesson</h1></div>
+    <div><small id="crumb">GATEWAY B1 + FOCUS 2</small><h1 id="lessonHeading">Lesson</h1></div>
   </header>
   <div class="workspace" id="workspace"></div>
 </section>
@@ -228,10 +228,13 @@ function openLesson(n,i){
   document.getElementById('lessonHeading').textContent=m.lessons[i].title;
   document.getElementById('workspace').innerHTML=
     '<nav class="topicTabs">'+m.lessons.map((x,j)=>'<button data-topic="'+j+'">'+x.note+'</button>').join('')+'</nav>'+
-    '<article class="lessonCard"><small>FOCUS 2 · B1 · MODULE '+n+'</small><h2 id="topicTitle">'+m.lessons[i].title+'</h2>'+
-    '<p>'+m.lessons[i].note+'</p></article>';
+    '<article class="lessonCard"><small>GATEWAY B1 + FOCUS 2 · MODULE '+n+'</small><h2 id="topicTitle">'+m.lessons[i].title+'</h2>'+
+    '<p id="topicNote">'+m.lessons[i].note+'</p><p>План темы. Интерактивные задания ещё не добавлены.</p></article>';
   document.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>{
-    document.getElementById('topicTitle').textContent=m.lessons[Number(b.dataset.topic)].note;
+    const lesson=m.lessons[Number(b.dataset.topic)];
+    document.getElementById('topicTitle').textContent=lesson.title;
+    document.getElementById('lessonHeading').textContent=lesson.title;
+    document.getElementById('topicNote').textContent=lesson.note;
   });
   const view=document.getElementById('lessonView');
   view.classList.add('on');view.setAttribute('aria-hidden','false');
@@ -257,10 +260,11 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
     const src='data:image/webp;base64,'+parts.join('').replace(/\s+/g,'');
     await new Promise((resolve,reject)=>{
       const test=new Image();
-      test.onload=()=>{img.src=src;resolve()};
+      test.onload=resolve;
       test.onerror=reject;
       test.src=src;
     });
+    img.src=src;
   }catch(err){
     console.error('New cover fallback',err);
   }finally{
