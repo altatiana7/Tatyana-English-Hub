@@ -95,6 +95,24 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
  .article-columns{font-size:14px;line-height:1.42}
  .reading-layout{grid-template-columns:1.4fr .9fr}
 }
+
+/* FULLSCREEN READING */
+.reading-launch{height:100%;display:grid;place-items:center}
+.reading-launch-card{width:min(860px,92%);text-align:center;padding:34px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(135deg,#eaf7fc,#fff8dd);box-shadow:var(--shadow)}
+.reading-launch-card h3{margin:0 0 10px;font:700 clamp(28px,3vw,42px)/1.08 Georgia,serif;color:#32728f}
+.reading-launch-card p{margin:0 auto 18px;max-width:650px;font-size:15px;line-height:1.5;color:var(--muted)}
+.open-reading{border:0;border-radius:14px;background:#32728f;color:#fff;padding:13px 20px;font-weight:900;cursor:pointer}
+.reading-overlay{position:fixed;inset:0;z-index:9999;background:#f8f1ec;display:none;grid-template-rows:56px 1fr}
+.reading-overlay.on{display:grid}
+.reading-bar{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--line);background:#fffdfb}
+.reading-bar-title{font-weight:900;color:#32728f;flex:1;text-align:center}
+.reading-bar button{border:0;border-radius:11px;padding:9px 12px;font-weight:900;cursor:pointer;background:#eee6e2;color:#514642}
+.reading-bar .full{background:#32728f;color:#fff}
+.reading-paper{overflow:auto;padding:18px}
+.reading-inner{width:min(1180px,96vw);margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px 34px;box-shadow:var(--shadow)}
+.reading-inner .article-columns{column-count:2;column-gap:34px;font-size:18px;line-height:1.5}
+@media(max-width:900px){.reading-inner .article-columns{column-count:1}.reading-inner{padding:20px}}
+
 </style>
 </head>
 <body>
@@ -161,65 +179,13 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
     </section>
 
     <section class="screen" id="screen-reading">
-      <div class="reading-layout" style="grid-template-columns:1.65fr .75fr">
-        <article class="card article" style="overflow:auto">
-          <div style="font-size:11px;font-weight:900;letter-spacing:.16em;color:#3aa0d1;margin-bottom:5px">CURIOUS KIDS</div>
-          <h3 style="font-size:31px;line-height:1.02">Is it OK to listen to music while studying?</h3>
-          <div class="dek"><b>Author: Timothy Byron</b> · Lecturer in Psychology, University of Wollongong</div>
-
-          <div style="border-left:5px solid #f2d45e;background:#fff8d9;border-radius:14px;padding:11px 13px;margin:10px 0 13px;font-size:13px;line-height:1.4">
-            <b>Robert, Year 11 student:</b> “I am in year 11 and I like to listen to music when I am studying, but my dad says that my brain is spending only half of its time studying and the other half is distracted by listening. He says it is better to leave my phone out of my room and concentrate on studying rather than listening to music. Is it OK to listen to songs when I am studying?”
-          </div>
-
-          <div class="article-columns" style="column-count:2;column-gap:24px;font-size:15px;line-height:1.43">
-            <p>It’s a good question! <b>In a nutshell</b>, music puts us in a better mood, which makes us better at studying – but it also distracts us, which makes us worse at studying. So if you want to study effectively with music, you want to reduce how distracting music can be, and increase the level to which the music keeps you in a good mood.</p>
-
-            <p><b style="color:#32728f">Music can put us in a better mood</b><br>
-            You may have heard of the Mozart effect – the idea that listening to Mozart makes you “smarter”. This is based on research that found listening to <b>complex</b> classical music like Mozart improved test scores, which the researcher argued was based on the music’s ability to stimulate parts of our minds that play a role in mathematical ability.</p>
-
-            <p>However, further research <b>conclusively debunked</b> the Mozart effect theory: it wasn’t really anything to do with maths, it was really just that music puts us in a better mood.</p>
-
-            <p>Research conducted in the 1990s found a “Blur Effect” – where kids who listened to the BritPop band Blur seemed to do better on tests. In fact, researchers found that the Blur effect was bigger than the Mozart effect, simply because kids enjoyed pop music like Blur more than classical music.</p>
-
-            <p>Being in a better mood likely means that we try that little bit harder and are <b>willing</b> to stick with challenging tasks.</p>
-
-            <p><b style="color:#32728f">Music can distract us</b><br>
-            On the other hand, music can be a distraction – under certain circumstances. When you study, you’re using your <b>working memory</b> – that means you are holding and manipulating several bits of information in your head at once.</p>
-
-            <p>The research is fairly clear that when there’s music in the background, and especially music with vocals, our working memory gets worse. Likely as a result, reading <b>comprehension</b> decreases when people listen to music with lyrics.</p>
-
-            <p>Music also appears to be more distracting for people who are introverts than for people who are extroverts, perhaps because introverts are more easily <b>overstimulated</b>.</p>
-
-            <p>Some clever work by an Australia-based researcher called Bill Thompson and his colleagues <b>aimed to figure out</b> the relative effect of these two competing factors – mood and distraction.</p>
-
-            <p>They had participants do a fairly demanding comprehension task, and listen to classical music that was either slow or fast, and which was either soft or loud.</p>
-
-            <p>They found the only time there was any real decrease in performance was when people were listening to music that was both fast and loud – at about the speed of <i>Shake It Off</i> by Taylor Swift, at about the volume of a vacuum cleaner.</p>
-
-            <p>But while that caused a decrease in performance, it wasn’t actually that big a decrease. And other similar research also failed to find large differences.</p>
-
-            <p><b style="color:#32728f">So… can I listen to music while studying or not?</b><br>
-            To sum up: research suggests it’s probably fine to listen to music while you’re studying – with some <b>caveats</b>.</p>
-
-            <p>It’s better if:<br>
-            • it puts you in a good mood;<br>
-            • it’s not too fast or too loud;<br>
-            • it’s less wordy (and hip-hop, where the words are rapped rather than sung, is likely to be even more distracting);<br>
-            • you’re not too introverted.</p>
-
-            <p><b>Happy listening and good luck in your exams!</b></p>
-          </div>
-        </article>
-
-        <aside class="readtasks">
-          <div class="card blue"><h3>Evidence Hunt</h3><p>Find the evidence in the Curious Kids text before opening the answer.</p></div>
-          <div class="qs">
-            <div class="q"><b>1.</b> Why did the “Blur Effect” appear stronger than the Mozart effect?<button class="answer-btn">Answer</button><div class="answer">Because the children enjoyed Blur’s pop music more than classical music, which put them in a better mood.</div></div>
-            <div class="q"><b>2.</b> What happens to working memory when music with vocals is playing?<button class="answer-btn">Answer</button><div class="answer">Working memory gets worse because the brain is processing competing information.</div></div>
-            <div class="q"><b>3.</b> Which combination caused a measurable drop in performance?<button class="answer-btn">Answer</button><div class="answer">Music that was both fast and loud.</div></div>
-            <div class="q"><b>4.</b> What four caveats does the author give at the end?<button class="answer-btn">Answer</button><div class="answer">The music should improve your mood, not be too fast or loud, be less wordy, and be less distracting for your personality.</div></div>
-          </div>
-        </aside>
+      <div class="reading-launch">
+        <div class="reading-launch-card">
+          <div style="font-size:11px;font-weight:900;letter-spacing:.16em;color:#3aa0d1;margin-bottom:8px">CURIOUS KIDS</div>
+          <h3>Is it OK to listen to music while studying?</h3>
+          <p>Open the original reading in a clean full-screen view. Evidence Hunt and vocabulary stay separate from the text.</p>
+          <button class="open-reading" id="openReading">Open Reading Text ⛶</button>
+        </div>
       </div>
     </section>
 
@@ -364,6 +330,85 @@ document.getElementById("speakWord").onclick=function(e){
  window.speechSynthesis.speak(u);
 };
 render();
+
+const readingOverlay=document.getElementById("readingOverlay");
+const openReading=document.getElementById("openReading");
+const readingBack=document.getElementById("readingBack");
+const readingFull=document.getElementById("readingFull");
+if(openReading) openReading.onclick=function(){
+  readingOverlay.classList.add("on");
+  readingOverlay.setAttribute("aria-hidden","false");
+};
+if(readingBack) readingBack.onclick=function(){
+  if(document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+  readingOverlay.classList.remove("on");
+  readingOverlay.setAttribute("aria-hidden","true");
+};
+if(readingFull) readingFull.onclick=async function(){
+  try{
+    if(document.fullscreenElement) await document.exitFullscreen();
+    else await readingOverlay.requestFullscreen();
+  }catch(e){}
+};
 </script>
+
+<div class="reading-overlay" id="readingOverlay" aria-hidden="true">
+  <div class="reading-bar">
+    <button id="readingBack">← Back</button>
+    <div class="reading-bar-title">Curious Kids · Is it OK to listen to music while studying?</div>
+    <button class="full" id="readingFull">⛶ Full screen</button>
+  </div>
+  <div class="reading-paper">
+    <article class="reading-inner">
+      <div style="font-size:12px;font-weight:900;letter-spacing:.18em;color:#3aa0d1;margin-bottom:6px">CURIOUS KIDS</div>
+      <h2 style="margin:0 0 8px;font:700 clamp(34px,4vw,58px)/1.02 Georgia,serif;color:#32728f">Is it OK to listen to music while studying?</h2>
+      <div style="font-size:13px;color:#706662;margin-bottom:16px"><b>Author: Timothy Byron</b> · Lecturer in Psychology, University of Wollongong</div>
+
+      <div style="border-left:5px solid #f2d45e;background:#fff8d9;border-radius:14px;padding:12px 14px;margin:0 0 18px;font-size:15px;line-height:1.45">
+        <b>Robert, Year 11 student:</b> “I am in year 11 and I like to listen to music when I am studying, but my dad says that my brain is spending only half of its time studying and the other half is distracted by listening. He says it is better to leave my phone out of my room and concentrate on studying rather than listening to music. Is it OK to listen to songs when I am studying?”
+      </div>
+
+      <div class="article-columns">
+        <p>It’s a good question! <b>In a nutshell</b>, music puts us in a better mood, which makes us better at studying – but it also distracts us, which makes us worse at studying. So if you want to study effectively with music, you want to reduce how distracting music can be, and increase the level to which the music keeps you in a good mood.</p>
+
+        <p><b style="color:#32728f">Music can put us in a better mood</b><br>
+        You may have heard of the Mozart effect – the idea that listening to Mozart makes you “smarter”. This is based on research that found listening to <b>complex</b> classical music like Mozart improved test scores, which the researcher argued was based on the music’s ability to stimulate parts of our minds that play a role in mathematical ability.</p>
+
+        <p>However, further research <b>conclusively debunked</b> the Mozart effect theory: it wasn’t really anything to do with maths, it was really just that music puts us in a better mood.</p>
+
+        <p>Research conducted in the 1990s found a “Blur Effect” – where kids who listened to the BritPop band Blur seemed to do better on tests. In fact, researchers found that the Blur effect was bigger than the Mozart effect, simply because kids enjoyed pop music like Blur more than classical music.</p>
+
+        <p>Being in a better mood likely means that we try that little bit harder and are <b>willing</b> to stick with challenging tasks.</p>
+
+        <p><b style="color:#32728f">Music can distract us</b><br>
+        On the other hand, music can be a distraction – under certain circumstances. When you study, you’re using your <b>working memory</b> – that means you are holding and manipulating several bits of information in your head at once.</p>
+
+        <p>The research is fairly clear that when there’s music in the background, and especially music with vocals, our working memory gets worse. Likely as a result, reading <b>comprehension</b> decreases when people listen to music with lyrics.</p>
+
+        <p>Music also appears to be more distracting for people who are introverts than for people who are extroverts, perhaps because introverts are more easily <b>overstimulated</b>.</p>
+
+        <p>Some clever work by an Australia-based researcher called Bill Thompson and his colleagues <b>aimed to figure out</b> the relative effect of these two competing factors – mood and distraction.</p>
+
+        <p>They had participants do a fairly demanding comprehension task, and listen to classical music that was either slow or fast, and which was either soft or loud.</p>
+
+        <p>They found the only time there was any real decrease in performance was when people were listening to music that was both fast and loud – at about the speed of <i>Shake It Off</i> by Taylor Swift, at about the volume of a vacuum cleaner.</p>
+
+        <p>But while that caused a decrease in performance, it wasn’t actually that big a decrease. And other similar research also failed to find large differences.</p>
+
+        <p><b style="color:#32728f">So… can I listen to music while studying or not?</b><br>
+        To sum up: research suggests it’s probably fine to listen to music while you’re studying – with some <b>caveats</b>.</p>
+
+        <p>It’s better if:<br>
+        • it puts you in a good mood;<br>
+        • it’s not too fast or too loud;<br>
+        • it’s less wordy (and hip-hop, where the words are rapped rather than sung, is likely to be even more distracting);<br>
+        • you’re not too introverted.</p>
+
+        <p><b>Happy listening and good luck in your exams!</b></p>
+      </div>
+    </article>
+  </div>
+</div>
+
 </body>
 </html>
