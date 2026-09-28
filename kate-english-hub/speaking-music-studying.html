@@ -281,46 +281,19 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
 
     <section class="screen" id="screen-pros">
       <div class="pros-screen">
-        <div class="pros-html" id="prosHtml">
-          <h2>Is It OK to Listen to Music While Studying?</h2>
-          <div class="sub">Pros and Cons for Adults</div>
-          <div class="lead">Music can be a helpful study companion for many adults, but it’s not always the right choice. Here’s a balanced look at the main advantages and disadvantages.</div>
-
-          <div class="pc-grid">
-            <section class="pc-col pro">
-              <div class="pc-head">✓ Pros</div>
-              <div class="pc-row"><b>Can improve mood and reduce stress</b><br>Music can be relaxing, uplifting, and help lower anxiety during study sessions.</div>
-              <div class="pc-row"><b>May help block distracting background noise</b><br>Can mask conversations, traffic, or other noisy environments.</div>
-              <div class="pc-row"><b>Instrumental music can support focus for routine tasks</b><br>Especially helpful for reviewing notes, organizing, or memorizing.</div>
-              <div class="pc-row"><b>Familiar calm music can make long study sessions feel easier</b><br>Comforting music can create a positive and steady rhythm.</div>
-              <div class="pc-row"><b>Can increase motivation for repetitive work</b><br>Upbeat or energizing music can help you stay engaged and keep going.</div>
-            </section>
-
-            <section class="pc-col con">
-              <div class="pc-head">✕ Cons</div>
-              <div class="pc-row"><b>Lyrics can distract attention and reduce comprehension</b><br>Your brain may focus on the words instead of the material you’re studying.</div>
-              <div class="pc-row"><b>Loud or fast music may hurt concentration</b><br>High volume or fast tempo can be overstimulating and make it harder to focus.</div>
-              <div class="pc-row"><b>Multitasking can slow down deep thinking and memory</b><br>Dividing attention between music and studying can reduce how well you learn and remember.</div>
-              <div class="pc-row"><b>New or emotionally charged songs can pull focus away</b><br>Unfamiliar songs or music with strong emotions can be distracting.</div>
-              <div class="pc-row"><b>Not ideal for reading, writing, or complex problem-solving</b><br>These tasks often require full attention and deep concentration.</div>
-            </section>
-          </div>
-
-          <section class="best">
-            <h3>Best Advice</h3>
-            <div class="best-grid">
-              <div class="best-item"><b>Choose instrumental or low-volume music</b>Keep it calm, with no or minimal lyrics.</div>
-              <div class="best-item"><b>Use music for simple tasks, not heavy analysis</b>Good for routine work, less ideal for complex thinking.</div>
-              <div class="best-item"><b>Test what works best for you</b>Everyone is different, so experiment and pay attention to how you perform.</div>
-              <div class="best-item"><b>Study in silence when you need deep focus</b>Turn off music for reading, writing, or challenging problem-solving.</div>
-            </div>
-          </section>
+        <div class="pros-image-card">
+          <img id="prosImage" src="assets/music-pros-cons-restored.webp?v=2" alt="Is It OK to Listen to Music While Studying? Pros and Cons for Adults">
         </div>
-
         <aside class="pros-side">
-          <div class="card blue"><h3 style="margin:0 0 7px">Use the visual</h3><p style="margin:0;font-size:12px;line-height:1.4">Read the Pros, Cons and Best Advice. Then close it and retrieve the ideas from memory.</p></div>
+          <div class="card blue">
+            <h3 style="margin:0 0 7px">Use the visual</h3>
+            <p style="margin:0;font-size:12px;line-height:1.4">Study the Pros, Cons and Best Advice, then close the image and retrieve the ideas from memory.</p>
+          </div>
           <button class="primary" id="openPros" style="border:0;border-radius:12px;padding:11px;font-weight:900;cursor:pointer">Open full screen ⛶</button>
-          <div class="card"><b style="font-size:12px">Quick retrieval</b><p style="font-size:12px;line-height:1.4">Without looking back, name <b>2 pros + 2 cons + 1 piece of advice</b>.</p></div>
+          <div class="card">
+            <b style="font-size:12px">Quick retrieval</b>
+            <p style="font-size:12px;line-height:1.4">Without looking back, name <b>2 pros + 2 cons + 1 piece of advice</b>.</p>
+          </div>
         </aside>
       </div>
     </section>
@@ -697,8 +670,14 @@ if(readingFull) readingFull.onclick=async function(){
 
 
 <div class="visual-overlay" id="visualOverlay" aria-hidden="true">
-  <div class="visual-bar"><button id="closePros">← Back</button><b>Pros & Cons for Adults</b><button id="fullPros">⛶ Full screen</button></div>
-  <div class="visual-body" id="visualBody"></div>
+  <div class="visual-bar">
+    <button id="closePros">← Back</button>
+    <b>Pros & Cons for Adults</b>
+    <button id="fullPros">⛶ Full screen</button>
+  </div>
+  <div class="visual-body">
+    <img id="fullProsImage" src="assets/music-pros-cons-restored.webp?v=2" alt="Pros and Cons for Adults">
+  </div>
 </div>
 <script>
 (function(){
@@ -720,10 +699,16 @@ if(readingFull) readingFull.onclick=async function(){
   };
 
   const pov=document.getElementById("visualOverlay");
+  function openProsOverlay(){pov.classList.add("on");pov.setAttribute("aria-hidden","false");}
   document.getElementById("openPros").onclick=openProsOverlay;
-  
-  document.getElementById("closePros").onclick=async function(){if(document.fullscreenElement){try{await document.exitFullscreen()}catch(e){}}pov.classList.remove("on");pov.setAttribute("aria-hidden","true")};
-  document.getElementById("fullPros").onclick=async function(){try{if(document.fullscreenElement)await document.exitFullscreen();else await pov.requestFullscreen()}catch(e){}};
+  document.getElementById("prosImage").onclick=openProsOverlay;
+  document.getElementById("closePros").onclick=async function(){
+    if(document.fullscreenElement){try{await document.exitFullscreen()}catch(e){}}
+    pov.classList.remove("on");pov.setAttribute("aria-hidden","true");
+  };
+  document.getElementById("fullPros").onclick=async function(){
+    try{if(document.fullscreenElement)await document.exitFullscreen();else await pov.requestFullscreen()}catch(e){}
+  };
 })();
 </script>
 
