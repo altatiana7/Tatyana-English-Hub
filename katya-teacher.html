@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<title>Katya · Teacher Hub</title>
+<style>
+:root{--navy:#173f49;--navy2:#0f323a;--cream:#f6efe9;--ink:#17323a;--line:#d8e2e1}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;background:#f3efeb;color:var(--ink)}
+button,textarea{font:inherit} button{cursor:pointer}
+#app{height:100vh;display:grid;grid-template-columns:230px 1fr;overflow:hidden}
+.sidebar{background:linear-gradient(180deg,var(--navy),var(--navy2));color:#fff;padding:14px 11px;overflow:auto}
+.brand{padding:5px 6px 12px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:8px}
+.brand b{display:block;font-family:Georgia,serif;font-size:18px}.brand span{font-size:9px;opacity:.7}
+.homebtn,.modulebtn,.lessonbtn{width:100%;border:0;text-align:left}
+.homebtn{background:#6f9faa;color:#fff;border-radius:10px;padding:9px 10px;font-weight:800;margin-bottom:7px}
+.module{margin-bottom:4px}
+.modulebtn{display:flex;align-items:center;justify-content:space-between;background:transparent;color:#fff;padding:7px 8px;border-radius:9px;font-weight:800;font-size:11px}
+.modulebtn:hover,.modulebtn.open{background:rgba(255,255,255,.10)}
+.lessons{display:none;padding:3px 0 4px 12px}.lessons.open{display:grid;gap:3px}
+.lessonbtn{background:transparent;color:rgba(255,255,255,.76);padding:6px 8px;border-radius:7px;font-size:10px}
+.lessonbtn:hover,.lessonbtn.active{background:rgba(255,255,255,.10);color:#fff}.lessonbtn.empty{opacity:.58}
+.workspace{position:relative;overflow:hidden;background:var(--cream)}
+.home{position:absolute;inset:0;background:url("./katya-cover.webp") center/cover no-repeat}
+.home::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,247,244,.06),transparent 45%,rgba(0,0,0,.04));pointer-events:none}
+.lessonview{position:absolute;inset:0;display:none;background:#fff;z-index:5}.lessonview.on{display:grid;grid-template-rows:44px 1fr}
+.topbar{display:flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:6px 9px}
+.back,.notesbtn{border:0;border-radius:8px;padding:7px 10px;font-weight:800;font-size:11px}
+.back{background:#719da8;color:#fff}.notesbtn{margin-left:auto;background:rgba(255,255,255,.12);color:#fff}
+.title{font-size:11px;font-weight:800}.framewrap{position:relative;min-height:0}
+iframe{width:100%;height:100%;border:0;background:#fff}
+.placeholder{position:absolute;inset:0;display:none;place-items:center;background:#f5f7f6}.placeholder.on{display:grid}
+.placeholder>div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;text-align:center;box-shadow:0 12px 30px rgba(0,0,0,.08)}
+.placeholder h2{margin:0 0 7px}.placeholder p{margin:0;color:#6b777a;font-size:12px}
+.notes{position:absolute;top:10px;right:10px;bottom:10px;width:min(340px,40vw);background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;display:none;flex-direction:column;box-shadow:0 14px 35px rgba(0,0,0,.16)}.notes.on{display:flex}
+.notes h3{margin:0 0 7px;font-size:13px}.notes textarea{flex:1;min-height:0;border:1px solid var(--line);border-radius:9px;padding:9px;resize:none}
+.noteactions{display:flex;gap:6px;margin-top:7px}.noteactions button{border:0;border-radius:8px;padding:7px 9px;font-size:10px;font-weight:800}.save{background:#5f959f;color:#fff}.clear{background:#eef2f1;color:#385158}
+@media(max-width:820px){#app{grid-template-columns:185px 1fr}}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside class="sidebar">
+    <div class="brand"><b>Katya · Teacher Hub</b><span>Teacher workspace</span></div>
+    <button class="homebtn" onclick="goHome()">Home</button>
+    <div id="modules"></div>
+  </aside>
+  <main class="workspace">
+    <section class="home" id="home"></section>
+    <section class="lessonview" id="lessonView">
+      <div class="topbar">
+        <button class="back" onclick="goHome()">← Назад</button>
+        <div class="title" id="lessonTitle">Lesson</div>
+        <button class="notesbtn" onclick="toggleNotes()">Teacher Notes</button>
+      </div>
+      <div class="framewrap">
+        <iframe id="lessonFrame" title="Katya lesson"></iframe>
+        <div class="placeholder" id="placeholder"><div><h2 id="phTitle">Lesson</h2><p>Этот слот готов для следующего урока.</p></div></div>
+        <aside class="notes" id="notes">
+          <h3 id="notesTitle">Teacher Notes</h3>
+          <textarea id="noteText" placeholder="Ошибки, ответы, идеи, homework..."></textarea>
+          <div class="noteactions">
+            <button class="save" onclick="saveNote()">Сохранить</button>
+            <button class="clear" onclick="clearNote()">Очистить</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+</div>
+<script>
+const course=[
+  {module:'Module 1',lessons:[
+    {id:'m1l1',title:'Lesson 1 · Elections in Russia',url:'kate-english-hub/extra-practice-elections-russia.html'},
+    {id:'m1l2',title:'Lesson 2 · Generations',url:'kate-english-hub/homework-lesson2-generations.html'},
+    {id:'m1l3',title:'Lesson 3 · Useful Tools',url:'kate-english-hub/useful-tools-false-synonyms.html'}
+  ]},
+  ...Array.from({length:7},(_,i)=>({module:'Module '+(i+2),lessons:[
+    {id:'m'+(i+2)+'l1',title:'Lesson 1',url:''},
+    {id:'m'+(i+2)+'l2',title:'Lesson 2',url:''},
+    {id:'m'+(i+2)+'l3',title:'Lesson 3',url:''}
+  ]}))
+];
+let current='';
+function render(){
+  const root=document.getElementById('modules');
+  course.forEach((m,mi)=>{
+    const wrap=document.createElement('div'); wrap.className='module';
+    const mb=document.createElement('button'); mb.className='modulebtn'+(mi===0?' open':''); mb.innerHTML='<span>'+m.module+'</span><span>›</span>';
+    const list=document.createElement('div'); list.className='lessons'+(mi===0?' open':'');
+    mb.onclick=()=>{mb.classList.toggle('open');list.classList.toggle('open')};
+    m.lessons.forEach(l=>{
+      const b=document.createElement('button'); b.className='lessonbtn'+(!l.url?' empty':''); b.textContent=l.title; b.dataset.id=l.id;
+      b.onclick=()=>openLesson(mi,l); list.appendChild(b);
+    });
+    wrap.appendChild(mb);wrap.appendChild(list);root.appendChild(wrap);
+  });
+}
+function openLesson(mi,l){
+  current=l.id;
+  document.querySelectorAll('.lessonbtn').forEach(x=>x.classList.remove('active'));
+  const active=document.querySelector('[data-id="'+l.id+'"]'); if(active)active.classList.add('active');
+  document.getElementById('lessonTitle').textContent=course[mi].module+' · '+l.title;
+  document.getElementById('notesTitle').textContent=l.title+' · Notes';
+  document.getElementById('noteText').value=localStorage.getItem('katya_teacher_'+l.id)||'';
+  document.getElementById('notes').classList.remove('on');
+  document.getElementById('lessonView').classList.add('on');
+  const f=document.getElementById('lessonFrame'), p=document.getElementById('placeholder');
+  if(l.url){p.classList.remove('on');f.style.display='block';f.src=l.url}
+  else{f.src='about:blank';f.style.display='none';document.getElementById('phTitle').textContent=course[mi].module+' · '+l.title;p.classList.add('on')}
+}
+function goHome(){
+  document.getElementById('lessonView').classList.remove('on');
+  document.getElementById('lessonFrame').src='about:blank';
+  document.getElementById('notes').classList.remove('on');
+  document.querySelectorAll('.lessonbtn').forEach(x=>x.classList.remove('active'));
+  current='';
+}
+function toggleNotes(){document.getElementById('notes').classList.toggle('on')}
+function saveNote(){if(current)localStorage.setItem('katya_teacher_'+current,document.getElementById('noteText').value)}
+function clearNote(){if(current){document.getElementById('noteText').value='';localStorage.removeItem('katya_teacher_'+current)}}
+render();
+</script>
+</body>
+</html>
