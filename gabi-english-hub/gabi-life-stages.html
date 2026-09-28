@@ -420,59 +420,30 @@ const Q=[
 let i=0,score=0,heard=false;
 const names=Q.map(x=>x[1]), stage=document.getElementById('fmStage'), ans=document.getElementById('fmAnswers'), fb=document.getElementById('fmFeedback'), sc=document.getElementById('fmScore');
 function draw(){heard=false;stage.textContent=Q[i][0]+' · '+(i+1)+'/'+Q.length;fb.textContent='';sc.textContent='Score: '+score;let opts=[Q[i][1],...names.filter(x=>x!==Q[i][1]).sort(()=>Math.random()-.5).slice(0,3)].sort(()=>Math.random()-.5);ans.innerHTML=opts.map(x=>'<button style="padding:11px;border:1px solid #b9d4dc;border-radius:12px;background:white;font-weight:800;color:#183c55">'+x+'</button>').join('');[...ans.children].forEach(b=>b.onclick=()=>{if(!heard){fb.textContent='Listen first.';return} const ok=b.textContent===Q[i][1]; if(ok){score++;fb.textContent='Correct — '+Q[i][1]+'.'}else fb.textContent='Not quite. Correct answer: '+Q[i][1]+'.'; [...ans.children].forEach(x=>x.disabled=true);sc.textContent='Score: '+score;});}
-const fmTtsCache=new Map();let fmVoiceIndex=null;let fmAudio=null;
-async function getFmBritishVoice(){
-  if(fmVoiceIndex)return fmVoiceIndex;
-  const r=await fetch('https://ahm7xmakki.com/api/voices',{cache:'no-store'});
-  if(!r.ok)throw new Error('Voice list unavailable');
-  const data=await r.json();
-  const voices=Array.isArray(data.voices)?data.voices:[];
-  const male=voices.filter(v=>/male/i.test(v.gender||''));
-  const british=male.filter(v=>/english/i.test(v.language||'')&&/(united kingdom|great britain|british|england|\\buk\\b|en-gb)/i.test(((v.country||'')+' '+(v.language||'')+' '+(v.id||'')).toLowerCase()));
-  const preferred=british.find(v=>/(george|ryan|oliver|thomas|arthur|brian|alfie|elliot|edward|william|harry)/i.test(v.name||''))||british[0]||male.find(v=>/english/i.test(v.language||''))||voices[0];
-  if(!preferred||!preferred.index)throw new Error('No English voice found');
-  fmVoiceIndex=preferred.index;
-  return fmVoiceIndex;
+let fmUtterance=null,fmTimer=null,fmRun=0;
+const fmBtn=document.getElementById('fmListen');
+function stopFm(){fmRun++;clearTimeout(fmTimer);if('speechSynthesis' in window)speechSynthesis.cancel();fmUtterance=null;fmBtn.disabled=false;fmBtn.textContent='LISTEN';}
+function playFmNatural(text){
+  stopFm();const run=fmRun;
+  if(!('speechSynthesis' in window)){fb.textContent='Audio is not supported in this browser. Please open this lesson in Safari, Chrome or Edge.';return;}
+  const synth=window.speechSynthesis;
+  // Speak inside the click gesture: mobile browsers block delayed playback.
+  const u=new SpeechSynthesisUtterance(text);fmUtterance=u;
+  u.lang='en-GB';u.rate=.88;
+  const voices=synth.getVoices();
+  u.voice=voices.find(v=>v.lang==='en-GB')||voices.find(v=>/^en[-_]/i.test(v.lang))||null;
+  fmBtn.textContent='STARTING…';fb.textContent='';
+  u.onstart=()=>{if(run!==fmRun)return;clearTimeout(fmTimer);heard=true;fmBtn.textContent='REPLAY';fb.textContent='Playing… Listen, then choose a name.';};
+  u.onend=()=>{if(run!==fmRun)return;clearTimeout(fmTimer);fmBtn.textContent='LISTEN AGAIN';fb.textContent='Choose a name.';};
+  u.onerror=()=>{if(run!==fmRun)return;clearTimeout(fmTimer);fmBtn.textContent='RETRY AUDIO';fb.textContent='The browser could not play its English voice. Check that an English speech voice is installed, then tap Retry audio.';};
+  synth.resume();synth.speak(u);
+  fmTimer=setTimeout(()=>{if(run!==fmRun||heard)return;stopFm();fmBtn.textContent='RETRY AUDIO';fb.textContent='No voice started. Check your browser’s English speech voice, then retry.';},6000);
 }
-function fmBrowserFallback(text){
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  u.lang='en-GB';u.rate=.88;u.pitch=.96;
-  const vs=speechSynthesis.getVoices();
-  u.voice=vs.find(v=>v.lang==='en-GB'&&/Ryan|George|Daniel|Oliver|Thomas|British/i.test(v.name))||vs.find(v=>v.lang==='en-GB')||null;
-  speechSynthesis.speak(u);
-}
-async function playFmNatural(text,key){
-  const btn=document.getElementById('fmListen');
-  const label=btn.textContent;
-  btn.disabled=true;btn.textContent='LOADING…';
-  try{
-    let url=fmTtsCache.get(key);
-    if(!url){
-      const voiceIndex=await getFmBritishVoice();
-      const r=await fetch('https://ahm7xmakki.com/api/tts',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({voiceIndex,text,pitch:-3,rate:-12})
-      });
-      if(!r.ok)throw new Error('Natural TTS unavailable');
-      const blob=await r.blob();
-      if(!blob.size)throw new Error('Empty audio');
-      url=URL.createObjectURL(blob);
-      fmTtsCache.set(key,url);
-    }
-    if(fmAudio){fmAudio.pause();fmAudio.currentTime=0}
-    fmAudio=new Audio(url);
-    fmAudio.preload='auto';
-    await fmAudio.play();
-  }catch(err){
-    fmBrowserFallback(text);
-  }finally{
-    btn.disabled=false;btn.textContent=label;
-  }
-}
-document.getElementById('fmListen').onclick=()=>{heard=true;playFmNatural(Q[i][2],i)};
-document.getElementById('fmNext').onclick=()=>{i=(i+1)%Q.length;draw()}; draw();
+fmBtn.onclick=()=>playFmNatural(Q[i][2]);
+document.getElementById('fmNext').onclick=()=>{stopFm();i=(i+1)%Q.length;draw()};
+window.addEventListener('pagehide',stopFm);
+if('speechSynthesis' in window)speechSynthesis.getVoices();
+draw();
 })();
 </script>
 <script>
