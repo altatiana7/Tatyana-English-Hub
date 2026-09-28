@@ -185,7 +185,7 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
 .visual-body .pros-html{width:min(1080px,96vw);height:auto;max-height:calc(100vh - 75px)}
 
 </style>
-</head>
+<script src="assets/music-pros-cons-data.js?v=20260928-1"></script>\n</head>
 <body>
 <div class="app">
 <header>
@@ -282,7 +282,7 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
     <section class="screen" id="screen-pros">
       <div class="pros-screen">
         <div class="pros-image-card">
-          <img id="prosImage" src="assets/music-pros-cons-original.jpg?v=20260928a" alt="Is It OK to Listen to Music While Studying? Pros and Cons for Adults">
+          <img id="prosImage" src="" alt="Is It OK to Listen to Music While Studying? Pros and Cons for Adults">
         </div>
         <aside class="pros-side">
           <div class="card blue">
@@ -698,7 +698,15 @@ if(readingFull) readingFull.onclick=async function(){
     try{if(document.fullscreenElement)await document.exitFullscreen();else if(ov)await ov.requestFullscreen()}catch(e){}
   };
 
-  const pov=document.getElementById("visualOverlay");
+  
+  const prosData=window.KATYA_PROS_IMG||"";
+  const prosMain=document.getElementById("prosImage");
+  const prosFull=document.getElementById("fullProsImage");
+  if(prosData){
+    if(prosMain) prosMain.src=prosData;
+    if(prosFull) prosFull.src=prosData;
+  }
+\n  const pov=document.getElementById("visualOverlay");
   function openProsOverlay(){document.getElementById("fullProsImage").src=document.getElementById("prosImage").src;pov.classList.add("on");pov.setAttribute("aria-hidden","false");}
   document.getElementById("openPros").onclick=openProsOverlay;
   document.getElementById("prosImage").onclick=openProsOverlay;
