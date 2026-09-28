@@ -155,16 +155,21 @@ html.teacher-mode body{margin:0!important;overflow:hidden!important;background:#
 html.teacher-mode #teacherRoot{display:grid!important}
 #teacherRoot{
   position:fixed;inset:0;z-index:999999;
-  grid-template-columns:230px 1fr;
-  width:100vw;height:100vh;background:#f4efea;
-  font-family:Arial,Helvetica,sans-serif;color:#17323a
+  display:block;
+  width:100vw;height:100vh;background:#efe8e2;
+  font-family:Arial,Helvetica,sans-serif;color:#17323a;
+  overflow:hidden
 }
 #teacherRoot *{box-sizing:border-box}
 #teacherRoot button,#teacherRoot textarea{font:inherit}
 #teacherRoot button{cursor:pointer}
 #teacherRoot .t-side{
-  background:linear-gradient(180deg,#173f49,#0f323a);color:#fff;
-  padding:14px 11px;overflow:auto
+  position:absolute;left:0;top:0;bottom:0;width:224px;z-index:5;
+  background:linear-gradient(180deg,rgba(15,58,68,.94),rgba(10,43,51,.90));
+  backdrop-filter:blur(10px);
+  color:#fff;padding:16px 11px;overflow:auto;
+  box-shadow:10px 0 30px rgba(0,0,0,.18);
+  border-right:1px solid rgba(255,255,255,.10)
 }
 #teacherRoot .t-brand{padding:5px 6px 12px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:8px}
 #teacherRoot .t-brand b{display:block;font-family:Georgia,serif;font-size:18px}
@@ -186,14 +191,27 @@ html.teacher-mode #teacherRoot{display:grid!important}
 }
 #teacherRoot .t-lesson:hover,#teacherRoot .t-lesson.active{background:rgba(255,255,255,.10);color:#fff}
 #teacherRoot .t-lesson.empty{opacity:.58}
-#teacherRoot .t-work{position:relative;overflow:hidden;background:#f6efe9}
+#teacherRoot .t-work{position:absolute;inset:0;overflow:hidden;background:#f6efe9}
 #teacherRoot .t-cover{
   position:absolute;inset:0;
-  background:url("../katya-cover.webp") center center/cover no-repeat
+  background:
+    linear-gradient(90deg,rgba(12,39,46,.18) 0%,rgba(12,39,46,.03) 34%,rgba(255,255,255,.02) 100%),
+    url("https://images.unsplash.com/photo-1759903553652-ab0355e1319a?auto=format&fit=crop&fm=jpg&q=88&w=2200") center center/cover no-repeat;
+  transform:scale(1.002)
+}
+#teacherRoot .t-cover:before{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.03),rgba(20,37,41,.08)),
+    radial-gradient(circle at 72% 24%,rgba(255,255,255,.22),transparent 30%);
+  pointer-events:none
 }
 #teacherRoot .t-cover:after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(90deg,rgba(255,247,244,.05),transparent 45%,rgba(0,0,0,.04))
+  content:"KATYA · ENGLISH";
+  position:absolute;right:34px;bottom:27px;
+  color:rgba(255,255,255,.88);
+  font-family:Georgia,serif;font-size:13px;font-weight:700;
+  letter-spacing:.18em;text-shadow:0 2px 10px rgba(0,0,0,.34)
 }
 #teacherRoot .t-view{position:absolute;inset:0;display:none;background:#fff;z-index:4}
 #teacherRoot .t-view.on{display:grid;grid-template-rows:44px 1fr}
@@ -228,7 +246,9 @@ html.teacher-mode #teacherRoot{display:grid!important}
 #teacherRoot .t-noteactions button{border:0;border-radius:8px;padding:7px 9px;font-size:10px;font-weight:800}
 #teacherRoot .t-save{background:#5f959f;color:#fff}
 #teacherRoot .t-clear{background:#eef2f1;color:#385158}
-@media(max-width:820px){#teacherRoot{grid-template-columns:185px 1fr}}
+@media(max-width:820px){
+  #teacherRoot .t-side{width:185px}
+}
 </style>
 <script>
 (function(){
