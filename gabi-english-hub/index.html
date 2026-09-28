@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Gabi English Hub · Gateway B1</title>
+<title>Gabi English Hub · Focus 2 · B1</title>
 <style>
 :root{--ink:#082d59;--blue:#158edf;--line:#d7e6f2}
 *{box-sizing:border-box}
@@ -26,6 +26,14 @@ body{display:grid;place-items:center}
 .homeHot,.moduleHot{position:absolute;z-index:5;border:0;background:transparent;cursor:pointer;padding:0}
 .homeHot{left:2.0%;top:7.25%;width:3.8%;height:5.7%;border-radius:18%}
 .moduleHot{left:2.0%;width:24.4%;height:6.45%;border-radius:14px}
+.moduleHot .moduleLabel{
+  position:absolute;left:21.5%;right:3.5%;top:10%;bottom:10%;
+  display:flex;align-items:center;padding:0 8px;
+  border-radius:9px;background:rgba(255,255,255,.96);
+  color:#123f62;font-weight:900;font-size:clamp(9px,.82vw,15px);
+  line-height:1.05;text-align:left;box-shadow:0 1px 5px rgba(8,45,89,.10);
+  pointer-events:none;
+}
 .moduleHot:focus-visible,.homeHot:focus-visible{outline:4px solid rgba(21,142,223,.72);outline-offset:2px}
 .m1{top:13.6%}.m2{top:21.45%}.m3{top:29.25%}.m4{top:37.05%}.m5{top:44.85%}
 .m6{top:52.65%}.m7{top:60.45%}.m8{top:68.25%}.m9{top:76.05%}.m10{top:83.85%}
@@ -78,72 +86,72 @@ body{display:grid;place-items:center}
 </style>
 </head>
 <body>
-<main class="board" id="board" aria-label="Gabi English Hub Gateway B1 interactive board">
+<main class="board" id="board" aria-label="Gabi English Hub Focus 2 B1 interactive board">
   <img class="cover" src="gabi-board-exact-16x9.png?v=20260925-exact" alt="Gabi English Hub Gateway B1">
   <button class="homeHot" id="homeHot" aria-label="Home"></button>
-  <button class="moduleHot m1" data-module="1" aria-label="A fresh start"></button>
-  <button class="moduleHot m2" data-module="2" aria-label="People and relationships"></button>
-  <button class="moduleHot m3" data-module="3" aria-label="Lifestyles"></button>
-  <button class="moduleHot m4" data-module="4" aria-label="The world around us"></button>
-  <button class="moduleHot m5" data-module="5" aria-label="Culture and communication"></button>
-  <button class="moduleHot m6" data-module="6" aria-label="Getting there"></button>
-  <button class="moduleHot m7" data-module="7" aria-label="Health and well-being"></button>
-  <button class="moduleHot m8" data-module="8" aria-label="Science and technology"></button>
-  <button class="moduleHot m9" data-module="9" aria-label="The working world"></button>
-  <button class="moduleHot m10" data-module="10" aria-label="Global challenges"></button>
+  <button class="moduleHot m1" data-module="1" aria-label="Happy families"><span class="moduleLabel">Happy families</span></button>
+  <button class="moduleHot m2" data-module="2" aria-label="Law and order"><span class="moduleLabel">Law and order</span></button>
+  <button class="moduleHot m3" data-module="3" aria-label="Plurilingual"><span class="moduleLabel">Plurilingual</span></button>
+  <button class="moduleHot m4" data-module="4" aria-label="Take care!"><span class="moduleLabel">Take care!</span></button>
+  <button class="moduleHot m5" data-module="5" aria-label="Screen time"><span class="moduleLabel">Screen time</span></button>
+  <button class="moduleHot m6" data-module="6" aria-label="Changing climates"><span class="moduleLabel">Changing climates</span></button>
+  <button class="moduleHot m7" data-module="7" aria-label="Get to the top!"><span class="moduleLabel">Get to the top!</span></button>
+  <button class="moduleHot m8" data-module="8" aria-label="Friendly advice"><span class="moduleLabel">Friendly advice</span></button>
+  <button class="moduleHot m9" data-module="9" aria-label="Facts about fiction"><span class="moduleLabel">Facts about fiction</span></button>
+  <button class="moduleHot m10" data-module="10" aria-label="Computer update"><span class="moduleLabel">Computer update</span></button>
   <section class="lessonMenu" id="lessonMenu" aria-live="polite"></section>
 </main>
 
 <section id="lessonView" aria-hidden="true">
   <header class="topbar">
     <button class="back" id="backBtn">←</button>
-    <div><small id="crumb">GATEWAY B1</small><h1 id="lessonHeading">Lesson</h1></div>
+    <div><small id="crumb">FOCUS 2 · B1</small>/<h1 id="lessonHeading">Lesson</h1></div>
   </header>
   <div class="workspace" id="workspace"></div>
 </section>
 
 <script>
 const modules=[
- {title:'A fresh start',lessons:[
-   {title:'Vocabulary & Listening',note:'Life stages · family · listening'},
-   {title:'Reading & Grammar',note:'Sharenting · habits · stative verbs'},
-   {title:'Speaking & Review',note:'Celebrity Kids · Family Dinners · review'}]},
- {title:'People and relationships',lessons:[
-   {title:'Vocabulary & Listening',note:'People · relationships · feelings'},
-   {title:'Reading & Grammar',note:'Stories · past forms · used to'},
-   {title:'Speaking & Review',note:'Discussion · role-play · revision'}]},
- {title:'Lifestyles',lessons:[
-   {title:'Vocabulary & Listening',note:'Daily life · free time · routines'},
-   {title:'Reading & Grammar',note:'Habits · quantifiers · relative clauses'},
-   {title:'Speaking & Review',note:'Lifestyle choices · challenge'}]},
- {title:'The world around us',lessons:[
-   {title:'Vocabulary & Listening',note:'Places · nature · geography'},
-   {title:'Reading & Grammar',note:'Travel texts · present perfect'},
-   {title:'Speaking & Review',note:'Places to explore · review'}]},
- {title:'Culture and communication',lessons:[
-   {title:'Vocabulary & Listening',note:'Culture · media · communication'},
-   {title:'Reading & Grammar',note:'Comparisons · adjectives · articles'},
-   {title:'Speaking & Review',note:'Culture exchange · speaking'}]},
- {title:'Getting there',lessons:[
-   {title:'Vocabulary & Listening',note:'Transport · journeys · directions'},
-   {title:'Reading & Grammar',note:'Future forms · conditionals'},
-   {title:'Speaking & Review',note:'Travel situations · review'}]},
- {title:'Health and well-being',lessons:[
-   {title:'Vocabulary & Listening',note:'Health · body · habits'},
-   {title:'Reading & Grammar',note:'Advice · obligation · present perfect'},
-   {title:'Speaking & Review',note:'Healthy choices · challenge'}]},
- {title:'Science and technology',lessons:[
-   {title:'Vocabulary & Listening',note:'Devices · science · innovation'},
-   {title:'Reading & Grammar',note:'Technology texts · passive voice'},
-   {title:'Speaking & Review',note:'Future tech · discussion'}]},
- {title:'The working world',lessons:[
-   {title:'Vocabulary & Listening',note:'Jobs · skills · qualities'},
-   {title:'Reading & Grammar',note:'Work texts · modals · conditionals'},
-   {title:'Speaking & Review',note:'Career ideas · interview game'}]},
- {title:'Global challenges',lessons:[
-   {title:'Vocabulary & Listening',note:'Environment · society · change'},
-   {title:'Reading & Grammar',note:'Global issues · future forms'},
-   {title:'Speaking & Review',note:'Solutions · project · review'}]}
+ {title:'Happy families',lessons:[
+   {title:'Vocabulary & Grammar',note:'Ages & stages · family · Present Simple vs Continuous'},
+   {title:'Reading & Grammar',note:'Sharenting · state/action verbs · articles'},
+   {title:'Listening & Culture',note:'Teen-parent arguments · Family Dinners · review'}]},
+ {title:'Law and order',lessons:[
+   {title:'Vocabulary & Grammar',note:'Crimes · detective work · Past Simple'},
+   {title:'Reading & Grammar',note:'Surprising true crimes · Past Continuous · used to'},
+   {title:'Listening & Speaking',note:'Crime story · investigation · review'}]},
+ {title:'Plurilingual',lessons:[
+   {title:'Vocabulary & Grammar',note:'Languages · nationalities · negative prefixes'},
+   {title:'Reading & Grammar',note:'International English · quantifiers · relative clauses'},
+   {title:'Listening & Speaking',note:'Toki Pona · language learning · review'}]},
+ {title:'Take care!',lessons:[
+   {title:'Vocabulary & Grammar',note:'Body · health problems · Present Perfect'},
+   {title:'Reading & Grammar',note:'Technology & health · for/since · just/yet/already'},
+   {title:'Listening & Speaking',note:'BASE jumping · health advice · review'}]},
+ {title:'Screen time',lessons:[
+   {title:'Vocabulary & Grammar',note:'TV programmes · online video · -ed/-ing adjectives'},
+   {title:'Reading & Grammar',note:'Reality TV · comparatives · so/such · too/enough'},
+   {title:'Listening & Culture',note:'Binge-watching · TV in the UK · review'}]},
+ {title:'Changing climates',lessons:[
+   {title:'Vocabulary & Grammar',note:'Geography · environment · uses of get'},
+   {title:'Reading & Grammar',note:'Climate change · future forms · may/might'},
+   {title:'Listening & Speaking',note:'Zero & First Conditional · environment · review'}]},
+ {title:'Get to the top!',lessons:[
+   {title:'Vocabulary & Grammar',note:'Jobs · work · personal qualities'},
+   {title:'Reading & Grammar',note:'Careers · modals of obligation/advice · Second Conditional'},
+   {title:'Listening & Speaking',note:'Unusual jobs · unless · career discussion'}]},
+ {title:'Friendly advice',lessons:[
+   {title:'Vocabulary & Grammar',note:'Feelings · friendships · noun suffixes'},
+   {title:'Reading & Grammar',note:'My best friend is a robot · Past Perfect'},
+   {title:'Listening & Culture',note:'Friendship · gerunds/infinitives · Positive messages'}]},
+ {title:'Facts about fiction',lessons:[
+   {title:'Vocabulary & Grammar',note:'Books · genres · reading/writing phrasal verbs'},
+   {title:'Reading & Grammar',note:'Books on the move · Reported Speech'},
+   {title:'Listening & Culture',note:'Using a pen name · British writers · review'}]},
+ {title:'Computer update',lessons:[
+   {title:'Vocabulary & Grammar',note:'Computers · Internet · email/document collocations'},
+   {title:'Reading & Grammar',note:'Switching off the Internet · Passive Voice'},
+   {title:'Listening & Culture',note:'Museum of Failure · have something done · Science Museum'}]}
 ];
 const colors=['#188ee0','#4ec497','#ff9a20','#7554dd','#ff3f56','#13bac6','#ffbd08','#209ce6','#ec1490','#a6d600'];
 const menu=document.getElementById('lessonMenu');
@@ -172,7 +180,7 @@ document.getElementById('board').onclick=closeMenu;
 function openLesson(n,i){
   closeMenu();
   if(n===1){
-    location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20260927-natural-tts';
+    location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20260928-focus2-contents';
     return;
   }
   const m=modules[n-1];
@@ -181,7 +189,7 @@ function openLesson(n,i){
   const topics=m.lessons.map(x=>x.note);
   document.getElementById('workspace').innerHTML=
    '<nav class="topicTabs">'+topics.map((t,j)=>'<button data-topic="'+j+'">'+t+'</button>').join('')+'</nav>'+
-   '<article class="lessonCard"><small>GATEWAY B1 · MODULE '+n+'</small><h2 id="topicTitle">'+m.lessons[i].title+'</h2>'+
+   '<article class="lessonCard"><small>FOCUS 2 · B1 · MODULE '+n+'</small><h2 id="topicTitle">'+m.lessons[i].title+'</h2>'+
    '<p>This module is ready for the next interactive lesson. The main Gabi hub design stays unchanged.</p></article>';
   document.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>document.getElementById('topicTitle').textContent=topics[Number(b.dataset.topic)]);
   const view=document.getElementById('lessonView');
