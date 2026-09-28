@@ -16,15 +16,10 @@
   --line:rgba(21,105,155,.16);
 }
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#bfe6fb;font-family:Arial,Helvetica,sans-serif}
+html,body{margin:0;overflow:hidden;background:#dfefff;font-family:Arial,sans-serif}
 button{font:inherit}
-.board{position:fixed;inset:0;width:100vw;height:100dvh;overflow:hidden;background:#bfe6fb}
-.cover{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:center center;display:block;
-  user-select:none;-webkit-user-drag:none;
-  opacity:0;transition:opacity .22s ease;
-}
+.board{position:absolute;inset:0;width:100%;height:100%;overflow:hidden}
+.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
 .cover.ready{opacity:1}
 .coverShade{
   position:absolute;inset:0;pointer-events:none;
@@ -117,7 +112,7 @@ button{font:inherit}
 </head>
 <body>
 <main class="board" id="board" aria-label="Gabi English Hub Focus 2 B1 interactive board">
-  <img class="cover" id="mainCover" src="gabi-cover-final.webp?v=20260928-fallback" alt="Gabi English Hub with curious teenagers, London and New York">
+  <img class="cover" src="bg-cover.png?v=20260928-fullscreen" alt="Gabi English Hub cover">
   <div class="coverShade"></div>
   <div class="loader" id="loader">LOADING GABI HUB…</div>
 
