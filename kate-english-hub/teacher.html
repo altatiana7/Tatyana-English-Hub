@@ -150,7 +150,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
         <button class="t-home" id="tHome">Home</button>
         <div id="tModules"></div><button class="t-covernotes" id="tCoverNotes" aria-label="Teacher Notes">Teacher Notes</button>
       </aside>
-      <main class="t-work"><button class="t-board-fullscreen" id="tBoardFullscreen">На весь экран</button>
+      <main class="t-work"><button class="t-board-fullscreen" id="tBoardFullscreen">На весь экран</button><button class="t-speaking-tab" id="tSpeakingTab" aria-label="Open Speaking activity">SPEAKING</button>
         <section class="t-cover"><img class="t-art" id="tArt" alt="Katya English Hub — Small steps. Big progress."></section><section class="t-module-dialog" id="tModuleDialog" role="dialog" aria-modal="true" aria-labelledby="tModuleTitle" hidden><h2 id="tModuleTitle"></h2><p>Материалы этого модуля пока не добавлены.</p><button id="tModuleClose">Назад</button></section>
         <section class="t-view" id="tView">
           <div class="t-top">
@@ -252,6 +252,17 @@ html.teacher-mode #teacherRoot{display:grid!important}
     document.getElementById('tNoteClose').onclick=()=>notes.classList.remove('on');
     document.getElementById('tCoverNotes').onclick=()=>{current='general';document.getElementById('tNotesTitle').textContent='Teacher Notes';document.getElementById('tNoteText').value=localStorage.getItem('katya_teacher_general')||'';notes.classList.add('on');document.getElementById('tNoteText').focus()};
     document.addEventListener('keydown',e=>{if(e.key==='Escape'){notes.classList.remove('on');document.getElementById('tModuleDialog').hidden=true;goHome()}});
+    document.getElementById('tSpeakingTab').onclick=()=>{
+      current='speaking_music_studying';
+      document.querySelectorAll('#teacherRoot .t-lesson').forEach(x=>x.classList.remove('active'));
+      document.getElementById('tTitle').textContent='Speaking · Is it OK to listen to music while studying?';
+      document.getElementById('tNotesTitle').textContent='Speaking · Music while studying · Notes';
+      document.getElementById('tNoteText').value=localStorage.getItem('katya_teacher_'+current)||'';
+      document.getElementById('tNotes').classList.remove('on');
+      document.getElementById('tPlaceholder').classList.remove('on');
+      const fr=document.getElementById('tFrame');fr.style.display='block';fr.src='speaking-music-studying.html';
+      document.getElementById('tView').classList.add('on');
+    };
     document.getElementById('tHome').onclick=goHome;
     document.getElementById('tBack').onclick=goHome;
     document.getElementById('tNotesBtn').onclick=()=>document.getElementById('tNotes').classList.toggle('on');
@@ -269,4 +280,14 @@ html.teacher-mode #teacherRoot{display:grid!important}
 #teacherRoot .t-board-fullscreen{position:absolute;right:12px;bottom:12px;z-index:6;border:1px solid #fff9;border-radius:10px;background:#fff9;color:#452d28;padding:9px 13px;font-size:14px;backdrop-filter:blur(8px)}
 #teacherRoot:fullscreen .t-board-fullscreen{display:none}
 #teacherRoot .t-module-dialog{left:calc(var(--board-sidebar) + 18px)}
+#teacherRoot .t-speaking-tab{
+  position:absolute;right:0;top:35%;z-index:8;
+  width:50px;height:170px;border:0;border-radius:16px 0 0 16px;
+  background:rgba(201,145,134,.96);color:#fff;
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  letter-spacing:.16em;font-weight:900;font-size:13px;
+  box-shadow:0 10px 28px rgba(64,42,35,.18)
+}
+#teacherRoot .t-speaking-tab:hover{background:#b97e73}
+#teacherRoot .t-speaking-tab:focus-visible{outline:3px solid #fff;outline-offset:-5px}
 </style></head><body></body></html>
