@@ -3,332 +3,340 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Katya · Speaking · Music while studying</title>
+<title>Katya · Music While Studying</title>
 <style>
 :root{
-  --ink:#2f2a28;--muted:#746b67;--paper:#fffaf6;--rose:#c99186;--rose2:#e6c9c1;
-  --blue:#3ea2d2;--blue2:#dff1fa;--gold:#f4d45c;--green:#789c8f;--line:#eadbd4;
+  --ink:#332826;--muted:#706662;--bg:#f5ede8;--paper:#fffaf7;--line:#e8d5cd;
+  --rose:#c99186;--rose2:#f5e3dd;--blue:#3aa0d1;--blue2:#e7f5fc;--gold:#f2d45e;
+  --green:#729b8c;--red:#bf6e66;--shadow:0 15px 38px rgba(85,54,44,.12)
 }
 *{box-sizing:border-box}
-html,body{margin:0;height:100%;overflow:hidden;background:#f4ece6;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink)}
-button{font:inherit;cursor:pointer}
-.app{height:100vh;display:grid;grid-template-rows:66px 1fr 54px;gap:0;background:
- radial-gradient(circle at 90% 10%,#fff 0 7%,transparent 30%),
- linear-gradient(135deg,#fffaf7 0%,#f2e7df 100%)}
-header{display:flex;align-items:center;gap:16px;padding:10px 22px;border-bottom:1px solid var(--line);background:#fffdfb}
-.kicker{font-size:12px;letter-spacing:.18em;font-weight:900;color:var(--blue)}
-h1{margin:0;font:700 clamp(22px,2.2vw,36px)/1.05 Georgia,serif;color:#2f6f8d}
-.source{margin-left:auto;font-size:12px;color:var(--muted);max-width:360px;text-align:right}
-main{min-height:0;padding:14px 20px;display:grid;grid-template-columns:1.02fr 1.18fr;gap:16px}
-.panel{min-height:0;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.94);box-shadow:0 12px 35px #6d4a3a15;overflow:hidden}
-.left{padding:18px;display:grid;grid-template-rows:auto auto 1fr;gap:12px}
-.right{padding:18px;display:grid;grid-template-rows:auto 1fr auto;gap:12px}
-.stepbar{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.stepbar .step{padding:8px 7px;font-size:11px}
-.step{border:0;border-radius:999px;padding:10px 12px;background:#f2e9e4;color:#6b5d58;font-size:13px;font-weight:900}
-.step.active{background:var(--rose);color:#fff}
-.prompt{border-radius:18px;background:linear-gradient(135deg,#eaf7fd,#fff);padding:14px 16px;border:1px solid #cfe8f4}
-.prompt small{display:block;color:#2f6f8d;font-weight:900;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
-.prompt strong{font-size:clamp(18px,1.8vw,28px);line-height:1.15}
-.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;align-content:start}
-.choice{min-height:76px;border:2px solid transparent;border-radius:16px;background:#fff7f1;padding:12px;text-align:left;font-weight:900;color:#4b3b36;box-shadow:0 5px 14px #7e5a4710}
-.choice:hover,.choice.selected{border-color:var(--rose);background:#fff}
-.choice span{display:block;font-size:12px;color:var(--muted);font-weight:600;margin-top:4px}
-.stems{display:flex;gap:7px;flex-wrap:wrap;align-content:start}
-.stem{border:1px solid var(--rose2);border-radius:999px;background:#fff;padding:7px 10px;font-size:12px;font-weight:800;color:#6a4d46}
-.card{min-height:0;border-radius:20px;background:linear-gradient(155deg,#fff 0%,#fff9f5 100%);border:1px solid var(--line);padding:18px;display:grid;grid-template-rows:auto 1fr auto;gap:14px}
-.card .label{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:900;letter-spacing:.1em;color:#2f6f8d;text-transform:uppercase}
-.fact{display:grid;place-items:center;text-align:center;font:700 clamp(24px,2.7vw,42px)/1.14 Georgia,serif;color:#3a302d;padding:8px}
-.task{background:#f7f1ed;border-radius:14px;padding:10px 12px;font-size:14px;line-height:1.35}
-.actions{display:flex;gap:8px}
-.action{border:0;border-radius:12px;padding:10px 14px;font-weight:900;background:var(--blue);color:#fff}
-.action.secondary{background:#ede6e2;color:#4b403c}
-.timer{display:flex;align-items:center;gap:12px}
-.time{min-width:78px;font-size:30px;font-weight:950;color:#8d5048}
-.track{height:12px;flex:1;background:#eee5e0;border-radius:999px;overflow:hidden}
-.fill{height:100%;width:100%;background:linear-gradient(90deg,var(--green),var(--gold),var(--rose));transition:width .2s linear}
-footer{display:flex;align-items:center;gap:10px;padding:8px 20px;border-top:1px solid var(--line);background:#fffdfb}
-.tip{font-size:12px;color:var(--muted)}
-.next{margin-left:auto;border:0;border-radius:12px;background:#2f6f8d;color:#fff;padding:10px 18px;font-weight:900}
-.answerbox{display:none;border:1px dashed #d7b7ad;border-radius:14px;background:#fff8f4;padding:10px 12px;font-size:13px;line-height:1.35}
-.answerbox.on{display:block}
-.badge{display:inline-block;background:#fff0c5;padding:2px 7px;border-radius:999px;font-weight:900}
-.facttiles{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.facttile{border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px;font-size:12px;line-height:1.35}
-.facttile b{display:block;color:#8d5048;margin-bottom:3px}
-.vocabgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.vocabitem{border:1px solid var(--line);border-radius:13px;background:#fff;padding:9px;font-size:12px;font-weight:800}
-.collocs{display:flex;flex-wrap:wrap;gap:7px}
-.colloc{border:1px solid var(--rose2);border-radius:999px;background:#fff;padding:7px 9px;font-size:12px;font-weight:800;color:#6a4d46}
-.video-card{border:1px solid #cfe8f4;border-radius:16px;background:linear-gradient(135deg,#eaf7fd,#fff);padding:12px;margin-top:10px}
-.video-card a{display:inline-block;margin-top:8px;text-decoration:none;background:#2f6f8d;color:#fff;border-radius:10px;padding:8px 11px;font-size:12px;font-weight:900}
-@media(max-width:900px){
-  .app{grid-template-rows:58px 1fr 50px}
-  main{grid-template-columns:1fr 1.08fr;padding:8px;gap:8px}
-  .left,.right{padding:11px}
-  .choice{min-height:62px}
-  .fact{font-size:clamp(18px,2.3vw,30px)}
-  .source{display:none}
+html,body{margin:0;height:100%;overflow:hidden;background:linear-gradient(135deg,#f8f1ec,#efe2da);font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink)}
+button,a{font:inherit}
+.app{height:100vh;display:grid;grid-template-rows:66px 1fr}
+header{display:flex;align-items:center;gap:18px;padding:10px 18px;border-bottom:1px solid var(--line);background:rgba(255,252,249,.96)}
+.kicker{font-size:11px;letter-spacing:.18em;font-weight:900;color:var(--blue)}
+h1{margin:1px 0 0;font:700 clamp(23px,2.1vw,36px)/1.05 Georgia,serif;color:#32728f}
+.subtitle{margin-left:auto;max-width:430px;text-align:right;font-size:12px;line-height:1.35;color:var(--muted)}
+main{min-height:0;display:grid;grid-template-columns:245px 1fr;gap:12px;padding:12px}
+.side,.work{min-height:0;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.94);box-shadow:var(--shadow)}
+.side{padding:13px;display:grid;grid-template-rows:auto auto 1fr auto;gap:10px;overflow:hidden}
+.hero{border-radius:18px;padding:13px;background:linear-gradient(135deg,#e5f5fc,#fff6cf 70%,#fff);border:1px solid #d6e8ef}
+.hero b{display:block;font-size:17px;margin-bottom:5px}.hero p{margin:0;font-size:12px;line-height:1.35;color:#5f5551}
+.nav{display:grid;gap:7px}
+.nav button{border:0;border-radius:13px;padding:10px 12px;text-align:left;background:#f4ebe6;color:#665853;font-weight:900;cursor:pointer}
+.nav button.active{background:var(--rose);color:#fff}
+.sidebox{min-height:0;overflow:auto;border:1px dashed #dec3ba;border-radius:16px;padding:10px;background:#fff9f6}
+.sidebox h3{margin:0 0 7px;font-size:13px;color:#8b554b}
+.sidebox p{margin:0;font-size:12px;line-height:1.42;color:#5d514d}
+.sideactions{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.sideactions a,.sideactions button{border:0;border-radius:12px;padding:9px 8px;text-align:center;text-decoration:none;font-weight:900;cursor:pointer}
+.sideactions a{background:#32728f;color:#fff}.sideactions button{background:#eee5e1;color:#5c504b}
+.work{padding:14px;overflow:hidden;display:grid;grid-template-rows:auto 1fr}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.topline h2{margin:0;font-size:21px}.topline span{font-size:12px;color:var(--muted)}
+.stage{min-height:0;position:relative}
+.screen{position:absolute;inset:0;display:none;min-height:0;overflow:hidden}
+.screen.on{display:block}
+.grid2{height:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.card{border:1px solid var(--line);border-radius:19px;background:linear-gradient(180deg,#fff,#fff9f6);padding:14px;box-shadow:0 8px 22px rgba(90,59,48,.07)}
+.card h3{margin:0 0 8px;font-size:17px}.card p{margin:0;font-size:13px;line-height:1.4}
+.blue{background:var(--blue2);border-color:#cfe6f3}.yellow{background:#fff8da;border-color:#ecd978}.pink{background:#fff2ee;border-color:#e7c4ba}
+.choicegrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.choice{border:2px solid transparent;border-radius:14px;padding:11px;background:#fff;font-weight:900;text-align:left;cursor:pointer;color:#4d403c}
+.choice small{display:block;margin-top:4px;font-size:11px;color:var(--muted);font-weight:600}
+.choice:hover,.choice.sel{border-color:var(--rose)}
+.pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.pill{border:1px solid #dfc7be;border-radius:999px;background:#fff;padding:7px 9px;font-size:12px;font-weight:800}
+.video{display:grid;grid-template-rows:auto 1fr auto;gap:10px;height:100%}
+.video .box{display:grid;place-items:center;text-align:center;border-radius:17px;background:linear-gradient(135deg,#f5d9d2,#e8f5fb);padding:18px;border:1px solid #ddc8c2}
+.video .box b{font:700 24px/1.15 Georgia,serif;color:#604843}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.actions button,.actions a{border:0;border-radius:12px;padding:9px 12px;font-weight:900;text-decoration:none;cursor:pointer}
+.primary{background:var(--blue);color:#fff}.secondary{background:#eee6e2;color:#514642}
+.tfwrap{height:100%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:10px}
+.tfcard{position:relative;border:1px solid var(--line);border-radius:20px;background:#fff;padding:13px;display:grid;grid-template-rows:auto 1fr auto;gap:8px;box-shadow:0 8px 22px rgba(90,59,48,.07)}
+.tfcard:nth-child(2n){background:#fff9e7}.tfcard:nth-child(3n){background:#eaf7fc}
+.tfnum{font-size:11px;font-weight:900;letter-spacing:.12em;color:#8d5b51;text-transform:uppercase}
+.tftext{display:grid;place-items:center;text-align:center;font:700 clamp(16px,1.35vw,22px)/1.18 Georgia,serif}
+.tfbuttons{display:grid;grid-template-columns:1fr 1fr;gap:7px}.tfbuttons button{border:0;border-radius:11px;padding:8px;font-weight:900;cursor:pointer}
+.tbtn{background:#e7f3ee;color:#416f60}.fbtn{background:#f8e3df;color:#925149}
+.tfanswer{display:none;margin-top:7px;padding:8px;border-radius:11px;background:#fff;border:1px dashed #d9bcb4;font-size:11px;line-height:1.3}
+.tfanswer.on{display:block}.tfcard.correct{outline:3px solid #9ac3b5}.tfcard.wrong{outline:3px solid #e2a49c}
+.lexgrid{height:100%;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:9px}
+.flip{perspective:900px;cursor:pointer}.flipin{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}.flip.flipped .flipin{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:18px;background:#fff;display:grid;place-items:center;text-align:center;padding:12px;box-shadow:0 7px 20px rgba(90,59,48,.07)}
+.front{font:700 clamp(16px,1.5vw,23px)/1.15 Georgia,serif;color:#3c3330}.front small{display:block;font:700 10px Arial;color:var(--blue);letter-spacing:.12em;margin-top:7px}
+.back{transform:rotateY(180deg);background:#fff8e6;font-size:12px;line-height:1.35}.back b{display:block;color:#8b554b;margin-bottom:5px}
+.collocgrid{height:100%;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px}
+.bucket{border:1px dashed #d7bbb2;border-radius:18px;padding:12px;background:#fffaf7}.bucket h3{margin:0 0 8px;font-size:14px;color:#8b554b}
+.bucket .pill{display:inline-block;margin:3px}
+.challenge{grid-column:1/-1;background:linear-gradient(135deg,#eaf7fc,#fff7d8)}
+.challenge p{font-size:13px;line-height:1.45}.challenge b{color:#7b5047}
+.speakgrid{height:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bigfact{display:grid;place-items:center;text-align:center;min-height:175px;border-radius:18px;background:linear-gradient(135deg,#eaf7fd,#fff);border:1px solid #d5e8f3;padding:16px;font:700 clamp(22px,2.1vw,34px)/1.14 Georgia,serif}
+.task{margin-top:10px;padding:10px 12px;border-radius:14px;background:#f4eeea;font-size:13px;line-height:1.4}
+.support{display:none;margin-top:9px;padding:10px 12px;border-radius:14px;background:#fff8e2;border:1px dashed #e1cb78;font-size:12px;line-height:1.4}.support.on{display:block}
+.timer{display:flex;align-items:center;gap:10px;margin-top:10px}.time{font-size:28px;font-weight:950;color:#8d564c;min-width:76px}.track{flex:1;height:11px;background:#eee4df;border-radius:999px;overflow:hidden}.fill{height:100%;width:100%;background:linear-gradient(90deg,var(--green),var(--gold),var(--rose));transition:width .2s linear}
+.mission{height:100%;display:grid;grid-template-rows:auto 1fr auto}.mission ul{margin:8px 0 0;padding-left:18px;font-size:13px;line-height:1.5}.model{display:none;margin-top:9px;padding:10px;border-radius:14px;background:#fff7e4;border:1px dashed #d8bd72;font-size:12px;line-height:1.4}.model.on{display:block}
+@media(max-width:980px){
+ main{grid-template-columns:210px 1fr;padding:8px;gap:8px}.tfwrap{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(3,1fr)}.lexgrid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,1fr)}
+ .subtitle{display:none}
 }
 </style>
 </head>
 <body>
 <div class="app">
-  <header>
-    <div>
-      <div class="kicker">SPEAKING LAB · KATYA</div>
-      <h1>Is it OK to listen to music while studying?</h1>
-    </div>
-    <div class="source">Based on the “Curious Kids” article: mood, working memory, lyrics, speed/volume and personality.</div>
-  </header>
+<header>
+  <div><div class="kicker">KATYA · SPEAKING + VOCABULARY LAB</div><h1>Is it OK to listen to music while studying?</h1></div>
+  <div class="subtitle">Article ideas → True/False facts → vocabulary → collocations → speaking.</div>
+</header>
 
-  <main>
-    <section class="panel left">
-      <div class="stepbar">
-        <button class="step active" data-step="1">1 · Hook</button>
-        <button class="step" data-step="2">2 · Facts</button>
-        <button class="step" data-step="3">3 · Vocabulary</button>
-        <button class="step" data-step="4">4 · Collocations</button>
-        <button class="step" data-step="5">5 · Quick check</button>
-        <button class="step" data-step="6">6 · Speaking</button>
-      </div>
+<main>
+<aside class="side">
+  <div class="hero"><b>Music & Study Lab</b><p>One compact lesson for the interactive board. Click the sections in order.</p></div>
 
-      <div class="prompt" id="leftPrompt">
-        <small>Quick choice</small>
-        <strong>What works best for you when you study?</strong>
-      </div>
+  <div class="nav" id="nav">
+    <button class="active" data-screen="hook">1 · Hook + video</button>
+    <button data-screen="facts">2 · Facts · True / False</button>
+    <button data-screen="lexis">3 · New vocabulary</button>
+    <button data-screen="collocations">4 · Collocations</button>
+    <button data-screen="speaking">5 · Speaking lab</button>
+  </div>
 
-      <div id="leftContent">
-        <div class="choices" id="choices">
-          <button class="choice">Silence<span>I need zero background noise.</span></button>
-          <button class="choice">Instrumental music<span>Music helps, but lyrics do not.</span></button>
-          <button class="choice">Pop / songs with lyrics<span>I concentrate better with familiar music.</span></button>
-          <button class="choice">It depends<span>The task, mood and place change my choice.</span></button>
+  <div class="sidebox">
+    <h3>Core language</h3>
+    <p><b>working memory</b><br><b>background music</b><br><b>reading comprehension</b><br><b>demanding task</b><br><b>boost your mood</b><br><b>interrupt your train of thought</b></p>
+  </div>
+
+  <div class="sideactions">
+    <a href="https://www.ted.com/talks/ted_ed_3_tips_on_how_to_study_effectively" target="_blank" rel="noopener">Video</a>
+    <button id="randomFact">Random fact</button>
+  </div>
+</aside>
+
+<section class="work">
+  <div class="topline"><h2 id="heading">Hook + video</h2><span id="mini">Start with a quick personal choice.</span></div>
+
+  <div class="stage">
+
+    <section class="screen on" id="screen-hook">
+      <div class="grid2">
+        <div class="card blue">
+          <h3>What is your ideal study soundtrack?</h3>
+          <div class="choicegrid">
+            <button class="choice">Silence<small>I need total quiet.</small></button>
+            <button class="choice">Instrumental music<small>No lyrics, just background sound.</small></button>
+            <button class="choice">Familiar songs<small>I work better with known tracks.</small></button>
+            <button class="choice">It depends<small>The task decides everything.</small></button>
+          </div>
+          <div class="pills">
+            <span class="pill">I tend to…</span><span class="pill">I get distracted if…</span>
+            <span class="pill">For reading, I prefer…</span><span class="pill">It works best when…</span>
+          </div>
         </div>
-        <div class="stems" style="margin-top:12px">
-          <button class="stem">I tend to…</button>
-          <button class="stem">I find it easier to… when…</button>
-          <button class="stem">The main distraction for me is…</button>
-          <button class="stem">It depends on whether…</button>
+
+        <div class="card video pink">
+          <div><h3>Short video extension</h3><p>TED-Ed · <b>3 tips on how to study effectively</b></p></div>
+          <div class="box"><b>Watch → choose one tip → connect it to the article.</b></div>
+          <div class="actions">
+            <a class="primary" href="https://www.ted.com/talks/ted_ed_3_tips_on_how_to_study_effectively" target="_blank" rel="noopener">Open video</a>
+            <button class="secondary" id="videoTask">Show task</button>
+          </div>
+          <div class="support" id="videoSupport"><b>After watching:</b> Which study tip would still work if a student listens to music? Explain in 3 sentences.</div>
         </div>
       </div>
     </section>
 
-    <section class="panel right">
-      <div class="card">
-        <div class="label"><span id="roundLabel">ARTICLE → SPEAKING</span><span class="badge" id="cardNo">1 / 6</span></div>
-        <div class="fact" id="fact">Music may improve your mood, and a better mood can make it easier to keep working.</div>
-        <div class="task" id="task"><b>Speak:</b> paraphrase the idea, say whether it matches your experience, and give one example.</div>
-      </div>
-
-      <div class="answerbox" id="answerBox"></div>
-
-      <div>
-        <div class="actions">
-          <button class="action" id="newCard">New evidence</button>
-          <button class="action secondary" id="showSupport">Teacher support</button>
-          <button class="action secondary" id="startTimer">45 sec</button>
+    <section class="screen" id="screen-facts">
+      <div class="tfwrap">
+        <div class="tfcard" data-answer="true">
+          <div class="tfnum">Fact 1</div>
+          <div class="tftext">Pleasant music can sometimes improve your mood while studying.</div>
+          <div><div class="tfbuttons"><button class="tbtn">TRUE</button><button class="fbtn">FALSE</button></div><div class="tfanswer"><b>TRUE.</b> A better mood may help motivation, although it does not guarantee better concentration.</div></div>
         </div>
-        <div class="timer" style="margin-top:10px">
-          <div class="time" id="time">0:45</div>
-          <div class="track"><div class="fill" id="fill"></div></div>
+        <div class="tfcard" data-answer="false">
+          <div class="tfnum">Fact 2</div>
+          <div class="tftext">Songs with lyrics are usually the best choice for difficult reading.</div>
+          <div><div class="tfbuttons"><button class="tbtn">TRUE</button><button class="fbtn">FALSE</button></div><div class="tfanswer"><b>FALSE.</b> Lyrics can compete with language processing and make comprehension harder.</div></div>
+        </div>
+        <div class="tfcard" data-answer="true">
+          <div class="tfnum">Fact 3</div>
+          <div class="tftext">Fast and loud music may reduce performance on demanding tasks.</div>
+          <div><div class="tfbuttons"><button class="tbtn">TRUE</button><button class="fbtn">FALSE</button></div><div class="tfanswer"><b>TRUE.</b> High speed plus high volume can be especially distracting.</div></div>
+        </div>
+        <div class="tfcard" data-answer="false">
+          <div class="tfnum">Fact 4</div>
+          <div class="tftext">The “Mozart effect” proves that Mozart makes people permanently smarter.</div>
+          <div><div class="tfbuttons"><button class="tbtn">TRUE</button><button class="fbtn">FALSE</button></div><div class="tfanswer"><b>FALSE.</b> The popular claim is exaggerated; mood and arousal are more plausible explanations.</div></div>
+        </div>
+        <div class="tfcard" data-answer="true">
+          <div class="tfnum">Fact 5</div>
+          <div class="tftext">Instrumental music is often a safer option than word-heavy songs.</div>
+          <div><div class="tfbuttons"><button class="tbtn">TRUE</button><button class="fbtn">FALSE</button></div><div class="tfanswer"><b>TRUE.</b> Quiet instrumental music is less likely to compete with reading or vocabulary work.</div></div>
+        </div>
+        <div class="tfcard" data-answer="true">
+          <div class="tfnum">Fact 6</div>
+          <div class="tftext">The best study soundtrack can depend on both the person and the task.</div>
+          <div><div class="tfbuttons"><button class="tbtn">TRUE</button><button class="fbtn">FALSE</button></div><div class="tfanswer"><b>TRUE.</b> Routine tasks and deep-reading tasks may require different conditions, and people react differently to noise.</div></div>
         </div>
       </div>
     </section>
-  </main>
 
-  <footer>
-    <div class="tip" id="footerTip"><b>Target:</b> answer in 3–4 full sentences. Use one linker: <i>however, because, whereas, overall</i>.</div>
-    <button class="next" id="nextStep">Next →</button>
-  </footer>
+    <section class="screen" id="screen-lexis">
+      <div class="lexgrid">
+        <div class="flip"><div class="flipin"><div class="face front">working memory<small>CLICK</small></div><div class="face back"><div><b>working memory</b>The short-term mental space used to hold and process information.</div></div></div></div>
+        <div class="flip"><div class="flipin"><div class="face front">comprehension<small>CLICK</small></div><div class="face back"><div><b>comprehension</b>The ability to understand what you read or hear.</div></div></div></div>
+        <div class="flip"><div class="flipin"><div class="face front">background music<small>CLICK</small></div><div class="face back"><div><b>background music</b>Music playing while another activity is the main focus.</div></div></div></div>
+        <div class="flip"><div class="flipin"><div class="face front">demanding task<small>CLICK</small></div><div class="face back"><div><b>demanding task</b>A task that needs a lot of concentration and mental effort.</div></div></div></div>
+        <div class="flip"><div class="flipin"><div class="face front">overstimulated<small>CLICK</small></div><div class="face back"><div><b>overstimulated</b>Mentally overloaded because there is too much sound, activity or input.</div></div></div></div>
+        <div class="flip"><div class="flipin"><div class="face front">caveat<small>CLICK</small></div><div class="face back"><div><b>caveat</b>An important warning, condition or limitation.</div></div></div></div>
+        <div class="flip"><div class="flipin"><div class="face front">train of thought<small>CLICK</small></div><div class="face back"><div><b>train of thought</b>The connected flow of ideas in your mind.</div></div></div></div>
+        <div class="flip"><div class="flipin"><div class="face front">word-heavy<small>CLICK</small></div><div class="face back"><div><b>word-heavy</b>Containing many lyrics or a lot of verbal information.</div></div></div></div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-collocations">
+      <div class="collocgrid">
+        <div class="bucket"><h3>Helpful / neutral</h3>
+          <span class="pill">boost your mood</span><span class="pill">improve performance</span><span class="pill">stay on task</span>
+          <span class="pill">listen at a low volume</span><span class="pill">study with instrumental music</span>
+        </div>
+        <div class="bucket"><h3>Distracting / risky</h3>
+          <span class="pill">reduce comprehension</span><span class="pill">overload working memory</span><span class="pill">distract the listener</span>
+          <span class="pill">interrupt your train of thought</span><span class="pill">word-heavy songs</span>
+        </div>
+        <div class="bucket"><h3>Study language</h3>
+          <span class="pill">process information</span><span class="pill">do a demanding task</span><span class="pill">revise for an exam</span>
+          <span class="pill">read with concentration</span><span class="pill">hold information in your head</span>
+        </div>
+        <div class="bucket"><h3>Advice language</h3>
+          <span class="pill">It depends on the task.</span><span class="pill">I would avoid…</span><span class="pill">A safer option would be…</span>
+          <span class="pill">The evidence suggests…</span><span class="pill">Overall, my rule is…</span>
+        </div>
+        <div class="card challenge"><h3>Collocation challenge</h3><p>Choose <b>three collocations</b>. Make one 30-second answer: “What should someone listen to while revising for an English exam?”</p></div>
+      </div>
+    </section>
+
+    <section class="screen" id="screen-speaking">
+      <div class="speakgrid">
+        <div class="card">
+          <div class="bigfact" id="bigFact">Pleasant music can improve mood — but better mood does not always mean better concentration.</div>
+          <div class="task" id="speakTask"><b>Speak:</b> paraphrase the idea, react to it and give one example.</div>
+          <div class="support" id="supportBox">Useful language: <b>The article suggests that… / However… / In my experience… / A safer option would be…</b></div>
+          <div class="actions" style="margin-top:10px">
+            <button class="primary" id="newCard">New card</button>
+            <button class="secondary" id="showSupport">Teacher support</button>
+            <button class="secondary" id="timerBtn">45 sec</button>
+          </div>
+          <div class="timer"><div class="time" id="time">0:45</div><div class="track"><div class="fill" id="fill"></div></div></div>
+        </div>
+
+        <div class="card mission">
+          <div><h3>Final speaking mission</h3><p><b>Should students listen to music while studying?</b></p></div>
+          <ul>
+            <li>Give your own opinion.</li>
+            <li>Use <b>2 facts</b> from the True/False cards.</li>
+            <li>Use <b>3 collocations</b>.</li>
+            <li>Mention one exception.</li>
+            <li>Finish with practical advice.</li>
+          </ul>
+          <div>
+            <button class="secondary" id="modelBtn">Model structure</button>
+            <div class="model" id="modelBox"><b>Overall, it depends on the task.</b> Music may boost your mood during routine revision. However, word-heavy songs can overload working memory and reduce comprehension. For demanding reading, a safer option would be silence or quiet instrumental music.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</section>
+</main>
 </div>
 
 <script>
-const evidence = [
-  {
-    fact:"Music may improve your mood, and a better mood can make it easier to keep working.",
-    support:"Useful language: “That makes sense to me because… / In my experience… / A better mood doesn’t always mean better concentration because…”"
-  },
-  {
-    fact:"Songs with lyrics can overload working memory when you are reading or processing language.",
-    support:"Useful language: “Working memory is… / Lyrics compete with… / This is especially true when…”"
-  },
-  {
-    fact:"In one study, the clearest drop in performance happened with music that was both fast and loud.",
-    support:"Useful language: “The study suggests that… / The important factor seems to be… / I’d expect a different result if…”"
-  },
-  {
-    fact:"The so-called ‘Blur effect’ suggested that music people genuinely enjoy may help partly because it improves mood.",
-    support:"Useful language: “The key point is not the band itself but… / Preference may matter because… / However…”"
-  },
-  {
-    fact:"The article suggests introverts may be more easily distracted by background music than extroverts.",
-    support:"Useful language: “Personality could matter because… / I’m not sure this applies to everyone because… / A possible example is…”"
-  },
-  {
-    fact:"The article’s practical advice: avoid music that is too fast, too loud or too word-heavy when the task is demanding.",
-    support:"Useful language: “If the task requires deep concentration… / I’d recommend… / The exception would be…”"
-  }
-];
-let currentStep=1, idx=0, timer=null, remaining=45;
-
-const steps=[...document.querySelectorAll(".step")];
-const leftPrompt=document.getElementById("leftPrompt");
-const leftContent=document.getElementById("leftContent");
-const fact=document.getElementById("fact");
-const task=document.getElementById("task");
-const answerBox=document.getElementById("answerBox");
-const footerTip=document.getElementById("footerTip");
-const nextStep=document.getElementById("nextStep");
-
-function renderStep(n){
-  currentStep=n;
-  steps.forEach(b=>b.classList.toggle("active",Number(b.dataset.step)===n));
-  answerBox.classList.remove("on");
-  if(n===1){
-    leftPrompt.innerHTML="<small>Quick choice</small><strong>What works best for you when you study?</strong>";
-    leftContent.innerHTML=`
-      <div class="choices">
-        <button class="choice">Silence<span>I need zero background noise.</span></button>
-        <button class="choice">Instrumental music<span>Music helps, but lyrics do not.</span></button>
-        <button class="choice">Familiar songs<span>I concentrate better with music I know.</span></button>
-        <button class="choice">It depends<span>The task decides everything.</span></button>
-      </div>
-      <div class="stems" style="margin-top:10px">
-        <button class="stem">I tend to…</button><button class="stem">I get distracted if…</button>
-        <button class="stem">It works best when…</button><button class="stem">For reading, I prefer…</button>
-      </div>
-      <div class="video-card"><b>Short video extension</b><br><span style="font-size:12px">TED-Ed · 3 tips on how to study effectively</span><br><a target="_blank" rel="noopener" href="https://www.ted.com/talks/ted_ed_3_tips_on_how_to_study_effectively">▶ Open short video</a></div>`;
-    bindChoices();
-    fact.textContent="Start with your real study habits. Then compare your experience with the article.";
-    task.innerHTML="<b>Speak:</b> 3–4 sentences. Give one example from your own study routine.";
-    footerTip.innerHTML="<b>Target:</b> I tend to… / I get distracted if… / It depends on…";
-    nextStep.textContent="Next →";
-  }else if(n===2){
-    leftPrompt.innerHTML="<small>Interesting facts</small><strong>What does research suggest?</strong>";
-    leftContent.innerHTML=`
-      <div class="facttiles">
-        <div class="facttile"><b>Mood matters</b>Pleasant music may help you stay with a task longer.</div>
-        <div class="facttile"><b>Lyrics compete</b>Songs with words can interfere with reading and vocabulary learning.</div>
-        <div class="facttile"><b>Fast + loud</b>High-energy loud music can make demanding tasks harder.</div>
-        <div class="facttile"><b>Instrumental is safer</b>Low-volume instrumental music is often less distracting.</div>
-        <div class="facttile"><b>Personality matters</b>Some learners feel overstimulated more easily than others.</div>
-        <div class="facttile"><b>Task type matters</b>Routine practice and close reading may need different soundtracks.</div>
-      </div>`;
-    fact.textContent=evidence[idx].fact;
-    task.innerHTML="<b>Mini discussion:</b> choose one fact, paraphrase it and say whether it matches your experience.";
-    footerTip.innerHTML="<b>Target:</b> The research suggests… / This seems convincing because…";
-    nextStep.textContent="Next →";
-  }else if(n===3){
-    leftPrompt.innerHTML="<small>New vocabulary</small><strong>Build precise language for the topic.</strong>";
-    leftContent.innerHTML=`
-      <div class="vocabgrid">
-        <div class="vocabitem">working memory</div><div class="vocabitem">temporary memory used while thinking</div>
-        <div class="vocabitem">comprehension</div><div class="vocabitem">understanding what you read or hear</div>
-        <div class="vocabitem">overstimulated</div><div class="vocabitem">mentally overloaded by too much input</div>
-        <div class="vocabitem">caveat</div><div class="vocabitem">an important warning or limitation</div>
-        <div class="vocabitem">demanding task</div><div class="vocabitem">a task needing serious concentration</div>
-        <div class="vocabitem">background music</div><div class="vocabitem">music playing while you work</div>
-      </div>
-      <div class="stems" style="margin-top:10px">
-        <button class="stem">Reading comprehension gets worse if…</button>
-        <button class="stem">A major caveat is that…</button>
-        <button class="stem">I feel overstimulated when…</button>
-      </div>`;
-    fact.textContent="Vocabulary challenge: explain one word without translating it.";
-    task.innerHTML="<b>Use it:</b> make 3 original sentences with the new vocabulary.";
-    footerTip.innerHTML="<b>Target:</b> working memory · comprehension · overstimulated · caveat · demanding task";
-    nextStep.textContent="Next →";
-  }else if(n===4){
-    leftPrompt.innerHTML="<small>Collocations</small><strong>Use chunks, not isolated words.</strong>";
-    leftContent.innerHTML=`
-      <div class="collocs">
-        <span class="colloc">boost your mood</span><span class="colloc">improve performance</span>
-        <span class="colloc">reduce comprehension</span><span class="colloc">interrupt your train of thought</span>
-        <span class="colloc">overload working memory</span><span class="colloc">listen at a low volume</span>
-        <span class="colloc">stay on task</span><span class="colloc">process information</span>
-        <span class="colloc">revise for an exam</span><span class="colloc">do a demanding task</span>
-        <span class="colloc">study in silence</span><span class="colloc">word-heavy songs</span>
-      </div>
-      <div class="prompt" style="margin-top:10px;background:#fff8dc;border-color:#efd66a">
-        <small>Challenge</small><strong style="font-size:20px">Choose any 3 collocations and connect them in one natural answer.</strong>
-      </div>`;
-    fact.textContent="Strong speaking uses natural collocations: boost your mood, reduce comprehension, stay on task, overload working memory.";
-    task.innerHTML="<b>Speak:</b> compare silence, instrumental music and songs with lyrics using at least 3 collocations.";
-    footerTip.innerHTML="<b>Target:</b> use 3 collocations correctly, not just list them.";
-    nextStep.textContent="Next →";
-  }else if(n===5){
-    leftPrompt.innerHTML="<small>Quick check</small><strong>True or false? Correct the false statements.</strong>";
-    leftContent.innerHTML=`
-      <div class="choices">
-        <button class="choice">Lyrics are usually less distracting than instrumental music.<span>True / False?</span></button>
-        <button class="choice">Fast and loud music may hurt concentration.<span>True / False?</span></button>
-        <button class="choice">Music always improves reading comprehension.<span>True / False?</span></button>
-        <button class="choice">Different tasks may need different soundtracks.<span>True / False?</span></button>
-      </div>`;
-    bindChoices();
-    fact.textContent="Correct the false ideas in full sentences.";
-    task.innerHTML="<b>Rule:</b> no one-word answers. Explain why.";
-    footerTip.innerHTML="<b>Target:</b> evidence + correction.";
-    nextStep.textContent="Next →";
-  }else{
-    leftPrompt.innerHTML="<small>Final speaking mission</small><strong>Should students listen to music while studying?</strong>";
-    leftContent.innerHTML=`
-      <div class="prompt" style="background:#fff8dc;border-color:#efd66a">
-        <small>Include all 5</small>
-        <strong style="font-size:20px">1. Your view<br>2. Two facts<br>3. Three collocations<br>4. One exception<br>5. Practical advice</strong>
-      </div>
-      <div class="stems" style="margin-top:10px">
-        <button class="stem">Overall, it depends on…</button><button class="stem">The evidence suggests…</button>
-        <button class="stem">However…</button><button class="stem">A safer option would be…</button>
-      </div>`;
-    fact.textContent="Give balanced advice: mention one situation where music could help and one where it could distract.";
-    task.innerHTML="<b>Final speaking:</b> 45 seconds. Use at least two ideas from the article and three collocations.";
-    footerTip.innerHTML="<b>Target:</b> opinion + evidence + collocations + exception + recommendation.";
-    nextStep.textContent="Restart ↺";
-  }
-}
-function bindChoices(){
-  document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{
-    const box=b.parentElement;
-    box.querySelectorAll(".choice").forEach(x=>x.classList.remove("selected"));
-    b.classList.add("selected");
-  });
-}
-function showCard(){
-  idx=(idx+1)%evidence.length;
-  fact.textContent=evidence[idx].fact;
-  document.getElementById("cardNo").textContent=(idx+1)+" / "+evidence.length;
-  answerBox.classList.remove("on");
-}
-function resetTimer(sec=45){
-  clearInterval(timer);remaining=sec;
-  document.getElementById("time").textContent="0:"+String(remaining).padStart(2,"0");
-  document.getElementById("fill").style.width="100%";
-}
-function startTimer(){
-  clearInterval(timer);
-  const total=45;
-  if(remaining<=0 || remaining>total) remaining=total;
-  timer=setInterval(()=>{
-    remaining--;
-    document.getElementById("time").textContent="0:"+String(Math.max(0,remaining)).padStart(2,"0");
-    document.getElementById("fill").style.width=(Math.max(0,remaining)/total*100)+"%";
-    if(remaining<=0){clearInterval(timer);timer=null;}
-  },1000);
-}
-document.getElementById("newCard").onclick=showCard;
-document.getElementById("showSupport").onclick=()=>{
-  answerBox.innerHTML=currentStep===6
-    ? "<b>Teacher support:</b> Strong answer = practical recommendation + reference to working memory / lyrics / speed & volume / mood + one exception."
-    : evidence[idx].support;
-  answerBox.classList.toggle("on");
+const titles={
+ hook:["Hook + video","Start with a quick personal choice."],
+ facts:["Facts · True / False","Choose first, then reveal the explanation."],
+ lexis:["New vocabulary","Click each card to flip it."],
+ collocations:["Collocations","Build fluent chunks, not isolated words."],
+ speaking:["Speaking lab","Use facts + collocations in a timed answer."]
 };
-document.getElementById("startTimer").onclick=()=>{resetTimer(45);startTimer();};
-nextStep.onclick=()=>renderStep(currentStep===6?1:currentStep+1);
-steps.forEach(b=>b.onclick=()=>renderStep(Number(b.dataset.step)));
-bindChoices();
-resetTimer(45);
+document.querySelectorAll("#nav button").forEach(function(btn){
+ btn.onclick=function(){
+   const name=btn.dataset.screen;
+   document.querySelectorAll(".screen").forEach(function(x){x.classList.remove("on")});
+   document.getElementById("screen-"+name).classList.add("on");
+   document.querySelectorAll("#nav button").forEach(function(x){x.classList.toggle("active",x===btn)});
+   document.getElementById("heading").textContent=titles[name][0];
+   document.getElementById("mini").textContent=titles[name][1];
+ };
+});
+document.querySelectorAll(".choice").forEach(function(btn){
+ btn.onclick=function(){
+   const parent=btn.parentElement;
+   parent.querySelectorAll(".choice").forEach(function(x){x.classList.remove("sel")});
+   btn.classList.add("sel");
+ };
+});
+document.getElementById("videoTask").onclick=function(){document.getElementById("videoSupport").classList.toggle("on")};
+
+document.querySelectorAll(".tfcard").forEach(function(card){
+ const answer=card.dataset.answer;
+ const buttons=card.querySelectorAll(".tfbuttons button");
+ buttons.forEach(function(btn,idx){
+   btn.onclick=function(){
+     const picked=idx===0?"true":"false";
+     card.classList.remove("correct","wrong");
+     card.classList.add(picked===answer?"correct":"wrong");
+     card.querySelector(".tfanswer").classList.add("on");
+   };
+ });
+});
+
+document.querySelectorAll(".flip").forEach(function(card){card.onclick=function(){card.classList.toggle("flipped")}});
+
+const speaking=[
+ ["Pleasant music can improve mood — but better mood does not always mean better concentration.","Paraphrase the idea, react to it and give one example."],
+ ["Lyrics can compete with reading and vocabulary learning.","Explain why language-heavy tasks are sensitive to songs with words."],
+ ["Fast and loud music is more likely to distract you during demanding tasks.","Explain when energetic music helps and when it becomes a problem."],
+ ["Instrumental music is often a safer background choice than word-heavy songs.","Compare instrumental tracks with songs that have lyrics."],
+ ["Some learners feel overstimulated by background music during close reading.","Explain how personality and task type can affect study choices."],
+ ["A practical rule is to match the soundtrack to the task.","Give a concrete recommendation for exam revision."]
+];
+let sidx=0,timer=null,left=45;
+function renderSpeaking(){
+ document.getElementById("bigFact").textContent=speaking[sidx][0];
+ document.getElementById("speakTask").innerHTML="<b>Speak:</b> "+speaking[sidx][1];
+ document.getElementById("supportBox").classList.remove("on");
+}
+document.getElementById("newCard").onclick=function(){sidx=(sidx+1)%speaking.length;renderSpeaking();resetTimer()};
+document.getElementById("showSupport").onclick=function(){document.getElementById("supportBox").classList.toggle("on")};
+document.getElementById("modelBtn").onclick=function(){document.getElementById("modelBox").classList.toggle("on")};
+function resetTimer(){clearInterval(timer);left=45;document.getElementById("time").textContent="0:45";document.getElementById("fill").style.width="100%"}
+document.getElementById("timerBtn").onclick=function(){
+ resetTimer();
+ timer=setInterval(function(){
+   left--;
+   document.getElementById("time").textContent="0:"+String(Math.max(0,left)).padStart(2,"0");
+   document.getElementById("fill").style.width=(Math.max(0,left)/45*100)+"%";
+   if(left<=0){clearInterval(timer)}
+ },1000);
+};
+document.getElementById("randomFact").onclick=function(){
+ const facts=document.querySelectorAll(".tfcard");
+ document.querySelectorAll("#nav button").forEach(function(x){x.classList.remove("active")});
+ const factsBtn=document.querySelector('#nav button[data-screen="facts"]');
+ factsBtn.classList.add("active");
+ document.querySelectorAll(".screen").forEach(function(x){x.classList.remove("on")});
+ document.getElementById("screen-facts").classList.add("on");
+ document.getElementById("heading").textContent=titles.facts[0];
+ document.getElementById("mini").textContent=titles.facts[1];
+ facts.forEach(function(x){x.style.transform="";x.style.boxShadow=""});
+ const pick=facts[Math.floor(Math.random()*facts.length)];
+ pick.style.transform="scale(1.03)";
+ pick.style.boxShadow="0 0 0 4px #f2d45e";
+};
+renderSpeaking();resetTimer();
 </script>
 </body>
 </html>
