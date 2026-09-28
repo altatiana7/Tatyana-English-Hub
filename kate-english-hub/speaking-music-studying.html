@@ -31,7 +31,7 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
 .topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
 .topline h2{margin:0;font-size:21px}.topline span{font-size:12px;color:var(--muted)}
 .stage{min-height:0;position:relative}
-.screen{position:absolute;inset:0;display:none;min-height:0;overflow:hidden}
+.screen{position:absolute;inset:0;display:none;min-height:0;overflow:auto;padding-right:4px;scrollbar-gutter:stable}
 .screen.on{display:block}
 .grid2{height:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .card{border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#fff,#fff9f6);padding:16px;box-shadow:0 8px 22px rgba(90,59,48,.07)}
@@ -49,8 +49,8 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
 .support{display:none;padding:10px 12px;border-radius:14px;background:#fff8e2;border:1px dashed #e1cb78;font-size:12px;line-height:1.4}.support.on{display:block}
 
 /* READING */
-.reading-layout{height:100%;display:grid;grid-template-columns:1.55fr .85fr;gap:12px}
-.article{height:100%;overflow:hidden;padding:18px 21px}
+.reading-layout{min-height:100%;display:grid;grid-template-columns:1.55fr .85fr;gap:12px;align-items:start}
+.article{min-height:100%;overflow:visible;padding:18px 21px}
 .article h3{margin:0 0 8px;font:700 24px Georgia,serif;color:#32728f}
 .article .dek{font-size:13px;color:var(--muted);margin-bottom:11px}
 .article-columns{column-count:2;column-gap:28px;font:500 clamp(14px,1.18vw,18px)/1.48 Georgia,serif}
@@ -64,8 +64,8 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
 .answer{display:none;margin-top:7px;padding:7px 8px;border-radius:9px;background:#fff7da;font-size:11px}.answer.on{display:block}
 
 /* QUIZLET */
-.study-layout{height:100%;display:grid;grid-template-columns:1.15fr .85fr;gap:12px}
-.quizlet{height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:10px}
+.study-layout{min-height:100%;display:grid;grid-template-columns:1.15fr .85fr;gap:12px;align-items:start}
+.quizlet{min-height:520px;display:grid;grid-template-rows:auto 1fr auto;gap:10px}
 .quizlet-top{display:flex;align-items:center;justify-content:space-between}
 .quizlet-top h3{margin:0;font-size:18px}.quizlet-tools{display:flex;gap:6px}
 .iconbtn{width:36px;height:36px;border:1px solid var(--line);border-radius:50%;background:#fff;cursor:pointer;font-weight:900}
@@ -83,7 +83,7 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
 .counter{text-align:center;font-size:13px;font-weight:900;color:#6c5d57}
 .progress{height:7px;border-radius:999px;background:#eee4df;overflow:hidden;margin-top:6px}.progress span{display:block;height:100%;background:#c99186}
 
-.collocations{height:100%;display:grid;grid-template-rows:auto 1fr;gap:10px}
+.collocations{min-height:520px;display:grid;grid-template-rows:auto 1fr;gap:10px}
 .collocations h3{margin:0;font-size:18px}
 .colloc-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start}
 .colloc{border:1px solid #dfc7be;border-radius:14px;background:#fff;padding:11px 10px;font-size:13px;font-weight:850;line-height:1.25}
@@ -141,9 +141,20 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
           <div>
             <div class="actions">
               <a class="primary" href="https://www.ted.com/talks/ted_ed_3_tips_on_how_to_study_effectively" target="_blank" rel="noopener">Open video</a>
-              <button class="secondary" id="videoTask">Show task</button>
+              <button class="secondary vtask-btn" data-target="vtask1">1 · Main idea</button>
+              <button class="secondary vtask-btn" data-target="vtask2">2 · Detail check</button>
+              <button class="secondary vtask-btn" data-target="vtask3">3 · Apply it</button>
             </div>
-            <div class="support" id="videoSupport"><b>After watching:</b> Write 3–4 sentences. Which tip is most useful for you, and would you still use it while listening to music?</div>
+            <div class="support" id="vtask1"><b>Main idea:</b> Which statement best matches the video?<br><br>
+              A. Good studying depends mostly on talent.<br>
+              B. Effective studying uses specific strategies and active practice.<br>
+              C. Music is necessary for concentration.
+            </div>
+            <div class="support" id="vtask2"><b>Detail check:</b> Choose the ideas mentioned in the video:<br><br>
+              □ spacing study sessions &nbsp; □ testing yourself &nbsp; □ studying everything at once &nbsp; □ mixing different kinds of practice
+            </div>
+            <div class="support" id="vtask3"><b>Apply it:</b> Choose one strategy from the video and write 3 sentences explaining how you could use it when preparing for English.
+            </div>
           </div>
         </div>
       </div>
@@ -177,6 +188,35 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
           </div>
         </aside>
       </div>
+
+      <section class="card" style="margin-top:12px">
+        <h3 style="margin:0 0 10px;font-size:19px;color:#32728f">Worksheet · Music & Studying</h3>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+          <div class="q"><b>A · Study Soundtrack</b><br>Choose one for each situation: <b>silence / classical / lo-fi / pop / rock / café sounds</b>.<br><br>
+            1. Reading a difficult article<br>2. Learning vocabulary<br>3. Doing routine homework<br>4. Writing an essay
+          </div>
+          <div class="q"><b>B · Music Ranking</b><br>Rank these from <b>1 = best for concentration</b> to <b>6 = worst</b>:<br><br>
+            silence · instrumental · familiar songs · new songs · café noise · loud music
+          </div>
+          <div class="q"><b>C · Before reading</b><br>Choose: <b>Agree / Not sure / Disagree</b>.<br><br>
+            “Music usually helps people study better.”<br>
+            “Lyrics make reading more difficult.”<br>
+            “The best soundtrack depends on the task.”
+          </div>
+          <div class="q"><b>D · Prediction</b><br>Before checking the text, predict:<br><br>
+            A. Music mainly helps memory.<br>
+            B. Music can help or distract depending on the person and task.<br>
+            C. Silence is always best.
+          </div>
+          <div class="q"><b>E · Vocabulary match</b><br>Match the words to meanings:<br><br>
+            <b>distracting · in a nutshell · complex · debunk · willing · figure out · caveat · working memory</b>
+          </div>
+          <div class="q"><b>F · Distraction Meter</b><br>Rate each from <b>0–5</b> for you:<br><br>
+            lyrics · notifications · background voices · loud music · unfamiliar music<br><br>
+            Then compare two: <i>Lyrics are more distracting for me than…</i>
+          </div>
+        </div>
+      </section>
     </section>
 
     <section class="screen" id="screen-study">
@@ -218,16 +258,16 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
         <section class="card collocations">
           <h3>Collocations</h3>
           <div class="colloc-list">
-            <div class="colloc">boost your mood<small>improve how you feel</small></div>
-            <div class="colloc">stay on task<small>keep working without drifting away</small></div>
-            <div class="colloc">reduce comprehension<small>make understanding weaker</small></div>
-            <div class="colloc">overload working memory<small>give the brain too much to process</small></div>
-            <div class="colloc">interrupt your train of thought<small>break your concentration</small></div>
-            <div class="colloc">listen at a low volume<small>keep the sound quiet</small></div>
-            <div class="colloc">do a demanding task<small>work on something mentally difficult</small></div>
-            <div class="colloc">process information<small>understand and work with information</small></div>
-            <div class="colloc">revise for an exam<small>study again before a test</small></div>
-            <div class="colloc">background music<small>music playing while you do something else</small></div>
+            <div class="colloc">boost your mood</div>
+            <div class="colloc">stay on task</div>
+            <div class="colloc">reduce comprehension</div>
+            <div class="colloc">overload working memory</div>
+            <div class="colloc">interrupt your train of thought</div>
+            <div class="colloc">listen at a low volume</div>
+            <div class="colloc">do a demanding task</div>
+            <div class="colloc">process information</div>
+            <div class="colloc">revise for an exam</div>
+            <div class="colloc">background music</div>
             <div class="challenge"><b>Mini challenge:</b> choose any 4 collocations and write four sentences about your real study habits.</div>
           </div>
         </section>
@@ -265,9 +305,14 @@ document.querySelectorAll(".choice").forEach(function(btn){
  };
 });
 
-document.getElementById("videoTask").onclick=function(){
- document.getElementById("videoSupport").classList.toggle("on");
-};
+document.querySelectorAll(".vtask-btn").forEach(function(btn){
+ btn.onclick=function(){
+   const target=document.getElementById(btn.dataset.target);
+   const wasOpen=target.classList.contains("on");
+   document.querySelectorAll("#screen-hook .support").forEach(x=>x.classList.remove("on"));
+   if(!wasOpen) target.classList.add("on");
+ };
+});
 
 document.querySelectorAll(".answer-btn").forEach(function(btn){
  btn.onclick=function(){
