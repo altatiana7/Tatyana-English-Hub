@@ -706,7 +706,8 @@ if(readingFull) readingFull.onclick=async function(){
     if(prosMain) prosMain.src=prosData;
     if(prosFull) prosFull.src=prosData;
   }
-\n  const pov=document.getElementById("visualOverlay");
+
+  const pov=document.getElementById("visualOverlay");
   function openProsOverlay(){document.getElementById("fullProsImage").src=document.getElementById("prosImage").src;pov.classList.add("on");pov.setAttribute("aria-hidden","false");}
   document.getElementById("openPros").onclick=openProsOverlay;
   document.getElementById("prosImage").onclick=openProsOverlay;
