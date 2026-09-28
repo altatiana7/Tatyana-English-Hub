@@ -282,7 +282,7 @@ main{min-height:0;display:grid;grid-template-columns:230px 1fr;gap:12px;padding:
     <section class="screen" id="screen-pros">
       <div class="pros-screen">
         <div class="pros-image-card">
-          <img id="prosImage" src="assets/music-pros-cons-fixed.jpg?v=3" alt="Is It OK to Listen to Music While Studying? Pros and Cons for Adults">
+          <img id="prosImage" src="data:image/jpeg;base64,BASE64_CHUNKS_HERE" alt="Is It OK to Listen to Music While Studying? Pros and Cons for Adults">
         </div>
         <aside class="pros-side">
           <div class="card blue">
@@ -676,7 +676,7 @@ if(readingFull) readingFull.onclick=async function(){
     <button id="fullPros">⛶ Full screen</button>
   </div>
   <div class="visual-body">
-    <img id="fullProsImage" src="assets/music-pros-cons-fixed.jpg?v=3" alt="Pros and Cons for Adults">
+    <img id="fullProsImage" src="" alt="Pros and Cons for Adults">
   </div>
 </div>
 <script>
@@ -699,7 +699,7 @@ if(readingFull) readingFull.onclick=async function(){
   };
 
   const pov=document.getElementById("visualOverlay");
-  function openProsOverlay(){pov.classList.add("on");pov.setAttribute("aria-hidden","false");}
+  function openProsOverlay(){document.getElementById("fullProsImage").src=document.getElementById("prosImage").src;pov.classList.add("on");pov.setAttribute("aria-hidden","false");}
   document.getElementById("openPros").onclick=openProsOverlay;
   document.getElementById("prosImage").onclick=openProsOverlay;
   document.getElementById("closePros").onclick=async function(){
