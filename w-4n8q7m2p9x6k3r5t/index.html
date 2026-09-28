@@ -7,176 +7,110 @@
 <title>Katya · Teacher Hub</title>
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#efe5df;font-family:Arial,Helvetica,sans-serif;color:#2d2022}
-button,textarea{font:inherit}
-button{cursor:pointer}
-#app{position:fixed;inset:0;overflow:hidden;background:#efe5df}
-.blur-bg{position:absolute;inset:-28px;background-position:center;background-size:cover;background-repeat:no-repeat;filter:blur(24px) brightness(.92);transform:scale(1.06);opacity:.55}
-.stage{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,150vh);aspect-ratio:3/2;max-height:100vh;background:#f6eee9;box-shadow:0 0 34px rgba(72,35,35,.16);overflow:hidden}
-.cover{position:absolute;inset:0;background-position:center;background-size:100% 100%;background-repeat:no-repeat}
-.hotspot{position:absolute;border:0;background:transparent;border-radius:18px;outline:none}
-.hotspot:focus-visible{box-shadow:0 0 0 3px rgba(185,119,119,.32)}
-.h-l1{left:2.2%;top:23.8%;width:15.2%;height:5.7%}
-.h-l2{left:2.2%;top:29.7%;width:15.2%;height:5.7%}
-.h-l3{left:2.2%;top:35.6%;width:15.2%;height:5.7%}
-.h-m2{left:.7%;top:43.1%;width:16.8%;height:5.4%}
-.h-m3{left:.7%;top:49.4%;width:16.8%;height:5.4%}
-.h-m4{left:.7%;top:55.8%;width:16.8%;height:5.4%}
-.h-m5{left:.7%;top:62.2%;width:16.8%;height:5.4%}
-.h-m6{left:.7%;top:68.6%;width:16.8%;height:5.4%}
-.h-m7{left:.7%;top:75.0%;width:16.8%;height:5.4%}
-.h-m8{left:.7%;top:81.4%;width:16.8%;height:5.4%}
-.h-notes{left:.7%;top:90.8%;width:16.8%;height:5.4%}
-
-.lesson-view{position:fixed;inset:0;z-index:50;background:#fff;display:none;grid-template-rows:50px 1fr}
-.lesson-view.on{display:grid}
-.lessonbar{display:flex;align-items:center;gap:10px;padding:7px 10px;background:rgba(247,238,234,.98);border-bottom:1px solid #ead8d2}
-.back,.notes-btn{border:0;border-radius:12px;padding:9px 13px;font-weight:800}
-.back{background:#d8aaa5;color:#fff}
-.notes-btn{margin-left:auto;background:#f1dfdc;color:#4a3436}
-.lesson-title{font-weight:800;font-size:14px;color:#38282a}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f4ede9;font-family:Arial,Helvetica,sans-serif}
+#home{position:fixed;inset:0;background:#f4ede9}
+#cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;display:block}
+.hotspot{position:absolute;left:0;width:18.2%;border:0;background:transparent;cursor:pointer;z-index:5}
+.hotspot:focus{outline:2px solid rgba(214,176,171,.45);outline-offset:-2px}
+#l1{top:24.1%;height:5.3%}
+#l2{top:30.0%;height:5.3%}
+#l3{top:36.0%;height:5.3%}
+#m2{top:42.7%;height:5.3%}
+#m3{top:49.0%;height:5.3%}
+#m4{top:55.4%;height:5.3%}
+#m5{top:61.8%;height:5.3%}
+#m6{top:68.1%;height:5.3%}
+#m7{top:74.5%;height:5.3%}
+#m8{top:80.9%;height:5.3%}
+#notesHot{top:90.1%;height:6.1%}
+.viewer{position:fixed;inset:0;z-index:20;background:#fff;display:none;grid-template-rows:48px 1fr}
+.viewer.on{display:grid}
+.bar{display:flex;align-items:center;gap:10px;padding:6px 10px;background:#f0d9d6;color:#3a292d;border-bottom:1px solid #e1c5c1}
+.bar button{border:0;border-radius:12px;padding:8px 12px;background:#d6aaa6;color:#fff;font-weight:800;cursor:pointer}
+.bar .title{font-weight:800;font-size:13px}
 .framewrap{position:relative;min-height:0}
-iframe{display:block;width:100%;height:100%;border:0;background:#fff}
-
-.modal{position:fixed;inset:0;z-index:60;display:none;place-items:center;background:rgba(43,30,31,.26);padding:20px}
-.modal.on{display:grid}
-.card{width:min(430px,92vw);background:rgba(255,249,246,.98);border:1px solid #ead8d2;border-radius:22px;padding:20px;box-shadow:0 24px 70px rgba(58,34,36,.22)}
-.card-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-.card h2{margin:0;font-family:Georgia,serif;font-size:22px;font-weight:500}
-.close{border:0;border-radius:10px;background:#f0dfdc;padding:8px 10px}
-.lesson-options{display:grid;gap:8px}
-.lesson-options button{border:1px solid #ead8d2;border-radius:14px;background:#fff8f5;padding:11px 12px;text-align:left;color:#3d2c2e;font-weight:700}
-.lesson-options button:hover{background:#f5e7e3}
-.note-area{width:100%;height:220px;border:1px solid #ead8d2;border-radius:14px;padding:12px;resize:none;background:#fff}
-.note-actions{display:flex;gap:8px;margin-top:10px}
-.note-actions button{border:0;border-radius:11px;padding:9px 12px;font-weight:800}
-.save{background:#d3a29d;color:#fff}.clear{background:#f1e4e1;color:#523b3d}
-.loading{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#f5ece7;color:#6b4d50;font-size:14px;font-weight:700}
-.loading.hide{display:none}
+iframe{width:100%;height:100%;border:0;background:#fff}
+.placeholder{position:absolute;inset:0;display:none;place-items:center;background:#fbf7f5}
+.placeholder.on{display:grid}
+.card{background:#fff;border:1px solid #ead7d3;border-radius:20px;padding:26px 30px;text-align:center;box-shadow:0 16px 40px rgba(80,45,50,.08)}
+.card h2{margin:0 0 8px;color:#4a3137}.card p{margin:0;color:#7a666a;font-size:13px}
+.notes{position:fixed;right:22px;top:22px;bottom:22px;width:min(360px,42vw);z-index:30;background:rgba(255,250,248,.98);border:1px solid #ead7d3;border-radius:20px;padding:16px;box-shadow:0 20px 60px rgba(70,40,45,.18);display:none;flex-direction:column}
+.notes.on{display:flex}
+.notes h3{margin:0 0 10px;color:#4a3137}
+.notes textarea{flex:1;resize:none;border:1px solid #ead7d3;border-radius:14px;padding:12px;background:#fff;font:inherit}
+.actions{display:flex;gap:8px;margin-top:10px}
+.actions button{border:0;border-radius:12px;padding:9px 12px;font-weight:800;cursor:pointer}
+.save{background:#d6aaa6;color:white}.clear{background:#f1e7e4;color:#6d555b}
+.closeNotes{position:absolute;right:12px;top:10px;border:0;background:transparent;font-size:22px;color:#795f64;cursor:pointer}
+@media(max-width:900px){
+  .hotspot{width:18.6%}
+  .bar .title{font-size:11px}
+}
 </style>
 </head>
 <body>
-<div id="app">
-  <div class="blur-bg" id="blurBg"></div>
-  <div class="stage">
-    <div class="cover" id="cover"></div>
+<section id="home">
+  <img id="cover" src="./assets/katya-strict-cover.webp" alt="Katya English Hub">
+  <button class="hotspot" id="l1" aria-label="Lesson 1"></button>
+  <button class="hotspot" id="l2" aria-label="Lesson 2"></button>
+  <button class="hotspot" id="l3" aria-label="Lesson 3"></button>
+  <button class="hotspot" id="m2" aria-label="Module 2"></button>
+  <button class="hotspot" id="m3" aria-label="Module 3"></button>
+  <button class="hotspot" id="m4" aria-label="Module 4"></button>
+  <button class="hotspot" id="m5" aria-label="Module 5"></button>
+  <button class="hotspot" id="m6" aria-label="Module 6"></button>
+  <button class="hotspot" id="m7" aria-label="Module 7"></button>
+  <button class="hotspot" id="m8" aria-label="Module 8"></button>
+  <button class="hotspot" id="notesHot" aria-label="Teacher Notes"></button>
+</section>
 
-    <button class="hotspot h-l1" aria-label="Lesson 1 Elections in Russia" onclick="openLesson('Lesson 1 · Elections in Russia','../kate-english-hub/extra-practice-elections-russia.html')"></button>
-    <button class="hotspot h-l2" aria-label="Lesson 2 Generations" onclick="openLesson('Lesson 2 · Generations','../kate-english-hub/homework-lesson2-generations.html')"></button>
-    <button class="hotspot h-l3" aria-label="Lesson 3 Useful Tools" onclick="openLesson('Lesson 3 · Useful Tools','../kate-english-hub/useful-tools-false-synonyms.html')"></button>
-
-    <button class="hotspot h-m2" aria-label="Module 2" onclick="openModule(2)"></button>
-    <button class="hotspot h-m3" aria-label="Module 3" onclick="openModule(3)"></button>
-    <button class="hotspot h-m4" aria-label="Module 4" onclick="openModule(4)"></button>
-    <button class="hotspot h-m5" aria-label="Module 5" onclick="openModule(5)"></button>
-    <button class="hotspot h-m6" aria-label="Module 6" onclick="openModule(6)"></button>
-    <button class="hotspot h-m7" aria-label="Module 7" onclick="openModule(7)"></button>
-    <button class="hotspot h-m8" aria-label="Module 8" onclick="openModule(8)"></button>
-    <button class="hotspot h-notes" aria-label="Teacher Notes" onclick="openNotes()"></button>
-  </div>
-</div>
-
-<div class="lesson-view" id="lessonView">
-  <div class="lessonbar">
-    <button class="back" onclick="goHome()">← Назад</button>
-    <div class="lesson-title" id="lessonTitle">Lesson</div>
-    <button class="notes-btn" onclick="openNotes()">Teacher Notes</button>
+<section class="viewer" id="viewer">
+  <div class="bar">
+    <button id="back">← Назад</button>
+    <div class="title" id="title">Lesson</div>
   </div>
   <div class="framewrap">
-    <iframe id="lessonFrame" title="Katya lesson"></iframe>
+    <iframe id="frame" title="Katya lesson"></iframe>
+    <div class="placeholder" id="placeholder"><div class="card"><h2 id="phTitle">Module</h2><p>Слот подготовлен для следующего урока.</p></div></div>
   </div>
-</div>
+</section>
 
-<div class="modal" id="moduleModal">
-  <div class="card">
-    <div class="card-top">
-      <h2 id="moduleTitle">Module 2</h2>
-      <button class="close" onclick="closeModal('moduleModal')">✕</button>
-    </div>
-    <div class="lesson-options">
-      <button onclick="placeholderLesson(1)">Lesson 1</button>
-      <button onclick="placeholderLesson(2)">Lesson 2</button>
-      <button onclick="placeholderLesson(3)">Lesson 3</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="notesModal">
-  <div class="card">
-    <div class="card-top">
-      <h2>Teacher Notes</h2>
-      <button class="close" onclick="closeModal('notesModal')">✕</button>
-    </div>
-    <textarea class="note-area" id="notesText" placeholder="Notes for Katya lessons..."></textarea>
-    <div class="note-actions">
-      <button class="save" onclick="saveNotes()">Save</button>
-      <button class="clear" onclick="clearNotes()">Clear</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="slotModal">
-  <div class="card">
-    <div class="card-top">
-      <h2 id="slotTitle">Lesson</h2>
-      <button class="close" onclick="closeModal('slotModal')">✕</button>
-    </div>
-    <p style="margin:0;color:#6f5a5c">Этот слот готов для следующего урока.</p>
-  </div>
-</div>
-
-<div class="loading" id="loading">Загружаю обложку…</div>
+<aside class="notes" id="notes">
+  <button class="closeNotes" id="closeNotes">×</button>
+  <h3>Teacher Notes</h3>
+  <textarea id="noteText" placeholder="Ошибки, идеи, homework, vocabulary..."></textarea>
+  <div class="actions"><button class="save" id="saveNote">Сохранить</button><button class="clear" id="clearNote">Очистить</button></div>
+</aside>
 
 <script>
-let currentModule=2;
-async function loadCover(){
-  try{
-    const parts=await Promise.all([
-      fetch('./cover-data/01.b64').then(r=>r.text()),
-      fetch('./cover-data/02.b64').then(r=>r.text()),
-      fetch('./cover-data/03.b64').then(r=>r.text())
-    ]);
-    const b64=parts.join('').replace(/\s+/g,'');
-    const uri='data:image/webp;base64,'+b64;
-    document.getElementById('cover').style.backgroundImage='url("'+uri+'")';
-    document.getElementById('blurBg').style.backgroundImage='url("'+uri+'")';
-  } finally {
-    document.getElementById('loading').classList.add('hide');
-  }
-}
-function openLesson(title,url){
-  document.getElementById('lessonTitle').textContent=title;
-  document.getElementById('lessonFrame').src=url;
-  document.getElementById('lessonView').classList.add('on');
-}
-function goHome(){
-  document.getElementById('lessonView').classList.remove('on');
-  document.getElementById('lessonFrame').src='about:blank';
+const lessons={
+ l1:['Module 1 · Lesson 1 · Elections in Russia','../kate-english-hub/extra-practice-elections-russia.html'],
+ l2:['Module 1 · Lesson 2 · Generations','../kate-english-hub/homework-lesson2-generations.html'],
+ l3:['Module 1 · Lesson 3 · Useful Tools','../kate-english-hub/useful-tools-false-synonyms.html']
+};
+const viewer=document.getElementById('viewer'), frame=document.getElementById('frame'), placeholder=document.getElementById('placeholder');
+function openLesson(key){
+ const [t,u]=lessons[key];
+ document.getElementById('title').textContent=t;
+ placeholder.classList.remove('on');
+ frame.style.display='block';frame.src=u;viewer.classList.add('on');
 }
 function openModule(n){
-  currentModule=n;
-  document.getElementById('moduleTitle').textContent='Module '+n;
-  document.getElementById('moduleModal').classList.add('on');
+ document.getElementById('title').textContent='Module '+n;
+ frame.src='about:blank';frame.style.display='none';
+ document.getElementById('phTitle').textContent='Module '+n+' · 3 lessons';
+ placeholder.classList.add('on');viewer.classList.add('on');
 }
-function placeholderLesson(n){
-  closeModal('moduleModal');
-  document.getElementById('slotTitle').textContent='Module '+currentModule+' · Lesson '+n;
-  document.getElementById('slotModal').classList.add('on');
-}
-function openNotes(){
-  document.getElementById('notesText').value=localStorage.getItem('katya_teacher_notes')||'';
-  document.getElementById('notesModal').classList.add('on');
-}
-function saveNotes(){
-  localStorage.setItem('katya_teacher_notes',document.getElementById('notesText').value);
-  closeModal('notesModal');
-}
-function clearNotes(){
-  document.getElementById('notesText').value='';
-  localStorage.removeItem('katya_teacher_notes');
-}
-function closeModal(id){document.getElementById(id).classList.remove('on')}
-loadCover();
+document.getElementById('l1').onclick=()=>openLesson('l1');
+document.getElementById('l2').onclick=()=>openLesson('l2');
+document.getElementById('l3').onclick=()=>openLesson('l3');
+[2,3,4,5,6,7,8].forEach(n=>document.getElementById('m'+n).onclick=()=>openModule(n));
+document.getElementById('back').onclick=()=>{viewer.classList.remove('on');frame.src='about:blank';placeholder.classList.remove('on');frame.style.display='block'};
+const notes=document.getElementById('notes'), note=document.getElementById('noteText');
+document.getElementById('notesHot').onclick=()=>{note.value=localStorage.getItem('katya_teacher_notes')||'';notes.classList.add('on')};
+document.getElementById('closeNotes').onclick=()=>notes.classList.remove('on');
+document.getElementById('saveNote').onclick=()=>localStorage.setItem('katya_teacher_notes',note.value);
+document.getElementById('clearNote').onclick=()=>{note.value='';localStorage.removeItem('katya_teacher_notes')};
 </script>
 </body>
 </html>
