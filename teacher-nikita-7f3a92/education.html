@@ -32,21 +32,6 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 .teacherhint{display:none;margin-top:10px;padding:11px;border-radius:12px;background:#eef5ff;border:1px dashed #9db7d2;color:#28445e;font-size:14px}
 @media(max-width:900px){.app{grid-template-columns:1fr}.side{position:relative;height:auto}.menu{grid-template-columns:repeat(2,1fr)}.top{position:relative}.grid2,.grid3,.grammar{grid-template-columns:1fr}.hero h1{font-size:42px}.wrap{padding:14px}}
 </style>
-
-<style id="nikita-homework-style">
-.hw-route{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}.hw-route span{padding:8px 11px;border-radius:999px;background:#e9eef2;color:var(--navy);font-size:12px;font-weight:900}
-.hw-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:16px}
-.hw-deck{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px}
-.hw-deck h3{margin-bottom:4px}.hw-sub{font-size:13px;color:var(--muted);margin:0 0 12px}
-.hw-card{height:270px;perspective:1200px;cursor:pointer}.hw-inner{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}.hw-card.flipped .hw-inner{transform:rotateY(180deg)}
-.hw-face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:22px;display:grid;place-items:center;text-align:center;padding:28px;background:linear-gradient(145deg,#fff,#f5f8fa);box-shadow:0 10px 28px rgba(12,34,53,.08)}
-.hw-back{transform:rotateY(180deg);background:linear-gradient(145deg,#fffaf2,#eef6f8)}.hw-term{font-family:Georgia,serif;font-size:34px;line-height:1.05;color:var(--navy);font-weight:700}.hw-def{font-size:18px;line-height:1.45;color:var(--ink)}.hw-example{margin-top:10px;color:var(--muted);font-style:italic}
-.hw-controls{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:12px}.hw-controls button{border:1px solid var(--line);background:#fff;color:var(--navy);min-width:44px;height:42px;border-radius:12px;font-weight:900;cursor:pointer}.hw-count{min-width:78px;text-align:center;font-weight:900;color:var(--muted)}
-.hw-task{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;margin-top:18px}.hw-item{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:center;margin:10px 0}.hw-item input{width:100%;border:1px solid #cbd8df;border-radius:10px;padding:10px 12px;font:inherit}.hw-result{display:none;margin-top:12px;padding:12px;border-radius:12px;font-weight:800}.hw-result.ok{display:block;background:#eaf6f1;color:#245c4c}.hw-result.bad{display:block;background:#fff0ee;color:#8a332e}
-.hw-answer{display:none;margin-top:12px;padding:12px;border-radius:12px;background:#f7f3ec;border:1px dashed #c8aa85;line-height:1.6}
-.hw-write textarea{min-height:120px}.hw-final{background:linear-gradient(135deg,#0d2940,#1c4a65);color:#fff;border-radius:22px;padding:22px;margin-top:18px}.hw-final h3{color:#fff}.hw-final p{color:#e7eff4}
-@media(max-width:900px){.hw-grid{grid-template-columns:1fr}.hw-card{height:240px}}
-</style>
 </head>
 <body>
 <div class="app">
@@ -66,7 +51,6 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 <button onclick="show('bridge',this)">9. Education</button>
 <button onclick="show('debate',this)">10. Debate</button>
 <button onclick="show('exit',this)">11. Exit challenge</button>
-<button onclick="show('homework',this)">12. Homework</button>
 </div>
 <a class="back" href="./">← Nikita Hub</a>
 </aside>
@@ -414,103 +398,6 @@ When the prisoner <b>1. ________</b> (ENTER) the cell, he immediately notices th
 </div>
 </main>
 </div>
-
-<section id="homework" class="screen">
-  <h2>12. Homework — Society & Education</h2>
-  <p class="lead">Revise the collocations first. Then complete the practice without looking back at the cards.</p>
-  <div class="hw-route"><span>1 · Society deck</span><span>2 · Society practice</span><span>3 · Education deck</span><span>4 · Education practice</span><span>5 · Final production</span></div>
-
-  <div class="hw-grid">
-    <div class="hw-deck">
-      <h3>Society · Quizlet-style cards</h3>
-      <p class="hw-sub">Click the card to flip it. Use the speaker button to hear the collocation.</p>
-      <div id="societyHwCard" class="hw-card" onclick="hwFlip('society')">
-        <div class="hw-inner">
-          <div class="hw-face"><div id="societyHwFront" class="hw-term"></div></div>
-          <div class="hw-face hw-back"><div><div id="societyHwDef" class="hw-def"></div><div id="societyHwEx" class="hw-example"></div></div></div>
-        </div>
-      </div>
-      <div class="hw-controls">
-        <button onclick="hwPrev('society',event)" aria-label="Previous">←</button>
-        <button onclick="hwSpeak('society',event)" aria-label="Listen">♪</button>
-        <div id="societyHwCount" class="hw-count"></div>
-        <button onclick="hwNext('society',event)" aria-label="Next">→</button>
-      </div>
-    </div>
-
-    <div class="hw-deck">
-      <h3>Education · Quizlet-style cards</h3>
-      <p class="hw-sub">Focus on chunks you can reuse in discussion, essays and university-related conversations.</p>
-      <div id="educationHwCard" class="hw-card" onclick="hwFlip('education')">
-        <div class="hw-inner">
-          <div class="hw-face"><div id="educationHwFront" class="hw-term"></div></div>
-          <div class="hw-face hw-back"><div><div id="educationHwDef" class="hw-def"></div><div id="educationHwEx" class="hw-example"></div></div></div>
-        </div>
-      </div>
-      <div class="hw-controls">
-        <button onclick="hwPrev('education',event)" aria-label="Previous">←</button>
-        <button onclick="hwSpeak('education',event)" aria-label="Listen">♪</button>
-        <div id="educationHwCount" class="hw-count"></div>
-        <button onclick="hwNext('education',event)" aria-label="Next">→</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="hw-task">
-    <h3>Society · Complete the collocations</h3>
-    <p class="small">Type only the missing word or words.</p>
-    <div class="hw-item"><b>1.</b><input id="soc1" placeholder="social ______"></div>
-    <div class="hw-item"><b>2.</b><input id="soc2" placeholder="equal ______"></div>
-    <div class="hw-item"><b>3.</b><input id="soc3" placeholder="public ______"></div>
-    <div class="hw-item"><b>4.</b><input id="soc4" placeholder="community ______"></div>
-    <div class="hw-item"><b>5.</b><input id="soc5" placeholder="cultural ______"></div>
-    <div class="hw-item"><b>6.</b><input id="soc6" placeholder="social ______"></div>
-    <div class="hw-item"><b>7.</b><input id="soc7" placeholder="civic ______"></div>
-    <div class="hw-item"><b>8.</b><input id="soc8" placeholder="income ______"></div>
-    <div class="row"><button class="action" onclick="checkHwSet('soc')">Check</button><button class="action alt" onclick="toggle('socHwAnswers')">Show answers</button></div>
-    <div id="socHwResult" class="hw-result"></div>
-    <div id="socHwAnswers" class="hw-answer">1 norms · 2 opportunities · 3 services · 4 engagement · 5 diversity · 6 mobility · 7 responsibility · 8 inequality</div>
-  </div>
-
-  <div class="hw-task">
-    <h3>Education · Complete the collocations</h3>
-    <p class="small">Type only the missing word or words.</p>
-    <div class="hw-item"><b>1.</b><input id="edu1" placeholder="higher ______"></div>
-    <div class="hw-item"><b>2.</b><input id="edu2" placeholder="academic ______"></div>
-    <div class="hw-item"><b>3.</b><input id="edu3" placeholder="tuition ______"></div>
-    <div class="hw-item"><b>4.</b><input id="edu4" placeholder="learning ______"></div>
-    <div class="hw-item"><b>5.</b><input id="edu5" placeholder="compulsory ______"></div>
-    <div class="hw-item"><b>6.</b><input id="edu6" placeholder="vocational ______"></div>
-    <div class="hw-item"><b>7.</b><input id="edu7" placeholder="gain ______"></div>
-    <div class="hw-item"><b>8.</b><input id="edu8" placeholder="meet entry ______"></div>
-    <div class="hw-item"><b>9.</b><input id="edu9" placeholder="drop out of ______"></div>
-    <div class="hw-item"><b>10.</b><input id="edu10" placeholder="broaden your ______"></div>
-    <div class="row"><button class="action" onclick="checkHwSet('edu')">Check</button><button class="action alt" onclick="toggle('eduHwAnswers')">Show answers</button></div>
-    <div id="eduHwResult" class="hw-result"></div>
-    <div id="eduHwAnswers" class="hw-answer">1 education · 2 performance · 3 fees · 4 outcomes · 5 education · 6 training · 7 qualifications · 8 requirements · 9 university · 10 knowledge</div>
-  </div>
-
-  <div class="hw-task hw-write">
-    <h3>Use the collocations in context</h3>
-    <ol>
-      <li>Explain one way education can improve <b>social mobility</b>.</li>
-      <li>Give one realistic example of <b>unequal opportunities</b> in education.</li>
-      <li>Should university students always pay <b>tuition fees</b>? Give two reasons.</li>
-      <li>Which matters more: <b>academic performance</b> or practical skills?</li>
-      <li>How can schools encourage <b>civic responsibility</b> and <b>community engagement</b>?</li>
-      <li>Use at least four collocations from the cards to describe an ideal education system.</li>
-    </ol>
-    <textarea placeholder="Write your answers here..."></textarea>
-    <button class="action alt" style="margin-top:10px" onclick="toggle('hwModel')">Model language</button>
-    <div id="hwModel" class="hw-answer"><b>Useful frame:</b> “A strong education system should provide equal opportunities, improve learning outcomes and support social mobility. It should also prepare students for civic responsibility rather than focusing only on academic performance.”</div>
-  </div>
-
-  <div class="hw-final">
-    <h3>Final challenge</h3>
-    <p>Record a 60–90 second answer: <b>“To what extent can education change a person’s place in society?”</b> Use at least five collocations from both decks.</p>
-  </div>
-</section>
-
 <script>
 const TEACHER_MODE = new URLSearchParams(location.search).get('teacher') === '1';
 function applyTeacherMode(){
@@ -581,82 +468,6 @@ function nextFlash(e){e.stopPropagation();fi=(fi+1)%flashData.length;renderFlash
 function prevFlash(e){e.stopPropagation();fi=(fi-1+flashData.length)%flashData.length;renderFlash()}
 function speakFlash(e){e.stopPropagation();if('speechSynthesis' in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(flashData[fi].f);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}
 renderFlash();
-</script>
-
-<script id="nikita-homework-script">
-const hwDecks={
-  society:[
-    {t:'social norms',d:'shared expectations about acceptable behaviour in a group or society',e:'Social norms can change significantly from one generation to another.'},
-    {t:'equal opportunities',d:'the same fair chances to succeed, regardless of background',e:'Education should give students equal opportunities.'},
-    {t:'public services',d:'services provided for the public, usually by the state or local authorities',e:'Reliable public services improve quality of life.'},
-    {t:'community engagement',d:'active participation in local or social community life',e:'Schools can encourage community engagement through volunteering.'},
-    {t:'cultural diversity',d:'the presence of different cultures and traditions within one society',e:'Cultural diversity can broaden people’s perspectives.'},
-    {t:'social mobility',d:'the ability to move to a different social or economic position',e:'Higher education can increase social mobility.'},
-    {t:'civic responsibility',d:'a person’s duty to contribute responsibly to society',e:'Voting is often described as a form of civic responsibility.'},
-    {t:'income inequality',d:'an uneven distribution of income between groups of people',e:'Income inequality can affect access to education.'},
-    {t:'social background',d:'a person’s family, class and social circumstances',e:'Social background should not determine educational success.'},
-    {t:'social cohesion',d:'the strength of relationships and sense of unity within society',e:'Trust in institutions can support social cohesion.'},
-    {t:'social exclusion',d:'being prevented from fully participating in society',e:'Long-term unemployment can lead to social exclusion.'},
-    {t:'access to resources',d:'the ability to obtain useful services, money, information or support',e:'Students need fair access to resources.'},
-    {t:'quality of life',d:'the general level of health, comfort and wellbeing a person experiences',e:'Public transport can affect quality of life.'},
-    {t:'shape public opinion',d:'to influence what many people think about an issue',e:'Media can shape public opinion quickly.'}
-  ],
-  education:[
-    {t:'higher education',d:'education at university or college level',e:'Higher education is not the only route to a successful career.'},
-    {t:'academic performance',d:'how well a student performs in formal study',e:'Sleep and stress can affect academic performance.'},
-    {t:'tuition fees',d:'money paid for teaching at a university or college',e:'High tuition fees may discourage some applicants.'},
-    {t:'learning outcomes',d:'the knowledge and skills students are expected to gain',e:'Good courses define clear learning outcomes.'},
-    {t:'compulsory education',d:'education that children are legally required to receive',e:'Compulsory education usually covers the school years.'},
-    {t:'vocational training',d:'practical education for a specific job or profession',e:'Vocational training can lead directly to employment.'},
-    {t:'gain qualifications',d:'to obtain official certificates or degrees',e:'Many adults return to study to gain qualifications.'},
-    {t:'meet entry requirements',d:'to satisfy the conditions needed to join a course',e:'Applicants must meet entry requirements before enrolment.'},
-    {t:'drop out of university',d:'to leave university before completing a course',e:'Financial pressure can cause students to drop out of university.'},
-    {t:'broaden your knowledge',d:'to increase what you know about a subject or the world',e:'Reading widely can broaden your knowledge.'},
-    {t:'develop critical thinking',d:'to improve the ability to analyse claims and evidence carefully',e:'Debates can help students develop critical thinking.'},
-    {t:'practical skills',d:'abilities that can be used directly in real tasks or jobs',e:'Employers often value practical skills as well as degrees.'},
-    {t:'educational inequality',d:'unfair differences in access to or quality of education',e:'Educational inequality often reflects wider social inequality.'},
-    {t:'lifelong learning',d:'continuing to learn and develop skills throughout life',e:'Technology makes lifelong learning easier to access.'}
-  ]
-};
-const hwIndex={society:0,education:0};
-
-function hwRender(type){
-  const item=hwDecks[type][hwIndex[type]];
-  document.getElementById(type+'HwFront').textContent=item.t;
-  document.getElementById(type+'HwDef').textContent=item.d;
-  document.getElementById(type+'HwEx').textContent=item.e;
-  document.getElementById(type+'HwCount').textContent=(hwIndex[type]+1)+' / '+hwDecks[type].length;
-  document.getElementById(type+'HwCard').classList.remove('flipped');
-}
-function hwFlip(type){document.getElementById(type+'HwCard').classList.toggle('flipped')}
-function hwNext(type,e){e.stopPropagation();hwIndex[type]=(hwIndex[type]+1)%hwDecks[type].length;hwRender(type)}
-function hwPrev(type,e){e.stopPropagation();hwIndex[type]=(hwIndex[type]-1+hwDecks[type].length)%hwDecks[type].length;hwRender(type)}
-function hwSpeak(type,e){e.stopPropagation();if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(hwDecks[type][hwIndex[type]].t);u.lang='en-GB';u.rate=.88;speechSynthesis.speak(u)}
-function normHw(v){return (v||'').trim().toLowerCase().replace(/\s+/g,' ')}
-function checkHwSet(type){
-  const answers=type==='soc'
-    ?['norms','opportunities','services','engagement','diversity','mobility','responsibility','inequality']
-    :['education','performance','fees','outcomes','education','training','qualifications','requirements','university','knowledge'];
-  let score=0;
-  answers.forEach((a,i)=>{
-    const input=document.getElementById(type+(i+1));
-    const ok=normHw(input.value)===a;
-    if(ok) score++;
-    input.style.borderColor=ok?'#4e8b74':'#b85c54';
-    input.style.background=ok?'#f0f8f4':'#fff5f3';
-  });
-  const out=document.getElementById(type+'HwResult');
-  out.className='hw-result '+(score===answers.length?'ok':'bad');
-  out.textContent=score+' / '+answers.length+(score===answers.length?' — complete.':' — correct the highlighted items and try again.');
-}
-function openHomeworkFromHash(){
-  if(location.hash!=='#homework') return;
-  const btn=[...document.querySelectorAll('.menu button')].find(b=>b.textContent.includes('Homework'));
-  if(btn) show('homework',btn);
-}
-hwRender('society');hwRender('education');
-window.addEventListener('DOMContentLoaded',openHomeworkFromHash);
-window.addEventListener('hashchange',openHomeworkFromHash);
 </script>
 </body>
 </html>
