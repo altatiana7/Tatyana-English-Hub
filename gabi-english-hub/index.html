@@ -8,33 +8,274 @@
 <meta http-equiv="Expires" content="0">
 <title>Gabi English Hub · Gateway to the World B1</title>
 <style>
-:root{--ink:#0a315f;--blue:#169be5;--cyan:#35c4df;--line:rgba(21,105,155,.16)}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#082d59;font-family:Arial,sans-serif}button{font:inherit}.board{position:fixed;inset:0;background:#082d59;overflow:hidden}.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}.coverShade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(216,241,255,.18),transparent 28%),linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.22));pointer-events:none}.sidebar{position:absolute;z-index:10;left:0;top:0;bottom:0;width:clamp(205px,15vw,282px);padding:clamp(10px,1vw,16px) clamp(8px,.8vw,13px);background:linear-gradient(180deg,rgba(233,247,255,.97),rgba(220,240,251,.95));border-right:1px solid rgba(255,255,255,.72);box-shadow:10px 0 34px rgba(4,54,91,.20);backdrop-filter:blur(15px);overflow:auto;scrollbar-width:none}.sidebar::-webkit-scrollbar{display:none}.brand{padding:3px 5px 9px;margin-bottom:6px;border-bottom:1px solid var(--line)}.brand b{display:block;color:#0b4c7b;font-size:clamp(17px,1.45vw,25px);line-height:1;font-weight:900}.brand span{display:block;margin-top:4px;color:#5a7890;font-size:clamp(8px,.62vw,11px);font-weight:800;letter-spacing:.12em}.homeBtn,.moduleBtn,.lessonBtn{width:100%;border:0;cursor:pointer;text-align:left;transition:.12s ease}.homeBtn{min-height:clamp(39px,4.2vh,53px);margin-bottom:7px;padding:7px 10px;border-radius:13px;background:linear-gradient(135deg,#21a7ec,#0e8ddb);color:#fff;font-weight:900;font-size:clamp(11px,.85vw,15px);box-shadow:0 5px 14px rgba(15,142,215,.26)}.module{margin:0 0 5px}.moduleBtn{min-height:clamp(39px,4.55vh,54px);display:grid;grid-template-columns:31px minmax(0,1fr) 14px;gap:7px;align-items:center;padding:6px 8px;border-radius:13px;background:rgba(255,255,255,.88);color:#163f68;box-shadow:0 2px 8px rgba(32,88,125,.08)}.moduleBtn:hover,.moduleBtn.open{background:#fff;box-shadow:0 5px 15px rgba(15,113,171,.18)}.moduleBtn .num{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:#1aa0e7;color:#fff;font-size:11px;font-weight:900}.moduleBtn .name{font-size:clamp(9px,.72vw,13px);font-weight:900;line-height:1.05}.moduleBtn .arrow{font-size:17px;color:#62a7ca}.moduleBtn.open .arrow{transform:rotate(90deg)}.lessons{display:none;padding:4px 2px 1px 14px}.lessons.open{display:grid;gap:4px}.lessonBtn{border-radius:9px;padding:6px 8px;background:rgba(255,255,255,.76);color:#345a76;font-size:clamp(8px,.62vw,11px);font-weight:800;line-height:1.15;border:1px solid rgba(40,119,165,.10)}.lessonBtn:hover{background:#fff;color:#0e6094}.badgeNew{display:inline-block;margin-left:5px;padding:2px 5px;border-radius:999px;background:#ffd642;color:#0a315f;font-size:9px;font-weight:900}.loader{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);padding:11px 16px;border-radius:999px;background:rgba(255,255,255,.9);color:#0c5a89;font-size:12px;font-weight:900;box-shadow:0 8px 24px rgba(0,60,100,.16)}.loader.hide{display:none}#lessonView{position:fixed;inset:0;z-index:50;display:none;background:#f2f8fc;overflow:auto}#lessonView.on{display:block}.topbar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:13px;padding:9px 14px;background:#fff;border-bottom:1px solid #d7e6f2}.back{width:42px;height:42px;border:0;border-radius:12px;background:#138bd7;color:#fff;font-size:23px;font-weight:900;cursor:pointer}.topbar small{display:block;color:#6b8498;font-weight:800;font-size:10px;letter-spacing:.08em}.topbar h1{margin:2px 0 0;color:#082d59;font-size:clamp(18px,2vw,29px)}.workspace{max-width:1180px;margin:auto;padding:24px}.topicTabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.topicTabs button{border:1px solid #cfe0ec;background:#fff;border-radius:999px;padding:9px 13px;color:#194c70;font-weight:800;cursor:pointer}.lessonCard{background:#fff;border:1px solid #dce9f2;border-radius:24px;padding:clamp(25px,4vw,56px);min-height:62vh;box-shadow:0 15px 42px rgba(27,74,107,.09)}.lessonCard small{font-weight:900;color:#168edf;letter-spacing:.1em}.lessonCard h2{font-size:clamp(32px,5vw,66px);line-height:1.02;color:#082d59;margin:13px 0}.lessonCard p{max-width:760px;color:#5c7487;font-size:clamp(16px,1.5vw,22px);line-height:1.55}@media(max-height:720px){.sidebar{padding-top:8px}.homeBtn{min-height:34px}.moduleBtn{min-height:36px}}@media(max-width:760px){.sidebar{width:190px}.moduleBtn{grid-template-columns:27px minmax(0,1fr) 12px}.moduleBtn .num{width:25px;height:25px}}
+:root{
+  --ink:#0a315f;
+  --blue:#169be5;
+  --cyan:#35c4df;
+  --panel:rgba(239,248,255,.96);
+  --line:rgba(21,105,155,.16);
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;min-width:100%;min-height:100%;overflow:hidden;background:#082d59;font-family:Arial,sans-serif}
+button{font:inherit}
+.board{position:fixed;inset:0;width:100dvw;height:100dvh;min-width:100vw;min-height:100vh;margin:0;padding:0;overflow:hidden;background:#082d59}
+.cover{position:absolute;inset:0;width:100%;height:100%;min-width:100%;min-height:100%;max-width:none;max-height:none;margin:0;padding:0;display:block;object-fit:cover;object-position:center center;transform:none;image-rendering:auto}
+.cover.ready{opacity:1}
+.coverShade{
+  position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(216,241,255,.18) 0,transparent 26%);
+}
+.sidebar{
+  position:absolute;z-index:10;left:0;top:0;bottom:0;
+  width:clamp(205px,15vw,282px);
+  padding:clamp(10px,1vw,16px) clamp(8px,.8vw,13px);
+  background:linear-gradient(180deg,rgba(233,247,255,.97),rgba(220,240,251,.95));
+  border-right:1px solid rgba(255,255,255,.72);
+  box-shadow:10px 0 34px rgba(4,54,91,.20);
+  backdrop-filter:blur(15px);
+  overflow:auto;
+  scrollbar-width:none;
+}
+.sidebar::-webkit-scrollbar{display:none}
+.brand{padding:3px 5px 9px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.brand b{display:block;color:#0b4c7b;font-size:clamp(17px,1.45vw,25px);line-height:1;font-weight:900;letter-spacing:.02em}
+.brand span{display:block;margin-top:4px;color:#5a7890;font-size:clamp(8px,.62vw,11px);font-weight:800;letter-spacing:.12em}
+.homeBtn,.moduleBtn,.lessonBtn{
+  width:100%;border:0;cursor:pointer;text-align:left;
+  transition:transform .12s ease,background .12s ease,box-shadow .12s ease;
+}
+.homeBtn{
+  min-height:clamp(39px,4.2vh,53px);
+  margin-bottom:7px;padding:7px 10px;border-radius:13px;
+  background:linear-gradient(135deg,#21a7ec,#0e8ddb);
+  color:#fff;font-weight:900;font-size:clamp(11px,.85vw,15px);
+  box-shadow:0 5px 14px rgba(15,142,215,.26)
+}
+.module{margin:0 0 5px}
+.moduleBtn{
+  min-height:clamp(39px,4.55vh,54px);
+  display:grid;grid-template-columns:31px minmax(0,1fr) 14px;gap:7px;align-items:center;
+  padding:6px 8px;border-radius:13px;
+  background:rgba(255,255,255,.88);color:#163f68;
+  box-shadow:0 2px 8px rgba(32,88,125,.08);
+}
+.moduleBtn:hover,.moduleBtn.open,.moduleBtn:focus-visible{background:#fff;box-shadow:0 5px 15px rgba(15,113,171,.18);outline:none}
+.moduleBtn .num{
+  width:28px;height:28px;border-radius:9px;display:grid;place-items:center;
+  background:#1aa0e7;color:#fff;font-size:11px;font-weight:900
+}
+.moduleBtn .name{font-size:clamp(9px,.72vw,13px);font-weight:900;line-height:1.05}
+.moduleBtn .arrow{font-size:17px;color:#62a7ca;transition:transform .12s ease}
+.moduleBtn.open .arrow{transform:rotate(90deg)}
+.lessons{display:none;padding:4px 2px 1px 14px}
+.lessons.open{display:grid;gap:4px}
+.lessonBtn{
+  border-radius:9px;padding:6px 8px;background:rgba(255,255,255,.76);
+  color:#345a76;font-size:clamp(8px,.62vw,11px);font-weight:800;line-height:1.15;
+  border:1px solid rgba(40,119,165,.10)
+}
+.lessonBtn:hover,.lessonBtn:focus-visible{background:#fff;color:#0e6094;outline:none}
+.loader{
+  position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);
+  padding:11px 16px;border-radius:999px;background:rgba(255,255,255,.9);
+  color:#0c5a89;font-size:12px;font-weight:900;box-shadow:0 8px 24px rgba(0,60,100,.16)
+}
+.loader.hide{display:none}
+
+#lessonView{position:fixed;inset:0;z-index:50;display:none;background:#f2f8fc;overflow:auto}
+#lessonView.on{display:block}
+.topbar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:13px;padding:9px 14px;background:#fff;border-bottom:1px solid #d7e6f2}
+.back{width:42px;height:42px;border:0;border-radius:12px;background:#138bd7;color:#fff;font-size:23px;font-weight:900;cursor:pointer}
+.topbar small{display:block;color:#6b8498;font-weight:800;font-size:10px;letter-spacing:.08em}
+.topbar h1{margin:2px 0 0;color:#082d59;font-size:clamp(18px,2vw,29px)}
+.workspace{max-width:1180px;margin:auto;padding:24px}
+.topicTabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.topicTabs button{border:1px solid #cfe0ec;background:#fff;border-radius:999px;padding:9px 13px;color:#194c70;font-weight:800;cursor:pointer}
+.lessonCard{background:#fff;border:1px solid #dce9f2;border-radius:24px;padding:clamp(25px,4vw,56px);min-height:62vh;box-shadow:0 15px 42px rgba(27,74,107,.09)}
+.lessonCard small{font-weight:900;color:#168edf;letter-spacing:.1em}
+.lessonCard h2{font-size:clamp(32px,5vw,66px);line-height:1.02;color:#082d59;margin:13px 0}
+.lessonCard p{max-width:760px;color:#5c7487;font-size:clamp(16px,1.5vw,22px);line-height:1.55}
+
+@media(max-height:720px){
+  .sidebar{padding-top:8px}
+  .brand{padding-bottom:6px}
+  .homeBtn{min-height:34px}
+  .moduleBtn{min-height:36px}
+}
+@media(max-width:760px){
+  .sidebar{width:190px}
+  .moduleBtn{grid-template-columns:27px minmax(0,1fr) 12px}
+  .moduleBtn .num{width:25px;height:25px}
+}
+@media(max-aspect-ratio:16/9){.cover{object-position:center center}}
+@media(min-aspect-ratio:16/9){.cover{object-position:center center}}
+@supports(height:100svh){.board{height:100svh}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<main class="board" id="board"><img class="cover" id="mainCover" alt="Gabi English Hub cover"><div class="coverShade"></div><div class="loader" id="loader">LOADING GABI HUB…</div><aside class="sidebar"><div class="brand"><b>GABI</b><span>GATEWAY B1 + FOCUS 2</span></div><button class="homeBtn" id="homeBtn">HOME</button><div id="moduleNav"></div></aside></main>
-<section id="lessonView" aria-hidden="true"><header class="topbar"><button class="back" id="backBtn">←</button><div><small id="crumb">GATEWAY B1 + FOCUS 2</small><h1 id="lessonHeading">Lesson</h1></div></header><div class="workspace" id="workspace"></div></section>
+<main class="board" id="board" aria-label="Gabi English Hub Gateway to the World B1 interactive board">
+  <img class="cover" id="mainCover" alt="Gabi English Hub cover">
+  <div class="coverShade"></div>
+  <div class="loader" id="loader">LOADING GABI HUB…</div>
+
+  <aside class="sidebar" aria-label="Modules">
+    <div class="brand"><b>GABI</b><span>GATEWAY B1 + FOCUS 2</span></div>
+    <button class="homeBtn" id="homeBtn">HOME</button>
+    <div id="moduleNav"></div>
+  </aside>
+</main>
+
+<section id="lessonView" aria-hidden="true">
+  <header class="topbar">
+    <button class="back" id="backBtn" aria-label="Back">←</button>
+    <div><small id="crumb">GATEWAY B1 + FOCUS 2</small><h1 id="lessonHeading">Lesson</h1></div>
+  </header>
+  <div class="workspace" id="workspace"></div>
+</section>
+
 <script>
 const modules=[
- {title:'Happy families',lessons:[{title:'Vocabulary & Grammar',note:'Ages & stages · family · Present Simple vs Continuous'},{title:'Reading & Grammar',note:'Sharenting · state/action verbs · articles'},{title:'People & Perspectives',note:'Warm-up · Word forms · Evidence Hunt · To Be Old'}]},
- {title:'Law and order',lessons:[{title:'Vocabulary & Grammar',note:'Crimes · detective work · Past Simple'},{title:'Reading & Grammar',note:'Caribbean Homes · comparison grammar · conditionals · B2-C1 property vocabulary',new:true},{title:'Listening & Speaking',note:'Crime story · investigation · review'}]},
- {title:'Plurilingual',lessons:[{title:'Vocabulary & Grammar',note:'Languages · nationalities · negative prefixes'},{title:'Reading & Grammar',note:'International English · quantifiers · relative clauses'},{title:'Listening & Speaking',note:'Toki Pona · language learning · review'}]},
- {title:'Take care!',lessons:[{title:'Vocabulary & Grammar',note:'Body · health problems · Present Perfect'},{title:'Reading & Grammar',note:'Technology & health · for/since · just/yet/already'},{title:'Listening & Speaking',note:'BASE jumping · health advice · review'}]},
- {title:'Screen time',lessons:[{title:'Vocabulary & Grammar',note:'TV programmes · online video · -ed/-ing adjectives'},{title:'Reading & Grammar',note:'Reality TV · comparatives · so/such · too/enough'},{title:'Listening & Culture',note:'Binge-watching · TV in the UK · review'}]},
- {title:'Changing climates',lessons:[{title:'Vocabulary & Grammar',note:'Geography · environment · uses of get'},{title:'Reading & Grammar',note:'Climate change · future forms · may/might'},{title:'Listening & Speaking',note:'Zero & First Conditional · environment · review'}]},
- {title:'Get to the top!',lessons:[{title:'Vocabulary & Grammar',note:'Jobs · work · personal qualities'},{title:'Reading & Grammar',note:'Careers · modals of obligation/advice · Second Conditional'},{title:'Listening & Speaking',note:'Unusual jobs · unless · career discussion'}]},
- {title:'Friendly advice',lessons:[{title:'Vocabulary & Grammar',note:'Feelings · friendships · noun suffixes'},{title:'Reading & Grammar',note:'My best friend is a robot · Past Perfect'},{title:'Listening & Culture',note:'Friendship · gerunds/infinitives · Positive messages'}]},
- {title:'Facts about fiction',lessons:[{title:'Vocabulary & Grammar',note:'Books · genres · reading/writing phrasal verbs'},{title:'Reading & Grammar',note:'Books on the move · Reported Speech'},{title:'Listening & Culture',note:'Using a pen name · British writers · review'}]},
- {title:'Computer update',lessons:[{title:'Vocabulary & Grammar',note:'Computers · Internet · email/document collocations'},{title:'Reading & Grammar',note:'Switching off the Internet · Passive Voice'},{title:'Listening & Culture',note:'Museum of Failure · have something done · Science Museum'}]}
+ {title:'Happy families',lessons:[
+   {title:'Vocabulary & Grammar',note:'Ages & stages · family · Present Simple vs Continuous'},
+   {title:'Reading & Grammar',note:'Sharenting · state/action verbs · articles'},
+   {title:'People & Perspectives',note:'Warm-up · Word forms · Evidence Hunt · To Be Old'}]},
+ {title:'Law and order',lessons:[
+   {title:'Vocabulary & Grammar',note:'Crimes · detective work · Past Simple'},
+   {title:'Reading & Grammar',note:'Surprising true crimes · Past Continuous · used to'},
+   {title:'Listening & Speaking',note:'Crime story · investigation · review'}]},
+ {title:'Plurilingual',lessons:[
+   {title:'Vocabulary & Grammar',note:'Languages · nationalities · negative prefixes'},
+   {title:'Reading & Grammar',note:'International English · quantifiers · relative clauses'},
+   {title:'Listening & Speaking',note:'Toki Pona · language learning · review'}]},
+ {title:'Take care!',lessons:[
+   {title:'Vocabulary & Grammar',note:'Body · health problems · Present Perfect'},
+   {title:'Reading & Grammar',note:'Technology & health · for/since · just/yet/already'},
+   {title:'Listening & Speaking',note:'BASE jumping · health advice · review'}]},
+ {title:'Screen time',lessons:[
+   {title:'Vocabulary & Grammar',note:'TV programmes · online video · -ed/-ing adjectives'},
+   {title:'Reading & Grammar',note:'Reality TV · comparatives · so/such · too/enough'},
+   {title:'Listening & Culture',note:'Binge-watching · TV in the UK · review'}]},
+ {title:'Changing climates',lessons:[
+   {title:'Vocabulary & Grammar',note:'Geography · environment · uses of get'},
+   {title:'Reading & Grammar',note:'Climate change · future forms · may/might'},
+   {title:'Listening & Speaking',note:'Zero & First Conditional · environment · review'}]},
+ {title:'Get to the top!',lessons:[
+   {title:'Vocabulary & Grammar',note:'Jobs · work · personal qualities'},
+   {title:'Reading & Grammar',note:'Careers · modals of obligation/advice · Second Conditional'},
+   {title:'Listening & Speaking',note:'Unusual jobs · unless · career discussion'}]},
+ {title:'Friendly advice',lessons:[
+   {title:'Vocabulary & Grammar',note:'Feelings · friendships · noun suffixes'},
+   {title:'Reading & Grammar',note:'My best friend is a robot · Past Perfect'},
+   {title:'Listening & Culture',note:'Friendship · gerunds/infinitives · Positive messages'}]},
+ {title:'Facts about fiction',lessons:[
+   {title:'Vocabulary & Grammar',note:'Books · genres · reading/writing phrasal verbs'},
+   {title:'Reading & Grammar',note:'Books on the move · Reported Speech'},
+   {title:'Listening & Culture',note:'Using a pen name · British writers · review'}]},
+ {title:'Computer update',lessons:[
+   {title:'Vocabulary & Grammar',note:'Computers · Internet · email/document collocations'},
+   {title:'Reading & Grammar',note:'Switching off the Internet · Passive Voice'},
+   {title:'Listening & Culture',note:'Museum of Failure · have something done · Science Museum'}]}
 ];
-const nav=document.getElementById('moduleNav');let openModule=-1;
-function renderNav(){nav.innerHTML=modules.map((m,mi)=>`<div class="module"><button class="moduleBtn" data-module="${mi}"><span class="num">${mi+1}</span><span class="name">${m.title}</span><span class="arrow">›</span></button><div class="lessons" id="lessons-${mi}">${m.lessons.map((l,li)=>`<button class="lessonBtn" data-m="${mi}" data-l="${li}">Lesson ${li+1} · ${l.title}${l.new?'<span class="badgeNew">NEW</span>':''}</button>`).join('')}</div></div>`).join('');nav.querySelectorAll('.moduleBtn').forEach(btn=>{btn.onclick=()=>{const mi=Number(btn.dataset.module),same=openModule===mi;nav.querySelectorAll('.moduleBtn').forEach(b=>b.classList.remove('open'));nav.querySelectorAll('.lessons').forEach(x=>x.classList.remove('open'));openModule=same?-1:mi;if(!same){btn.classList.add('open');document.getElementById('lessons-'+mi).classList.add('open');btn.scrollIntoView({block:'nearest',behavior:'smooth'});}}});nav.querySelectorAll('.lessonBtn').forEach(btn=>{btn.onclick=()=>openLesson(Number(btn.dataset.m)+1,Number(btn.dataset.l));});}
+
+const nav=document.getElementById('moduleNav');
+let openModule=-1;
+
+function renderNav(){
+  nav.innerHTML=modules.map((m,mi)=>`
+    <div class="module">
+      <button class="moduleBtn" data-module="${mi}">
+        <span class="num">${mi+1}</span>
+        <span class="name">${m.title}</span>
+        <span class="arrow">›</span>
+      </button>
+      <div class="lessons" id="lessons-${mi}">
+        ${m.lessons.map((l,li)=>`<button class="lessonBtn" data-m="${mi}" data-l="${li}">Lesson ${li+1} · ${l.title}</button>`).join('')}
+      </div>
+    </div>`).join('');
+
+  nav.querySelectorAll('.moduleBtn').forEach(btn=>{
+    btn.onclick=()=>{
+      const mi=Number(btn.dataset.module);
+      const same=openModule===mi;
+      nav.querySelectorAll('.moduleBtn').forEach(b=>b.classList.remove('open'));
+      nav.querySelectorAll('.lessons').forEach(x=>x.classList.remove('open'));
+      openModule=same?-1:mi;
+      if(!same){
+        btn.classList.add('open');
+        document.getElementById('lessons-'+mi).classList.add('open');
+        btn.scrollIntoView({block:'nearest',behavior:'smooth'});
+      }
+    };
+  });
+  nav.querySelectorAll('.lessonBtn').forEach(btn=>{
+    btn.onclick=()=>openLesson(Number(btn.dataset.m)+1,Number(btn.dataset.l));
+  });
+}
 renderNav();
-document.getElementById('homeBtn').onclick=()=>{openModule=-1;nav.querySelectorAll('.moduleBtn').forEach(b=>b.classList.remove('open'));nav.querySelectorAll('.lessons').forEach(x=>x.classList.remove('open'));closeLesson();};
-function openLesson(n,i){if(n===1&&i===2){location.href='lesson3.html?v=20260928-lesson3-final5';return;}if(n===1){location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20260928-audio-native-v3';return;}if(n===2&&i===1){location.href='module2-lesson2-caribbean-homes.html?v=20260929-m2l2';return;}const m=modules[n-1];document.getElementById('crumb').textContent='MODULE '+n+' · '+m.title.toUpperCase();document.getElementById('lessonHeading').textContent=m.lessons[i].title;document.getElementById('workspace').innerHTML='<nav class="topicTabs">'+m.lessons.map((x,j)=>'<button data-topic="'+j+'">'+x.note+'</button>').join('')+'</nav>'+'<article class="lessonCard"><small>GATEWAY B1 + FOCUS 2 · MODULE '+n+'</small><h2 id="topicTitle">'+m.lessons[i].title+'</h2><p id="topicNote">'+m.lessons[i].note+'</p><p>План темы. Интерактивные задания ещё не добавлены.</p></article>';document.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>{const lesson=m.lessons[Number(b.dataset.topic)];document.getElementById('topicTitle').textContent=lesson.title;document.getElementById('lessonHeading').textContent=lesson.title;document.getElementById('topicNote').textContent=lesson.note;});const view=document.getElementById('lessonView');view.classList.add('on');view.setAttribute('aria-hidden','false');}
-function closeLesson(){const view=document.getElementById('lessonView');view.classList.remove('on');view.setAttribute('aria-hidden','true');}
-document.getElementById('backBtn').onclick=closeLesson;document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
-(async function loadNewCover(){const img=document.getElementById('mainCover'),loader=document.getElementById('loader');try{const parts=await Promise.all(Array.from({length:7},(_,i)=>{const n=String(i+1).padStart(2,'0');return fetch('cover-data/cover20260928-'+n+'.b64?v=20260928-cover-v1',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('cover '+n);return r.text()});}));const src='data:image/webp;base64,'+parts.join('').replace(/\s+/g,'');await new Promise((resolve,reject)=>{const test=new Image();test.onload=resolve;test.onerror=reject;test.src=src;});img.src=src;}catch(err){console.error('Cover fallback',err);img.style.background='linear-gradient(135deg,#0b80c9,#2fd0df,#ffe179)';}finally{img.classList.add('ready');loader.classList.add('hide');}})();
+
+document.getElementById('homeBtn').onclick=()=>{
+  openModule=-1;
+  nav.querySelectorAll('.moduleBtn').forEach(b=>b.classList.remove('open'));
+  nav.querySelectorAll('.lessons').forEach(x=>x.classList.remove('open'));
+  closeLesson();
+};
+
+function openLesson(n,i){
+  if(n===1 && i===2){ location.href='lesson3.html?v=20260928-lesson3-final5'; return; }
+  if(n===1){
+    location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20260928-audio-native-v3';
+    return;
+  }
+  const m=modules[n-1];
+  document.getElementById('crumb').textContent='MODULE '+n+' · '+m.title.toUpperCase();
+  document.getElementById('lessonHeading').textContent=m.lessons[i].title;
+  document.getElementById('workspace').innerHTML=
+    '<nav class="topicTabs">'+m.lessons.map((x,j)=>'<button data-topic="'+j+'">'+x.note+'</button>').join('')+'</nav>'+
+    '<article class="lessonCard"><small>GATEWAY B1 + FOCUS 2 · MODULE '+n+'</small><h2 id="topicTitle">'+m.lessons[i].title+'</h2>'+
+    '<p id="topicNote">'+m.lessons[i].note+'</p><p>План темы. Интерактивные задания ещё не добавлены.</p></article>';
+  document.querySelectorAll('[data-topic]').forEach(b=>b.onclick=()=>{
+    const lesson=m.lessons[Number(b.dataset.topic)];
+    document.getElementById('topicTitle').textContent=lesson.title;
+    document.getElementById('lessonHeading').textContent=lesson.title;
+    document.getElementById('topicNote').textContent=lesson.note;
+  });
+  const view=document.getElementById('lessonView');
+  view.classList.add('on');view.setAttribute('aria-hidden','false');
+}
+function closeLesson(){
+  const view=document.getElementById('lessonView');
+  view.classList.remove('on');view.setAttribute('aria-hidden','true');
+}
+document.getElementById('backBtn').onclick=closeLesson;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
+
+(async function loadNewCover(){
+  const img=document.getElementById('mainCover');
+  const loader=document.getElementById('loader');
+  try{
+    const parts=await Promise.all(
+      Array.from({length:7},(_,i)=>{
+        const n=String(i+1).padStart(2,'0');
+        return fetch('cover-data/cover20260928-'+n+'.b64?v=20260928-cover-v1',{cache:'no-store'})
+          .then(r=>{if(!r.ok)throw new Error('cover '+n);return r.text()});
+      })
+    );
+    const src='data:image/webp;base64,'+parts.join('').replace(/\s+/g,'');
+    await new Promise((resolve,reject)=>{
+      const test=new Image();
+      test.onload=resolve;
+      test.onerror=reject;
+      test.src=src;
+    });
+    img.src=src;
+  }catch(err){
+    console.error('New cover fallback',err);
+  }finally{
+    img.classList.add('ready');
+    loader.classList.add('hide');
+  }
+})();
 </script>
 </body>
 </html>
