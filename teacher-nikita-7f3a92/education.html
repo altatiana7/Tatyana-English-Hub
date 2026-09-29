@@ -89,32 +89,54 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 
 <section id="facts" class="screen">
 <div class="card" style="margin-bottom:16px"><span class="badge">STARTER</span><p><b>EN:</b> “Before we start, let’s see how reliable our first instincts are. Some of these facts sound wrong — but aren’t.”</p><button class="action gold" onclick="toggle('factsIntroRU')">RU</button><div id="factsIntroRU" class="rushelp">«Для начала проверим, насколько надёжна наша первая реакция. Некоторые факты звучат неправдоподобно, но оказываются правдой.» Это подводит к теме: интуиция ≠ доказательство.</div></div>
-<h2>1. Unexpected Facts — True or False?</h2>
-<p class="lead">Choose first. Open the answer only after Nikita explains his reasoning.</p>
+<h2>1. Fact or Myth? — Think before you decide</h2>
+<p class="lead">For each statement: 1) choose FACT or MYTH, 2) justify your choice, 3) if it is false, correct it, 4) explain why someone might believe it.</p>
+<div class="card" style="margin-bottom:16px">
+<h3>Speaking frame</h3>
+<p><b>I think this is a fact / myth because…</b></p>
+<p><b>The statement is misleading because…</b></p>
+<p><b>A more accurate version would be…</b></p>
+<p><b>People might believe this because…</b></p>
+<button class="action gold" onclick="toggle('factFrameRU')">RU</button>
+<div id="factFrameRU" class="rushelp">Я думаю, это факт / миф, потому что… · Утверждение вводит в заблуждение, потому что… · Более точная версия была бы… · Люди могут верить в это, потому что…</div>
+</div>
 
 <div class="case"><h3>1. Voting</h3><p><b>Austria allows citizens to vote in national elections from the age of 16.</b></p>
 <div class="row"><button class="action" onclick="toggle('tf1')">Answer + teacher note</button></div>
-<div id="tf1" class="teacherhint"><b>TRUE.</b> Austria lowered the voting age to 16 for nationwide elections in 2007 and was the first country in Europe to do so for all elections.<br><br><b>RU:</b> Правда. В Австрии голосовать на общенациональных выборах можно с 16 лет.<br><b>Ask:</b> “Does a lower voting age necessarily mean younger voters are less informed?”</div></div>
+<div id="tf1" class="teacherhint"><b>FACT.</b> Austria lowered the voting age to 16 for nationwide elections in 2007 and was the first country in Europe to do so for all elections.<br><br><b>RU:</b> Факт. В Австрии голосовать на общенациональных выборах можно с 16 лет.<br><br><b>Discuss:</b> Does a lower voting age necessarily mean younger voters are less informed? What should matter more: age, education or political knowledge?</div></div>
 
 <div class="case"><h3>2. Prison + Education</h3><p><b>There are school departments in every Norwegian prison.</b></p>
 <div class="row"><button class="action" onclick="toggle('tf2')">Answer + teacher note</button></div>
-<div id="tf2" class="teacherhint"><b>TRUE.</b> A 2025 Norwegian government report states that there are school departments in all Norwegian prisons.<br><br><b>RU:</b> Правда. В норвежских тюрьмах есть школьные подразделения.<br><b>Ask:</b> “Should education in prison be treated as a right, a privilege, or a rehabilitation tool?”</div></div>
+<div id="tf2" class="teacherhint"><b>FACT.</b> A 2025 Norwegian government report states that there are school departments in all Norwegian prisons.<br><br><b>RU:</b> Факт. В норвежских тюрьмах есть школьные подразделения.<br><br><b>Discuss:</b> Should education in prison be treated as a right, a privilege, or a rehabilitation tool? Which wording changes the way we think about prisoners?</div></div>
 
 <div class="case"><h3>3. Prison + Rights</h3><p><b>In Norway, prisoners can lose their right to basic education simply because they are serving a sentence.</b></p>
 <div class="row"><button class="action" onclick="toggle('tf3')">Answer + teacher note</button></div>
-<div id="tf3" class="teacherhint"><b>FALSE.</b> Norwegian guidance says prisoners have rights to primary and upper-secondary education on the same basis as the general population, within the limits of imprisonment.<br><br><b>RU:</b> Неправда. Сам факт заключения не отменяет право на базовое образование.<br><b>Useful phrase:</b> <i>retain the right to education</i> — сохранять право на образование.</div></div>
+<div id="tf3" class="teacherhint"><b>MYTH.</b> Norwegian guidance says prisoners retain rights to primary and upper-secondary education within the limits of imprisonment.<br><br><b>Correct it:</b> “Prisoners do not automatically lose their right to education because they are serving a sentence.”<br><br><b>RU:</b> Миф. Сам факт заключения не отменяет право на образование.<br><b>Useful phrase:</b> <i>retain the right to education</i> — сохранять право на образование.<br><br><b>Discuss:</b> Why do people often assume punishment means losing every right?</div></div>
 
 <div class="case"><h3>4. Religion + Knowledge</h3><p><b>People who personally know someone from another religion tend to know less about that religion.</b></p>
 <div class="row"><button class="action" onclick="toggle('tf4')">Answer + teacher note</button></div>
-<div id="tf4" class="teacherhint"><b>FALSE.</b> In a Pew survey, people with more religiously diverse social networks generally knew more about religion. For example, those who personally knew a Muslim were much more likely to identify Ramadan correctly.<br><br><b>RU:</b> Неправда. Более разнообразный круг общения был связан с лучшими знаниями о религиях.<br><b>Vocabulary:</b> <i>religiously diverse social network</i> — религиозно разнообразный круг общения.</div></div>
+<div id="tf4" class="teacherhint"><b>MYTH.</b> In a Pew survey, people with more religiously diverse social networks generally knew more about religion.<br><br><b>Correct it:</b> “Knowing people from different religious backgrounds is associated with greater factual knowledge about religion.”<br><br><b>RU:</b> Миф. Более разнообразный круг общения был связан с лучшими знаниями о религиях.<br><b>Vocabulary:</b> <i>religiously diverse social network</i> — религиозно разнообразный круг общения.<br><br><b>Discuss:</b> Can personal contact reduce stereotypes more effectively than formal lessons?</div></div>
 
 <div class="case"><h3>5. Religion + Education</h3><p><b>Taking a class about world religions is associated with higher factual knowledge about religion.</b></p>
 <div class="row"><button class="action" onclick="toggle('tf5')">Answer + teacher note</button></div>
-<div id="tf5" class="teacherhint"><b>TRUE.</b> In Pew’s 2019 U.S. survey, people who had taken a world-religions class answered more factual religion questions correctly on average than those who had not.<br><br><b>RU:</b> Правда. Участники, изучавшие мировые религии, в среднем лучше отвечали на фактические вопросы о религии.<br><b>Bridge:</b> “So education can change not only what we know, but also what assumptions we make.”</div></div>
+<div id="tf5" class="teacherhint"><b>FACT.</b> In Pew’s 2019 U.S. survey, people who had taken a world-religions class answered more factual religion questions correctly on average than those who had not.<br><br><b>RU:</b> Факт. Участники, изучавшие мировые религии, в среднем лучше отвечали на фактические вопросы о религии.<br><br><b>Discuss:</b> Does knowing more facts automatically make someone less biased? Why / why not?<br><b>Bridge:</b> “So education can change not only what we know, but also what assumptions we make.”</div></div>
 
 <div class="case"><h3>6. Evidence</h3><p><b>If a statistic is factually correct, it cannot be misleading.</b></p>
 <div class="row"><button class="action" onclick="toggle('tf6')">Answer + teacher note</button></div>
-<div id="tf6" class="teacherhint"><b>FALSE.</b> A statistic can be technically correct but misleading if the sample is selective, key cases are missing, or the denominator/context is hidden.<br><br><b>RU:</b> Неправда. Цифра может быть формально верной, но вводить в заблуждение из-за выборки или отсутствующего контекста.<br><b>Key phrase:</b> <i>technically true but misleading</i>.</div></div>
+<div id="tf6" class="teacherhint"><b>MYTH.</b> A statistic can be technically correct but misleading if the sample is selective, key cases are missing, or context is hidden.<br><br><b>Correct it:</b> “A statistic can be accurate and still create a misleading impression.”<br><br><b>RU:</b> Миф. Цифра может быть формально верной, но вводить в заблуждение из-за выборки или отсутствующего контекста.<br><b>Key phrase:</b> <i>technically true but misleading</i>.<br><br><b>Discuss:</b> Which is more dangerous: a false statistic or a true statistic presented without context?</div></div>
+
+<div class="card" style="margin-top:16px">
+<h3>Consolidation — Find the pattern</h3>
+<p>Choose any <b>three</b> facts and answer:</p>
+<ol>
+<li>What was your first instinct?</li>
+<li>What changed your mind?</li>
+<li>Which word do you need: <b>evidence, assumption, sample, misleading, context</b>?</li>
+<li>Can you rewrite one statement so it becomes more accurate?</li>
+</ol>
+<button class="action alt" onclick="toggle('factsConsolHelp')">Teacher help EN + RU</button>
+<div id="factsConsolHelp" class="teacherhint"><b>Possible EN:</b> “My first assumption was that… However, the evidence suggests… The original statement was misleading because it ignored… A more accurate version would be…”<br><br><b>RU:</b> «Сначала я предположил, что… Однако данные показывают… Исходное утверждение вводило в заблуждение, потому что игнорировало… Более точная версия была бы…»</div>
+</div>
 
 <div class="card" style="margin-top:16px"><h3>Bridge to vocabulary</h3><p><b>EN:</b> “We already need words like evidence, sample, assumption and misleading. Let’s train that language before we start the main discussion.”</p><button class="action gold" onclick="toggle('factsToVocabRU')">RU</button><div id="factsToVocabRU" class="rushelp">«Нам уже понадобились слова evidence, sample, assumption, misleading. Сначала натренируем эту лексику, а потом пойдём в основное обсуждение.»</div></div>
 </section>
