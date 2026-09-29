@@ -94,7 +94,7 @@ h1{font-size:clamp(44px,5vw,78px);line-height:.95;margin:12px 0 16px;letter-spac
     </div>
     <div class="hero-right">
       <button class="unit activeUnit" onclick="openUnit()"><b>UNIT 1</b><small>Household chores · daily routines</small></button>
-      <button class="unit lock"><b>UNIT 2</b><small>Coming next</small></button>
+      <button class="unit activeUnit" onclick="openUnit2()"><b>UNIT 2</b><small>Shopping · shops · comparisons</small></button>
       <button class="unit lock"><b>UNIT 3</b><small>Coming next</small></button>
       <button class="unit lock"><b>UNIT 4</b><small>Coming next</small></button>
       <button class="unit lock"><b>UNIT 5</b><small>Coming next</small></button>
@@ -148,6 +148,65 @@ h1{font-size:clamp(44px,5vw,78px);line-height:.95;margin:12px 0 16px;letter-spac
   </div>
 </div>
 </section>
+
+<section id="unit2" class="screen">
+<div class="lesson">
+  <aside class="side">
+    <h3>UNIT 2</h3>
+    <button class="nav sel" data-panel="u2vocab" onclick="showPanel2(this)">Shopping Words</button>
+    <button class="nav" data-panel="u2shops" onclick="showPanel2(this)">Shops Match</button>
+    <button class="nav" data-panel="u2grammar" onclick="showPanel2(this)">Grammar Race</button>
+    <button class="nav" data-panel="u2quick" onclick="showPanel2(this)">Quick Quiz</button>
+    <button class="nav" data-panel="u2speak" onclick="showPanel2(this)">Speak!</button>
+  </aside>
+
+  <div class="board">
+    <div class="boardHead"><h2 id="boardTitle2">Shopping</h2><div class="pill">Unit 2 · board mode</div></div>
+
+    <div id="u2vocab" class="panel show">
+      <div class="bigPrompt">Tap → say it → tap again for Russian</div>
+      <div class="cardgrid" id="u2cards"></div>
+    </div>
+
+    <div id="u2shops" class="panel">
+      <div class="bigPrompt">Where do you buy it?</div>
+      <div class="quiz">
+        <div class="qbox">
+          <div class="q" id="shopQ"></div>
+          <div class="opts" id="shopOpts"></div>
+        </div>
+        <div class="gamebar"><div class="score" id="shopScore">Score: 0</div><button class="hbtn" onclick="nextShop()">NEXT →</button></div>
+      </div>
+    </div>
+
+    <div id="u2grammar" class="panel">
+      <div class="bigPrompt">Comparative or superlative?</div>
+      <div class="quiz">
+        <div class="qbox">
+          <div class="q" id="gQ"></div>
+          <div class="opts" id="gOpts"></div>
+        </div>
+        <div class="gamebar"><div class="score" id="gScore">Score: 0</div><button class="hbtn" onclick="nextGrammar()">NEXT →</button></div>
+      </div>
+    </div>
+
+    <div id="u2quick" class="panel">
+      <div class="gamebar"><div class="timer">⚡ <span id="u2time">45</span>s</div><div class="score">Translate as many as you can</div><button class="hbtn" onclick="startU2Race()">START</button></div>
+      <div class="wordwall" id="u2wall"></div>
+    </div>
+
+    <div id="u2speak" class="panel">
+      <div class="speak">
+        <div class="bubble" id="u2SpeakPrompt">Where do you usually go shopping?</div>
+        <div class="hint">Answer in 2–4 sentences. Try to use one shopping phrase.</div>
+        <button onclick="nextU2Speak()">NEW QUESTION</button>
+      </div>
+    </div>
+
+    <div class="footerHint">Large controls · designed for a 16:9 interactive classroom board</div>
+  </div>
+</div>
+</section>
 </main>
 </div>
 
@@ -187,6 +246,7 @@ let qi=0,score=0,timer=null,speakI=0;
 
 function goHome(){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('home').classList.add('active')}
 function openUnit(){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('unit1').classList.add('active')}
+function openUnit2(){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('unit2').classList.add('active')}
 function showPanel(btn){
  document.querySelectorAll('.nav').forEach(x=>x.classList.remove('sel'));btn.classList.add('sel');
  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));
@@ -222,7 +282,81 @@ function startBomb(){
  timer=setInterval(()=>{t--;document.getElementById('time').textContent=t;if(t<=0){clearInterval(timer);document.getElementById('time').textContent='BOOM!'}},1000)
 }
 function nextSpeak(){speakI=(speakI+1)%speakPrompts.length;document.getElementById('speakPrompt').textContent=speakPrompts[speakI]}
-renderCards();renderQ();renderWall();
+const u2vocab=[
+["cashier","кассир"],["shopping bag","пакет для покупок"],["shopping trolley","тележка"],
+["shopping list","список покупок"],["check the price","проверить цену"],["special offer","спецпредложение"],
+["get a receipt","получить чек"],["get your change","получить сдачу"],["pay by card","платить картой"],
+["pay in cash","платить наличными"],["stand in a queue","стоять в очереди"],["carry the shopping","нести покупки"]
+];
+const shopData=[
+{q:"You need medicine. Where do you go?",a:["chemist's","shoe shop","bookshop","sports shop"],c:0},
+{q:"You want a new pair of trainers.",a:["shoe shop","bakery","chemist's","newsagent's"],c:0},
+{q:"You want a comic or a magazine.",a:["newsagent's","clothes shop","supermarket","bakery"],c:0},
+{q:"You need a birthday cake.",a:["bakery","sports shop","bookshop","chemist's"],c:0},
+{q:"You want a new T-shirt.",a:["clothes shop","bakery","newsagent's","chemist's"],c:0}
+];
+const grammarData=[
+{q:"A supermarket is ___ than a small shop.",a:["bigger","biggest","more big","the bigger"],c:0},
+{q:"This is ___ T-shirt in the shop.",a:["the cheapest","cheaper","more cheap","the cheaper"],c:0},
+{q:"My bag is ___ than yours.",a:["heavier","the heaviest","more heavy","heavyer"],c:0},
+{q:"That shop is ___ than this one.",a:["more expensive","expensiver","the expensive","most expensive"],c:0},
+{q:"This is ___ shopping centre in our town.",a:["the biggest","bigger","more big","the bigger"],c:0},
+{q:"My trainers are ___ than my boots.",a:["more comfortable","comfortabler","the comfortable","most comfortable"],c:0}
+];
+const u2Speak=[
+"Where do you usually go shopping?","What do you usually buy with your pocket money?",
+"Do you prefer paying in cash or by card? Why?","Which shop is the most useful for your family?",
+"What was the last thing you bought?","Which is better: a big shopping centre or a small shop?"
+];
+let shopI=0,shopScore=0,gI=0,gScore=0,u2timer=null,u2SpeakI=0;
+
+function showPanel2(btn){
+ document.querySelectorAll('#unit2 .nav').forEach(x=>x.classList.remove('sel'));btn.classList.add('sel');
+ document.querySelectorAll('#unit2 .panel').forEach(x=>x.classList.remove('show'));
+ document.getElementById(btn.dataset.panel).classList.add('show');
+ const t={u2vocab:"Shopping Vocabulary",u2shops:"Shops Match",u2grammar:"Grammar Race",u2quick:"45-Second Vocabulary Race",u2speak:"Speak!"};
+ document.getElementById('boardTitle2').textContent=t[btn.dataset.panel];
+}
+function renderU2Cards(){
+ const box=document.getElementById('u2cards');box.innerHTML='';
+ u2vocab.forEach(([en,ru])=>{
+   const b=document.createElement('button');b.className='vcard';b.textContent=en;b.dataset.side='en';
+   b.onclick=()=>{if(b.dataset.side==='en'){b.textContent=ru;b.dataset.side='ru';b.classList.add('revealed')}else{b.textContent=en;b.dataset.side='en';b.classList.remove('revealed')}};
+   box.appendChild(b);
+ });
+}
+function renderShop(){
+ const q=shopData[shopI%shopData.length];document.getElementById('shopQ').textContent=q.q;
+ const box=document.getElementById('shopOpts');box.innerHTML='';
+ q.a.forEach((t,i)=>{const b=document.createElement('button');b.className='opt';b.textContent=t;b.onclick=()=>{
+   [...box.children].forEach(x=>x.disabled=true);
+   if(i===q.c){b.classList.add('good');shopScore++}else{b.classList.add('bad');box.children[q.c].classList.add('good')}
+   document.getElementById('shopScore').textContent='Score: '+shopScore;
+ };box.appendChild(b)})
+}
+function nextShop(){shopI=(shopI+1)%shopData.length;renderShop()}
+function renderGrammar(){
+ const q=grammarData[gI%grammarData.length];document.getElementById('gQ').textContent=q.q;
+ const box=document.getElementById('gOpts');box.innerHTML='';
+ q.a.forEach((t,i)=>{const b=document.createElement('button');b.className='opt';b.textContent=t;b.onclick=()=>{
+   [...box.children].forEach(x=>x.disabled=true);
+   if(i===q.c){b.classList.add('good');gScore++}else{b.classList.add('bad');box.children[q.c].classList.add('good')}
+   document.getElementById('gScore').textContent='Score: '+gScore;
+ };box.appendChild(b)})
+}
+function nextGrammar(){gI=(gI+1)%grammarData.length;renderGrammar()}
+function renderU2Wall(){
+ const w=document.getElementById('u2wall');w.innerHTML='';
+ u2vocab.forEach(([en,ru])=>{const b=document.createElement('button');b.className='word';b.textContent=ru;b.onclick=()=>b.classList.toggle('done');w.appendChild(b)})
+}
+function startU2Race(){
+ clearInterval(u2timer);let t=45;document.getElementById('u2time').textContent=t;
+ document.querySelectorAll('#u2wall .word').forEach(x=>x.classList.remove('done'));
+ u2timer=setInterval(()=>{t--;document.getElementById('u2time').textContent=t;if(t<=0){clearInterval(u2timer);document.getElementById('u2time').textContent='STOP!'}},1000)
+}
+function nextU2Speak(){u2SpeakI=(u2SpeakI+1)%u2Speak.length;document.getElementById('u2SpeakPrompt').textContent=u2Speak[u2SpeakI]}
+
+renderCards();renderQ();renderWall();renderU2Cards();renderShop();renderGrammar();renderU2Wall();
 </script>
 </body>
 </html>
