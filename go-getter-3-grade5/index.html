@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Go Getter 3 · Grade 5</title>
+<style>
+:root{
+  --ink:#15233f;--muted:#61708f;--card:#ffffff;--shadow:0 18px 45px rgba(41,62,120,.15);
+  --p1:#6c63ff;--p2:#00c2ff;--p3:#ffb703;--p4:#ff5d8f;--p5:#48cae4;--good:#17a673;--bad:#e74c3c;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Inter,ui-rounded,"Segoe UI",Arial,sans-serif;background:#eef7ff;color:var(--ink);overflow:hidden}
+button{font:inherit}
+.app{height:100vh;display:grid;grid-template-rows:72px 1fr;background:
+radial-gradient(circle at 10% 10%,rgba(255,183,3,.24),transparent 24%),
+radial-gradient(circle at 90% 18%,rgba(108,99,255,.18),transparent 25%),
+linear-gradient(135deg,#fafdff,#eaf7ff)}
+header{display:flex;align-items:center;gap:14px;padding:10px 24px;background:rgba(255,255,255,.93);box-shadow:0 4px 20px rgba(35,54,110,.09);z-index:3}
+.logo{font-weight:900;font-size:28px;letter-spacing:-.7px}
+.logo span{color:var(--p1)}
+.tag{font-size:15px;font-weight:800;color:#5b6a8b;background:#edf1ff;padding:8px 12px;border-radius:999px}
+.spacer{flex:1}
+.hbtn{border:0;background:#15233f;color:white;border-radius:15px;padding:11px 16px;font-weight:900;cursor:pointer}
+main{min-height:0;position:relative}
+.screen{display:none;height:100%;padding:24px;overflow:hidden}
+.screen.active{display:block}
+.hero{height:100%;display:grid;grid-template-columns:1.05fr 1fr;gap:22px}
+.hero-left,.hero-right{background:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.9);border-radius:30px;box-shadow:var(--shadow)}
+.hero-left{padding:34px;display:flex;flex-direction:column;justify-content:center}
+.kicker{font-weight:900;color:var(--p1);font-size:18px;text-transform:uppercase;letter-spacing:1.6px}
+h1{font-size:clamp(44px,5vw,78px);line-height:.95;margin:12px 0 16px;letter-spacing:-3px}
+.sub{font-size:23px;line-height:1.35;color:#53617d;max-width:760px}
+.start{margin-top:24px;border:0;border-radius:20px;background:linear-gradient(90deg,var(--p1),#8f7cff);color:white;padding:19px 26px;font-size:25px;font-weight:900;cursor:pointer;box-shadow:0 12px 26px rgba(108,99,255,.28);width:max-content}
+.hero-right{padding:24px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px;align-content:center}
+.unit{min-height:145px;border:0;border-radius:24px;padding:20px;text-align:left;color:#10213e;cursor:pointer;box-shadow:0 10px 24px rgba(44,70,125,.1);transition:.2s;background:white}
+.unit:hover{transform:translateY(-4px)}
+.unit b{display:block;font-size:26px;margin-bottom:7px}
+.unit small{font-size:17px;color:#64728d;font-weight:700}
+.unit.activeUnit{background:linear-gradient(145deg,#fff,#eef0ff);outline:4px solid rgba(108,99,255,.22)}
+.unit.lock{opacity:.58;cursor:default}
+.lesson{height:100%;display:grid;grid-template-columns:230px 1fr;gap:18px}
+.side{background:#fff;border-radius:26px;box-shadow:var(--shadow);padding:18px;display:flex;flex-direction:column;gap:11px}
+.side h3{margin:4px 5px 8px;font-size:22px}
+.nav{border:0;border-radius:18px;padding:16px 14px;text-align:left;font-weight:900;font-size:18px;background:#eef4ff;color:#314469;cursor:pointer}
+.nav.sel{background:linear-gradient(90deg,var(--p1),#8b7cff);color:white}
+.board{background:#fff;border-radius:28px;box-shadow:var(--shadow);padding:24px;min-width:0;overflow:hidden;position:relative}
+.boardHead{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.boardHead h2{font-size:34px;margin:0}
+.pill{margin-left:auto;background:#eef3ff;color:#53617d;border-radius:999px;padding:9px 14px;font-size:16px;font-weight:900}
+.panel{display:none;height:calc(100% - 58px);overflow:auto;padding:4px 4px 20px}
+.panel.show{display:block}
+.bigPrompt{font-size:36px;font-weight:900;text-align:center;margin:18px 0 24px}
+.cardgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.vcard{min-height:150px;border:0;border-radius:24px;background:linear-gradient(145deg,#f8fbff,#eef4ff);box-shadow:0 8px 20px rgba(50,72,130,.11);cursor:pointer;padding:18px;font-weight:900;font-size:24px;display:flex;align-items:center;justify-content:center;text-align:center}
+.vcard.revealed{background:linear-gradient(145deg,#fff8dd,#fff2ae)}
+.quiz{display:grid;gap:16px;max-width:1000px;margin:0 auto}
+.qbox{background:#f7f9ff;border-radius:22px;padding:22px}
+.q{font-size:30px;font-weight:900;margin-bottom:16px}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.opt{border:0;border-radius:18px;padding:18px;font-weight:900;font-size:23px;background:#edf3ff;cursor:pointer}
+.opt.good{background:#dff7eb;color:#0e714d}
+.opt.bad{background:#ffe3e0;color:#a43128}
+.gamebar{display:flex;gap:12px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
+.score{font-size:22px;font-weight:900;background:#eef3ff;border-radius:14px;padding:10px 14px}
+.timer{font-size:22px;font-weight:900;background:#fff0b8;border-radius:14px;padding:10px 14px}
+.wordwall{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.word{border:0;border-radius:18px;padding:18px 10px;background:#eff7ff;font-size:21px;font-weight:900;cursor:pointer;min-height:74px}
+.word.done{opacity:.2;transform:scale(.95)}
+.speak{display:flex;flex-direction:column;align-items:center;justify-content:center;height:85%;text-align:center}
+.speak .bubble{font-size:44px;font-weight:900;max-width:900px}
+.speak .hint{font-size:21px;color:#6a7891;margin:14px 0 24px}
+.speak button{border:0;border-radius:20px;padding:18px 26px;font-size:24px;font-weight:900;background:var(--p4);color:white;cursor:pointer}
+.footerHint{position:absolute;right:22px;bottom:16px;font-size:14px;color:#8792a8;font-weight:700}
+@media(max-width:1000px){.hero{grid-template-columns:1fr}.hero-right{display:none}.lesson{grid-template-columns:190px 1fr}.cardgrid{grid-template-columns:repeat(2,1fr)}.wordwall{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="logo">GO <span>GETTER 3</span></div>
+  <div class="tag">Grade 5 · Interactive Board</div>
+  <div class="spacer"></div>
+  <button class="hbtn" onclick="goHome()">HOME</button>
+</header>
+<main>
+<section id="home" class="screen active">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="kicker">English Quest</div>
+      <h1>Learn. Play.<br>Speak English.</h1>
+      <div class="sub">Big-screen ESL hub for Go Getter 3. Vocabulary, grammar, speaking and fast classroom games — one activity per screen.</div>
+      <button class="start" onclick="openUnit()">START UNIT 1 →</button>
+    </div>
+    <div class="hero-right">
+      <button class="unit activeUnit" onclick="openUnit()"><b>UNIT 1</b><small>Household chores · daily routines</small></button>
+      <button class="unit lock"><b>UNIT 2</b><small>Coming next</small></button>
+      <button class="unit lock"><b>UNIT 3</b><small>Coming next</small></button>
+      <button class="unit lock"><b>UNIT 4</b><small>Coming next</small></button>
+      <button class="unit lock"><b>UNIT 5</b><small>Coming next</small></button>
+      <button class="unit lock"><b>UNIT 6–8</b><small>Course expansion</small></button>
+    </div>
+  </div>
+</section>
+
+<section id="unit1" class="screen">
+<div class="lesson">
+  <aside class="side">
+    <h3>UNIT 1</h3>
+    <button class="nav sel" data-panel="vocab" onclick="showPanel(this)">Vocabulary</button>
+    <button class="nav" data-panel="quiz" onclick="showPanel(this)">Quick Quiz</button>
+    <button class="nav" data-panel="bomb" onclick="showPanel(this)">Bomb Game</button>
+    <button class="nav" data-panel="speak" onclick="showPanel(this)">Speak!</button>
+  </aside>
+
+  <div class="board">
+    <div class="boardHead"><h2 id="boardTitle">Household Chores</h2><div class="pill">Tap the cards</div></div>
+
+    <div id="vocab" class="panel show">
+      <div class="bigPrompt">Tap a card → say it → tap again for Russian</div>
+      <div class="cardgrid" id="cards"></div>
+    </div>
+
+    <div id="quiz" class="panel">
+      <div class="quiz">
+        <div class="qbox">
+          <div class="q" id="qtext"></div>
+          <div class="opts" id="opts"></div>
+        </div>
+        <div class="gamebar"><div class="score" id="qscore">Score: 0</div><button class="hbtn" onclick="nextQ()">NEXT →</button></div>
+      </div>
+    </div>
+
+    <div id="bomb" class="panel">
+      <div class="gamebar"><div class="timer">💣 <span id="time">30</span>s</div><div class="score">Say the English phrase. Tap it if correct.</div><button class="hbtn" onclick="startBomb()">START</button></div>
+      <div class="wordwall" id="wordwall"></div>
+    </div>
+
+    <div id="speak" class="panel">
+      <div class="speak">
+        <div class="bubble" id="speakPrompt">What chores do you do at home?</div>
+        <div class="hint">Speak for 20–30 seconds. Use at least 3 phrases from Unit 1.</div>
+        <button onclick="nextSpeak()">NEW QUESTION</button>
+      </div>
+    </div>
+
+    <div class="footerHint">Designed for 16:9 classroom boards · no scrolling needed in normal view</div>
+  </div>
+</div>
+</section>
+</main>
+</div>
+
+<script>
+const vocab=[
+["make the bed","заправлять кровать"],
+["wash the dishes","мыть посуду"],
+["tidy the room","убирать комнату"],
+["vacuum the carpet","пылесосить ковёр"],
+["take out the rubbish","выносить мусор"],
+["empty the dishwasher","разгружать посудомоечную машину"],
+["water the plants","поливать растения"],
+["feed the pet","кормить питомца"],
+["do the laundry","стирать"],
+["set the table","накрывать на стол"],
+["clear the table","убирать со стола"],
+["cook dinner","готовить ужин"]
+];
+
+const quizData=[
+{q:"Which phrase means «выносить мусор»?",a:["take out the rubbish","wash the dishes","make the bed","feed the pet"],c:0},
+{q:"Choose the best phrase: I ___ every morning before school.",a:["make my bed","empty the dishwasher","water the plants","take out the rubbish"],c:0},
+{q:"Which chore uses a vacuum cleaner?",a:["vacuum the carpet","set the table","feed the pet","do the laundry"],c:0},
+{q:"Your cat is hungry. What do you do?",a:["feed the pet","clear the table","make the bed","wash the dishes"],c:0},
+{q:"After dinner, we ___ and put the plates away.",a:["clear the table","water the plants","vacuum the carpet","make the bed"],c:0},
+{q:"Which phrase means «поливать растения»?",a:["water the plants","do the laundry","cook dinner","set the table"],c:0}
+];
+const speakPrompts=[
+"What chores do you do at home?",
+"Which chore do you hate? Why?",
+"Which chore is easy for you?",
+"Who does the most housework in your family?",
+"What chores do you do at the weekend?",
+"Choose three chores you can do in ten minutes."
+];
+let qi=0,score=0,timer=null,speakI=0;
+
+function goHome(){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('home').classList.add('active')}
+function openUnit(){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('unit1').classList.add('active')}
+function showPanel(btn){
+ document.querySelectorAll('.nav').forEach(x=>x.classList.remove('sel'));btn.classList.add('sel');
+ document.querySelectorAll('.panel').forEach(x=>x.classList.remove('show'));
+ document.getElementById(btn.dataset.panel).classList.add('show');
+ const titles={vocab:"Household Chores",quiz:"Quick Quiz",bomb:"30-Second Bomb",speak:"Speak!"};
+ document.getElementById('boardTitle').textContent=titles[btn.dataset.panel];
+}
+function renderCards(){
+ const box=document.getElementById('cards');box.innerHTML='';
+ vocab.forEach(([en,ru])=>{
+   const b=document.createElement('button');b.className='vcard';b.textContent=en;b.dataset.side='en';
+   b.onclick=()=>{if(b.dataset.side==='en'){b.textContent=ru;b.dataset.side='ru';b.classList.add('revealed')}else{b.textContent=en;b.dataset.side='en';b.classList.remove('revealed')}};
+   box.appendChild(b);
+ });
+}
+function renderQ(){
+ const q=quizData[qi%quizData.length];document.getElementById('qtext').textContent=q.q;
+ const opts=document.getElementById('opts');opts.innerHTML='';
+ q.a.forEach((t,i)=>{const b=document.createElement('button');b.className='opt';b.textContent=t;b.onclick=()=>{
+   [...opts.children].forEach(x=>x.disabled=true);
+   if(i===q.c){b.classList.add('good');score++;}else{b.classList.add('bad');opts.children[q.c].classList.add('good')}
+   document.getElementById('qscore').textContent='Score: '+score;
+ };opts.appendChild(b)})
+}
+function nextQ(){qi=(qi+1)%quizData.length;renderQ()}
+function renderWall(){
+ const w=document.getElementById('wordwall');w.innerHTML='';
+ vocab.forEach(([en,ru])=>{const b=document.createElement('button');b.className='word';b.textContent=ru;b.onclick=()=>{b.classList.toggle('done')};w.appendChild(b)})
+}
+function startBomb(){
+ clearInterval(timer);let t=30;document.getElementById('time').textContent=t;
+ document.querySelectorAll('.word').forEach(x=>x.classList.remove('done'));
+ timer=setInterval(()=>{t--;document.getElementById('time').textContent=t;if(t<=0){clearInterval(timer);document.getElementById('time').textContent='BOOM!'}},1000)
+}
+function nextSpeak(){speakI=(speakI+1)%speakPrompts.length;document.getElementById('speakPrompt').textContent=speakPrompts[speakI]}
+renderCards();renderQ();renderWall();
+</script>
+</body>
+</html>
