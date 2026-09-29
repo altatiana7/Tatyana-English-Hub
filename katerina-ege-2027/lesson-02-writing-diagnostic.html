@@ -3,75 +3,70 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#eef3f5">
-<title>Катерина · Урок 2 · Writing diagnostic 37 + 38</title>
+<meta name="theme-color" content="#f7f8f4">
+<title>Катерина · ЕГЭ 2027 · Writing Lab 37/38</title>
 <style>
-:root{--bg:#eef3f5;--paper:#fff;--ink:#173246;--muted:#617583;--blue:#226f94;--green:#236d58;--red:#b64a4a;--line:#d6e1e5;--soft:#e5f0f4}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,Segoe UI,Arial,sans-serif}
-button,input,textarea,select{font:inherit}button,a.btn{cursor:pointer;border:1px solid var(--line);border-radius:11px;padding:10px 15px;background:#fff;color:var(--ink);text-decoration:none;font-weight:700}
-button:hover,a.btn:hover{border-color:var(--blue)}button:focus-visible,a:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid #e5a84a;outline-offset:2px}
-.primary{background:var(--blue)!important;color:#fff!important;border-color:var(--blue)!important}.green{background:var(--green)!important;color:#fff!important;border-color:var(--green)!important}.danger{background:#fff3f3!important;color:#8e3333!important}
-.top{min-height:60px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 20px;position:sticky;top:0;z-index:20}.top small{color:var(--muted)}
-.layout{display:grid;grid-template-columns:230px minmax(0,1fr);max-width:1460px;margin:auto;min-height:calc(100vh - 60px)}nav{border-right:1px solid var(--line);padding:18px 12px;position:sticky;top:60px;height:calc(100vh - 60px);overflow:auto}nav button{display:block;width:100%;text-align:left;border:0;background:transparent;margin:2px 0;font-size:14px}nav button.active{background:#dcecf2;color:#174f69}
-main{min-width:0;padding:clamp(18px,3vw,40px)}.pane{display:none;min-height:calc(100vh - 150px)}.pane.active{display:block}
-.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.11em;font-weight:850;color:var(--blue)}h1{font-size:clamp(34px,5vw,58px);line-height:1.02;letter-spacing:-.045em;margin:13px 0 18px}h2{font-size:clamp(27px,3.4vw,40px);line-height:1.1;letter-spacing:-.03em;margin:10px 0 18px}h3{margin:7px 0 10px;font-size:20px}.muted{color:var(--muted)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;margin:12px 0}.card.compact{padding:17px}
-.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:12px 0}.tag{display:inline-block;padding:5px 10px;border-radius:99px;background:#e2f0ea;color:var(--green);font-size:13px;font-weight:750}
-.prompt{font-size:20px;line-height:1.55}.taskbox{background:#fbfcfd;border:1px solid var(--line);border-radius:14px;padding:18px}.email{white-space:pre-line;font-family:Georgia,serif;font-size:18px;line-height:1.6}
-textarea{width:100%;min-height:280px;border:1px solid #b9cbd3;border-radius:12px;padding:14px;background:#fff;color:var(--ink);resize:vertical}.short{min-height:130px}.tiny{min-height:84px}
-.counter{font-weight:850}.counter.ok{color:var(--green)}.counter.warn{color:var(--red)}.timer{font-size:54px;font-weight:850;line-height:1}.bar{height:11px;border-radius:99px;background:#dce6e9;overflow:hidden;margin:14px 0}.bar>div{height:100%;background:var(--green);width:100%;transition:width .2s linear}
-details{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}summary{cursor:pointer;font-weight:800;color:var(--blue)}ul,ol{padding-left:22px}.rubric{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.rubric label{background:#fbfcfd;border:1px solid var(--line);border-radius:12px;padding:12px}.rubric select{width:100%;margin-top:7px;padding:7px;border:1px solid var(--line);border-radius:8px;background:#fff}
-.data{width:100%;border-collapse:collapse}.data th,.data td{padding:11px;border-bottom:1px solid var(--line);text-align:left}.data th:last-child,.data td:last-child{text-align:right;font-weight:800}.check{display:block;padding:8px 0;border-bottom:1px solid var(--line)}.check input{margin-right:8px;accent-color:var(--green)}
-.notice{background:#e7f0f4;border-radius:14px;padding:15px 18px}.teacheronly{}.project .teacheronly{display:none!important}.project nav{display:none}.project .layout{grid-template-columns:1fr}.project main{max-width:1120px;width:100%;margin:auto}.project .top small{display:none}
-.navbottom{display:flex;justify-content:space-between;gap:12px;margin-top:18px}.message{min-height:24px;color:var(--green);font-size:14px}.error{color:var(--red)}
-@media(max-width:780px){.layout{display:block}nav{position:static;height:auto;display:flex;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:8px}nav button{white-space:nowrap;width:auto}.grid,.rubric{grid-template-columns:1fr}.top{position:static;padding:8px 10px}.top small{display:none}main{padding:16px}.card{padding:17px}.prompt{font-size:18px}.timer{font-size:44px}}
-@media print{nav,.top,.navbottom,button{display:none!important}.pane{display:block!important;min-height:auto;break-before:page}.layout{display:block}main{padding:0}.teacheronly{display:block!important}}
+:root{--bg:#f7f8f4;--paper:#fff;--ink:#15304a;--muted:#657789;--blue:#2f78b7;--sky:#dfeff7;--green:#2b806b;--mint:#e5f3ed;--red:#c95454;--redsoft:#fbe9e7;--gold:#b57a25;--goldsoft:#fff1d8;--line:#d9e3e7;--shadow:0 10px 30px rgba(24,55,78,.08)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:18px/1.42 system-ui,-apple-system,Segoe UI,Arial,sans-serif}button,input,textarea,select{font:inherit}button,a{touch-action:manipulation}
+button,.button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:14px;padding:11px 16px;font-weight:800;cursor:pointer;text-decoration:none}button:hover,.button:hover{transform:translateY(-1px);border-color:#a9c5d4}button:focus-visible,a:focus-visible,textarea:focus-visible,select:focus-visible{outline:4px solid #f2c96b;outline-offset:2px}
+.primary{background:var(--blue);border-color:var(--blue);color:#fff}.green{background:var(--green);border-color:var(--green);color:#fff}.soft{background:var(--sky);border-color:#c8e0eb;color:#174d6e}.danger{background:var(--redsoft);border-color:#f0c8c4;color:#8f3535}
+.top{height:66px;background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:8px 18px;position:sticky;top:0;z-index:50}.top .title{font-weight:900;white-space:nowrap}.top .spacer{flex:1}.top small{color:var(--muted)}
+.progressnav{height:58px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:8px 18px;overflow:auto;position:sticky;top:66px;z-index:45}.stepbtn{min-width:44px;height:42px;padding:0 14px;border-radius:13px;background:#f5f7f7;color:#536777;white-space:nowrap}.stepbtn.active{background:var(--ink);color:#fff;border-color:var(--ink)}.stepbtn.done{background:var(--mint);color:#1d6654;border-color:#c9e6da}
+main{max-width:1380px;margin:auto;padding:18px}.screen{display:none;min-height:calc(100vh - 174px)}.screen.active{display:grid;align-items:center}.stage{width:100%}
+.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.16em;font-weight:900;color:var(--blue)}h1{font-size:clamp(44px,6vw,88px);line-height:.93;letter-spacing:-.055em;margin:10px 0 14px}h2{font-size:clamp(32px,4.2vw,56px);line-height:1;letter-spacing:-.045em;margin:8px 0 16px}h3{font-size:22px;margin:0 0 10px}.sub{font-size:clamp(18px,2vw,25px);color:var(--muted);max-width:850px;margin:0 0 22px}
+.board{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:16px}.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow)}.card.flat{box-shadow:none}.bigcard{padding:clamp(22px,3vw,38px)}.accent{background:linear-gradient(135deg,#ffffff 0%,#edf7fa 100%);border-color:#cde4ed}.mint{background:var(--mint);border-color:#cae7db}.gold{background:var(--goldsoft);border-color:#efd8ae}.redsoft{background:var(--redsoft);border-color:#f3d0cc}
+.route{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:22px}.route .tile{min-height:135px;border-radius:20px;padding:18px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between}.route .n{font-size:42px;font-weight:950;line-height:1;color:#bfd2dc}.route b{font-size:20px}.route small{color:var(--muted)}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.between{justify-content:space-between}.clock{font-size:clamp(42px,6vw,76px);font-weight:950;letter-spacing:-.05em;line-height:1}.meter{height:12px;background:#e7edef;border-radius:999px;overflow:hidden;margin:10px 0 0}.meter>div{height:100%;width:100%;background:var(--green);transition:width .2s linear}.wordcount{font-weight:900;font-size:20px}.wordcount.ok{color:var(--green)}.wordcount.warn{color:var(--red)}
+.examgrid{display:grid;grid-template-columns:minmax(420px,.95fr) minmax(500px,1.05fr);gap:16px;align-items:stretch}.promptbox{background:#fff;border:2px solid #d3e1e7;border-radius:22px;padding:22px}.email{font-family:Georgia,serif;white-space:pre-line;font-size:19px;line-height:1.55;background:#f8faf9;border-radius:15px;padding:18px}.taskline{font-size:18px;margin-top:16px}.editor{display:flex;flex-direction:column}.editor textarea{flex:1;min-height:470px;width:100%;border:2px solid #cad9df;border-radius:18px;background:#fff;padding:20px;font:19px/1.58 Georgia,serif;color:var(--ink);resize:none}
+.teacherbar{margin-top:12px}.drawer{display:none;margin-top:10px}.drawer.open{display:block}.teacher{border:2px dashed #a9c7d5;background:#f7fbfc}.teacher h3{color:#1d5c7e}
+.challenge{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.challenge button{min-height:120px;text-align:left;padding:18px;background:#fff}.challenge button.revealed{background:var(--mint);border-color:#bddfce}.challenge .q{font-size:14px;color:var(--muted);display:block;margin-bottom:8px}.challenge .a{display:none;font-size:22px;font-weight:900}.challenge button.revealed .a{display:block}
+.data{width:100%;border-collapse:collapse;font-size:20px}.data th,.data td{padding:13px 10px;border-bottom:1px solid var(--line);text-align:left}.data th:last-child,.data td:last-child{text-align:right;font-weight:950}.data tr:first-child{background:#f4f8f9}
+.checkgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.checkcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;min-height:115px}.checkcard label{display:flex;gap:9px;align-items:flex-start}.checkcard input{width:20px;height:20px;accent-color:var(--green);margin-top:2px}.scoregrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.scoregrid label{background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px;font-weight:800}.scoregrid select{width:100%;margin-top:8px;border:1px solid var(--line);border-radius:10px;padding:8px;background:#fff}
+textarea.note{width:100%;min-height:100px;border:1px solid #bacbd3;border-radius:14px;padding:13px;resize:vertical;background:#fff}.miniinput{width:100%;min-height:80px;border:1px solid #bacbd3;border-radius:14px;padding:12px;resize:vertical}
+.pills{display:flex;gap:8px;flex-wrap:wrap}.pill{background:#edf4f7;border-radius:999px;padding:7px 12px;font-size:14px;font-weight:800;color:#31586f}.hidden{display:none!important}.message{min-height:24px;color:var(--green);font-size:14px}.navbottom{display:flex;justify-content:space-between;gap:12px;margin-top:14px}
+body.student .teacheronly{display:none!important}body.student .teacherbar{display:none!important}
+@media(max-width:980px){.board,.examgrid{grid-template-columns:1fr}.route{grid-template-columns:1fr 1fr}.challenge,.checkgrid,.scoregrid{grid-template-columns:1fr 1fr}.editor textarea{min-height:390px}.screen.active{align-items:start}.top small{display:none}}
+@media(max-width:640px){html,body{font-size:16px}.top{height:auto;min-height:60px;padding:8px 10px}.top .title{display:none}.progressnav{top:60px;padding:7px 10px}.stepbtn{padding:0 10px}.route,.challenge,.checkgrid,.scoregrid{grid-template-columns:1fr}.card,.bigcard{padding:17px}main{padding:12px}.examgrid{display:block}.promptbox{margin-bottom:12px}.editor textarea{min-height:360px}h1{font-size:50px}.clock{font-size:48px}.email{font-size:17px}}
+@media print{.top,.progressnav,.navbottom,.teacherbar button{display:none!important}.screen{display:block!important;min-height:auto;page-break-after:always}.drawer{display:block!important}main{max-width:none;padding:0}.card{box-shadow:none}}
 </style>
 </head>
 <body>
 <header class="top">
-<a class="btn" href="./">← Кабинет</a>
-<small>Катерина · Урок 2 · 60 минут · письменная диагностика</small>
-<div><button id="project">Режим показа</button> <button id="fullscreen">Полный экран</button></div>
+<a class="button" href="./">← Кабинет</a>
+<div class="title">KATERINA · EGE 2027</div>
+<small>Writing Lab · задания 37 / 38</small>
+<div class="spacer"></div>
+<button id="mode">Режим показа</button>
+<button id="fullscreen">⛶</button>
 </header>
-<div class="layout">
-<nav id="nav" aria-label="Этапы"></nav>
+<nav class="progressnav" id="nav"></nav>
 <main>
-<section id="start" class="pane active">
-<div class="eyebrow">Урок 2 · Writing · 37 + 38</div>
-<h1>Write first.<br>Analyse second.</h1>
-<p class="muted">Диагностика без готового шаблона: сначала самостоятельная работа, потом критерии, разбор и точечная коррекция.</p>
-<div class="grid">
-<div class="card"><h3>Цель урока</h3><p>Проверить, умеет ли Катерина самостоятельно выполнить коммуникативную задачу, удержать объём, структуру и точность языка.</p><span class="tag">не показывать образец до сдачи</span></div>
-<div class="card"><h3>Результат</h3><p>1 письмо 37 + диагностический фрагмент 38 + карта повторяющихся ошибок + две цели на следующую неделю.</p><button class="primary" data-go="review">Начать →</button></div>
+<section class="screen active" id="start"><div class="stage">
+<div class="kicker">Урок 2 · 60 минут</div>
+<h1>WRITING<br>LAB 37 / 38</h1>
+<p class="sub">Не учим «идеальный шаблон». Проверяем, что Катерина реально умеет делать сама — и сразу превращаем ошибки в следующий шаг.</p>
+<div class="route">
+<div class="tile"><span class="n">01</span><div><b>SPRINT</b><br><small>3 questions · 90 sec</small></div></div>
+<div class="tile"><span class="n">02</span><div><b>EMAIL 37</b><br><small>write → check → score</small></div></div>
+<div class="tile"><span class="n">03</span><div><b>DATA 38</b><br><small>read numbers · compare</small></div></div>
+<div class="tile"><span class="n">04</span><div><b>WRITE 38</b><br><small>core paragraphs · diagnose</small></div></div>
 </div>
-<details class="teacheronly"><summary>Сценарий преподавателя · 60 минут</summary>
-<table class="data"><tr><th>Время</th><th>Этап</th></tr><tr><td>0–8</td><td>Короткий разбор домашней работы после устного урока</td></tr><tr><td>8–28</td><td>Задание 37 — полностью самостоятельно</td></tr><tr><td>28–34</td><td>Самопроверка 37 + раскрытие критериев</td></tr><tr><td>34–42</td><td>Задание 38 — анализ данных и план</td></tr><tr><td>42–52</td><td>Диагностический фрагмент 38</td></tr><tr><td>52–60</td><td>Проверка, карта ошибок, домашняя работа</td></tr></table>
-<p>Не редактируйте текст во время написания. Сначала зафиксируйте исходный результат. Подсказки и чек-листы открывайте только после самостоятельной попытки.</p>
-</details>
-<div class="notice teacheronly"><b>Статус формата:</b> страница ориентирована на проект ЕГЭ‑2027 и действующую модель письменной части. Финальные формулировки и критерии перепроверьте после публикации утверждённых документов ФИПИ.</div>
-</section>
+<div class="row" style="margin-top:18px"><button class="primary" data-go="sprint">Начать урок →</button><span class="pill teacheronly">Ваша проверка скрыта под кнопками</span><span class="pill">Каждый этап — отдельный экран</span></div>
+</div></section>
 
-<section id="review" class="pane">
-<div class="eyebrow">0–8 минут · связь с прошлым уроком</div>
-<h2>Three-minute retrieval + homework scan.</h2>
-<div class="card">
-<p class="prompt">Без записей: назови 6 выражений из прошлого урока и составь с любыми двумя личные предложения.</p>
-<div class="row"><button data-mini="180" class="primary">3 минуты</button><span class="timer" id="mini-clock">3:00</span></div><div class="bar"><div id="mini-bar"></div></div>
-</div>
-<div class="card teacheronly"><h3>Быстрая проверка преподавателя</h3>
-<label class="check"><input type="checkbox" data-check="hw-lexis">12 сочетаний повторены</label>
-<label class="check"><input type="checkbox" data-check="hw-grammar">8 грамматических контекстов выполнены</label>
-<label class="check"><input type="checkbox" data-check="hw-recording">5 ответов о волонтёрстве записаны</label>
-<label>Одна повторяющаяся ошибка<textarea class="tiny" data-field="reviewNote" placeholder="Например: после Have you ever... нет конкретного примера в Past Simple."></textarea></label>
-</div>
-</section>
+<section class="screen" id="sprint"><div class="stage">
+<div class="kicker">0–6 мин · warm-up</div><h2>3 QUESTIONS. 90 SECONDS.</h2>
+<div class="board">
+<div class="card bigcard accent"><h3>Alex is going on a two-day class trip to a science centre.</h3><p class="sub" style="margin:10px 0">Ask THREE different questions. No writing first — say them aloud.</p><div class="pills"><span class="pill">when?</span><span class="pill">transport?</span><span class="pill">activities?</span><span class="pill">accommodation?</span><span class="pill">cost?</span></div></div>
+<div class="card bigcard"><div class="row between"><b>QUESTION SPRINT</b><span class="clock" id="sprint-clock">1:30</span></div><div class="meter"><div id="sprint-meter"></div></div><div class="row" style="margin-top:18px"><button class="primary" id="sprint-start">START</button><button class="soft teacheronly" data-drawer="sprint-key">Мои возможные вопросы</button></div><div id="sprint-key" class="drawer teacheronly"><div class="card teacher"><p>How are you going to get there?</p><p>What activities are you going to do there?</p><p>Where are you going to stay?</p><p class="muted">Это ориентиры, не обязательный набор. Засчитывайте другие грамматически корректные вопросы по теме поездки.</p></div></div></div>
+</div></div></section>
 
-<section id="emailtask" class="pane">
-<div class="eyebrow">8–28 минут · ЕГЭ 37</div>
-<h2>Email. No template.</h2>
-<div class="taskbox">
-<p>You have received an email message from your English-speaking pen-friend Alex:</p>
+<section class="screen" id="email"><div class="stage">
+<div class="kicker">6–27 мин · задание 37</div>
+<div class="row between"><h2 style="margin-bottom:8px">EMAIL 37</h2><div class="row"><span id="email-count" class="wordcount">0 words</span><span class="clock" id="email-clock">20:00</span><button class="primary" id="email-start">START 20:00</button></div></div>
+<div class="meter"><div id="email-meter"></div></div>
+<div class="examgrid" style="margin-top:14px">
+<div class="promptbox">
 <div class="email">From: Alex@mail.uk
 To: Russian_friend@ege.ru
 Subject: School projects
@@ -81,122 +76,100 @@ Subject: School projects
 Do students at your school often take part in volunteer projects? What kind of activities would you personally choose? Why do you think volunteering can be useful for teenagers?
 
 Next month our class is going on a two-day trip to a science centre…</div>
-<p><b>Write an email to Alex.</b> In your message answer his 3 questions and ask 3 questions about the class trip to the science centre. Write <b>100–140 words</b>.</p>
+<p class="taskline"><b>Write an email to Alex.</b> Answer the 3 questions and ask 3 questions about the class trip to the science centre. <b>100–140 words.</b></p>
+<button class="soft teacheronly" data-drawer="email-key">Для меня · смысловые точки</button>
+<div id="email-key" class="drawer teacheronly"><div class="card teacher"><b>Проверить:</b><p>3 ответа + 3 прямых вопроса именно о поездке. Не подсказывать структуру до завершения первой версии.</p></div></div>
 </div>
-<div class="row"><button id="email-timer" class="primary">20 минут</button><span class="timer" id="email-clock">20:00</span><span id="email-count" class="counter">0 words</span></div><div class="bar"><div id="email-bar"></div></div>
-<textarea id="email-text" placeholder="Пиши здесь. На этом этапе подсказки закрыты."></textarea>
-<div class="message" id="email-status"></div>
-</section>
+<div class="editor"><textarea id="email-text" spellcheck="false" placeholder="Write here…"></textarea><div id="email-status" class="message"></div></div>
+</div></div></section>
 
-<section id="emailcheck" class="pane">
-<div class="eyebrow">28–34 минут · после сдачи</div>
-<h2>Check what actually earns the points.</h2>
-<div class="grid">
-<div class="card"><h3>Self-check</h3>
-<label class="check"><input type="checkbox" data-check="e-answers">Я ответила на все 3 вопроса Alex.</label>
-<label class="check"><input type="checkbox" data-check="e-questions">Я задала ровно 3 уместных вопроса о поездке.</label>
-<label class="check"><input type="checkbox" data-check="e-style">Стиль личного email соблюдён.</label>
-<label class="check"><input type="checkbox" data-check="e-links">Есть логичные переходы и абзацы.</label>
-<label class="check"><input type="checkbox" data-check="e-language">Я проверила вопросы, времена, артикли и сочетаемость.</label>
+<section class="screen" id="check37"><div class="stage">
+<div class="kicker">27–35 мин · error clinic</div><h2>CAN THIS EMAIL SCORE?</h2>
+<div class="checkgrid">
+<div class="checkcard"><label><input type="checkbox" data-check="37-a1"><span><b>Answer 1</b><br>Есть содержательный ответ на первый вопрос.</span></label></div>
+<div class="checkcard"><label><input type="checkbox" data-check="37-a2"><span><b>Answer 2</b><br>Второй ответ не одно слово, а полная мысль.</span></label></div>
+<div class="checkcard"><label><input type="checkbox" data-check="37-a3"><span><b>Answer 3</b><br>Причина объяснена, а не просто названа.</span></label></div>
+<div class="checkcard"><label><input type="checkbox" data-check="37-q"><span><b>3 questions</b><br>Все три относятся к поездке.</span></label></div>
+<div class="checkcard"><label><input type="checkbox" data-check="37-org"><span><b>Organisation</b><br>Email читается как связное личное сообщение.</span></label></div>
+<div class="checkcard"><label><input type="checkbox" data-check="37-lang"><span><b>Language</b><br>Проверены вопросы, времена, артикли и сочетаемость.</span></label></div>
 </div>
-<div class="card teacheronly"><h3>Моя проверка · 37</h3>
-<div class="rubric">
+<div class="card teacheronly" style="margin-top:14px"><div class="row between"><h3>МОЯ ПРОВЕРКА · 37</h3><button class="soft" data-drawer="score37">Открыть критерии</button></div><div id="score37" class="drawer"><div class="scoregrid">
 <label>К1 · содержание<select data-score="37-k1"><option value="">—</option><option>0</option><option>1</option><option>2</option></select></label>
 <label>К2 · организация<select data-score="37-k2"><option value="">—</option><option>0</option><option>1</option><option>2</option></select></label>
 <label>К3 · язык<select data-score="37-k3"><option value="">—</option><option>0</option><option>1</option><option>2</option></select></label>
-</div>
-<label>Причина каждой потери балла<textarea class="short" data-field="emailTeacherNote" placeholder="Содержание / организация / лексика / грамматика / орфография."></textarea></label>
-</div>
-</div>
-<details class="teacheronly"><summary>Открыть ориентир только после самостоятельной проверки</summary>
-<div class="card compact"><p><b>Обязательные смысловые элементы:</b> три содержательных ответа; три прямых вопроса именно о предстоящей поездке в science centre; логичное личное письмо с обращением, благодарностью/реакцией, завершающей фразой и подписью.</p><p><b>Не требовать:</b> совпадения с шаблонными фразами. Проверять коммуникативную задачу и качество собственного текста.</p></div>
-</details>
-</section>
+</div><textarea class="note" data-field="note37" placeholder="Ошибка → почему потеря балла → что повторить"></textarea></div></div>
+</div></section>
 
-<section id="data" class="pane">
-<div class="eyebrow">34–42 минуты · ЕГЭ 38</div>
-<h2>Read the data before you write.</h2>
-<div class="taskbox">
-<p>Imagine that you are doing a project on <b>how teenagers improve their English outside school</b>. You have found some data on the subject — the results of a survey of teenagers. Comment on the data in the table and give your opinion on the subject of the project.</p>
-<table class="data"><tr><th>Activity</th><th>Percentage</th></tr><tr><td>Watching films and series in English</td><td>34%</td></tr><tr><td>Following English-language social media</td><td>26%</td></tr><tr><td>Playing online games in English</td><td>18%</td></tr><tr><td>Listening to podcasts or songs</td><td>13%</td></tr><tr><td>Attending conversation clubs</td><td>9%</td></tr></table>
-<p>Write <b>200–250 words</b>. Use the project plan: introduce the project; select and report relevant facts; make comparisons and comment on them; describe a possible problem connected with learning English outside school and suggest a solution; conclude with your opinion.</p>
+<section class="screen" id="decode"><div class="stage">
+<div class="kicker">35–43 мин · задание 38</div><h2>DATA DECODE</h2>
+<div class="board">
+<div class="card bigcard"><h3>How teenagers improve their English outside school</h3>
+<table class="data"><tr><th>Activity</th><th>%</th></tr><tr><td>Watching films and series</td><td>34</td></tr><tr><td>English-language social media</td><td>26</td></tr><tr><td>Online games in English</td><td>18</td></tr><tr><td>Podcasts or songs</td><td>13</td></tr><tr><td>Conversation clubs</td><td>9</td></tr></table></div>
+<div class="card bigcard gold"><h3>READ NUMBERS — DON'T COPY THEM</h3><p>Нажми карточку только после ответа вслух.</p>
+<div class="challenge">
+<button data-answer><span class="q">Largest gap?</span><span class="a">34 − 9 = 25 pp</span></button>
+<button data-answer><span class="q">Top two together?</span><span class="a">60%</span></button>
+<button data-answer><span class="q">Film vs clubs?</span><span class="a">≈ 3.8×</span></button>
 </div>
-<div class="card"><h3>Data map · 4 minutes</h3>
-<label>Two or three facts<textarea class="tiny" data-field="facts" placeholder="34%... / 26%... / 9%..."></textarea></label>
-<label>One meaningful comparison<textarea class="tiny" data-field="comparison" placeholder="Watching films is almost four times as popular as..."></textarea></label>
-<label>Problem + solution<textarea class="tiny" data-field="problem" placeholder="Problem: ... Solution: ..."></textarea></label>
-</div>
-<details class="teacheronly"><summary>Подсказка преподавателю</summary><p>Сначала спросите: «Что эти цифры позволяют утверждать?» Не принимайте простое переписывание всех пяти строк как анализ. Добивайтесь сравнения и комментария к нему.</p></details>
-</section>
+</div></div>
+<div class="row" style="margin-top:14px"><span class="pill">fact ≠ analysis</span><span class="pill">comparison + comment</span><span class="pill">problem → solution</span></div>
+</div></section>
 
-<section id="essay" class="pane">
-<div class="eyebrow">42–52 минут · диагностический фрагмент 38</div>
-<h2>Write the core, not a memorised essay.</h2>
-<p class="muted">За 10 минут: вступление + 2–3 факта + сравнение с комментарием + проблема/решение. Полный текст будет домашним заданием.</p>
-<div class="row"><button id="essay-timer" class="primary">10 минут</button><span class="timer" id="essay-clock">10:00</span><span id="essay-count" class="counter">0 words</span></div><div class="bar"><div id="essay-bar"></div></div>
-<textarea id="essay-text" placeholder="Пиши собственный текст. Не копируй формулировку задания целиком."></textarea>
-<div class="message" id="essay-status"></div>
-<details class="teacheronly"><summary>Языковые опоры после попытки</summary>
-<div class="card compact"><p><b>Reporting:</b> The survey shows that… / The most common choice is… / Only a small proportion of respondents…</p><p><b>Comparison:</b> … is considerably more popular than… / The figure for … is roughly twice as high as…</p><p><b>Problem/solution:</b> One problem that may arise is… / This can be addressed by…</p></div>
-</details>
-</section>
+<section class="screen" id="plan38"><div class="stage">
+<div class="kicker">43–48 мин · before writing</div><h2>BUILD THE LOGIC.</h2>
+<div class="board">
+<div class="card bigcard accent"><h3>1 · Facts</h3><textarea class="miniinput" data-field="facts38" placeholder="Choose 2–3 figures, not all five."></textarea><h3 style="margin-top:16px">2 · Comparison + comment</h3><textarea class="miniinput" data-field="compare38" placeholder="What is being compared and why is it interesting?"></textarea></div>
+<div class="card bigcard mint"><h3>3 · Problem</h3><textarea class="miniinput" data-field="problem38" placeholder="A realistic problem connected with learning English outside school."></textarea><h3 style="margin-top:16px">4 · Solution</h3><textarea class="miniinput" data-field="solution38" placeholder="A solution that directly addresses that problem."></textarea><button class="soft teacheronly" style="margin-top:14px" data-drawer="plan-key">Моя подсказка</button><div id="plan-key" class="drawer teacheronly"><div class="card teacher"><p><b>Если перечисляет цифры:</b> спросите “So what?” — что можно заключить из сравнения?</p><p><b>Если solution не связан с problem:</b> заставьте закончить конструкцию “This problem can be addressed by…”</p></div></div></div>
+</div></div></section>
 
-<section id="finish" class="pane">
-<div class="eyebrow">52–60 минут · teacher diagnosis</div>
-<h2>Convert errors into the next plan.</h2>
-<div class="grid">
-<div class="card teacheronly"><h3>Карта ошибок</h3>
-<label>37 · содержание<textarea class="tiny" data-field="d37content"></textarea></label>
-<label>37 · язык/организация<textarea class="tiny" data-field="d37language"></textarea></label>
-<label>38 · анализ данных/логика<textarea class="tiny" data-field="d38logic"></textarea></label>
-<label>38 · язык<textarea class="tiny" data-field="d38language"></textarea></label>
-</div>
-<div class="card"><h3>Две цели</h3>
-<label>Goal 1<textarea class="tiny" data-field="goal1" placeholder="Например: задавать 3 точных вопроса без грамматических ошибок."></textarea></label>
-<label>Goal 2<textarea class="tiny" data-field="goal2" placeholder="Например: комментировать сравнение данных, а не только перечислять цифры."></textarea></label>
-</div>
-</div>
-<div class="card"><h3>Домашняя работа</h3>
-<ol><li>Исправить письмо 37 по комментариям, не переписывая его с готового образца.</li><li>Завершить полный текст 38 на 200–250 слов по сегодняшней таблице.</li><li>Подчеркнуть 5 связок и обвести 5 языковых мест, в которых сомневалась.</li><li>Отдельно переписать все ошибки из сегодняшней карты в формате: <b>ошибка → правило → свой новый пример</b>.</li></ol>
-</div>
-<div class="row teacheronly"><button id="save-session" class="green">Сохранить урок</button><button id="export-session">Скачать результат JSON</button><span id="save-status" class="message"></span></div>
-<details class="teacheronly"><summary>Объём и важные ограничения проверки</summary><p>Рабочие ориентиры: задание 37 — 100–140 слов, задание 38 — 200–250 слов. При подготовке к ЕГЭ отдельно отслеживайте коммуникативную задачу: нулевой результат по соответствующему критерию обнуляет задание целиком. Не поощряйте заученные универсальные фрагменты вместо собственного текста.</p></details>
-</section>
+<section class="screen" id="write38"><div class="stage">
+<div class="kicker">48–58 мин · writing sprint</div>
+<div class="row between"><h2 style="margin-bottom:8px">WRITE THE CORE.</h2><div class="row"><span id="essay-count" class="wordcount">0 words</span><span class="clock" id="essay-clock">10:00</span><button class="primary" id="essay-start">START 10:00</button></div></div>
+<div class="meter"><div id="essay-meter"></div></div>
+<div class="card accent" style="margin-top:14px"><p style="margin:0"><b>За 10 минут:</b> introduction → 2–3 facts → comparison + comment → problem + solution. Полный текст 200–250 слов закончить дома.</p></div>
+<div class="editor" style="margin-top:12px"><textarea id="essay-text" spellcheck="false" placeholder="Write here…"></textarea><div id="essay-status" class="message"></div></div>
+<div class="teacherbar teacheronly"><button class="soft" data-drawer="language38">Для меня · языковые опоры</button><div id="language38" class="drawer"><div class="card teacher"><p><b>Reporting:</b> The survey shows that… / The most common choice is…</p><p><b>Comparison:</b> The figure for … is considerably higher than… / … is almost four times as popular as…</p><p><b>Problem / solution:</b> One problem that may arise is… / This can be addressed by…</p></div></div></div>
+</div></section>
 
-<div class="navbottom"><button id="back">← Назад</button><button id="next" class="primary">Далее →</button></div>
+<section class="screen" id="finish"><div class="stage">
+<div class="kicker">58–60 мин · finish</div><h2>NEXT TARGETS</h2>
+<div class="board">
+<div class="card bigcard teacheronly"><h3>МОЯ КАРТА ОШИБОК</h3><textarea class="note" data-field="final37" placeholder="37 · содержание / вопросы / организация / язык"></textarea><textarea class="note" data-field="final38" placeholder="38 · данные / сравнение / problem-solution / язык" style="margin-top:10px"></textarea></div>
+<div class="card bigcard"><h3>ДВЕ ЦЕЛИ</h3><textarea class="miniinput" data-field="goal1" placeholder="1."></textarea><textarea class="miniinput" data-field="goal2" placeholder="2." style="margin-top:10px"></textarea></div>
+</div>
+<div class="card bigcard" style="margin-top:14px"><div class="row between"><div><div class="kicker">Homework</div><h3 style="margin-top:5px">FIX → FINISH → LOG</h3></div><span class="pill">45–60 min</span></div><ol><li>Исправить письмо 37 по комментариям.</li><li>Закончить полный текст 38 на 200–250 слов.</li><li>Выписать ошибки: <b>ошибка → правило → свой новый пример</b>.</li></ol></div>
+<div class="row teacheronly"><button class="green" id="save-session">Сохранить урок</button><button id="export-session">Скачать результат</button><span id="save-status" class="message"></span></div>
+</div></section>
+
+<div class="navbottom"><button id="back">← Назад</button><button class="primary" id="next">Далее →</button></div>
 </main>
-</div>
 <script>
-(function(){
-'use strict';
-var key='katerina-ege-lesson02-writing-v1';
-var state={fields:{},checks:{},scores:{},email:'',essay:''};
-try{var saved=JSON.parse(localStorage.getItem(key));if(saved&&typeof saved==='object')state=Object.assign(state,saved)}catch(e){}
+(()=>{'use strict';
+const key='katerina-ege-writing-lab-v2',oldKey='katerina-ege-lesson02-writing-v1';
+let state={fields:{},checks:{},scores:{},email:'',essay:''};
+try{const old=JSON.parse(localStorage.getItem(oldKey)||'null');if(old&&typeof old==='object')state={...state,...old}}catch{}
+try{const fresh=JSON.parse(localStorage.getItem(key)||'null');if(fresh&&typeof fresh==='object')state={...state,...fresh}}catch{}
 state.fields=state.fields||{};state.checks=state.checks||{};state.scores=state.scores||{};
-var stages=[['start','Старт'],['review','0–8 · Разогрев'],['emailtask','8–28 · 37'],['emailcheck','28–34 · Проверка 37'],['data','34–42 · Данные 38'],['essay','42–52 · Фрагмент 38'],['finish','52–60 · Итоги']];
-var stage=0,timer=null;
-function $(s){return document.querySelector(s)}
-function save(){try{localStorage.setItem(key,JSON.stringify(state));return true}catch(e){return false}}
-function go(id){clearInterval(timer);timer=null;stage=stages.findIndex(function(x){return x[0]===id});if(stage<0)stage=0;document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('active',p.id===stages[stage][0])});document.querySelectorAll('#nav button').forEach(function(b){b.classList.toggle('active',b.dataset.go===stages[stage][0])});$('#back').disabled=stage===0;$('#next').disabled=stage===stages.length-1;window.scrollTo(0,0)}
-$('#nav').innerHTML=stages.map(function(s){return '<button data-go="'+s[0]+'">'+s[1]+'</button>'}).join('');
-document.addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(b)go(b.dataset.go)});
-$('#back').onclick=function(){go(stages[Math.max(0,stage-1)][0])};$('#next').onclick=function(){go(stages[Math.min(stages.length-1,stage+1)][0])};
-$('#project').onclick=function(){document.body.classList.toggle('project');$('#project').textContent=document.body.classList.contains('project')?'Режим преподавателя':'Режим показа'};
-$('#fullscreen').onclick=async function(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch(e){}};
-function countWords(t){var m=(t.trim().match(/[A-Za-zА-Яа-яЁё0-9]+(?:['’\-][A-Za-zА-Яа-яЁё0-9]+)*/g)||[]);return m.length}
-function paintCount(el,n,min,max){el.textContent=n+' words';el.className='counter '+(n>=min&&n<=max?'ok':'warn')}
-function bindText(id,stateKey,min,max,countId){var ta=$(id),out=$(countId);ta.value=state[stateKey]||'';function upd(){state[stateKey]=ta.value;save();paintCount(out,countWords(ta.value),min,max)}ta.addEventListener('input',upd);upd()}
-bindText('#email-text','email',100,140,'#email-count');bindText('#essay-text','essay',180,250,'#essay-count');
-document.querySelectorAll('[data-field]').forEach(function(el){el.value=state.fields[el.dataset.field]||'';el.addEventListener('input',function(){state.fields[el.dataset.field]=el.value;save()})});
-document.querySelectorAll('[data-check]').forEach(function(el){el.checked=!!state.checks[el.dataset.check];el.addEventListener('change',function(){state.checks[el.dataset.check]=el.checked;save()})});
-document.querySelectorAll('[data-score]').forEach(function(el){el.value=state.scores[el.dataset.score]||'';el.addEventListener('change',function(){state.scores[el.dataset.score]=el.value;save()})});
-function runTimer(seconds,clock,bar,status){clearInterval(timer);var end=Date.now()+seconds*1000;function tick(){var left=Math.max(0,Math.ceil((end-Date.now())/1000)),m=Math.floor(left/60),s=left%60;$(clock).textContent=m+':'+String(s).padStart(2,'0');$(bar).style.width=(left/seconds*100)+'%';if(left<=0){clearInterval(timer);timer=null;if(status)$(status).textContent='Время вышло. Сохрани текущую версию и переходи к проверке.'}}tick();timer=setInterval(tick,250)}
-$('#email-timer').onclick=function(){runTimer(1200,'#email-clock','#email-bar','#email-status')};$('#essay-timer').onclick=function(){runTimer(600,'#essay-clock','#essay-bar','#essay-status')};
-document.querySelector('[data-mini]').onclick=function(){runTimer(180,'#mini-clock','#mini-bar',null)};
-$('#save-session').onclick=function(){save();$('#save-status').textContent='Сохранено в браузере.'};
-$('#export-session').onclick=function(){save();var payload={title:'Катерина ЕГЭ 2027 · Урок 2 · Writing diagnostic',exportedAt:new Date().toISOString(),data:state};var blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Katerina_EGE_Lesson02_Writing_Diagnostic.json';a.click();setTimeout(function(){URL.revokeObjectURL(a.href)},2500)};
+const $=s=>document.querySelector(s), stages=[['start','START'],['sprint','01 SPRINT'],['email','02 EMAIL'],['check37','CHECK 37'],['decode','03 DATA'],['plan38','PLAN 38'],['write38','04 WRITE'],['finish','FINISH']];
+let pos=0,timer=null;
+const save=()=>{try{localStorage.setItem(key,JSON.stringify(state));return true}catch{return false}};
+function nav(){document.querySelector('#nav').innerHTML=stages.map((s,i)=>'<button class="stepbtn '+(i===pos?'active':i<pos?'done':'')+'" data-go="'+s[0]+'">'+s[1]+'</button>').join('')}
+function go(id){clearInterval(timer);timer=null;const n=stages.findIndex(s=>s[0]===id);pos=n<0?0:n;document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===stages[pos][0]));nav();$('#back').disabled=pos===0;$('#next').disabled=pos===stages.length-1;window.scrollTo(0,0)}
+document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){go(g.dataset.go);return}const d=e.target.closest('[data-drawer]');if(d){$('#'+d.dataset.drawer)?.classList.toggle('open');return}const a=e.target.closest('[data-answer]');if(a)a.classList.toggle('revealed')});
+$('#back').onclick=()=>go(stages[Math.max(0,pos-1)][0]);$('#next').onclick=()=>go(stages[Math.min(stages.length-1,pos+1)][0]);
+$('#mode').onclick=()=>{document.body.classList.toggle('student');$('#mode').textContent=document.body.classList.contains('student')?'Режим преподавателя':'Режим показа'};
+$('#fullscreen').onclick=async()=>{try{document.fullscreenElement?await document.exitFullscreen():await document.documentElement.requestFullscreen()}catch{}};
+function countWords(t){return (t.trim().match(/[A-Za-zА-Яа-яЁё0-9]+(?:['’\-][A-Za-zА-Яа-яЁё0-9]+)*/g)||[]).length}
+function bindEditor(id,keyName,min,max,count){const ta=$(id),out=$(count);ta.value=state[keyName]||'';const upd=()=>{state[keyName]=ta.value;save();const n=countWords(ta.value);out.textContent=n+' words';out.className='wordcount '+(n>=min&&n<=max?'ok':'warn')};ta.oninput=upd;upd()}
+bindEditor('#email-text','email',100,140,'#email-count');bindEditor('#essay-text','essay',1,250,'#essay-count');
+document.querySelectorAll('[data-field]').forEach(el=>{el.value=state.fields[el.dataset.field]||'';el.oninput=()=>{state.fields[el.dataset.field]=el.value;save()}});
+document.querySelectorAll('[data-check]').forEach(el=>{el.checked=!!state.checks[el.dataset.check];el.onchange=()=>{state.checks[el.dataset.check]=el.checked;save()}});
+document.querySelectorAll('[data-score]').forEach(el=>{el.value=state.scores[el.dataset.score]||'';el.onchange=()=>{state.scores[el.dataset.score]=el.value;save()}});
+function run(sec,clock,meter,status){clearInterval(timer);const start=Date.now(),end=start+sec*1000;const tick=()=>{const left=Math.max(0,Math.ceil((end-Date.now())/1000)),m=Math.floor(left/60),s=left%60;$(clock).textContent=m+':'+String(s).padStart(2,'0');$(meter).style.width=(left/sec*100)+'%';if(left<=0){clearInterval(timer);timer=null;if(status)$(status).textContent='Время вышло — остановите текст на текущем месте.'}};tick();timer=setInterval(tick,200)}
+$('#sprint-start').onclick=()=>run(90,'#sprint-clock','#sprint-meter',null);$('#email-start').onclick=()=>run(1200,'#email-clock','#email-meter','#email-status');$('#essay-start').onclick=()=>run(600,'#essay-clock','#essay-meter','#essay-status');
+$('#save-session').onclick=()=>{$('#save-status').textContent=save()?'Сохранено в браузере.':'Сохранение недоступно.'};
+$('#export-session').onclick=()=>{save();const blob=new Blob([JSON.stringify({title:'Katerina EGE 2027 · Writing Lab 37/38',exportedAt:new Date().toISOString(),data:state},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Katerina_EGE_Writing_Lab_37_38.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2500)};
 history.replaceState(null,'',location.pathname+location.search);go('start');
 })();
 </script>
-</body>
-</html>
+</body></html>
