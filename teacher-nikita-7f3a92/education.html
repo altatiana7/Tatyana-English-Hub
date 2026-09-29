@@ -39,17 +39,18 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 <div class="brand">Nikita · Unit 8</div>
 <div class="meta">26 September 2026 · Education & Society</div>
 <div class="menu">
-<button class="active" onclick="show('home',this)">0. Hook</button>
-<button onclick="show('connect',this)">1. Connect the dots</button>
-<button onclick="show('predict',this)">2. Room 8 · Predict</button>
-<button onclick="show('watch',this)">3. Watch</button>
-<button onclick="show('infer',this)">4. Inference</button>
-<button onclick="show('grammar',this)">5. Grammar Lab</button>
-<button onclick="show('bias',this)">6. Survivorship Bias</button>
-<button onclick="show('cards',this)">7. Quizlet Cards</button>
-<button onclick="show('bridge',this)">8. Education bridge</button>
-<button onclick="show('debate',this)">9. Debate</button>
-<button onclick="show('exit',this)">10. Exit challenge</button>
+<button class="active" onclick="show('home',this)">0. Home</button>
+<button onclick="show('facts',this)">1. Unexpected T / F</button>
+<button onclick="show('cards',this)">2. Quizlet Vocabulary</button>
+<button onclick="show('connect',this)">3. Connect the dots</button>
+<button onclick="show('predict',this)">4. Room 8 · Predict</button>
+<button onclick="show('watch',this)">5. Watch</button>
+<button onclick="show('infer',this)">6. Inference</button>
+<button onclick="show('grammar',this)">7. Grammar Lab</button>
+<button onclick="show('bias',this)">8. Survivorship Bias</button>
+<button onclick="show('bridge',this)">9. Education bridge</button>
+<button onclick="show('debate',this)">10. Debate</button>
+<button onclick="show('exit',this)">11. Exit challenge</button>
 </div>
 <a class="back" href="./">← Nikita Hub</a>
 </aside>
@@ -65,16 +66,17 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 <div class="chips"><span class="chip">Room 8</span><span class="chip">critical thinking</span><span class="chip">education</span><span class="chip">institutions</span><span class="chip">modal perfects</span></div>
 </div>
 <div class="card" style="margin-top:16px"><h3>Teacher route — transitions</h3><button class="action alt" onclick="toggle('routeHelp')">Show all bridges EN + RU</button><div id="routeHelp" class="teacherhint">
-<b>0→1:</b> Bigger picture: what shapes thinking?<br>
-<b>1→2:</b> Institutions use rules → Room 8 warning.<br>
-<b>2→3:</b> Prediction → test it against evidence.<br>
-<b>3→4:</b> Events → motives and interpretation.<br>
-<b>4→5:</b> Interpretation of the past → modal perfects.<br>
-<b>5→6:</b> One person’s mistake → group-level reasoning errors.<br>
-<b>6→7:</b> Concept → precise vocabulary.<br>
-<b>7→8:</b> Bias → purpose of education.<br>
-<b>8→9:</b> Education → real institutions and previous topics.<br>
-<b>9→10:</b> Discussion → final position.<br><br>
+<b>0→1:</b> Unexpected facts → challenge first instincts.<br>
+<b>1→2:</b> Facts create a language need → Quizlet vocabulary.<br>
+<b>2→3:</b> Vocabulary → connect society, education, voting, prison and religion.<br>
+<b>3→4:</b> Institutions and rules → Room 8 story.<br>
+<b>4→5:</b> Prediction → test it against evidence.<br>
+<b>5→6:</b> Events → motives and interpretation.<br>
+<b>6→7:</b> Interpretation of the past → modal perfects.<br>
+<b>7→8:</b> One person’s reasoning → survivorship bias.<br>
+<b>8→9:</b> Bias → purpose of education.<br>
+<b>9→10:</b> Education → real institutions and previous topics.<br>
+<b>10→11:</b> Discussion → final position.<br><br>
 <b>RU:</b> логика урока: широкий контекст → история → доказательства → грамматика → когнитивная ошибка → лексика → образование → применение → итог.
 </div></div>
 <div class="grid3" style="margin-top:16px">
@@ -84,9 +86,42 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 </div>
 </section>
 
+
+<section id="facts" class="screen">
+<div class="card" style="margin-bottom:16px"><span class="badge">STARTER</span><p><b>EN:</b> “Before we start, let’s see how reliable our first instincts are. Some of these facts sound wrong — but aren’t.”</p><button class="action gold" onclick="toggle('factsIntroRU')">RU</button><div id="factsIntroRU" class="rushelp">«Для начала проверим, насколько надёжна наша первая реакция. Некоторые факты звучат неправдоподобно, но оказываются правдой.» Это подводит к теме: интуиция ≠ доказательство.</div></div>
+<h2>1. Unexpected Facts — True or False?</h2>
+<p class="lead">Choose first. Open the answer only after Nikita explains his reasoning.</p>
+
+<div class="case"><h3>1. Voting</h3><p><b>Austria allows citizens to vote in national elections from the age of 16.</b></p>
+<div class="row"><button class="action" onclick="toggle('tf1')">Answer + teacher note</button></div>
+<div id="tf1" class="teacherhint"><b>TRUE.</b> Austria lowered the voting age to 16 for nationwide elections in 2007 and was the first country in Europe to do so for all elections.<br><br><b>RU:</b> Правда. В Австрии голосовать на общенациональных выборах можно с 16 лет.<br><b>Ask:</b> “Does a lower voting age necessarily mean younger voters are less informed?”</div></div>
+
+<div class="case"><h3>2. Prison + Education</h3><p><b>There are school departments in every Norwegian prison.</b></p>
+<div class="row"><button class="action" onclick="toggle('tf2')">Answer + teacher note</button></div>
+<div id="tf2" class="teacherhint"><b>TRUE.</b> A 2025 Norwegian government report states that there are school departments in all Norwegian prisons.<br><br><b>RU:</b> Правда. В норвежских тюрьмах есть школьные подразделения.<br><b>Ask:</b> “Should education in prison be treated as a right, a privilege, or a rehabilitation tool?”</div></div>
+
+<div class="case"><h3>3. Prison + Rights</h3><p><b>In Norway, prisoners can lose their right to basic education simply because they are serving a sentence.</b></p>
+<div class="row"><button class="action" onclick="toggle('tf3')">Answer + teacher note</button></div>
+<div id="tf3" class="teacherhint"><b>FALSE.</b> Norwegian guidance says prisoners have rights to primary and upper-secondary education on the same basis as the general population, within the limits of imprisonment.<br><br><b>RU:</b> Неправда. Сам факт заключения не отменяет право на базовое образование.<br><b>Useful phrase:</b> <i>retain the right to education</i> — сохранять право на образование.</div></div>
+
+<div class="case"><h3>4. Religion + Knowledge</h3><p><b>People who personally know someone from another religion tend to know less about that religion.</b></p>
+<div class="row"><button class="action" onclick="toggle('tf4')">Answer + teacher note</button></div>
+<div id="tf4" class="teacherhint"><b>FALSE.</b> In a Pew survey, people with more religiously diverse social networks generally knew more about religion. For example, those who personally knew a Muslim were much more likely to identify Ramadan correctly.<br><br><b>RU:</b> Неправда. Более разнообразный круг общения был связан с лучшими знаниями о религиях.<br><b>Vocabulary:</b> <i>religiously diverse social network</i> — религиозно разнообразный круг общения.</div></div>
+
+<div class="case"><h3>5. Religion + Education</h3><p><b>Taking a class about world religions is associated with higher factual knowledge about religion.</b></p>
+<div class="row"><button class="action" onclick="toggle('tf5')">Answer + teacher note</button></div>
+<div id="tf5" class="teacherhint"><b>TRUE.</b> In Pew’s 2019 U.S. survey, people who had taken a world-religions class answered more factual religion questions correctly on average than those who had not.<br><br><b>RU:</b> Правда. Участники, изучавшие мировые религии, в среднем лучше отвечали на фактические вопросы о религии.<br><b>Bridge:</b> “So education can change not only what we know, but also what assumptions we make.”</div></div>
+
+<div class="case"><h3>6. Evidence</h3><p><b>If a statistic is factually correct, it cannot be misleading.</b></p>
+<div class="row"><button class="action" onclick="toggle('tf6')">Answer + teacher note</button></div>
+<div id="tf6" class="teacherhint"><b>FALSE.</b> A statistic can be technically correct but misleading if the sample is selective, key cases are missing, or the denominator/context is hidden.<br><br><b>RU:</b> Неправда. Цифра может быть формально верной, но вводить в заблуждение из-за выборки или отсутствующего контекста.<br><b>Key phrase:</b> <i>technically true but misleading</i>.</div></div>
+
+<div class="card" style="margin-top:16px"><h3>Bridge to vocabulary</h3><p><b>EN:</b> “We already need words like evidence, sample, assumption and misleading. Let’s train that language before we start the main discussion.”</p><button class="action gold" onclick="toggle('factsToVocabRU')">RU</button><div id="factsToVocabRU" class="rushelp">«Нам уже понадобились слова evidence, sample, assumption, misleading. Сначала натренируем эту лексику, а потом пойдём в основное обсуждение.»</div></div>
+</section>
+
 <section id="connect" class="screen">
-<div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 0 → 1</span><p><b>EN:</b> “Before we talk about education, let’s look at the bigger picture: what actually shapes the way people think and behave?”</p><button class="action gold" onclick="toggle('bridge01ru')">RU</button><div id="bridge01ru" class="rushelp">«Прежде чем говорить об образовании, давай посмотрим шире: что вообще формирует то, как люди думают и ведут себя?» Логика: от общей темы урока → к институтам и обществу.</div></div>
-<h2>1. Connect the dots</h2>
+<div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 2 → 3</span><p><b>EN:</b> “Now that we have the language, let’s use it to connect the bigger ideas: what actually shapes the way people think and behave?”</p><button class="action gold" onclick="toggle('bridge01ru')">RU</button><div id="bridge01ru" class="rushelp">«Прежде чем говорить об образовании, давай посмотрим шире: что вообще формирует то, как люди думают и ведут себя?» Логика: от общей темы урока → к институтам и обществу.</div></div>
+<h2>3. Connect the dots</h2>
 <p class="lead">No textbook yet. Explain the connection between all five ideas.</p>
 <div class="timeline"><span class="node">PRISON</span><span class="node">RELIGION</span><span class="node">ARABIC</span><span class="node">VOTING</span><span class="node current">EDUCATION</span></div>
 <div class="grid2" style="margin-top:16px">
@@ -102,7 +137,7 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 
 <section id="predict" class="screen">
 <div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 1 → 2</span><p><b>EN:</b> “Institutions shape behaviour partly through rules, expectations and consequences. Let’s test that idea in a story where one warning changes everything.”</p><button class="action gold" onclick="toggle('bridge12ru')">RU</button><div id="bridge12ru" class="rushelp">«Институты формируют поведение через правила, ожидания и последствия. Проверим эту идею на истории, где одно предупреждение меняет всё.» Логика: общество/институты → конкретная история Room 8.</div></div>
-<h2>2. Room 8 — predict before watching</h2>
+<h2>4. Room 8 — predict before watching</h2>
 <p class="lead">Do not reveal the plot. Give Nikita only the situation.</p>
 <div class="grid2">
 <div class="card"><div class="prompt">A man is taken into a prison cell. His cellmate tells him not to open a mysterious box.</div><h3 style="margin-top:14px">Predict</h3><ol><li>What could be inside?</li><li>Why might the cellmate be afraid?</li><li>What would make you open it?</li><li>What kind of film is this?</li></ol></div>
@@ -112,7 +147,7 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 
 <section id="watch" class="screen">
 <div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 2 → 3</span><p><b>EN:</b> “You’ve made your prediction. Now let’s see what the character actually does — and whether the evidence supports your theory.”</p><button class="action gold" onclick="toggle('bridge23ru')">RU</button><div id="bridge23ru" class="rushelp">«Ты сделал прогноз. Теперь посмотрим, что герой действительно сделает и подтверждают ли факты твою версию.» Логика: prediction → проверка гипотезы фактами.</div></div>
-<h2>3. Watch Room 8</h2>
+<h2>5. Watch Room 8</h2>
 <p class="lead">Watch in stages. Stop before each major reveal and make a prediction.</p>
 <div class="video"><iframe src="https://player.vimeo.com/video/64878402" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Room 8"></iframe></div>
 <div class="grid3" style="margin-top:16px">
@@ -124,7 +159,7 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 
 <section id="infer" class="screen">
 <div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 3 → 4</span><p><b>EN:</b> “We know what happened. The harder question is why it happened. Let’s move from events to motives, evidence and interpretation.”</p><button class="action gold" onclick="toggle('bridge34ru')">RU</button><div id="bridge34ru" class="rushelp">«Мы знаем, что произошло. Более сложный вопрос — почему. Переходим от событий к мотивам, доказательствам и интерпретации.» Логика: просмотр → анализ.</div></div>
-<h2>4. Inference challenge</h2>
+<h2>6. Inference challenge</h2>
 <p class="lead">No simple comprehension questions. Infer motives and causes.</p>
 <div class="grid2">
 <div class="card"><h3>What probably happened?</h3>
@@ -144,7 +179,7 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 
 <section id="grammar" class="screen">
 <div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 4 → 5</span><p><b>EN:</b> “Once we start explaining past motives, we need language for certainty, possibility, missed chances and criticism.”</p><button class="action gold" onclick="toggle('bridge45ru')">RU</button><div id="bridge45ru" class="rushelp">«Когда мы объясняем мотивы и решения в прошлом, нам нужен язык для уверенности, вероятности, упущенных возможностей и критики.» Логика: анализ → modal perfects.</div></div>
-<h2>5. Grammar Lab — modal perfects</h2>
+<h2>7. Grammar Lab — modal perfects</h2>
 <p class="lead">Use the film to reconstruct the past and judge decisions.</p>
 <div class="grammar">
 <div class="g"><b>must have + V3</b><p>Strong deduction about the past.</p><p><i>The cellmate must have seen this happen before.</i></p><button class="action gold" onclick="toggle('ruMust')">Объяснение по-русски</button><div id="ruMust" class="rushelp"><b>must have + V3</b> = почти уверенный вывод о прошлом: «должно быть / наверняка». Мы не видели событие, но по фактам делаем сильный вывод. Пример: <i>He must have known.</i> — Он, должно быть, знал.</div></div>
@@ -170,7 +205,7 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 
 <section id="bias" class="screen">
 <div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 5 → 6</span><p><b>EN:</b> “We’ve used grammar to reconstruct one person’s decision. Now let’s ask a bigger question: can whole groups make bad decisions because they are looking at incomplete evidence?”</p><button class="action gold" onclick="toggle('bridge56ru')">RU</button><div id="bridge56ru" class="rushelp">«Мы восстановили решение одного человека. Теперь вопрос шире: могут ли целые группы ошибаться, потому что смотрят на неполные данные?» Логика: личное решение → когнитивная ошибка и данные.</div></div>
-<h2>6. Survivorship Bias — What are we missing?</h2>
+<h2>8. Survivorship Bias — What are we missing?</h2>
 <p class="lead">Start with the evidence. Do not reveal the term immediately.</p>
 
 <div class="card">
@@ -241,8 +276,8 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 </section>
 
 <section id="cards" class="screen">
-<div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 6 → 7</span><p><b>EN:</b> “To discuss bias properly, we need precise language. Let’s build the vocabulary first, then use it to challenge claims.”</p><button class="action gold" onclick="toggle('bridge67ru')">RU</button><div id="bridge67ru" class="rushelp">«Чтобы нормально обсуждать когнитивные ошибки, нужна точная лексика. Сначала соберём словарь, потом будем разрушать аргументы.» Логика: идея survivorship bias → активная лексика.</div></div>
-<h2>7. Quizlet-style Vocabulary Cards</h2>
+<div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 1 → 2</span><p><b>EN:</b> “The facts already gave us the problem. Now let’s learn the language we’ll need to explain it precisely.”</p><button class="action gold" onclick="toggle('bridge67ru')">RU</button><div id="bridge67ru" class="rushelp">«Факты уже показали нам проблему. Теперь выучим язык, который понадобится, чтобы точно её объяснить.» Логика: True/False → vocabulary → discussion.</div></div>
+<h2>2. Quizlet-style Vocabulary — Language First</h2>
 <p class="lead">Click the card to flip it. Learn the word, Russian meaning and one natural example.</p>
 <div class="flashwrap">
 <div id="flashCard" class="flashcard" onclick="flipCard()">
@@ -282,7 +317,7 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 
 <section id="bridge" class="screen">
 <div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 7 → 8</span><p><b>EN:</b> “If people can be misled by incomplete evidence, education should do more than give facts. It should teach us how to question them.”</p><button class="action gold" onclick="toggle('bridge78ru')">RU</button><div id="bridge78ru" class="rushelp">«Если неполные данные могут вводить нас в заблуждение, образование должно не только давать факты, но и учить задавать к ним вопросы.» Логика: survivorship bias → зачем вообще нужно образование.</div></div>
-<h2>8. The bridge to Unit 8: Education</h2>
+<h2>9. The bridge to Unit 8: Education</h2>
 <div class="prompt">If curiosity can get a person into trouble, should education teach obedience — or intelligent curiosity?</div>
 <div class="grid2" style="margin-top:16px">
 <div class="card"><h3>Rank these purposes of education</h3><ol><li>getting qualifications</li><li>getting a job</li><li>learning to question information</li><li>learning social rules</li><li>becoming an informed citizen</li><li>understanding other cultures</li><li>changing your future</li></ol>
@@ -296,7 +331,7 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 
 <section id="debate" class="screen">
 <div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 8 → 9</span><p><b>EN:</b> “Now let’s test whether critical thinking actually transfers to real institutions: prisons, religion, elections and education itself.”</p><button class="action gold" onclick="toggle('bridge89ru')">RU</button><div id="bridge89ru" class="rushelp">«Теперь проверим, переносится ли критическое мышление на реальные институты: тюрьмы, религию, выборы и само образование.» Логика: теория образования → применение к прошлым темам Никиты.</div></div>
-<h2>9. Final debate — Education & Society</h2>
+<h2>10. Final debate — Education & Society</h2>
 <div class="prompt">“The purpose of education is not to tell people what to think, but to teach them how to think.”</div>
 <div class="grid3" style="margin-top:16px">
 <div class="card"><h3>Prison</h3><p>Should prisoners have access to higher education?</p><button class="action alt" onclick="toggle('debPrison')">Possible answer</button><div id="debPrison" class="teacherhint"><b>EN:</b> “Access to education may support rehabilitation and improve employment prospects, but programmes should be evaluated using representative data, not only success stories.”<br><b>RU:</b> «Доступ к образованию может помогать реабилитации и трудоустройству, но программы нужно оценивать по репрезентативным данным, а не только по историям успеха.»</div></div>
@@ -308,7 +343,7 @@ button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padd
 
 <section id="exit" class="screen">
 <div class="card" style="margin-bottom:16px"><span class="badge">BRIDGE 9 → 10</span><p><b>EN:</b> “You’ve analysed the evidence, challenged assumptions and connected the topics. Now reduce everything to one clear position.”</p><button class="action gold" onclick="toggle('bridge910ru')">RU</button><div id="bridge910ru" class="rushelp">«Ты проанализировал данные, поставил под сомнение предположения и связал темы. Теперь сведи всё к одной чёткой позиции.» Логика: дискуссия → итоговый 60-second answer.</div></div>
-<h2>10. Exit challenge</h2>
+<h2>11. Exit challenge</h2>
 <div class="final">
 <h3>60 seconds. No notes.</h3>
 <p class="prompt">Can education change the kind of choices a person makes?</p>
