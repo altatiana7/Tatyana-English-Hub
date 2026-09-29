@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nikita Homework · 30 September 2026</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;background:#f3f0eb;color:#17212b}
+body{display:grid;place-items:center}.wrap{width:min(1120px,96vw);padding:16px}
+.hero{background:linear-gradient(120deg,#071b27,#123e54);color:#fff;border-radius:18px;padding:16px 20px;box-shadow:0 10px 26px #0002;margin-bottom:12px}
+.hero span{display:inline-block;background:#e9b23b;color:#211707;font-weight:950;padding:6px 9px;border-radius:8px;font-size:11px;letter-spacing:.04em}
+.hero h1{font:800 31px/1.1 Georgia,serif;margin:8px 0 5px}.hero p{margin:0;color:#d5e2e8;font-size:13px;line-height:1.45}
+.board,.section{background:#fffdfa;border:1px solid #ded8cf;border-radius:18px;padding:16px;box-shadow:0 8px 24px #0001}
+.section{margin-top:14px}.section h2{font:800 24px Georgia,serif;color:#123e54;margin:0 0 8px}.section p{margin:0 0 10px;color:#59636d;line-height:1.5}
+.tabs{display:flex;justify-content:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.quizlet{display:grid;grid-template-columns:minmax(0,700px) 175px;gap:14px;justify-content:center;align-items:stretch}
+.card{height:350px;background:#fff;border:1px solid #d8dde3;border-radius:18px;box-shadow:0 10px 28px #00000012;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;padding:30px;cursor:pointer}
+.front .word{font:800 42px/1.15 Georgia,serif;color:#123e54}.back{display:none;max-width:560px}.card.flipped .front{display:none}.card.flipped .back{display:block}
+.meaning{font-size:20px;font-weight:800;color:#123e54;margin-bottom:14px;line-height:1.35}.example{font-size:18px;font-weight:700;line-height:1.45;color:#39454f}.note{margin-top:12px;font-size:14px;color:#6d665d}
+.listen{position:absolute;top:14px;left:14px;border:1px solid #d5dde2;background:#eef4f7;border-radius:999px;padding:10px 14px;font-size:13px;font-weight:900;color:#123e54;cursor:pointer}.card.flipped .listen{display:none}
+.counter{position:absolute;bottom:13px;left:50%;transform:translateX(-50%);font-size:13px;color:#6c737a;font-weight:850}
+.side{display:flex;flex-direction:column;gap:9px}.btn{border:1px solid #d5dde2;background:#fff;color:#123e54;border-radius:11px;padding:13px 10px;font-weight:900;cursor:pointer}.activeTab,.flip{background:#e9b23b;color:#211707;border-color:#e9b23b}.btn:disabled{opacity:.4}.hint{margin-top:auto;background:#f5efe3;border:1px solid #dfd2bd;border-radius:10px;padding:10px;font-size:11px;color:#62594d;line-height:1.4}
+.exercise{margin-top:12px}.ex-row{padding:10px 0;border-bottom:1px solid #ece7df;font-size:15px;line-height:1.5}.ex-row:last-child{border-bottom:0}
+.ex-row select,.ex-row input{margin:5px 0 0;padding:8px 10px;border:1px solid #cbd1d7;border-radius:8px;font:inherit;min-width:210px;max-width:100%}.check{margin-top:12px;border:0;background:#123e54;color:#fff;border-radius:10px;padding:10px 14px;font-weight:900;cursor:pointer}.secondary{background:#1b6f69}.result{margin-left:10px;font-weight:900}.good{border-color:#5c9a68!important;background:#eef8f0}.bad{border-color:#b85b63!important;background:#fff1f2}
+.answers{display:none;margin-top:12px;padding:12px 14px;background:#f5efe3;border:1px dashed #cdbb9d;border-radius:10px;line-height:1.6;font-size:14px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.prompt{background:#f7f4ee;border:1px solid #e1d7c7;border-radius:12px;padding:13px;line-height:1.45}.prompt b{color:#123e54}
+textarea{width:100%;min-height:120px;border:1px solid #cbd1d7;border-radius:10px;padding:12px;font:inherit;resize:vertical}
+.final{background:linear-gradient(135deg,#0d2940,#1c4a65);color:#fff}.final h2{color:#fff}.final p{color:#e7eff4}.backlink{display:inline-block;margin-top:14px;text-decoration:none;color:#123e54;font-weight:900}
+@media(max-width:820px){.quizlet{grid-template-columns:1fr}.side{display:grid;grid-template-columns:repeat(3,1fr)}.hint{display:none}.card{height:290px}.front .word{font-size:34px}.grid2{grid-template-columns:1fr}}
+</style>
+<script>
+(function(){
+  const p=new URLSearchParams(location.search);
+  if(p.get('open')!=='1'){location.replace('index.html')}
+})();
+</script>
+</head>
+<body>
+<main class="wrap">
+<section class="hero"><span>HOMEWORK · 30 SEPTEMBER 2026</span><h1>Society & Education · Collocations</h1><p>Learn the collocations as complete chunks. Listen, say them aloud, flip the card, then complete the practice without looking back.</p></section>
+
+<section class="board">
+<div class="tabs">
+<button class="btn activeTab" id="tabSociety" onclick="setDeck('society')">Society</button>
+<button class="btn" id="tabEducation" onclick="setDeck('education')">Education</button>
+</div>
+<div class="quizlet">
+<div class="card" id="card" onclick="flipCard()">
+<button class="listen" onclick="event.stopPropagation();speakCard()" aria-label="Listen">Listen</button>
+<div class="front"><div class="word" id="word"></div></div>
+<div class="back"><div class="meaning" id="meaning"></div><div class="example" id="example"></div><div class="note">Say one new sentence with this collocation before moving on.</div></div>
+<div class="counter" id="counter"></div>
+</div>
+<div class="side">
+<button class="btn flip" onclick="flipCard()">Flip</button>
+<button class="btn" id="backBtn" onclick="prevCard()">← Back</button>
+<button class="btn" id="nextBtn" onclick="nextCard()">Next →</button>
+<div class="hint">Learn the whole phrase, not separate words. Audio is available only on the English side.</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<h2>1. Complete the Society collocations</h2>
+<p>Type only the missing word.</p>
+<div class="exercise" id="socExercise">
+<div class="ex-row">1. social <input data-a="norms" placeholder="..."></div>
+<div class="ex-row">2. equal <input data-a="opportunities" placeholder="..."></div>
+<div class="ex-row">3. public <input data-a="services" placeholder="..."></div>
+<div class="ex-row">4. community <input data-a="engagement" placeholder="..."></div>
+<div class="ex-row">5. cultural <input data-a="diversity" placeholder="..."></div>
+<div class="ex-row">6. social <input data-a="mobility" placeholder="..."></div>
+<div class="ex-row">7. civic <input data-a="responsibility" placeholder="..."></div>
+<div class="ex-row">8. income <input data-a="inequality" placeholder="..."></div>
+<div class="ex-row">9. social <input data-a="cohesion" placeholder="..."></div>
+<div class="ex-row">10. social <input data-a="exclusion" placeholder="..."></div>
+<button class="check" onclick="checkInputs('socExercise','socResult')">Check</button><span class="result" id="socResult"></span>
+<button class="check secondary" onclick="toggleAnswers('socAnswers')">Show answers</button>
+<div class="answers" id="socAnswers">1 norms · 2 opportunities · 3 services · 4 engagement · 5 diversity · 6 mobility · 7 responsibility · 8 inequality · 9 cohesion · 10 exclusion</div>
+</div>
+</section>
+
+<section class="section">
+<h2>2. Complete the Education collocations</h2>
+<p>Type only the missing word.</p>
+<div class="exercise" id="eduExercise">
+<div class="ex-row">1. higher <input data-a="education" placeholder="..."></div>
+<div class="ex-row">2. academic <input data-a="performance" placeholder="..."></div>
+<div class="ex-row">3. tuition <input data-a="fees" placeholder="..."></div>
+<div class="ex-row">4. learning <input data-a="outcomes" placeholder="..."></div>
+<div class="ex-row">5. compulsory <input data-a="education" placeholder="..."></div>
+<div class="ex-row">6. vocational <input data-a="training" placeholder="..."></div>
+<div class="ex-row">7. gain <input data-a="qualifications" placeholder="..."></div>
+<div class="ex-row">8. meet entry <input data-a="requirements" placeholder="..."></div>
+<div class="ex-row">9. practical <input data-a="skills" placeholder="..."></div>
+<div class="ex-row">10. lifelong <input data-a="learning" placeholder="..."></div>
+<button class="check" onclick="checkInputs('eduExercise','eduResult')">Check</button><span class="result" id="eduResult"></span>
+<button class="check secondary" onclick="toggleAnswers('eduAnswers')">Show answers</button>
+<div class="answers" id="eduAnswers">1 education · 2 performance · 3 fees · 4 outcomes · 5 education · 6 training · 7 qualifications · 8 requirements · 9 skills · 10 learning</div>
+</div>
+</section>
+
+<section class="section">
+<h2>3. Choose the best collocation in context</h2>
+<div class="exercise" id="contextExercise">
+<div class="ex-row">1. A fair school system should give students <select data-a="equal opportunities"><option value="">— choose —</option><option>social exclusion</option><option>equal opportunities</option><option>income inequality</option></select>.</div>
+<div class="ex-row">2. University can improve a person's chances of upward <select data-a="social mobility"><option value="">— choose —</option><option>social mobility</option><option>public services</option><option>cultural diversity</option></select>.</div>
+<div class="ex-row">3. Some students decide not to apply because they cannot afford high <select data-a="tuition fees"><option value="">— choose —</option><option>learning outcomes</option><option>tuition fees</option><option>entry requirements</option></select>.</div>
+<div class="ex-row">4. Employers often want graduates to have both knowledge and <select data-a="practical skills"><option value="">— choose —</option><option>practical skills</option><option>social norms</option><option>public services</option></select>.</div>
+<div class="ex-row">5. Volunteering is one way to develop <select data-a="civic responsibility"><option value="">— choose —</option><option>income inequality</option><option>civic responsibility</option><option>academic performance</option></select>.</div>
+<div class="ex-row">6. Clear assessment criteria can improve students' <select data-a="learning outcomes"><option value="">— choose —</option><option>learning outcomes</option><option>social cohesion</option><option>tuition fees</option></select>.</div>
+<div class="ex-row">7. A society with large differences between rich and poor may struggle with <select data-a="income inequality"><option value="">— choose —</option><option>community engagement</option><option>income inequality</option><option>lifelong learning</option></select>.</div>
+<div class="ex-row">8. Apprenticeships are a form of <select data-a="vocational training"><option value="">— choose —</option><option>higher education</option><option>vocational training</option><option>cultural diversity</option></select>.</div>
+<button class="check" onclick="checkSelects('contextExercise','contextResult')">Check</button><span class="result" id="contextResult"></span>
+</div>
+</section>
+
+<section class="section">
+<h2>4. Use the collocations actively</h2>
+<div class="grid2">
+<div class="prompt"><b>Society:</b> Explain how education can reduce social exclusion.</div>
+<div class="prompt"><b>Society:</b> Give one example of how schools can build social cohesion.</div>
+<div class="prompt"><b>Education:</b> Which is more important: academic performance or practical skills?</div>
+<div class="prompt"><b>Education:</b> Should higher education always involve tuition fees?</div>
+<div class="prompt"><b>Connection:</b> How can equal opportunities affect social mobility?</div>
+<div class="prompt"><b>Connection:</b> How can lifelong learning benefit both individuals and society?</div>
+</div>
+</section>
+
+<section class="section">
+<h2>5. Writing</h2>
+<p>Write 120–150 words. Use at least <b>8 collocations</b> from both decks.</p>
+<p><b>Question:</b> What should a modern education system do for both the individual and society?</p>
+<textarea placeholder="Write your answer here..."></textarea>
+</section>
+
+<section class="section final">
+<h2>6. Final speaking challenge</h2>
+<p>Speak for 60–90 seconds without notes: <b>“To what extent can education change a person’s place in society?”</b></p>
+<p>Use at least five target collocations. Include one example and one counterargument.</p>
+</section>
+
+<a class="backlink" href="index.html">← Back to Nikita Homework</a>
+</main>
+
+<script>
+const societyCards=[
+['social norms','shared expectations about acceptable behaviour in a group or society','Social norms can change significantly from one generation to another.'],
+['equal opportunities','fair chances to succeed regardless of social or economic background','Education should give students equal opportunities.'],
+['public services','services provided for the public by the state or local authorities','Reliable public services can improve quality of life.'],
+['community engagement','active participation in the life of a local or social community','Schools can encourage community engagement through volunteering.'],
+['cultural diversity','the presence of different cultures, backgrounds and traditions in one society','Cultural diversity can broaden people’s perspectives.'],
+['social mobility','the ability to move to a different social or economic position','Higher education can increase social mobility.'],
+['civic responsibility','a person’s duty to contribute responsibly to society','Voting is often described as a form of civic responsibility.'],
+['income inequality','an uneven distribution of income between different groups','Income inequality can affect access to education.'],
+['social cohesion','the strength of relationships and sense of unity within society','Trust and participation can strengthen social cohesion.'],
+['social exclusion','being prevented from fully participating in society','Long-term poverty can lead to social exclusion.'],
+['social background','a person’s family, class and social circumstances','Social background should not determine educational success.'],
+['access to resources','the ability to obtain useful services, information, money or support','Students need fair access to resources.'],
+['quality of life','the general level of health, comfort and wellbeing a person experiences','Education can improve a person’s quality of life.'],
+['shape public opinion','to influence what many people think about an issue','Media can shape public opinion very quickly.']
+];
+const educationCards=[
+['higher education','education at university or college level','Higher education is not the only route to a successful career.'],
+['academic performance','how well a student performs in formal study','Stress and sleep can affect academic performance.'],
+['tuition fees','money paid for teaching at a university or college','High tuition fees may discourage some applicants.'],
+['learning outcomes','the knowledge and skills students are expected to gain','A good course should have clear learning outcomes.'],
+['compulsory education','education that children are legally required to receive','Compulsory education usually covers the school years.'],
+['vocational training','practical education for a specific job or profession','Vocational training can lead directly to employment.'],
+['gain qualifications','to obtain official certificates, diplomas or degrees','Many adults return to study to gain qualifications.'],
+['meet entry requirements','to satisfy the conditions needed to join a course','Applicants must meet entry requirements before enrolment.'],
+['drop out of university','to leave university before completing a course','Financial pressure can cause students to drop out of university.'],
+['broaden your knowledge','to increase what you know about a subject or the world','Reading widely can broaden your knowledge.'],
+['develop critical thinking','to improve the ability to analyse claims and evidence carefully','Debates can help students develop critical thinking.'],
+['practical skills','abilities that can be used directly in real tasks or jobs','Employers often value practical skills as well as degrees.'],
+['educational inequality','unfair differences in access to or quality of education','Educational inequality often reflects wider social inequality.'],
+['lifelong learning','continuing to learn and develop skills throughout life','Technology makes lifelong learning easier to access.']
+];
+let cards=societyCards;let i=0;
+function setDeck(type){
+  cards=type==='education'?educationCards:societyCards;i=0;
+  tabSociety.classList.toggle('activeTab',type==='society');
+  tabEducation.classList.toggle('activeTab',type==='education');
+  render();
+}
+function render(){const x=cards[i];card.classList.remove('flipped');word.textContent=x[0];meaning.textContent=x[1];example.textContent=x[2];counter.textContent=(i+1)+' / '+cards.length;backBtn.disabled=i===0;nextBtn.disabled=i===cards.length-1}
+function flipCard(){card.classList.toggle('flipped')}
+function prevCard(){if(i>0){i--;render()}}
+function nextCard(){if(i<cards.length-1){i++;render()}}
+function speakCard(){if(!('speechSynthesis' in window)||card.classList.contains('flipped'))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(cards[i][0]);u.lang='en-GB';u.rate=.86;speechSynthesis.speak(u)}
+function norm(s){return (s||'').toLowerCase().trim().replace(/\s+/g,' ')}
+function checkInputs(id,resId){const box=document.getElementById(id),qs=[...box.querySelectorAll('input[data-a]')];let ok=0;qs.forEach(q=>{const good=norm(q.value)===norm(q.dataset.a);q.classList.toggle('good',good);q.classList.toggle('bad',!good);if(good)ok++});document.getElementById(resId).textContent=ok+'/'+qs.length+' correct'}
+function checkSelects(id,resId){const box=document.getElementById(id),qs=[...box.querySelectorAll('select[data-a]')];let ok=0;qs.forEach(q=>{const good=norm(q.value)===norm(q.dataset.a);q.classList.toggle('good',good);q.classList.toggle('bad',!good);if(good)ok++});document.getElementById(resId).textContent=ok+'/'+qs.length+' correct'}
+function toggleAnswers(id){const e=document.getElementById(id);e.style.display=e.style.display==='block'?'none':'block'}
+render();
+</script>
+</body></html>
