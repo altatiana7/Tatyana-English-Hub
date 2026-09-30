@@ -58,14 +58,98 @@ const famousPeople=[
   }
 ];
 
-const mysteryItems=[
-  {clues:['I was born in Moscow.','I became famous in a team sport.','My team won the Stanley Cup in 2018.'],answer:'Alexander Ovechkin'},
-  {clues:['I changed my career plans.','My work takes me onto a stage and in front of a camera.','I appeared in Night Watch and Day Watch.'],answer:'Konstantin Khabensky'},
-  {clues:['I was born in Leningrad in 1952.','I worked in a state security service before national politics.','I became Prime Minister in 1999.'],answer:'Vladimir Putin'},
-  {clues:['I worked in music.','I began losing my hearing as a young adult.','I continued composing music.'],answer:'Ludwig van Beethoven'},
-  {clues:['My career is in sport.','I moved from Argentina to Spain when I was thirteen.','I developed my career in football.'],answer:'Lionel Messi'}
+const warmupQuiz=[
+  {
+    question:'Which famous scientist later worked as Master of the Royal Mint and personally investigated counterfeiters?',
+    options:['Isaac Newton','Nikola Tesla','Charles Darwin','Alan Turing'],
+    answer:'Isaac Newton',
+    fact:'Newton became Warden and later Master of the Royal Mint. He took the job seriously and investigated counterfeiting cases.'
+  },
+  {
+    question:'Whose first agreement with FC Barcelona was famously written on a paper napkin?',
+    options:['Lionel Messi','Alexander Ovechkin','Michael Jackson','Ludwig van Beethoven'],
+    answer:'Lionel Messi',
+    fact:'A preliminary agreement connected with Messi’s move to Barcelona was written on a napkin in 2000.'
+  },
+  {
+    question:'Which composer originally admired Napoleon enough to dedicate a major symphony to him, then removed the dedication?',
+    options:['Ludwig van Beethoven','Wolfgang Mozart','Johann Bach','Franz Schubert'],
+    answer:'Ludwig van Beethoven',
+    fact:'Beethoven originally connected his Third Symphony, the Eroica, with Napoleon, but changed the dedication after Napoleon declared himself emperor.'
+  },
+  {
+    question:'Which scientist named a newly discovered element after her homeland?',
+    options:['Marie Skłodowska-Curie','Hedy Lamarr','Ada Lovelace','Rosalind Franklin'],
+    answer:'Marie Skłodowska-Curie',
+    fact:'Curie named polonium after Poland, her homeland.'
+  },
+  {
+    question:'Which inventor worked on alternating-current technology and also experimented with wireless transmission?',
+    options:['Nikola Tesla','Charles Darwin','Nicolaus Copernicus','Isaac Newton'],
+    answer:'Nikola Tesla',
+    fact:'Tesla is strongly associated with alternating-current systems and also carried out experiments in wireless power and radio-frequency technology.'
+  },
+  {
+    question:'Which performer co-wrote “We Are the World” with Lionel Richie?',
+    options:['Michael Jackson','Elvis Presley','Freddie Mercury','David Bowie'],
+    answer:'Michael Jackson',
+    fact:'Michael Jackson and Lionel Richie wrote “We Are the World” for the 1985 USA for Africa charity recording.'
+  },
+  {
+    question:'Which mathematician described the idea of a universal computing machine in 1936?',
+    options:['Alan Turing','Isaac Newton','Nikola Tesla','Charles Darwin'],
+    answer:'Alan Turing',
+    fact:'Turing’s 1936 paper introduced the abstract machine model now known as the Turing machine.'
+  },
+  {
+    question:'Which scientist first trained in medicine but strongly disliked surgery before changing direction?',
+    options:['Charles Darwin','Nicolaus Copernicus','Alan Turing','Marie Curie'],
+    answer:'Charles Darwin',
+    fact:'Darwin studied medicine in Edinburgh but left the course; he later studied at Cambridge.'
+  },
+  {
+    question:'Which astronomer proposed a heliocentric model in which Earth moves around the Sun?',
+    options:['Nicolaus Copernicus','Isaac Newton','Nikola Tesla','Alan Turing'],
+    answer:'Nicolaus Copernicus',
+    fact:'Copernicus developed a heliocentric model that placed the Sun near the centre of the planetary system.'
+  },
+  {
+    question:'Which hockey star grew up in a family where his mother was an Olympic champion in basketball?',
+    options:['Alexander Ovechkin','Lionel Messi','Wayne Gretzky','Sidney Crosby'],
+    answer:'Alexander Ovechkin',
+    fact:'Ovechkin’s mother, Tatyana Ovechkina, was a two-time Olympic gold medallist in basketball with the Soviet team.'
+  },
+  {
+    question:'Which Russian actor studied at a technical institute before choosing an acting career?',
+    options:['Konstantin Khabensky','Alexander Ovechkin','Michael Jackson','Lionel Messi'],
+    answer:'Konstantin Khabensky',
+    fact:'Khabensky studied in a technical field before leaving and later training as an actor.'
+  },
+  {
+    question:'Which Hollywood star was also an inventor who co-developed a frequency-hopping communication system?',
+    options:['Hedy Lamarr','Marilyn Monroe','Grace Kelly','Audrey Hepburn'],
+    answer:'Hedy Lamarr',
+    fact:'Hedy Lamarr and George Antheil patented a frequency-hopping system intended to make radio-controlled torpedoes harder to jam.'
+  },
+  {
+    question:'Which novelist disappeared for eleven days in 1926, creating a major public mystery?',
+    options:['Agatha Christie','Virginia Woolf','Jane Austen','George Eliot'],
+    answer:'Agatha Christie',
+    fact:'Agatha Christie disappeared in December 1926 and was found eleven days later at a hotel in Harrogate.'
+  },
+  {
+    question:'Which scientist was offered the presidency of Israel in 1952 but declined?',
+    options:['Albert Einstein','Isaac Newton','Nikola Tesla','Alan Turing'],
+    answer:'Albert Einstein',
+    fact:'After the death of Chaim Weizmann, Einstein was invited to become President of Israel but declined the offer.'
+  },
+  {
+    question:'Which technology entrepreneur said a college calligraphy course later influenced the typography of the Macintosh?',
+    options:['Steve Jobs','Bill Gates','Alan Turing','Nikola Tesla'],
+    answer:'Steve Jobs',
+    fact:'Jobs later said that his calligraphy studies influenced the Macintosh’s attention to typography.'
+  }
 ];
-const mysteryNames=['Alexander Ovechkin','Konstantin Khabensky','Vladimir Putin','Ludwig van Beethoven','Lionel Messi'];
 
 const quickCheck=[
   ['Vladimir Putin was born in …','Leningrad',['Moscow','Leningrad','London']],
@@ -144,7 +228,7 @@ const earlierLives=[
 let wfIndex=0,wfBack=false;
 let vocabIndex=0,vocabBack=false;
 let personIndex=0;
-let mysteryIndex=0,clueCount=0;
+let warmupStarted=false,warmupIndex=0,warmupScore=0,warmupStreak=0,warmupAnswered=false,warmupSelected='',warmupFinished=false;
 let quickIndex=0;
 let videoTfIndex=0,chooseIndex=0;
 let grammarPane='kids',stativeIndex=0,articleIndex=0;
@@ -158,24 +242,68 @@ function accordion(title,subtitle,content,open=false){
   </details>`;
 }
 
-function mysteryCard(){
-  const m=mysteryItems[mysteryIndex];
-  const shown=m.clues.slice(0,clueCount).map(x=>`<p>• ${esc(x)}</p>`).join('');
-  return `<div class="grid2">
-    <div class="panel">
-      <span class="tag">SECRET IDENTITY · ${mysteryIndex+1}/${mysteryItems.length}</span>
-      <h2>Three clues. One person.</h2>
-      <div id="mysteryClues">${shown||'<p class="sub">Reveal the clues one by one.</p>'}</div>
-      <div class="row">
-        <button class="actionBtn primary" id="showClue" ${clueCount>=3?'disabled':''}>Show a clue</button>
-        <button class="actionBtn" id="mysteryPrev" ${mysteryIndex===0?'disabled':''}>←</button>
-        <button class="actionBtn" id="mysteryNext" ${mysteryIndex===mysteryItems.length-1?'disabled':''}>→</button>
+function warmupQuizCard(){
+  if(!warmupStarted && !warmupFinished){
+    return `<div class="hardQuizShell">
+      <div class="hardQuizStart">
+        <div class="hardQuizKicker">HARD MODE · UNUSUAL FACTS EDITION</div>
+        <h2>Famous People Quiz</h2>
+        <p>15 challenging questions. The answer is not always obvious.</p>
+        <div class="hardQuizRules">
+          <span>15 unusual-fact questions</span>
+          <span>Immediate feedback after every answer</span>
+          <span>Streak + score tracking</span>
+          <span>Short fact after every question</span>
+        </div>
+        <button class="hardQuizPrimary" id="startWarmupQuiz">Start Challenge</button>
       </div>
+    </div>`;
+  }
+
+  if(warmupFinished){
+    const pct=Math.round((warmupScore/warmupQuiz.length)*100);
+    const comment=pct>=87?'Excellent recall and inference.':pct>=67?'Strong result. Review the facts you missed.':'Good start. Reopen the quiz and challenge the facts again.';
+    return `<div class="hardQuizShell">
+      <div class="hardQuizResult">
+        <div class="hardQuizKicker">QUIZ COMPLETE</div>
+        <h2>${warmupScore} / ${warmupQuiz.length}</h2>
+        <div class="hardQuizScoreBar"><span style="width:${pct}%"></span></div>
+        <p>${pct}% · ${comment}</p>
+        <button class="hardQuizPrimary" id="restartWarmupQuiz">Try Again</button>
+      </div>
+    </div>`;
+  }
+
+  const q=warmupQuiz[warmupIndex];
+  const pct=((warmupIndex+1)/warmupQuiz.length)*100;
+  return `<div class="hardQuizShell">
+    <div class="hardQuizTop">
+      <div>
+        <span>Question <strong>${warmupIndex+1}</strong> / ${warmupQuiz.length}</span>
+        <span class="streakPill ${warmupStreak>1?'show':''}">Streak: ${warmupStreak}</span>
+      </div>
+      <strong>Score: ${warmupScore}</strong>
     </div>
-    <div class="panel">
-      <h3>Who is it?</h3>
-      <div class="choices">${mysteryNames.map(n=>`<button data-mystery-answer="${esc(n)}">${esc(n)}</button>`).join('')}</div>
-      <div class="feedback" id="mysteryFeedback"></div>
+    <div class="hardQuizProgress"><span style="width:${pct}%"></span></div>
+    <h2 class="hardQuizQuestion">${esc(q.question)}</h2>
+    <div class="hardQuizOptions">
+      ${q.options.map(opt=>{
+        let cls='';
+        if(warmupAnswered){
+          if(opt===q.answer) cls=' correct';
+          else if(opt===warmupSelected) cls=' wrong';
+        }
+        return `<button class="hardOption${cls}" data-warmup-answer="${esc(opt)}" ${warmupAnswered?'disabled':''}>${esc(opt)}</button>`;
+      }).join('')}
+    </div>
+    <div class="hardQuizFeedback ${warmupAnswered?'show':''}">
+      <strong>${warmupAnswered?(warmupSelected===q.answer?'Correct.':'Not quite.') : ''}</strong>
+      <p>${warmupAnswered?esc(q.fact):''}</p>
+    </div>
+    <div class="hardQuizNextRow">
+      <button class="hardQuizPrimary ${warmupAnswered?'':'hiddenQuizBtn'}" id="nextWarmupQuestion">
+        ${warmupIndex===warmupQuiz.length-1?'See Result':'Next Question →'}
+      </button>
     </div>
   </div>`;
 }
@@ -401,7 +529,7 @@ function finishCard(){
 
 function render(){
   $('#activities').innerHTML =
-    accordion('1 · Warm-up · Three clues','Guess the person from clues.',mysteryCard(),true)+
+    accordion('1 · Warm-up · Famous People Quiz','Hard Mode · 15 unusual facts · score and streak.',warmupQuizCard(),true)+
     accordion('2 · Word Formation · Quizlet cards','compose → composer · composition and more.',wordFormCard())+
     accordion('3 · Word pairs + Famous people','Vocabulary plus embedded continuous texts about Putin, Khabensky and Ovechkin.',wordsAndPeople())+
     accordion('4 · Text details · Quick check','Short comprehension. Activities 21, 23 and 15 are removed.',quickCheckCard())+
@@ -430,14 +558,54 @@ function markAnswer(button,ok,feedbackEl,okMsg='Correct.',badMsg='Try again.'){
 function bindAll(){
   $('#full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
 
-  const showClue=$('#showClue');
-  if(showClue) showClue.onclick=()=>{if(clueCount<3){clueCount++;rerenderKeepOpen('1')}};
-  if($('#mysteryPrev')) $('#mysteryPrev').onclick=()=>{if(mysteryIndex>0){mysteryIndex--;clueCount=0;rerenderKeepOpen('1')}};
-  if($('#mysteryNext')) $('#mysteryNext').onclick=()=>{if(mysteryIndex<mysteryItems.length-1){mysteryIndex++;clueCount=0;rerenderKeepOpen('1')}};
-  $$('[data-mystery-answer]').forEach(b=>b.onclick=()=>{
-    const ok=b.dataset.mysteryAnswer===mysteryItems[mysteryIndex].answer;
-    markAnswer(b,ok,$('#mysteryFeedback'),ok?'Correct. Which clue helped you?':'','Reveal another clue and try again.');
+  if($('#startWarmupQuiz')) $('#startWarmupQuiz').onclick=()=>{
+    warmupStarted=true;
+    warmupFinished=false;
+    warmupIndex=0;
+    warmupScore=0;
+    warmupStreak=0;
+    warmupAnswered=false;
+    warmupSelected='';
+    rerenderKeepOpen('1');
+  };
+
+  $('[data-warmup-answer]').forEach(b=>b.onclick=()=>{
+    if(warmupAnswered) return;
+    const q=warmupQuiz[warmupIndex];
+    warmupSelected=b.dataset.warmupAnswer;
+    warmupAnswered=true;
+    if(warmupSelected===q.answer){
+      warmupScore++;
+      warmupStreak++;
+    }else{
+      warmupStreak=0;
+    }
+    rerenderKeepOpen('1');
   });
+
+  if($('#nextWarmupQuestion')) $('#nextWarmupQuestion').onclick=()=>{
+    if(!warmupAnswered) return;
+    if(warmupIndex>=warmupQuiz.length-1){
+      warmupFinished=true;
+      warmupStarted=false;
+    }else{
+      warmupIndex++;
+      warmupAnswered=false;
+      warmupSelected='';
+    }
+    rerenderKeepOpen('1');
+  };
+
+  if($('#restartWarmupQuiz')) $('#restartWarmupQuiz').onclick=()=>{
+    warmupStarted=false;
+    warmupFinished=false;
+    warmupIndex=0;
+    warmupScore=0;
+    warmupStreak=0;
+    warmupAnswered=false;
+    warmupSelected='';
+    rerenderKeepOpen('1');
+  };
 
   if($('#wfFlash')) $('#wfFlash').onclick=()=>{wfBack=!wfBack;rerenderKeepOpen('2')};
   if($('#wfPrev')) $('#wfPrev').onclick=()=>{if(wfIndex>0){wfIndex--;wfBack=false;rerenderKeepOpen('2')}};
