@@ -1,151 +1,527 @@
 'use strict';
-const people=[
-{name:'Vladimir Putin',source:'putin.jpg',sentences:[
-'Vladimir Putin was born in 1952 in Leningrad.',
-'Before his political career, he worked in the Soviet intelligence service.',
-'In 1999 he became the Prime Minister of Russia, and in 2000 he became the President.',
-'The worksheet describes him as a determined leader and says that his determination helped him stay in politics for many years.',
-'It describes his way of speaking as confident and says that his confidence helps him communicate with world leaders.',
-'The writer calls him an intelligent politician and says that his intelligence helps him make political decisions.'
-],forms:[['The writer describes a ___ leader.','determination','determined',1],['His ___ helped him stay in politics.','determination','determined',0],['The text describes a ___ way of speaking.','confidence','confident',1],['His ___ helps him communicate.','confidence','confident',0],['The writer calls him an ___ politician.','intelligence','intelligent',1],['The text mentions his ___.','intelligence','intelligent',0]]},
-{name:'Konstantin Khabensky',source:'khabensky.jpg',sentences:[
-'Konstantin Khabensky is a Russian actor who was born in 1972 in Leningrad, now Saint Petersburg.',
-'According to the worksheet, he first tried studying at a technical university, but later decided to become an actor.',
-'His determination helped him enter a theatre academy.',
-'The writer describes him as talented and says that his talent helped him become famous in theatre and cinema.',
-'He appeared in Night Watch and Day Watch.',
-'The text describes him as intelligent and says that his intelligence helps him understand difficult roles.',
-'It describes his acting style as emotional and natural.',
-'It says he looks confident on stage and in films, and that confidence and hard work helped him become successful.'
-],forms:[['His ___ helped him enter a theatre academy.','determination','determined',0],['He is a ___ actor.','talent','talented',1],['His ___ helped him become famous.','talent','talented',0],['The writer calls him ___.','intelligence','intelligent',1],['His ___ helps him understand roles.','intelligence','intelligent',0],['He is known for his ___ acting.','style','stylish',1],['His acting ___ is emotional and natural.','style','stylish',0],['On stage he looks ___.','confidence','confident',1],['His ___ helped him succeed.','confidence','confident',0],['His ___ helped him become successful.','hard work','hard-working',0]]},
-{name:'Alexander Ovechkin',source:'ovechkin.jpg',sentences:[
-'Alexander Ovechkin is a famous hockey player who was born in 1985 in Moscow.',
-'He started playing hockey when he was a child.',
-'His family quickly noticed his talent, and he became a talented young athlete.',
-'He is a hard-working player. His hard work helped him become one of the best goal scorers in hockey history.',
-'He is a determined athlete. His determination helps him fight for every puck.',
-'In 2018, his team won the Stanley Cup.',
-'On the ice he looks confident, and his confidence inspires his teammates.'
-],forms:[['His family noticed his ___.','talent','talented',0],['He became a ___ young athlete.','talent','talented',1],['He is a ___ player.','hard work','hard-working',1],['His ___ helped him become successful.','hard work','hard-working',0],['He is a ___ athlete.','determination','determined',1],['His ___ helps him fight for every puck.','determination','determined',0],['On the ice he looks ___.','confidence','confident',1],['His ___ inspires his teammates.','confidence','confident',0]]}
-];
-const tf=[
-[0,'Putin worked in intelligence before his political career.','True',1],
-[0,'He became Prime Minister after becoming President.','False',2],
-[0,'He learnt three foreign languages at school.','Not Stated',null],
-[1,'Khabensky became an actor immediately, without trying another field of study.','False',1],
-[1,'The text mentions two films he appeared in.','True',4],
-[1,'Night Watch is his favourite film.','Not Stated',null],
-[2,'Ovechkin began playing hockey as an adult.','False',1],
-[2,'Ovechkin’s team won the Stanley Cup in 2018.','True',5],
-[2,'Ovechkin practises for five hours every day.','Not Stated',null]
-];
-const evidence=[
-[2,'Find a sentence that shows he began his sports career when he was very young.',1],
-[2,'Find a sentence that shows effort helped him become successful.',3],
-[2,'Find the sentence about an important win.',5],
-[2,'Find a sentence that shows his attitude motivates other players.',6],
-[2,'Find a sentence that shows people around him noticed his ability early.',2],
-[2,'Find a sentence that shows he became one of the top goal scorers.',3],
-[2,'Find a sentence that shows he comes from Russia’s capital.',0],
-[1,'Find a sentence that shows he changed his career plans.',1],
-[1,'Find the sentence about the way he acts.',6],
-[0,'Find the sentence with the dates of his two political jobs.',2]
-];
-const transforms=[
-['He is a talented athlete.','His ___ helped him succeed.','TALENTED','talent'],
-['His confidence inspires the team.','He looks ___ on the ice.','CONFIDENCE','confident'],
-['She is determined to finish.','Her ___ keeps her going.','DETERMINED','determination'],
-['He shows great intelligence.','He is an ___ person.','INTELLIGENCE','intelligent'],
-['She is a stylish performer.','People admire her ___.','STYLISH','style'],
-['His hard work helped the team.','He is a ___ player.','HARD WORK','hard-working'],
-['He is a confident actor.','His ___ helps him on stage.','CONFIDENT','confidence'],
-['Their determination is impressive.','They are ___ to improve.','DETERMINATION','determined'],
-['She has a lot of talent.','She is a ___ musician.','TALENT','talented'],
-['He is intelligent.','People admire his ___.','INTELLIGENT','intelligence'],
-['She works hard.','Her ___ is impressive.','HARD-WORKING','hard work'],
-['He has a great style.','He is a ___ actor.','STYLE','stylish']
-];
-const vocab=[['talent','талант','talented · talented athlete'],['determination','решимость, упорство','determined · determined to succeed'],['confidence','уверенность','confident · feel confident'],['intelligence','ум, интеллект','intelligent · an intelligent person'],['style','стиль','stylish · a stylish performer'],['hard work','упорный труд','hard-working · a hard-working player'],['inspire teammates','вдохновлять товарищей по команде','His confidence inspires his teammates.'],['make assumptions','делать предположения без достаточных оснований','Don’t make assumptions about someone’s age.'],['challenge a stereotype','оспаривать стереотип','Challenge a stereotype about older people.'],['keep an open mind','быть открытым к новым взглядам','Keep an open mind when you meet people.']];
+
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
 const wordFormCards=[
-['compose','composer · composition'],
-['develop','developer · development'],
-['discover','discovery'],
-['science','scientist · scientific'],
-['biology','biologist · biological'],
-['astronomy','astronomer · astronomical'],
-['mathematics','mathematician · mathematical'],
-['electric','electricity · electrical'],
-['fame','famous'],
-['talent','talented'],
-['determine','determination · determined'],
-['confident','confidence'],
-['intelligent','intelligence'],
-['connect','connection']
+  ['compose','composer · composition'],
+  ['develop','developer · development'],
+  ['discover','discovery'],
+  ['science','scientist · scientific'],
+  ['biology','biologist · biological'],
+  ['astronomy','astronomer · astronomical'],
+  ['mathematics','mathematician · mathematical'],
+  ['electric','electricity · electrical'],
+  ['fame','famous'],
+  ['talent','talented'],
+  ['determine','determination · determined'],
+  ['confident','confidence'],
+  ['intelligent','intelligence'],
+  ['connect','connection']
 ];
-const mystery=[{clues:['I was born in Moscow.','I became famous in a team sport.','My team won the Stanley Cup in 2018.'],a:2},{clues:['I changed my career plans.','My work takes me onto a stage and in front of a camera.','I appeared in Night Watch and Day Watch.'],a:1},{clues:['I was born in Leningrad in 1952.','I worked in intelligence before politics.','I became Prime Minister in 1999.'],a:0}];
 
-const earlierPeople=[{"name":"Ludwig van Beethoven","sentences":["Ludwig van Beethoven was a composer.","He began losing his hearing as a young adult.","He continued composing music despite his hearing problems."],"forms":[["Beethoven continued ___ music.","compose","composing",1]],"clues":["I worked in music.","I began losing my hearing as a young adult.","I continued composing music despite this problem."],"tf":["Beethoven stopped composing when his hearing became worse.","False",2],"proof":["Find the sentence that shows he did not give up composing.",2]},{"name":"Lionel Messi","sentences":["Lionel Messi developed his career in football.","He moved from Argentina to Spain when he was thirteen.","He moved to continue his football development."],"forms":[["He moved abroad to continue his football ___.","develop","development",1]],"clues":["My career is in sport.","I moved abroad when I was thirteen.","I moved from Argentina to Spain to develop my football career."],"tf":["Messi moved to Spain as a teenager.","True",1],"proof":["Find the sentence that tells us his age when he moved.",1]},{"name":"Nikola Tesla","sentences":["Nikola Tesla worked with electricity.","His work with alternating current changed modern technology."],"forms":[["Tesla worked with ___.","electric","electricity",1]],"clues":["I worked in science and technology.","My work involved electricity.","My work with alternating current changed modern technology."],"tf":["Tesla’s work involved electricity.","True",0],"proof":["Find the sentence that shows the effect of Tesla’s work.",1]},{"name":"Michael Jackson","sentences":["Michael Jackson became internationally famous while he was still a child.","He performed with his brothers."],"forms":[["He became internationally ___.","fame","famous",1]],"clues":["My career was in entertainment.","I became internationally famous as a child.","I performed with my brothers."],"tf":["Jackson became famous only after he became an adult.","False",0],"proof":["Find the sentence that connects success with childhood.",0]},{"name":"Marie Skłodowska-Curie","sentences":["Marie Skłodowska-Curie was a physicist and chemist.","She did experiments with radioactive materials.","She discovered polonium and radium."],"forms":[["She made important ___.","discover","discoveries",1]],"clues":["I worked in science.","I did experiments with radioactive materials.","I discovered polonium and radium."],"tf":["Curie discovered polonium and radium.","True",2],"proof":["Find the sentence that names her discoveries.",2]},{"name":"Isaac Newton","sentences":["Isaac Newton was a physicist and mathematician.","He did research into gravity and light.","His research also covered maths and astronomy."],"forms":[["He was a ___.","mathematics","mathematician",1]],"clues":["I was a scientist.","I worked in physics and mathematics.","I did research into gravity and light."],"tf":["Newton studied only chemistry.","False",1],"proof":["Find the sentence that mentions gravity.",1]},{"name":"Alan Turing","sentences":["Alan Turing was a computer scientist.","In 1936, he developed the idea of a Universal Machine, an important idea in computing."],"forms":[["Turing was a computer ___.","science","scientist",1]],"clues":["My work was connected with computers.","I developed an important idea in 1936.","It was the idea of a Universal Machine."],"tf":["Turing’s idea of a Universal Machine dates from 1936.","True",1],"proof":["Find the sentence that includes the year of his idea.",1]},{"name":"Nicolaus Copernicus","sentences":["Nicolaus Copernicus was an astronomer and mathematician.","He developed the theory that the Earth moves around the Sun."],"forms":[["He studied ___.","astronomy","astronomer",0]],"clues":["I was a scientist and mathematician.","I studied space.","I developed the theory that the Earth moves around the Sun."],"tf":["Copernicus developed a theory about the Earth and the Sun.","True",1],"proof":["Find the sentence that explains his theory.",1]},{"name":"Charles Darwin","sentences":["Charles Darwin was a biologist.","He observed nature and took notes and measurements.","He collected specimens from around the world."],"forms":[["Darwin was a ___.","biology","biologist",1]],"clues":["I was a biologist.","I observed nature and took notes.","I collected specimens from around the world."],"tf":["Darwin collected specimens from only one country.","False",2],"proof":["Find the sentence that shows how he recorded information.",1]}];
-earlierPeople.forEach(p=>people.push(p));
-tf.unshift(...earlierPeople.flatMap((p,i)=>[[i+3,p.tf[0],p.tf[1],p.tf[2]],[i+3,p.name+" practised or studied for exactly six hours every day.","Not Stated",null]]));
-evidence.unshift(...earlierPeople.map((p,i)=>[i+3,p.proof[0],p.proof[1]]));
-transforms.unshift(
-["Beethoven continued to compose music.","Beethoven continued ___ music.","COMPOSE","composing"],
-["Messi moved to develop his football skills.","Messi moved to continue his football ___.","DEVELOP","development"],
-["Tesla worked on electrical systems.","Tesla worked with ___.","ELECTRICAL","electricity"],
-["Michael Jackson achieved international fame as a child.","Michael Jackson became internationally ___ as a child.","FAME","famous"],
-["Curie discovered polonium and radium.","Curie made important ___.","DISCOVER","discoveries"],
-["Newton studied mathematics.","Newton was a ___.","MATHEMATICS","mathematician"],
-["Turing worked in computer science.","Turing was a computer ___.","SCIENCE","scientist"],
-["Copernicus was an astronomer.","Copernicus worked in ___.","ASTRONOMER","astronomy"],
-["Darwin studied biology.","Darwin was a ___.","BIOLOGY","biologist"]
-);
-vocab.push(["development","развитие","develop → development"],["electricity","электричество","electrical → electricity"],["fame","слава","fame → famous"],["discovery","открытие","discover → discovery"],["scientist","учёный","science → scientist"],["specimen","образец для изучения","collect specimens"]);
-mystery.unshift(...earlierPeople.map((p,i)=>({clues:p.clues,a:i+3})));
-const journey=[0,13,1,2,3,4,5,6,7,8,9,10,11,12];
-let recallPerson=3;
-let wordCardIndex=0;
-let wordCardFlipped=false;
-
-const sections=['Warm-up · Three clues','Word pairs · Flashcards','Read · Putin','Read · Khabensky','Read · Ovechkin','21 · True / False / Not Stated','23 · Evidence Hunt','Text details · Quick check','15 · Transformation','Video · To Be Old','Video · Evidence check','Sentence · Phrase · Word','Finish · 30-second challenge','Recall · Earlier famous lives'];
-let screen=0,item=0,clue=0,flipped=false,locked=false,correct=0,total=0;const saved=new Map();const $=s=>document.querySelector(s);const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-$('#menu').innerHTML=journey.map(i=>`<option value="${i}">${sections[i]}</option>`).join('');$('#menu').onchange=e=>open(+e.target.value);$('#prev').onclick=()=>open(journey[journey.indexOf(screen)-1]);$('#next').onclick=()=>open(journey[journey.indexOf(screen)+1]);$('#full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
-function open(n){if(!Number.isInteger(n)||n<0||n>=sections.length)return;document.querySelectorAll('video').forEach(v=>v.pause());screen=n;item=0;clue=0;flipped=false;locked=false;render();$('#app').scrollTop=0}
-function source(p){if(!p.source){location.href='gabi-life-stages.html?lesson=1';return;}$('#sourceImg').src='assets/lesson3/'+p.source;$('#source').showModal()}
-function reveal(label,content){return `<details class="reveal"><summary>${esc(label)}</summary><div class="revealContent">${content}</div></details>`}
-function visual(p){if(!p.source)return '';return reveal('Show lesson image',`<figure class="personVisual"><img src="assets/lesson3/${p.source}" alt="${esc(p.name+' · lesson image')}"></figure>`)}
-function reading(p,interactive=false){const text=p.sentences.map((s,i)=>interactive?`<button data-sentence="${i}" data-text="${esc(s)}">Sentence ${i+1} · reveal</button>`:`<span>${esc(s)} </span>`).join('');return `${visual(p)}${interactive?`<div class="reading small">${text}</div>`:reveal('Show reading text',`<div class="reading">${text}</div>`)}${reveal('Text source',`<p class="sub" style="font-size:12px">${p.source?'Adapted from your worksheet.':'Recall from our earlier Famous Lives lesson.'}</p>`)}<button class="sourceBtn" id="original">${p.source?'Original worksheet':'Earlier audio quiz'}</button>`}
-function feedback(ok,msg){$('#feedback').innerHTML=(ok?'Correct. ':'Try again. ')+esc(msg)}
-function pager(len){return `<div class="row"><button id="itemPrev" ${item===0?'disabled':''}>←</button><span>${item+1} / ${len}</span><button id="itemNext" ${item===len-1?'disabled':''}>→</button></div>`}
-function bindPager(len){$('#itemPrev').onclick=()=>{if(item>0){item--;locked=false;clue=0;flipped=false;render()}};$('#itemNext').onclick=()=>{if(item<len-1){item++;locked=false;clue=0;flipped=false;render()}}}
-function scoreOnce(ok){const key=screen+':'+item;if(!saved.has(key)){saved.set(key,ok);total++;if(ok)correct++}}
-function render(){const app=$('#app');$('#menu').value=screen;$('#counter').textContent=(journey.indexOf(screen)+1)+' / '+journey.length;$('#prev').disabled=screen===0;$('#next').disabled=screen===journey[journey.length-1];
-if(screen===0){const m=mystery[item];app.innerHTML=`<div class="eyebrow">WARM-UP · OLD & NEW FACES</div><div class="hero"><span class="tag">Secret identity · ${item+1}/${mystery.length}</span><h1>Three clues. One person.</h1><div class="clue"></div><button id="clue">Show a clue</button><div class="choices">${[m.a,...people.map((_,i)=>i).filter(i=>i!==m.a).slice(item%7,item%7+3)].sort((a,b)=>a-b).map(i=>`<button data-answer="${i}">${people[i].name}</button>`).join('')}</div><div id="feedback" class="feedback"></div>${pager(mystery.length)}</div>`;$('#clue').onclick=()=>{clue=Math.min(clue+1,2);$('.clue').textContent=m.clues.slice(0,clue+1).join(' / ');$('.clue').classList.add('shown');$('#clue').textContent=clue===2?'All clues revealed':'Reveal another clue';$('#clue').disabled=clue===2};document.querySelectorAll('[data-answer]').forEach(b=>b.onclick=()=>{const ok=+b.dataset.answer===m.a;b.classList.add(ok?'correct':'wrong');feedback(ok,ok?'Which clue helped you? Use: “I guessed because…”':'Reveal another clue.');});bindPager(mystery.length)}
-if(screen===1){const v=vocab[item];app.innerHTML=`<div class="eyebrow">WORDS IN CONTEXT</div><h1>Word pairs & useful phrases</h1><button class="panel flash" id="flash">${esc(flipped?v[1]:v[0])}<small>${flipped?esc(v[2]):'Tap to flip'}</small></button><div class="row center" style="margin:20px">${pager(vocab.length)}<button id="sound">Listen to the word</button></div>`;$('#flash').onclick=()=>{flipped=!flipped;render()};$('#sound').onclick=()=>{if(!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(v[0]);u.lang='en-GB';const voices=speechSynthesis.getVoices();u.voice=voices.find(x=>x.lang==='en-GB')||null;speechSynthesis.speak(u)};bindPager(vocab.length)}
-if(screen>=2&&screen<=4){const p=people[screen-2],q=p.forms[item];app.innerHTML=`<div class="eyebrow">READ & CHOOSE · NOUN OR ADJECTIVE?</div><h1>${p.name}</h1><div class="grid"><article class="panel">${reading(p)}</article><section class="panel">${reveal('Show the sentence',esc(q[0]))}<div class="choices">${q.slice(1,3).map((a,i)=>`<button data-choice="${i}">${esc(a)}</button>`).join('')}</div><div id="feedback" class="feedback"></div>${pager(p.forms.length)}</section></div>`;$('#original').onclick=()=>source(p);document.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{const ok=+b.dataset.choice===q[3];scoreOnce(ok);b.classList.add(ok?'correct':'wrong');feedback(ok,ok?'Read the completed sentence aloud.':'Look at the words before and after the gap.')});bindPager(p.forms.length)}
-if(screen===5){const q=tf[item],p=people[q[0]];app.innerHTML=`<div class="eyebrow">21 · TRUE / FALSE / NOT STATED</div><h1>Text detective</h1><div class="grid"><article class="panel"><h2>${p.name}</h2>${reading(p)}</article><section class="panel">${reveal('Show the statement',esc(q[1]))}<div class="choices">${['True','False','Not Stated'].map(a=>`<button data-tf="${a}">${a}</button>`).join('')}</div><div id="feedback" class="feedback"></div>${reveal('Help · False or Not Stated',`<p class="sub">False = the text says the opposite.<br>Not Stated = the text does not tell us.</p>`)}${pager(tf.length)}</section></div>`;$('#original').onclick=()=>source(p);document.querySelectorAll('[data-tf]').forEach(b=>b.onclick=()=>{const ok=b.dataset.tf===q[2];scoreOnce(ok);b.classList.add(ok?'correct':'wrong');feedback(ok,ok?(q[3]===null?'There is no information about this in the text.':p.sentences[q[3]]):'Check the text, not your general knowledge.')});bindPager(tf.length)}
-if(screen===6){const q=evidence[item],p=people[q[0]];app.innerHTML=`<div class="eyebrow">23 · EVIDENCE HUNT</div><h1>Find the proof</h1><div class="grid"><article class="panel"><h2>${p.name}</h2>${reading(p,true)}</article><section class="panel">${reveal('Show the evidence clue',esc(q[1])+'<p>Tap the sentence that proves it.</p>')}<div id="feedback" class="feedback"></div>${pager(evidence.length)}</section></div>`;$('#original').onclick=()=>source(p);document.querySelectorAll('[data-sentence]').forEach(b=>b.onclick=()=>{if(b.dataset.opened!=='true'){b.dataset.opened='true';b.textContent=(+b.dataset.sentence+1)+'. '+b.dataset.text;b.classList.add('revealedSentence');return}const ok=+b.dataset.sentence===q[2];scoreOnce(ok);b.classList.add(ok?'correct':'wrong');feedback(ok,ok?'Evidence found. Say: “The text says …”':'Find a sentence with the same meaning as the clue.')});bindPager(evidence.length)}
-if(screen===13){
-const p=people[recallPerson],q=p.forms[item],wf=wordFormCards[wordCardIndex];
-app.innerHTML=`<div class="eyebrow">B1 · FROM OUR PREVIOUS LESSONS</div><h1>Remember them. Connect the ideas.</h1><select id="recallPerson" aria-label="Famous person">${earlierPeople.map((x,i)=>`<option value="${i+3}" ${i+3===recallPerson?'selected':''}>${x.name}</option>`).join('')}</select><div class="grid" style="margin-top:15px"><article class="panel wordFormPanel"><div class="wordFormHead"><div><span class="tag">WORD FORMATION</span><h2>Flip the card</h2></div><span class="wordCount">${wordCardIndex+1} / ${wordFormCards.length}</span></div><button class="wordFlash ${wordCardFlipped?'is-flipped':''}" id="wordFlash" aria-label="Flip word formation card"><span class="wordFaceLabel">${wordCardFlipped?'WORD FAMILY':'BASE WORD'}</span><strong>${esc(wordCardFlipped?wf[1]:wf[0])}</strong><small>${wordCardFlipped?'Tap to see the base word':'Tap to flip'}</small></button><div class="wordNav"><button id="wordPrev" ${wordCardIndex===0?'disabled':''}>←</button><button id="wordNext" ${wordCardIndex===wordFormCards.length-1?'disabled':''}>→</button></div></article><section class="panel">${reveal('Show the sentence',esc(q[0]))}<div class="choices">${q.slice(1,3).map((a,i)=>`<button data-choice="${i}">${esc(a)}</button>`).join('')}</div><div id="feedback" class="feedback"></div><p class="sub">Music → Beethoven & Jackson<br>Sport → Messi & Ovechkin<br>Science → Tesla, Curie, Newton, Turing, Copernicus & Darwin</p><p class="prompt">“They both …” · “He started as a child / teenager.”</p></section></div>`;
-$('#recallPerson').onchange=e=>{recallPerson=+e.target.value;item=0;render()};
-$('#wordFlash').onclick=()=>{wordCardFlipped=!wordCardFlipped;render()};
-$('#wordPrev').onclick=()=>{if(wordCardIndex>0){wordCardIndex--;wordCardFlipped=false;render()}};
-$('#wordNext').onclick=()=>{if(wordCardIndex<wordFormCards.length-1){wordCardIndex++;wordCardFlipped=false;render()}};
-document.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{const ok=+b.dataset.choice===q[3];b.classList.add(ok?'correct':'wrong');feedback(ok,ok?'Now read the complete sentence.':'Look at the sentence and try the other form.')});
-}
-if(screen===7)details();
-if(screen===8){const q=transforms[item];app.innerHTML=`<div class="eyebrow">15 · TRANSFORMATION</div><h1>Same idea. New word form.</h1><div class="panel">${reveal('Show the transformation',`<p class="prompt">${esc(q[0])}</p><div class="question">${esc(q[1])}</div><p><span class="tag">${q[2]}</span> Change this word.</p>`)}<button id="formHint">Help · Example</button><p id="hintText" class="sub hidden">He is confident → His confidence helps him.<br>Examples: develop → development; science → scientist; continue composing.<br>Look at the whole sentence before choosing the form.</p><input id="answer" aria-label="Transformed word" autocomplete="off"><div class="row" style="margin-top:15px"><button class="primary" id="check">Check</button><button id="show">Show answer</button></div><div id="feedback" class="feedback"></div>${pager(transforms.length)}</div>`;$('#formHint').onclick=()=>$('#hintText').classList.toggle('hidden');const check=()=>{const val=$('#answer').value.trim().toLowerCase().replace(/[‐‑–]/g,'-');const ok=val===q[3]||(q[3]==='hard-working'&&val==='hardworking');scoreOnce(ok);feedback(ok,ok?q[3]:'Change the part of speech. Keep the meaning.')};$('#check').onclick=check;$('#answer').onkeydown=e=>{if(e.key==='Enter')check()};$('#show').onclick=()=>{$('#feedback').textContent=q[3]};bindPager(transforms.length)}
-if(screen===9){app.innerHTML=`<div class="eyebrow">B1 · GREAT LEARNERS · 2:40</div><h1>To Be Old</h1><div class="grid"><div><video controls preload="metadata" playsinline poster="assets/lesson3/video-poster.jpg" src="assets/lesson3/to-be-old.mp4"></video><div class="row"><button id="restartVideo">Play from the start</button><a href="assets/lesson3/to-be-old.mp4" download>Download video</a></div></div><div class="panel"><h2>Watch like a detective</h2>${reveal('Show viewing prompts',`<p class="prompt">Before watching: can you tell if someone is kind or talented just by looking at them?</p><p class="prompt">First viewing: what changes about the way the man looks?</p><p class="prompt">Second viewing: name two things you see. Use: “I can see …” and “The man is …”</p>`)}<button id="revealVideo">Reveal the main idea</button><div id="feedback" class="feedback"></div></div></div>`;$('#restartVideo').onclick=()=>{const v=$('video');v.currentTime=0;v.play().catch(()=>{})};$('#revealVideo').onclick=()=>{$('#feedback').textContent='The man is made to look older. The film invites us to question assumptions about age and how we treat other people.'}}
-if(screen===10){const qs=[['Make-up is used to change the man’s appearance.','True','We see make-up being applied.'],['The man stays in the make-up room for the whole film.','False','Later scenes show him outside among other people.'],['The man was born in 1952.','Not Stated','We cannot find his year of birth in the pictures.'],['The man is shown outside with other people.','True','We see outdoor scenes with other people around him.']];const q=qs[item];app.innerHTML=`<div class="eyebrow">21 + 23 · VIDEO EVIDENCE</div><h1>What did you actually see?</h1><div class="panel">${reveal('Show the statement',esc(q[0]))}<div class="choices">${['True','False','Not Stated'].map(x=>`<button data-v="${x}">${x}</button>`).join('')}</div><div id="feedback" class="feedback"></div><button id="rewatch">Back to video</button>${pager(qs.length)}</div>`;document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{const ok=b.dataset.v===q[1];scoreOnce(ok);b.classList.add(ok?'correct':'wrong');feedback(ok,ok?q[2]:'Choose what you can see. Do not guess.')});$('#rewatch').onclick=()=>open(9);bindPager(qs.length)}
-if(screen===11){app.innerHTML=`<div class="eyebrow">GREAT THINKERS · SENTENCE–PHRASE–WORD</div><h1>Keep an open mind</h1><div class="grid"><div class="panel">${reveal('Show the text hunt',`<p class="prompt">Choose one of today’s texts. Find:</p><label>A sentence with an important idea<textarea placeholder="Copy a sentence from a text."></textarea></label><label>A phrase that interests you<input placeholder="Choose a phrase."></label><label>A word that you think is central to the idea<input placeholder="Choose one word."></label>`)}</div><div class="panel"><h2>Compare & explain</h2>${reveal('Show discussion prompts',`<p class="prompt">“I chose … because …”</p><p class="prompt">Some people say, “Teenagers are lazy.” Is this always true? Give an example.</p><p class="prompt">How can you help an older person? How can an older person help you?</p>`)}<button id="model">Show an example</button><div id="feedback" class="feedback"></div><button id="page">Original Great Thinkers page</button></div></div>`;$('#model').onclick=()=>{$('#feedback').textContent='Word: confidence. Phrase: inspires his teammates. Sentence: “On the ice he looks confident, and his confidence inspires his teammates.” I chose these because they connect one person’s attitude with its effect on others.'};$('#page').onclick=()=>source({source:'great-thinkers.png'})}
-if(screen===12){app.innerHTML=`<div class="eyebrow">FINISH · TRANSFER TO SPEAKING</div><div class="hero"><h1>Talent has no age limit.</h1>${reveal('Show speaking challenge',`<p class="question">Choose an earlier person and a new person. Compare them.</p><p class="prompt">Use: “They both …”, “Unlike …” and “The text says …”. Give one fact about each.</p><div class="bank"><span>talented / talent</span><span>confident / confidence</span><span>determined / determination</span></div>`)}<button id="timer">Start 30 seconds</button><p id="clock" class="question">30</p><button id="model">Show a model</button><div id="feedback" class="feedback"></div><p class="score">First-attempt answers: ${correct} / ${total}. Open-ended speaking is not automatically scored.</p><a href="gabi-life-stages.html?lesson=3&legacy=1">Celebrity Kids + Family Dinners →</a></div>`;$('#timer').onclick=()=>{clearInterval(window.lessonTimer);let n=30;$('#clock').textContent=n;window.lessonTimer=setInterval(()=>{n--;const el=$('#clock');if(!el){clearInterval(window.lessonTimer);return}el.textContent=n;if(n===0)clearInterval(window.lessonTimer)},1000)};$('#model').onclick=()=>{$('#feedback').textContent='Messi and Ovechkin both developed careers in sport. Messi moved to Spain as a teenager. Ovechkin started hockey as a child. They play different sports: football and hockey.'}}
-}
-const detailBank=[
-[0,'Complete the six gaps in the original summary.',['politician','Leningrad','intelligence','Prime Minister','2000','confident'],['Vladimir Putin is a Russian ___.','He was born in ___ in 1952.','He worked in the Soviet ___ service.','In 1999 he became ___.','He became President in ___.','The writer describes him as a ___ leader.']],
-[0,'Choose the answers supported by the worksheet.',['intelligence services','determination','communicate with world leaders','make political decisions'],['He started his career in ___.','The text connects his leadership with ___.','The writer says his confidence helps him ___.','The writer says his intelligence helps him ___.']],
-[1,'Complete the details from the text.',['Leningrad','at a technical university','theatre','talent','intelligent'],['He was born in ___.','At first he studied ___.','He later entered a ___ academy.','His ___ helped him become famous.','The text describes him as an ___ actor.']],
-[1,'Put the events in order.',['5','2','1','4','3'],['He became famous in theatre and cinema.','He decided to become an actor.','He tried technical studies.','He developed a successful acting career through talent and work.','He entered a theatre academy.']],
-[2,'Complete the profile.',['1985','Moscow','hockey','Stanley Cup'],['Year of birth','City of birth','Sport','Famous trophy']]
+const vocab=[
+  ['talent','талант','talented · a talented athlete'],
+  ['determination','решимость, упорство','determined · determined to succeed'],
+  ['confidence','уверенность','confident · feel confident'],
+  ['intelligence','ум, интеллект','intelligent · an intelligent person'],
+  ['style','стиль','stylish · a stylish performer'],
+  ['hard work','упорный труд','hard-working · a hard-working player'],
+  ['inspire teammates','вдохновлять товарищей по команде','His confidence inspires his teammates.'],
+  ['make assumptions','делать предположения','Don’t make assumptions about someone’s age.'],
+  ['challenge a stereotype','оспаривать стереотип','Challenge a stereotype about older people.'],
+  ['keep an open mind','быть открытым к новым взглядам','Keep an open mind when you meet people.'],
+  ['development','развитие','develop → development'],
+  ['electricity','электричество','electric → electricity'],
+  ['fame','слава','fame → famous'],
+  ['discovery','открытие','discover → discovery'],
+  ['scientist','учёный','science → scientist'],
+  ['specimen','образец для изучения','collect specimens']
 ];
-function details(){const q=detailBank[item],p=people[q[0]];$('#app').innerHTML=`<div class="eyebrow">WORKSHEET DETAILS</div><h1>${p.name}</h1><div class="grid"><article class="panel">${reading(p)}</article><div class="panel"><h2>${q[1]}</h2>${item===0?'<div class="bank">politician · intelligence · confident · 2000 · Leningrad · Prime Minister</div>':''}<div class="splitinputs">${q[3].map((s,i)=>`<label>${esc(s)}<input data-gap="${i}" aria-label="${esc(s)}" autocomplete="off"></label>`).join('')}</div><div class="row" style="margin-top:12px"><button id="checkDetails">Check</button><button id="showDetails">Answers</button></div><div id="feedback" class="feedback"></div>${pager(detailBank.length)}</div></div>`;$('#original').onclick=()=>source(p);$('#checkDetails').onclick=()=>{let n=0;document.querySelectorAll('[data-gap]').forEach((x,i)=>{const ok=x.value.trim().toLowerCase()===q[2][i].toLowerCase();x.classList.toggle('correct',ok);x.classList.toggle('wrong',!ok);if(ok)n++});$('#feedback').textContent=n+' / '+q[2].length};$('#showDetails').onclick=()=>{$('#feedback').textContent=q[2].map((a,i)=>(i+1)+'. '+a).join(' · ')};bindPager(detailBank.length)}
+
+const famousPeople=[
+  {
+    name:'Vladimir Putin',
+    text:'Vladimir Putin was born in 1952 in Leningrad, now Saint Petersburg. He studied law at Leningrad State University and later worked in the Soviet security service. In 1999 he became Prime Minister of Russia. At the end of that year he became acting President, and in 2000 he was elected President. These biographical facts make the text useful for practising words connected with careers, public life and personal history.',
+    source:'Official Kremlin biography and historical records.'
+  },
+  {
+    name:'Konstantin Khabensky',
+    text:'Konstantin Khabensky was born in 1972 in Leningrad, now Saint Petersburg. He first studied in a technical field but later chose acting. He became widely known through theatre and film work, including Night Watch and Day Watch. His career gives us useful language for talking about talent, development, performance and professional choices.',
+    source:'Biographical details checked against published actor biography sources.'
+  },
+  {
+    name:'Alexander Ovechkin',
+    text:'Alexander Ovechkin was born in 1985 in Moscow. He developed his career in ice hockey and joined the Washington Capitals in the NHL. In 2018 he captained the Capitals to their first Stanley Cup championship and received the Conn Smythe Trophy as the most valuable player of the playoffs. His story is useful for vocabulary about sport, achievement, determination and teamwork.',
+    source:'Biographical details checked against NHL records.'
+  }
+];
+
+const mysteryItems=[
+  {clues:['I was born in Moscow.','I became famous in a team sport.','My team won the Stanley Cup in 2018.'],answer:'Alexander Ovechkin'},
+  {clues:['I changed my career plans.','My work takes me onto a stage and in front of a camera.','I appeared in Night Watch and Day Watch.'],answer:'Konstantin Khabensky'},
+  {clues:['I was born in Leningrad in 1952.','I worked in a state security service before national politics.','I became Prime Minister in 1999.'],answer:'Vladimir Putin'},
+  {clues:['I worked in music.','I began losing my hearing as a young adult.','I continued composing music.'],answer:'Ludwig van Beethoven'},
+  {clues:['My career is in sport.','I moved from Argentina to Spain when I was thirteen.','I developed my career in football.'],answer:'Lionel Messi'}
+];
+const mysteryNames=['Alexander Ovechkin','Konstantin Khabensky','Vladimir Putin','Ludwig van Beethoven','Lionel Messi'];
+
+const quickCheck=[
+  ['Vladimir Putin was born in …','Leningrad',['Moscow','Leningrad','London']],
+  ['Before national politics, Putin worked in …','a state security service',['medicine','a state security service','cinema']],
+  ['Khabensky first studied in …','a technical field',['a technical field','medicine','professional sport']],
+  ['Khabensky appeared in …','Night Watch and Day Watch',['Night Watch and Day Watch','Titanic and Avatar','Rocky and Creed']],
+  ['Ovechkin was born in …','Moscow',['Moscow','Saint Petersburg','Madrid']],
+  ['Ovechkin developed a career in …','ice hockey',['tennis','ice hockey','basketball']],
+  ['The Capitals won the Stanley Cup in …','2018',['2000','2018','2025']],
+  ['Ovechkin received the Conn Smythe Trophy as …','playoff MVP',['top coach','playoff MVP','best goalkeeper']]
+];
+
+const videoTF=[
+  ['Make-up is used to change the man’s appearance.','True'],
+  ['The man stays in the make-up room for the whole film.','False'],
+  ['We see the man outside after his appearance changes.','True'],
+  ['The video gives the man’s year of birth.','False'],
+  ['The film encourages viewers to think about first impressions.','True'],
+  ['The man becomes younger during the experiment.','False']
+];
+
+const chooseWords=[
+  ['The make-up changes the man’s ________.','appearance'],
+  ['He is made to look much ________.','older'],
+  ['The video asks us to question our ________ about age.','assumptions'],
+  ['A fixed idea about a group of people is a ________.','stereotype'],
+  ['We should keep an ________ mind when we meet people.','open'],
+  ['Appearance does not always tell us what a person is ________.','like'],
+  ['The film makes us think about how we ________ older people.','treat'],
+  ['Age should not decide how much ________ we show someone.','respect']
+];
+const wordBank=['appearance','older','assumptions','stereotype','open','like','treat','respect'];
+
+const celebrityKidsText='Growing up with a famous parent can look exciting from the outside, but many children of celebrities still want an ordinary private life. They know that people recognise their family name, and they understand why strangers are curious. However, they do not always like the attention. Some teenagers believe that fame creates opportunities, while others prefer to build an identity of their own. They need privacy, they want close friends, and they often value normal routines. At the same time, their lives are changing. They are studying, travelling, working on projects and meeting new people. A teenager may think that a public event is exciting today but feel completely different about it tomorrow. The important point is that we cannot know a person simply from a photo. A famous surname belongs to a family, but personality belongs to the individual.';
+
+const familyDinnersText='For many families, dinner is more than a meal. It is a time when people stop, sit together and talk about the day. In one family, a parent cooks the main dish while a teenager lays the table. The younger child brings a bottle of water and puts it next to the glasses. When everyone is ready, the family turns off the television and leaves the phones in another room. During the meal, they share stories from school and work. Sometimes there is an argument, but there is usually a laugh too. At the weekend, they may invite a grandparent or a friend. A simple dinner can become an important family tradition because it gives people the chance to listen to one another. The meal does not need to be expensive; the important thing is the time they spend together.';
+
+const stativeQs=[
+  ['Celebrity kids usually ___ why people are curious.','understand',['are understanding','understand']],
+  ['They often ___ privacy.','need',['need','are needing']],
+  ['Some teenagers ___ fame creates opportunities.','believe',['are believing','believe']],
+  ['Others ___ to build their own identity.','prefer',['prefer','are preferring']],
+  ['They ___ close friends and normal routines.','want',['are wanting','want']],
+  ['Right now, many teenagers ___ on new projects.','are working',['work','are working']],
+  ['A teenager may ___ differently tomorrow.','feel',['be feeling','feel']],
+  ['We cannot ___ a person from a photo alone.','know',['know','be knowing']],
+  ['A famous surname ___ to a family.','belongs',['belongs','is belonging']],
+  ['This month, some teenagers ___ abroad for work or study.','are travelling',['travel','are travelling']]
+];
+
+const articleQs=[
+  ['Dinner can be ___ important family tradition.','an',['a','an','the','—']],
+  ['A parent may cook ___ main dish.','the',['a','an','the','—']],
+  ['A teenager lays ___ table.','the',['a','an','the','—']],
+  ['The younger child brings ___ bottle of water.','a',['a','an','the','—']],
+  ['They turn off ___ television before eating.','the',['a','an','the','—']],
+  ['At ___ weekend, they may invite a grandparent.','the',['a','an','the','—']],
+  ['They share stories from ___ school and work.','—',['a','an','the','—']],
+  ['Sometimes there is ___ argument.','an',['a','an','the','—']],
+  ['A family may invite ___ friend to dinner.','a',['a','an','the','—']],
+  ['What matters most is ___ time they spend together.','the',['a','an','the','—']]
+];
+
+const earlierLives=[
+  ['Ludwig van Beethoven','composer','He continued composing music despite serious hearing problems.'],
+  ['Lionel Messi','footballer','He moved from Argentina to Spain when he was thirteen to develop his football career.'],
+  ['Nikola Tesla','inventor and engineer','His work with alternating current influenced modern electrical technology.'],
+  ['Michael Jackson','performer','He became internationally famous while he was still a child.'],
+  ['Marie Skłodowska-Curie','physicist and chemist','She discovered polonium and radium.'],
+  ['Isaac Newton','physicist and mathematician','He researched gravity and light.'],
+  ['Alan Turing','computer scientist','In 1936, he developed the idea of a Universal Machine.'],
+  ['Nicolaus Copernicus','astronomer','He developed the theory that the Earth moves around the Sun.'],
+  ['Charles Darwin','biologist','He observed nature and collected specimens from around the world.']
+];
+
+let wfIndex=0,wfBack=false;
+let vocabIndex=0,vocabBack=false;
+let personIndex=0;
+let mysteryIndex=0,clueCount=0;
+let quickIndex=0;
+let videoTfIndex=0,chooseIndex=0;
+let grammarPane='kids',stativeIndex=0,articleIndex=0;
+let recallIndex=0;
+let lessonTimer=null;
+
+function accordion(title,subtitle,content,open=false){
+  return `<details class="activity" ${open?'open':''}>
+    <summary><span><strong>${esc(title)}</strong><small>${esc(subtitle)}</small></span><b>OPEN</b></summary>
+    <div class="activityBody">${content}</div>
+  </details>`;
+}
+
+function mysteryCard(){
+  const m=mysteryItems[mysteryIndex];
+  const shown=m.clues.slice(0,clueCount).map(x=>`<p>• ${esc(x)}</p>`).join('');
+  return `<div class="grid2">
+    <div class="panel">
+      <span class="tag">SECRET IDENTITY · ${mysteryIndex+1}/${mysteryItems.length}</span>
+      <h2>Three clues. One person.</h2>
+      <div id="mysteryClues">${shown||'<p class="sub">Reveal the clues one by one.</p>'}</div>
+      <div class="row">
+        <button class="actionBtn primary" id="showClue" ${clueCount>=3?'disabled':''}>Show a clue</button>
+        <button class="actionBtn" id="mysteryPrev" ${mysteryIndex===0?'disabled':''}>←</button>
+        <button class="actionBtn" id="mysteryNext" ${mysteryIndex===mysteryItems.length-1?'disabled':''}>→</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Who is it?</h3>
+      <div class="choices">${mysteryNames.map(n=>`<button data-mystery-answer="${esc(n)}">${esc(n)}</button>`).join('')}</div>
+      <div class="feedback" id="mysteryFeedback"></div>
+    </div>
+  </div>`;
+}
+
+function wordFormCard(){
+  const c=wordFormCards[wfIndex];
+  return `<div class="panel">
+    <div class="row" style="justify-content:space-between">
+      <span class="tag">WORD FORMATION</span><strong>${wfIndex+1} / ${wordFormCards.length}</strong>
+    </div>
+    <button class="wordFlash" id="wfFlash">
+      <span class="wordFaceLabel">${wfBack?'WORD FAMILY':'BASE WORD'}</span>
+      <strong>${esc(wfBack?c[1]:c[0])}</strong>
+      <small>${wfBack?'Tap to see the base word':'Tap to flip'}</small>
+    </button>
+    <div class="row center" style="margin-top:14px">
+      <button class="actionBtn" id="wfPrev" ${wfIndex===0?'disabled':''}>←</button>
+      <button class="actionBtn" id="wfNext" ${wfIndex===wordFormCards.length-1?'disabled':''}>→</button>
+    </div>
+  </div>`;
+}
+
+function wordsAndPeople(){
+  const v=vocab[vocabIndex];
+  const p=famousPeople[personIndex];
+  return `<div class="grid2">
+    <section class="panel">
+      <span class="tag">WORD PAIRS & USEFUL PHRASES</span>
+      <h3>Quizlet-style cards</h3>
+      <button class="flash" id="vocabFlash">${esc(vocabBack?v[1]:v[0])}<small>${vocabBack?esc(v[2]):'Tap to flip'}</small></button>
+      <div class="row center" style="margin-top:13px">
+        <button class="actionBtn" id="vocabPrev" ${vocabIndex===0?'disabled':''}>←</button>
+        <strong>${vocabIndex+1} / ${vocab.length}</strong>
+        <button class="actionBtn" id="vocabNext" ${vocabIndex===vocab.length-1?'disabled':''}>→</button>
+        <button class="actionBtn" id="listenWord">Listen</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <span class="tag">FAMOUS PEOPLE</span>
+      <h3>Read the text</h3>
+      <div class="personTabs">
+        ${famousPeople.map((x,i)=>`<button class="personBtn ${i===personIndex?'active':''}" data-person="${i}">${esc(x.name)}</button>`).join('')}
+      </div>
+      <p class="personText">${esc(p.text)}</p>
+      <div class="factSource">${esc(p.source)}</div>
+    </section>
+  </div>`;
+}
+
+function quickCheckCard(){
+  const q=quickCheck[quickIndex];
+  return `<div class="questionBox">
+    <div class="row" style="justify-content:space-between">
+      <span class="tag">QUICK CHECK</span><strong>${quickIndex+1} / ${quickCheck.length}</strong>
+    </div>
+    <p class="question">${esc(q[0])}</p>
+    <div class="choices">${q[2].map(x=>`<button data-quick="${esc(x)}">${esc(x)}</button>`).join('')}</div>
+    <div class="feedback" id="quickFeedback"></div>
+    <div class="row">
+      <button class="actionBtn" id="quickPrev" ${quickIndex===0?'disabled':''}>←</button>
+      <button class="actionBtn" id="quickNext" ${quickIndex===quickCheck.length-1?'disabled':''}>→</button>
+    </div>
+  </div>`;
+}
+
+function videoCard(){
+  const tf=videoTF[videoTfIndex];
+  const cw=chooseWords[chooseIndex];
+  return `<div class="grid2">
+    <div class="panel videoWrap">
+      <span class="tag">TO BE OLD</span>
+      <h3>Watch the video</h3>
+      <video id="oldVideo" controls preload="metadata" playsinline poster="assets/lesson3/video-poster.jpg" src="assets/lesson3/to-be-old.mp4"></video>
+      <div class="videoActions">
+        <button class="actionBtn" id="restartVideo">Play from the start</button>
+        <a class="actionBtn" href="assets/lesson3/to-be-old.mp4" download>Download video</a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="taskTabs">
+        <button class="miniBtn active" data-video-pane="tf">True / False</button>
+        <button class="miniBtn" data-video-pane="words">Choose from words</button>
+      </div>
+
+      <div class="taskPane active" id="videoPane-tf">
+        <div class="row" style="justify-content:space-between">
+          <span class="tag">TRUE / FALSE</span><strong>${videoTfIndex+1} / ${videoTF.length}</strong>
+        </div>
+        <p class="question">${esc(tf[0])}</p>
+        <div class="choices">
+          <button data-vtf="True">True</button>
+          <button data-vtf="False">False</button>
+        </div>
+        <div class="feedback" id="videoTfFeedback"></div>
+        <div class="row">
+          <button class="actionBtn" id="videoTfPrev" ${videoTfIndex===0?'disabled':''}>←</button>
+          <button class="actionBtn" id="videoTfNext" ${videoTfIndex===videoTF.length-1?'disabled':''}>→</button>
+        </div>
+      </div>
+
+      <div class="taskPane" id="videoPane-words">
+        <div class="row" style="justify-content:space-between">
+          <span class="tag">CHOOSE FROM WORDS</span><strong>${chooseIndex+1} / ${chooseWords.length}</strong>
+        </div>
+        <div class="wordBank">${wordBank.map(x=>`<span>${esc(x)}</span>`).join('')}</div>
+        <p class="question">${esc(cw[0])}</p>
+        <div class="choices">${wordBank.map(x=>`<button data-cword="${esc(x)}">${esc(x)}</button>`).join('')}</div>
+        <div class="feedback" id="chooseFeedback"></div>
+        <div class="row">
+          <button class="actionBtn" id="choosePrev" ${chooseIndex===0?'disabled':''}>←</button>
+          <button class="actionBtn" id="chooseNext" ${chooseIndex===chooseWords.length-1?'disabled':''}>→</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function sentencePhraseWord(){
+  return `<div class="grid2">
+    <div class="panel">
+      <span class="tag">SENTENCE · PHRASE · WORD</span>
+      <h3>Choose from today’s lesson</h3>
+      <label>One sentence<textarea id="spwSentence" placeholder="Copy or write one sentence."></textarea></label>
+      <label>One phrase<input id="spwPhrase" placeholder="Choose one phrase."></label>
+      <label>One key word<input id="spwWord" placeholder="Choose one word."></label>
+    </div>
+    <div class="panel">
+      <h3>Explain your choice</h3>
+      <p class="question">Use: “I chose … because …”</p>
+      <button class="actionBtn" id="spwModel">Show a model</button>
+      <div class="feedback" id="spwFeedback"></div>
+    </div>
+  </div>`;
+}
+
+function celebrityAndDinner(){
+  const s=stativeQs[stativeIndex];
+  const a=articleQs[articleIndex];
+  return `<div class="panel">
+    <div class="grammarTabs">
+      <button class="miniBtn ${grammarPane==='kids'?'active':''}" data-grammar="kids">Celebrity Kids · Text</button>
+      <button class="miniBtn ${grammarPane==='stative'?'active':''}" data-grammar="stative">Stative verbs</button>
+      <button class="miniBtn ${grammarPane==='dinner'?'active':''}" data-grammar="dinner">Family Dinners · Text</button>
+      <button class="miniBtn ${grammarPane==='articles'?'active':''}" data-grammar="articles">Articles</button>
+    </div>
+
+    <div class="grammarPane ${grammarPane==='kids'?'active':''}" id="grammar-kids">
+      <span class="tag">READING · STATIVE VERBS IN CONTEXT</span>
+      <h3>Celebrity Kids</h3>
+      <p class="readText">${esc(celebrityKidsText)}</p>
+    </div>
+
+    <div class="grammarPane ${grammarPane==='stative'?'active':''}" id="grammar-stative">
+      <div class="row" style="justify-content:space-between">
+        <span class="tag">STATIVE / DYNAMIC</span><strong>${stativeIndex+1} / ${stativeQs.length}</strong>
+      </div>
+      <p class="question">${esc(s[0])}</p>
+      <div class="choices">${s[2].map(x=>`<button data-stative="${esc(x)}">${esc(x)}</button>`).join('')}</div>
+      <div class="feedback" id="stativeFeedback"></div>
+      <div class="row">
+        <button class="actionBtn" id="stativePrev" ${stativeIndex===0?'disabled':''}>←</button>
+        <button class="actionBtn" id="stativeNext" ${stativeIndex===stativeQs.length-1?'disabled':''}>→</button>
+      </div>
+    </div>
+
+    <div class="grammarPane ${grammarPane==='dinner'?'active':''}" id="grammar-dinner">
+      <span class="tag">READING · ARTICLES IN CONTEXT</span>
+      <h3>Family Dinners</h3>
+      <p class="readText">${esc(familyDinnersText)}</p>
+    </div>
+
+    <div class="grammarPane ${grammarPane==='articles'?'active':''}" id="grammar-articles">
+      <div class="row" style="justify-content:space-between">
+        <span class="tag">A / AN / THE / —</span><strong>${articleIndex+1} / ${articleQs.length}</strong>
+      </div>
+      <p class="question">${esc(a[0])}</p>
+      <div class="choices">${a[2].map(x=>`<button data-article="${esc(x)}">${esc(x)}</button>`).join('')}</div>
+      <div class="feedback" id="articleFeedback"></div>
+      <div class="row">
+        <button class="actionBtn" id="articlePrev" ${articleIndex===0?'disabled':''}>←</button>
+        <button class="actionBtn" id="articleNext" ${articleIndex===articleQs.length-1?'disabled':''}>→</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function recallCard(){
+  const x=earlierLives[recallIndex];
+  return `<div class="grid2">
+    <div class="panel">
+      <div class="row" style="justify-content:space-between">
+        <span class="tag">EARLIER FAMOUS LIVES</span><strong>${recallIndex+1} / ${earlierLives.length}</strong>
+      </div>
+      <h2>${esc(x[0])}</h2>
+      <p class="personText"><strong>${esc(x[1])}</strong>. ${esc(x[2])}</p>
+      <div class="row" style="margin-top:13px">
+        <button class="actionBtn" id="recallPrev" ${recallIndex===0?'disabled':''}>←</button>
+        <button class="actionBtn" id="recallNext" ${recallIndex===earlierLives.length-1?'disabled':''}>→</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Connect the ideas</h3>
+      <p class="question">Compare this person with one person from today.</p>
+      <p>Use: <strong>They both … / Unlike … / One important difference is …</strong></p>
+    </div>
+  </div>`;
+}
+
+function finishCard(){
+  return `<div class="timerBox">
+    <span class="tag">30-SECOND CHALLENGE</span>
+    <h2>Talent has no age limit.</h2>
+    <p class="question">Choose two people from the lesson. Compare them using at least three lesson words.</p>
+    <div class="wordBank center"><span>talent</span><span>determination</span><span>confidence</span><span>development</span><span>keep an open mind</span></div>
+    <button class="actionBtn primary" id="startTimer">Start 30 seconds</button>
+    <div class="clock" id="clock">30</div>
+    <button class="actionBtn" id="finishModel">Show a model</button>
+    <div class="feedback" id="finishFeedback"></div>
+  </div>`;
+}
+
+function render(){
+  $('#activities').innerHTML =
+    accordion('1 · Warm-up · Three clues','Guess the person from clues.',mysteryCard(),true)+
+    accordion('2 · Word Formation · Quizlet cards','compose → composer · composition and more.',wordFormCard())+
+    accordion('3 · Word pairs + Famous people','Vocabulary plus embedded continuous texts about Putin, Khabensky and Ovechkin.',wordsAndPeople())+
+    accordion('4 · Text details · Quick check','Short comprehension. Activities 21, 23 and 15 are removed.',quickCheckCard())+
+    accordion('5 · To Be Old · Video + practice','Video, 6 True/False statements and Choose from words.',videoCard())+
+    accordion('6 · Sentence · Phrase · Word','Choose useful language and explain your choice.',sentencePhraseWord())+
+    accordion('7 · Celebrity Kids + Family Dinners','Original B1 texts with stative verbs and articles.',celebrityAndDinner())+
+    accordion('8 · Recall · Earlier famous lives','Connect people from previous lessons.',recallCard())+
+    accordion('9 · Finish · 30-second challenge','Transfer vocabulary and ideas to speaking.',finishCard());
+  bindAll();
+}
+
+function rerenderKeepOpen(titlePrefix){
+  const openTitles=$$('.activity[open] summary strong').map(x=>x.textContent);
+  render();
+  $$('.activity').forEach(d=>{
+    const t=$('summary strong',d).textContent;
+    d.open=openTitles.some(x=>t.startsWith(x.split(' · ')[0])) || (titlePrefix && t.startsWith(titlePrefix));
+  });
+}
+
+function markAnswer(button,ok,feedbackEl,okMsg='Correct.',badMsg='Try again.'){
+  button.classList.add(ok?'correct':'wrong');
+  if(feedbackEl) feedbackEl.textContent=ok?okMsg:badMsg;
+}
+
+function bindAll(){
+  $('#full').onclick=()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();
+
+  const showClue=$('#showClue');
+  if(showClue) showClue.onclick=()=>{if(clueCount<3){clueCount++;rerenderKeepOpen('1')}};
+  if($('#mysteryPrev')) $('#mysteryPrev').onclick=()=>{if(mysteryIndex>0){mysteryIndex--;clueCount=0;rerenderKeepOpen('1')}};
+  if($('#mysteryNext')) $('#mysteryNext').onclick=()=>{if(mysteryIndex<mysteryItems.length-1){mysteryIndex++;clueCount=0;rerenderKeepOpen('1')}};
+  $$('[data-mystery-answer]').forEach(b=>b.onclick=()=>{
+    const ok=b.dataset.mysteryAnswer===mysteryItems[mysteryIndex].answer;
+    markAnswer(b,ok,$('#mysteryFeedback'),ok?'Correct. Which clue helped you?':'','Reveal another clue and try again.');
+  });
+
+  if($('#wfFlash')) $('#wfFlash').onclick=()=>{wfBack=!wfBack;rerenderKeepOpen('2')};
+  if($('#wfPrev')) $('#wfPrev').onclick=()=>{if(wfIndex>0){wfIndex--;wfBack=false;rerenderKeepOpen('2')}};
+  if($('#wfNext')) $('#wfNext').onclick=()=>{if(wfIndex<wordFormCards.length-1){wfIndex++;wfBack=false;rerenderKeepOpen('2')}};
+
+  if($('#vocabFlash')) $('#vocabFlash').onclick=()=>{vocabBack=!vocabBack;rerenderKeepOpen('3')};
+  if($('#vocabPrev')) $('#vocabPrev').onclick=()=>{if(vocabIndex>0){vocabIndex--;vocabBack=false;rerenderKeepOpen('3')}};
+  if($('#vocabNext')) $('#vocabNext').onclick=()=>{if(vocabIndex<vocab.length-1){vocabIndex++;vocabBack=false;rerenderKeepOpen('3')}};
+  if($('#listenWord')) $('#listenWord').onclick=()=>{
+    if(!('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(vocab[vocabIndex][0]);
+    u.lang='en-GB';
+    const voices=speechSynthesis.getVoices();
+    u.voice=voices.find(x=>x.lang==='en-GB')||null;
+    speechSynthesis.speak(u);
+  };
+  $$('[data-person]').forEach(b=>b.onclick=()=>{personIndex=Number(b.dataset.person);rerenderKeepOpen('3')});
+
+  $$('[data-quick]').forEach(b=>b.onclick=()=>{
+    const ok=b.dataset.quick===quickCheck[quickIndex][1];
+    markAnswer(b,ok,$('#quickFeedback'),'Correct.','Read the text again.');
+  });
+  if($('#quickPrev')) $('#quickPrev').onclick=()=>{if(quickIndex>0){quickIndex--;rerenderKeepOpen('4')}};
+  if($('#quickNext')) $('#quickNext').onclick=()=>{if(quickIndex<quickCheck.length-1){quickIndex++;rerenderKeepOpen('4')}};
+
+  if($('#restartVideo')) $('#restartVideo').onclick=()=>{
+    const v=$('#oldVideo'); if(v){v.currentTime=0;v.play().catch(()=>{})}
+  };
+  $$('[data-video-pane]').forEach(b=>b.onclick=()=>{
+    const pane=b.dataset.videoPane;
+    $$('.taskPane').forEach(x=>x.classList.remove('active'));
+    $$('.taskTabs .miniBtn').forEach(x=>x.classList.remove('active'));
+    $('#videoPane-'+pane).classList.add('active'); b.classList.add('active');
+  });
+  $$('[data-vtf]').forEach(b=>b.onclick=()=>{
+    const ok=b.dataset.vtf===videoTF[videoTfIndex][1];
+    markAnswer(b,ok,$('#videoTfFeedback'),'Correct.','Watch that part again.');
+  });
+  if($('#videoTfPrev')) $('#videoTfPrev').onclick=()=>{if(videoTfIndex>0){videoTfIndex--;rerenderKeepOpen('5')}};
+  if($('#videoTfNext')) $('#videoTfNext').onclick=()=>{if(videoTfIndex<videoTF.length-1){videoTfIndex++;rerenderKeepOpen('5')}};
+  $$('[data-cword]').forEach(b=>b.onclick=()=>{
+    const ok=b.dataset.cword===chooseWords[chooseIndex][1];
+    markAnswer(b,ok,$('#chooseFeedback'),'Correct.','Try another word from the bank.');
+  });
+  if($('#choosePrev')) $('#choosePrev').onclick=()=>{if(chooseIndex>0){chooseIndex--;rerenderKeepOpen('5')}};
+  if($('#chooseNext')) $('#chooseNext').onclick=()=>{if(chooseIndex<chooseWords.length-1){chooseIndex++;rerenderKeepOpen('5')}};
+
+  if($('#spwModel')) $('#spwModel').onclick=()=>{
+    $('#spwFeedback').textContent='Word: confidence. Phrase: keep an open mind. Sentence: “Appearance does not always tell us what a person is like.” I chose them because they connect the lesson’s vocabulary with its main idea.';
+  };
+
+  $$('[data-grammar]').forEach(b=>b.onclick=()=>{grammarPane=b.dataset.grammar;rerenderKeepOpen('7')});
+  $$('[data-stative]').forEach(b=>b.onclick=()=>{
+    const ok=b.dataset.stative===stativeQs[stativeIndex][1];
+    markAnswer(b,ok,$('#stativeFeedback'),'Correct.','Check whether the verb describes a state or an action in progress.');
+  });
+  if($('#stativePrev')) $('#stativePrev').onclick=()=>{if(stativeIndex>0){stativeIndex--;grammarPane='stative';rerenderKeepOpen('7')}};
+  if($('#stativeNext')) $('#stativeNext').onclick=()=>{if(stativeIndex<stativeQs.length-1){stativeIndex++;grammarPane='stative';rerenderKeepOpen('7')}};
+  $$('[data-article]').forEach(b=>b.onclick=()=>{
+    const ok=b.dataset.article===articleQs[articleIndex][1];
+    markAnswer(b,ok,$('#articleFeedback'),'Correct.','Think about first mention, specific reference and fixed expressions.');
+  });
+  if($('#articlePrev')) $('#articlePrev').onclick=()=>{if(articleIndex>0){articleIndex--;grammarPane='articles';rerenderKeepOpen('7')}};
+  if($('#articleNext')) $('#articleNext').onclick=()=>{if(articleIndex<articleQs.length-1){articleIndex++;grammarPane='articles';rerenderKeepOpen('7')}};
+
+  if($('#recallPrev')) $('#recallPrev').onclick=()=>{if(recallIndex>0){recallIndex--;rerenderKeepOpen('8')}};
+  if($('#recallNext')) $('#recallNext').onclick=()=>{if(recallIndex<earlierLives.length-1){recallIndex++;rerenderKeepOpen('8')}};
+
+  if($('#startTimer')) $('#startTimer').onclick=()=>{
+    clearInterval(lessonTimer);
+    let n=30;
+    $('#clock').textContent=n;
+    lessonTimer=setInterval(()=>{
+      n--;
+      const el=$('#clock');
+      if(!el){clearInterval(lessonTimer);return}
+      el.textContent=n;
+      if(n<=0) clearInterval(lessonTimer);
+    },1000);
+  };
+  if($('#finishModel')) $('#finishModel').onclick=()=>{
+    $('#finishFeedback').textContent='Ovechkin and Messi both developed successful careers in sport. Ovechkin is connected with ice hockey, while Messi is connected with football. Both stories show talent, development and long-term effort.';
+  };
+}
+
 render();
