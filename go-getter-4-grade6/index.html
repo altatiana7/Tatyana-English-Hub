@@ -6,56 +6,66 @@
 <title>Go Getter 4 · Grade 6 · Lesson 1</title>
 <style>
 :root{
-  --bg:#f5f1e8;--panel:#ffffff;--ink:#18303f;--muted:#66727a;--line:#d8ddd9;
-  --teal:#2f8f83;--teal2:#dff1ec;--sand:#f3e2bf;--blue:#dceaf4;--rose:#f1d8d0;
-  --ok:#2e7d55;--bad:#a94747;--shadow:0 10px 26px rgba(35,55,65,.10)
+  --purple:#6f3198;--purple-dark:#4b1d70;--purple-soft:#efe4f7;
+  --lime:#d8ff00;--lime-soft:#efffa8;--white:#ffffff;--ink:#261331;
+  --muted:#6d5c77;--line:#d9cfe0;--panel:#ffffff;--ok:#2d8a57;--bad:#b64654;
+  --shadow:0 14px 32px rgba(68,29,95,.18)
 }
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-button,input{font:inherit}
-button{cursor:pointer}
-.app{min-height:100vh}
-.topbar{position:sticky;top:0;z-index:20;background:rgba(245,241,232,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(24,48,63,.08)}
-.topbar-inner{max-width:1180px;margin:auto;padding:10px 18px;display:flex;align-items:center;gap:12px}
-.brand{font-weight:800;letter-spacing:.02em;white-space:nowrap}
-.progress-wrap{flex:1;height:8px;background:#e3e2dc;border-radius:99px;overflow:hidden}
-.progress{height:100%;width:0;background:var(--teal);transition:.25s}
-.score{font-weight:800;min-width:74px;text-align:right}
-.shell{max-width:1180px;margin:auto;display:grid;grid-template-columns:210px minmax(0,1fr);gap:18px;padding:18px}
-.sidebar{position:sticky;top:64px;align-self:start;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:12px;box-shadow:var(--shadow)}
-.navbtn{width:100%;border:0;background:transparent;color:var(--ink);text-align:left;padding:12px 11px;border-radius:12px;margin:3px 0;font-weight:700}
-.navbtn.active,.navbtn:hover{background:var(--teal2);color:#145f58}
-main{min-width:0}
-.screen{display:none;animation:fade .24s ease}.screen.active{display:block}
-@keyframes fade{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}
-.hero{display:grid;grid-template-columns:1.15fr .85fr;min-height:520px;background:var(--panel);border-radius:28px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow)}
-.hero-copy{padding:48px 44px;display:flex;flex-direction:column;justify-content:center}
-.kicker{display:inline-flex;align-self:flex-start;padding:7px 11px;border-radius:999px;background:var(--teal2);color:#145f58;font-weight:800;font-size:.85rem}
-h1{font-size:clamp(2.2rem,5vw,4.8rem);line-height:.98;margin:18px 0 18px;letter-spacing:-.04em}
-.hero p{font-size:1.1rem;line-height:1.6;color:var(--muted);max-width:580px}
-.hero-photo{min-height:430px;background:url('https://static.tildacdn.com/tild3861-3962-4565-a265-313566363838/02.jpg') center/cover no-repeat}
-.primary,.secondary{border:0;border-radius:14px;padding:13px 18px;font-weight:800;min-height:46px}
-.primary{background:var(--teal);color:#fff}.secondary{background:#edf0ef;color:var(--ink)}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow)}
-.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:14px}
-.section-head h2{margin:0;font-size:clamp(1.65rem,4vw,2.5rem);letter-spacing:-.03em}
-.section-head p{margin:0;color:var(--muted)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Trebuchet MS,Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:#f6f1f9;color:var(--ink)}
+button,input{font:inherit}button{cursor:pointer}.app{min-height:100vh}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(78,28,112,.97);color:#fff;border-bottom:4px solid var(--lime);box-shadow:0 5px 16px rgba(62,22,88,.18)}
+.topbar-inner{max-width:1180px;margin:auto;padding:9px 18px;display:flex;align-items:center;gap:12px}
+.brand{font-weight:900;letter-spacing:.035em;text-transform:lowercase;font-size:1.05rem}
+.progress-wrap{flex:1;height:8px;background:rgba(255,255,255,.18);border-radius:99px;overflow:hidden}
+.progress{height:100%;width:0;background:var(--lime);transition:.25s}.score{font-weight:900;min-width:74px;text-align:right;color:var(--lime)}
+.shell{max-width:1180px;margin:auto;display:grid;grid-template-columns:205px minmax(0,1fr);gap:18px;padding:18px}
+.sidebar{position:sticky;top:66px;align-self:start;background:linear-gradient(180deg,var(--purple),var(--purple-dark));border:0;border-radius:20px;padding:12px;box-shadow:var(--shadow)}
+.navbtn{width:100%;border:0;background:transparent;color:#fff;text-align:left;padding:12px 11px;border-radius:11px;margin:3px 0;font-weight:900}
+.navbtn.active,.navbtn:hover{background:var(--lime);color:var(--purple-dark)}
+main{min-width:0}.screen{display:none;animation:fade .22s ease}.screen.active{display:block}
+@keyframes fade{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+.hero{position:relative;min-height:540px;background:var(--purple);border-radius:30px;overflow:hidden;box-shadow:var(--shadow);isolation:isolate}
+.hero::before{content:"";position:absolute;inset:122px -7% auto -7%;height:150px;background:var(--lime);transform:rotate(-5deg);z-index:-1}
+.hero::after{content:"";position:absolute;right:-75px;bottom:-90px;width:330px;height:330px;border:16px solid rgba(255,255,255,.16);border-radius:50%;z-index:-1}
+.hero-grid{display:grid;grid-template-columns:1.04fr .96fr;min-height:540px}
+.hero-copy{padding:38px 24px 40px 46px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.cover-logo{font-weight:1000;font-size:clamp(4.7rem,10vw,9rem);line-height:.68;letter-spacing:-.075em;color:var(--lime);text-transform:lowercase;text-shadow:0 4px 0 rgba(52,14,78,.22)}
+.cover-logo .line2{display:block;color:var(--purple);background:transparent;margin-left:42px}
+.kicker{display:inline-flex;align-self:flex-start;margin-top:31px;padding:7px 11px;border-radius:999px;background:#fff;color:var(--purple-dark);font-weight:900;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}
+h1{font-size:clamp(1.5rem,4vw,2.55rem);line-height:1.05;margin:13px 0 9px;color:#fff;letter-spacing:-.03em}
+.hero p{font-size:1rem;line-height:1.52;color:#f5eafd;max-width:560px;margin:0}
+.hero-visual{position:relative;min-height:470px;display:flex;align-items:flex-end;justify-content:center;padding:32px 26px}
+.hero-photo{width:min(92%,390px);height:440px;border-radius:42% 42% 18px 18px;background:url('https://static.tildacdn.com/tild3861-3962-4565-a265-313566363838/02.jpg') center/cover no-repeat;border:9px solid #fff;box-shadow:0 18px 35px rgba(39,9,57,.33);transform:rotate(-2deg)}
+.doodle{position:absolute;border:4px solid #fff;border-radius:50%;opacity:.94}
+.d1{width:76px;height:76px;left:12px;top:74px}.d2{width:40px;height:40px;right:25px;top:68px;border-color:var(--lime)}
+.d3{width:86px;height:32px;right:8px;bottom:58px;border-radius:50%;transform:rotate(-24deg)}
+.primary,.secondary{border:0;border-radius:13px;padding:13px 18px;font-weight:900;min-height:46px}
+.primary{background:var(--lime);color:var(--purple-dark);box-shadow:0 5px 0 #a8c700}
+.primary:active{transform:translateY(2px);box-shadow:0 3px 0 #a8c700}
+.secondary{background:var(--purple-soft);color:var(--purple-dark)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.hero .badge{background:#fff;color:var(--purple-dark)}
+.card{background:var(--panel);border:2px solid #e2d5e9;border-radius:22px;padding:22px;box-shadow:var(--shadow)}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:14px;padding:16px 18px;background:linear-gradient(100deg,var(--purple) 0 72%,var(--lime) 72%);border-radius:18px;color:#fff}
+.section-head h2{margin:0;font-size:clamp(1.65rem,4vw,2.5rem);letter-spacing:-.03em}.section-head p{margin:0;color:#f1e6f8}.section-head .badge{background:#fff;color:var(--purple-dark)}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.wordcard{border:1px solid var(--line);background:#fff;border-radius:18px;padding:0;overflow:hidden;text-align:left;min-height:148px}
-.wordpic{height:90px;background-size:cover;background-position:center}
-.wordbody{padding:12px}.word{font-weight:850;font-size:1.05rem}.translation{display:none;color:var(--muted);margin-top:5px}.wordcard.open .translation{display:block}
-.quiz-list{display:grid;gap:12px}.q{padding:16px;border:1px solid var(--line);border-radius:16px;background:#fff}.q p{font-weight:750;margin:0 0 10px}
-.options{display:flex;gap:8px;flex-wrap:wrap}.opt{border:1px solid #cfd6d2;background:#fafbfa;border-radius:12px;padding:9px 12px}.opt.correct{background:#e0f1e8;border-color:#8fc5a7}.opt.wrong{background:#f6e1e1;border-color:#d7a1a1}
-.feedback{font-weight:800;margin-top:8px;min-height:20px}
-.match{display:grid;grid-template-columns:1fr 1fr;gap:14px}.stack{display:grid;gap:9px}.matchbtn{padding:12px;border:1px solid var(--line);background:#fff;border-radius:12px;text-align:left}.matchbtn.sel{outline:3px solid rgba(47,143,131,.25);border-color:var(--teal)}.matchbtn.done{opacity:.45;text-decoration:line-through}
-.story{font-size:1.05rem;line-height:1.8;background:linear-gradient(135deg,var(--blue),#fff);padding:20px;border-radius:18px}.blank{display:inline-block;min-width:115px;border-bottom:2px solid var(--teal);padding:0 3px}.inline-select{border:1px solid #b9c6c1;border-radius:8px;padding:4px;background:#fff}
-.timer{font-size:2.2rem;font-weight:900;letter-spacing:-.04em}.speed-word{font-size:clamp(2rem,7vw,4.3rem);font-weight:900;margin:28px 0;text-align:center}.speed-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.badge{display:inline-flex;padding:7px 10px;border-radius:999px;background:var(--sand);font-weight:800}
-.exitbox{display:grid;gap:12px}.exitrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.exitrow input{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px}
-.result{padding:18px;border-radius:18px;background:var(--teal2);font-size:1.15rem;font-weight:800}
+.wordcard{border:2px solid #dfd3e6;background:#fff;border-radius:18px;padding:0;overflow:hidden;text-align:left;min-height:148px;box-shadow:0 7px 18px rgba(67,28,92,.09)}
+.wordcard.open{outline:4px solid var(--lime)}
+.wordpic{height:90px;background-size:cover;background-position:center}.wordbody{padding:12px}.word{font-weight:1000;font-size:1.05rem;color:var(--purple-dark)}
+.translation{display:none;color:var(--muted);margin-top:5px}.wordcard.open .translation{display:block}
+.quiz-list{display:grid;gap:12px}.q{padding:16px;border:2px solid #e3d8e9;border-left:8px solid var(--purple);border-radius:16px;background:#fff}.q p{font-weight:850;margin:0 0 10px}
+.options{display:flex;gap:8px;flex-wrap:wrap}.opt{border:2px solid #d8cce0;background:#fbf9fc;border-radius:12px;padding:9px 12px;font-weight:800}.opt:hover{border-color:var(--purple)}
+.opt.correct{background:#e1f5e8;border-color:#65aa7d}.opt.wrong{background:#fae3e7;border-color:#d18794}
+.feedback{font-weight:900;margin-top:8px;min-height:20px}.match{display:grid;grid-template-columns:1fr 1fr;gap:14px}.stack{display:grid;gap:9px}
+.matchbtn{padding:12px;border:2px solid #ddd0e4;background:#fff;border-radius:12px;text-align:left;font-weight:750}.matchbtn.sel{outline:4px solid rgba(216,255,0,.72);border-color:var(--purple)}.matchbtn.done{opacity:.5;text-decoration:line-through}
+.story{font-size:1.05rem;line-height:1.8;background:linear-gradient(135deg,#efe1f7 0 70%,#f1ffab 70%);padding:20px;border-radius:18px;border-left:8px solid var(--purple)}
+.timer{font-size:2.4rem;font-weight:1000;color:var(--purple-dark);letter-spacing:-.04em}.speed-word{font-size:clamp(2rem,7vw,4.3rem);font-weight:1000;margin:28px 0;text-align:center;color:var(--purple)}
+.speed-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.badge{display:inline-flex;padding:7px 10px;border-radius:999px;background:var(--lime-soft);font-weight:900;color:var(--purple-dark)}
+.exitbox{display:grid;gap:12px}.exitrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.exitrow input{width:100%;padding:12px;border:2px solid #ddd0e4;border-radius:12px}
+.result{padding:18px;border-radius:18px;background:linear-gradient(90deg,var(--purple-soft),var(--lime-soft));font-size:1.15rem;font-weight:900}
 .footerline{color:var(--muted);font-size:.88rem;margin-top:18px}
-@media(max-width:860px){.shell{grid-template-columns:1fr}.sidebar{position:static;display:flex;overflow:auto;gap:4px}.navbtn{width:auto;white-space:nowrap}.hero{grid-template-columns:1fr}.hero-photo{min-height:260px;order:-1}.hero-copy{padding:30px 24px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.shell{padding:10px}.grid{grid-template-columns:1fr}.match{grid-template-columns:1fr}.topbar-inner{padding:8px 10px}.brand{font-size:.86rem}.score{font-size:.86rem}.card{padding:16px}.hero{min-height:0}}
+@media(max-width:860px){.shell{grid-template-columns:1fr}.sidebar{position:static;display:flex;overflow:auto;gap:4px}.navbtn{width:auto;white-space:nowrap}.hero-grid{grid-template-columns:1fr}.hero-visual{min-height:310px;order:-1;padding:26px}.hero-photo{height:300px;width:min(78%,350px)}.hero-copy{padding:26px}.cover-logo{font-size:clamp(4.2rem,18vw,7rem)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.shell{padding:10px}.grid{grid-template-columns:1fr}.match{grid-template-columns:1fr}.topbar-inner{padding:8px 10px}.brand{font-size:.8rem}.score{font-size:.82rem}.card{padding:16px}.hero{min-height:0}.hero-grid{min-height:0}.hero::before{top:108px;height:115px}.section-head{align-items:flex-start;flex-direction:column;background:var(--purple)}}
 </style>
 </head>
 <body>
@@ -81,16 +91,22 @@ h1{font-size:clamp(2.2rem,5vw,4.8rem);line-height:.98;margin:18px 0 18px;letter-
     <main>
       <section id="home" class="screen active">
         <div class="hero">
-          <div class="hero-copy">
-            <span class="kicker">UNIT 1 · WHO WE ARE</span>
-            <h1>Style Mission</h1>
-            <p>Lesson 1 focuses on clothes and accessories. Learn the core words, notice how we describe what people wear, read a short teen-style text and finish with a 45-second challenge.</p>
-            <div class="actions">
-              <button class="primary" data-go="vocab">Start lesson</button>
-              <span class="badge">A2 · 45–60 min</span>
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <div class="cover-logo">go<span class="line2">getter</span></div>
+              <span class="kicker">UNIT 1 · WHO WE ARE</span>
+              <h1>Grade 6 · Interactive English</h1>
+              <p>Lesson 1: clothes, accessories and style. Learn the words, describe what people wear, read, play and finish the challenge.</p>
+              <div class="actions">
+                <button class="primary" data-go="vocab">START LESSON</button>
+                <span class="badge">A2 · 45–60 min</span>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <span class="doodle d1"></span><span class="doodle d2"></span><span class="doodle d3"></span>
+              <div class="hero-photo" role="img" aria-label="Teenagers studying English"></div>
             </div>
           </div>
-          <div class="hero-photo" role="img" aria-label="Teenagers studying English in a classroom"></div>
         </div>
       </section>
 
