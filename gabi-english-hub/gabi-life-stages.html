@@ -657,7 +657,7 @@ draw();loadFmAudio();
   }
   const teenAudio=document.getElementById('teenAudio');if(teenAudio){const status=document.getElementById('teenAudioStatus');teenAudio.addEventListener('canplay',()=>{if(status)status.textContent='Audio ready · press Play.'});teenAudio.addEventListener('error',()=>{if(status)status.textContent='Audio could not load. Refresh the lesson page.'});}
   function selectLesson(value){
-    if(String(value)==='3' && new URLSearchParams(location.search).get('legacy')!=='1'){location.href='lesson3.html?v=20261001-guided-v6';return;}
+    if(String(value)==='3' && new URLSearchParams(location.search).get('legacy')!=='1'){location.href='lesson3.html?v=20261001-review-v11';return;}
 
     const lesson=Object.hasOwn(starts,value)?String(value):'1';
     picker.value=lesson;
