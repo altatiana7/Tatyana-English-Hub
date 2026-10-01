@@ -50,6 +50,26 @@ const lesson5=[
 ['It took a lot of ___ to admit he was wrong.','courage'],
 ['Sometimes people ___ family expectations when deciding what to do with their lives.','struggle with']
 ]}];
+const lesson5wf=[
+['We had a small ___ about the rules. (ARGUE)','argument'],
+['Music gives her a lot of ___. (ENJOY)','enjoyment'],
+['There is a clear ___ in his English. (IMPROVE)','improvement'],
+['Practice is important for skill ___. (DEVELOP)','development'],
+['The public comment caused her ___. (EMBARRASS)','embarrassment'],
+['Winning the competition was a great ___. (ACHIEVE)','achievement'],
+['Can you give me an ___ for this choice? (EXPLAIN)','explanation'],
+['We need a ___ to this problem. (SOLVE)','solution'],
+['There is a strong ___ between the two ideas. (CONNECT)','connection'],
+['Ask for ___ before posting the photo. (PERMIT)','permission'],
+['It was a difficult ___ to make. (DECIDE)','decision'],
+['Clear ___ helps families understand each other. (COMMUNICATE)','communication'],
+['Speaking practice can build your ___. (CONFIDENT)','confidence'],
+['Teenagers often want more ___. (INDEPENDENT)','independence'],
+['One important ___ is their age. (DIFFERENT)','difference'],
+['People go through many changes during ___. (ADOLESCENT)','adolescence'],
+['This task requires creativity and ___. (INTELLIGENT)','intelligence'],
+['Learning a new skill takes time and ___. (PATIENT)','patience']
+];
 
 const ALPH='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 function b64bytes(s){const bin=atob(s);return Uint8Array.from(bin,c=>c.charCodeAt(0))}function b64urlText(s){s=s.trim().replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const bin=atob(s);return new TextDecoder().decode(Uint8Array.from(bin,c=>c.charCodeAt(0)))}async function decryptKey(pin){const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(pin),'PBKDF2',false,['deriveKey']);const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64bytes(encrypted.salt),iterations:150000,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['decrypt']);const plain=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64bytes(encrypted.iv)},key,b64bytes(encrypted.ct));return JSON.parse(new TextDecoder().decode(plain))}function norm(s){return(s||'').trim().toLowerCase().replace(/’/g,"'")}function shown(v){return v==='zero'||v==='—'?'—':(v||'—')}function rowHTML(no,prompt,given,correct,ok){return `<div class="row ${ok?'correct':'wrong'}"><div><b>${no}</b></div><div class="prompt">${prompt}</div><div class="answer">${shown(given)}</div><div class="answer">${shown(correct)}</div><div class="result ${ok?'ok':'no'}">${ok?'✓':'✕'}</div></div>`}function head(){return '<div class="row head"><div>#</div><div>Item</div><div>Student</div><div>Correct</div><div>Result</div></div>'}function section(title,rows){return `<h2 class="section-title">${title}</h2><div class="rows">${rows}</div>`}function stat(score,label){return `<div class="stat"><b>${score}</b><span>${label}</span></div>`}function scoreRows(vals,keys,prompts){let score=0,html=head();vals.forEach((v,i)=>{const ok=norm(v)===norm(keys[i]);if(ok)score++;html+=rowHTML(i+1,prompts[i],v,keys[i],ok)});return{score,html}}
@@ -59,8 +79,8 @@ function renderRepairArrays(vv,ww,aa,mm){const v=scoreRows(vv,repair.vKey,repair
 function renderLesson3(p){if(!Array.isArray(p.art)||p.art.length!==25)throw new Error('Lesson 3 code is incomplete.');const a=scoreRows(p.art,lesson3.key,lesson3.prompts);document.getElementById('summary').innerHTML=stat(a.score+'/25','TOTAL')+stat(a.score+'/25','ARTICLES');document.getElementById('sections').innerHTML=section('Articles · My First Music Festival',a.html);document.getElementById('meta').innerHTML='<b>Module 1 · Lesson 3 · Homework</b>'}
 
 function renderLesson5(p){
-  if(!Array.isArray(p.answers)||p.answers.length!==3)throw new Error('Lesson 5 code is incomplete.');
-  let total=0,sections='',stats='';
+  if(!Array.isArray(p.answers)||(p.answers.length!==3&&p.answers.length!==4))throw new Error('Lesson 5 code is incomplete.');
+  let total=0,sections='',stats='',max=36;
   lesson5.forEach((block,ti)=>{
     const vals=p.answers[ti];
     if(!Array.isArray(vals)||vals.length!==block.items.length)throw new Error('Lesson 5 code is incomplete.');
@@ -73,7 +93,20 @@ function renderLesson5(p){
     stats+=stat(score+'/12',block.title.toUpperCase());
     sections+=section(block.title,html);
   });
-  document.getElementById('summary').innerHTML=stat(total+'/36','TOTAL')+stats;
+  if(p.answers.length===4){
+    const vals=p.answers[3];
+    if(!Array.isArray(vals)||vals.length!==lesson5wf.length)throw new Error('Lesson 5 Word Formation code is incomplete.');
+    let score=0,html=head();
+    vals.forEach((v,i)=>{
+      const correct=lesson5wf[i][1],ok=norm(v)===norm(correct);
+      if(ok){score++;total++}
+      html+=rowHTML(i+1,lesson5wf[i][0],v,correct,ok);
+    });
+    max=54;
+    stats+=stat(score+'/18','WORD FORMATION');
+    sections+=section('Word Formation',html);
+  }
+  document.getElementById('summary').innerHTML=stat(total+'/'+max,'TOTAL')+stats;
   document.getElementById('sections').innerHTML=sections;
   document.getElementById('meta').innerHTML='<b>Module 1 · Lesson 5 · Homework</b>';
 }
