@@ -25,6 +25,9 @@
 <div class="meta"><span id="count"></span><span>Click the card to flip</span></div><div class="controls"><button id="prev">← Back</button><button id="flip" class="primary">Flip card</button><button id="next">Next →</button><button id="shuffle">Shuffle</button></div></div>
 <aside class="list"><h3 id="listTitle">Words</h3><div id="wordList"></div></aside></div></main></div>
 <script>
+function pickBritishVoice(){const voices=window.speechSynthesis?window.speechSynthesis.getVoices():[];const preferred=[/Sonia.*Natural/i,/Ryan.*Natural/i,/Libby.*Natural/i,/Mia.*Natural/i,/George.*Natural/i,/Daniel/i,/Google UK English Female/i,/Google UK English Male/i];for(const p of preferred){const v=voices.find(x=>p.test(x.name)&&/^en-GB/i.test(x.lang||''));if(v)return v}return voices.find(x=>/^en-GB/i.test(x.lang||''))||voices.find(x=>/^en/i.test(x.lang||''))||null}
+if('speechSynthesis'in window){window.speechSynthesis.getVoices();window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices()}
+
 const decks={
 active:[
 ['talent','талант','talented · a talented athlete'],
@@ -72,7 +75,7 @@ let deckName='active',cards=[...decks.active],i=0,flipped=false;
 const card=document.getElementById('card'),frontWord=document.getElementById('frontWord'),translation=document.getElementById('translation'),example=document.getElementById('example'),listen=document.getElementById('listen'),count=document.getElementById('count'),wordList=document.getElementById('wordList');
 function renderList(){wordList.innerHTML=cards.map((x,n)=>'<div class="wordItem '+(n===i?'active':'')+'" data-i="'+n+'">'+(n+1)+'. '+x[0]+'</div>').join('')}
 function render(){const c=cards[i];frontWord.textContent=c[0];translation.textContent=c[1];example.textContent=c[2];count.textContent=(i+1)+' / '+cards.length;card.classList.toggle('flipped',flipped);listen.style.visibility=flipped?'hidden':'visible';renderList()}
-function speak(){if(flipped||!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(cards[i][0]);u.lang='en-GB';u.rate=.88;window.speechSynthesis.speak(u)}
+function speak(){if(flipped||!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(cards[i][0]);u.lang='en-GB';const v=pickBritishVoice();if(v)u.voice=v;u.rate=.84;u.pitch=.98;u.volume=1;window.speechSynthesis.speak(u)}
 function flip(){flipped=!flipped;render()}
 card.onclick=e=>{if(e.target===listen)return;flip()};listen.onclick=e=>{e.stopPropagation();speak()};document.getElementById('flip').onclick=flip;
 document.getElementById('prev').onclick=()=>{i=(i-1+cards.length)%cards.length;flipped=false;render()};document.getElementById('next').onclick=()=>{i=(i+1)%cards.length;flipped=false;render()};
