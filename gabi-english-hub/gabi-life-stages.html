@@ -459,7 +459,7 @@ document.querySelectorAll('#famousChoices button').forEach(b=>b.onclick=()=>{if(
 function nextFamous(){if(famousIndex<famousItems.length-1){famousIndex++;renderFamous()}else{famousFeedback.textContent='Finished · '+famousPoints+' / '+famousItems.length;famousCorrection.textContent='Now move on to Life Stages and compare how childhood, adolescence and adulthood shaped these lives.'}}
 function prevFamous(){if(famousIndex>0){famousIndex--;renderFamous()}}
 function restartFamous(){buildFamous()}
-buildFamous();const order=['warm','age','puzzle','read','habits','stative','textbook','listen','use'],sel=document.getElementById('sel');function go(id){document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));document.getElementById(id).classList.add('on');sel.value=id;scrollTo(0,0)}sel.onchange=()=>go(sel.value);function step(d){let i=order.indexOf(sel.value);go(order[Math.max(0,Math.min(order.length-1,i+d))])}const ageQuiz=[
+buildFamous();const order=['warm','age','puzzle','read','habits','stative','textbook','listen','use'],sel=document.getElementById('sel');function go(id){if(!order.includes(id))return;document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));document.getElementById(id).classList.add('on');sel.value=id;scrollTo(0,0)}sel.onchange=()=>go(sel.value);function step(d){let i=order.indexOf(sel.value);go(order[Math.max(0,Math.min(order.length-1,i+d))])}const ageQuiz=[
 {q:"Which stage normally comes immediately after childhood?",a:["infancy","adolescence","middle age","retirement"],r:1,e:"Adolescence is the transition from childhood towards adulthood."},
 {q:"A 17-year-old starts making more decisions without parents. Which idea fits best?",a:["dependence","independence","retirement","infancy"],r:1,e:"Growing independence is a typical feature of adolescence."},
 {q:"Someone leaves full-time work at 66 but starts travelling and learning Italian. Which stage is this?",a:["early childhood","adolescence","retirement","young adulthood"],r:2,e:"Retirement is a life stage, but it does not mean learning or adventure stops."},
@@ -583,11 +583,33 @@ draw();loadFmAudio();
 (()=>{
   const starts={1:'warm',2:'read',3:'textbook'};
   const picker=document.getElementById('lessonSelect');
+  const allSections=order.filter(id=>id!=='puzzle');
+  const sectionOptions=Array.from(sel.options).filter(option=>option.value!=='puzzle').map(option=>({
+    id:option.value,
+    label:option.textContent.replace(/^\d+\.\s*/,'')
+  }));
+  const lesson1Excluded=new Set(['read','listen','use']);
+  function configureSections(lesson){
+    const visible=allSections.filter(id=>lesson!=='1'||!lesson1Excluded.has(id));
+    order.splice(0,order.length,...visible);
+    sel.replaceChildren(...sectionOptions.filter(option=>visible.includes(option.id)).map((option,index)=>{
+      const node=document.createElement('option');
+      node.value=option.id;
+      node.textContent=(index+1)+'. '+option.label;
+      return node;
+    }));
+    document.querySelectorAll('.page').forEach(page=>{
+      page.hidden=!visible.includes(page.id);
+      page.classList.remove('on');
+      if(page.hidden)page.querySelectorAll('audio,video').forEach(media=>media.pause());
+    });
+  }
   function selectLesson(value){
     if(String(value)==='3' && new URLSearchParams(location.search).get('legacy')!=='1'){location.href='lesson3.html?v=20260928-lesson3-final5';return;}
 
     const lesson=Object.hasOwn(starts,value)?String(value):'1';
     picker.value=lesson;
+    configureSections(lesson);
     go(starts[lesson]);
   }
   picker.addEventListener('change',()=>{
