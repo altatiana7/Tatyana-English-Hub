@@ -20,7 +20,7 @@
 </style></head><body>
 <div class="app"><aside class="side"><div class="brand"><div class="mark">E</div><div><b>English Hub</b><small>Gabi · Vocabulary</small></div></div><div class="navtitle">HOMEWORK</div><a href="index.html">← Homework Hub</a><a class="active" href="vocabulary.html">Vocabulary</a><div class="note">Cards from lessons are collected here for revision.</div></aside>
 <main class="main"><section class="hero"><small>GABI · VOCABULARY</small><h1>Quizlet-style cards</h1><p>Lesson vocabulary. Audio is available only on the front of each card.</p></section>
-<div class="deckTabs"><button class="active" data-deck="active">Active vocabulary · 16</button><button data-deck="warmup">Warm-up vocabulary · 22</button></div>
+<div class="deckTabs"><button class="active" data-deck="active">Active vocabulary · 16</button><button data-deck="warmup">Warm-up vocabulary · 12</button></div>
 <div class="workspace"><div><div class="cardStage"><div id="card" class="flashcard"><div class="inner"><div class="face"><div id="frontWord" class="frontWord"></div><button id="listen" class="listen">Listen</button><div class="hint">Say the meaning, then flip.</div></div><div class="face back"><div id="translation" class="translation"></div><div id="example" class="example"></div><div class="hint">No audio on the back.</div></div></div></div></div>
 <div class="meta"><span id="count"></span><span>Click the card to flip</span></div><div class="controls"><button id="prev">← Back</button><button id="flip" class="primary">Flip card</button><button id="next">Next →</button><button id="shuffle">Shuffle</button></div></div>
 <aside class="list"><h3 id="listTitle">Words</h3><div id="wordList"></div></aside></div></main></div>
@@ -48,28 +48,18 @@ active:[
 ['specimen','образец для изучения','collect specimens']
 ],
 warmup:[
-['counterfeiter','фальшивомонетчик','Newton investigated people who made fake coins.'],
-['Royal Mint','Королевский монетный двор','Newton worked at the Royal Mint.'],
-['investigate','расследовать','Police investigate crimes.'],
-['agreement','соглашение','Messi’s early Barcelona agreement was written on a napkin.'],
-['napkin','салфетка','The agreement was written on a paper napkin.'],
-['dedicate','посвящать','Beethoven first planned to dedicate the symphony to Napoleon.'],
-['emperor','император','Napoleon declared himself emperor.'],
-['homeland','родина','Curie named polonium after her homeland, Poland.'],
-['element','химический элемент','Curie discovered new elements.'],
-['alternating current','переменный ток','Tesla worked with alternating current.'],
-['wireless transmission','беспроводная передача','Tesla experimented with wireless transmission.'],
-['co-write','писать в соавторстве','Michael Jackson co-wrote We Are the World.'],
-['universal machine','универсальная машина','It became an important idea in computing.'],
-['heliocentric','гелиоцентрический','Copernicus proposed a heliocentric model.'],
-['Olympic champion','олимпийский чемпион','Ovechkin’s mother was an Olympic champion.'],
-['technical college','технический колледж','Khabensky studied at a technical college.'],
-['frequency-hopping','скачкообразная смена частоты','Hedy Lamarr helped develop this idea.'],
-['novelist','романист','Agatha Christie was a famous novelist.'],
-['presidency','президентство','Einstein was offered the presidency of Israel.'],
-['calligraphy','каллиграфия','Steve Jobs studied calligraphy.'],
-['typography','типографика','Calligraphy influenced Macintosh typography.'],
-['decline','отказаться','Einstein declined the offer.']
+['counterfeiter','фальшивомонетчик','Newton investigated a counterfeiter.'],
+['investigate','расследовать','Police investigate crimes and unusual events.'],
+['agreement','соглашение','They finally reached an agreement.'],
+['dedicate','посвящать','The composer dedicated the work to someone he admired.'],
+['homeland','родина','She was proud of her homeland.'],
+['element','химический элемент','Scientists discovered a new element.'],
+['co-write','писать в соавторстве','Two musicians can co-write a song.'],
+['Olympic champion','олимпийский чемпион','Her mother was an Olympic champion.'],
+['technical college','технический колледж','He studied at a technical college before changing careers.'],
+['novelist','писатель-романист','A novelist writes novels.'],
+['calligraphy','каллиграфия','He became interested in calligraphy at college.'],
+['decline','отказаться','He declined the offer politely.']
 ]};
 let deckName='active',cards=[...decks.active],i=0,flipped=false;
 const card=document.getElementById('card'),frontWord=document.getElementById('frontWord'),translation=document.getElementById('translation'),example=document.getElementById('example'),listen=document.getElementById('listen'),count=document.getElementById('count'),wordList=document.getElementById('wordList');
