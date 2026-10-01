@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Go Getter 4 · Grade 6 · Lesson 1</title>
+<style>
+:root{
+  --bg:#f5f1e8;--panel:#ffffff;--ink:#18303f;--muted:#66727a;--line:#d8ddd9;
+  --teal:#2f8f83;--teal2:#dff1ec;--sand:#f3e2bf;--blue:#dceaf4;--rose:#f1d8d0;
+  --ok:#2e7d55;--bad:#a94747;--shadow:0 10px 26px rgba(35,55,65,.10)
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+button,input{font:inherit}
+button{cursor:pointer}
+.app{min-height:100vh}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(245,241,232,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(24,48,63,.08)}
+.topbar-inner{max-width:1180px;margin:auto;padding:10px 18px;display:flex;align-items:center;gap:12px}
+.brand{font-weight:800;letter-spacing:.02em;white-space:nowrap}
+.progress-wrap{flex:1;height:8px;background:#e3e2dc;border-radius:99px;overflow:hidden}
+.progress{height:100%;width:0;background:var(--teal);transition:.25s}
+.score{font-weight:800;min-width:74px;text-align:right}
+.shell{max-width:1180px;margin:auto;display:grid;grid-template-columns:210px minmax(0,1fr);gap:18px;padding:18px}
+.sidebar{position:sticky;top:64px;align-self:start;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:12px;box-shadow:var(--shadow)}
+.navbtn{width:100%;border:0;background:transparent;color:var(--ink);text-align:left;padding:12px 11px;border-radius:12px;margin:3px 0;font-weight:700}
+.navbtn.active,.navbtn:hover{background:var(--teal2);color:#145f58}
+main{min-width:0}
+.screen{display:none;animation:fade .24s ease}.screen.active{display:block}
+@keyframes fade{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;min-height:520px;background:var(--panel);border-radius:28px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow)}
+.hero-copy{padding:48px 44px;display:flex;flex-direction:column;justify-content:center}
+.kicker{display:inline-flex;align-self:flex-start;padding:7px 11px;border-radius:999px;background:var(--teal2);color:#145f58;font-weight:800;font-size:.85rem}
+h1{font-size:clamp(2.2rem,5vw,4.8rem);line-height:.98;margin:18px 0 18px;letter-spacing:-.04em}
+.hero p{font-size:1.1rem;line-height:1.6;color:var(--muted);max-width:580px}
+.hero-photo{min-height:430px;background:url('https://static.tildacdn.com/tild3861-3962-4565-a265-313566363838/02.jpg') center/cover no-repeat}
+.primary,.secondary{border:0;border-radius:14px;padding:13px 18px;font-weight:800;min-height:46px}
+.primary{background:var(--teal);color:#fff}.secondary{background:#edf0ef;color:var(--ink)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:var(--shadow)}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:14px}
+.section-head h2{margin:0;font-size:clamp(1.65rem,4vw,2.5rem);letter-spacing:-.03em}
+.section-head p{margin:0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.wordcard{border:1px solid var(--line);background:#fff;border-radius:18px;padding:0;overflow:hidden;text-align:left;min-height:148px}
+.wordpic{height:90px;background-size:cover;background-position:center}
+.wordbody{padding:12px}.word{font-weight:850;font-size:1.05rem}.translation{display:none;color:var(--muted);margin-top:5px}.wordcard.open .translation{display:block}
+.quiz-list{display:grid;gap:12px}.q{padding:16px;border:1px solid var(--line);border-radius:16px;background:#fff}.q p{font-weight:750;margin:0 0 10px}
+.options{display:flex;gap:8px;flex-wrap:wrap}.opt{border:1px solid #cfd6d2;background:#fafbfa;border-radius:12px;padding:9px 12px}.opt.correct{background:#e0f1e8;border-color:#8fc5a7}.opt.wrong{background:#f6e1e1;border-color:#d7a1a1}
+.feedback{font-weight:800;margin-top:8px;min-height:20px}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:14px}.stack{display:grid;gap:9px}.matchbtn{padding:12px;border:1px solid var(--line);background:#fff;border-radius:12px;text-align:left}.matchbtn.sel{outline:3px solid rgba(47,143,131,.25);border-color:var(--teal)}.matchbtn.done{opacity:.45;text-decoration:line-through}
+.story{font-size:1.05rem;line-height:1.8;background:linear-gradient(135deg,var(--blue),#fff);padding:20px;border-radius:18px}.blank{display:inline-block;min-width:115px;border-bottom:2px solid var(--teal);padding:0 3px}.inline-select{border:1px solid #b9c6c1;border-radius:8px;padding:4px;background:#fff}
+.timer{font-size:2.2rem;font-weight:900;letter-spacing:-.04em}.speed-word{font-size:clamp(2rem,7vw,4.3rem);font-weight:900;margin:28px 0;text-align:center}.speed-controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.badge{display:inline-flex;padding:7px 10px;border-radius:999px;background:var(--sand);font-weight:800}
+.exitbox{display:grid;gap:12px}.exitrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}.exitrow input{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px}
+.result{padding:18px;border-radius:18px;background:var(--teal2);font-size:1.15rem;font-weight:800}
+.footerline{color:var(--muted);font-size:.88rem;margin-top:18px}
+@media(max-width:860px){.shell{grid-template-columns:1fr}.sidebar{position:static;display:flex;overflow:auto;gap:4px}.navbtn{width:auto;white-space:nowrap}.hero{grid-template-columns:1fr}.hero-photo{min-height:260px;order:-1}.hero-copy{padding:30px 24px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.shell{padding:10px}.grid{grid-template-columns:1fr}.match{grid-template-columns:1fr}.topbar-inner{padding:8px 10px}.brand{font-size:.86rem}.score{font-size:.86rem}.card{padding:16px}.hero{min-height:0}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">GO GETTER 4 · GRADE 6</div>
+      <div class="progress-wrap" aria-label="Lesson progress"><div id="progress" class="progress"></div></div>
+      <div id="score" class="score">0 pts</div>
+    </div>
+  </div>
+
+  <div class="shell">
+    <aside class="sidebar" aria-label="Lesson navigation">
+      <button class="navbtn active" data-go="home">Start</button>
+      <button class="navbtn" data-go="vocab">1 Vocabulary</button>
+      <button class="navbtn" data-go="grammar">2 Grammar</button>
+      <button class="navbtn" data-go="reading">3 Reading</button>
+      <button class="navbtn" data-go="speed">4 Speed game</button>
+      <button class="navbtn" data-go="exit">5 Exit challenge</button>
+    </aside>
+
+    <main>
+      <section id="home" class="screen active">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="kicker">UNIT 1 · WHO WE ARE</span>
+            <h1>Style Mission</h1>
+            <p>Lesson 1 focuses on clothes and accessories. Learn the core words, notice how we describe what people wear, read a short teen-style text and finish with a 45-second challenge.</p>
+            <div class="actions">
+              <button class="primary" data-go="vocab">Start lesson</button>
+              <span class="badge">A2 · 45–60 min</span>
+            </div>
+          </div>
+          <div class="hero-photo" role="img" aria-label="Teenagers studying English in a classroom"></div>
+        </div>
+      </section>
+
+      <section id="vocab" class="screen">
+        <div class="section-head"><div><h2>1. Vocabulary Lab</h2><p>Tap each card to reveal Russian support.</p></div><span class="badge">12 words</span></div>
+        <div id="wordgrid" class="grid"></div>
+        <div class="actions"><button class="primary" data-go="grammar">Next: Grammar</button></div>
+      </section>
+
+      <section id="grammar" class="screen">
+        <div class="section-head"><div><h2>2. Describe the look</h2><p>Choose the best option. Focus on <b>is wearing / has got / looks</b>.</p></div><span class="badge">8 questions</span></div>
+        <div class="card"><div id="grammarQuiz" class="quiz-list"></div></div>
+        <div class="actions"><button class="primary" data-go="reading">Next: Reading</button></div>
+      </section>
+
+      <section id="reading" class="screen">
+        <div class="section-head"><div><h2>3. Reading Detective</h2><p>Read once for gist, then match the details.</p></div><span class="badge">Teen style</span></div>
+        <div class="card">
+          <div class="story">
+            Mia is twelve and she likes comfortable clothes. On school days she usually wears jeans, a plain T-shirt and trainers. Her favourite hoodie is dark green. She also wears a small bracelet that her best friend gave her. At weekends Mia sometimes chooses a checked shirt and baggy trousers. She does not like formal clothes, but she has a smart blue dress for family celebrations. Mia says clothes should show your personality, but they should also feel comfortable.
+          </div>
+          <h3>Match the sentence halves.</h3>
+          <div class="match">
+            <div id="leftMatch" class="stack"></div>
+            <div id="rightMatch" class="stack"></div>
+          </div>
+          <div id="matchFeedback" class="feedback" aria-live="polite"></div>
+        </div>
+        <div class="actions"><button class="primary" data-go="speed">Next: Speed game</button></div>
+      </section>
+
+      <section id="speed" class="screen">
+        <div class="section-head"><div><h2>4. 45-second Speed Game</h2><p>Say the Russian meaning or make a short English phrase before you reveal the answer.</p></div><span class="badge">Fast recall</span></div>
+        <div class="card" style="text-align:center">
+          <div id="timer" class="timer">45</div>
+          <div id="speedWord" class="speed-word">hoodie</div>
+          <div id="speedAnswer" class="feedback"></div>
+          <div class="speed-controls">
+            <button id="startTimer" class="primary">Start</button>
+            <button id="revealSpeed" class="secondary">Reveal</button>
+            <button id="nextSpeed" class="secondary">Next word</button>
+          </div>
+        </div>
+        <div class="actions"><button class="primary" data-go="exit">Next: Exit challenge</button></div>
+      </section>
+
+      <section id="exit" class="screen">
+        <div class="section-head"><div><h2>5. Exit Challenge</h2><p>Type one word in each gap.</p></div><span class="badge">Final check</span></div>
+        <div class="card exitbox">
+          <div class="exitrow"><label>1. You wear this around your waist.</label><input data-answer="belt" placeholder="word"></div>
+          <div class="exitrow"><label>2. A top with a hood.</label><input data-answer="hoodie" placeholder="word"></div>
+          <div class="exitrow"><label>3. A pattern with lines.</label><input data-answer="striped" placeholder="word"></div>
+          <div class="exitrow"><label>4. Shoes for sport or everyday casual wear.</label><input data-answer="trainers" placeholder="word"></div>
+          <div class="exitrow"><label>5. Small jewellery worn on the wrist.</label><input data-answer="bracelet" placeholder="word"></div>
+          <div class="actions"><button id="checkExit" class="primary">Check result</button><button id="resetLesson" class="secondary">Restart lesson</button></div>
+          <div id="finalResult" class="result" aria-live="polite">Finish the five gaps to get your result.</div>
+        </div>
+        <div class="footerline">Student page only. Answers appear after interaction; no teacher notes are shown.</div>
+      </section>
+    </main>
+  </div>
+</div>
+<script>
+(()=>{
+  const words=[
+    ['belt','ремень','https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80'],
+    ['earrings','серьги','https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80'],
+    ['dress','платье','https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80'],
+    ['hoodie','толстовка с капюшоном','https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80'],
+    ['trainers','кроссовки','https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80'],
+    ['bracelet','браслет','https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=800&q=80'],
+    ['checked','в клетку','https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=800&q=80'],
+    ['striped','в полоску','https://images.unsplash.com/photo-1571945153237-4929e783af4a?auto=format&fit=crop&w=800&q=80'],
+    ['plain','однотонный','https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80'],
+    ['baggy','мешковатый, свободный','https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80'],
+    ['tight','обтягивающий','https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=800&q=80'],
+    ['scarf','шарф','https://images.unsplash.com/photo-1609803384069-19f3e5a70e75?auto=format&fit=crop&w=800&q=80']
+  ];
+  const root=document;
+  const wordgrid=root.getElementById('wordgrid');
+  words.forEach(([w,r,img])=>{
+    const b=document.createElement('button');b.type='button';b.className='wordcard';
+    b.innerHTML='<div class="wordpic" style="background-image:url(\''+img+'\')"></div><div class="wordbody"><div class="word">'+w+'</div><div class="translation">'+r+'</div></div>';
+    b.addEventListener('click',()=>b.classList.toggle('open'));wordgrid.appendChild(b);
+  });
+
+  let score=0;const scoreEl=root.getElementById('score');
+  const addScore=n=>{score+=n;scoreEl.textContent=score+' pts'};
+
+  const grammar=[
+    ['Look at Anna. She ___ a striped T-shirt.',['is wearing','has got','wear'],0],
+    ['Ben ___ short dark hair.',['is wearing','has got','looks'],1],
+    ['That hoodie ___ really comfortable.',['wears','looks','has got'],1],
+    ['My sister usually ___ trainers to school.',['wears','is wearing','has got'],0],
+    ['Today I ___ my new checked shirt.',['wear','am wearing','looks'],1],
+    ['This bracelet ___ great with your dress.',['looks','is wearing','has got'],0],
+    ['Leo ___ a blue belt today.',['is wearing','has got hair','look'],0],
+    ['Her trousers are loose, not ___.',['striped','tight','plain'],1]
+  ];
+  const qWrap=root.getElementById('grammarQuiz');
+  grammar.forEach((item,i)=>{
+    const box=document.createElement('div');box.className='q';
+    box.innerHTML='<p>'+(i+1)+'. '+item[0]+'</p><div class="options"></div><div class="feedback"></div>';
+    const opts=box.querySelector('.options'),fb=box.querySelector('.feedback');
+    item[1].forEach((o,j)=>{
+      const b=document.createElement('button');b.type='button';b.className='opt';b.textContent=o;
+      b.addEventListener('click',()=>{
+        if(box.dataset.done)return;
+        box.dataset.done='1';
+        [...opts.children].forEach((x,k)=>{x.disabled=true;if(k===item[2])x.classList.add('correct')});
+        if(j===item[2]){b.classList.add('correct');fb.textContent='Correct';addScore(10)}
+        else{b.classList.add('wrong');fb.textContent='Check the highlighted answer'}
+      });opts.appendChild(b);
+    });qWrap.appendChild(box);
+  });
+
+  const left=[
+    ['a','On school days Mia'],
+    ['b','Her favourite hoodie'],
+    ['c','Her bracelet'],
+    ['d','At weekends she sometimes'],
+    ['e','For family celebrations she']
+  ];
+  const right=[
+    ['c','was a gift from her best friend.'],
+    ['e','has a smart blue dress.'],
+    ['b','is dark green.'],
+    ['a','wears jeans, a plain T-shirt and trainers.'],
+    ['d','wears a checked shirt and baggy trousers.']
+  ];
+  let selected=null,matched=0;
+  const l=root.getElementById('leftMatch'),r=root.getElementById('rightMatch'),mfb=root.getElementById('matchFeedback');
+  left.forEach(([id,txt])=>{
+    const b=document.createElement('button');b.type='button';b.className='matchbtn';b.dataset.id=id;b.textContent=txt;
+    b.addEventListener('click',()=>{[...l.children].forEach(x=>x.classList.remove('sel'));b.classList.add('sel');selected=id});l.appendChild(b)
+  });
+  right.forEach(([id,txt])=>{
+    const b=document.createElement('button');b.type='button';b.className='matchbtn';b.dataset.id=id;b.textContent=txt;
+    b.addEventListener('click',()=>{
+      if(!selected){mfb.textContent='Choose a sentence on the left first.';return}
+      const lb=[...l.children].find(x=>x.dataset.id===selected);
+      if(id===selected){b.classList.add('done');lb.classList.add('done');lb.classList.remove('sel');b.disabled=true;lb.disabled=true;matched++;addScore(10);mfb.textContent=matched===5?'All five matches are correct.':'Correct match.';selected=null}
+      else{mfb.textContent='Not this one. Try again.'}
+    });r.appendChild(b)
+  });
+
+  const speed=[...words];let sIndex=3,timerId=null,time=45;
+  const sw=root.getElementById('speedWord'),sa=root.getElementById('speedAnswer'),tm=root.getElementById('timer');
+  function showSpeed(){sw.textContent=speed[sIndex][0];sa.textContent=''}
+  root.getElementById('nextSpeed').addEventListener('click',()=>{sIndex=(sIndex+1)%speed.length;showSpeed()});
+  root.getElementById('revealSpeed').addEventListener('click',()=>sa.textContent=speed[sIndex][1]);
+  root.getElementById('startTimer').addEventListener('click',()=>{
+    clearInterval(timerId);time=45;tm.textContent=time;
+    timerId=setInterval(()=>{time--;tm.textContent=time;if(time<=0){clearInterval(timerId);sa.textContent='Time. Move to the exit challenge.'}},1000)
+  });
+
+  root.getElementById('checkExit').addEventListener('click',()=>{
+    let correct=0;
+    root.querySelectorAll('.exitrow input').forEach(inp=>{
+      const ok=inp.value.trim().toLowerCase()===inp.dataset.answer;
+      inp.style.borderColor=ok?'#65a77d':'#c97c7c';if(ok)correct++;
+    });
+    if(!root.getElementById('exit').dataset.scored){addScore(correct*10);root.getElementById('exit').dataset.scored='1'}
+    root.getElementById('finalResult').textContent='Result: '+correct+'/5 · '+(correct===5?'Excellent recall.':correct>=4?'Very good. Review one word.':'Review the vocabulary cards and try again.');
+  });
+
+  const ids=['home','vocab','grammar','reading','speed','exit'];
+  function go(id){
+    root.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
+    root.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.go===id));
+    const idx=ids.indexOf(id);root.getElementById('progress').style.width=(idx/(ids.length-1)*100)+'%';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  root.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+  root.getElementById('resetLesson').addEventListener('click',()=>location.reload());
+  showSpeed();
+})();
+</script>
+</body>
+</html>
