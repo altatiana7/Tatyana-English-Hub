@@ -111,12 +111,12 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
 
       <div class="scroll">
         <table class="finance-table">
-          <thead><tr><th>Ученик</th><th>План на месяц</th><th>Фактически оплачено</th><th>Осталось</th></tr></thead>
+          <thead><tr><th>Ученик</th><th>План на месяц</th><th>Фактически оплачено</th><th>Цена за 1 занятие</th><th>Осталось</th></tr></thead>
           <tbody id="financeByStudent"></tbody>
         </table>
       </div>
 
-      <div class="notice" style="margin-top:10px">Каждый ученик показывается один раз. План и фактическую оплату вводите прямо в строке ученика. Итоги пересчитываются автоматически и сохраняются в Cloud.</div>
+      <div class="notice" style="margin-top:10px">Каждый ученик показывается один раз. План, фактическую оплату и цену за 1 занятие вводите прямо в строке ученика. Итоги пересчитываются автоматически и сохраняются в Cloud.</div>
     </div>
   </section>
   <section id="attendance" class="panel"><div class="notice">Посещаемость сохраняется в резервной и облачной копии планнера.</div></section>
@@ -254,6 +254,14 @@ function setActual(studentId,value){
   saveLocal();
   renderPayments();
 }
+function setStudentPrice(studentId,value){
+  const st=students.find(x=>String(x.id)===String(studentId));
+  if(!st)return;
+  const v=Math.max(0,money(value));
+  if(v) st.price=v; else delete st.price;
+  saveLocal();
+  renderPayments();
+}
 function canonicalStudentName(v){
   return normalizeName(v).toLowerCase().replace(/ё/g,'е').replace(/[.,;:()]/g,' ')
     .replace(/\b(егэ|огэ)\b/gi,' ')
@@ -387,7 +395,7 @@ function renderPayments(){
       const balance=Math.max(0,plan-paid);
       return {st,plan,paid,balance};
     });
-    byStudent.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x.st.name)+'</b></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(x.plan||'')+'" placeholder="0" onchange="setPlan(\''+esc(x.st.id)+'\',this.value)"></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(x.paid||'')+'" placeholder="0" onchange="setActual(\''+esc(x.st.id)+'\',this.value)"></td><td>'+fmtMoney(x.balance)+'</td></tr>').join('')+'<tr class="total-row"><td>ИТОГО</td><td>'+fmtMoney(planMonth)+'</td><td>'+fmtMoney(paidMonth)+'</td><td>'+fmtMoney(remainMonth)+'</td></tr>';
+    byStudent.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x.st.name)+'</b></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(x.plan||'')+'" placeholder="0" onchange="setPlan(\''+esc(x.st.id)+'\',this.value)"></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(x.paid||'')+'" placeholder="0" onchange="setActual(\''+esc(x.st.id)+'\',this.value)"></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(money(x.st.price)||'')+'" placeholder="0" onchange="setStudentPrice(\''+esc(x.st.id)+'\',this.value)"></td><td>'+fmtMoney(x.balance)+'</td></tr>').join('')+'<tr class="total-row"><td>ИТОГО</td><td>'+fmtMoney(planMonth)+'</td><td>'+fmtMoney(paidMonth)+'</td><td>—</td><td>'+fmtMoney(remainMonth)+'</td></tr>';
   }
 }
 
