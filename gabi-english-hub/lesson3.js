@@ -60,7 +60,7 @@ const famousPeople=[
 
 const warmupQuiz=[
   {
-    question:'Which famous scientist later worked as Master of the Royal Mint and personally investigated counterfeiters?',
+    question:'Which famous scientist later worked as Master of the Royal Mint and personally investigated counterfeiter?',
     options:['Isaac Newton','Nikola Tesla','Charles Darwin','Alan Turing'],
     answer:'Isaac Newton',
     fact:'Newton became Warden and later Master of the Royal Mint. He took the job seriously and investigated counterfeiting cases.'
