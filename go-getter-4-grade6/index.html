@@ -79,6 +79,14 @@ h1{font-size:clamp(1.5rem,4vw,2.55rem);line-height:1.05;margin:13px 0 9px;color:
 @media(max-width:860px){.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.module-columns{grid-template-columns:1fr}}
 @media(max-width:520px){.module-grid{grid-template-columns:1fr}}
 
+
+.cover-stage{background:var(--purple-dark);border-radius:28px;overflow:hidden;box-shadow:var(--shadow);border:4px solid var(--purple-dark)}
+.course-cover{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;background:var(--purple-dark)}
+.cover-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:15px 18px 18px;background:linear-gradient(90deg,var(--purple-dark),var(--purple))}
+.cover-actions .primary{min-width:170px}.cover-secondary{background:#fff;color:var(--purple-dark)}.cover-badge{background:var(--lime);color:var(--purple-dark)}
+.cover-loading{width:100%;aspect-ratio:16/9;display:grid;place-items:center;background:linear-gradient(135deg,var(--purple-dark),var(--purple));color:var(--lime);font-weight:900;letter-spacing:.04em}
+@media(max-width:520px){.cover-stage{border-radius:18px;border-width:2px}.cover-actions{padding:11px 12px 14px}.cover-actions .primary,.cover-actions .secondary{flex:1 1 135px}.cover-badge{width:100%;justify-content:center}}
+
 </style>
 </head>
 <body>
@@ -104,27 +112,16 @@ h1{font-size:clamp(1.5rem,4vw,2.55rem);line-height:1.05;margin:13px 0 9px;color:
 
     <main>
       <section id="home" class="screen active">
-        <div class="hero">
-          <div class="hero-grid">
-            <div class="hero-copy">
-              <div class="cover-logo">go<span class="line2">getter</span></div>
-              <span class="kicker">UNIT 1 · WHO WE ARE</span>
-              <h1>Grade 6 · Interactive English</h1>
-              <p>Lesson 1: clothes, accessories and style. Learn the words, describe what people wear, read, play and finish the challenge.</p>
-              <div class="actions">
-                <button class="primary" data-go="vocab">START LESSON</button>
-                <button class="secondary" data-go="modules">MODULES</button>
-                <span class="badge">A2 · 45–60 min</span>
-              </div>
-            </div>
-            <div class="hero-visual">
-              <span class="doodle d1"></span><span class="doodle d2"></span><span class="doodle d3"></span>
-              <div class="hero-photo" role="img" aria-label="Teenagers studying English"></div>
-            </div>
+        <div class="cover-stage">
+          <div id="coverLoading" class="cover-loading">GO GETTER 4</div>
+          <img id="courseCover" class="course-cover" alt="Go Getter 4 · Interactive ESL Course · Grade 6" hidden>
+          <div class="cover-actions">
+            <button class="primary" data-go="modules">MODULES 0–8</button>
+            <button class="secondary cover-secondary" data-go="vocab">START UNIT 1</button>
+            <span class="badge cover-badge">A2 · GRADE 6</span>
           </div>
         </div>
       </section>
-
 
       <section id="modules" class="screen">
         <div class="section-head">
@@ -392,6 +389,29 @@ h1{font-size:clamp(1.5rem,4vw,2.55rem);line-height:1.05;margin:13px 0 9px;color:
   }
   root.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
   root.getElementById('resetLesson').addEventListener('click',()=>location.reload());
+
+  async function loadCourseCover(){
+    const img=root.getElementById('courseCover');
+    const loading=root.getElementById('coverLoading');
+    if(!img) return;
+    try{
+      const paths=[1,2,3,4,5].map(n=>'assets/cover-'+n+'.b64');
+      const chunks=await Promise.all(paths.map(async path=>{
+        const response=await fetch(path,{cache:'force-cache'});
+        if(!response.ok) throw new Error('cover');
+        return (await response.text()).trim();
+      }));
+      img.addEventListener('load',()=>{
+        img.hidden=false;
+        if(loading) loading.hidden=true;
+      },{once:true});
+      img.src='data:image/webp;base64,'+chunks.join('');
+    }catch(error){
+      if(loading) loading.textContent='GO GETTER 4 · INTERACTIVE ESL COURSE';
+    }
+  }
+  loadCourseCover();
+
   showSpeed();
 })();
 </script>
