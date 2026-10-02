@@ -410,7 +410,7 @@ button{transition:background .16s,border-color .16s,box-shadow .16s}button:focus
     const btn=document.createElement('button');btn.type='button';btn.className='home-module';
     btn.innerHTML='<span class="home-module-no">'+m.no+'</span><span>'+m.title+'</span>';
     btn.addEventListener('click',()=>{go('modules');renderModuleDetail(i);moduleDetail.scrollIntoView({block:'nearest'});});
-    root.getElementById('homeModules').appendChild(btn);
+    root.getElementById('homeModules')?.appendChild(btn);
   });
   renderModuleDetail(0);
 
@@ -537,6 +537,9 @@ button{transition:background .16s,border-color .16s,box-shadow .16s}button:focus
     if(remember&&id!==currentScreen)screenHistory.push(currentScreen);
     if(currentScreen==='speed'&&id!=='speed')clearInterval(timerId);
     currentScreen=id;root.getElementById('backScreen').hidden=id==='home';
+    const onHome=id==='home';
+    app.classList.toggle('home-mode',onHome);
+    document.body.style.overflow=onHome?'hidden':'';
     root.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
     root.querySelectorAll('.navbtn').forEach(b=>{b.classList.toggle('active',b.dataset.go===id);if(b.dataset.go===id)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
     const idx=ids.indexOf(id);root.getElementById('progress').style.width=(idx/(ids.length-1)*100)+'%';
@@ -544,6 +547,30 @@ button{transition:background .16s,border-color .16s,box-shadow .16s}button:focus
   }
   root.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
   root.getElementById('resetLesson').addEventListener('click',()=>location.reload());
+
+
+  async function loadExactBoardCover(){
+    const img=root.getElementById('courseCover');
+    const loading=root.getElementById('coverLoading');
+    if(!img)return;
+    try{
+      const paths=[1,2,3,4,5].map(n=>'assets/cover-'+n+'.b64?v=20261002-board-exact-v5');
+      const chunks=await Promise.all(paths.map(async path=>{
+        const response=await fetch(path,{cache:'no-store'});
+        if(!response.ok)throw new Error('cover part '+path);
+        return (await response.text()).trim();
+      }));
+      img.addEventListener('load',()=>{
+        img.hidden=false;
+        if(loading)loading.hidden=true;
+      },{once:true});
+      img.src='data:image/webp;base64,'+chunks.join('');
+    }catch(error){
+      console.error('Cover load failed',error);
+      if(loading){loading.hidden=false;loading.textContent='';}
+    }
+  }
+  loadExactBoardCover();
 
   showSpeed();
 })();
