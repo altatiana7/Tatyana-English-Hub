@@ -331,6 +331,20 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
 @media(max-width:700px){.activity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.activity-launch{padding:13px;min-height:100px}.activity-launch strong{font-size:19px}.activity-launch span{font-size:14px}.app:not(.home-mode) main{padding:10px}.brand span{display:none}.iv-top{grid-template-columns:1fr}.iv-modebar{justify-content:flex-start}.iv-options{grid-template-columns:repeat(2,minmax(0,1fr))}.iv-option{font-size:18px}.iv-answer{flex-wrap:wrap}.iv-answer input{width:100%;flex-basis:100%}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.wordpic{height:75px}.match{grid-template-columns:1fr}.quiz-pager{gap:6px}.quiz-pager button{padding:9px;font-size:14px}.progress-wrap,.score{display:none}}
 @media(max-width:380px){.activity-grid{grid-template-columns:1fr}.iv-options{grid-template-columns:1fr}}
 
+
+/* Quizlet vocabulary: one compact two-sided card. */
+.quizlet-wrap{width:min(560px,100%);margin:22px auto}
+.quizlet-card{display:block;width:100%;height:300px;padding:0;border:0;border-radius:16px;background:transparent;perspective:1200px;text-align:center;color:#472166}
+.quizlet-inner{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .35s}
+.quizlet-card.flipped .quizlet-inner{transform:rotateY(180deg)}
+.quizlet-face{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;padding:20px;border:1px solid #d9cfe1;border-radius:16px;background:#fff;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 5px 18px rgba(63,29,88,.08)}
+.quizlet-front img{width:100%;max-width:320px;height:155px;object-fit:contain;border-radius:8px}
+.quizlet-face strong{font-size:32px;line-height:1.2}
+.quizlet-hint{font-size:14px;color:#665775}
+.quizlet-back{transform:rotateY(180deg);background:#f1f7d8}
+.quizlet-controls{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:16px}
+@media(max-width:700px){.quizlet-wrap{margin:16px auto}.quizlet-card{height:270px}.quizlet-face{padding:16px}.quizlet-front img{height:135px}.quizlet-face strong{font-size:28px}.quizlet-controls{gap:12px}}
+@media(prefers-reduced-motion:reduce){.quizlet-inner{transition:none}}
 </style>
 </head>
 <body>
@@ -399,8 +413,15 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
 
       <section id="lesson" class="screen"><div class="section-head"><div><h2>Lesson 1 · Activities</h2><p>Choose an activity. Use Activities to return here.</p></div></div><div class="activity-grid"><button class="activity-launch" data-go="vocab"><strong>Vocabulary</strong><span>12 cards · reveal translations</span></button><button class="activity-launch" data-go="irregular"><strong>Irregular Verbs</strong><span>25 verbs · 4 game modes</span></button><button class="activity-launch" data-go="grammar"><strong>Grammar</strong><span>8 questions · choose the form</span></button><button class="activity-launch" data-go="reading"><strong>Reading</strong><span>Read and match</span></button><button class="activity-launch" data-go="speed"><strong>Speed Game</strong><span>45 seconds · vocabulary</span></button><button class="activity-launch" data-go="exit"><strong>Exit Challenge</strong><span>5 gaps · final check</span></button></div></section>
 <section id="vocab" class="screen">
-        <div class="section-head"><div><h2>1. Vocabulary Lab</h2><p>Tap each card to reveal Russian support.</p></div><span class="badge">12 words</span></div>
-        <div id="wordgrid" class="grid"></div>
+        <div class="section-head"><div><h2>1. Vocabulary Lab</h2><p>Tap the card to flip. Use the arrows to move between words.</p></div><span class="badge">12 words</span></div>
+        <div class="quizlet-wrap">
+<button type="button" id="quizletCard" class="quizlet-card" aria-label="Flip vocabulary card" aria-expanded="false">
+<span class="quizlet-inner">
+<span id="quizletFront" class="quizlet-face quizlet-front"><img id="quizletPhoto" alt="" loading="lazy"><strong id="quizletWord"></strong><span class="quizlet-hint">Tap to see the translation</span></span>
+<span id="quizletBack" class="quizlet-face quizlet-back" aria-hidden="true"><strong id="quizletTranslation"></strong><span class="quizlet-hint">Tap to see the word</span></span>
+</span></button>
+<div class="quizlet-controls"><button type="button" id="quizletPrev" class="secondary" aria-label="Previous card">← Back</button><span id="quizletCount" class="badge" aria-live="polite">1 / 12</span><button type="button" id="quizletNext" class="secondary" aria-label="Next card">Next →</button></div>
+</div>
         <div class="actions"><button class="primary" data-go="irregular">Next: Irregular verbs</button></div>
       </section>
 
@@ -603,12 +624,37 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
     btn.addEventListener('click',()=>go(btn.dataset.coverGo));
   });
 
-  const wordgrid=root.getElementById('wordgrid');
-  words.forEach(([w,r,img])=>{
-    const b=document.createElement('button');b.type='button';b.className='wordcard';
-    b.innerHTML='<div class="wordpic" style="background-image:url(\''+img+'\')"></div><div class="wordbody"><div class="word">'+w+'</div><div class="translation">'+r+'</div></div>';
-    b.setAttribute('aria-expanded','false');b.addEventListener('click',()=>{b.classList.toggle('open');b.setAttribute('aria-expanded',String(b.classList.contains('open')));});wordgrid.appendChild(b);
+  let flashIndex=0;
+  const flashCard=root.getElementById('quizletCard');
+  function renderFlashcard(){
+    const [word,translation,photo]=words[flashIndex];
+    flashCard.classList.remove('flipped');
+    flashCard.setAttribute('aria-expanded','false');
+    root.getElementById('quizletFront').setAttribute('aria-hidden','false');
+    root.getElementById('quizletBack').setAttribute('aria-hidden','true');
+    root.getElementById('quizletWord').textContent=word;
+    root.getElementById('quizletTranslation').textContent=translation;
+    const image=root.getElementById('quizletPhoto');image.hidden=false;image.src=photo;
+    root.getElementById('quizletCount').textContent=(flashIndex+1)+' / '+words.length;
+    flashCard.setAttribute('aria-label',word+' — flip to see translation');
+  }
+  root.getElementById('quizletPhoto').addEventListener('error',e=>{e.target.hidden=true});
+  flashCard.addEventListener('click',()=>{
+    const flipped=flashCard.classList.toggle('flipped');
+    flashCard.setAttribute('aria-expanded',String(flipped));
+    root.getElementById('quizletFront').setAttribute('aria-hidden',String(flipped));
+    root.getElementById('quizletBack').setAttribute('aria-hidden',String(!flipped));
+    flashCard.setAttribute('aria-label',flipped?words[flashIndex][1]+' — flip to see word':words[flashIndex][0]+' — flip to see translation');
   });
+  function moveFlashcard(step){flashIndex=(flashIndex+step+words.length)%words.length;renderFlashcard()}
+  root.getElementById('quizletPrev').addEventListener('click',()=>moveFlashcard(-1));
+  root.getElementById('quizletNext').addEventListener('click',()=>moveFlashcard(1));
+  root.addEventListener('keydown',e=>{
+    if(!root.getElementById('vocab').classList.contains('active')||e.target.matches('input,textarea'))return;
+    if(e.key==='ArrowLeft'){e.preventDefault();moveFlashcard(-1)}
+    if(e.key==='ArrowRight'){e.preventDefault();moveFlashcard(1)}
+  });
+  renderFlashcard();
 
   let score=0;const scoreEl=root.getElementById('score');
   const addScore=n=>{score+=n;scoreEl.textContent=score+' pts'};
