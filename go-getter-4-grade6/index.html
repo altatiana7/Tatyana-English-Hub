@@ -279,6 +279,35 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
   background:#472166!important;
 }
 
+
+/* Irregular Verbs Arena */
+.iv-top{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;margin-bottom:14px}
+.iv-stats{display:flex;gap:10px;flex-wrap:wrap}
+.iv-stats>div{min-width:82px;padding:10px 12px;border:2px solid #e2d5e9;border-radius:12px;background:#fff}
+.iv-label{display:block;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.iv-stats strong{font-size:24px;color:var(--purple-dark)}
+.iv-modebar{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.iv-mode{min-height:42px;padding:9px 14px;border:2px solid #d8cce0;border-radius:10px;background:#fff;color:var(--purple-dark);font-weight:900}
+.iv-mode.active{background:var(--lime);border-color:var(--purple)}
+.iv-game{min-height:390px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.iv-kicker{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.iv-prompt{font-size:clamp(34px,6vw,70px);font-weight:1000;color:var(--purple-dark);margin:14px 0 20px;line-height:1.05}
+.iv-sub{font-size:18px;color:var(--muted);margin-bottom:16px}
+.iv-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:min(760px,100%)}
+.iv-option{min-height:56px;padding:12px 16px;border:2px solid #d8cce0;border-radius:12px;background:#fff;font-size:20px;font-weight:900;color:var(--purple-dark)}
+.iv-option:hover{border-color:var(--purple)}
+.iv-option.correct{background:#e1f5e8;border-color:#65aa7d}
+.iv-option.wrong{background:#fae3e7;border-color:#d18794}
+.iv-answer{display:flex;gap:10px;width:min(620px,100%);align-items:center;justify-content:center}
+.iv-answer input{flex:1;min-width:0;padding:14px 16px;border:2px solid #d8cce0;border-radius:12px;font-size:20px}
+.iv-feedback{min-height:28px;margin-top:14px;font-size:18px;font-weight:900}
+.iv-feedback.ok{color:#26734a}.iv-feedback.bad{color:#a13d4d}
+.iv-triple{font-size:clamp(28px,4.5vw,52px);font-weight:1000;color:var(--purple-dark);margin:12px 0 22px}
+.iv-timer{font-size:18px;font-weight:900;color:var(--purple-dark);margin-bottom:8px}
+.iv-bar{width:min(620px,100%);height:10px;background:#e9e0ee;border-radius:99px;overflow:hidden;margin-bottom:14px}
+.iv-bar>span{display:block;height:100%;width:100%;background:var(--lime);transition:width .2s linear}
+@media(max-width:760px){.iv-top{grid-template-columns:1fr}.iv-modebar{justify-content:flex-start}.iv-options{grid-template-columns:1fr}.iv-game{min-height:330px}}
+
 </style>
 </head>
 <body>
@@ -296,10 +325,11 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
       <div class="nav-heading">COURSE</div><button class="navbtn active" data-go="home">Home</button>
       <button class="navbtn" data-go="modules">Modules</button>
       <div class="nav-heading">LESSON 1</div><button class="navbtn" data-go="vocab">1 Vocabulary</button>
-      <button class="navbtn" data-go="grammar">2 Grammar</button>
-      <button class="navbtn" data-go="reading">3 Reading</button>
-      <button class="navbtn" data-go="speed">4 Speed game</button>
-      <button class="navbtn" data-go="exit">5 Exit challenge</button>
+      <button class="navbtn" data-go="irregular">2 Irregular verbs</button>
+      <button class="navbtn" data-go="grammar">3 Grammar</button>
+      <button class="navbtn" data-go="reading">4 Reading</button>
+      <button class="navbtn" data-go="speed">5 Speed game</button>
+      <button class="navbtn" data-go="exit">6 Exit challenge</button>
     </aside>
 
     <main>
@@ -347,17 +377,49 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
       <section id="vocab" class="screen">
         <div class="section-head"><div><h2>1. Vocabulary Lab</h2><p>Tap each card to reveal Russian support.</p></div><span class="badge">12 words</span></div>
         <div id="wordgrid" class="grid"></div>
-        <div class="actions"><button class="primary" data-go="grammar">Next: Grammar</button></div>
+        <div class="actions"><button class="primary" data-go="irregular">Next: Irregular verbs</button></div>
+      </section>
+
+
+      <section id="irregular" class="screen">
+        <div class="section-head">
+          <div>
+            <h2>2. Irregular Verbs Arena</h2>
+            <p>25 key verbs from Lesson 1. Train all three forms with four different game mechanics.</p>
+          </div>
+          <span class="badge">25 verbs</span>
+        </div>
+
+        <div class="iv-top card">
+          <div class="iv-stats">
+            <div><span class="iv-label">Score</span><strong id="ivScore">0</strong></div>
+            <div><span class="iv-label">Streak</span><strong id="ivStreak">0</strong></div>
+            <div><span class="iv-label">Lives</span><strong id="ivLives">3</strong></div>
+          </div>
+          <div class="iv-modebar" role="tablist" aria-label="Irregular verb game modes">
+            <button type="button" class="iv-mode active" data-iv-mode="flip">Form Flip</button>
+            <button type="button" class="iv-mode" data-iv-mode="triple">Triple Match</button>
+            <button type="button" class="iv-mode" data-iv-mode="missing">Missing Form</button>
+            <button type="button" class="iv-mode" data-iv-mode="lightning">Lightning</button>
+          </div>
+        </div>
+
+        <div id="ivGame" class="card iv-game" aria-live="polite"></div>
+
+        <div class="actions">
+          <button type="button" id="ivRestart" class="secondary">Restart game</button>
+          <button class="primary" data-go="grammar">Next: Grammar</button>
+        </div>
       </section>
 
       <section id="grammar" class="screen">
-        <div class="section-head"><div><h2>2. Describe the look</h2><p>Choose the best option. Focus on <b>is wearing / has got / looks</b>.</p></div><span class="badge">8 questions</span></div>
+        <div class="section-head"><div><h2>3. Describe the look</h2><p>Choose the best option. Focus on <b>is wearing / has got / looks</b>.</p></div><span class="badge">8 questions</span></div>
         <div class="card"><div id="grammarQuiz" class="quiz-list"></div><div class="quiz-pager"><button id="prevQuestion" class="secondary">Previous</button><span id="questionCount" class="badge">1 / 8</span><button id="nextQuestion" class="primary">Next question</button></div></div>
         <div class="actions"><button class="primary" data-go="reading">Next: Reading</button></div>
       </section>
 
       <section id="reading" class="screen">
-        <div class="section-head"><div><h2>3. Reading Detective</h2><p>Read once for gist, then match the details.</p></div><span class="badge">Teen style</span></div>
+        <div class="section-head"><div><h2>4. Reading Detective</h2><p>Read once for gist, then match the details.</p></div><span class="badge">Teen style</span></div>
         <div class="card">
           <div class="story">
             Mia is twelve and she likes comfortable clothes. On school days she usually wears jeans, a plain T-shirt and trainers. Her favourite hoodie is dark green. She also wears a small bracelet that her best friend gave her. At weekends Mia sometimes chooses a checked shirt and baggy trousers. She does not like formal clothes, but she has a smart blue dress for family celebrations. Mia says clothes should show your personality, but they should also feel comfortable.
@@ -373,7 +435,7 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
       </section>
 
       <section id="speed" class="screen">
-        <div class="section-head"><div><h2>4. 45-second Speed Game</h2><p>Say the Russian meaning or make a short English phrase before you reveal the answer.</p></div><span class="badge">Fast recall</span></div>
+        <div class="section-head"><div><h2>5. 45-second Speed Game</h2><p>Say the Russian meaning or make a short English phrase before you reveal the answer.</p></div><span class="badge">Fast recall</span></div>
         <div class="card" style="text-align:center">
           <div id="timer" class="timer">45</div>
           <div id="speedWord" class="speed-word">hoodie</div>
@@ -388,7 +450,7 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
       </section>
 
       <section id="exit" class="screen">
-        <div class="section-head"><div><h2>5. Exit Challenge</h2><p>Type one word in each gap.</p></div><span class="badge">Final check</span></div>
+        <div class="section-head"><div><h2>6. Exit Challenge</h2><p>Type one word in each gap.</p></div><span class="badge">Final check</span></div>
         <div class="card exitbox">
           <div class="exitrow"><label>1. You wear this around your waist.</label><input data-answer="belt" placeholder="word"></div>
           <div class="exitrow"><label>2. A top with a hood.</label><input data-answer="hoodie" placeholder="word"></div>
@@ -614,7 +676,88 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
     root.getElementById('finalResult').textContent='Result: '+correct+'/5 · '+(correct===5?'Excellent recall.':correct>=4?'Very good. Review one word.':'Review the vocabulary cards and try again.');
   });
 
-  const ids=['home','modules','vocab','grammar','reading','speed','exit'];
+
+  const irregularVerbs=[
+    ['read','read','read'],['write','wrote','written'],['see','saw','seen'],['say','said','said'],['sleep','slept','slept'],
+    ['meet','met','met'],['come','came','come'],['run','ran','run'],['sing','sang','sung'],['go','went','gone'],
+    ['drink','drank','drunk'],['do','did','done'],['have','had','had'],['eat','ate','eaten'],['be','was/were','been'],
+    ['know','knew','known'],['swim','swam','swum'],['choose','chose','chosen'],['make','made','made'],['bring','brought','brought'],
+    ['take','took','taken'],['speak','spoke','spoken'],['give','gave','given'],['tell','told','told'],['wake','woke','woken']
+  ];
+  const ivGame=root.getElementById('ivGame');
+  const ivScoreEl=root.getElementById('ivScore'),ivStreakEl=root.getElementById('ivStreak'),ivLivesEl=root.getElementById('ivLives');
+  let ivMode='flip',ivScore=0,ivStreak=0,ivLives=3,ivIndex=0,ivDeck=[],ivTimer=null,ivTime=20;
+  const shuffle=a=>[...a].sort(()=>Math.random()-.5);
+  function resetIvDeck(){ivDeck=shuffle(irregularVerbs.map((_,i)=>i));ivIndex=0}
+  function ivStats(){ivScoreEl.textContent=ivScore;ivStreakEl.textContent=ivStreak;ivLivesEl.textContent=ivLives}
+  function ivGood(points=10){ivScore+=points;ivStreak++;if(ivStreak>0&&ivStreak%5===0)ivScore+=10;ivStats()}
+  function ivBad(){ivStreak=0;ivLives=Math.max(0,ivLives-1);ivStats()}
+  function currentVerb(){if(!ivDeck.length||ivIndex>=ivDeck.length)resetIvDeck();return irregularVerbs[ivDeck[ivIndex]]}
+  function nextIv(){ivIndex++;if(ivLives<=0){renderIvGameOver();return}renderIv()}
+  function setIvFeedback(msg,ok){const el=root.getElementById('ivFeedback');if(el){el.textContent=msg;el.className='iv-feedback '+(ok?'ok':'bad')}}
+  function randomOptions(correct,pool,count=4){
+    const arr=shuffle([...new Set(pool.filter(x=>x!==correct))]).slice(0,count-1);
+    return shuffle([correct,...arr]);
+  }
+  function renderIvFlip(){
+    const v=currentVerb();const ask=Math.random()<.5?1:2;
+    const label=ask===1?'Past Simple (V2)':'Past Participle (V3)';
+    const pool=irregularVerbs.map(x=>x[ask]);
+    const opts=randomOptions(v[ask],pool,4);
+    ivGame.innerHTML='<div class="iv-kicker">Form Flip · choose '+label+'</div><div class="iv-prompt">'+v[0]+'</div><div class="iv-sub">Choose the correct form.</div><div class="iv-options">'+opts.map(o=>'<button type="button" class="iv-option">'+o+'</button>').join('')+'</div><div id="ivFeedback" class="iv-feedback"></div>';
+    [...ivGame.querySelectorAll('.iv-option')].forEach(btn=>btn.addEventListener('click',()=>{
+      if(ivGame.dataset.locked)return;ivGame.dataset.locked='1';
+      if(btn.textContent===v[ask]){btn.classList.add('correct');ivGood(10);setIvFeedback('Correct! +10',true)}
+      else{btn.classList.add('wrong');[...ivGame.querySelectorAll('.iv-option')].find(b=>b.textContent===v[ask])?.classList.add('correct');ivBad();setIvFeedback('Correct answer: '+v[ask],false)}
+      setTimeout(()=>{ivGame.dataset.locked='';nextIv()},650);
+    }));
+  }
+  function renderIvTriple(){
+    const v=currentVerb();const correct=v.join(' – ');
+    const distractors=shuffle(irregularVerbs.filter(x=>x!==v)).slice(0,3).map(x=>{
+      const mixed=[v[0],x[1],x[2]];return mixed.join(' – ');
+    });
+    const opts=shuffle([correct,...distractors]);
+    ivGame.innerHTML='<div class="iv-kicker">Triple Match · find the correct line</div><div class="iv-prompt">'+v[0]+'</div><div class="iv-options">'+opts.map(o=>'<button type="button" class="iv-option">'+o+'</button>').join('')+'</div><div id="ivFeedback" class="iv-feedback"></div>';
+    [...ivGame.querySelectorAll('.iv-option')].forEach(btn=>btn.addEventListener('click',()=>{
+      if(ivGame.dataset.locked)return;ivGame.dataset.locked='1';
+      if(btn.textContent===correct){btn.classList.add('correct');ivGood(12);setIvFeedback('Perfect triple! +12',true)}
+      else{btn.classList.add('wrong');[...ivGame.querySelectorAll('.iv-option')].find(b=>b.textContent===correct)?.classList.add('correct');ivBad();setIvFeedback(correct,false)}
+      setTimeout(()=>{ivGame.dataset.locked='';nextIv()},750);
+    }));
+  }
+  function renderIvMissing(){
+    const v=currentVerb();const missing=Math.random()<.5?1:2;
+    const shown=missing===1?v[0]+' – ? – '+v[2]:v[0]+' – '+v[1]+' – ?';
+    ivGame.innerHTML='<div class="iv-kicker">Missing Form · type the missing word</div><div class="iv-triple">'+shown+'</div><form id="ivForm" class="iv-answer"><input id="ivInput" autocomplete="off" spellcheck="false" placeholder="Type the missing form"><button class="primary">Check</button></form><div id="ivFeedback" class="iv-feedback"></div>';
+    const form=root.getElementById('ivForm'),inp=root.getElementById('ivInput');inp.focus();
+    form.addEventListener('submit',e=>{e.preventDefault();if(ivGame.dataset.locked)return;const ans=inp.value.trim().toLowerCase();const ok=ans===v[missing].toLowerCase();ivGame.dataset.locked='1';if(ok){ivGood(15);setIvFeedback('Excellent! +15',true)}else{ivBad();setIvFeedback('Answer: '+v[missing],false)}setTimeout(()=>{ivGame.dataset.locked='';nextIv()},800)});
+  }
+  function renderIvLightning(){
+    clearInterval(ivTimer);ivTime=20;
+    const v=currentVerb();const ask=Math.random()<.5?1:2;const pool=irregularVerbs.map(x=>x[ask]);const opts=randomOptions(v[ask],pool,4);
+    ivGame.innerHTML='<div class="iv-kicker">Lightning · 20 seconds</div><div class="iv-timer">Time: <span id="ivTime">20</span>s</div><div class="iv-bar"><span id="ivBar"></span></div><div class="iv-prompt">'+v[0]+'</div><div class="iv-options">'+opts.map(o=>'<button type="button" class="iv-option">'+o+'</button>').join('')+'</div><div id="ivFeedback" class="iv-feedback"></div>';
+    const tick=()=>{ivTime--;const t=root.getElementById('ivTime'),bar=root.getElementById('ivBar');if(t)t.textContent=ivTime;if(bar)bar.style.width=(ivTime/20*100)+'%';if(ivTime<=0){clearInterval(ivTimer);if(!ivGame.dataset.locked){ivGame.dataset.locked='1';ivBad();setIvFeedback('Time! '+v[0]+' – '+v[1]+' – '+v[2],false);setTimeout(()=>{ivGame.dataset.locked='';nextIv()},800)}}};
+    ivTimer=setInterval(tick,1000);
+    [...ivGame.querySelectorAll('.iv-option')].forEach(btn=>btn.addEventListener('click',()=>{
+      if(ivGame.dataset.locked)return;ivGame.dataset.locked='1';clearInterval(ivTimer);
+      if(btn.textContent===v[ask]){btn.classList.add('correct');ivGood(20);setIvFeedback('Lightning point! +20',true)}
+      else{btn.classList.add('wrong');ivBad();setIvFeedback('Correct: '+v[ask],false)}
+      setTimeout(()=>{ivGame.dataset.locked='';nextIv()},650);
+    }));
+  }
+  function renderIvGameOver(){
+    clearInterval(ivTimer);
+    ivGame.innerHTML='<div class="iv-kicker">Round finished</div><div class="iv-prompt">'+ivScore+' pts</div><div class="iv-sub">Best training pattern: repeat the mode where you lost most lives.</div><button type="button" id="ivAgain" class="primary">Play again</button>';
+    root.getElementById('ivAgain').addEventListener('click',restartIv);
+  }
+  function renderIv(){clearInterval(ivTimer);if(ivLives<=0){renderIvGameOver();return}if(ivMode==='flip')renderIvFlip();else if(ivMode==='triple')renderIvTriple();else if(ivMode==='missing')renderIvMissing();else renderIvLightning()}
+  function restartIv(){clearInterval(ivTimer);ivScore=0;ivStreak=0;ivLives=3;resetIvDeck();ivStats();renderIv()}
+  root.querySelectorAll('.iv-mode').forEach(btn=>btn.addEventListener('click',()=>{root.querySelectorAll('.iv-mode').forEach(b=>b.classList.toggle('active',b===btn));ivMode=btn.dataset.ivMode;restartIv()}));
+  root.getElementById('ivRestart').addEventListener('click',restartIv);
+  resetIvDeck();ivStats();renderIv();
+
+  const ids=['home','modules','vocab','irregular','grammar','reading','speed','exit'];
   let currentScreen='home';const screenHistory=[];
   root.getElementById('backScreen').addEventListener('click',()=>go(screenHistory.pop()||'home',false));
   const fullButton=root.getElementById('fullscreen');
@@ -625,7 +768,7 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
   function go(id,remember=true){
     if(!ids.includes(id))return;
     if(remember&&id!==currentScreen)screenHistory.push(currentScreen);
-    if(currentScreen==='speed'&&id!=='speed')clearInterval(timerId);
+    if(currentScreen==='speed'&&id!=='speed')clearInterval(timerId);if(currentScreen==='irregular'&&id!=='irregular')clearInterval(ivTimer);
     currentScreen=id;root.getElementById('backScreen').hidden=id==='home';
     const onHome=id==='home';
     app.classList.toggle('home-mode',onHome);
