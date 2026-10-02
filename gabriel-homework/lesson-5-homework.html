@@ -29,7 +29,18 @@
 .mistakes{display:grid;gap:10px;margin-top:14px}.mistake{border:1px solid var(--border);border-radius:13px;padding:12px;background:#fafcfe}
 .copyBtn{margin-top:14px;min-height:46px;border:0;border-radius:13px;padding:0 18px;background:var(--blue);color:#fff;font-weight:850;cursor:pointer}.codeWrap5{margin-top:14px;padding:14px;border:1px dashed #aac2d4;border-radius:14px;background:#f6fbff}.submissionCode5{padding:12px;border-radius:10px;background:#edf4f8;font:800 12px ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;text-align:left}.codeActions5{display:flex;gap:8px;flex-wrap:wrap}
 @media(max-width:640px){.wrap{padding:12px}.flashcard{min-height:330px;padding:20px}.taskCard{padding:17px}.answer{font-size:16px}.reportGrid{grid-template-columns:1fr}}
-</style></head><body>
+</style><script>
+(() => {
+  const q = new URLSearchParams(location.search);
+  if (q.get('from') !== 'hub') {
+    location.replace('index.html');
+    return;
+  }
+  history.replaceState(null, '', location.pathname + location.hash);
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+})();
+</script></head><body>
 <div class="wrap">
 <a href="index.html" style="display:inline-block;margin-bottom:12px;padding:10px 15px;border-radius:12px;background:#fff;color:#173846;font-weight:800;text-decoration:none;border:1px solid #dbe9e8">← Homework Hub</a>
 <div class="header"><div><div class="sub">GABI · HOMEWORK</div><h1>Family & Life Stages</h1></div>

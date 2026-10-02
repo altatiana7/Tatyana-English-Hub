@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Gabi Vocabulary</title>
+<title>Gabriel Vocabulary</title>
 <style>
 :root{--ink:#173846;--muted:#6b818b;--teal:#35c7bd;--blue:#4264e8;--line:#dbe9e8;--bg:#f5fbfb}
 *{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,#f7fffd,#eef7ff);min-height:100vh}
@@ -17,9 +17,20 @@
 .controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.controls button{border:1px solid var(--line);border-radius:13px;padding:11px 16px;background:#fff;font-weight:900;cursor:pointer}.controls .primary{background:var(--blue);color:#fff;border-color:var(--blue)}
 .meta{display:flex;justify-content:center;gap:12px;color:var(--muted);font-weight:800}.list{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;max-height:500px;overflow:auto}.list h3{margin:0 0 9px}.wordItem{padding:9px;border-radius:10px;cursor:pointer;font-weight:800}.wordItem:hover,.wordItem.active{background:#ecfaf7;color:#187d75}
 @media(max-width:800px){.app{grid-template-columns:1fr}.side{display:none}.main{padding:14px}.workspace{grid-template-columns:1fr}.list{display:none}.flashcard{height:330px}}
-</style></head><body>
-<div class="app"><aside class="side"><div class="brand"><div class="mark">E</div><div><b>English Hub</b><small>Gabi · Vocabulary</small></div></div><div class="navtitle">HOMEWORK</div><a href="index.html">← Homework Hub</a><a class="active" href="vocabulary.html">Vocabulary</a><div class="note">Cards from lessons are collected here for revision.</div></aside>
-<main class="main"><section class="hero"><small>GABI · VOCABULARY</small><h1>Quizlet-style cards</h1><p>Lesson vocabulary. Audio is available only on the front of each card.</p></section>
+</style><script>
+(() => {
+  const q = new URLSearchParams(location.search);
+  if (q.get('from') !== 'hub') {
+    location.replace('index.html');
+    return;
+  }
+  history.replaceState(null, '', location.pathname + location.hash);
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+})();
+</script></head><body>
+<div class="app"><aside class="side"><div class="brand"><div class="mark">E</div><div><b>English Hub</b><small>Gabriel · Vocabulary</small></div></div><div class="navtitle">HOMEWORK</div><a href="index.html">← Homework Hub</a><a class="active" href="vocabulary.html">Vocabulary</a><div class="note">Cards from lessons are collected here for revision.</div></aside>
+<main class="main"><section class="hero"><small>GABRIEL · VOCABULARY</small><h1>Quizlet-style cards</h1><p>Lesson vocabulary. Audio is available only on the front of each card.</p></section>
 <div class="deckTabs"><button class="active" data-deck="active">Active vocabulary · 16</button><button data-deck="warmup">Warm-up vocabulary · 12</button></div>
 <div class="workspace"><div><div class="cardStage"><div id="card" class="flashcard"><div class="inner"><div class="face"><div id="frontWord" class="frontWord"></div><button id="listen" class="listen">Listen</button><div class="hint">Say the meaning, then flip.</div></div><div class="face back"><div id="translation" class="translation"></div><div id="example" class="example"></div><div class="hint">No audio on the back.</div></div></div></div></div>
 <div class="meta"><span id="count"></span><span>Click the card to flip</span></div><div class="controls"><button id="prev">← Back</button><button id="flip" class="primary">Flip card</button><button id="next">Next →</button><button id="shuffle">Shuffle</button></div></div>

@@ -6,7 +6,18 @@
 <meta name="theme-color" content="#20b8b0">
 <title>Lesson 1 · Older teens. Different routes.</title>
 <link rel="stylesheet" href="lesson-1.css?v=20261001">
-</head>
+<script>
+(() => {
+  const q = new URLSearchParams(location.search);
+  if (q.get('from') !== 'hub') {
+    location.replace('index.html');
+    return;
+  }
+  history.replaceState(null, '', location.pathname + location.hash);
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+})();
+</script></head>
 <body>
 <div class="app">
 <aside class="side"><div class="brand"><div class="brandmark">E</div><div><b>English Hub</b><small>Homework</small></div></div><div><div class="navtitle">MODULES</div><a class="module" href="index.html" style="text-decoration:none">← Homework Hub</a></div><div class="side-note">Complete the homework and send the homework code to your teacher.</div></aside>
