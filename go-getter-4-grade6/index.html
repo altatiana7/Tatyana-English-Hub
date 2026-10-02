@@ -308,13 +308,36 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
 .iv-bar>span{display:block;height:100%;width:100%;background:var(--lime);transition:width .2s linear}
 @media(max-width:760px){.iv-top{grid-template-columns:1fr}.iv-modebar{justify-content:flex-start}.iv-options{grid-template-columns:1fr}.iv-game{min-height:330px}}
 
+
+/* Compact activity launcher; scroll only inside opened activities. */
+.app:not(.home-mode){height:100dvh;min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr)}
+.app:not(.home-mode) .topbar{position:relative}
+.app:not(.home-mode) .topbar-inner{min-height:44px;padding:6px 12px;gap:8px;flex-wrap:wrap}
+.app:not(.home-mode) .shell{display:block;height:100%;min-height:0;padding:0;overflow:hidden}
+.app:not(.home-mode) .sidebar{display:none}
+.app:not(.home-mode) main{height:100%;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:14px;background:#f5f3f8;scrollbar-gutter:stable}
+.app:not(.home-mode) .screen{max-width:1360px;margin:0 auto}
+.section-head{padding:12px 16px;margin-bottom:12px}
+.section-head h2{font-size:clamp(23px,2vw,32px)}
+.section-head p{font-size:16px;margin-top:4px}
+.card{padding:16px}.q{min-height:0;padding:22px}.q p{font-size:clamp(22px,2vw,30px);margin-bottom:16px}
+.iv-game{min-height:0;padding:22px}.iv-prompt{font-size:clamp(34px,4vw,54px);margin:12px 0}.iv-top{gap:12px;margin-bottom:12px}.iv-stats>div{padding:6px 10px}.iv-stats strong{font-size:21px}
+.iv-option{min-height:46px;font-size:20px;padding:10px 14px}.iv-sub{margin-bottom:12px}.iv-triple{font-size:clamp(26px,3vw,42px)}
+.wordcard{min-height:130px}.wordpic{height:85px}.word{font-size:21px}.wordbody{padding:8px 12px}
+.story{font-size:20px;line-height:1.5;padding:16px}.speed-word{font-size:clamp(40px,4vw,60px);margin:16px 0}.timer{font-size:44px}
+.activity-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.activity-launch{display:flex;flex-direction:column;gap:8px;text-align:left;border:1px solid #d9cfe1;border-left:5px solid #693092;border-radius:12px;background:#fff;color:#472166;padding:18px;min-height:110px}
+.activity-launch strong{font-size:22px}.activity-launch span{font-size:16px;color:#665775}.activity-launch:hover{background:#f1f7d8}
+@media(max-width:700px){.activity-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.activity-launch{padding:13px;min-height:100px}.activity-launch strong{font-size:19px}.activity-launch span{font-size:14px}.app:not(.home-mode) main{padding:10px}.brand span{display:none}.iv-top{grid-template-columns:1fr}.iv-modebar{justify-content:flex-start}.iv-options{grid-template-columns:repeat(2,minmax(0,1fr))}.iv-option{font-size:18px}.iv-answer{flex-wrap:wrap}.iv-answer input{width:100%;flex-basis:100%}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.wordpic{height:75px}.match{grid-template-columns:1fr}.quiz-pager{gap:6px}.quiz-pager button{padding:9px;font-size:14px}.progress-wrap,.score{display:none}}
+@media(max-width:380px){.activity-grid{grid-template-columns:1fr}.iv-options{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
 <div class="app home-mode">
   <div class="topbar">
     <div class="topbar-inner">
-      <div class="brand">GO GETTER <b>4</b> <span>GRADE 6</span></div><button id="backScreen" class="top-control" hidden>Back</button><button id="fullscreen" class="top-control">Full screen</button>
+      <div class="brand">GO GETTER <b>4</b> <span>GRADE 6</span></div><button id="backScreen" class="top-control" hidden>Back</button><button class="top-control" data-go="home">Home</button><button class="top-control" data-go="lesson">Activities</button><button id="fullscreen" class="top-control">Full screen</button>
       <div class="progress-wrap" aria-label="Lesson progress"><div id="progress" class="progress"></div></div>
       <div id="score" class="score">0 pts</div>
     </div>
@@ -374,7 +397,8 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
         </div>
       </section>
 
-      <section id="vocab" class="screen">
+      <section id="lesson" class="screen"><div class="section-head"><div><h2>Lesson 1 · Activities</h2><p>Choose an activity. Use Activities to return here.</p></div></div><div class="activity-grid"><button class="activity-launch" data-go="vocab"><strong>Vocabulary</strong><span>12 cards · reveal translations</span></button><button class="activity-launch" data-go="irregular"><strong>Irregular Verbs</strong><span>25 verbs · 4 game modes</span></button><button class="activity-launch" data-go="grammar"><strong>Grammar</strong><span>8 questions · choose the form</span></button><button class="activity-launch" data-go="reading"><strong>Reading</strong><span>Read and match</span></button><button class="activity-launch" data-go="speed"><strong>Speed Game</strong><span>45 seconds · vocabulary</span></button><button class="activity-launch" data-go="exit"><strong>Exit Challenge</strong><span>5 gaps · final check</span></button></div></section>
+<section id="vocab" class="screen">
         <div class="section-head"><div><h2>1. Vocabulary Lab</h2><p>Tap each card to reveal Russian support.</p></div><span class="badge">12 words</span></div>
         <div id="wordgrid" class="grid"></div>
         <div class="actions"><button class="primary" data-go="irregular">Next: Irregular verbs</button></div>
@@ -538,7 +562,7 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
         '<div class="module-box"><h4>Skills</h4><ul>'+m.skills.map(item=>'<li>'+item+'</li>').join('')+'</ul></div>'+
       '</div>'+
       '<div class="module-open">'+
-        (m.no==='1' ? '<button class="primary" data-go="vocab">Open Lesson 1</button>' : '<span class="badge">Module preview ready</span>')+
+        (m.no==='1' ? '<button class="primary" data-go="lesson">Open Lesson 1</button>' : '<span class="badge">Module preview ready</span>')+
       '</div>';
 
     moduleDetail.querySelectorAll('[data-go]').forEach(btn=>{
@@ -695,35 +719,44 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
   function currentVerb(){if(!ivDeck.length||ivIndex>=ivDeck.length)resetIvDeck();return irregularVerbs[ivDeck[ivIndex]]}
   function nextIv(){ivIndex++;if(ivLives<=0){renderIvGameOver();return}renderIv()}
   function setIvFeedback(msg,ok){const el=root.getElementById('ivFeedback');if(el){el.textContent=msg;el.className='iv-feedback '+(ok?'ok':'bad')}}
-  function randomOptions(correct,pool,count=4){
-    const arr=shuffle([...new Set(pool.filter(x=>x!==correct))]).slice(0,count-1);
-    return shuffle([correct,...arr]);
+  const verbTraps={
+    read:['readed','reading','reads'],write:['writed','wrote','written','writing'],see:['seed','saw','seen','seeing'],say:['sayed','said','saying'],sleep:['sleeped','slept','sleeping'],
+    meet:['meeted','met','meeting'],come:['comed','came','come','coming'],run:['runned','ran','run','running'],sing:['singed','sang','sung','singing'],go:['goed','went','gone','going'],
+    drink:['drinked','drank','drunk','drinking'],do:['doed','did','done','doing'],have:['haved','had','having'],eat:['eated','ate','eaten','eating'],be:['was/were','been','being','beed'],
+    know:['knowed','knew','known','knowing'],swim:['swimmed','swam','swum','swimming'],choose:['choosed','chose','chosen','choosing'],make:['maked','made','making'],bring:['bringed','brought','bringing'],
+    take:['taked','took','taken','taking'],speak:['speaked','spoke','spoken','speaking'],give:['gived','gave','given','giving'],tell:['telled','told','telling'],wake:['waked','woke','woken','waking']
+  };
+  function formOptions(v,ask){
+    const correct=v[ask];
+    const traps=[...new Set([...verbTraps[v[0]],...v])].filter(x=>x!==correct);
+    return shuffle([correct,...shuffle(traps).slice(0,3)]);
   }
+  let ivPending=null;
+  function queueIv(delay){clearTimeout(ivPending);ivPending=setTimeout(()=>{ivGame.dataset.locked='';nextIv()},delay)}
   function renderIvFlip(){
     const v=currentVerb();const ask=Math.random()<.5?1:2;
     const label=ask===1?'Past Simple (V2)':'Past Participle (V3)';
-    const pool=irregularVerbs.map(x=>x[ask]);
-    const opts=randomOptions(v[ask],pool,4);
+    const opts=formOptions(v,ask);
     ivGame.innerHTML='<div class="iv-kicker">Form Flip · choose '+label+'</div><div class="iv-prompt">'+v[0]+'</div><div class="iv-sub">Choose the correct form.</div><div class="iv-options">'+opts.map(o=>'<button type="button" class="iv-option">'+o+'</button>').join('')+'</div><div id="ivFeedback" class="iv-feedback"></div>';
     [...ivGame.querySelectorAll('.iv-option')].forEach(btn=>btn.addEventListener('click',()=>{
       if(ivGame.dataset.locked)return;ivGame.dataset.locked='1';
       if(btn.textContent===v[ask]){btn.classList.add('correct');ivGood(10);setIvFeedback('Correct! +10',true)}
       else{btn.classList.add('wrong');[...ivGame.querySelectorAll('.iv-option')].find(b=>b.textContent===v[ask])?.classList.add('correct');ivBad();setIvFeedback('Correct answer: '+v[ask],false)}
-      setTimeout(()=>{ivGame.dataset.locked='';nextIv()},650);
+      queueIv(650);
     }));
   }
   function renderIvTriple(){
     const v=currentVerb();const correct=v.join(' – ');
-    const distractors=shuffle(irregularVerbs.filter(x=>x!==v)).slice(0,3).map(x=>{
-      const mixed=[v[0],x[1],x[2]];return mixed.join(' – ');
-    });
+    const wrong2=formOptions(v,1).filter(x=>x!==v[1]);
+    const wrong3=formOptions(v,2).filter(x=>x!==v[2]);
+    const distractors=[ [v[0],wrong2[0],v[2]], [v[0],v[1],wrong3[0]], [v[0],wrong2[1],wrong3[1]] ].map(x=>x.join(' – '));
     const opts=shuffle([correct,...distractors]);
     ivGame.innerHTML='<div class="iv-kicker">Triple Match · find the correct line</div><div class="iv-prompt">'+v[0]+'</div><div class="iv-options">'+opts.map(o=>'<button type="button" class="iv-option">'+o+'</button>').join('')+'</div><div id="ivFeedback" class="iv-feedback"></div>';
     [...ivGame.querySelectorAll('.iv-option')].forEach(btn=>btn.addEventListener('click',()=>{
       if(ivGame.dataset.locked)return;ivGame.dataset.locked='1';
       if(btn.textContent===correct){btn.classList.add('correct');ivGood(12);setIvFeedback('Perfect triple! +12',true)}
       else{btn.classList.add('wrong');[...ivGame.querySelectorAll('.iv-option')].find(b=>b.textContent===correct)?.classList.add('correct');ivBad();setIvFeedback(correct,false)}
-      setTimeout(()=>{ivGame.dataset.locked='';nextIv()},750);
+      queueIv(750);
     }));
   }
   function renderIvMissing(){
@@ -731,19 +764,19 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
     const shown=missing===1?v[0]+' – ? – '+v[2]:v[0]+' – '+v[1]+' – ?';
     ivGame.innerHTML='<div class="iv-kicker">Missing Form · type the missing word</div><div class="iv-triple">'+shown+'</div><form id="ivForm" class="iv-answer"><input id="ivInput" autocomplete="off" spellcheck="false" placeholder="Type the missing form"><button class="primary">Check</button></form><div id="ivFeedback" class="iv-feedback"></div>';
     const form=root.getElementById('ivForm'),inp=root.getElementById('ivInput');inp.focus();
-    form.addEventListener('submit',e=>{e.preventDefault();if(ivGame.dataset.locked)return;const ans=inp.value.trim().toLowerCase();const ok=ans===v[missing].toLowerCase();ivGame.dataset.locked='1';if(ok){ivGood(15);setIvFeedback('Excellent! +15',true)}else{ivBad();setIvFeedback('Answer: '+v[missing],false)}setTimeout(()=>{ivGame.dataset.locked='';nextIv()},800)});
+    form.addEventListener('submit',e=>{e.preventDefault();if(ivGame.dataset.locked)return;const ans=inp.value.trim().toLowerCase();const ok=v[missing].toLowerCase().split('/').includes(ans)||ans===v[missing].toLowerCase();ivGame.dataset.locked='1';if(ok){ivGood(15);setIvFeedback('Excellent! +15',true)}else{ivBad();setIvFeedback('Answer: '+v[missing],false)}queueIv(800)});
   }
   function renderIvLightning(){
     clearInterval(ivTimer);ivTime=20;
-    const v=currentVerb();const ask=Math.random()<.5?1:2;const pool=irregularVerbs.map(x=>x[ask]);const opts=randomOptions(v[ask],pool,4);
-    ivGame.innerHTML='<div class="iv-kicker">Lightning · 20 seconds</div><div class="iv-timer">Time: <span id="ivTime">20</span>s</div><div class="iv-bar"><span id="ivBar"></span></div><div class="iv-prompt">'+v[0]+'</div><div class="iv-options">'+opts.map(o=>'<button type="button" class="iv-option">'+o+'</button>').join('')+'</div><div id="ivFeedback" class="iv-feedback"></div>';
-    const tick=()=>{ivTime--;const t=root.getElementById('ivTime'),bar=root.getElementById('ivBar');if(t)t.textContent=ivTime;if(bar)bar.style.width=(ivTime/20*100)+'%';if(ivTime<=0){clearInterval(ivTimer);if(!ivGame.dataset.locked){ivGame.dataset.locked='1';ivBad();setIvFeedback('Time! '+v[0]+' – '+v[1]+' – '+v[2],false);setTimeout(()=>{ivGame.dataset.locked='';nextIv()},800)}}};
+    const v=currentVerb();const ask=Math.random()<.5?1:2;const opts=formOptions(v,ask);
+    ivGame.innerHTML='<div class="iv-kicker">Lightning · choose '+(ask===1?'Past Simple (V2)':'Past Participle (V3)')+' · 20 seconds</div><div class="iv-timer">Time: <span id="ivTime">20</span>s</div><div class="iv-bar"><span id="ivBar"></span></div><div class="iv-prompt">'+v[0]+'</div><div class="iv-options">'+opts.map(o=>'<button type="button" class="iv-option">'+o+'</button>').join('')+'</div><div id="ivFeedback" class="iv-feedback"></div>';
+    const tick=()=>{ivTime--;const t=root.getElementById('ivTime'),bar=root.getElementById('ivBar');if(t)t.textContent=ivTime;if(bar)bar.style.width=(ivTime/20*100)+'%';if(ivTime<=0){clearInterval(ivTimer);if(!ivGame.dataset.locked){ivGame.dataset.locked='1';ivBad();setIvFeedback('Time! '+v[0]+' – '+v[1]+' – '+v[2],false);queueIv(800)}}};
     ivTimer=setInterval(tick,1000);
     [...ivGame.querySelectorAll('.iv-option')].forEach(btn=>btn.addEventListener('click',()=>{
       if(ivGame.dataset.locked)return;ivGame.dataset.locked='1';clearInterval(ivTimer);
       if(btn.textContent===v[ask]){btn.classList.add('correct');ivGood(20);setIvFeedback('Lightning point! +20',true)}
       else{btn.classList.add('wrong');ivBad();setIvFeedback('Correct: '+v[ask],false)}
-      setTimeout(()=>{ivGame.dataset.locked='';nextIv()},650);
+      queueIv(650);
     }));
   }
   function renderIvGameOver(){
@@ -752,12 +785,12 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
     root.getElementById('ivAgain').addEventListener('click',restartIv);
   }
   function renderIv(){clearInterval(ivTimer);if(ivLives<=0){renderIvGameOver();return}if(ivMode==='flip')renderIvFlip();else if(ivMode==='triple')renderIvTriple();else if(ivMode==='missing')renderIvMissing();else renderIvLightning()}
-  function restartIv(){clearInterval(ivTimer);ivScore=0;ivStreak=0;ivLives=3;resetIvDeck();ivStats();renderIv()}
+  function restartIv(){clearTimeout(ivPending);ivGame.dataset.locked="";clearInterval(ivTimer);ivScore=0;ivStreak=0;ivLives=3;resetIvDeck();ivStats();renderIv()}
   root.querySelectorAll('.iv-mode').forEach(btn=>btn.addEventListener('click',()=>{root.querySelectorAll('.iv-mode').forEach(b=>b.classList.toggle('active',b===btn));ivMode=btn.dataset.ivMode;restartIv()}));
   root.getElementById('ivRestart').addEventListener('click',restartIv);
   resetIvDeck();ivStats();renderIv();
 
-  const ids=['home','modules','vocab','irregular','grammar','reading','speed','exit'];
+  const ids=['home','modules','lesson','vocab','irregular','grammar','reading','speed','exit'];
   let currentScreen='home';const screenHistory=[];
   root.getElementById('backScreen').addEventListener('click',()=>go(screenHistory.pop()||'home',false));
   const fullButton=root.getElementById('fullscreen');
@@ -768,15 +801,16 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
   function go(id,remember=true){
     if(!ids.includes(id))return;
     if(remember&&id!==currentScreen)screenHistory.push(currentScreen);
-    if(currentScreen==='speed'&&id!=='speed')clearInterval(timerId);if(currentScreen==='irregular'&&id!=='irregular')clearInterval(ivTimer);
+    if(currentScreen==='speed'&&id!=='speed')clearInterval(timerId);if(currentScreen==='irregular'&&id!=='irregular'){clearInterval(ivTimer);clearTimeout(ivPending);ivGame.dataset.locked='';}
     currentScreen=id;root.getElementById('backScreen').hidden=id==='home';
     const onHome=id==='home';
     app.classList.toggle('home-mode',onHome);
-    document.body.style.overflow=onHome?'hidden':'';
+    document.body.style.overflow='hidden';
+    if(id==='irregular')renderIv();
     root.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
     root.querySelectorAll('.navbtn').forEach(b=>{b.classList.toggle('active',b.dataset.go===id);if(b.dataset.go===id)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
     const idx=ids.indexOf(id);root.getElementById('progress').style.width=(idx/(ids.length-1)*100)+'%';
-    window.scrollTo({top:0,behavior:'smooth'});
+    root.querySelector('main').scrollTo({top:0,behavior:'instant'});
   }
   root.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
   root.getElementById('resetLesson').addEventListener('click',()=>location.reload());
@@ -810,3 +844,4 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
 </script>
 </body>
 </html>
+
