@@ -66,6 +66,19 @@ h1{font-size:clamp(1.5rem,4vw,2.55rem);line-height:1.05;margin:13px 0 9px;color:
 .footerline{color:var(--muted);font-size:.88rem;margin-top:18px}
 @media(max-width:860px){.shell{grid-template-columns:1fr}.sidebar{position:static;display:flex;overflow:auto;gap:4px}.navbtn{width:auto;white-space:nowrap}.hero-grid{grid-template-columns:1fr}.hero-visual{min-height:310px;order:-1;padding:26px}.hero-photo{height:300px;width:min(78%,350px)}.hero-copy{padding:26px}.cover-logo{font-size:clamp(4.2rem,18vw,7rem)}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.shell{padding:10px}.grid{grid-template-columns:1fr}.match{grid-template-columns:1fr}.topbar-inner{padding:8px 10px}.brand{font-size:.8rem}.score{font-size:.82rem}.card{padding:16px}.hero{min-height:0}.hero-grid{min-height:0}.hero::before{top:108px;height:115px}.section-head{align-items:flex-start;flex-direction:column;background:var(--purple)}}
+
+.module-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.module-btn{border:2px solid #ddd0e4;background:#fff;border-radius:18px;padding:16px;text-align:left;font-weight:900;color:var(--purple-dark);box-shadow:0 7px 18px rgba(67,28,92,.09);min-height:118px}
+.module-btn:hover,.module-btn.active{background:var(--lime);border-color:var(--purple);color:var(--purple-dark)}
+.module-no{font-size:2rem;line-height:1;font-weight:1000;color:var(--purple)}
+.module-title{margin-top:6px;font-size:1.08rem;font-weight:900}.module-page{margin-top:4px;color:var(--muted);font-size:.92rem}
+.module-detail{margin-top:14px}.module-detail h3{margin:0 0 10px;font-size:1.55rem;color:var(--purple-dark)}
+.module-columns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:12px}
+.module-box{background:#fff;border:2px solid #e2d5e9;border-radius:16px;padding:14px}.module-box h4{margin:0 0 8px;color:var(--purple);font-size:1rem}
+.module-box ul{margin:0;padding-left:18px}.module-box li{margin:5px 0}.module-open{margin-top:14px}
+@media(max-width:860px){.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.module-columns{grid-template-columns:1fr}}
+@media(max-width:520px){.module-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -81,6 +94,7 @@ h1{font-size:clamp(1.5rem,4vw,2.55rem);line-height:1.05;margin:13px 0 9px;color:
   <div class="shell">
     <aside class="sidebar" aria-label="Lesson navigation">
       <button class="navbtn active" data-go="home">Start</button>
+      <button class="navbtn" data-go="modules">Modules</button>
       <button class="navbtn" data-go="vocab">1 Vocabulary</button>
       <button class="navbtn" data-go="grammar">2 Grammar</button>
       <button class="navbtn" data-go="reading">3 Reading</button>
@@ -99,6 +113,7 @@ h1{font-size:clamp(1.5rem,4vw,2.55rem);line-height:1.05;margin:13px 0 9px;color:
               <p>Lesson 1: clothes, accessories and style. Learn the words, describe what people wear, read, play and finish the challenge.</p>
               <div class="actions">
                 <button class="primary" data-go="vocab">START LESSON</button>
+                <button class="secondary" data-go="modules">MODULES</button>
                 <span class="badge">A2 · 45–60 min</span>
               </div>
             </div>
@@ -107,6 +122,26 @@ h1{font-size:clamp(1.5rem,4vw,2.55rem);line-height:1.05;margin:13px 0 9px;color:
               <div class="hero-photo" role="img" aria-label="Teenagers studying English"></div>
             </div>
           </div>
+        </div>
+      </section>
+
+
+      <section id="modules" class="screen">
+        <div class="section-head">
+          <div>
+            <h2>Modules Overview</h2>
+            <p>Tap a module to see its vocabulary, grammar and skills.</p>
+          </div>
+          <span class="badge">Units 0–8</span>
+        </div>
+
+        <div class="card">
+          <div id="moduleButtons" class="module-grid"></div>
+        </div>
+
+        <div id="moduleDetail" class="card module-detail">
+          <h3>Select a module</h3>
+          <p>Choose any module button above to open the course map.</p>
         </div>
       </section>
 
@@ -186,6 +221,81 @@ h1{font-size:clamp(1.5rem,4vw,2.55rem);line-height:1.05;margin:13px 0 9px;color:
     ['scarf','шарф','https://images.unsplash.com/photo-1609803384069-19f3e5a70e75?auto=format&fit=crop&w=800&q=80']
   ];
   const root=document;
+
+  const modules = [
+    {no:'0',title:'Get started!',page:'p.4',
+      vocab:['Free-time activities','Adjectives','Weather'],
+      grammar:['Present Simple and Present Continuous','Stative verbs','Present Continuous for future arrangements','Comparative and superlative adjectives','Articles','was / were'],
+      skills:['Introducing oneself','Talking about arrangements','Opinions and holidays']},
+    {no:'1',title:'Who we are',page:'p.10',
+      vocab:['Clothes and accessories','Describing clothes','Hairstyles','Personality adjectives','Negative adjectives'],
+      grammar:['Past Simple','Past Continuous and Past Simple'],
+      skills:['Communication: telling a story and reacting','Reading: Teenage fashions','Listening: First impressions','Writing: Describing a friend']},
+    {no:'2',title:'Working hard',page:'p.24',
+      vocab:['Jobs','Describing jobs','make and do','Learning and exams','Expressions with take'],
+      grammar:['have to / must / mustn’t','had to / could'],
+      skills:['Communication: asking for and giving advice','Reading: Weird and wonderful jobs','Listening: Learning and exams','Writing: Describing a school']},
+    {no:'3',title:'That’s exciting!',page:'p.38',
+      vocab:['Experiences','Sports verbs','Sports equipment','Compound nouns'],
+      grammar:['Present Perfect: ever / never','Present Perfect: just / already / yet'],
+      skills:['Communication: instructions','Reading: Girl power','Listening: Skydiving','Writing: A holiday email']},
+    {no:'4',title:'A good story',page:'p.52',
+      vocab:['Types of films and books','Life stages','Film jobs','Verbs followed by a preposition'],
+      grammar:['Present Perfect with for / since','Present Perfect and Past Simple'],
+      skills:['Communication: making and accepting apologies','Reading: Don’t forget to be awesome!','Listening: An extra','Writing: A review']},
+    {no:'5',title:'Don’t stop the music!',page:'p.66',
+      vocab:['Music styles and instruments','Music collocations','Crime','Personal qualities','Adjectives from nouns'],
+      grammar:['going to and will','Defining relative clauses: who / which / that / where'],
+      skills:['Communication: talking about plans','Reading: Alma Deutscher – the new Mozart?','Listening: A talent show','Writing: An email asking for information']},
+    {no:'6',title:'Protect the planet',page:'p.80',
+      vocab:['Wild animals','Environment verbs','Natural events','Big numbers'],
+      grammar:['First conditional','Verbs followed by infinitive or -ing'],
+      skills:['Communication: persuading','Reading: Message in a bottle','Listening: Natural events','Writing: A leaflet with tips or instructions']},
+    {no:'7',title:'Material world',page:'p.94',
+      vocab:['Materials','Adjectives to describe objects','Verbs of discovery and creativity','Technology verbs','Phrasal verbs with up and down'],
+      grammar:['Present Simple passive','Past Simple passive'],
+      skills:['Communication: asking for clarification','Checking understanding','Reading: What’s it made of?','Listening: Your favourite gadgets','Writing: Describing a popular product']},
+    {no:'8',title:'That’s life',page:'p.108',
+      vocab:['Relationships and conflicts','Feelings','Extreme adjectives'],
+      grammar:['be allowed to','Revision of tenses'],
+      skills:['Communication: sympathising and encouraging','Reading: Bedroom bullies','Listening: Bullying','Writing: Replying to a problem page letter']}
+  ];
+
+  const moduleButtons = root.getElementById('moduleButtons');
+  const moduleDetail = root.getElementById('moduleDetail');
+
+  function renderModuleDetail(index){
+    const m = modules[index];
+    moduleDetail.innerHTML = '<h3>Unit '+m.no+' · '+m.title+'</h3>'+
+      '<div class="badge">'+m.page+'</div>'+
+      '<div class="module-columns">'+
+        '<div class="module-box"><h4>Vocabulary</h4><ul>'+m.vocab.map(item=>'<li>'+item+'</li>').join('')+'</ul></div>'+
+        '<div class="module-box"><h4>Grammar</h4><ul>'+m.grammar.map(item=>'<li>'+item+'</li>').join('')+'</ul></div>'+
+        '<div class="module-box"><h4>Skills</h4><ul>'+m.skills.map(item=>'<li>'+item+'</li>').join('')+'</ul></div>'+
+      '</div>'+
+      '<div class="module-open">'+
+        (m.no==='1' ? '<button class="primary" data-go="vocab">Open Lesson 1</button>' : '<span class="badge">Module preview ready</span>')+
+      '</div>';
+
+    moduleDetail.querySelectorAll('[data-go]').forEach(btn=>{
+      btn.addEventListener('click',()=>go(btn.dataset.go));
+    });
+
+    root.querySelectorAll('.module-btn').forEach((btn,i)=>{
+      btn.classList.toggle('active',i===index);
+    });
+  }
+
+  modules.forEach((m,i)=>{
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='module-btn';
+    btn.innerHTML='<div class="module-no">'+m.no+'</div><div class="module-title">'+m.title+'</div><div class="module-page">'+m.page+'</div>';
+    btn.addEventListener('click',()=>renderModuleDetail(i));
+    moduleButtons.appendChild(btn);
+  });
+  renderModuleDetail(0);
+
   const wordgrid=root.getElementById('wordgrid');
   words.forEach(([w,r,img])=>{
     const b=document.createElement('button');b.type='button';b.className='wordcard';
@@ -273,7 +383,7 @@ h1{font-size:clamp(1.5rem,4vw,2.55rem);line-height:1.05;margin:13px 0 9px;color:
     root.getElementById('finalResult').textContent='Result: '+correct+'/5 · '+(correct===5?'Excellent recall.':correct>=4?'Very good. Review one word.':'Review the vocabulary cards and try again.');
   });
 
-  const ids=['home','vocab','grammar','reading','speed','exit'];
+  const ids=['home','modules','vocab','grammar','reading','speed','exit'];
   function go(id){
     root.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
     root.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('active',b.dataset.go===id));
