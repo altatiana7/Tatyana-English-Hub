@@ -78,6 +78,38 @@ function renderOld(p,key){if(p.lex?.length!==12||p.wf?.length!==10||p.art?.lengt
 function renderRepairArrays(vv,ww,aa,mm){const v=scoreRows(vv,repair.vKey,repair.vPrompts),w=scoreRows(ww,repair.wfKey,repair.wfPrompts),a=scoreRows(aa,repair.aKey,repair.aPrompts),m=scoreRows(mm,repair.mKey,repair.mPrompts),total=v.score+w.score+a.score+m.score;document.getElementById('summary').innerHTML=stat(total+'/35','TOTAL')+stat(v.score+'/8','VOCABULARY')+stat(w.score+'/5','WORD FORMATION')+stat(a.score+'/15','ARTICLES')+stat(m.score+'/7','CHALLENGE');document.getElementById('sections').innerHTML=section('Vocabulary Repair',v.html)+section('Word Formation',w.html)+section('Articles',a.html)+section('Mini Challenge',m.html);document.getElementById('meta').innerHTML='<b>Module 1 · Lesson 2 · Homework</b>'}function renderRepairShort(code){const vals=decodeShort(code);let p=0;renderRepairArrays(repair.vOpts.map(o=>o[vals[p++]]),repair.wfOpts.map(o=>o[vals[p++]]),repair.aOpts.map(o=>o[vals[p++]]),repair.mOpts.map(o=>o[vals[p++]]))}function renderRepairLong(p){renderRepairArrays(p.v,p.wf,p.a.map(x=>x==='zero'?'—':x),p.m.map(x=>x==='zero'?'—':x))}
 function renderLesson3(p){if(!Array.isArray(p.art)||p.art.length!==25)throw new Error('Lesson 3 code is incomplete.');const a=scoreRows(p.art,lesson3.key,lesson3.prompts);document.getElementById('summary').innerHTML=stat(a.score+'/25','TOTAL')+stat(a.score+'/25','ARTICLES');document.getElementById('sections').innerHTML=section('Articles · My First Music Festival',a.html);document.getElementById('meta').innerHTML='<b>Module 1 · Lesson 3 · Homework</b>'}
 
+function decodeLesson5Short(code){
+  const m=code.trim().toUpperCase().match(/^G5([A-HJ-NP-Z2-9]{11})([A-HJ-NP-Z2-9]{2})$/);
+  if(!m)throw new Error('Lesson 5 short code format is not correct.');
+  if(checksum(m[1])!==m[2])throw new Error('Lesson 5 short code has a typing error.');
+  let n=0n;for(const ch of m[1])n=n*32n+BigInt(ALPH.indexOf(ch));
+  const bits=Array(54).fill(0);for(let i=53;i>=0;i--){bits[i]=Number(n&1n);n>>=1n}
+  return bits;
+}
+function renderLesson5Short(bits){
+  if(!Array.isArray(bits)||bits.length!==54)throw new Error('Lesson 5 short code is incomplete.');
+  let pos=0,total=0,sections='',stats='';
+  lesson5.forEach((block)=>{
+    let score=0,html=head();
+    block.items.forEach((item,qi)=>{
+      const ok=!!bits[pos++]; if(ok){score++;total++}
+      html+=rowHTML(qi+1,item[0],ok?'correct':'incorrect',item[1],ok);
+    });
+    stats+=stat(score+'/12',block.title.toUpperCase());
+    sections+=section(block.title,html);
+  });
+  let wfScore=0,wfHtml=head();
+  lesson5wf.forEach((item,i)=>{
+    const ok=!!bits[pos++]; if(ok){wfScore++;total++}
+    wfHtml+=rowHTML(i+1,item[0],ok?'correct':'incorrect',item[1],ok);
+  });
+  stats+=stat(wfScore+'/18','WORD FORMATION');
+  sections+=section('Word Formation',wfHtml);
+  document.getElementById('summary').innerHTML=stat(total+'/54','TOTAL')+stats;
+  document.getElementById('sections').innerHTML=sections;
+  document.getElementById('meta').innerHTML='<b>Module 1 · Lesson 5 · Homework · short code</b>';
+}
+
 function renderLesson5(p){
   if(!Array.isArray(p.answers)||(p.answers.length!==3&&p.answers.length!==4))throw new Error('Lesson 5 code is incomplete.');
   let total=0,sections='',stats='',max=36;
@@ -111,4 +143,4 @@ function renderLesson5(p){
   document.getElementById('meta').innerHTML='<b>Module 1 · Lesson 5 · Homework</b>';
 }
 
-document.getElementById('checkBtn').onclick=async()=>{const st=document.getElementById('status');st.className='status';st.textContent='Opening…';document.getElementById('results').classList.add('hidden');try{const key=await decryptKey(document.getElementById('pin').value.trim());const raw=document.getElementById('code').value.trim();let payload=null;if(/^G2-/i.test(raw)){renderRepairShort(raw)}else{payload=JSON.parse(b64urlText(raw));if(payload.assignment==='life-plans-hw1')renderOld(payload,key);else if(payload.assignment==='gabi-repair-20260827')renderRepairLong(payload);else if(payload.assignment==='gabi-hw-2026-09-01')renderLesson3(payload);else if(payload.assignment==='gabi-hw-2026-09-08')renderLesson5(payload);else throw new Error('Unknown homework code.');const dt=payload.submitted?new Date(payload.submitted):null;if(dt&&!isNaN(dt))document.getElementById('meta').innerHTML+='<br><span class="note">Submitted: '+dt.toLocaleString()+'</span>'}document.getElementById('results').classList.remove('hidden');st.textContent='Submission opened ✓'}catch(e){st.className='status bad';st.textContent=e.name==='OperationError'?'PIN is not correct.':(e.message||'Could not open this submission code.')}};</script></body></html>
+document.getElementById('checkBtn').onclick=async()=>{const st=document.getElementById('status');st.className='status';st.textContent='Opening…';document.getElementById('results').classList.add('hidden');try{const key=await decryptKey(document.getElementById('pin').value.trim());const raw=document.getElementById('code').value.trim();let payload=null;if(/^G5[A-HJ-NP-Z2-9]{13}$/i.test(raw)){renderLesson5Short(decodeLesson5Short(raw))}else if(/^G2-/i.test(raw)){renderRepairShort(raw)}else{payload=JSON.parse(b64urlText(raw));if(payload.assignment==='life-plans-hw1')renderOld(payload,key);else if(payload.assignment==='gabi-repair-20260827')renderRepairLong(payload);else if(payload.assignment==='gabi-hw-2026-09-01')renderLesson3(payload);else if(payload.assignment==='gabi-hw-2026-09-08')renderLesson5(payload);else throw new Error('Unknown homework code.');const dt=payload.submitted?new Date(payload.submitted):null;if(dt&&!isNaN(dt))document.getElementById('meta').innerHTML+='<br><span class="note">Submitted: '+dt.toLocaleString()+'</span>'}document.getElementById('results').classList.remove('hidden');st.textContent='Submission opened ✓'}catch(e){st.className='status bad';st.textContent=e.name==='OperationError'?'PIN is not correct.':(e.message||'Could not open this submission code.')}};</script></body></html>
