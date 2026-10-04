@@ -121,6 +121,14 @@ html.teacher-mode #teacherRoot{display:grid!important}
 #teacherRoot .t-modwrap:not(:first-child) .t-lessons{display:none}
 #teacherRoot .t-module:hover,#teacherRoot .t-lesson:hover,#teacherRoot .t-home:hover,#teacherRoot .t-covernotes:hover{background:rgba(205,149,141,.14)!important}
 #teacherRoot button:focus-visible{outline:3px solid #8d5048;outline-offset:-3px}
+#teacherRoot .t-usefultool{
+  position:absolute;left:7%;top:84.8%;width:86%;height:4.8%;
+  border:1px solid rgba(126,78,70,.24);border-radius:12px;
+  background:rgba(255,247,242,.90);color:#7e4e46;
+  font-size:10px;font-weight:900;letter-spacing:.08em;
+  pointer-events:auto;box-shadow:0 5px 14px rgba(70,42,35,.09)
+}
+#teacherRoot .t-usefultool:hover{background:#fff7f2}
 #teacherRoot .t-covernotes{top:90.3%;height:5.8%;font-size:0}
 #teacherRoot .t-view{z-index:10}
 #teacherRoot .t-top{background:#f4e9e2;color:#352323;border-bottom:1px solid #dfc2b8}
@@ -148,7 +156,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
       <aside class="t-side"><img class="t-sidebar-art" id="tSidebarArt" alt="">
         <div class="t-brand"><b>Katya · Teacher Hub</b><span>Teacher workspace</span></div>
         <button class="t-home" id="tHome">Home</button>
-        <div id="tModules"></div><button class="t-covernotes" id="tCoverNotes" aria-label="Teacher Notes">Teacher Notes</button>
+        <div id="tModules"></div><button class="t-usefultool" id="tUsefulTool" aria-label="Useful Tool">USEFUL TOOL</button><button class="t-covernotes" id="tCoverNotes" aria-label="Teacher Notes">Teacher Notes</button>
       </aside>
       <main class="t-work"><button class="t-board-fullscreen" id="tBoardFullscreen">На весь экран</button><button class="t-speaking-tab" id="tSpeakingTab" aria-label="Open Speaking activity">SPEAKING</button>
         <section class="t-cover"><img class="t-art" id="tArt" alt="Katya English Hub — Small steps. Big progress."></section><section class="t-module-dialog" id="tModuleDialog" role="dialog" aria-modal="true" aria-labelledby="tModuleTitle" hidden><h2 id="tModuleTitle"></h2><p>Материалы этого модуля пока не добавлены.</p><button id="tModuleClose">Назад</button></section>
@@ -190,8 +198,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
     const course=[
       {module:'Module 1',lessons:[
         {id:'m1l1',title:'Lesson 1 · Elections in Russia',url:'extra-practice-elections-russia.html'},
-        {id:'m1l2',title:'Lesson 2 · Generations',url:'homework-lesson2-generations.html'},
-        {id:'m1l3',title:'Lesson 3 · Useful Tools',url:'useful-tools-false-synonyms.html'}
+        {id:'m1l2',title:'Lesson 2 · Generations',url:'homework-lesson2-generations.html'}
       ]},
       ...Array.from({length:7},(_,i)=>({module:'Module '+(i+2),lessons:[
         {id:'m'+(i+2)+'l1',title:'Lesson 1',url:''},
@@ -252,6 +259,17 @@ html.teacher-mode #teacherRoot{display:grid!important}
     document.getElementById('tNoteClose').onclick=()=>notes.classList.remove('on');
     document.getElementById('tCoverNotes').onclick=()=>{current='general';document.getElementById('tNotesTitle').textContent='Teacher Notes';document.getElementById('tNoteText').value=localStorage.getItem('katya_teacher_general')||'';notes.classList.add('on');document.getElementById('tNoteText').focus()};
     document.addEventListener('keydown',e=>{if(e.key==='Escape'){notes.classList.remove('on');document.getElementById('tModuleDialog').hidden=true;goHome()}});
+    document.getElementById('tUsefulTool').onclick=()=>{
+      current='useful_tools';
+      document.querySelectorAll('#teacherRoot .t-lesson').forEach(x=>x.classList.remove('active'));
+      document.getElementById('tTitle').textContent='Useful Tool · False Synonyms';
+      document.getElementById('tNotesTitle').textContent='Useful Tool · False Synonyms · Notes';
+      document.getElementById('tNoteText').value=localStorage.getItem('katya_teacher_'+current)||'';
+      document.getElementById('tNotes').classList.remove('on');
+      document.getElementById('tPlaceholder').classList.remove('on');
+      const fr=document.getElementById('tFrame');fr.style.display='block';fr.src='useful-tools-false-synonyms.html';
+      document.getElementById('tView').classList.add('on');
+    };
     document.getElementById('tSpeakingTab').onclick=()=>{
       current='speaking_music_studying';
       document.querySelectorAll('#teacherRoot .t-lesson').forEach(x=>x.classList.remove('active'));
