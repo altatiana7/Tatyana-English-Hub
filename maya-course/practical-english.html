@@ -27,9 +27,9 @@ button,input{font:inherit}button{cursor:pointer}.shell{height:100%;display:grid;
 .qList{display:grid;gap:8px}.q{background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px 11px;font-weight:800}.step{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:9px}
 .listenList{display:grid;gap:8px}.listenRow{display:grid;grid-template-columns:54px 1fr 150px 86px;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px}.play{width:44px;height:44px;border-radius:50%;border:0;background:#17213c;color:#fff;font-weight:950}.gapSentence{font-weight:850}.listenRow input{width:100%;border:1px solid #cfd7e6;border-radius:10px;padding:9px}.miniCheck{border:0;background:#6b4fe4;color:#fff;border-radius:10px;padding:9px;font-weight:900}.explain{grid-column:2/5;display:none;font-size:12px;border-radius:10px;padding:8px 9px}.explain.show{display:block}
 .problemGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.problem{border:0;border-radius:16px;padding:15px;text-align:left;min-height:115px;background:#fff;border:1px solid var(--line)}.problem b{font-size:17px;display:block}.problem span{font-size:12px;color:var(--muted)}.problem.revealed{background:#f0ecff;border-color:#a994f1}.problem .answer{display:none;margin-top:8px;font-weight:850;color:#4b33b2}.problem.revealed .answer{display:block}
-.bridge{display:grid;grid-template-columns:1fr 80px 1fr;gap:12px;align-items:center}.bridgeLine{height:8px;background:linear-gradient(90deg,var(--pink),var(--violet),var(--teal));border-radius:999px}.edition{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}.edition .tag{display:inline-block;font-size:10px;font-weight:950;border-radius:999px;padding:5px 8px;background:#ede8ff;color:#5034c1}.edition h3{font-size:24px;margin:8px 0 5px}.arrowText{text-align:center;font-size:11px;font-weight:950;color:#6b4fe4}
+.videoLesson{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-bottom:12px}.videoWrap{position:relative;padding-top:56.25%;border-radius:18px;overflow:hidden;background:#111}.videoWrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.watchTasks{display:grid;gap:8px}.watchTask{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}.watchTask b{display:block;margin-bottom:4px}.bridge{display:grid;grid-template-columns:1fr 80px 1fr;gap:12px;align-items:center}.bridgeLine{height:8px;background:linear-gradient(90deg,var(--pink),var(--violet),var(--teal));border-radius:999px}.edition{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}.edition .tag{display:inline-block;font-size:10px;font-weight:950;border-radius:999px;padding:5px 8px;background:#ede8ff;color:#5034c1}.edition h3{font-size:24px;margin:8px 0 5px}.arrowText{text-align:center;font-size:11px;font-weight:950;color:#6b4fe4}
 .roleWrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:10px}.roleProblem{min-height:330px;border-radius:20px;background:linear-gradient(135deg,#17315c,#5f4ee8);color:#fff;padding:22px;display:flex;flex-direction:column;justify-content:center}.roleProblem .big{font-size:40px;font-weight:950;line-height:1}.rolePrompt{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px}.timer{font-size:52px;font-weight:950;color:var(--pink)}.source{margin-top:10px;font-size:10px;color:#7b879e}
-@media(max-width:950px){.hero{grid-template-columns:1fr}.heroPhoto{display:none}.grid{grid-template-columns:repeat(2,1fr)}.revealGrid,.roleWrap{grid-template-columns:1fr}.bridge{grid-template-columns:1fr}.bridgeLine{height:6px}.listenRow{grid-template-columns:48px 1fr 110px}.miniCheck{grid-column:2/4}.explain{grid-column:1/4}.problemGrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:950px){.videoLesson{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.heroPhoto{display:none}.grid{grid-template-columns:repeat(2,1fr)}.revealGrid,.roleWrap{grid-template-columns:1fr}.bridge{grid-template-columns:1fr}.bridgeLine{height:6px}.listenRow{grid-template-columns:48px 1fr 110px}.miniCheck{grid-column:2/4}.explain{grid-column:1/4}.problemGrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.top{height:58px}.badge{display:none}.home{padding:8px}.heroText h2{font-size:24px}.grid{grid-template-columns:1fr}.tile{min-height:110px}.cards2,.cards3,.problemGrid{grid-template-columns:1fr}.photoReveal{min-height:420px}.listenRow{grid-template-columns:48px 1fr}.listenRow input,.miniCheck{grid-column:2}.explain{grid-column:1/3}}
 </style>
 </head>
@@ -53,7 +53,7 @@ button,input{font:inherit}button{cursor:pointer}.shell{height:100%;display:grid;
       <button class="tile t2" data-open="photo"><span class="n">02</span><b>Behind the Photo</b><small>Three-stage reveal. Predict, describe, discover the hotel problem.</small></button>
       <button class="tile t3" data-open="listen"><span class="n">03</span><b>Listen & Fill the Verb</b><small>Six short hotel lines. Hear the full sentence, type the missing verb, check.</small></button>
       <button class="tile t4" data-open="problems"><span class="n">04</span><b>Hotel Problem Lab</b><small>Wi-Fi · AC · towels · hot water · TV · key card. Build natural complaints.</small></button>
-      <button class="tile t5" data-open="bridge"><span class="n">05</span><b>Jenny → Izzy Bridge</b><small>Why we now move into Practical English and what Maya listens for in each edition.</small></button>
+      <button class="tile t5" data-open="bridge"><span class="n">05</span><b>Real Video → Jenny / Izzy</b><small>Hotel Complaints: predict → watch → remember → notice language → transfer to English File.</small></button>
       <button class="tile t6" data-open="role"><span class="n">06</span><b>Reception Challenge</b><small>Random problem + 30 seconds + receptionist response. Speak without a script.</small></button>
     </section>
   </main>
@@ -95,14 +95,33 @@ button,input{font:inherit}button{cursor:pointer}.shell{height:100%;display:grid;
 <div class="card" style="margin-top:10px"><h3>Natural English</h3><p class="small">A good complaint is specific, calm and easy to act on.</p><div class="cards2" id="naturalCards"></div></div>
 </div></div></section>
 
-<section class="overlay" id="bridge"><div class="ovTop"><button class="close">← MENU</button><h2>05 · From Maya’s Hotel Problem to Jenny / Izzy</h2><button class="audioBtn" data-say="You can describe the problem now. Next, listen for how the English File characters do the same job in a real hotel conversation.">PLAY BRIDGE</button></div><div class="content"><div class="panel">
-<div class="card" style="margin-bottom:10px;background:#fff6d8"><b>Transition</b><div class="prompt">Maya can already say what is wrong. The new question is: how does a guest get help politely and quickly?</div></div>
-<div class="bridge">
-<div class="edition"><span class="tag">4th EDITION</span><h3>Jenny + Rob</h3><p>Hotel problems. Before the scene, predict which problem happens. During it, listen only for the complaint and the receptionist’s solution.</p><div class="choiceRow"><button class="choice">air conditioning</button><button class="choice">Wi-Fi</button><button class="choice">towels</button><button class="choice">key card</button></div><p class="small">After: Which exact phrase did you hear? What did Reception promise to do?</p></div>
-<div><div class="bridgeLine"></div><div class="arrowText">SAME FUNCTION<br>NEW STORY</div></div>
-<div class="edition"><span class="tag">5th EDITION</span><h3>Ben + Izzy + Emma</h3><p>A visit from the USA. Now Maya transfers the same functional language into the newer storyline instead of learning it again from zero.</p><div class="choiceRow"><button class="choice">Who has the problem?</button><button class="choice">What is not working?</button><button class="choice">What does Reception offer?</button></div><p class="small">Key listening target: There’s a problem with… / It isn’t working. / I’ll…</p></div>
+<section class="overlay" id="bridge"><div class="ovTop"><button class="close">← MENU</button><h2>05 · Real Video → Jenny / Izzy</h2><button class="audioBtn" data-say="First watch for the situation. Do not try to understand every word. After the video, tell me what went wrong.">PLAY TASK</button></div><div class="content"><div class="panel">
+<div class="videoLesson">
+  <div>
+    <div class="videoWrap"><iframe src="https://www.youtube.com/embed/k5Ggr_LYOwU?rel=0" title="Hotel Complaints · Top Notch TV" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    <div class="source">Video source: Top Notch TV via Listen in English · Hotel Complaints · 2:17.</div>
+  </div>
+  <div class="watchTasks">
+    <div class="watchTask"><b>BEFORE WATCHING</b><span class="small">Which problems do you expect: luggage · wrong bed · dirty towels · TV · no lift · smoking room?</span></div>
+    <div class="watchTask"><b>WATCH 1 · GIST</b><span class="small">Who is complaining? Is the main problem the room, the hotel, or the reservation?</span></div>
+    <div class="watchTask"><b>FROM MEMORY</b><span class="small">Name as many hotel problems as you can. Do not replay yet.</span></div>
+    <div class="watchTask"><b>WATCH 2 · DETAIL</b><span class="small">Listen for: had to · wanted · requested · gave · didn’t make up · are dirty.</span></div>
+    <div class="watchTask"><b>LANGUAGE NOTICE</b><span class="small">Which complaints are facts now, and which describe what happened before she called?</span></div>
+  </div>
 </div>
-<div class="card" style="margin-top:10px"><b>Teacher bridge sentence</b><div class="prompt">“You’ve solved the problem as Maya. Now let’s see how English File guests handle the same situation.”</div></div>
+
+<div class="card" style="margin-bottom:10px;background:#fff6d8">
+  <b>Why this comes before Jenny / Izzy</b>
+  <div class="prompt">Maya has now heard a real hotel complaint with several problems. Next we narrow the task: not “tell the whole bad experience”, but “call Reception and get one problem fixed”.</div>
+</div>
+
+<div class="bridge">
+<div class="edition"><span class="tag">4th EDITION</span><h3>Jenny + Rob</h3><p>Now listen for a shorter, more functional hotel exchange. Maya already understands the context, so the listening target becomes the exact complaint + the receptionist’s response.</p><div class="choiceRow"><button class="choice">What is wrong?</button><button class="choice">What phrase starts the complaint?</button><button class="choice">What does Reception promise?</button></div><p class="small">Focus: There’s a problem with… / It isn’t working. / I’ll…</p></div>
+<div><div class="bridgeLine"></div><div class="arrowText">SAME SITUATION<br>MORE PRECISE LANGUAGE</div></div>
+<div class="edition"><span class="tag">5th EDITION</span><h3>Ben + Izzy + Emma</h3><p>Transfer the same functional language into the newer storyline. Maya does not learn the phrases again — she notices who says them and how quickly the problem is solved.</p><div class="choiceRow"><button class="choice">Who calls?</button><button class="choice">What isn’t working?</button><button class="choice">What does Reception offer?</button></div><p class="small">Final transfer: change the problem and role-play the call without text.</p></div>
+</div>
+
+<div class="card" style="margin-top:10px"><b>Teacher transition</b><div class="prompt">“Mrs Beatty had a whole list of complaints. Jenny and Izzy have a simpler job: one problem, one phone call, one solution. Listen for the exact language they use.”</div></div>
 </div></div></section>
 
 <section class="overlay" id="role"><div class="ovTop"><button class="close">← MENU</button><h2>06 · Reception Challenge</h2><button class="audioBtn" data-say="You are the guest. You have thirty seconds. Explain the problem and ask for help.">PLAY INSTRUCTION</button></div><div class="content"><div class="panel">
