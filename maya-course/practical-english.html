@@ -27,7 +27,7 @@ button,input{font:inherit}button{cursor:pointer}.shell{height:100%;display:grid;
 .qList{display:grid;gap:8px}.q{background:#fff;border:1px solid var(--line);border-radius:13px;padding:10px 11px;font-weight:800}.step{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:9px}
 .listenList{display:grid;gap:8px}.listenRow{display:grid;grid-template-columns:54px 1fr 150px 86px;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:9px}.play{width:44px;height:44px;border-radius:50%;border:0;background:#17213c;color:#fff;font-weight:950}.gapSentence{font-weight:850}.listenRow input{width:100%;border:1px solid #cfd7e6;border-radius:10px;padding:9px}.miniCheck{border:0;background:#6b4fe4;color:#fff;border-radius:10px;padding:9px;font-weight:900}.explain{grid-column:2/5;display:none;font-size:12px;border-radius:10px;padding:8px 9px}.explain.show{display:block}
 .problemGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.problem{border:0;border-radius:16px;padding:15px;text-align:left;min-height:115px;background:#fff;border:1px solid var(--line)}.problem b{font-size:17px;display:block}.problem span{font-size:12px;color:var(--muted)}.problem.revealed{background:#f0ecff;border-color:#a994f1}.problem .answer{display:none;margin-top:8px;font-weight:850;color:#4b33b2}.problem.revealed .answer{display:block}
-.videoLesson{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-bottom:12px}.videoWrap{position:relative;padding-top:56.25%;border-radius:18px;overflow:hidden;background:#111}.videoWrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.watchTasks{display:grid;gap:8px}.watchTask{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}.watchTask b{display:block;margin-bottom:4px}.bridge{display:grid;grid-template-columns:1fr 80px 1fr;gap:12px;align-items:center}.bridgeLine{height:8px;background:linear-gradient(90deg,var(--pink),var(--violet),var(--teal));border-radius:999px}.edition{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}.edition .tag{display:inline-block;font-size:10px;font-weight:950;border-radius:999px;padding:5px 8px;background:#ede8ff;color:#5034c1}.edition h3{font-size:24px;margin:8px 0 5px}.arrowText{text-align:center;font-size:11px;font-weight:950;color:#6b4fe4}
+.videoLesson{display:grid;grid-template-columns:1.15fr .85fr;gap:12px;margin-bottom:12px}.videoWrap{position:relative;padding-top:56.25%;border-radius:18px;overflow:hidden;background:#111}.videoWrap iframe,.videoWrap video{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;object-fit:contain}.efTabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:10px}.efTab{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 10px;font-weight:900;color:var(--ink)}.efTab.active{background:var(--violet);border-color:var(--violet);color:#fff}.efPane{display:none}.efPane.active{display:block}.storyBridge{background:linear-gradient(120deg,#fff4c9,#f1ebff);border:1px solid #eadfbe;border-radius:16px;padding:12px;margin-top:10px}.tfGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.tf{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px;font-weight:800}.watchTasks{display:grid;gap:8px}.watchTask{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}.watchTask b{display:block;margin-bottom:4px}.bridge{display:grid;grid-template-columns:1fr 80px 1fr;gap:12px;align-items:center}.bridgeLine{height:8px;background:linear-gradient(90deg,var(--pink),var(--violet),var(--teal));border-radius:999px}.edition{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}.edition .tag{display:inline-block;font-size:10px;font-weight:950;border-radius:999px;padding:5px 8px;background:#ede8ff;color:#5034c1}.edition h3{font-size:24px;margin:8px 0 5px}.arrowText{text-align:center;font-size:11px;font-weight:950;color:#6b4fe4}
 .roleWrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:10px}.roleProblem{min-height:330px;border-radius:20px;background:linear-gradient(135deg,#17315c,#5f4ee8);color:#fff;padding:22px;display:flex;flex-direction:column;justify-content:center}.roleProblem .big{font-size:40px;font-weight:950;line-height:1}.rolePrompt{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px}.timer{font-size:52px;font-weight:950;color:var(--pink)}.source{margin-top:10px;font-size:10px;color:#7b879e}
 @media(max-width:950px){.videoLesson{grid-template-columns:1fr}.hero{grid-template-columns:1fr}.heroPhoto{display:none}.grid{grid-template-columns:repeat(2,1fr)}.revealGrid,.roleWrap{grid-template-columns:1fr}.bridge{grid-template-columns:1fr}.bridgeLine{height:6px}.listenRow{grid-template-columns:48px 1fr 110px}.miniCheck{grid-column:2/4}.explain{grid-column:1/4}.problemGrid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.top{height:58px}.badge{display:none}.home{padding:8px}.heroText h2{font-size:24px}.grid{grid-template-columns:1fr}.tile{min-height:110px}.cards2,.cards3,.problemGrid{grid-template-columns:1fr}.photoReveal{min-height:420px}.listenRow{grid-template-columns:48px 1fr}.listenRow input,.miniCheck{grid-column:2}.explain{grid-column:1/3}}
@@ -52,7 +52,7 @@ button,input{font:inherit}button{cursor:pointer}.shell{height:100%;display:grid;
       <button class="tile t1" data-open="memory"><span class="n">01</span><b>Memory Challenge</b><small>Questions · people · grammar · place. Fast retrieval from File 1.</small></button>
       <button class="tile t2" data-open="photo"><span class="n">02</span><b>Behind the Photo</b><small>Three-stage reveal. Predict, describe, discover the hotel problem.</small></button>
       <button class="tile t3" data-open="problems"><span class="n">03</span><b>Hotel Problem Lab</b><small>Wi-Fi · AC · towels · hot water · TV · key card. Build natural complaints.</small></button>
-      <button class="tile t4" data-open="bridge"><span class="n">04</span><b>English File Video</b><small>Rob calls Reception: predict → watch → remember → notice the exact functional language.</small></button>
+      <button class="tile t4" data-open="bridge"><span class="n">04</span><b>English File · 4e + 5e</b><small>Rob/Jenny + Ben/Izzy/Emma. Real embedded videos: story → hotel → functional language.</small></button>
       <button class="tile t5" data-open="listen"><span class="n">05</span><b>Listening Accuracy</b><small>Replay the real clip, restore the missing verbs, check the phrase and meaning.</small></button>
       <button class="tile t6" data-open="role"><span class="n">06</span><b>Reception Challenge</b><small>Random problem + 30 seconds + receptionist response. Speak without a script.</small></button>
     </section>
@@ -112,40 +112,74 @@ button,input{font:inherit}button{cursor:pointer}.shell{height:100%;display:grid;
 <div class="card" style="margin-top:10px"><h3>Natural English</h3><p class="small">A good complaint is specific, calm and easy to act on.</p><div class="cards2" id="naturalCards"></div></div>
 </div></div></section>
 
-<section class="overlay" id="bridge"><div class="ovTop"><button class="close">← MENU</button><h2>04 · English File Video · Calling Reception</h2><button class="audioBtn" data-say="First watch for the situation. Who does Rob call, and why? Do not read a script yet.">PLAY TASK</button></div><div class="content"><div class="panel">
-<div class="videoLesson">
-  <div>
-    <div class="videoWrap"><iframe src="https://www.youtube.com/embed/hq0-y-iYgBI?playsinline=1&rel=0" title="English File · Rob Comes to New York" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-    <div class="source">The uploaded 57-second MP4 is the exact Calling Reception scene. This public embed is the online fallback for Maya.</div>
+<section class="overlay" id="bridge"><div class="ovTop"><button class="close">← MENU</button><h2>04 · English File · 4th + 5th Editions</h2><button class="audioBtn" data-say="Choose an edition. Watch first for the story, then focus on the hotel language.">PLAY TASK</button></div><div class="content"><div class="panel">
+
+<div class="efTabs">
+  <button class="efTab active" data-ef="fourth">4th · ROB CALLS RECEPTION</button>
+  <button class="efTab" data-ef="recap">5th · STORY SO FAR</button>
+  <button class="efTab" data-ef="six">5th · SIX MONTHS LATER</button>
+</div>
+
+<div class="efPane active" data-efpane="fourth">
+  <div class="videoLesson">
+    <div>
+      <div class="videoWrap"><iframe src="https://www.youtube.com/embed/hq0-y-iYgBI?playsinline=1&rel=0" title="English File 4th · Rob calls Reception" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+      <div class="source">4th edition · Rob · Calling Reception.</div>
+    </div>
+    <div class="watchTasks">
+      <div class="watchTask"><b>BEFORE WATCHING</b><span class="small">Rob is in room 613. Predict two problems he might have.</span></div>
+      <div class="watchTask"><b>WATCH 1 · GIST</b><span class="small">How many times does Rob call Reception?</span></div>
+      <div class="watchTask"><b>FROM MEMORY</b><span class="small">Problem 1 = ? · Problem 2 = ? · Which one needs IT?</span></div>
+      <div class="watchTask"><b>WATCH 2 · SOLUTIONS</b><span class="small">What does Reception promise after each complaint?</span></div>
+    </div>
   </div>
-  <div class="watchTasks">
-    <div class="watchTask"><b>BEFORE WATCHING</b><span class="small">Rob is in room 613. Predict two hotel problems he might have.</span></div>
-    <div class="watchTask"><b>WATCH 1 · GIST</b><span class="small">Who does Rob call? How many calls does he make?</span></div>
-    <div class="watchTask"><b>FROM MEMORY</b><span class="small">Problem 1 = ? · Problem 2 = ? · Which one needs IT?</span></div>
-    <div class="watchTask"><b>WATCH 2 · SOLUTIONS</b><span class="small">What does Reception promise to do after each complaint?</span></div>
-    <div class="watchTask"><b>DO NOT SHOW SCRIPT YET</b><span class="small">Maya should retrieve the phrases first; then use Listening Accuracy.</span></div>
+  <div class="cards2">
+    <div class="card"><h3>CALL 1</h3><div class="prompt">What is wrong?</div><button class="ghost" data-revealtext="Air conditioning: it isn’t working. Reception will send somebody up.">REVEAL</button><div class="feedback">Say the problem + solution from memory.</div></div>
+    <div class="card"><h3>CALL 2</h3><div class="prompt">What is wrong?</div><button class="ghost" data-revealtext="Wi-Fi: Rob can’t get a signal. Reception will put him through to IT.">REVEAL</button><div class="feedback">Say the problem + solution from memory.</div></div>
   </div>
+  <div class="storyBridge"><b>Bridge · Rob → Jenny</b><div class="prompt">Rob has just complained twice. A little later Jenny asks, “And how’s your hotel?” What do you think he says?</div><p class="small">Then move from the practical problem into the story: listen for what Rob says socially, not just what happened technically.</p></div>
 </div>
 
-<div class="cards2">
-  <div class="card"><h3>CALL 1</h3><div class="prompt">What is wrong?</div><button class="ghost" data-revealtext="Air conditioning: it isn’t working. Reception will send somebody up.">REVEAL</button><div class="feedback">Say the problem + solution from memory.</div></div>
-  <div class="card"><h3>CALL 2</h3><div class="prompt">What is wrong?</div><button class="ghost" data-revealtext="Wi-Fi: Rob can’t get a signal. Reception will put him through to IT.">REVEAL</button><div class="feedback">Say the problem + solution from memory.</div></div>
+<div class="efPane" data-efpane="recap">
+  <div class="videoLesson">
+    <div>
+      <div class="videoWrap"><video id="ef5Recap" controls playsinline preload="metadata" src="media/ef5e-preint-pe1-recap.mp4"></video></div>
+      <div class="source">5th edition · Pictures of You · The Story So Far · uploaded file embedded in Maya Hub.</div>
+    </div>
+    <div class="watchTasks">
+      <div class="watchTask"><b>BEFORE WATCHING</b><span class="small">Do not explain the characters first. Maya watches and works out who is connected to whom.</span></div>
+      <div class="watchTask"><b>WATCH 1 · WHO IS WHO?</b><span class="small">Find Ben · Izzy · Andre · Carla · Pamela.</span></div>
+      <div class="watchTask"><b>WATCH 2 · RELATIONSHIPS</b><span class="small">Who studies photography? Who works in the café? Who is Izzy’s friend / landlady? What connects Ben and Izzy?</span></div>
+      <div class="watchTask"><b>MEMORY CHECK</b><span class="small">Close the video and give one fact about each person.</span></div>
+    </div>
+  </div>
+  <div class="storyBridge"><b>Transition</b><div class="prompt">That was Season 1. Now jump forward: <strong>six months later</strong>. What do you predict has changed for Ben and Izzy?</div><p class="small">Prediction before the next video keeps the storyline continuous instead of introducing Emma suddenly.</p></div>
 </div>
 
-<div class="card" style="margin-top:10px;background:#fff6d8">
-  <b>Bridge 1 · Rob → Jenny</b>
-  <div class="prompt">Rob has just complained twice. A little later Jenny asks about his hotel. What do you think he says?</div>
-  <div class="choiceRow" style="margin-top:8px"><button class="choice">He tells her every problem.</button><button class="choice">He says the hotel is fine.</button><button class="choice">He changes the subject.</button></div>
-  <p class="small">Teacher transition: “We know what really happened in Rob’s room. Now Jenny asks, ‘And how’s your hotel?’ Listen for the contrast between the real problems and Rob’s social answer.”</p>
+<div class="efPane" data-efpane="six">
+  <div class="videoLesson">
+    <div>
+      <div class="videoWrap"><video id="ef5Main" controls playsinline preload="metadata" src="media/ef5e-preint-pe1-main.mp4"></video></div>
+      <div class="source">5th edition · Episode 1 · Six Months Later · uploaded file embedded in Maya Hub.</div>
+    </div>
+    <div class="watchTasks">
+      <div class="watchTask"><b>HEADS-UP</b><span class="small">Where are Ben and Izzy now? Watch for their jobs, not every word.</span></div>
+      <div class="watchTask"><b>WATCH 1 · GIST</b><span class="small">Who is Emma? Where is she staying? Who is she going to meet?</span></div>
+      <div class="watchTask"><b>WATCH 2 · DETAIL</b><span class="small">What does Ben think about Emma and Izzy? Why might Izzy change her evening plans?</span></div>
+      <div class="watchTask"><b>PREDICT</b><span class="small">Emma is at the hotel now. What kind of problem could take us naturally to Calling Reception?</span></div>
+    </div>
+  </div>
+
+  <div class="tfGrid">
+    <div class="tf">Emma is staying with Ben. <button class="ghost" data-revealtext="FALSE · She is staying in a hotel.">CHECK</button><div class="feedback">Decide first.</div></div>
+    <div class="tf">Emma is Ben’s twin sister. <button class="ghost" data-revealtext="TRUE.">CHECK</button><div class="feedback">Decide first.</div></div>
+    <div class="tf">Ben thinks Emma and Izzy are very similar. <button class="ghost" data-revealtext="FALSE · He thinks they are very different.">CHECK</button><div class="feedback">Decide first.</div></div>
+    <div class="tf">Izzy may go to a work event later. <button class="ghost" data-revealtext="TRUE.">CHECK</button><div class="feedback">Decide first.</div></div>
+  </div>
+
+  <div class="storyBridge"><b>Bridge · 5th edition → hotel function</b><div class="prompt">Emma is now established as a hotel guest. We already know the survival pattern from Rob: <strong>problem → complaint → Reception’s offer</strong>. Maya now transfers it to Emma instead of learning the same language from zero.</div><p class="small">Teacher line: “Rob was in room 613. Emma is in a different hotel and a different story — but what does a guest still need to say when something stops working?”</p></div>
 </div>
 
-<div class="bridge" style="margin-top:10px">
-<div class="edition"><span class="tag">4th EDITION</span><h3>Jenny + Rob</h3><p>Keep the story moving: hotel problem → Jenny meets Rob → social English. Maya already knows the practical language, so the next task is character meaning, not another grammar exercise.</p><div class="choiceRow"><button class="choice">Why does Rob hesitate?</button><button class="choice">Is he tired?</button><button class="choice">What does Jenny notice?</button></div></div>
-<div><div class="bridgeLine"></div><div class="arrowText">TRANSFER<br>SAME FUNCTION</div></div>
-<div class="edition"><span class="tag">5th EDITION</span><h3>Izzy / Emma storyline</h3><p>Now switch editions deliberately: new characters, same hotel function. Maya listens for the same three things — <b>problem → complaint phrase → Reception’s offer</b> — instead of learning the language again.</p><div class="choiceRow"><button class="choice">What isn’t working?</button><button class="choice">What does the guest say?</button><button class="choice">What does Reception offer?</button></div></div>
-</div>
-
-<div class="card" style="margin-top:10px"><b>Bridge 2 · Into the role-play</b><div class="prompt">“Rob had two real problems. Now you are the guest. Your problem will be different, but the conversation pattern stays the same.”</div></div>
 </div></div></section>
 
 <section class="overlay" id="role"><div class="ovTop"><button class="close">← MENU</button><h2>06 · Reception Challenge</h2><button class="audioBtn" data-say="You are the guest. You have thirty seconds. Explain the problem and ask for help.">PLAY INSTRUCTION</button></div><div class="content"><div class="panel">
@@ -156,14 +190,20 @@ button,input{font:inherit}button{cursor:pointer}.shell{height:100%;display:grid;
 <script>
 const overlays=[...document.querySelectorAll('.overlay')];
 document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>document.getElementById(b.dataset.open).classList.add('show'));
-document.querySelectorAll('.close').forEach(b=>b.onclick=()=>b.closest('.overlay').classList.remove('show'));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')overlays.forEach(x=>x.classList.remove('show'))});
+document.querySelectorAll('.close').forEach(b=>b.onclick=()=>{const ov=b.closest('.overlay');ov.querySelectorAll('video').forEach(v=>v.pause());ov.classList.remove('show')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')overlays.forEach(x=>{x.querySelectorAll('video').forEach(v=>v.pause());x.classList.remove('show')})});
 
 function say(text,rate=.92){if(!('speechSynthesis'in window))return alert('Audio is not available in this browser.');speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=rate;const voices=speechSynthesis.getVoices();const v=voices.find(x=>/en-GB/i.test(x.lang)&&/male|daniel|george|arthur|oliver/i.test(x.name))||voices.find(x=>/en-GB/i.test(x.lang))||voices.find(x=>/^en/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u)}
 document.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>say(b.dataset.say));
 
 document.querySelectorAll('.tabs').forEach(tabs=>tabs.querySelectorAll('.tab').forEach(tab=>tab.onclick=()=>{tabs.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===tab));const ov=tabs.closest('.panel');ov.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active',p.dataset.pane===tab.dataset.tab))}));
 document.querySelectorAll('[data-revealtext]').forEach(b=>b.onclick=()=>{const f=b.parentElement.querySelector('.feedback');f.textContent=b.dataset.revealtext;f.classList.add('good')});
+document.querySelectorAll('.efTab').forEach(tab=>tab.onclick=()=>{
+  const panel=tab.closest('.panel');
+  panel.querySelectorAll('.efTab').forEach(x=>x.classList.toggle('active',x===tab));
+  panel.querySelectorAll('.efPane').forEach(p=>p.classList.toggle('active',p.dataset.efpane===tab.dataset.ef));
+  panel.querySelectorAll('video').forEach(v=>v.pause());
+});
 
 const grammar=[
 ['She usually ___ from home.','works','is working','works'],
