@@ -98,9 +98,8 @@ textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:
   </div>
   <div class="card">
     <h3>2 · LISTEN · 1.24</h3>
-    <p class="lead">Load the English File audio if you have it. First listen: T/F. Second listen: evidence.</p>
-    <input type="file" id="audioFile" accept="audio/*">
-    <audio id="audioPlayer" controls style="width:100%;margin-top:8px"></audio>
+    <p class="lead">English File 1.24 · Mr and Mrs Clark and Percy. First listen: T/F. Second listen: evidence.</p>
+    <div class="videoWrap" style="min-height:170px"><iframe src="https://www.youtube.com/embed/RcshBjJ8Q4w" title="English File 1.24 — Mr and Mrs Clark and Percy" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
   </div>
 </div>
 <div id="tfList" class="card" style="margin-top:10px"></div>
@@ -108,7 +107,7 @@ textarea{width:100%;min-height:120px;border:1px solid var(--line);border-radius:
 <div class="grid2" style="margin-top:10px">
   <div class="card">
     <h3>3 · NOW WATCH</h3>
-    <div class="videoWrap"><iframe src="https://www.youtube.com/embed/8vGMYoeDcbU" title="Mr and Mrs Clark and Percy story" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
+    <div class="videoWrap"><iframe src="https://www.youtube.com/embed/c5WV4KInJrM" title="Mr and Mrs Clark and Percy story" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
   </div>
   <div class="card">
     <h3>4 · WHAT HAPPENED TO THE COUPLE?</h3>
@@ -245,7 +244,7 @@ document.getElementById('prepKeyBtn').onclick=()=>document.getElementById('prepK
 const tf=['Percy is the name of the cat.','Mr and Mrs Clark made clothes for famous people.','The painting shows their living room.','The painting is quite small.','Celia is pregnant in the painting.','Ossie is putting his feet into the carpet because he is cold.','The position of the couple in the painting is unusual.','The open window is a symbol of the love between them.','The cat is a symbol of infidelity.','Celia and Ossie later got divorced.'];
 document.getElementById('tfList').innerHTML=tf.map((t,i)=>'<div class="q"><b>'+(i+1)+'. '+t+'</b><div class="opts"><button class="opt" data-tf="'+i+'" data-v="T">TRUE</button><button class="opt" data-tf="'+i+'" data-v="F">FALSE</button><input aria-label="evidence" placeholder="Evidence / correction" style="flex:1;min-width:220px;padding:7px;border:1px solid #dde3eb;border-radius:8px"></div></div>').join('');
 document.querySelectorAll('[data-tf]').forEach(b=>b.onclick=()=>{b.parentElement.querySelectorAll('.opt').forEach(x=>x.classList.remove('good'));b.classList.add('good')});
-document.getElementById('audioFile').onchange=e=>{const f=e.target.files[0];if(f)document.getElementById('audioPlayer').src=URL.createObjectURL(f)};
+
 const sort=[['Maya usually studies English after school.','usually'],['Look! The cat is sitting on his lap.','now'],['Artists often paint portraits.','usually'],['We are looking at a Hockney painting now.','now'],['Cats often sleep during the day.','usually'],['Celia is standing near the window.','now'],['Maya sometimes reads in the evening.','usually'],['Ossie is wearing a green jumper in the painting.','now']];
 let done=0;document.getElementById('sentenceBank').innerHTML=sort.map((x,i)=>'<button class="sent" data-sort="'+i+'">'+x[0]+'</button>').join('');
 document.querySelectorAll('[data-sort]').forEach(b=>b.onclick=()=>{if(b.classList.contains('done'))return;const i=+b.dataset.sort;const pick=confirm('OK = RIGHT NOW / Cancel = USUALLY')?'now':'usually';document.getElementById(pick).appendChild(b);b.classList.add('done');if(pick===sort[i][1])b.style.borderColor='#77bc96';else b.style.borderColor='#dc8b96';done++;document.getElementById('sortScore').textContent=done+' / 8 sorted'});
