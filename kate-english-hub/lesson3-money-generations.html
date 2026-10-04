@@ -24,6 +24,224 @@ footer{grid-column:2;grid-row:3;border-top:1px solid var(--line);background:#fff
 @media(max-width:700px){.app{grid-template-columns:1fr;grid-template-rows:52px 43px minmax(0,1fr) 43px}.lesson-nav{grid-column:1;grid-row:2;display:flex;gap:4px;padding:5px 8px;overflow:auto;border-right:0;border-bottom:1px solid var(--line)}.nav-label,.nav-note{display:none}.nav-item{width:auto;flex-shrink:0;white-space:nowrap;padding:8px}.nav-item span{display:none}main{grid-column:1;grid-row:3}footer{grid-column:1;grid-row:4;padding:5px 10px}.screen{padding:12px}.overview-top{grid-template-columns:1fr}.cover-card img{max-height:180px;object-fit:contain}.route-grid{grid-template-columns:1fr}.route-card{grid-template-columns:1fr auto}.overview-foot{display:none}.vocab,.myth-grid,.mix-grid,.cond-rush,.sort-grid,.pred-grid,.rank-wrap{grid-template-columns:1fr}.vitem{grid-template-columns:135px 1fr}.money5000,.battle,.cond-map,.argument-grid{grid-template-columns:repeat(2,1fr)}.shorts-lab{grid-template-columns:1fr}.short-list{grid-template-columns:repeat(3,1fr);gap:5px}.short-tab{grid-template-columns:1fr}.short-tab img,.short-tab small{display:none}.short-stage{grid-template-columns:130px minmax(0,1fr)}.title{align-items:start}.title h2{font-size:18px}.title p{font-size:10px}.pill{font-size:8px;padding:5px}.quote{font-size:13px}.progress{font-size:9px}.navbtn{padding:7px 9px}.level{font-size:9px}header{padding:8px 12px}}
 
 </style>
+
+<!-- COMPACT-DASHBOARD-V2 -->
+<style>
+/* Lesson 3 — compact classroom dashboard */
+:root{
+  --compact-max:1180px;
+  --compact-gap:8px;
+}
+.app{
+  grid-template-columns:146px minmax(0,1fr);
+  grid-template-rows:50px minmax(0,1fr) 38px;
+}
+header{padding:6px 16px}
+header h1{font-size:18px;letter-spacing:-.03em}
+header p{font-size:10px;margin-top:1px}
+.level{padding:5px 8px;font-size:9px}
+.lesson-nav{padding:10px 7px}
+.nav-label{margin:0 7px 7px;font-size:8px}
+.nav-item{
+  min-height:26px;
+  padding:6px 7px;
+  gap:6px;
+  margin:1px 0;
+  font-size:10px;
+  border-radius:6px;
+}
+.nav-item span{font-size:8px;min-width:14px}
+.nav-note{font-size:8px;margin-top:8px;padding:7px 6px}
+.screen{
+  padding:12px 16px;
+  overflow:auto;
+}
+.screen>*{max-width:var(--compact-max)}
+.title{
+  margin-bottom:9px;
+  padding-bottom:8px;
+}
+.title h2{font-size:18px}
+.title p{font-size:10px;margin-top:2px}
+.pill{font-size:8px;padding:4px 6px}
+.overview-top{
+  grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr);
+  gap:10px;
+  max-height:210px;
+}
+.cover-card{min-height:0;border-radius:10px}
+.cover-card img{
+  max-height:210px;
+  object-fit:cover;
+}
+.quick-card{
+  padding:11px 12px;
+  border-radius:10px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.eyebrow{font-size:8px;margin-bottom:3px}
+.quick-card h2{font-size:20px;margin-bottom:2px}
+.quick-intro{font-size:10px;margin-bottom:7px}
+.choice-row{gap:5px}
+.choice{
+  min-height:48px;
+  padding:6px 7px;
+  border-radius:6px;
+}
+.choice strong{font-size:10px;margin-bottom:2px}
+.choice span{font-size:8px;line-height:1.25}
+.choice-response{font-size:9px;margin-top:6px;min-height:12px}
+.language-line{font-size:9px;margin-top:4px}
+.route-grid{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;
+  margin-top:9px;
+}
+.route-card{
+  min-height:0;
+  padding:8px 10px;
+  border-radius:8px;
+  gap:3px 7px;
+  align-items:center;
+}
+.route-card small{font-size:7px}
+.route-card strong{font-size:12px}
+.route-card span{
+  font-size:9px;
+  line-height:1.25;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.route-card i{font-size:14px}
+.overview-foot{font-size:8px;margin-top:7px}
+.grid2,.grid3,.vocab,.sort-grid,.money5000,.pred-grid,.rank-wrap,.battle,.myth-grid,.cond-map,.cond-rush,.mix-grid,.argument-grid{
+  gap:7px;
+}
+.card,.vitem,.person,.predict,.reason,.ranking,.claim,.cond-card,.cond-q,.mix-q,.arg{
+  border-radius:8px;
+}
+.card{padding:10px}
+.card h3{font-size:14px;margin-bottom:4px}
+.card p,.sub{font-size:11px;line-height:1.35}
+.bigquestion{font-size:19px;line-height:1.25;margin:0 0 8px}
+.prompt{padding:7px 10px;font-size:10px;line-height:1.35;margin-top:8px}
+.vocab{grid-template-columns:repeat(2,minmax(0,1fr))}
+.vitem{
+  padding:7px 8px;
+  grid-template-columns:minmax(105px,.65fr) minmax(0,1fr);
+  gap:6px;
+}
+.vitem b{font-size:11px}
+select{padding:6px 5px;font-size:10px}
+.feedback{font-size:10px;padding-top:7px}
+.sort-grid{grid-template-columns:minmax(195px,.72fr) minmax(0,1.28fr)}
+.statement-bank{gap:4px}
+.statement{padding:6px 8px;font-size:10px}
+.buckets{gap:6px}
+.bucket{min-height:58px;padding:7px}
+.bucket h4{font-size:8px;margin-bottom:3px}
+.bucket button{padding:4px 5px;font-size:9px;margin-top:3px}
+.bucket .language-tip{font-size:9px;line-height:1.4}
+.money5000,.battle{grid-template-columns:repeat(4,minmax(0,1fr))}
+.person img{height:92px}
+.person .body{padding:7px;gap:4px}
+.person h3{font-size:12px}
+.person small{font-size:9px;line-height:1.3}
+.person button,.cond-card button{padding:5px 6px;font-size:8px}
+.reveal{font-size:9px;line-height:1.3;padding-top:4px}
+.pred-grid{grid-template-columns:.7fr 1.3fr;gap:8px}
+.headline{padding:14px;border-radius:9px}
+.headline .kicker{font-size:8px}
+.headline h3{font-size:23px;margin:7px 0}
+.headline p{font-size:10px;line-height:1.4}
+.predicts{gap:5px}
+.predict{padding:7px;gap:5px}
+.predict b{font-size:10px}
+.predict button,.claim button,.mix-q button,.short-options button{
+  padding:4px 6px;
+  font-size:8px;
+}
+.rank-wrap{grid-template-columns:1.2fr 1fr}
+.reasons{gap:6px}
+.reason{padding:9px}
+.reason b{font-size:10px;margin-bottom:3px}
+.reason span{font-size:9px;line-height:1.3}
+.ranking{padding:7px;gap:3px}
+.rank-slot{padding:6px;min-height:31px;font-size:10px}
+.quote{margin-top:8px;padding:8px 10px;font-size:12px}
+.shorts-lab{grid-template-columns:158px minmax(0,1fr);gap:8px}
+.short-list{gap:5px}
+.short-tab{grid-template-columns:34px 1fr;gap:6px;padding:5px;border-radius:7px}
+.short-tab img{width:34px;height:42px}
+.short-tab b{font-size:9px}
+.short-tab small{font-size:8px;margin-top:2px}
+.short-stage{grid-template-columns:138px minmax(0,1fr);gap:8px}
+.short-media{max-height:275px;border-radius:8px}
+.short-play{bottom:8px;padding:7px 4px;font-size:8px}
+.short-game{gap:5px}
+.short-game h3{font-size:14px}
+.short-game p{font-size:9px}
+.short-step{padding:7px;border-radius:6px}
+.short-step b{font-size:8px;margin-bottom:4px}
+.short-game textarea{min-height:36px;padding:6px;font-size:10px}
+.short-save{padding:5px 7px;font-size:8px}
+.short-score{font-size:8px}
+.myth-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.claim{padding:8px}
+.claim p{font-size:10px;line-height:1.35;margin-bottom:6px}
+.cond-map{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.cond-card{padding:8px;gap:5px}
+.cond-card h3{font-size:11px}
+.cond-card .when{font-size:9px;line-height:1.3;min-height:34px}
+.formula,.example{font-size:9px;line-height:1.3;padding:6px}
+.cond-rush,.mix-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.cond-q{
+  padding:6px 7px;
+  grid-template-columns:minmax(0,1fr) 118px;
+  gap:6px;
+}
+.cond-q p,.mix-q p{font-size:10px;line-height:1.3}
+.cond-q select{font-size:9px;padding:5px}
+.cond-actions{gap:6px;margin-top:7px}
+.cond-result{font-size:10px}
+.mix-q{padding:7px}
+.mix-q p{margin-bottom:5px}
+.mix-explain{font-size:9px;margin-top:5px}
+.scale{gap:5px;margin:8px auto}
+.scale button{min-width:43px;padding:6px;font-size:14px}
+.argument-grid{gap:6px}
+.arg{padding:8px}
+.arg b{font-size:8px;margin-bottom:4px}
+.arg span{font-size:10px;line-height:1.3}
+footer{padding:4px 14px}
+.navbtn{padding:5px 9px;font-size:8px}
+.progress{font-size:8px}
+@media (min-width:900px) and (max-height:760px){
+  .overview-top{max-height:180px}
+  .cover-card img{max-height:180px}
+  .person img{height:78px}
+  .short-media{max-height:235px}
+  .route-card span{display:none}
+}
+@media(max-width:900px){
+  .app{grid-template-columns:132px minmax(0,1fr)}
+  .overview-top{grid-template-columns:.8fr 1.2fr}
+  .cond-map{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:700px){
+  .app{grid-template-columns:1fr;grid-template-rows:48px 40px minmax(0,1fr) 38px}
+  .screen{padding:9px 10px}
+  .overview-top{grid-template-columns:1fr;max-height:none}
+  .cover-card{display:none}
+  .route-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .route-card span{display:none}
+  .money5000,.battle,.argument-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+<!-- /COMPACT-DASHBOARD-V2 -->
 </head>
 <body>
 <div class="app">
