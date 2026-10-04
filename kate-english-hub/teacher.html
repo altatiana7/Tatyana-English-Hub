@@ -199,7 +199,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
       {module:'Module 1',lessons:[
         {id:'m1l1',title:'Lesson 1 · Elections in Russia',url:'extra-practice-elections-russia.html'},
         {id:'m1l2',title:'Lesson 2 · Generations',url:'homework-lesson2-generations.html'},
-        {id:'m1l3',title:'Lesson 3 · Will Gen Zers Make Cash Cool Again?',url:'lesson3-money-generations.html'}
+        {id:'m1l3',title:'Lesson 3 · Gen Z & Money',url:'lesson3-money-generations.html'}
       ]},
       ...Array.from({length:7},(_,i)=>({module:'Module '+(i+2),lessons:[
         {id:'m'+(i+2)+'l1',title:'Lesson 1',url:''},
@@ -221,7 +221,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
       m.lessons.forEach(l=>{
         const b=document.createElement('button');
         b.className='t-lesson'+(!l.url?' empty':'');
-        b.textContent=l.title;
+        b.textContent=l.id==='m1l3'?'Lesson 3\nGen Z & Money':l.title;
         b.setAttribute('aria-label',l.title);
         b.dataset.id=l.id;
         b.onclick=()=>openLesson(mi,l);
@@ -309,4 +309,11 @@ html.teacher-mode #teacherRoot{display:grid!important}
 }
 #teacherRoot .t-speaking-tab:hover{background:#b97e73}
 #teacherRoot .t-speaking-tab:focus-visible{outline:3px solid #fff;outline-offset:-5px}
+/* Keep Lesson 3's visible label in sync with its live course title. */
+#teacherRoot .t-modwrap:first-child .t-lesson[data-id="m1l3"],
+#teacherRoot .t-modwrap:first-child .t-lesson[data-id="m1l3"]:hover{
+  background:#f4eae3!important;color:#352323!important;
+  border-radius:0;padding:0 2.4%;white-space:pre-line;
+  font-size:1.5dvh;line-height:1.4;font-weight:400;
+}
 </style></head><body></body></html>
