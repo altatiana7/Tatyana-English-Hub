@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Katya · Lesson 3 · Money & Generations</title>
+<style>
+:root{
+  --ink:#18354a;--navy:#103b68;--muted:#6a7b87;--line:#d8e6ed;--bg:#f6fbfd;
+  --pink:#ffe5e9;--orange:#fff0d9;--green:#e6f7eb;--blue:#e5f3ff;--purple:#eee8ff;--yellow:#fff3c9;
+  --ok:#dff5e6;--bad:#ffe3e3
+}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg)}
+body{overflow:hidden}
+.app{height:100dvh;display:grid;grid-template-rows:58px 1fr 54px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 18px;background:#fff;border-bottom:1px solid var(--line)}
+header h1{font-size:23px;margin:0;color:var(--navy);letter-spacing:.02em}
+header p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+.level{font-weight:900;font-size:12px;background:var(--yellow);border-radius:999px;padding:8px 12px}
+main{min-height:0;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0;padding:14px 18px;display:none;overflow:hidden}
+.screen.on{display:block}
+.title{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:11px}
+.title h2{margin:0;color:var(--navy);font-size:24px}
+.title p{margin:2px 0 0;color:var(--muted);font-size:12px}
+.pill{font-size:11px;font-weight:900;background:#fff;border:1px solid var(--line);padding:7px 10px;border-radius:999px;white-space:nowrap}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;height:calc(100% - 49px)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 22px rgba(31,72,94,.05)}
+.card h3{margin:0 0 8px;color:var(--navy);font-size:18px}
+.card p{font-size:13px;line-height:1.4;margin:6px 0}
+.bigquestion{font:800 clamp(24px,3vw,42px)/1.12 Georgia,serif;color:#163f67;max-width:900px}
+.sub{font-size:14px;color:var(--muted);line-height:1.45}
+.choice-row{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-top:18px}
+.choice{min-height:170px;border:2px solid transparent;border-radius:22px;padding:18px;background:#fff;box-shadow:0 10px 28px rgba(26,65,87,.08);cursor:pointer;text-align:left}
+.choice strong{display:block;font-size:28px;color:var(--navy);margin-bottom:10px}
+.choice span{font-size:13px;color:#5d707c;line-height:1.4}
+.choice.selected{border-color:#518bb2;transform:translateY(-2px)}
+.prompt{margin-top:14px;background:linear-gradient(90deg,#e5f3ff,#fff1d8);border-radius:16px;padding:12px 15px;font-weight:800;font-size:14px}
+.vocab{display:grid;grid-template-columns:1fr 1fr;gap:8px;height:calc(100% - 2px)}
+.vitem{display:grid;grid-template-columns:180px 1fr;gap:10px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:13px;padding:9px}
+.vitem b{color:var(--navy);font-size:14px}
+.vitem select{width:100%;border:1px solid #cadce6;border-radius:9px;padding:7px;background:#fbfdfe;color:#344f60}
+.feedback{font-size:12px;font-weight:800;margin-top:6px;min-height:16px}
+.ok{background:var(--ok)!important;border-color:#7fc094!important}.wrong{background:var(--bad)!important;border-color:#dc8c8c!important}
+.sort-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:12px;height:calc(100% - 49px)}
+.statement-bank{display:grid;gap:7px;align-content:start}
+.statement{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 10px;font-size:13px;font-weight:800;cursor:pointer}
+.statement.active{outline:3px solid #82afd0}
+.buckets{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.bucket{min-height:106px;border:1px dashed #aac4d4;border-radius:14px;padding:9px;background:#fafdff}
+.bucket h4{margin:0 0 6px;font-size:13px;color:var(--navy)}
+.bucket button{display:block;width:100%;text-align:left;border:0;border-radius:8px;background:#fff;padding:6px;margin-top:5px;font-size:11px;color:#405968}
+.money5000{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;height:calc(100% - 84px)}
+.person{background:#fff;border:1px solid var(--line);border-radius:17px;overflow:hidden;display:flex;flex-direction:column}
+.person img{width:100%;height:145px;object-fit:cover;background:#eef4f6}
+.person .body{padding:10px;display:flex;flex-direction:column;gap:6px;flex:1}
+.person h3{font-size:17px;margin:0;color:var(--navy)}
+.person small{color:var(--muted);line-height:1.3}
+.person button{margin-top:auto;border:0;border-radius:10px;background:#e8f3f8;color:#143f63;font-weight:900;padding:8px;cursor:pointer}
+.person button.selected{background:#143f63;color:#fff}
+.reveal{font-size:12px;background:#f6fafc;border-radius:10px;padding:8px;display:none}
+.reveal.on{display:block}
+.pred-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;height:calc(100% - 50px)}
+.headline{height:100%;background:linear-gradient(135deg,#143e69,#6a91b4);color:#fff;border-radius:22px;padding:25px;display:flex;flex-direction:column;justify-content:center}
+.headline .kicker{font-size:12px;font-weight:900;letter-spacing:.16em;opacity:.8}
+.headline h3{font:800 clamp(28px,4vw,50px)/1.03 Georgia,serif;margin:9px 0 13px}
+.headline p{font-size:14px;line-height:1.45;max-width:700px}
+.predicts{display:grid;gap:8px;align-content:start}
+.predict{border:1px solid var(--line);border-radius:13px;background:#fff;padding:10px}
+.predict b{font-size:13px}
+.predict .btns{display:flex;gap:6px;margin-top:7px}
+.predict button{flex:1;border:1px solid #c9dce7;background:#f8fcfe;border-radius:8px;padding:7px;font-weight:900;color:#214c6a;cursor:pointer}
+.predict button.sel{background:#214c6a;color:#fff}
+.rank-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:12px;height:calc(100% - 49px)}
+.reasons{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start}
+.reason{border:1px solid var(--line);background:#fff;border-radius:13px;padding:12px;cursor:pointer}
+.reason b{display:block;color:var(--navy);font-size:14px}
+.reason span{font-size:11px;color:var(--muted)}
+.reason.used{opacity:.36}
+.ranking{background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px;display:grid;grid-template-rows:repeat(6,1fr);gap:6px}
+.rank-slot{border:1px dashed #aac4d4;border-radius:11px;padding:8px;display:flex;align-items:center;gap:9px;font-size:13px}
+.rank-slot strong{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#e6f1f7;color:#164666}
+.rank-slot button{margin-left:auto;border:0;background:transparent;color:#964f49;font-weight:900;cursor:pointer}
+.battle{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;height:calc(100% - 105px)}
+.battle .person img{height:115px}
+.quote{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;font:700 17px/1.35 Georgia,serif;text-align:center}
+.battle .person.correct{outline:4px solid #72b78b}.battle .person.incorrect{outline:4px solid #db8383}
+.myth-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;height:calc(100% - 50px)}
+.claim{background:#fff;border:1px solid var(--line);border-radius:15px;padding:11px}
+.claim p{font-size:13px;font-weight:800;line-height:1.35;margin:0 0 8px}
+.claim .answers{display:flex;gap:5px}
+.claim button{flex:1;border:1px solid #cadce6;background:#f8fcfe;border-radius:8px;padding:7px 5px;font-size:10px;font-weight:900;cursor:pointer}
+.claim button.sel{background:#1c5279;color:#fff}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0}
+.scale button{border:1px solid #c9dce7;background:#fff;border-radius:13px;padding:14px;font-size:22px;font-weight:900;color:#18466a;cursor:pointer}
+.scale button.sel{background:#18466a;color:#fff}
+.argument-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.arg{border-radius:14px;padding:11px;min-height:92px;background:#fff;border:1px solid var(--line)}
+.arg b{display:block;font-size:12px;color:var(--navy);margin-bottom:5px}.arg span{font-size:12px;line-height:1.35}
+footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:7px 12px;background:#fff;border-top:1px solid var(--line)}
+.navbtn{border:0;border-radius:10px;padding:9px 14px;font-weight:900;background:#e8f2f7;color:#17456a;cursor:pointer}
+.navbtn.primary{background:#17456a;color:#fff}
+.progress{display:flex;gap:5px;justify-content:center}
+.dot{width:25px;height:6px;border-radius:999px;background:#d9e6ed;cursor:pointer}.dot.on{background:#17456a}
+@media(max-width:900px){
+  .choice-row,.money5000,.battle{grid-template-columns:1fr 1fr}
+  .grid2,.sort-grid,.pred-grid,.rank-wrap{grid-template-columns:1fr}
+  .screen{overflow:auto}.app{grid-template-rows:58px 1fr 54px}
+  .money5000,.battle,.myth-grid{height:auto}.vocab{grid-template-columns:1fr}.vitem{grid-template-columns:150px 1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div><h1>MONEY & GENERATIONS</h1><p>Lesson 3 · spending, saving, cash and generational habits</p></div>
+  <div class="level">B2–C1 · interactive</div>
+</header>
+<main>
+<section class="screen on">
+  <div class="title"><div><h2>1. Cash, card or phone?</h2><p>Fast choice first. Explain the reason after you choose.</p></div><div class="pill">WARM-UP</div></div>
+  <div class="bigquestion">You are paying for something right now. What do you reach for first?</div>
+  <div class="choice-row">
+    <button class="choice" onclick="selectOne(this,'.choice')"><strong>CASH</strong><span>I want to see and control exactly how much I spend.</span></button>
+    <button class="choice" onclick="selectOne(this,'.choice')"><strong>CARD</strong><span>It is fast, familiar and easy to track later.</span></button>
+    <button class="choice" onclick="selectOne(this,'.choice')"><strong>PHONE</strong><span>I prefer contactless payment and rarely carry a wallet.</span></button>
+  </div>
+  <div class="prompt">Discuss: Is your choice personal, or is it typical of your generation? Use <b>tend to</b>, <b>be more likely to</b>, <b>be wary of</b>.</div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>2. Money Language Sprint</h2><p>Match each phrase with the best meaning. Check instantly.</p></div><div class="pill">VOCABULARY</div></div>
+  <div class="vocab" id="vocab">
+    <div class="vitem" data-a="accumulate"><b>rack up debt</b><select><option value="">Choose…</option><option value="accumulate">gradually accumulate debt</option><option value="repay">repay what you owe</option><option value="extra">earn extra money</option></select></div>
+    <div class="vitem" data-a="repay"><b>pay off debt</b><select><option value="">Choose…</option><option value="large">spend a lot</option><option value="repay">repay what you owe</option><option value="survive">cover basic costs</option></select></div>
+    <div class="vitem" data-a="extra"><b>side hustle</b><select><option value="">Choose…</option><option value="extra">extra job or income stream</option><option value="cautious">not fully trusting</option><option value="affected">badly affected</option></select></div>
+    <div class="vitem" data-a="survive"><b>make ends meet</b><select><option value="">Choose…</option><option value="survive">have enough money for basic costs</option><option value="accumulate">build debt</option><option value="large">pay a lot</option></select></div>
+    <div class="vitem" data-a="affected"><b>hard-hit</b><select><option value="">Choose…</option><option value="cautious">careful or suspicious</option><option value="affected">badly affected by a problem</option><option value="repay">repay a loan</option></select></div>
+    <div class="vitem" data-a="cautious"><b>wary of</b><select><option value="">Choose…</option><option value="affected">badly affected</option><option value="cautious">not fully trusting; cautious about</option><option value="extra">extra source of income</option></select></div>
+    <div class="vitem" data-a="large"><b>shell out</b><select><option value="">Choose…</option><option value="large">pay a large amount, often reluctantly</option><option value="survive">cover basic costs</option><option value="accumulate">increase debt</option></select></div>
+    <div class="vitem" data-a="frugal"><b>careful about spending</b><select><option value="">Choose…</option><option value="frugal">avoid unnecessary spending</option><option value="large">pay a lot</option><option value="repay">pay a debt back</option></select></div>
+  </div>
+  <div class="feedback" id="vocabFeedback">Complete all eight, then press CHECK.</div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>3. Generation Stereotype Sort</h2><p>Select a statement, then place it in the topic it belongs to. Discuss whether the statement is fair.</p></div><div class="pill">SORT + SPEAK</div></div>
+  <div class="sort-grid">
+    <div class="statement-bank" id="statementBank">
+      <button class="statement" data-t="MONEY">prefers saving to spending</button>
+      <button class="statement" data-t="WORK">values job security</button>
+      <button class="statement" data-t="TECHNOLOGY">expects everything to be digital</button>
+      <button class="statement" data-t="RELATIONSHIPS">keeps in touch mainly through messaging</button>
+      <button class="statement" data-t="LIFESTYLE">spends more on experiences</button>
+      <button class="statement" data-t="MONEY">uses cash to control a budget</button>
+      <button class="statement" data-t="WORK">is more open to changing careers</button>
+      <button class="statement" data-t="TECHNOLOGY">is wary of new apps and AI</button>
+    </div>
+    <div class="buckets">
+      <div class="bucket" data-b="MONEY"><h4>MONEY</h4></div>
+      <div class="bucket" data-b="WORK"><h4>WORK</h4></div>
+      <div class="bucket" data-b="TECHNOLOGY"><h4>TECHNOLOGY</h4></div>
+      <div class="bucket" data-b="RELATIONSHIPS"><h4>RELATIONSHIPS</h4></div>
+      <div class="bucket" data-b="LIFESTYLE"><h4>LIFESTYLE</h4></div>
+      <div class="bucket"><h4>LANGUAGE RULE</h4><button type="button">Avoid “All Gen Z…”</button><button type="button">Use “tend to / are more likely to…”</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>4. The £5,000 Challenge</h2><p>Same situation, different generation. Who is most likely to do what?</p></div><div class="pill">SCENARIO</div></div>
+  <div class="prompt" style="margin:0 0 10px">Each person unexpectedly receives £5,000. Choose the most likely first move, then justify without turning a stereotype into a fact.</div>
+  <div class="money5000">
+    <article class="person"><img src="https://images.pexels.com/photos/5473068/pexels-photo-5473068.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Older adult"><div class="body"><h3>Baby Boomer</h3><small>stability · savings · long-term security</small><button onclick="toggleReveal(this)">Choose / reveal</button><div class="reveal">Possible move: put most of it into savings or use it for a major planned expense.</div></div></article>
+    <article class="person"><img src="https://images.pexels.com/photos/32585362/pexels-photo-32585362.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Generation X adult"><div class="body"><h3>Gen X</h3><small>balance · family costs · practical choices</small><button onclick="toggleReveal(this)">Choose / reveal</button><div class="reveal">Possible move: split it between debt, savings and a practical purchase.</div></div></article>
+    <article class="person"><img src="https://images.pexels.com/photos/4492126/pexels-photo-4492126.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Millennial adult"><div class="body"><h3>Millennial</h3><small>experiences · housing costs · flexibility</small><button onclick="toggleReveal(this)">Choose / reveal</button><div class="reveal">Possible move: pay off debt, build an emergency fund or spend part on travel.</div></div></article>
+    <article class="person"><img src="https://images.pexels.com/photos/17889246/pexels-photo-17889246.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Generation Z young adult"><div class="body"><h3>Gen Z</h3><small>budgeting · side hustles · digital finance</small><button onclick="toggleReveal(this)">Choose / reveal</button><div class="reveal">Possible move: divide it into cash envelopes, savings and money for a side hustle.</div></div></article>
+  </div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>5. Will Gen Z make cash cool again?</h2><p>Prediction before evidence. Decide what sounds plausible and explain why.</p></div><div class="pill">CASE STUDY</div></div>
+  <div class="pred-grid">
+    <div class="headline"><div class="kicker">GEN Z + MONEY</div><h3>Could physical cash become useful again?</h3><p>Consider control, debt, budgeting, inflation, side hustles and social-media money trends. The point is not to prove that “Gen Z uses cash”, but to examine why some young adults might deliberately choose it in certain situations.</p></div>
+    <div class="predicts">
+      <div class="predict"><b>Cash can make overspending feel more visible.</b><div class="btns"><button onclick="selectSibling(this)">LIKELY</button><button onclick="selectSibling(this)">UNLIKELY</button></div></div>
+      <div class="predict"><b>Young adults who grew up digital may still use cash for budgeting.</b><div class="btns"><button onclick="selectSibling(this)">LIKELY</button><button onclick="selectSibling(this)">UNLIKELY</button></div></div>
+      <div class="predict"><b>Using cash means a person rejects technology.</b><div class="btns"><button onclick="selectSibling(this)">LIKELY</button><button onclick="selectSibling(this)">UNLIKELY</button></div></div>
+      <div class="predict"><b>Concern about debt may influence payment choices.</b><div class="btns"><button onclick="selectSibling(this)">LIKELY</button><button onclick="selectSibling(this)">UNLIKELY</button></div></div>
+      <div class="predict"><b>One viral trend proves how an entire generation behaves.</b><div class="btns"><button onclick="selectSibling(this)">LIKELY</button><button onclick="selectSibling(this)">UNLIKELY</button></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>6. Rank the reasons</h2><p>What could push a young person towards cash or stricter budgeting?</p></div><div class="pill">PRIORITISE</div></div>
+  <div class="rank-wrap">
+    <div class="reasons" id="reasons">
+      <button class="reason" data-r="CONTROL"><b>CONTROL</b><span>Seeing money leave your hand feels concrete.</span></button>
+      <button class="reason" data-r="DEBT"><b>DEBT</b><span>Avoiding credit and racking up debt.</span></button>
+      <button class="reason" data-r="INFLATION"><b>INFLATION</b><span>Higher prices make spending decisions more deliberate.</span></button>
+      <button class="reason" data-r="BUDGETING"><b>BUDGETING</b><span>Cash envelopes can set visible limits.</span></button>
+      <button class="reason" data-r="SIDE HUSTLES"><b>SIDE HUSTLES</b><span>Extra income changes how people divide money.</span></button>
+      <button class="reason" data-r="SOCIAL MEDIA"><b>SOCIAL MEDIA</b><span>Challenges and money habits spread quickly online.</span></button>
+    </div>
+    <div class="ranking" id="ranking">
+      <div class="rank-slot"><strong>1</strong><span></span></div><div class="rank-slot"><strong>2</strong><span></span></div>
+      <div class="rank-slot"><strong>3</strong><span></span></div><div class="rank-slot"><strong>4</strong><span></span></div>
+      <div class="rank-slot"><strong>5</strong><span></span></div><div class="rank-slot"><strong>6</strong><span></span></div>
+    </div>
+  </div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>7. Generational Money Battle</h2><p>Who is most likely to say the sentence? Choose a person, then defend or challenge the choice.</p></div><div class="pill">GAME</div></div>
+  <div class="battle" id="battle">
+    <article class="person" data-person="boomer" onclick="battlePick(this)"><img src="https://images.pexels.com/photos/5473068/pexels-photo-5473068.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Baby Boomer"><div class="body"><h3>Baby Boomer</h3><small>security · saving · long-term planning</small></div></article>
+    <article class="person" data-person="genx" onclick="battlePick(this)"><img src="https://images.pexels.com/photos/32585362/pexels-photo-32585362.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Generation X"><div class="body"><h3>Gen X</h3><small>practicality · balance · independence</small></div></article>
+    <article class="person" data-person="millennial" onclick="battlePick(this)"><img src="https://images.pexels.com/photos/4492126/pexels-photo-4492126.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Millennial"><div class="body"><h3>Millennial</h3><small>experiences · flexibility · housing costs</small></div></article>
+    <article class="person" data-person="genz" onclick="battlePick(this)"><img src="https://images.pexels.com/photos/17889246/pexels-photo-17889246.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Gen Z"><div class="body"><h3>Gen Z</h3><small>digital life · budgeting trends · side hustles</small></div></article>
+  </div>
+  <div class="quote"><span id="battleQuote">“I use a separate pot of money so I can see when my fun budget is gone.”</span> <button class="navbtn" style="margin-left:10px" onclick="nextBattle()">NEXT</button></div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>8. Myth, possibly true, or not enough information?</h2><p>Challenge overgeneralisation. Then finish with your own position.</p></div><div class="pill">CRITICAL THINKING</div></div>
+  <div class="myth-grid">
+    <div class="claim"><p>Gen Z is a cash-only generation.</p><div class="answers"><button onclick="selectSibling(this)">MYTH</button><button onclick="selectSibling(this)">POSSIBLY TRUE</button><button onclick="selectSibling(this)">NOT ENOUGH INFO</button></div></div>
+    <div class="claim"><p>Some people may use cash because it makes a spending limit more visible.</p><div class="answers"><button onclick="selectSibling(this)">MYTH</button><button onclick="selectSibling(this)">POSSIBLY TRUE</button><button onclick="selectSibling(this)">NOT ENOUGH INFO</button></div></div>
+    <div class="claim"><p>Older generations are always better at saving.</p><div class="answers"><button onclick="selectSibling(this)">MYTH</button><button onclick="selectSibling(this)">POSSIBLY TRUE</button><button onclick="selectSibling(this)">NOT ENOUGH INFO</button></div></div>
+    <div class="claim"><p>Cost of living can affect how any generation spends and saves.</p><div class="answers"><button onclick="selectSibling(this)">MYTH</button><button onclick="selectSibling(this)">POSSIBLY TRUE</button><button onclick="selectSibling(this)">NOT ENOUGH INFO</button></div></div>
+    <div class="claim"><p>Social-media trends can influence financial habits, but they do not describe every person.</p><div class="answers"><button onclick="selectSibling(this)">MYTH</button><button onclick="selectSibling(this)">POSSIBLY TRUE</button><button onclick="selectSibling(this)">NOT ENOUGH INFO</button></div></div>
+    <div class="claim"><p>If someone uses cash, they must be wary of all digital technology.</p><div class="answers"><button onclick="selectSibling(this)">MYTH</button><button onclick="selectSibling(this)">POSSIBLY TRUE</button><button onclick="selectSibling(this)">NOT ENOUGH INFO</button></div></div>
+  </div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>9. Final position</h2><p>How much does generation really matter when it comes to money?</p></div><div class="pill">FINAL SPEAK</div></div>
+  <div class="bigquestion">“Your generation strongly shapes the way you spend and save.”</div>
+  <div class="scale">
+    <button onclick="selectOne(this,'.scale button')">1</button><button onclick="selectOne(this,'.scale button')">2</button><button onclick="selectOne(this,'.scale button')">3</button><button onclick="selectOne(this,'.scale button')">4</button><button onclick="selectOne(this,'.scale button')">5</button>
+  </div>
+  <div class="argument-grid">
+    <div class="arg"><b>ARGUMENT 1</b><span>Give one example connected with payment habits.</span></div>
+    <div class="arg"><b>ARGUMENT 2</b><span>Use one target phrase: rack up debt / make ends meet / shell out / side hustle.</span></div>
+    <div class="arg"><b>ARGUMENT 3</b><span>Compare two generations using tend to / more likely to.</span></div>
+    <div class="arg"><b>COUNTERARGUMENT</b><span>Explain why individual circumstances may matter more than age.</span></div>
+  </div>
+  <div class="prompt">Finish: “There may be some truth in generational patterns, but it would be an oversimplification to say that…”</div>
+</section>
+</main>
+<footer>
+  <button class="navbtn" id="prev" onclick="move(-1)">BACK</button>
+  <div class="progress" id="progress"></div>
+  <div><button class="navbtn" id="checkBtn" onclick="checkCurrent()">CHECK</button> <button class="navbtn primary" id="next" onclick="move(1)">NEXT</button></div>
+</footer>
+</div>
+<script>
+const screens=[...document.querySelectorAll('.screen')];let current=0;
+const progress=document.getElementById('progress');
+screens.forEach((_,i)=>{const d=document.createElement('button');d.className='dot'+(i===0?' on':'');d.title='Activity '+(i+1);d.onclick=()=>show(i);progress.appendChild(d)});
+function show(i){current=Math.max(0,Math.min(screens.length-1,i));screens.forEach((s,j)=>s.classList.toggle('on',j===current));[...progress.children].forEach((d,j)=>d.classList.toggle('on',j===current));document.getElementById('prev').disabled=current===0;document.getElementById('next').textContent=current===screens.length-1?'FINISH':'NEXT'}
+function move(n){show(current+n)}
+function selectOne(el,sel){document.querySelectorAll(sel).forEach(x=>x.classList.remove('selected','sel'));el.classList.add(el.classList.contains('choice')?'selected':'sel')}
+function selectSibling(el){[...el.parentElement.children].forEach(x=>x.classList.remove('sel'));el.classList.add('sel')}
+function toggleReveal(btn){btn.classList.toggle('selected');btn.nextElementSibling.classList.toggle('on')}
+document.querySelectorAll('#vocab select').forEach(s=>s.onchange=()=>{s.closest('.vitem').classList.remove('ok','wrong')});
+let activeStatement=null;
+document.querySelectorAll('.statement').forEach(b=>b.onclick=()=>{document.querySelectorAll('.statement').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeStatement=b});
+document.querySelectorAll('.bucket[data-b]').forEach(bucket=>bucket.onclick=()=>{if(!activeStatement)return;const clone=document.createElement('button');clone.textContent=activeStatement.textContent;clone.dataset.correct=(activeStatement.dataset.t===bucket.dataset.b?'1':'0');bucket.appendChild(clone);activeStatement.remove();activeStatement=null});
+let rankNext=0;
+document.querySelectorAll('.reason').forEach(b=>b.onclick=()=>{if(b.classList.contains('used')||rankNext>5)return;const slot=document.querySelectorAll('.rank-slot')[rankNext];slot.querySelector('span').textContent=b.dataset.r;const rm=document.createElement('button');rm.textContent='×';rm.onclick=(e)=>{e.stopPropagation();b.classList.remove('used');slot.querySelector('span').textContent='';rm.remove();rankNext=[...document.querySelectorAll('.rank-slot')].findIndex(x=>!x.querySelector('span').textContent);if(rankNext<0)rankNext=6};slot.appendChild(rm);b.classList.add('used');rankNext++});
+const battles=[
+ {q:'“I use a separate pot of money so I can see when my fun budget is gone.”',a:'genz'},
+ {q:'“I would rather pay off the mortgage before I shell out on a luxury trip.”',a:'genx'},
+ {q:'“I value financial stability more than keeping up with every new trend.”',a:'boomer'},
+ {q:'“Between rent and other costs, a side hustle can make a real difference.”',a:'millennial'}
+];let bi=0;
+function battlePick(el){document.querySelectorAll('#battle .person').forEach(x=>x.classList.remove('correct','incorrect'));el.classList.add(el.dataset.person===battles[bi].a?'correct':'incorrect')}
+function nextBattle(){bi=(bi+1)%battles.length;document.getElementById('battleQuote').textContent=battles[bi].q;document.querySelectorAll('#battle .person').forEach(x=>x.classList.remove('correct','incorrect'))}
+function checkCurrent(){
+ if(current===1){let score=0;document.querySelectorAll('#vocab .vitem').forEach(v=>{const ok=v.querySelector('select').value===v.dataset.a;v.classList.toggle('ok',ok);v.classList.toggle('wrong',!ok);if(ok)score++});document.getElementById('vocabFeedback').textContent=score+' / 8 correct.'}
+ else if(current===2){document.querySelectorAll('.bucket[data-b] button').forEach(b=>b.classList.add(b.dataset.correct==='1'?'ok':'wrong'))}
+ else if(current===7){
+  const expected=['MYTH','POSSIBLY TRUE','MYTH','POSSIBLY TRUE','POSSIBLY TRUE','MYTH'];
+  document.querySelectorAll('.claim').forEach((c,i)=>{const s=c.querySelector('button.sel');if(s)s.classList.add(s.textContent===expected[i]?'ok':'wrong')})
+ }
+}
+show(0);
+</script>
+</body>
+</html>
