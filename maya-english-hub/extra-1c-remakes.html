@@ -15,14 +15,9 @@ textarea{width:100%;height:120px;border:1px solid #d7d0e8;border-radius:10px;pad
 <body><div class="wrap">
 <div class="top"><div><h1>EXTRA to 1C · Remakes</h1><div>Only the two videos, tasks and vocabulary.</div></div><a class="back" href="./">← HOMEWORK HUB</a></div>
 <div class="tabs"><button class="tab active" data-p="gothic">1 · AMERICAN GOTHIC</button><button class="tab" data-p="hockney">2 · HOCKNEY STORY</button><button class="tab" data-p="vocab">3 · VOCAB CARDS</button></div>
-<div class="mediaSaveBar">
-  <button id="saveMedia">SAVE ALL VIDEO & AUDIO ON THIS DEVICE</button>
-  <button id="clearMedia" style="background:#777">CLEAR SAVED MEDIA</button>
-  <span class="mediaStatus" id="mediaStatus">Media not saved yet.</span>
-</div>
 <div class="audioRow">
-  <div class="audioCard"><b>Listening 1.24</b><input id="audio24File" type="file" accept="audio/*"><audio id="audio24" controls></audio></div>
-  <div class="audioCard"><b>Listening 1.25</b><input id="audio25File" type="file" accept="audio/*"><audio id="audio25" controls></audio></div>
+  <div class="audioCard"><b>Listening 1.24</b><audio id="audio24" controls preload="metadata" src="assets/EF4e_PreintSB_1.24.mp3"></audio></div>
+  <div class="audioCard"><b>Listening 1.25</b><audio id="audio25" controls preload="metadata" src="assets/EF4e_PreintSB_1.25.mp3"></audio></div>
 </div>
 
 <section class="panel active" id="gothic">
@@ -101,22 +96,6 @@ function resetToStart(){
 window.addEventListener('pageshow',resetToStart);
 document.addEventListener('DOMContentLoaded',resetToStart);
 document.querySelectorAll('.tab[data-p]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab[data-p]').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===b.dataset.p));scrollTo(0,0)});
-const mediaEls={
-  gothic:{file:document.getElementById('gFile'),player:document.getElementById('gVideo')},
-  hockney:{file:document.getElementById('hFile'),player:document.getElementById('hVideo')},
-  audio24:{file:document.getElementById('audio24File'),player:document.getElementById('audio24')},
-  audio25:{file:document.getElementById('audio25File'),player:document.getElementById('audio25')}
-};
-let pendingMedia={};
-Object.entries(mediaEls).forEach(([k,v])=>v.file.onchange=e=>{const file=e.target.files[0];if(file){pendingMedia[k]=file;v.player.src=URL.createObjectURL(file)}});
-function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open('maya-extra-1c-media',1);req.onupgradeneeded=()=>req.result.createObjectStore('media');req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
-async function saveAllMedia(){const db=await openDB();const tx=db.transaction('media','readwrite'),store=tx.objectStore('media');let n=0;for(const [k,file] of Object.entries(pendingMedia)){store.put(file,k);n++}await new Promise((res,rej)=>{tx.oncomplete=res;tx.onerror=()=>rej(tx.error)});document.getElementById('mediaStatus').textContent=n?('Saved '+n+' media file(s). They will auto-load next time on this device.'):'No new media selected.'}
-async function loadSavedMedia(){try{const db=await openDB();const tx=db.transaction('media','readonly'),store=tx.objectStore('media');for(const [k,v] of Object.entries(mediaEls)){const req=store.get(k);req.onsuccess=()=>{if(req.result)v.player.src=URL.createObjectURL(req.result)}}document.getElementById('mediaStatus').textContent='Saved media will auto-load on this device.'}catch(e){}}
-async function clearSavedMedia(){const db=await openDB();const tx=db.transaction('media','readwrite');tx.objectStore('media').clear();await new Promise((res,rej)=>{tx.oncomplete=res;tx.onerror=()=>rej(tx.error)});document.getElementById('mediaStatus').textContent='Saved media cleared.'}
-document.getElementById('saveMedia').onclick=saveAllMedia;
-document.getElementById('clearMedia').onclick=clearSavedMedia;
-loadSavedMedia();
-
 document.getElementById('showHockneyScript').onclick=()=>document.getElementById('hockneyScript').classList.toggle('show');
 document.querySelectorAll('.testOpts button').forEach(b=>b.onclick=()=>{const box=b.parentElement;box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));if(b.dataset.correct==='1'){b.classList.add('ok')}else{b.classList.add('bad');const right=[...box.querySelectorAll('button')].find(x=>x.dataset.correct==='1');if(right)right.classList.add('ok')}});
 const sets={gothic:[['remake','ремейк'],['garden fork','садовые вилы'],['hold hands','держаться за руки'],['rooftop garden','сад на крыше'],['city skyline','городской пейзаж'],['background','задний план'],['pose','поза'],['serious','серьёзный'],['relaxed','расслабленный'],['modern clothes','современная одежда'],['hoodie','толстовка с капюшоном'],['similar','похожий'],['different','отличающийся']],hockney:[['portrait','портрет'],['fashion designer','модельер'],['flat','квартира'],['bedroom','спальня'],['carpet','ковёр'],['relationship','отношения'],['symbolize','символизировать'],['distance','дистанция / отчуждение'],['infidelity','неверность'],['pregnant','беременная'],['get divorced','развестись'],['lover','любовник / возлюбленный'],['murder','убийство'],['be murdered','быть убитым']]};
