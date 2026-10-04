@@ -118,6 +118,25 @@ main{min-height:0;position:relative;overflow:hidden}
 .argument-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .arg{border-radius:14px;padding:11px;min-height:92px;background:#fff;border:1px solid var(--line)}
 .arg b{display:block;font-size:12px;color:var(--navy);margin-bottom:5px}.arg span{font-size:12px;line-height:1.35}
+.cond-map{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;height:calc(100% - 52px)}
+.cond-card{border:1px solid var(--line);border-radius:17px;background:#fff;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.cond-card h3{margin:0;font-size:17px;color:var(--navy)}.cond-card .when{font-size:11px;color:var(--muted);line-height:1.35}
+.cond-card .formula{font-size:12px;font-weight:900;background:#eef5f8;border-radius:9px;padding:8px;color:#173f66;display:none}
+.cond-card .example{font-size:12px;line-height:1.4;background:#fafcfd;border-radius:9px;padding:8px;display:none}
+.cond-card.open .formula,.cond-card.open .example{display:block}
+.cond-card button{margin-top:auto;border:0;border-radius:9px;padding:8px;background:#17456a;color:#fff;font-weight:900;cursor:pointer}
+.cond-rush{display:grid;grid-template-columns:1fr 1fr;gap:8px;height:calc(100% - 88px);overflow:auto;padding-right:2px}
+.cond-q{display:grid;grid-template-columns:1fr 170px;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:13px;padding:9px}
+.cond-q p{margin:0;font-size:12px;line-height:1.35;font-weight:700}.cond-q select{width:100%;border:1px solid #cadce6;border-radius:8px;padding:7px;background:#fff;color:#23495f}
+.cond-actions{display:flex;align-items:center;gap:8px;margin-top:9px}.cond-result{font-size:12px;font-weight:900;color:#17456a}
+.mix-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;height:calc(100% - 87px);overflow:auto}
+.mix-q{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}
+.mix-q p{margin:0 0 8px;font-size:13px;line-height:1.4;font-weight:800}
+.mix-q .mixopts{display:flex;flex-wrap:wrap;gap:5px}
+.mix-q button{border:1px solid #c9dce7;background:#f8fcfe;border-radius:8px;padding:6px 8px;font-size:11px;font-weight:900;color:#214c6a;cursor:pointer}
+.mix-q button.sel{background:#214c6a;color:#fff}
+.mix-explain{font-size:11px;line-height:1.35;color:#4c6370;margin-top:7px;display:none}
+.mix-q.ok .mix-explain,.mix-q.wrong .mix-explain{display:block}
 footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;padding:7px 12px;background:#fff;border-top:1px solid var(--line)}
 .navbtn{border:0;border-radius:10px;padding:9px 14px;font-weight:900;background:#e8f2f7;color:#17456a;cursor:pointer}
 .navbtn.primary{background:#17456a;color:#fff}
@@ -127,7 +146,7 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1
   .choice-row,.money5000,.battle{grid-template-columns:1fr 1fr}
   .grid2,.sort-grid,.pred-grid,.rank-wrap,.shorts-lab,.short-stage{grid-template-columns:1fr}
   .screen{overflow:auto}.app{grid-template-rows:58px 1fr 54px}
-  .money5000,.battle,.myth-grid{height:auto}.vocab{grid-template-columns:1fr}.vitem{grid-template-columns:150px 1fr}
+  .money5000,.battle,.myth-grid,.cond-map,.cond-rush,.mix-grid{height:auto}.cond-map{grid-template-columns:1fr 1fr}.cond-rush,.mix-grid{grid-template-columns:1fr}.vocab{grid-template-columns:1fr}.vitem{grid-template-columns:150px 1fr}.cond-q{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -280,7 +299,48 @@ footer{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:1
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>10. Final position</h2><p>How much does generation really matter when it comes to money?</p></div><div class="pill">FINAL SPEAK</div></div>
+  <div class="title"><div><h2>10. Conditionals Control Room</h2><p>Rebuild the logic first: fact → real future → unreal now → unreal past → mixed time.</p></div><div class="pill">0 → 3 + MIXED</div></div>
+  <div class="cond-map">
+    <article class="cond-card"><h3>ZERO</h3><div class="when">Facts, routines, things that normally happen.</div><div class="formula">IF + Present Simple → Present Simple</div><div class="example">If people spend more than they earn, they get into debt.</div><button type="button" onclick="this.parentElement.classList.toggle('open')">REVEAL</button></article>
+    <article class="cond-card"><h3>FIRST</h3><div class="when">A real or possible future result.</div><div class="formula">IF + Present Simple → WILL + V</div><div class="example">If prices rise again, I’ll cut back on eating out.</div><button type="button" onclick="this.parentElement.classList.toggle('open')">REVEAL</button></article>
+    <article class="cond-card"><h3>SECOND</h3><div class="when">Imaginary / unlikely situation now or in the future.</div><div class="formula">IF + Past Simple → WOULD + V</div><div class="example">If I had £10,000, I’d pay off my debt first.</div><button type="button" onclick="this.parentElement.classList.toggle('open')">REVEAL</button></article>
+    <article class="cond-card"><h3>THIRD</h3><div class="when">Imaginary past: the real past cannot be changed.</div><div class="formula">IF + had + V3 → WOULD HAVE + V3</div><div class="example">If she had tracked her spending, she wouldn’t have overspent.</div><button type="button" onclick="this.parentElement.classList.toggle('open')">REVEAL</button></article>
+    <article class="cond-card"><h3>MIXED</h3><div class="when">Two times collide: past cause → present result, or present state → past result.</div><div class="formula">had + V3 → WOULD + V / Past Simple → WOULD HAVE + V3</div><div class="example">If I had saved more last year, I wouldn’t be broke now.</div><button type="button" onclick="this.parentElement.classList.toggle('open')">REVEAL</button></article>
+  </div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>11. Money Conditionals Rush</h2><p>Choose the form fast. Zero, First, Second and Third are mixed together.</p></div><div class="pill">10 QUESTIONS</div></div>
+  <div class="cond-rush" id="condRush">
+    <div class="cond-q" data-a="get"><p>1. If you spend more than you earn, you ___ into debt.</p><select><option value="">Choose…</option><option>get</option><option>will get</option><option>would get</option></select></div>
+    <div class="cond-q" data-a="will cut"><p>2. If prices keep rising, many people ___ back on non-essential spending.</p><select><option value="">Choose…</option><option>cut</option><option>will cut</option><option>would cut</option></select></div>
+    <div class="cond-q" data-a="had"><p>3. If I ___ £10,000, I’d pay off my credit card first.</p><select><option value="">Choose…</option><option>have</option><option>had</option><option>had had</option></select></div>
+    <div class="cond-q" data-a="had used"><p>4. If she ___ cash envelopes, she wouldn’t have overspent last month.</p><select><option value="">Choose…</option><option>used</option><option>had used</option><option>would use</option></select></div>
+    <div class="cond-q" data-a="forget"><p>5. If people don’t track small purchases, they often ___ where the money goes.</p><select><option value="">Choose…</option><option>forget</option><option>will forget</option><option>would forget</option></select></div>
+    <div class="cond-q" data-a="will put"><p>6. If I earn extra money from my side hustle this month, I ___ it into savings.</p><select><option value="">Choose…</option><option>put</option><option>will put</option><option>would put</option></select></div>
+    <div class="cond-q" data-a="were"><p>7. If young people ___ less wary of debt, they might use credit cards more.</p><select><option value="">Choose…</option><option>are</option><option>were</option><option>had been</option></select></div>
+    <div class="cond-q" data-a="would have paid"><p>8. If he had compared prices, he ___ less for the laptop.</p><select><option value="">Choose…</option><option>would pay</option><option>would have paid</option><option>will have paid</option></select></div>
+    <div class="cond-q" data-a="gets"><p>9. If inflation rises, everything usually ___ more expensive.</p><select><option value="">Choose…</option><option>gets</option><option>will get</option><option>would get</option></select></div>
+    <div class="cond-q" data-a="wouldn't buy"><p>10. If I were more frugal, I ___ coffee out every day.</p><select><option value="">Choose…</option><option>don't buy</option><option>won't buy</option><option>wouldn't buy</option></select></div>
+  </div>
+  <div class="cond-actions"><button class="navbtn primary" type="button" onclick="checkCondRush()">CHECK 0–3</button><button class="navbtn" type="button" onclick="resetCondRush()">RESET</button><span class="cond-result" id="condRushResult">Score: 0 / 10</span></div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>12. Mixed Conditionals Time Machine</h2><p>Decide which time causes which result. These are the ones people usually forget.</p></div><div class="pill">MIXED</div></div>
+  <div class="mix-grid" id="mixGrid">
+    <div class="mix-q" data-a="wouldn't be"><p>1. If I had saved more last year, I ___ so stressed about money now.</p><div class="mixopts"><button>wouldn't be</button><button>wouldn't have been</button><button>won't be</button></div><div class="mix-explain">Past cause → present result: had saved → wouldn’t be.</div></div>
+    <div class="mix-q" data-a="would have taken"><p>2. If she were more careful with money, she ___ that huge loan last year.</p><div class="mixopts"><button>wouldn't take</button><button>wouldn't have taken</button><button>hadn't taken</button></div><div class="mix-explain">Present characteristic → past result: were → wouldn’t have taken.</div></div>
+    <div class="mix-q" data-a="would have"><p>3. If he hadn’t quit his side hustle, he ___ more disposable income now.</p><div class="mixopts"><button>would have</button><button>would have had</button><button>will have</button></div><div class="mix-explain">Past action → present situation: hadn’t quit → would have.</div></div>
+    <div class="mix-q" data-a="wouldn't have bought"><p>4. If I weren’t so impulsive, I ___ those trainers yesterday.</p><div class="mixopts"><button>wouldn't buy</button><button>wouldn't have bought</button><button>hadn't bought</button></div><div class="mix-explain">Present trait → past consequence: weren’t → wouldn’t have bought.</div></div>
+    <div class="mix-q" data-a="wouldn't owe"><p>5. If they had avoided credit cards at university, they ___ so much money now.</p><div class="mixopts"><button>wouldn't owe</button><button>wouldn't have owed</button><button>don't owe</button></div><div class="mix-explain">Past cause → present result: had avoided → wouldn’t owe.</div></div>
+    <div class="mix-q" data-a="would have saved"><p>6. If Maya were better at budgeting, she ___ more before her trip.</p><div class="mixopts"><button>would save</button><button>would have saved</button><button>had saved</button></div><div class="mix-explain">Present ability/state → past consequence: were → would have saved.</div></div>
+  </div>
+  <div class="cond-actions"><button class="navbtn primary" type="button" onclick="checkMixed()">CHECK MIXED</button><button class="navbtn" type="button" onclick="resetMixed()">RESET</button><span class="cond-result" id="mixResult">Score: 0 / 6</span></div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>13. Final position</h2><p>How much does generation really matter when it comes to money?</p></div><div class="pill">FINAL SPEAK</div></div>
   <div class="bigquestion">“Your generation strongly shapes the way you spend and save.”</div>
   <div class="scale">
     <button onclick="selectOne(this,'.scale button')">1</button><button onclick="selectOne(this,'.scale button')">2</button><button onclick="selectOne(this,'.scale button')">3</button><button onclick="selectOne(this,'.scale button')">4</button><button onclick="selectOne(this,'.scale button')">5</button>
@@ -362,6 +422,34 @@ document.getElementById('shortSave').onclick=()=>{
   if(txt.split(/\s+/).filter(Boolean).length>=8 && hasHedge){shortState[shortKey].rewrite=true;document.getElementById('shortRewrite').classList.add('ok');updateShortScore()}
   else{document.getElementById('shortRewrite').classList.remove('ok');document.getElementById('shortRewrite').classList.add('wrong')}
 };
+
+function checkCondRush(){
+ let score=0;
+ document.querySelectorAll('#condRush .cond-q').forEach(q=>{
+   const ok=q.querySelector('select').value===q.dataset.a;
+   q.classList.toggle('ok',ok);q.classList.toggle('wrong',!ok);if(ok)score++;
+ });
+ document.getElementById('condRushResult').textContent='Score: '+score+' / 10';
+}
+function resetCondRush(){
+ document.querySelectorAll('#condRush .cond-q').forEach(q=>{q.classList.remove('ok','wrong');q.querySelector('select').value=''});
+ document.getElementById('condRushResult').textContent='Score: 0 / 10';
+}
+document.querySelectorAll('#mixGrid .mix-q button').forEach(b=>b.onclick=()=>{
+ const q=b.closest('.mix-q');q.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');q.classList.remove('ok','wrong');
+});
+function checkMixed(){
+ let score=0;
+ document.querySelectorAll('#mixGrid .mix-q').forEach(q=>{
+   const s=q.querySelector('button.sel');const ok=!!s && s.textContent.trim()===q.dataset.a;
+   q.classList.toggle('ok',ok);q.classList.toggle('wrong',!ok);if(ok)score++;
+ });
+ document.getElementById('mixResult').textContent='Score: '+score+' / 6';
+}
+function resetMixed(){
+ document.querySelectorAll('#mixGrid .mix-q').forEach(q=>{q.classList.remove('ok','wrong');q.querySelectorAll('button').forEach(b=>b.classList.remove('sel'))});
+ document.getElementById('mixResult').textContent='Score: 0 / 6';
+}
 
 function checkCurrent(){
  if(current===1){let score=0;document.querySelectorAll('#vocab .vitem').forEach(v=>{const ok=v.querySelector('select').value===v.dataset.a;v.classList.toggle('ok',ok);v.classList.toggle('wrong',!ok);if(ok)score++});document.getElementById('vocabFeedback').textContent=score+' / 8 correct.'}
