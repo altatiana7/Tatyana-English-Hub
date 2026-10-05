@@ -189,6 +189,9 @@ header>div:first-child{display:flex;align-items:center}
 .c0{background:#b9503a}.c1{background:#2f6f9f}.c2{background:#a67a12}.c3{background:#2f8560}.c4{background:#7a4fa3}.c5{background:#1f8a8a}.c6{background:#b24a7a}.c7{background:#5b6fb5}
 @media(max-width:700px){.vm-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-height:640px) and (min-width:701px){.title p{display:none}.title{margin-bottom:8px;padding-bottom:6px}.vm-label{margin:8px 0 4px}.vm-p{padding:9px 8px}.vm-m{min-height:52px;padding:7px 11px}.g-stat{padding:4px 12px}.g-goal{padding:4px 12px}}
+/* embedded game fills the whole area */
+.screen.embed.on{padding:0;overflow:hidden}.screen.embed::before,.screen.embed::after{display:none}
+.screen.embed>iframe{zoom:1;max-width:none!important;width:100%;height:100%;flex:1;border:0;display:block;background:#eef0fb}
 </style>
 <!-- /LAYOUT-V3 -->
 </head>
@@ -198,7 +201,7 @@ header>div:first-child{display:flex;align-items:center}
   <div><button class="menu-btn" id="menuBtn" type="button" aria-expanded="true" onclick="setMenu(document.querySelector('.app').classList.contains('full'))">☰ MENU</button><div><h1>GEN Z &amp; MONEY</h1><p>Lesson 3 · money habits across generations</p></div></div>
   <div class="level">B2–C1 · interactive</div>
 </header>
-<nav class="lesson-nav" aria-label="Lesson activities"><p class="nav-label">LESSON 03 / EXPLORE</p><div id="activityNav"></div><div class="nav-note">7 sections · 15 activities</div></nav>
+<nav class="lesson-nav" aria-label="Lesson activities"><p class="nav-label">LESSON 03 / EXPLORE</p><div id="activityNav"></div><div class="nav-note">7 sections · 16 activities</div></nav>
 <main>
 <div class="subtabs" id="subTabs" hidden></div>
 <div class="screens">
@@ -427,6 +430,8 @@ header>div:first-child{display:flex;align-items:center}
   </div>
   <div class="prompt">Finish: “There may be some truth in generational patterns, but it would be an oversimplification to say that…”</div>
 </section>
+
+<section class="screen embed"><iframe title="Chat Reply: Across Generations" data-src="chat-reply.html?v=20261005" loading="lazy"></iframe></section>
 </div>
 </main>
 <footer>
@@ -437,11 +442,11 @@ header>div:first-child{display:flex;align-items:center}
 </div>
 <script>
 const screens=[...document.querySelectorAll('.screen')];let current=0;
-const activityNames=['Overview','Money language','Money guide','Stereotype sort','£5,000 challenge','Cash comeback','Rank the reasons','Money battle','Shorts lab','Myth or fact?','Group chat','Unlock the map','Savings Rush','Time machine','Final position'];
+const activityNames=['Overview','Money language','Money guide','Stereotype sort','£5,000 challenge','Cash comeback','Rank the reasons','Money battle','Shorts lab','Myth or fact?','Group chat','Unlock the map','Savings Rush','Time machine','Final position','Chat reply'];
 const GROUPS=[
  {n:'Overview',s:[0]},
  {n:'Money words',s:[1],links:[['Phrasal verbs arcade ↗','phrasal-verbs-money.html']]},
- {n:'Generations',s:[2,3,4,7,10]},
+ {n:'Generations',s:[2,3,4,7,10,15]},
  {n:'Cash comeback',s:[5,6,9]},
  {n:'Shorts lab',s:[8]},
  {n:'Grammar games',s:[11,12,13]},
@@ -469,6 +474,7 @@ function show(i,options={}){
   g.s.forEach((si,k)=>{const t=document.createElement('button');t.type='button';t.className='subtab'+(si===current?' on':'');t.innerHTML='<span>'+(k+1)+'</span>'+activityNames[si];t.onclick=()=>show(si);subTabs.appendChild(t)});
   (g.links||[]).forEach(l=>{const a=document.createElement('a');a.className='subtab link';a.href=l[1];a.textContent=l[0];subTabs.appendChild(a)});
  }
+ const fr=screens[current].querySelector('iframe[data-src]');if(fr&&!fr.src)fr.src=fr.dataset.src;
  if(!options.preserveScroll)screens[current].scrollTop=0;
  const pos=SEQ.indexOf(current);
  document.getElementById('prev').disabled=pos===0;

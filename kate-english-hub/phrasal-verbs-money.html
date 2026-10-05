@@ -69,6 +69,7 @@ main::before{content:"";flex:1 1 0}main::after{content:"";flex:1.5 1 0}
 @keyframes gshake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
 @keyframes gpop{50%{transform:scale(1.18)}}@keyframes gfloat{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-26px)}}
 @media(prefers-reduced-motion:reduce){.shake,.g-stat.pop b,.g-float{animation:none}.g-float{display:none}.flip-in{transition:none!important}}
+.ru{display:block;font-size:11px;line-height:1.35;font-weight:500;font-style:normal;letter-spacing:0;color:#8a978f}.lc .ru{display:none}.lc.open .ru{display:block}.g-msg .ru{display:inline;font-size:.82em}.face .ru{font-size:13px;margin-top:-4px}
 /* learn cards */
 .learn{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
 .lc{border:2px solid var(--line);background:#fff;border-radius:12px;padding:12px;text-align:left;color:var(--ink);min-height:118px;display:flex;flex-direction:column;gap:5px}
@@ -112,16 +113,16 @@ function pop(id){const e=$id(id);if(!e)return;e.classList.remove('pop');void e.o
 const SHAPES=['▲','◆','●','■'];
 
 const VERBS=[
- {v:'cut back (on)',def:'spend less on something',ex:'We’re cutting back on takeaways this month.',note:'cut – cut – cut'},
- {v:'give away',def:'give something to someone for free',ex:'She gave her old bike away.',note:'SEPARABLE · give it away'},
- {v:'pay back',def:'return money you borrowed',ex:'I’ll pay you back on Friday.',note:'SEPARABLE · pay me back'},
- {v:'rip off',def:'charge someone far too much; cheat',ex:'That taxi driver ripped us off.',note:'INFORMAL · rip sb off'},
- {v:'run up',def:'let a bill or debt grow bigger and bigger',ex:'He ran up a huge phone bill.',note:'run – ran – run'},
- {v:'save up (for)',def:'keep money so you can buy something later',ex:'I’m saving up for a laptop.',note:'save up FOR + noun'},
- {v:'sell out (of)',def:'have nothing left to sell',ex:'The tickets sold out in an hour.',note:'sell – sold – sold'},
- {v:'shop around',def:'compare prices in different places before buying',ex:'Shop around before you choose a phone plan.',note:'NO OBJECT'},
- {v:'splurge on',def:'spend a lot on something special as a treat',ex:'We splurged on a fancy dinner.',note:'splurge ON + noun'},
- {v:'take back',def:'return something to the shop where you bought it',ex:'These shoes are too small — I’ll take them back.',note:'SEPARABLE · take it back'}
+ {v:'cut back (on)',ru:'сокращать расходы (на что-то)',def:'spend less on something',ex:'We’re cutting back on takeaways this month.',note:'cut – cut – cut'},
+ {v:'give away',ru:'отдавать даром, раздавать',def:'give something to someone for free',ex:'She gave her old bike away.',note:'SEPARABLE · give it away'},
+ {v:'pay back',ru:'возвращать долг',def:'return money you borrowed',ex:'I’ll pay you back on Friday.',note:'SEPARABLE · pay me back'},
+ {v:'rip off',ru:'обдирать, брать втридорога (разг.)',def:'charge someone far too much; cheat',ex:'That taxi driver ripped us off.',note:'INFORMAL · rip sb off'},
+ {v:'run up',ru:'накопить (долг, большой счёт)',def:'let a bill or debt grow bigger and bigger',ex:'He ran up a huge phone bill.',note:'run – ran – run'},
+ {v:'save up (for)',ru:'копить (на что-то)',def:'keep money so you can buy something later',ex:'I’m saving up for a laptop.',note:'save up FOR + noun'},
+ {v:'sell out (of)',ru:'распродать(ся)',def:'have nothing left to sell',ex:'The tickets sold out in an hour.',note:'sell – sold – sold'},
+ {v:'shop around',ru:'сравнивать цены, прицениваться',def:'compare prices in different places before buying',ex:'Shop around before you choose a phone plan.',note:'NO OBJECT'},
+ {v:'splurge on',ru:'раскошелиться на что-то',def:'spend a lot on something special as a treat',ex:'We splurged on a fancy dinner.',note:'splurge ON + noun'},
+ {v:'take back',ru:'вернуть покупку в магазин',def:'return something to the shop where you bought it',ex:'These shoes are too small — I’ll take them back.',note:'SEPARABLE · take it back'}
 ];
 const BASE=VERBS.map(x=>x.v.replace(/ \(.*\)/,''));
 function opts4(correct){const others=shuffle(BASE.filter(b=>b!==correct)).slice(0,3);return shuffle([correct,...others])}
@@ -237,7 +238,7 @@ function nextAct(id){const i=ACTS.findIndex(a=>a.id===id);return i<ACTS.length-1
 /* ---------- 1 learn ---------- */
 function actLearn(){
  frame('learn','Guess the meaning first, then tap the card to check. Open all ten.');
- $id('body').innerHTML='<div class="learn">'+VERBS.map((x,i)=>'<button type="button" class="lc" data-i="'+i+'"><b>'+x.v+'</b><span class="def">'+x.def+'</span><span class="ex">'+x.ex+'</span><span class="note">'+x.note+'</span><span class="hint">TAP TO REVEAL</span></button>').join('')+'</div><div class="g-row"><div class="g-msg" id="lmsg">0 / 10 opened</div><span id="lnext"></span></div>';
+ $id('body').innerHTML='<div class="learn">'+VERBS.map((x,i)=>'<button type="button" class="lc" data-i="'+i+'"><b>'+x.v+'</b><span class="def">'+x.def+'</span><span class="ru">'+x.ru+'</span><span class="ex">'+x.ex+'</span><span class="note">'+x.note+'</span><span class="hint">TAP TO REVEAL</span></button>').join('')+'</div><div class="g-row"><div class="g-msg" id="lmsg">0 / 10 opened</div><span id="lnext"></span></div>';
  document.querySelectorAll('.lc').forEach(c=>c.onclick=()=>{c.classList.add('open');const n=document.querySelectorAll('.lc.open').length;$id('lmsg').textContent=n+' / 10 opened';if(n===10){complete('learn');$id('lnext').innerHTML=nextAct('learn')}});
 }
 
@@ -249,7 +250,7 @@ function actCards(){
   $id('cK').textContent=known+' / 10';$id('cBar').style.width=known*10+'%';$id('cLeft').textContent=deck.length+' LEFT';
   if(!deck.length){complete('cards');$id('body').innerHTML='<div class="g-stage"><div class="g-end"><p class="g-kicker">DECK CLEARED</p><h3>10 / 10 known</h3><p>Now use them under pressure.</p>'+nextAct('cards')+'</div></div>';return}
   const x=deck[0];
-  $id('body').innerHTML='<div class="flip" id="flip"><button type="button" class="flip-in" aria-label="Flip the card"><span class="face"><small>WHICH PHRASAL VERB?</small><span class="mid">'+x.def+'</span><small>TAP TO FLIP</small></span><span class="face back"><span class="big">'+x.v+'</span><span class="mid" style="font-size:15px;font-weight:500">'+x.ex+'</span></span></button></div><div class="fbtns"><button type="button" class="navbtn again" id="again" disabled>↺ AGAIN</button><button type="button" class="navbtn know" id="know" disabled>✓ I KNEW IT</button></div>';
+  $id('body').innerHTML='<div class="flip" id="flip"><button type="button" class="flip-in" aria-label="Flip the card"><span class="face"><small>WHICH PHRASAL VERB?</small><span class="mid">'+x.def+'</span><small>TAP TO FLIP</small></span><span class="face back"><span class="big">'+x.v+'</span><span class="ru">'+x.ru+'</span><span class="mid" style="font-size:15px;font-weight:500">'+x.ex+'</span></span></button></div><div class="fbtns"><button type="button" class="navbtn again" id="again" disabled>↺ AGAIN</button><button type="button" class="navbtn know" id="know" disabled>✓ I KNEW IT</button></div>';
   document.querySelector('.flip-in').onclick=()=>{$id('flip').classList.toggle('on');$id('again').disabled=$id('know').disabled=false};
   $id('again').onclick=()=>{deck.push(deck.shift());draw()};
   $id('know').onclick=()=>{deck.shift();known++;pop('cKnown');draw()};
@@ -292,7 +293,7 @@ function quiz(cfg){
 const gap=(s,w,cls)=>s.replace('___','<span class="blank '+(cls||'')+'">'+(w||'&nbsp;?&nbsp;')+'</span>');
 
 function actSit(){
- const items=shuffle(SITUATIONS).map(([q,a])=>{const o=opts4(a);const d=VERBS[BASE.indexOf(a)];return {q,o,a:o.indexOf(a),why:d.v+' = '+d.def+'.',review:q+'<br><b>'+a+'</b> — '+d.def}});
+ const items=shuffle(SITUATIONS).map(([q,a])=>{const o=opts4(a);const d=VERBS[BASE.indexOf(a)];return {q,o,a:o.indexOf(a),why:d.v+' = '+d.def+'. <span class="ru">'+d.ru+'</span>',review:q+'<br><b>'+a+'</b> — '+d.def}});
  quiz({id:'sit',sub:'Read the situation and pick the phrasal verb that fits. Faster = more points.',items,kicker:'SITUATION',restart:actSit});
 }
 function actSwap(){
