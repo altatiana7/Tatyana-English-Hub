@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Word Walls · Age & Attitudes</title>
+<style>
+:root{--ink:#16384d;--muted:#536e7d;--blue:#1f78a5;--blueD:#155d80;--line:#c8dce8;--brick:#c4552f;--brickD:#8a3a22;--mortar:#5a2314;--sand:#fff3ce}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(180deg,#eef9ff 0,#f7fbff 52%,#fffaf1 100%);display:flex;flex-direction:column;min-height:100vh}
+button,a{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+button:focus-visible,a:focus-visible{outline:3px solid #397baf;outline-offset:2px}
+header{flex:none;display:flex;align-items:center;gap:14px;padding:9px 3%;background:#fff;border-bottom:2px solid #bcd7e6}
+header .brand{flex:1;min-width:0}
+header small{display:block;color:var(--muted);font-size:12px;letter-spacing:.06em}
+header strong{display:block;font-size:20px;font-weight:900;letter-spacing:.02em}
+.btn{border:2px solid var(--line);border-radius:12px;background:#fff;padding:9px 14px;font-weight:800;text-decoration:none;display:inline-block;white-space:nowrap}
+.btn:hover{background:#eaf2f7}
+.primary{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 4px 0 var(--blueD)}
+.primary:hover{background:#1b6c95}
+main{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width:1450px;margin:0 auto;padding:12px 3% 14px}
+
+/* menu */
+.menu{margin:auto;width:min(760px,100%);text-align:center}
+.kicker{font-size:12px;font-weight:900;letter-spacing:.16em;color:var(--blue)}
+.menu h1{margin:6px 0 4px;font-size:clamp(40px,6vw,72px);font-weight:900;letter-spacing:-.02em;line-height:1}
+.menu p{margin:8px auto 0;max-width:600px;font-size:18px;line-height:1.45;color:var(--muted)}
+.demo{display:flex;justify-content:center;gap:6px;margin:18px auto 6px;padding:8px;background:var(--mortar);border-radius:14px;width:fit-content;max-width:100%;flex-wrap:wrap}
+.demo span{background:linear-gradient(135deg,var(--brick),var(--brickD));color:#fff;font-weight:900;font-size:17px;padding:10px 16px;border-radius:7px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)}
+.demo span.trap{background:#fff;color:#9a3a2a;box-shadow:none;text-decoration:line-through}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0 18px}
+.level{border:2px solid var(--line);border-radius:16px;background:#fff;padding:14px 10px;font-weight:900;font-size:19px}
+.level small{display:block;margin-top:5px;font-size:13px;font-weight:700;color:var(--muted)}
+.level[aria-pressed=true]{border-color:var(--blue);background:#e5f5ff;box-shadow:0 4px 0 #b8dced}
+.start{font-size:22px;padding:14px 34px;border-radius:16px}
+
+/* game bar */
+.bar{flex:none;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 14px;background:#fff;border:2px solid var(--line);border-radius:16px}
+.bar h2{margin:0;font-size:clamp(18px,1.9vw,24px);font-weight:900;flex:1;min-width:200px}
+.bar h2 span{color:var(--muted);font-weight:700;font-size:.72em;margin-left:8px}
+.stat{border:2px solid var(--ink);border-radius:12px;padding:5px 12px;font-weight:900;font-size:17px;background:#fff;white-space:nowrap}
+.stat.lives{color:#c0392b;border-color:#e3b5ad;letter-spacing:2px}
+.meter{flex:none;height:10px;margin:8px 0;background:#d9eaf2;border-radius:999px;overflow:hidden}
+.meter>div{height:100%;width:0;background:linear-gradient(90deg,var(--brick),#e08a3a);transition:width .3s}
+
+/* tiles */
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:minmax(64px,1fr);gap:8px}
+.tile{position:relative;border:0;padding:0;background:none;perspective:800px;min-height:64px}
+.fl{position:absolute;inset:0;transition:transform .55s;transform-style:preserve-3d}
+.tile.ok .fl{transform:rotateY(180deg)}
+.fa,.fb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-radius:12px;padding:4px 8px}
+.fa{background:#fff;border:2px solid var(--line);font-size:clamp(17px,1.65vw,24px);font-weight:900}
+.tile:hover .fa{background:#eef9ff;border-color:#8fc3dc}
+.tile.hint .fa{border-color:#f0b92f;box-shadow:0 0 0 4px #ffe08a}
+.tile.bad .fa{background:#ffe6e0;border-color:#d9735c;animation:shake .4s}
+.tile.gone{visibility:hidden}
+.fb{transform:rotateY(180deg);background:linear-gradient(135deg,var(--brick),var(--brickD));box-shadow:inset 0 -4px 0 rgba(0,0,0,.25);color:#fff}
+.fb b{font-size:clamp(17px,1.6vw,23px);font-weight:900;line-height:1.1}
+.fb span{margin-top:3px;font-size:clamp(12px,1vw,14.5px);line-height:1.2;color:#ffe6cc}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.toast{flex:none;min-height:30px;margin-top:8px;text-align:center;font-weight:800;font-size:17px;color:#873c2d}
+.toast.good{color:#225f40}
+
+/* finished wall */
+.wall{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:minmax(84px,1fr);gap:7px;padding:9px;background:var(--mortar);border-radius:18px}
+.brick{border:0;border-radius:9px;background:linear-gradient(135deg,var(--brick),var(--brickD));box-shadow:inset 0 -5px 0 rgba(0,0,0,.25);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6px 10px;animation:drop .45s backwards}
+.brick:hover{filter:brightness(1.1)}
+.brick b{font-size:clamp(19px,2vw,29px);font-weight:900;line-height:1.1}
+.brick span{margin-top:5px;font-size:clamp(13px,1.15vw,17px);line-height:1.25;color:#ffe6cc}
+.wall .brick:nth-child(n+6):nth-child(-n+10){transform:translateX(2.5%)}
+@keyframes drop{from{transform:translateY(-40px);opacity:0}}
+.after .stat{white-space:normal;text-align:center}
+.wall{overflow:hidden}
+.after{flex:none;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.fell{margin:auto;text-align:center}
+.fell h2{font-size:clamp(34px,5vw,56px);font-weight:900;margin:0 0 8px}
+.fell p{font-size:20px;color:var(--muted);margin:0 0 20px}
+
+@media(max-width:950px){.grid{grid-template-columns:repeat(4,1fr)}.wall{grid-template-columns:repeat(3,1fr)}.wall .brick{transform:none!important}}
+@media(max-width:560px){header small{display:none}header strong{font-size:16px}.btn{padding:8px 10px;font-size:13px}.grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:70px}.wall{grid-template-columns:repeat(2,1fr)}.levels{grid-template-columns:1fr}.fa{font-size:17px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <a class="btn" href="index.html">← HOME</a>
+  <div class="brand"><small>GABI · GATEWAY B1 · UNIT 1 · PAGES 10–11</small><strong>WORD WALLS: AGE &amp; ATTITUDES</strong></div>
+  <button class="btn" id="full">Full screen</button>
+</header>
+<main id="app"></main>
+<script>
+/* 15 adjectives for SB p10–11 (video "How does it feel to be old?", text "Ageism in the UK").
+   Traps are nouns from the same word families and the same text. */
+const WORDS=[
+ ['elderly','old (a polite word for people)'],
+ ['middle-aged','between about 40 and 60 years old'],
+ ['retired','no longer working because of your age'],
+ ['lonely','sad because you are alone'],
+ ['independent','able to live without help'],
+ ['confident','sure of yourself and your abilities'],
+ ['open-minded','ready to accept new, different ideas'],
+ ['unfair','not treating people equally'],
+ ['respectful','polite; showing that you value others'],
+ ['patient','able to wait without getting angry'],
+ ['positive','hopeful; seeing the good side'],
+ ['negative','seeing only the bad side'],
+ ['active','always doing things; full of energy'],
+ ['healthy','strong and not ill'],
+ ['stereotypical','based on a fixed idea about a group']
+];
+const TRAPS=['loneliness','independence','confidence','patience','respect','retirement','health','ageism','attitude','stereotype','citizen','opportunity','illness','memory','adolescence'];
+const LEVELS={practice:['Practice','no limit'],standard:['Standard','5 lives'],challenge:['Challenge','3 lives']};
+const LIVES={practice:Infinity,standard:5,challenge:3};
+const DEF=Object.fromEntries(WORDS),GOOD=new Set(Object.keys(DEF)),N=WORDS.length;
+const A=document.getElementById('app'),$=s=>A.querySelector(s);
+let level='standard';
+try{level=localStorage.getItem('gabi-wordwalls-level')||level}catch(e){}
+if(!LEVELS[level])level='standard';
+
+function say(w){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}catch(e){}}
+
+function menu(){
+ A.innerHTML=`<div class="menu">
+  <div class="kicker">ADJECTIVES · AGE &amp; ATTITUDES</div>
+  <h1>Word Walls</h1>
+  <p>Find the <b>15 adjectives</b> that describe people. Every adjective becomes a brick. The <b>nouns are traps</b>.</p>
+  <div class="demo"><span>lonely</span><span class="trap">loneliness</span><span>patient</span><span class="trap">patience</span></div>
+  <div class="levels">${Object.entries(LEVELS).map(([k,v])=>`<button class="level" data-level="${k}" aria-pressed="${k===level}">${v[0]}<small>${v[1]}</small></button>`).join('')}</div>
+  <button class="btn primary start" id="go">Start building →</button>
+ </div>`;
+ A.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{level=b.dataset.level;try{localStorage.setItem('gabi-wordwalls-level',level)}catch(e){}menu()});
+ $('#go').onclick=build;
+}
+
+function build(){
+ let lives=LIVES[level],found=0,hints=3,missed=[];
+ const words=[...GOOD,...TRAPS].sort((a,b)=>a.localeCompare(b));
+ A.innerHTML=`<div class="bar">
+   <h2>Tap the adjectives<span>Nouns are traps.</span></h2>
+   <span class="stat" id="cnt">0 / ${N} bricks</span>
+   <span class="stat lives" id="hp"></span>
+   <button class="btn" id="hint">Hint · <b id="hn">3</b></button>
+   <button class="btn" id="exit">Menu</button>
+  </div>
+  <div class="meter"><div id="fill"></div></div>
+  <div class="grid">${words.map(w=>`<button class="tile" data-w="${w}"><div class="fl"><div class="fa">${w}</div><div class="fb"><b>${w}</b><span>${DEF[w]||''}</span></div></div></button>`).join('')}</div>
+  <div class="toast" id="toast" role="status"></div>`;
+ const hp=()=>{$('#hp').textContent=lives===Infinity?'∞':'♥'.repeat(lives)+'♡'.repeat(LIVES[level]-lives)};hp();
+ $('#exit').onclick=menu;
+ $('#hint').onclick=()=>{
+  if(!hints)return;
+  const el=[...A.querySelectorAll('.tile:not(.ok):not(.hint)')].find(e=>GOOD.has(e.dataset.w));
+  if(el){el.classList.add('hint');hints--;$('#hn').textContent=hints;if(!hints)$('#hint').disabled=true}
+ };
+ A.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{
+  const w=b.dataset.w,toast=$('#toast');say(w);
+  if(b.classList.contains('ok'))return;
+  if(GOOD.has(w)){
+   b.classList.add('ok');b.classList.remove('hint');found++;
+   $('#cnt').textContent=found+' / '+N+' bricks';$('#fill').style.width=(found/N*100)+'%';
+   toast.className='toast good';toast.textContent=w+' = '+DEF[w];
+   if(found===N)setTimeout(()=>wall(missed),900);
+  }else{
+   b.classList.add('bad');setTimeout(()=>b.classList.remove('bad'),450);
+   if(!missed.includes(w))missed.push(w);
+   toast.className='toast';toast.textContent='“'+w+'” is a noun, not an adjective.';
+   if(lives!==Infinity){lives--;hp();if(lives<=0)setTimeout(()=>fell(found),500)}
+  }
+ });
+}
+
+function fell(found){
+ A.innerHTML=`<div class="fell"><div class="kicker">OUT OF LIVES</div><h2>The wall fell down</h2><p>You placed ${found} of ${N} bricks. Adjectives describe people: <b>a lonely man</b>, not <b>a loneliness man</b>.</p>
+ <button class="btn primary start" id="again">Try again</button> <button class="btn" id="m">Menu</button></div>`;
+ $('#again').onclick=build;$('#m').onclick=menu;
+}
+
+function wall(missed){
+ A.innerHTML=`<div class="bar">
+   <h2>The wall stands<span>${missed.length?'Traps you hit: '+missed.join(', '):'No traps hit. Perfect build.'}</span></h2>
+   <span class="stat">${N} / ${N} bricks</span>
+  </div>
+  <div class="meter"><div style="width:100%"></div></div>
+  <div class="wall">${WORDS.map((x,i)=>`<button class="brick" data-w="${x[0]}" style="animation-delay:${i*45}ms"><b>${x[0]}</b><span>${x[1]}</span></button>`).join('')}</div>
+  <div class="after"><span class="stat" style="border-color:var(--line);font-weight:700">Tap a brick to hear it. Then use it in a sentence about an older person you know.</span>
+   <button class="btn primary" id="again">Play again</button><button class="btn" id="m">Menu</button></div>`;
+ A.querySelectorAll('.brick').forEach(b=>b.onclick=()=>say(b.dataset.w));
+ $('#again').onclick=build;$('#m').onclick=menu;
+}
+
+document.getElementById('full').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}};
+menu();
+</script>
+</body>
+</html>
