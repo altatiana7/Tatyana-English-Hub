@@ -35,7 +35,7 @@ header{padding:8px 22px}header h1{font-size:22px}header p{font-size:12px}.level{
 footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8px}.progress{font-size:12px}
 .screen.on{display:flex;flex-direction:column;padding:22px 28px}
 .screen::before{content:"";flex:1 1 0}.screen::after{content:"";flex:1.6 1 0}
-.screen>*{zoom:var(--z);width:100%;max-width:900px;flex-shrink:0}
+.screen>*{zoom:var(--z);width:100%;max-width:800px;flex-shrink:0}
 .genz-facts-board{background:#f7f1e8}.genz-facts-board img{width:100%;height:100%;max-height:300px;object-fit:contain;border-radius:10px}
 .overview-top{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
 @media(min-width:1000px) and (min-height:620px){:root{--z:1.2}}
@@ -131,11 +131,11 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 .chat-wrap .g-opts{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:10px}
 @keyframes gbin{from{opacity:0;transform:translateY(8px)}}
 @media(max-width:700px){.chat-wrap,.shop{grid-template-columns:1fr}.phone{height:260px}}
-@media(max-height:860px){.cond-card.open .when{display:none}.genz-facts-board img{max-height:250px}.cond-card{min-height:132px}}
+@media(max-height:5000px){.cond-card.open .when{display:none}.genz-facts-board img{max-height:250px}.cond-card{min-height:132px}}
 .tm-arrow.np::after{left:-6px}.tm-arrow.pn::after{right:-6px}
 .choice{min-width:0}
 @media(min-width:1300px) and (max-height:800px){:root{--z:1.25}}
-@media(max-height:860px){.cond-card{padding:10px;gap:6px}.cond-card .formula,.cond-card .example{font-size:11px;line-height:1.4;padding:6px 8px}#mapStage{padding:14px 18px}#mapStage .g-sentence{font-size:20px}}
+@media(max-height:5000px){.cond-card{padding:10px;gap:6px}.cond-card .formula,.cond-card .example{font-size:11px;line-height:1.4;padding:6px 8px}#mapStage{padding:14px 18px}#mapStage .g-sentence{font-size:20px}}
 @media(max-width:700px){#activityNav{display:flex;gap:4px}header h1{font-size:18px}header p{display:none}}
 /* grouped pages: one sidebar item, buttons on top */
 main{display:flex;flex-direction:column}
@@ -170,9 +170,25 @@ main{display:flex;flex-direction:column}
 .menu-btn{border:1px solid #d5e0d7;border-radius:8px;background:#f2f5ef;color:var(--navy);font-size:12px;font-weight:800;letter-spacing:.04em;padding:9px 14px;margin-right:14px}
 header>div:first-child{display:flex;align-items:center}
 .app.full{grid-template-columns:0 minmax(0,1fr)}.app.full .lesson-nav{display:none}
-.app.full .screen>*{max-width:1100px}
+.app.full .screen>*{max-width:940px}
 .app.full .menu-btn{background:var(--navy);border-color:var(--navy);color:#fff}
 @media(max-width:700px){.menu-btn{display:none}.app.full{grid-template-columns:1fr}.app.full .lesson-nav{display:flex}}
+@media(max-height:640px) and (min-width:701px){.app{grid-template-rows:48px minmax(0,1fr) 44px}header{padding:4px 18px}header h1{font-size:19px}header p{display:none}footer{padding:4px 18px}.navbtn{padding:7px 14px}.subtabs{padding-top:5px!important;padding-bottom:5px!important}.screen.on{padding:12px 28px}}
+/* vocabulary match game */
+.vm-label{font-size:10px;letter-spacing:.12em;font-weight:800;color:#8a978f;margin:12px 0 6px}
+.vm-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.vm-p{border:0;border-radius:12px;padding:13px 8px;font-size:16px;font-weight:800;color:#fff;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18);transition:transform .12s,opacity .2s}
+.vm-p:not(:disabled):hover{transform:translateY(-2px)}
+.vm-p.pick{outline:3px solid var(--ink);outline-offset:2px;transform:translateY(-3px)}
+.vm-p.done{opacity:.38;box-shadow:none}
+.vm-m{border:2px solid #d5e0d7;border-radius:12px;background:#fff;padding:10px 12px;min-height:66px;font-size:13.5px;line-height:1.35;font-weight:600;color:var(--ink);text-align:left;transition:transform .12s,border-color .12s,background .2s}
+.vm-m:not(:disabled):hover{transform:translateY(-2px);border-color:var(--navy)}
+.vm-m.done{color:#fff;border-color:transparent}.vm-m.done b{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.vm-m:disabled{opacity:1}.vm-p:disabled{opacity:.38}
+.vm-m.bad{background:var(--bad);border-color:#cd8e81}
+.c0{background:#b9503a}.c1{background:#2f6f9f}.c2{background:#a67a12}.c3{background:#2f8560}.c4{background:#7a4fa3}.c5{background:#1f8a8a}.c6{background:#b24a7a}.c7{background:#5b6fb5}
+@media(max-width:700px){.vm-row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-height:640px) and (min-width:701px){.title p{display:none}.title{margin-bottom:8px;padding-bottom:6px}.vm-label{margin:8px 0 4px}.vm-p{padding:9px 8px}.vm-m{min-height:52px;padding:7px 11px}.g-stat{padding:4px 12px}.g-goal{padding:4px 12px}}
 </style>
 <!-- /LAYOUT-V3 -->
 </head>
@@ -210,19 +226,18 @@ header>div:first-child{display:flex;align-items:center}
   <div class="overview-foot"><span>Choose a section on the left, then an activity on top.</span><span>Make a claim. Give a reason. Avoid a stereotype.</span></div>
 </section>
 
-<section class="screen" data-k="vocab">
-  <div class="title"><div><h2>Money Language Sprint</h2><p>Match each phrase with the best meaning. Check instantly.</p></div><div class="pill">VOCABULARY</div></div>
-  <div class="vocab" id="vocab">
-    <div class="vitem" data-a="accumulate"><b>rack up debt</b><select><option value="">Choose…</option><option value="accumulate">gradually accumulate debt</option><option value="repay">repay what you owe</option><option value="extra">earn extra money</option></select></div>
-    <div class="vitem" data-a="repay"><b>pay off debt</b><select><option value="">Choose…</option><option value="large">spend a lot</option><option value="repay">repay what you owe</option><option value="survive">cover basic costs</option></select></div>
-    <div class="vitem" data-a="extra"><b>side hustle</b><select><option value="">Choose…</option><option value="extra">extra job or income stream</option><option value="cautious">not fully trusting</option><option value="affected">badly affected</option></select></div>
-    <div class="vitem" data-a="survive"><b>make ends meet</b><select><option value="">Choose…</option><option value="survive">have enough money for basic costs</option><option value="accumulate">build debt</option><option value="large">pay a lot</option></select></div>
-    <div class="vitem" data-a="affected"><b>hard-hit</b><select><option value="">Choose…</option><option value="cautious">careful or suspicious</option><option value="affected">badly affected by a problem</option><option value="repay">repay a loan</option></select></div>
-    <div class="vitem" data-a="cautious"><b>wary of</b><select><option value="">Choose…</option><option value="affected">badly affected</option><option value="cautious">not fully trusting; cautious about</option><option value="extra">extra source of income</option></select></div>
-    <div class="vitem" data-a="large"><b>shell out</b><select><option value="">Choose…</option><option value="large">pay a large amount, often reluctantly</option><option value="survive">cover basic costs</option><option value="accumulate">increase debt</option></select></div>
-    <div class="vitem" data-a="frugal"><b>careful about spending</b><select><option value="">Choose…</option><option value="frugal">avoid unnecessary spending</option><option value="large">pay a lot</option><option value="repay">pay a debt back</option></select></div>
+<section class="screen">
+  <div class="title"><div><h2>Money Language Sprint</h2><p>Tap a phrase, then tap its meaning. Match all eight as fast as you can — mistakes break your streak.</p></div><div class="pill">GAME · MATCH</div></div>
+  <div class="g-hud">
+    <div class="g-stat" id="vmStatM"><small>MATCHED</small><b id="vmMatched">0 / 8</b></div>
+    <div class="g-stat" id="vmStatS"><small>STREAK</small><b id="vmStreak">0</b></div>
+    <div class="g-stat"><small>TIME</small><b id="vmTime">0:00</b></div>
+    <div class="g-goal"><small><span id="vmMsg">Pick a phrase to start the clock.</span><span id="vmBest">BEST: —</span></small><div class="g-track"><i id="vmBar"></i></div></div>
+    <button class="navbtn" type="button" onclick="vmStart()">RESTART</button>
   </div>
-  <div class="feedback" id="vocabFeedback">Complete all eight, then press CHECK.</div>
+  <p class="vm-label">PHRASES</p><div class="vm-row" id="vmPhrases"></div>
+  <p class="vm-label">MEANINGS</p><div class="vm-row" id="vmMeanings"></div>
+  <div class="prompt" id="vmEnd" hidden></div>
 </section>
 
 <section class="screen">
@@ -481,7 +496,8 @@ function fitScreen(){
  const m=document.querySelector('main'),root=document.documentElement;
  if(innerWidth<=700){root.style.removeProperty('--z');return}
  const tabs=document.getElementById('subTabs'),h=m.clientHeight-(tabs.hidden?0:tabs.offsetHeight)-44,w=m.clientWidth-56;
- root.style.setProperty('--z',Math.max(1,Math.min(2.6,w/900,h/FIT_H)).toFixed(3));
+ const B=document.querySelector('.app').classList.contains('full')?940:800,wf=w/B,hf=h/FIT_H;
+ root.style.setProperty('--z',Math.max(1,Math.min(2.2,wf,Math.max(hf*1.3,1.3))).toFixed(3));
 }
 const FIT_H=500;
 addEventListener('resize',fitScreen);
@@ -495,7 +511,7 @@ document.addEventListener('keydown',e=>{if(e.target.closest('input,textarea,sele
 function selectOne(el,sel){document.querySelectorAll(sel).forEach(x=>x.classList.remove('selected','sel'));el.classList.add(el.classList.contains('choice')?'selected':'sel')}
 function selectSibling(el){[...el.parentElement.children].forEach(x=>x.classList.remove('sel','ok','wrong'));el.classList.add('sel')}
 function toggleReveal(btn){btn.classList.toggle('selected');btn.nextElementSibling.classList.toggle('on')}
-document.querySelectorAll('#vocab select').forEach(s=>s.onchange=()=>{s.closest('.vitem').classList.remove('ok','wrong')});
+
 let activeStatement=null;
 document.querySelectorAll('.statement').forEach(b=>b.onclick=()=>{document.querySelectorAll('.statement').forEach(x=>x.classList.remove('active'));b.classList.add('active');activeStatement=b});
 document.querySelectorAll('.bucket[data-b]').forEach(bucket=>bucket.onclick=()=>{if(!activeStatement)return;const clone=document.createElement('button');clone.textContent=activeStatement.textContent;clone.dataset.correct=(activeStatement.dataset.t===bucket.dataset.b?'1':'0');const source=activeStatement;clone.title='Return to statements';clone.onclick=(e)=>{e.stopPropagation();source.classList.remove('active');document.getElementById('statementBank').appendChild(source);clone.remove()};bucket.appendChild(clone);activeStatement.remove();activeStatement=null});
@@ -848,7 +864,36 @@ function huntShow(){
   const n=$id('huntNext');n.hidden=false;n.textContent=huntI===huntQueue.length-1?'RESULT →':'NEXT →';n.focus();
  });
 }
-mapStart();chatIntro();rushIntro();tmStart();huntStart();
+/* --- money language sprint (match game) --- */
+const VM=[['rack up debt','gradually build up more and more debt'],['pay off debt','give back all the money you owe'],['side hustle','an extra job or income stream'],['make ends meet','have just enough money for basic costs'],['hard-hit','badly affected by a problem'],['wary of','not fully trusting; cautious about'],['shell out','pay a lot of money, often unwillingly'],['frugal','careful about spending; avoiding waste']];
+const VM_BEST_KEY='katya_lesson3_vm_best';
+let vmPick=null,vmDone=0,vmStreak=0,vmMiss=0,vmT0=0,vmTick=null;
+function vmClock(sec){return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0')}
+function vmHud(){$id('vmMatched').textContent=vmDone+' / 8';$id('vmStreak').textContent=vmStreak>=2?'×'+vmStreak:vmStreak;$id('vmBar').style.width=(vmDone/8*100)+'%';const b=bestGet(VM_BEST_KEY);$id('vmBest').textContent='BEST: '+(b?vmClock(b):'—')}
+function vmStart(){
+ clearInterval(vmTick);vmPick=null;vmDone=0;vmStreak=0;vmMiss=0;vmT0=0;$id('vmTime').textContent='0:00';$id('vmEnd').hidden=true;$id('vmMsg').textContent='Pick a phrase to start the clock.';
+ const order=shuffle(VM.map((x,i)=>i));
+ $id('vmPhrases').innerHTML=order.map(i=>'<button type="button" class="vm-p c'+i+'" data-i="'+i+'">'+VM[i][0]+'</button>').join('');
+ $id('vmMeanings').innerHTML=shuffle(order).map(i=>'<button type="button" class="vm-m" data-i="'+i+'">'+VM[i][1]+'</button>').join('');
+ $id('vmPhrases').querySelectorAll('button').forEach(b=>b.onclick=()=>{if(!vmT0){vmT0=Date.now();vmTick=setInterval(()=>{$id('vmTime').textContent=vmClock(Math.floor((Date.now()-vmT0)/1000))},500)}
+  $id('vmPhrases').querySelectorAll('.pick').forEach(x=>x.classList.remove('pick'));b.classList.add('pick');vmPick=b;$id('vmMsg').textContent='Now tap the meaning of “'+b.textContent+'”.'});
+ $id('vmMeanings').querySelectorAll('button').forEach(m=>m.onclick=()=>{
+  if(!vmPick){$id('vmMsg').textContent='Tap a phrase first.';return}
+  if(m.dataset.i===vmPick.dataset.i){
+   vmDone++;vmStreak++;m.disabled=true;vmPick.disabled=true;m.classList.add('done','c'+m.dataset.i);m.innerHTML='<b>'+vmPick.textContent+'</b>'+m.textContent;vmPick.classList.remove('pick');vmPick.classList.add('done');vmPick=null;
+   $id('vmMsg').textContent=vmStreak>=3?'On fire — '+vmStreak+' in a row!':'Correct. Next phrase.';pop('vmStatM');if(vmStreak>=2)pop('vmStatS');
+   if(vmDone===8)vmFinish();
+  }else{vmStreak=0;vmMiss++;m.classList.add('bad','shake');setTimeout(()=>m.classList.remove('bad','shake'),450);$id('vmMsg').textContent='Not that one — try again.'}
+  vmHud();
+ });
+ vmHud();
+}
+function vmFinish(){
+ clearInterval(vmTick);const sec=Math.max(1,Math.round((Date.now()-vmT0)/1000))+vmMiss*5,best=bestGet(VM_BEST_KEY),record=!best||sec<best;if(record)bestSet(VM_BEST_KEY,sec);
+ $id('vmTime').textContent=vmClock(sec);$id('vmMsg').textContent=(record?'NEW BEST · ':'')+'Done'+(vmMiss?' · '+vmMiss+' mistake'+(vmMiss>1?'s':'')+' (+5 sec each)':' · no mistakes!');
+ const e=$id('vmEnd');e.hidden=false;e.innerHTML='<b>Now use them.</b> Choose three phrases and make true sentences about you or someone you know — e.g. “I’m wary of buy-now-pay-later apps.”';
+}
+mapStart();chatIntro();rushIntro();tmStart();vmStart();huntStart();
 
 function checkCurrent(){
  if(screens[current].dataset.k==='vocab'){let score=0;document.querySelectorAll('#vocab .vitem').forEach(v=>{const ok=v.querySelector('select').value===v.dataset.a;v.classList.toggle('ok',ok);v.classList.toggle('wrong',!ok);if(ok)score++});document.getElementById('vocabFeedback').textContent=score+' / 8 correct.'}
