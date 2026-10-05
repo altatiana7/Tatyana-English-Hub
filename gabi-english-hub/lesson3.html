@@ -274,6 +274,83 @@ input.gap.ok{background:#e4f3e9;border-color:#3c9865}input.gap.no{background:#ff
 .spkWords{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .spkWords span{border:2px solid #c8dce8;border-radius:999px;padding:5px 12px;font-weight:800;font-size:15.5px;background:#fff}
 @media(max-height:640px){.sortWord{padding:10px}.sortBtns button{min-height:50px}.fwList li{line-height:1.75}.famGrid .famRead p{font-size:15.5px;line-height:1.5}}
+
+/* ===== HARDER: memory work, typed answers, Reach Higher (2026-10-05) ===== */
+.famRead.wide{max-height:none}
+.famRead.wide p{font-size:17px;line-height:1.75;margin:6px 0 0}
+.narrow{max-width:760px}
+.memBar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#173f59;color:#fff;border-radius:14px;padding:8px 14px;margin-bottom:8px}
+.memBar b{flex:1;font-size:17px}.memBar button{min-height:36px;padding:6px 12px}
+.memBar .qscore{border-color:#fff;color:#fff}
+#peekBox{margin:0 0 8px;border-color:#f0b92f}
+.mapPanel .fwBank{margin:0}
+.mmap{margin:10px 0;padding:12px;border-radius:16px;background:#f4fbff;border:2px solid #c8dce8}
+.mrow{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.mcouple{display:flex;align-items:center;gap:8px;padding:8px;border-radius:16px;background:#e5f5ff;border:2px solid #b8dced}
+.mbro{display:flex;gap:8px}
+.mlink{font-size:12px;font-weight:900;letter-spacing:.08em;color:#536e7d;text-transform:uppercase}
+.mdown{text-align:center;font-size:12px;font-weight:900;letter-spacing:.08em;color:#536e7d;text-transform:uppercase;margin:8px 0;padding-top:8px;border-top:2px solid #b8dced;width:46%;margin-left:auto;margin-right:auto}
+.duo .gameHero p{display:block;margin:0}
+.mrow{flex-wrap:nowrap}.mrow.kids{gap:8px}
+.mslot{min-height:0;width:clamp(104px,10.5vw,138px);padding:8px 6px;border:2px dashed #7fb5cf;border-radius:14px;background:#fff;text-align:center}
+.mslot b{display:block;font-size:21px;font-weight:900}.mslot small{display:block;font-size:12px;color:#536e7d;line-height:1.2;margin-top:2px}
+.mslot.sel{border-style:solid;border-color:#16384d;box-shadow:0 0 0 3px #ffd84a}
+.mslot.ok{background:#e4f3e9;border:2px solid #3c9865}.mslot.no{background:#ffebe7;border:2px solid #be614c}
+.clockBig{font-size:22px;font-weight:900;color:#c0392b;min-width:64px;display:inline-block}
+.spkBig{font-size:clamp(18px,1.8vw,22px);font-weight:800;line-height:1.35;margin:6px 0 10px}
+.fwList input.gap{padding:2px 8px;margin:1px 3px;font-size:16px;font-weight:800}
+input.gap.maybe,.azGrid input.maybe{background:#fff3ce;border-color:#d5a52d}
+.fwList.defs li{display:flex;align-items:center;justify-content:space-between;gap:12px;line-height:1.3;margin:5px 0}
+.fwList.rules li{line-height:1.6;margin:6px 0}
+.fwList.rules em{display:inline-block;margin-left:8px;font-style:normal;font-weight:800;background:#fff3ce;border-radius:8px;padding:1px 8px}
+button.mini{min-height:0;padding:2px 9px;font-size:13px;border-radius:9px}
+.wordbox.verbs{display:inline-block;background:#e5f5ff;border-radius:10px;padding:5px 12px;font-weight:800;margin:4px 0 6px}
+.azGrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px 8px;margin:8px 0 10px}
+.azGrid label{display:flex;align-items:center;gap:6px}
+.azGrid label b{width:22px;font-size:18px;font-weight:900;color:#1f78a5}
+.azGrid input{padding:6px 8px;font-size:15.5px;font-weight:800;border-width:2px}
+.azGrid input.ok{background:#e4f3e9;border-color:#3c9865}.azGrid input.no{background:#ffebe7;border-color:#be614c}
+.numRow{display:grid;grid-template-columns:120px minmax(0,1fr) auto;gap:8px;align-items:center;margin:8px 0}
+.numRow>b{font-size:26px;font-weight:900;color:#173f59}
+.numRow input{padding:8px 10px;font-size:16px}
+.numRow p{grid-column:2/-1;margin:0;background:#e4f3e9;border:2px solid #9fd3b3;border-radius:10px;padding:6px 12px;font-weight:700}
+@media(max-height:640px){.famRead.wide p{line-height:1.6;font-size:16px}.mslot{padding:5px}.mslot b{font-size:19px}.mmap{padding:8px;margin:8px 0}.numRow{margin:5px 0}.azGrid{gap:4px 8px}.azGrid input{padding:4px 8px}}
+@media(max-width:950px){.azGrid{grid-template-columns:repeat(3,1fr)}.numRow{grid-template-columns:1fr}}
+
+/* ===== MISSION BOARD, SPEED ZONE, TYPED WORD FACTORY (2026-10-05) ===== */
+.boardHead{display:flex;align-items:baseline;gap:12px;margin:0 2px 8px}
+.boardHead b{font-size:22px;font-weight:900}.boardHead span{color:#536e7d;font-size:14.5px}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 12px;padding:4px 4px 8px}
+.board.n5{grid-template-columns:repeat(3,minmax(0,1fr))}
+.mcard{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:left;gap:3px;min-height:clamp(112px,19vh,160px);padding:12px 14px 12px;border:2px solid #16384d;border-radius:18px;background:#fff;box-shadow:5px 6px 0 #16384d;overflow:hidden;transition:transform .14s ease,box-shadow .14s ease}
+.mcard:nth-child(odd){transform:rotate(-1.1deg)}.mcard:nth-child(even){transform:rotate(.9deg)}
+.mcard:nth-child(3n){transform:rotate(1.6deg)}
+.mcard:hover,.mcard:focus-visible{transform:rotate(0) translate(-2px,-3px);box-shadow:8px 10px 0 #16384d;background:#fff}
+.mcard.c0{background:#e5f5ff}.mcard.c1{background:#fff1c9}.mcard.c2{background:#e4f6ec}.mcard.c3{background:#f3e8ff}
+.mcard i{position:absolute;right:8px;top:-12px;font-style:normal;font-size:78px;font-weight:900;line-height:1;color:rgba(22,56,77,.1)}
+.mcard small{font-size:11.5px;font-weight:900;letter-spacing:.12em;background:#16384d;color:#fff;border-radius:999px;padding:3px 9px}
+.mcard b{font-size:clamp(19px,1.9vw,24px);font-weight:900;line-height:1.1;margin-top:5px}
+.mcard span{font-size:14.5px;color:#3d5868;font-weight:700;line-height:1.25}
+.mcard u{position:absolute;right:10px;bottom:9px;text-decoration:none;font-size:11px;font-weight:900;letter-spacing:.1em;color:#2f8a57;border:2px solid #2f8a57;border-radius:6px;padding:1px 6px;transform:rotate(-6deg)}
+.mbar{display:flex;align-items:center;gap:10px;margin:0 0 8px;flex-wrap:wrap}
+.mbar>b{flex:1;font-size:18px;font-weight:900}
+.mbar button{min-height:36px;padding:5px 12px}
+.mtag{font-size:11.5px;font-weight:900;letter-spacing:.12em;background:#16384d;color:#fff;border-radius:999px;padding:4px 10px}
+.kahootLine{display:flex;align-items:center;gap:10px;justify-content:flex-end;font-size:14px;color:#536e7d;margin:-2px 0 2px}
+.kahootLine .link{min-height:0;padding:4px 10px;font-size:14px}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+.dcol{min-width:0}
+.duo .gameHero{grid-template-columns:1fr;gap:8px}
+.duo .gameHero h2{font-size:20px}
+.duo .options{grid-template-columns:1fr 1fr;gap:6px}.duo .options button{min-height:44px;padding:8px 10px;font-size:15px}
+.duo .lavaArena{min-height:clamp(200px,38vh,290px)}.duo .lavaContent{padding:12px}.duo .lavaContent h3{font-size:20px;margin:4px 0 8px}
+.duo .panel{margin:8px 0 0}
+.wordFactory{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);margin-top:10px}
+.factoryWord{flex-direction:column;gap:6px}.factoryWord small{font-size:13px;font-weight:800;color:#536e7d;letter-spacing:.08em}
+.wfSent{font-size:clamp(19px,1.9vw,24px);font-weight:800;line-height:1.4;margin:2px 0 12px}
+.wfGap{display:inline-block;min-width:4.5em;text-align:center;border-bottom:3px solid #1f78a5;color:#1f78a5;padding:0 6px}
+@media(max-height:640px){.mcard{min-height:104px;padding:9px 12px}.mcard span{font-size:13.5px}.board{gap:12px 10px}}
+@media(max-width:950px){.board,.board.n5{grid-template-columns:repeat(2,1fr)}.duo{grid-template-columns:1fr}}
 </style></head><body><header><a class="link" href="index.html">← HOME</a><div class="brand"><small>GABI · GATEWAY B1 · LESSON 3</small><strong>MISSION: PEOPLE & FAMILY</strong></div><button id="full">Full screen</button><button id="reset">Reset</button></header><div id="resetConfirm" class="panel" hidden><p>Clear your answers and notes for this lesson on this device?</p><button id="confirmReset">Clear lesson</button> <button id="cancelReset">Keep my work</button></div><div class="shell"><aside><nav id="route" aria-label="Lesson activities"></nav><div class="routeMeta" id="progressText"></div><div class="progress"><div id="progressFill"></div></div><p class="routeMeta">Your answers stay on this device.<br>The lesson always opens at Activity 1.</p></aside><main id="main" class="workspace"></main></div><script>const D={"warmupQuiz":[{"question":"Which famous scientist later worked as Master of the Royal Mint and personally investigated counterfeiter?","options":["Isaac Newton","Nikola Tesla","Charles Darwin","Alan Turing"],"answer":"Isaac Newton","fact":"Newton became Warden and later Master of the Royal Mint. He took the job seriously and investigated counterfeiting cases."},{"question":"Whose first agreement with FC Barcelona was famously written on a paper napkin?","options":["Lionel Messi","Alexander Ovechkin","Michael Jackson","Ludwig van Beethoven"],"answer":"Lionel Messi","fact":"A preliminary agreement connected with Messi’s move to Barcelona was written on a napkin in 2000."},{"question":"Which composer originally admired Napoleon enough to dedicate a major symphony to him, then removed the dedication?","options":["Ludwig van Beethoven","Wolfgang Mozart","Johann Bach","Franz Schubert"],"answer":"Ludwig van Beethoven","fact":"Beethoven originally connected his Third Symphony, the Eroica, with Napoleon, but changed the dedication after Napoleon declared himself emperor."},{"question":"Which scientist named a newly discovered element after her homeland?","options":["Marie Skłodowska-Curie","Hedy Lamarr","Ada Lovelace","Rosalind Franklin"],"answer":"Marie Skłodowska-Curie","fact":"Curie named polonium after Poland, her homeland."},{"question":"Which inventor worked on alternating-current technology and also experimented with wireless transmission?","options":["Nikola Tesla","Charles Darwin","Nicolaus Copernicus","Isaac Newton"],"answer":"Nikola Tesla","fact":"Tesla is strongly associated with alternating-current systems and also carried out experiments in wireless power and radio-frequency technology."},{"question":"Which performer co-wrote “We Are the World” with Lionel Richie?","options":["Michael Jackson","Elvis Presley","Freddie Mercury","David Bowie"],"answer":"Michael Jackson","fact":"Michael Jackson and Lionel Richie wrote “We Are the World” for the 1985 USA for Africa charity recording."},{"question":"Which mathematician described the idea of a universal computing machine in 1936?","options":["Alan Turing","Isaac Newton","Nikola Tesla","Charles Darwin"],"answer":"Alan Turing","fact":"Turing’s 1936 paper introduced the abstract machine model now known as the Turing machine."},{"question":"Which scientist first trained in medicine but strongly disliked surgery before changing direction?","options":["Charles Darwin","Nicolaus Copernicus","Alan Turing","Marie Curie"],"answer":"Charles Darwin","fact":"Darwin studied medicine in Edinburgh but left the course; he later studied at Cambridge."},{"question":"Which astronomer proposed a heliocentric model in which Earth moves around the Sun?","options":["Nicolaus Copernicus","Isaac Newton","Nikola Tesla","Alan Turing"],"answer":"Nicolaus Copernicus","fact":"Copernicus developed a heliocentric model that placed the Sun near the centre of the planetary system."},{"question":"Which hockey star grew up in a family where his mother was an Olympic champion in basketball?","options":["Alexander Ovechkin","Lionel Messi","Wayne Gretzky","Sidney Crosby"],"answer":"Alexander Ovechkin","fact":"Ovechkin’s mother, Tatyana Ovechkina, was a two-time Olympic gold medallist in basketball with the Soviet team."},{"question":"Which Russian actor studied at a technical college before choosing an acting career?","options":["Konstantin Khabensky","Alexander Ovechkin","Michael Jackson","Lionel Messi"],"answer":"Konstantin Khabensky","fact":"Khabensky studied in a technical field before leaving and later training as an actor."},{"question":"Which Hollywood star was also an inventor who co-developed a frequency-hopping communication system?","options":["Hedy Lamarr","Marilyn Monroe","Grace Kelly","Audrey Hepburn"],"answer":"Hedy Lamarr","fact":"Hedy Lamarr and George Antheil patented a frequency-hopping system intended to make radio-controlled torpedoes harder to jam."},{"question":"Which novelist disappeared for eleven days in 1926, creating a major public mystery?","options":["Agatha Christie","Virginia Woolf","Jane Austen","George Eliot"],"answer":"Agatha Christie","fact":"Agatha Christie disappeared in December 1926 and was found eleven days later at a hotel in Harrogate."},{"question":"Which scientist was offered the presidency of Israel in 1952 but declined?","options":["Albert Einstein","Isaac Newton","Nikola Tesla","Alan Turing"],"answer":"Albert Einstein","fact":"After the death of Chaim Weizmann, Einstein was invited to become President of Israel but declined the offer."},{"question":"Which technology entrepreneur said a college calligraphy course later influenced the typography of the Macintosh?","options":["Steve Jobs","Bill Gates","Alan Turing","Nikola Tesla"],"answer":"Steve Jobs","fact":"Jobs later said that his calligraphy studies influenced the Macintosh’s attention to typography."}],"warmupWords":[
 ["counterfeiter","a person who illegally makes fake money","фальшивомонетчик · Newton investigated people who made fake coins."],
 ["Royal Mint","the organisation that makes a country's coins","Королевский монетный двор · Newton worked at the Royal Mint."],
@@ -311,7 +388,7 @@ const titles=[
 'Error Hunter',
 'Timed Sprint',
 'Floor Is Lava',
-'Word Builder & Articles'
+'Reach Higher: Unit 1'
 ];
 const bridges=[
 'LEVEL 01 · Learn the exact difficult words before they appear in any question.',
@@ -326,7 +403,7 @@ const bridges=[
 'LEVEL 10 · Put the pieces together: word formation, family relationships and articles. Answer one question at a time, then review your corrections.'
 ];
 let saved={};try{saved=JSON.parse(localStorage.getItem('gabi-lesson3-game-v10')||'{}')}catch{}
-const S={step:0,tab:{},exercise:{},notes:{},flashes:{},done:[],game:{},...saved};S.step=0;S.flashes={};S.exercise={};S.game={};S.notes={};S.tab={};{const q=Number(new URLSearchParams(location.search).get('step'));if(q>0&&q<titles.length)S.step=q}S.game=S.game||{};
+const S={step:0,tab:{},exercise:{},notes:{},flashes:{},done:[],game:{},...saved};S.step=0;S.flashes={};S.exercise={};S.game={};S.notes={};S.tab={};S.seen={};{const q=Number(new URLSearchParams(location.search).get('step'));if(q>0&&q<titles.length)S.step=q}S.game=S.game||{};
 function save(){try{localStorage.setItem('gabi-lesson3-game-v10',JSON.stringify(S))}catch{}}
 const banks={};
 function bank(id,items){banks[id]=items;return id}
@@ -338,52 +415,59 @@ bank('wfWrite',D.wf.map(x=>({...Q(x[3],x[1],null,x[4]),base:x[0].toUpperCase()})
 bank('wfText',D.socialText.map(x=>({...Q(x[0],x[1],null,'A noun is needed here: '+x[2].toLowerCase()+' → '+x[1]+'.'),base:x[2]})));
 bank('familyGap',D.familyGap.map(x=>Q(x[0],x[1],null,'Check the family map above. Correct relationship: '+x[1]+'.')));
 bank('familyQuiz',D.familyQuiz.map(x=>Q(...x)));
-/* ===== A LEGENDARY FAMILY: Student's Book p6, ex 2, 3a, 4, 5 ===== */
+/* ===== A LEGENDARY FAMILY: Student's Book p6. Work from memory: no text beside the tasks, no word lists. ===== */
 const famText=['Chrissy Teigen is a famous model and food writer who is married to another celebrity. Her ',0,' is the Oscar-winning singer John Legend. They have two children, a ',1,' called Luna, and a ',2,' called Miles. In the photo, John has got Luna in his arms. Chrissy has got one sister, Tina. She is Luna and Miles’ ',3,'. John’s brothers, Vaughn and Ronald, are Luna and Miles’ ',4,'. Tina is John’s ',5,', and Vaughn and Ronald are Chrissy’s ',6,'. They aren’t in the photo. They’re a very happy family!'];
 const famKey=['husband','daughter','son','aunt','uncles','sister-in-law','brothers-in-law'];
 const famWords='aunt · brother/sister-in-law · cousin · daughter · father/mother-in-law · grandchild · grandfather/mother · grandparent · grandson/daughter · great-grandfather/mother · husband · nephew · niece · son · son/daughter-in-law · stepfather/mother · uncle · wife';
 const TF=(q,a,e)=>({q,a,o:['True','False','Not stated'],e,fixed:true});
+const QT=(q,a,e,alt)=>({q,a,e,alt});
 bank('famTF',[
- TF('Chrissy Teigen writes about food.','True','Evidence: “a famous model and food writer”.'),
- TF('John Legend has won an Oscar.','True','Evidence: “the Oscar-winning singer John Legend”.'),
- TF('In the photo, Chrissy is holding Luna.','False','Evidence: “In the photo, John has got Luna in his arms.”'),
+ TF('In the photo, Chrissy is holding Luna.','False','The text: “In the photo, John has got Luna in his arms.”'),
  TF('Luna is older than Miles.','Not stated','The text gives their names, but not their ages.'),
- TF('Chrissy is an only child.','False','Evidence: “Chrissy has got one sister, Tina.” An only child has no brothers or sisters.'),
+ TF('John is an only child.','False','The text mentions John’s brothers, Vaughn and Ronald.'),
  TF('Miles is Tina’s nephew.','True','Tina is Luna and Miles’ aunt, so Miles is her nephew.'),
  TF('Luna and Miles are twins.','Not stated','The text only says “a daughter called Luna, and a son called Miles”.'),
- TF('Vaughn and Ronald are in the photo.','False','Evidence: “They aren’t in the photo.”'),
+ TF('Ronald is Luna’s uncle on her mother’s side.','False','Ronald is John’s brother, so he is her uncle on her father’s side.'),
  TF('Tina is married.','Not stated','The text says nothing about Tina’s husband or partner.'),
  TF('John is Tina’s brother-in-law.','True','Tina is John’s sister-in-law, so John is her brother-in-law.'),
  TF('Miles is in the photo.','Not stated','The text mentions only John and Luna in the photo.'),
- TF('Chrissy’s husband is famous.','True','Evidence: she “is married to another celebrity”.')
+ TF('Tina is the children’s aunt on their mother’s side.','True','Tina is Chrissy’s sister, and Chrissy is the children’s mother.'),
+ TF('Vaughn and Ronald are in the photo.','False','The text: “They aren’t in the photo.”'),
+ TF('Chrissy’s husband is famous.','True','The text: she “is married to another celebrity”.')
 ]);
 bank('famLogic',[
- Q('Luna is Tina’s …','niece',['nephew','niece','cousin','granddaughter'],'Tina is Luna’s aunt. Your aunt’s or uncle’s word for you is niece (girl) or nephew (boy).'),
- Q('John is Tina’s …','brother-in-law',['brother','brother-in-law','son-in-law','uncle'],'John is married to Tina’s sister, so he is her brother-in-law.'),
- Q('Chrissy is Ronald’s …','sister-in-law',['sister','sister-in-law','niece','daughter-in-law'],'Chrissy is married to Ronald’s brother, so she is his sister-in-law.'),
- Q('Chrissy’s mother is John’s …','mother-in-law',['stepmother','grandmother','mother-in-law','aunt'],'The mother of your husband or wife is your mother-in-law.'),
- Q('John is Chrissy’s father’s …','son-in-law',['son','son-in-law','nephew','grandson'],'The husband of your daughter is your son-in-law.'),
- Q('Chrissy’s mother is Miles’ …','grandmother',['great-grandmother','grandmother','aunt','mother-in-law'],'Your mother’s mother is your grandmother.'),
- Q('Luna is John’s parents’ …','granddaughter',['daughter','niece','granddaughter','daughter-in-law'],'The daughter of your son or daughter is your granddaughter.'),
- Q('Imagine Tina has a son. He is Luna’s …','cousin',['nephew','brother','cousin','uncle'],'The child of your aunt or uncle is your cousin.'),
- Q('…and the same boy is Chrissy’s …','nephew',['nephew','niece','cousin','grandson'],'The son of your brother or sister is your nephew.'),
- Q('Chrissy’s grandmother is Luna’s …','great-grandmother',['grandmother','great-grandmother','aunt','stepmother'],'Your mother’s grandmother is your great-grandmother.'),
- Q('Imagine John’s father marries again. His new wife is John’s …','stepmother',['mother-in-law','stepmother','aunt','grandmother'],'Your father’s new wife is your stepmother. A mother-in-law is your husband’s or wife’s mother.'),
- Q('Luna and Miles are Chrissy’s parents’ …','grandchildren',['children','grandchildren','cousins','nephews'],'Grandchild is male or female; the plural is grandchildren.')
+ QT('Luna is Tina’s …','niece','Tina is Luna’s aunt. An aunt’s word for a girl is niece.'),
+ QT('John is Tina’s …','brother-in-law','John is married to Tina’s sister.'),
+ QT('Chrissy is Ronald’s …','sister-in-law','Chrissy is married to Ronald’s brother.'),
+ QT('Chrissy’s mother is John’s …','mother-in-law','The mother of your husband or wife is your mother-in-law.'),
+ QT('John is Chrissy’s father’s …','son-in-law','The husband of your daughter is your son-in-law.'),
+ QT('Chrissy’s mother is Miles’ …','grandmother','Your mother’s mother is your grandmother.',['grandma','granny','grandparent']),
+ QT('Luna is John’s parents’ …','granddaughter','The daughter of your son is your granddaughter.',['grandchild']),
+ QT('Imagine Tina has a son. He is Luna’s …','cousin','The child of your aunt or uncle is your cousin.'),
+ QT('…and the same boy is Chrissy’s …','nephew','The son of your brother or sister is your nephew.'),
+ QT('Chrissy’s grandmother is Luna’s …','great-grandmother','Your mother’s grandmother is your great-grandmother.',['great grandma','great-grandparent']),
+ QT('Imagine John’s father marries again. His new wife is John’s …','stepmother','Your father’s new wife is your stepmother. A mother-in-law is your husband’s or wife’s mother.',['step-mother','stepmum','stepmom']),
+ QT('Luna and Miles are Chrissy’s parents’ …','grandchildren','Grandchild is male or female; the plural is grandchildren.')
+]);
+bank('famTrans',[
+ QT('Tina is Luna’s aunt.  →  NIECE','Luna is Tina’s niece.','Swap the two people and use the opposite family word.'),
+ QT('John is Chrissy’s husband.  →  WIFE','Chrissy is John’s wife.','Husband and wife are a pair.'),
+ QT('Vaughn and Ronald are Miles’ uncles.  →  NEPHEW','Miles is Vaughn and Ronald’s nephew.','Two people together: only the second name takes ’s.',['Miles is Ronald and Vaughn’s nephew.','Miles is their nephew.']),
+ QT('Tina is John’s sister-in-law.  →  BROTHER-IN-LAW','John is Tina’s brother-in-law.','In-law words work in both directions.'),
+ QT('Chrissy and John are Luna and Miles’ parents.  →  CHILDREN','Luna and Miles are Chrissy and John’s children.','Two people together: only the second name takes ’s.',['Luna and Miles are John and Chrissy’s children.','Miles and Luna are Chrissy and John’s children.','Miles and Luna are John and Chrissy’s children.','Luna and Miles are their children.']),
+ QT('Chrissy has got one sister.  →  ONLY CHILD','Chrissy isn’t an only child.','An only child has no brothers or sisters.',['Chrissy is not an only child.','She isn’t an only child.','She is not an only child.']),
+ QT('Chrissy’s husband is a singer.  →  MARRIED TO','Chrissy is married to a singer.','You are married TO someone.',['She is married to a singer.'])
 ]);
 const huntItems=[
  ['Chrissy Teigen is married with another celebrity.',4,'to','You are married TO someone.'],
- ['Her husband is the Oscar-winning actor John Legend.',5,'singer','The text says “the Oscar-winning singer”.'],
- ['They have two childs, Luna and Miles.',3,'children,','Child has an irregular plural: children.'],
+ ['Her husband is the Oscar-winning actor John Legend.',5,'singer','In the text he is “the Oscar-winning singer”.'],
+ ['They have two childs, Luna and Miles.',3,'children','Child has an irregular plural: children.'],
  ['In the photo, John have got Luna in his arms.',4,'has','John = he, so: John has got.'],
- ['Tina is Luna and Miles’ uncle.',5,'aunt.','Tina is a woman: she is their aunt.'],
- ['Vaughn and Ronald are Chrissy’s brother-in-laws.',5,'brothers-in-law.','The plural goes on the first word: brothers-in-law.'],
- ['Chrissy has got one sister, Tina. He is the children’s aunt.',6,'She','Tina is a woman: She.'],
+ ['Tina is Luna and Miles’ uncle.',5,'aunt','Tina is a woman: she is their aunt.'],
+ ['Vaughn and Ronald are Chrissy’s brother-in-laws.',5,'brothers-in-law','The plural goes on the first word: brothers-in-law.'],
+ ['Chrissy has got one sister, Tina. He is the children’s aunt.',6,'she','Tina is a woman: She.'],
  ['Tina, Vaughn and Ronald aren’t on the photo.',5,'in','We say IN the photo.']
 ];
-const sortItems=[['nephew','M'],['cousin','B'],['daughter-in-law','F'],['grandchild','B'],['stepfather','M'],['niece','F'],['grandparent','B'],['great-grandmother','F'],['son-in-law','M'],['wife','F'],['uncle','M'],['aunt','F']];
-const sortNames={M:'Male',F:'Female',B:'Male or female'};
-const fwBank=['divorced','extended','immediate','one-parent','only child','partner','relative','single','twin'];
 const fwLines=[
  ['If you’re ',0,', you aren’t married. If you’re married and then you end the marriage, you’re ',1,'.'],
  ['An ',2,' doesn’t have any brothers or sisters.'],
@@ -394,29 +478,54 @@ const fwLines=[
  ['A ',8,' is a member of your family, especially one who doesn’t live with you.']
 ];
 const fwKey=['single','divorced','only child','partner','one-parent','immediate','extended','twin','relative'];
+/* accepted answers for every typed gap: id -> list */
+const GK={};
+fwKey.forEach((k,i)=>GK['fw'+i]=[k]);
+const nz=x=>norm(x).replace(/-/g,' ').replace(/[.,!?]/g,'').trim();
+function gapInput(id,w){return `<input class="gap" style="width:${w||8}em" data-note="${id}" data-gk="${id}" value="${esc(S.notes[id]||'')}" autocomplete="off" autocapitalize="off" spellcheck="false">`}
+function gapBar(prefix,n,key,extra){return `<div class="row"><button class="primary" data-gcheck="${prefix}" data-n="${n}">Check</button>${extra||''}<button data-gshow="${prefix}">Show answers</button><b id="${prefix}Score"></b></div><p id="${prefix}Key" class="answerReveal" hidden>${key}</p>`}
 function famFull(){return famText.map(x=>typeof x==='number'?'<b>'+esc(famKey[x])+'</b>':esc(x)).join('')}
-function withText(html){return `<div class="famGrid txt"><div class="panel reading famRead"><div class="kicker">A LEGENDARY FAMILY! · STUDENT’S BOOK P6</div><p>${famFull()}</p></div><div class="tcol">${html}</div></div>`}
+const mapNames=['Chrissy','John','Luna','Miles','Tina','Vaughn','Ronald'];
+const mapSlots=[{ok:['Tina'],hint:'her sister'},{ok:['Chrissy'],hint:'model and food writer'},{ok:['John'],hint:'Oscar-winning singer'},{ok:['Vaughn','Ronald'],hint:'his brother'},{ok:['Vaughn','Ronald'],hint:'his brother'},{ok:['Luna'],hint:'in John’s arms in the photo'},{ok:['Miles'],hint:'not mentioned in the photo'}];
+function mapGame(){
+ const g=S.game.map||(S.game.map={fill:{},sel:0,checked:false});
+ const used=Object.values(g.fill),done=g.checked&&mapSlots.every((sl,i)=>sl.ok.includes(g.fill[i]));
+ const slot=i=>`<button class="mslot ${g.sel===i?'sel':''} ${g.checked?(mapSlots[i].ok.includes(g.fill[i])?'ok':'no'):''}" data-mslot="${i}"><b>${g.fill[i]?esc(g.fill[i]):'?'}</b><small>${esc(mapSlots[i].hint)}</small></button>`;
+ return `<div class="panel mapPanel"><div class="row spread"><div class="kicker">MIND MAP · REBUILD THE FAMILY FROM MEMORY · THE TEXT IS HIDDEN</div><div class="fwBank">${mapNames.map(n=>`<button data-mname="${n}" ${used.includes(n)?'disabled':''}>${n}</button>`).join('')}</div></div>
+  <div class="mmap"><div class="mrow">${slot(0)}<span class="mlink">sisters</span><div class="mcouple">${slot(1)}<span class="mlink">married</span>${slot(2)}</div><span class="mlink">brothers</span><div class="mbro">${slot(3)}${slot(4)}</div></div><div class="mdown">their children</div><div class="mrow kids">${slot(5)}${slot(6)}</div></div>
+  <div class="row"><button class="primary" data-mcheck ${used.length<7?'disabled':''}>Check the map</button><button data-mreset>Clear</button><b>${g.checked?(done?'Correct. Now retell the whole family from this map.':'Red cards are in the wrong place. Tap one to remove it.'):'Tap a card, then tap a name.'}</b>${done?'<button data-mtimer="45">Start 45 seconds</button><b id="mClock" class="clockBig"></b>':''}</div></div>`}
 function famGapTask(){
- return `<div class="famGrid txt"><div class="panel reading famRead"><div class="kicker">EX 3A · COMPLETE THE TEXT WITH THE CORRECT FORM OF THE WORDS</div><p>${famText.map(x=>typeof x==='number'?`<span class="gl">(${'abcdefg'[x]})</span><input class="gap" data-note="fg${x}" data-fg="${x}" value="${esc(S.notes['fg'+x]||'')}" autocomplete="off" autocapitalize="off" spellcheck="false">`:esc(x)).join('')}</p></div>
- <div class="tcol"><div class="panel"><div class="kicker">EX 2 · THE FAMILY</div><p class="wordbox">${esc(famWords)}</p><p class="muted" style="margin:6px 0 0">Careful: some gaps need a plural.</p></div>
- <div class="panel"><div class="row"><button class="primary" data-fgcheck>Check</button><button data-say="${esc(famText.map(x=>typeof x==='number'?famKey[x]:x).join(''))}">Listen and check (3b)</button><button data-fgshow>Show answers</button></div><p id="fgScore" style="margin:8px 0 0;font-weight:800"></p><p id="fgKey" class="answerReveal" hidden>${famKey.map((k,i)=>'('+'abcdefg'[i]+') '+k).join(' · ')}</p><div id="speechStatus" class="muted" role="status"></div></div></div></div>`}
+ return `<div class="panel reading famRead wide"><div class="kicker">EX 3A · COMPLETE THE TEXT · NO WORD LIST · USE THE CORRECT FORM</div><p>${famText.map(x=>typeof x==='number'?`<span class="gl">(${'abcdefg'[x]})</span><input class="gap" data-note="fg${x}" data-fg="${x}" value="${esc(S.notes['fg'+x]||'')}" autocomplete="off" autocapitalize="off" spellcheck="false">`:esc(x)).join('')}</p>
+ <div class="row" style="margin-top:8px"><button class="primary" data-fgcheck>Check</button><button data-say="${esc(famText.map(x=>typeof x==='number'?famKey[x]:x).join(''))}">Listen and check (3b)</button><button data-fghint>Hint: word list</button><button data-fgshow>Show answers</button><b id="fgScore"></b></div><p id="fgHint" class="answerReveal" hidden>${esc(famWords)}</p><p id="fgKey" class="answerReveal" hidden>${famKey.map((k,i)=>'('+'abcdefg'[i]+') '+k).join(' · ')}</p><div id="speechStatus" class="muted" role="status"></div></div>`}
+function memoryTask(){
+ const g=S.game.peek||(S.game.peek={n:0});
+ return `<div class="memBar"><b>The text is hidden. Answer from memory.</b><button data-peek>Peek at the text for 8 seconds</button><span class="qscore">Peeks: <b id="peekN">${g.n}</b></span></div><div id="peekBox" class="panel reading famRead wide" hidden><p>${famFull()}</p></div>`+exercise('famTF','True, False or Not stated?')}
 function huntGame(){
- const g=S.game.hunt||(S.game.hunt={i:0,miss:0,found:false,score:0});
- if(g.i>=huntItems.length)return `<div class="panel"><div class="resultTop"><div class="ring ${g.score===huntItems.length?'full':''}"><b>${g.score}</b><span>of ${huntItems.length}</span></div><div><h2>${g.score===huntItems.length?'Every mistake found first time.':'Hunt finished.'}</h2><p>You get a point when your first tap is the mistake.</p></div></div><button class="primary" data-hunt-restart>Hunt again</button></div>`;
+ const g=S.game.hunt||(S.game.hunt={i:0,miss:0,found:false,score:0,fix:null});
+ if(g.i>=huntItems.length)return `<div class="panel"><div class="resultTop"><div class="ring ${g.score===huntItems.length*2?'full':''}"><b>${g.score}</b><span>of ${huntItems.length*2}</span></div><div><h2>Hunt finished.</h2><p>One point for finding the mistake on the first tap, one point for typing the correct word.</p></div></div><button class="primary" data-hunt-restart>Hunt again</button></div>`;
  const it=huntItems[g.i],words=it[0].split(' ');
- return `<div class="panel"><div class="row spread"><span class="badge">${g.i+1} / ${huntItems.length}</span><span class="qscore"><b>${g.score}</b> first-time</span></div><p class="huntAsk">Tap the one wrong word.</p><div class="huntLine">${words.map((w,n)=>`<button data-hunt="${n}" ${g.found?'disabled':''} class="${g.found&&n===it[1]?'wrong':''} ${g.bad===n?'shake':''}">${esc(w)}</button>`).join('')}</div>
- ${g.found?`<div class="fb ok"><b>${esc(words[it[1]])} → ${esc(it[2])}</b><span>${esc(it[3])}</span></div><div class="row" style="justify-content:flex-end;margin-top:10px"><button class="primary" data-hunt-next>${g.i===huntItems.length-1?'Finish →':'Next sentence →'}</button></div>`:(g.miss?`<div class="fb bad"><b>That word is fine.</b><span>Read the sentence again and check it against the text.</span></div>`:'')}</div>`}
-function sortGame(){
- const g=S.game.sort||(S.game.sort={i:0,score:0,last:null,wrong:[]});
- if(g.i>=sortItems.length)return `<div class="panel"><div class="resultTop"><div class="ring ${g.score===sortItems.length?'full':''}"><b>${g.score}</b><span>of ${sortItems.length}</span></div><div><h2>Sorted.</h2><p>Now choose three of these words and explain them: “My niece is my brother’s or sister’s daughter.”</p></div></div><div class="resultCols">${['M','F','B'].map(k=>`<div class="resultCol"><h3>${sortNames[k]}</h3>${sortItems.map((w,i)=>w[1]===k?`<div class="resultWord ${g.wrong.includes(i)?'miss':''}"><b>${esc(w[0])}</b></div>`:'').join('')}</div>`).join('')}</div><button class="primary" data-sort-restart style="margin-top:10px">Sort again</button></div>`;
- const it=sortItems[g.i];
- return `<div class="panel"><div class="row spread"><span class="badge">${g.i+1} / ${sortItems.length}</span><span class="qscore"><b>${g.score}</b> correct</span></div><div class="sortWord">${esc(it[0])}</div><div class="sortBtns">${['M','F','B'].map(k=>`<button data-sort="${k}" ${g.last?'disabled':''} class="${g.last?(k===it[1]?'correct':g.last.pick===k?'wrong':''):''}">${sortNames[k]}</button>`).join('')}</div>${g.last?`<div class="row" style="justify-content:flex-end;margin-top:10px"><button class="primary" data-sort-next>${g.i===sortItems.length-1?'Finish →':'Next word →'}</button></div>`:''}</div>`}
-function bankGame(){
- const g=S.game.fw||(S.game.fw={fill:{},sel:0,checked:false});
- const used=Object.values(g.fill);
- return `<div class="panel fw"><div class="kicker">EX 4 · WORDS CONNECTED WITH THE FAMILY · TAP A GAP, THEN TAP A WORD</div><div class="fwBank">${fwBank.map(w=>`<button data-fwword="${esc(w)}" ${used.includes(w)?'disabled':''}>${esc(w)}</button>`).join('')}</div><ol class="fwList">${fwLines.map(l=>'<li>'+l.map(x=>typeof x==='number'?`<button class="fwGap ${g.sel===x?'sel':''} ${g.checked?(norm(g.fill[x]||'')===norm(fwKey[x])?'ok':'no'):''}" data-fwgap="${x}">${g.fill[x]?esc(x===4?g.fill[x].charAt(0).toUpperCase()+g.fill[x].slice(1):g.fill[x]):'&nbsp;'}</button>`:esc(x)).join('')+'</li>').join('')}</ol><div class="row"><button class="primary" data-fwcheck ${used.length<9?'disabled':''}>Check</button><button data-fwreset>Clear</button><b>${g.checked?(n=>n+' / 9 correct. '+(n===9?'Well done.':'Tap a red gap to change it.'))(fwKey.filter((k,i)=>norm(g.fill[i]||'')===norm(k)).length):''}</b></div></div>`}
-function speakTask(){return `<div class="famGrid"><div class="panel"><div class="kicker">EX 5 · USE IT … DON’T LOSE IT</div><ol class="spk"><li>Who is in your immediate family? For example, are you an only child?</li><li>How big is your extended family? Talk about your different relatives.</li><li>How often do you see your grandparents or other relatives?</li><li>Which member(s) of your family do you spend a lot of time with?</li></ol></div><div class="panel"><div class="kicker">USE AT LEAST FIVE OF THESE</div><div class="spkWords">${['immediate family','extended family','only child','relative','on my mother’s side','on my father’s side','brother-in-law / sister-in-law','cousin','nephew / niece','great-grandmother','twin','We get together…'].map(w=>'<span>'+esc(w)+'</span>').join('')}</div><div class="kicker" style="margin-top:12px">CHALLENGE</div><p style="margin:4px 0 0">Describe one relative without saying the word. Your teacher guesses: “She is my mother’s sister’s daughter.”</p></div></div>`}
+ return `<div class="panel"><div class="row spread"><span class="badge">${g.i+1} / ${huntItems.length}</span><span class="qscore"><b>${g.score}</b> points</span></div><p class="huntAsk">${g.found?'Now type the correct word.':'One word is wrong: a fact from the text or the grammar. Tap it.'}</p><div class="huntLine">${words.map((w,n)=>`<button data-hunt="${n}" ${g.found?'disabled':''} class="${g.found&&n===it[1]?'wrong':''} ${g.bad===n?'shake':''}">${esc(w)}</button>`).join('')}</div>
+ ${g.found?(g.fix==null?`<form data-huntfix class="inputrow" style="margin-top:10px"><label style="flex:1">Correct word:<input autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Correct word"></label><button class="primary">Check</button></form>`:`<div class="fb ${g.fix?'ok':'bad'}"><b>${g.fix?'Correct: ':'The correct word is '}${esc(it[2])}</b><span>${esc(it[3])}</span></div><div class="row" style="justify-content:flex-end;margin-top:10px"><button class="primary" data-hunt-next>${g.i===huntItems.length-1?'Finish →':'Next sentence →'}</button></div>`):(g.miss?`<div class="fb bad"><b>That word is fine.</b><span>Think about the text and the grammar again.</span></div>`:'')}</div>`}
+function wordsTask(){
+ return `<div class="panel fw"><div class="kicker">EX 4 · WORDS CONNECTED WITH THE FAMILY · TYPE THE WORD · NO WORD LIST</div><ol class="fwList">${fwLines.map(l=>'<li>'+l.map(x=>typeof x==='number'?gapInput('fw'+x,8):esc(x)).join('')+'</li>').join('')}</ol>${gapBar('fw',9,fwKey.map((k,i)=>(i+1)+' '+k).join(' · '),'<button data-gletters="fw">Hint: first letters</button>')}</div>`}
+function speakTask(){return `<div class="famGrid"><div class="panel"><div class="kicker">1 · RETELL · THE TEXT IS HIDDEN</div><p class="spkBig">Tell the story of the Legend family in 45 seconds. Include all seven people and at least three in-law words.</p><div class="row"><button class="primary" data-mtimer="45">Start 45 seconds</button><b id="mClock" class="clockBig"></b></div><div class="kicker" style="margin-top:12px">3 · CHALLENGE</div><p style="margin:4px 0 0">Describe one of your relatives without saying the word. Your teacher guesses: “She is my mother’s sister’s daughter.”</p></div><div class="panel"><div class="kicker">2 · EX 5 · USE IT … DON’T LOSE IT</div><ol class="spk"><li>Who is in your immediate family? For example, are you an only child?</li><li>How big is your extended family? Talk about your different relatives.</li><li>How often do you see your grandparents or other relatives?</li><li>Which member(s) of your family do you spend a lot of time with?</li></ol></div></div>`}
 
+/* ===== REACH HIGHER · UNIT 1 · Student's Book p136 (answers: Teacher's Book p116) ===== */
+const AZ={A:['aunt'],B:['brother','brother-in-law'],C:['cousin','child','children'],D:['daughter','daughter-in-law','dad','divorced'],E:['extended family','ex-wife','ex-husband'],F:['father','father-in-law','family'],G:['grandchild','grandchildren','grandparent','grandparents','grandfather','grandmother','grandson','granddaughter','great-grandfather','great-grandmother','grandma','grandpa'],H:['husband','half-brother','half-sister'],I:['immediate family','in-laws'],K:['kid','kids'],M:['mother','mother-in-law','mum','mom'],N:['niece','nephew'],O:['only child','one-parent family'],P:['parent','parents','partner'],R:['relative','relatives'],S:['son','sister','son-in-law','sister-in-law','stepfather','stepmother','stepbrother','stepsister','single','sibling','siblings'],T:['twin','twins'],U:['uncle'],W:['wife']};
+const rhNums=[['16','The age of a boy who is legally forcing his mother to stop sharing images of him online.'],['€10,000','The fine the boy is asking his mother to pay if she doesn’t stop sharing images of him online.'],['€45,000','How much parents in France may have to pay if they post photos of their children without their permission.'],['(over) ten','The age when children should start being consulted about having their photos posted, according to the University of Michigan.']];
+const rhTense=[['I can’t come out at the moment because I ',0,' my sister with her homework.'],['Why ',1,' you ',2,'? I can hear you perfectly.'],['My cousin ',3,' as a waiter in a restaurant on Saturday afternoons.'],['Can you say that again? I ',4,'.'],['Can I help you, Dad? ',5,' you ',6,' anything?'],['My sister ',7,' down on the sofa right now because she doesn’t feel well.']];
+[['am helping','’m helping'],['are'],['shouting'],['works'],['don’t understand','do not understand'],['do'],['need'],['is lying','’s lying']].forEach((k,i)=>GK['rt'+i]=k);
+const rhDefs=[['when you believe you can do things well','confidence'],['the time in someone’s life between being a child and an adult','adolescence'],['an angry disagreement','argument'],['the answer to a question, problem or bad situation','solution'],['the ability to make decisions without the control of other people','independence'],['a description of how to do something','explanation']];
+rhDefs.forEach((d,i)=>GK['rd'+i]=[d[1]]);
+const rhRules=[['We use ','when we talk about things in general.',['no article','no','zero article','zero','nothing','—'],'I think arguments are normal.'],['We use ','to talk about a specific person or thing, or a person or thing mentioned before.',['the'],'The arguments I have with my parents are about my bedroom.'],['We use ','to talk about a singular, countable person or thing for the first time, or to say that the person or thing is one of a number of people or things.',['a/an','a','an','a or an','a / an'],'I’m in an unusual situation.'],['We use ','to talk about someone or something that is unique.',['the'],'He’s the headmaster at my school.'],['We use ','to say what somebody’s profession is.',['a/an','a','an','a or an','a / an'],'My mum’s a doctor.']];
+rhRules.forEach((r,i)=>GK['rr'+i]=r[2]);
+function reachHigher(){const t=S.tab[9];
+ return (t==null?`<div class="kahootLine"><span>Extra game for the teacher:</span><a class="link" href="https://create.kahoot.it/share/9028cb05-8110-410a-aeda-903887984c7d" target="_blank" rel="noopener">Open Kahoot · 15 questions</a></div>`:'')+tabs(['1 · A to Z','2 · Numbers','3 · Tenses','4 · Definitions','5 · Article rules'])+`<div id="taskPanel" role="tabpanel">`+pick([
+  `<div class="panel"><div class="row spread"><div class="kicker">VOCABULARY P6 · A FAMILY WORD FOR EACH LETTER · NOT ALL LETTERS HAVE ONE</div><span><button data-mtimer="90">Start 90 seconds</button> <b id="mClock" class="clockBig"></b></span></div><div class="azGrid">${'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(L=>`<label><b>${L}</b><input data-note="az${L}" data-az="${L}" value="${esc(S.notes['az'+L]||'')}" autocomplete="off" autocapitalize="off" spellcheck="false"></label>`).join('')}</div><div class="row"><button class="primary" data-azcheck>Check</button><b id="azScore"></b><span class="muted">Green = in the book’s list. Yellow = your teacher decides.</span></div></div>`,
+  `<div class="panel"><div class="kicker">READING P7 · WHAT DO THESE NUMBERS REFER TO? ONE SENTENCE EACH · FROM MEMORY</div><p class="muted" style="margin:4px 0 8px">Example: <b>1,000</b> is the number of pictures of their children parents post online from when they are born until their fifth birthday.</p><div class="numList">${rhNums.map((n,i)=>`<div class="numRow"><b>${esc(n[0])}</b><input data-note="rn${i}" value="${esc(S.notes['rn'+i]||'')}" placeholder="Type one sentence, then compare" autocomplete="off"><button data-reveal="rnA${i}">Model answer</button><p id="rnA${i}" hidden>${esc(n[1])}</p></div>`).join('')}</div></div>`,
+  `<div class="panel fw"><div class="kicker">GRAMMAR P8 · PRESENT SIMPLE OR PRESENT CONTINUOUS</div><p class="wordbox verbs">help · lie · need · not understand · shout · work</p><ol class="fwList">${rhTense.map(l=>'<li>'+l.map(x=>typeof x==='number'?gapInput('rt'+x,x===4?10:7):esc(x)).join('')+'</li>').join('')}</ol>${gapBar('rt',8,'1 am / ’m helping · 2 are, shouting · 3 works · 4 don’t understand · 5 Do, need · 6 is lying')}</div>`,
+  `<div class="panel fw"><div class="kicker">DEVELOPING VOCABULARY P9 · WRITE THE NOUN · NO WORD LIST</div><ol class="fwList defs">${rhDefs.map((d,i)=>`<li><span>${esc(d[0])}</span>${gapInput('rd'+i,10)}</li>`).join('')}</ol>${gapBar('rd',6,rhDefs.map((d,i)=>(i+1)+' '+d[1]).join(' · '),'<button data-gletters="rd">Hint: first letters</button>')}</div>`,
+  `<div class="panel fw"><div class="kicker">GRAMMAR P12 · CAN YOU REMEMBER THE FIVE RULES? TYPE A/AN, THE OR NO ARTICLE, THEN SAY YOUR OWN EXAMPLE</div><ol class="fwList rules">${rhRules.map((r,i)=>`<li>${esc(r[0])}${gapInput('rr'+i,6)} ${esc(r[1])} <button class="mini" data-reveal="rrE${i}">Book example</button><em id="rrE${i}" hidden>${esc(r[3])}</em></li>`).join('')}</ol>${gapBar('rr',5,'1 no article · 2 the · 3 a/an · 4 the · 5 a/an')}</div>`],t)+'</div>'}
 bank('videoMatch',D.videoWords.map((x,i)=>{const options=[x[0],D.videoWords[(i+4)%15][0],D.videoWords[(i+8)%15][0],D.videoWords[(i+11)%15][0]];return Q(x[1],x[0],options,x[0]+' — '+x[2]);}));
 bank('articles',D.articleQs.map(x=>Q(x[0],x[1],['a','an','the','—'],x[2])));
 bank('articleFix',D.articleFix.map(x=>Q(x[0],x[1],null,x[2])));
@@ -454,14 +563,22 @@ function drawExercise(id){const root=$('[data-exercise="'+id+'"] .exbody');if(!r
  root.innerHTML=`<div class="qtop"><div class="qdots">${dots}</div><span class="qscore"><b>${score}</b> correct</span></div>
   <p class="q">${esc(q.q)}</p>${q.base?`<div class="badge">${esc(q.base)}</div>`:''}
   ${options?`<div class="options lettered ${q.fixed?'tf':''} ${answer?'answered':''}">${options.map((o,n)=>{const st=answer?(norm(o)===norm(q.a)?'correct':o===answer.value?'wrong':'dim'):'';return `<button data-answer="${esc(o)}" data-bank="${id}" ${answer?'disabled':''} class="${st}"><i>${st==='correct'?'✓':st==='wrong'?'✕':'ABCDEF'[n]}</i><span>${esc(o)}</span></button>`}).join('')}</div>`
-   :`<form data-check="${id}" class="inputrow"><label style="flex:1">${id==='articleFix'?'Rewrite the complete sentence:':'Your answer:'}<input autocomplete="off" aria-label="Answer" data-draft="${id}" value="${esc(s.drafts[index]||answer?.value||'')}" ${answer?'disabled':''}></label><button class="primary" ${answer?'disabled':''}>Check</button></form>`}
+   :`<form data-check="${id}" class="inputrow"><label style="flex:1">${id==='articleFix'||id==='famTrans'?'Rewrite the complete sentence:':'Type your answer:'}<input autocomplete="off" aria-label="Answer" data-draft="${id}" value="${esc(s.drafts[index]||answer?.value||'')}" ${answer?'disabled':''}></label><button class="primary" ${answer?'disabled':''}>Check</button></form>`}
   ${answer?`<div class="fb ${answer.correct?'ok':'bad'}" aria-live="polite"><b>${answer.correct?'Correct.':'Not quite. The answer is '+esc(q.a)+'.'}</b><span>${esc(q.e)}</span></div>`:'<div class="fb empty" aria-live="polite"></div>'}
   <div class="exnav"><button data-question="${id}" data-delta="-1" ${s.i===0?'disabled':''}>← Back</button>${answer&&!answer.correct?`<button data-retry="${id}">Try this one again</button>`:'<span></span>'}${last?(big?`<button class="primary" data-result="${id}">See result →</button>`:`<button class="primary" data-result="${id}">Finish →</button>`):`<button class="${answer?'primary':''}" data-question="${id}" data-delta="1">${answer?'Next question →':'Skip →'}</button>`}</div>`;
 }
-function submit(id,value){const s=bs(id),index=list(id)[s.i];if(s.answers[index]||!String(value).trim())return;const q=banks[id][index];s.answers[index]={value,correct:norm(value)===norm(q.a)};save();drawExercise(id)}
+function submit(id,value){const s=bs(id),index=list(id)[s.i];if(s.answers[index]||!String(value).trim())return;const q=banks[id][index];const eq=x=>norm(x).replace(/-/g,' ')===norm(value).replace(/-/g,' ');s.answers[index]={value,correct:[q.a].concat(q.alt||[]).some(eq)};save();drawExercise(id)}
 function flash(id,cards){const s=S.flashes[id]||(S.flashes[id]={i:0,back:false});const c=cards[s.i];return `<div class="panel"><div class="row spread"><span class="badge">${s.i+1} / ${cards.length}</span><span>Tap to flip</span></div><button class="flash" data-flip="${id}"><strong>${esc(s.back?c[1]:c[0])}</strong><span>${esc(s.back?(c[2]||''): 'What does it mean? Give an example.')}</span></button><div class="row spread" style="margin-top:12px"><button data-flash="${id}" data-delta="-1" ${s.i===0?'disabled':''}>← Back</button><button data-say="${esc(c[0])}">Listen</button>${s.i===cards.length-1?`<button class="primary" data-flash-reset="${id}">Start again</button>`:`<button class="primary" data-flash="${id}" data-delta="1">Next →</button>`}</div><div id="speechStatus" class="muted" role="status"></div></div>`}
 const flashBanks={famous:D.warmupWords,video:D.videoWords,wf:D.wf.map(x=>[x[0],x[1],x[4]])};
-function tabs(names){const current=S.tab[S.step]||0;return `<div class="tabs" role="tablist" aria-label="Activity tasks">${names.map((n,i)=>`<button role="tab" id="tab-${S.step}-${i}" aria-controls="taskPanel" aria-selected="${i===current}" data-tab="${i}">${esc(n)}</button>`).join('')}</div>`}
+const MISSION={
+ 4:[['GAP FILL','Her (a) ____ is the singer…'],['MIND MAP','? — ? + ? — ? ?'],['FROM MEMORY','True · False · Not stated'],['TYPE IT','John is Tina’s …'],['HUNT + FIX','married with → ?'],['TYPE IT','An ____ child has no brothers'],['TRANSFORM','AUNT → NIECE'],['SPEAK','45 seconds, no text']],
+ 5:[['FLASHCARDS','15 words before the video'],['PREDICT','Will his dad recognise him?'],['VIDEO','Watch and fill 8 gaps'],['READ + SPEAK','Ageism in the UK']],
+ 9:[['RACE THE CLOCK','A – aunt, B – brother, C – …'],['RECALL','16 · €10,000 · €45,000 · ten'],['GRAMMAR','am helping or help?'],['WORD FORMATION','“an angry disagreement” = ?'],['RULES','a/an · the · no article']]
+};
+const pick=(arr,t)=>t==null?'':arr[t];
+function tabs(names){const cur=S.tab[S.step],meta=MISSION[S.step]||[],seen=(S.seen||{})[S.step]||[],clean=names.map(n=>n.replace(/^\d+ · /,''));
+ if(cur==null)return `<div class="boardHead"><b>Choose a mission</b><span>${seen.length} of ${names.length} opened · any order</span></div><div class="board n${names.length}">${clean.map((n,i)=>`<button class="mcard c${i%4} ${seen.includes(i)?'seen':''}" data-tab="${i}"><i>${i+1}</i><small>${esc((meta[i]||[''])[0])}</small><b>${esc(n)}</b><span>${esc((meta[i]||['',''])[1])}</span>${seen.includes(i)?'<u>OPENED</u>':''}</button>`).join('')}</div>`;
+ return `<div class="mbar"><button data-board>← All missions</button><b>Mission ${cur+1} of ${names.length} · ${esc(clean[cur])}</b><span class="mtag">${esc((meta[cur]||[''])[0])}</span>${cur<names.length-1?`<button class="primary" data-tab="${cur+1}">Next mission →</button>`:`<button class="primary" data-board>Finish →</button>`}</div>`}
 function note(id,prompt){return `<label><span>${esc(prompt)}</span><textarea data-note="${id}">${esc(S.notes[id]||'')}</textarea></label>`}
 function details(title,body){return `<details><summary>${title}</summary>${body}</details>`}
 function familyMap(){return `<div class="familyIntro"><div><h2>Who is who?</h2><p>Start with <b>Chrissy + John</b> in the centre. Then look at their children and their brothers/sister. Tap any person to hear the relationship in a full sentence.</p></div><div class="goal">GOAL: explain 4 family links</div></div><div class="familyTree"><div class="treeLabel">Chrissy Teigen + John Legend · family connections</div><div class="familyTop"><div class="familySide"><button class="personCard" data-person="Tina is Chrissy’s sister. She is John’s sister-in-law and Luna and Miles’ aunt."><b>Tina</b><span>Chrissy’s sister · aunt</span></button></div><div class="familyCouple"><button class="personCard" data-person="Chrissy is John’s wife. She is Luna and Miles’ mother."><b>Chrissy Teigen</b><span>wife · mother</span></button><button class="personCard" data-person="John is Chrissy’s husband. He is Luna and Miles’ father."><b>John Legend</b><span>husband · father</span></button></div><div class="familySide"><button class="personCard" data-person="Vaughn and Ronald are John’s brothers. They are Chrissy’s brothers-in-law and Luna and Miles’ uncles."><b>Vaughn + Ronald</b><span>John’s brothers · uncles</span></button></div></div><div class="familyLine" aria-hidden="true"></div><div class="familyChildren"><button class="personCard" data-person="Luna is John and Chrissy’s daughter. She is Miles’ sister and Tina’s niece."><b>Luna</b><span>daughter · sister · niece</span></button><button class="personCard" data-person="Miles is John and Chrissy’s son. He is Luna’s brother and Tina’s nephew."><b>Miles</b><span>son · brother · nephew</span></button></div><p id="familyDetail" class="familyDetail" role="status"><b>Tap a person.</b> The full relationship sentence will appear here.</p></div>`}
@@ -516,8 +633,9 @@ function wordFactory(){
  const item=D.wf[g.i%D.wf.length];
  const done=g.i>=D.wf.length;
  if(done){const wrong=new Set(g.wrong||[]),known=Array.isArray(g.wrong),miss=D.wf.length-g.score;
-  return `<div class="gameHero"><div><span class="levelTag">LEVEL 04 · FACTORY COMPLETE</span><h2>${g.score} / ${D.wf.length} correct</h2><p>${miss?(known?'Red cards are your mistakes. Read them aloud, then play again.':'Check all three suffix groups, then play again to fix '+miss+' mistakes.'):'Perfect run. Read the nouns aloud once more.'}</p></div><button class="primary" data-factory-restart>Play again</button></div><div class="resultCols">${['ment','ion','ence'].map(sf=>`<div class="resultCol"><h3>-${sf}</h3>${D.wf.map((w,i)=>w[2]===sf?`<div class="resultWord ${wrong.has(i)?'miss':''}"><small>${esc(w[0])} →</small><b>${esc(w[1])}</b></div>`:'').join('')}</div>`).join('')}</div>`}
- return `<div class="gameHero"><div><span class="levelTag">LEVEL 04 · WORD FACTORY</span><h2>Sort → build → check</h2><p>Choose the noun suffix for the base word.</p></div><div class="gameScore"><strong>${g.score}</strong><span>CORRECT</span></div></div><div class="wordFactory"><div class="factoryWord">${esc(item[0])}</div><div><div class="suffixButtons">${['ment','ion','ence'].map(s=>`<button data-factory="${s}" ${g.last?'disabled':''}>-${s}</button>`).join('')}</div><div class="feedback ${g.last?(g.last.correct?'ok':'bad'):''}">${g.last?`<strong>${g.last.correct?'Correct.':'Not quite.'}</strong>${esc(item[0])} → <b>${esc(item[1])}</b> · -${esc(item[2])}`:''}</div>${g.last?'<button class="primary" data-factory-next>Next word →</button>':''}</div></div>`;
+  return `<div class="gameHero"><div><span class="levelTag">FACTORY COMPLETE</span><h2>${g.score} / ${D.wf.length} correct</h2><p>${miss?(known?'Red cards are your mistakes. Read them aloud, then play again.':'Play again to fix '+miss+' mistakes.'):'Perfect run. Read the nouns aloud once more.'}</p></div><button class="primary" data-factory-restart>Play again</button></div><div class="resultCols">${['ment','ion','ence'].map(sf=>`<div class="resultCol"><h3>-${sf}</h3>${D.wf.map((w,i)=>w[2]===sf?`<div class="resultWord ${wrong.has(i)?'miss':''}"><small>${esc(w[0])} →</small><b>${esc(w[1])}</b></div>`:'').join('')}</div>`).join('')}</div>`}
+ const sent=esc(item[3]).replace('___','<span class="wfGap">'+(g.last?esc(item[1]):'?')+'</span>');
+ return `<div class="gameHero"><div><span class="levelTag">WORD FACTORY</span><h2>Type the noun</h2><p>Mind the spelling: some words change.</p></div><div class="gameScore"><strong>${g.score}</strong><span>CORRECT</span></div></div><div class="wordFactory"><div class="factoryWord"><small>${g.i+1} / ${D.wf.length}</small>${esc(item[0].toUpperCase())}</div><div class="panel" style="margin:0"><p class="wfSent">${sent}</p>${g.last?`<div class="fb ${g.last.correct?'ok':'bad'}"><b>${g.last.correct?'Correct.':'Not quite: '+esc(item[1])+'.'}</b><span>${esc(item[4]||'')}</span></div><div class="row" style="justify-content:flex-end;margin-top:10px"><button class="primary" data-factory-next>Next word →</button></div>`:`<form data-factoryfix class="inputrow"><label style="flex:1">Noun:<input autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Noun"></label><button class="primary">Check</button></form>`}</div></div>`;
 }
 function sentenceBuilder(){
  const g=S.game.builder||(S.game.builder={i:0,chosen:[],checked:false,correct:false});
@@ -557,19 +675,17 @@ function body(){
  if(S.step===0||S.step===1)return `<div class="vocabGrid"><div class="vcol"><div class="colHead"><b>1 · Flashcards</b><span>22 words · tap the card to flip</span></div>${flash('famousVocab',flashBanks.famous)}</div><div class="vcol"><div class="colHead"><b>2 · Memory Match</b><span>find the 6 pairs: word + meaning</span></div>${memoryGame()}</div></div>`;
  if(S.step===2)return `<div class="gameHero"><div><span class="levelTag">LEVEL 03 · QUIZ MODE</span><h2>Use the vocabulary in context</h2><p>15 factual questions. One clear answer each.</p></div><div class="gameScore"><strong>01</strong><span>SINGLE CHOICE</span></div></div>`+exercise('famous','Famous People Quiz');
  if(S.step===3)return wordFactory();
- if(S.step===4){const t=S.tab[4]||0;
-  return tabs(['1 · Text','2 · True / False','3 · Family logic','4 · Error hunt','5 · Sort','6 · Family words','7 · Transform','8 · Speak'])+`<div id="taskPanel" role="tabpanel">`+[
-   famGapTask(),
-   withText(exercise('famTF','True, False or Not stated?')),
-   withText(exercise('famLogic','Work it out')),
-   withText(huntGame()),
-   sortGame(),
-   bankGame(),
-   withText(sentenceBuilder()),
-   speakTask()][t]+'</div>'}
- if(S.step===5){const t=S.tab[5]||0;
+ if(S.step===4){const t=S.tab[4];
+  return tabs(['1 · Text','2 · Mind map','3 · Memory check','4 · Who is who?','5 · Error hunt','6 · Family words','7 · Transform','8 · Speak'])+`<div id="taskPanel" role="tabpanel">`+pick([
+   famGapTask(), mapGame(), memoryTask(),
+   `<div class="narrow">`+exercise('famLogic','Type the family word. No options.')+`</div>`,
+   `<div class="narrow">`+huntGame()+`</div>`,
+   wordsTask(),
+   `<div class="narrow">`+exercise('famTrans','Say it another way with the word in capitals')+`</div>`,
+   speakTask()],t)+'</div>'}
+ if(S.step===5){const t=S.tab[5];
   const gaps=[['By profession, Chris is a ',0,'.'],['He is ',1,' years old but uses make-up to appear over ',2,'.'],['Chris’s ',3,' doesn’t recognise Chris because of the make-up.'],['Recent studies say that by being ',4,' you can add up to ',5,' years to your life.'],['',6,' let Chris cross the street.'],['As a senior citizen Chris can sit down when using ',7,'.']];
-  return tabs(['1 · Words · 15','2 · Predict','3 · Watch and answer','4 · Read: Ageism'])+`<div id="taskPanel" role="tabpanel">`+[
+  return tabs(['1 · Words · 15','2 · Predict','3 · Watch and answer','4 · Read: Ageism'])+`<div id="taskPanel" role="tabpanel">`+pick([
    flash('video',flashBanks.video),
    `<div class="panel"><h3>Before you watch: what will happen?</h3><p>Chris is a 36-year-old doctor. Make-up artists will make him look over 80. Then he will walk around London. Say each prediction aloud: “I think people will… because…”</p><div class="grid">${['Will strangers offer him help?','Will his own dad recognise him?','Will people treat him with more respect?','Will he enjoy being old?'].map((q,i)=>`<div class="rule"><p>${q}</p><div class="row">${['Yes, they will','No, they won’t','They might'].map(a=>`<button data-predict="${i}" data-value="${a}" aria-pressed="${S.notes['prediction'+i]===a}">${a}</button>`).join('')}</div></div>`).join('')}</div></div>`,
    `<div class="watchGrid"><div class="panel vid"><video id="oldVideo" controls preload="metadata" playsinline poster="assets/lesson3/video-poster.jpg" src="assets/lesson3/to-be-old.mp4"></video><div class="row"><button data-video-restart>Play from the start</button><span class="muted">How does it feel to be old? · 2:40 · Student’s Book p10</span><span id="videoStatus" role="status"></span></div></div>
@@ -577,39 +693,41 @@ function body(){
     <div class="kicker">SECOND WATCH · EX 3 · ONE OR TWO WORDS OR A NUMBER</div><ol class="q3">${gaps.map(g=>'<li>'+g.map(x=>typeof x==='number'?`<input class="gap" data-note="vg${x}" data-vg="${x}" value="${esc(S.notes['vg'+x]||'')}" autocomplete="off" autocapitalize="off" spellcheck="false">`:esc(x)).join('')+'</li>').join('')}</ol>
     <div class="row"><button class="primary" data-vcheck>Check</button><button data-vshow>Show answers</button><b id="vgScore"></b></div><p id="vgKey" class="answerReveal" hidden>1 doctor · 2 36, 80 · 3 dad · 4 positive, seven · 5 Bus drivers · 6 public transport</p></div></div>`,
    `<div class="famGrid"><div class="panel reading"><div class="kicker">STUDENT’S BOOK P10 · EX 4</div><h3>Ageism in the UK</h3><p>A study from the Royal Society for Public Health shows that almost a third of people of different ages think that ‘being lonely is just something that happens when you get old’. A quarter of millennials believe it’s normal for older people to be unhappy.</p><p>These negative ideas stop us from thinking of old age as an opportunity for new experiences. And they can lead to increased memory loss amongst senior citizens, a worse ability to recover from illness and a negative body image. But the study showed one positive attitude: 69% of people agreed that ‘fundamentally, older people are no different from people of other ages’.</p></div>
-    <div class="panel qs"><div class="kicker">ANSWER FROM THE TEXT</div><ol class="q2"><li>What negative ideas do people have about becoming old?${details('Show answer','They think old people are lonely and unhappy.')}</li><li>In what ways can negative attitudes be a problem for senior citizens?${details('Show answer','They stop us seeing old age as an opportunity, and can lead to memory loss, a worse ability to recover from illness and a negative body image.')}</li><li>What positive discovery did the research make?${details('Show answer','69% of people think older people are no different from people of other ages.')}</li></ol><div class="kicker">SPEAK</div><p>A quarter of millennials believe it’s normal for older people to be unhappy. Is that true in your country? Will it be true when you are 80?</p></div></div>`][t]+'</div>'}
+    <div class="panel qs"><div class="kicker">ANSWER FROM THE TEXT</div><ol class="q2"><li>What negative ideas do people have about becoming old?${details('Show answer','They think old people are lonely and unhappy.')}</li><li>In what ways can negative attitudes be a problem for senior citizens?${details('Show answer','They stop us seeing old age as an opportunity, and can lead to memory loss, a worse ability to recover from illness and a negative body image.')}</li><li>What positive discovery did the research make?${details('Show answer','69% of people think older people are no different from people of other ages.')}</li></ol><div class="kicker">SPEAK</div><p>A quarter of millennials believe it’s normal for older people to be unhappy. Is that true in your country? Will it be true when you are 80?</p></div></div>`],t)+'</div>'}
  if(S.step===6)return `<div class="gameHero"><div><span class="levelTag">LEVEL 07 · HUNTER MODE</span><h2>Spot it. Fix it.</h2><p>One target error per item: family, articles or word formation.</p></div><div class="gameScore"><strong>13</strong><span>ERROR HUNTER</span></div></div>`+exercise('errorGame','Error Hunter');
- if(S.step===7)return sprintGame();
- if(S.step===8)return lavaGame();
- return `<div class="gameHero"><div><span class="levelTag">LEVEL 10 · REVIEW MODE</span><h2>Word Builder & Articles</h2><p>15 questions: noun suffixes, family relationships, stereotypes and a / an / the / no article. Choose one answer. Every correction includes a rule and an example.</p></div><div class="gameScore"><strong>15</strong><span>QUESTIONS</span></div></div>`+exercise('wordReview','Word Builder & Articles')+`<div class="panel row spread kahoot"><span><b>Extra game for the teacher: Kahoot · 15 questions.</b> <span class="muted">Opens on kahoot.com in a new tab. You host it from your Kahoot account and Gabi joins with the game PIN.</span></span><a class="link" href="https://create.kahoot.it/share/9028cb05-8110-410a-aeda-903887984c7d" target="_blank" rel="noopener">Open Kahoot</a></div>`;
+ if(S.step===7||S.step===8)return `<div class="duo"><div class="dcol"><div class="colHead"><b>1 · Timed Sprint</b><span>40 seconds</span></div>${sprintGame()}</div><div class="dcol"><div class="colHead"><b>2 · Floor Is Lava</b><span>10 questions</span></div>${lavaGame()}</div></div>`;
+ return reachHigher();
 }
 function render(){
- if(S.step===1)S.step=0;
- const vis=titles.map((t,i)=>i).filter(i=>i!==1),total=vis.length,doneN=vis.filter(i=>S.done.includes(i)).length;
+ if(S.step===1)S.step=0;if(S.step===8)S.step=7;titles[7]='Speed Zone: Sprint + Lava';
+ const vis=titles.map((t,i)=>i).filter(i=>i!==1&&i!==8),total=vis.length,doneN=vis.filter(i=>S.done.includes(i)).length;
  titles[0]='Vocabulary: Cards + Memory';
  $('#route').innerHTML=vis.map((i,n)=>`<button data-step="${i}" ${S.step===i?'aria-current="step"':''}><span>${S.done.includes(i)?'✓':n+1}</span><div><small>LEVEL ${String(n+1).padStart(2,'0')}</small><br>${esc(titles[i])}</div></button>`).join('');
  $('#progressText').textContent=doneN+' / '+total+' levels opened';
  $('#progressFill').style.width=(doneN/total*100)+'%';
  $('#main').innerHTML=`<div class="stephead"><h1>${titles[S.step]}</h1></div>`+body().replace(/LEVEL \d\d · /g,'');
  $$('[data-exercise]').forEach(e=>drawExercise(e.dataset.exercise));
- if(S.step===7)startSprintTimer();else clearInterval(window.__gabiSprintTimer);
- if(S.step===8)startLavaTimer();else clearInterval(window.__gabiLavaTimer);
+ if(S.step===7){startSprintTimer();startLavaTimer()}else{clearInterval(window.__gabiSprintTimer);clearInterval(window.__gabiLavaTimer)}
  save();
 }
 function move(n){if(n<0||n>=titles.length)return;stopGameTimers();if(n!==S.step&&!S.done.includes(S.step))S.done.push(S.step);S.step=n;render();window.scrollTo({top:0,behavior:'auto'})}
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;const d=b.dataset;
- if(d.fgcheck!==undefined){let ok=0;$$('[data-fg]').forEach(inp=>{const good=norm(inp.value)===famKey[+inp.dataset.fg];inp.classList.toggle('ok',good);inp.classList.toggle('no',!good);if(good)ok++});$('#fgScore').textContent=ok+' / 7 correct'+(ok===7?'. Well done.':'. Fix the red ones: check singular or plural.');return}
+ if(d.fgcheck!==undefined){let ok=0;$$('[data-fg]').forEach(inp=>{const good=norm(inp.value)===famKey[+inp.dataset.fg];inp.classList.toggle('ok',good);inp.classList.toggle('no',!good);if(good)ok++});$('#fgScore').textContent=ok+' / 7 correct'+(ok===7?'. Well done.':'. Fix the red ones: check spelling, hyphens and singular or plural.');return}
  if(d.fgshow!==undefined){const k=$('#fgKey');k.hidden=!k.hidden;return}
- if(d.hunt!==undefined){const g=S.game.hunt,it=huntItems[g.i];if(+d.hunt===it[1]){g.found=true;if(!g.miss)g.score++;g.bad=null}else{g.miss++;g.bad=+d.hunt}return render()}
- if(d.huntNext!==undefined){const g=S.game.hunt;g.i++;g.miss=0;g.found=false;g.bad=null;return render()}
+ if(d.fghint!==undefined){const k=$('#fgHint');k.hidden=!k.hidden;return}
+ if(d.gcheck){let ok=0;$$('[data-gk^="'+d.gcheck+'"]').forEach(inp=>{const good=(GK[inp.dataset.gk]||[]).some(a=>nz(a)===nz(inp.value));inp.classList.toggle('ok',good);inp.classList.toggle('no',!good);if(good)ok++});$('#'+d.gcheck+'Score').textContent=ok+' / '+d.n+' correct'+(ok==d.n?'. Well done.':'. Fix the red ones.');return}
+ if(d.gshow){const k=$('#'+d.gshow+'Key');k.hidden=!k.hidden;return}
+ if(d.gletters){$$('[data-gk^="'+d.gletters+'"]').forEach(inp=>{inp.placeholder=GK[inp.dataset.gk][0].charAt(0)+' …'});return}
+ if(d.azcheck!==undefined){let ok=0,maybe=0;$$('[data-az]').forEach(inp=>{const v=nz(inp.value),L=inp.dataset.az;inp.classList.remove('ok','no','maybe');if(!v)return;if((AZ[L]||[]).some(a=>nz(a)===v)){inp.classList.add('ok');ok++}else if(v.charAt(0)===L.toLowerCase()){inp.classList.add('maybe');maybe++}else inp.classList.add('no')});$('#azScore').textContent=ok+' words'+(maybe?' + '+maybe+' for your teacher to decide':'')+'. The book lists words for 15 letters.';return}
+ if(d.mtimer){clearInterval(window.__gabiTalk);let n=+d.mtimer;const tick=()=>{const c=$('#mClock');if(!c){clearInterval(window.__gabiTalk);return}c.textContent=n>0?n+' s':'Time!';if(n<=0)clearInterval(window.__gabiTalk);n--};tick();window.__gabiTalk=setInterval(tick,1000);return}
+ if(d.peek!==undefined){const g=S.game.peek,box=$('#peekBox');if(!box.hidden)return;g.n++;$('#peekN').textContent=g.n;box.hidden=false;clearTimeout(window.__gabiPeek);window.__gabiPeek=setTimeout(()=>{const x=$('#peekBox');if(x)x.hidden=true},8000);return}
+ if(d.mslot!==undefined){const g=S.game.map,x=+d.mslot;if(g.fill[x]){delete g.fill[x];g.checked=false}g.sel=x;return render()}
+ if(d.mname){const g=S.game.map,free=[0,1,2,3,4,5,6].filter(n=>!g.fill[n]);if(g.sel==null||g.fill[g.sel])g.sel=free[0];if(g.sel==null)return;g.fill[g.sel]=d.mname;g.checked=false;const next=[0,1,2,3,4,5,6].filter(n=>!g.fill[n]);g.sel=next.length?next[0]:null;return render()}
+ if(d.mcheck!==undefined){S.game.map.checked=true;return render()}
+ if(d.mreset!==undefined){S.game.map=null;return render()}
+ if(d.hunt!==undefined){const g=S.game.hunt,it=huntItems[g.i];if(+d.hunt===it[1]){g.found=true;if(!g.miss)g.score++;g.bad=null}else{g.miss++;g.bad=+d.hunt}render();const f=$('[data-huntfix] input');if(f)f.focus();return}
+ if(d.huntNext!==undefined){const g=S.game.hunt;g.i++;g.miss=0;g.found=false;g.bad=null;g.fix=null;return render()}
  if(d.huntRestart!==undefined){S.game.hunt=null;return render()}
- if(d.sort!==undefined){const g=S.game.sort,it=sortItems[g.i],ok=d.sort===it[1];if(ok)g.score++;else g.wrong.push(g.i);g.last={pick:d.sort,ok};return render()}
- if(d.sortNext!==undefined){const g=S.game.sort;g.i++;g.last=null;return render()}
- if(d.sortRestart!==undefined){S.game.sort=null;return render()}
- if(d.fwgap!==undefined){const g=S.game.fw,x=+d.fwgap;if(g.fill[x]){delete g.fill[x];g.checked=false}g.sel=x;return render()}
- if(d.fwword!==undefined){const g=S.game.fw;if(g.sel==null||g.fill[g.sel])g.sel=[0,1,2,3,4,5,6,7,8].find(n=>!g.fill[n]);if(g.sel==null)return;g.fill[g.sel]=d.fwword;g.checked=false;g.sel=[0,1,2,3,4,5,6,7,8].find(n=>!g.fill[n]);if(g.sel===undefined)g.sel=null;return render()}
- if(d.fwcheck!==undefined){S.game.fw.checked=true;return render()}
- if(d.fwreset!==undefined){S.game.fw=null;return render()}
  if(d.memoryRestart!==undefined){S.game.memory={open:[],matched:[]};save();return render()}
  if(d.memory!==undefined){
    const g=S.game.memory||(S.game.memory={open:[],matched:[]}),pos=+d.memory,pair=+d.pair;
@@ -652,7 +770,8 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||
    save();return render();
  }
  if(d.step!==undefined)return move(+d.step);
- if(d.tab!==undefined){S.tab[S.step]=+d.tab;return render()}
+ if(d.board!==undefined){S.tab[S.step]=null;return render()}
+ if(d.tab!==undefined){S.tab[S.step]=+d.tab;S.seen=S.seen||{};const a=S.seen[S.step]||(S.seen[S.step]=[]);if(!a.includes(+d.tab))a.push(+d.tab);return render()}
  if(d.done!==undefined){if(!S.done.includes(S.step))S.done.push(S.step);return render()}
  if(d.start){bs(d.start).started=true;save();return drawExercise(d.start)}
  if(d.answer!==undefined)return submit(d.bank,d.answer);
@@ -681,7 +800,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||
   $('#vgScore').textContent=ok+' / 8 correct'+(ok===8?'. Well done.':'. Watch again and fix the red ones.');return}
  if(d.videoRestart!==undefined){const v=$('#oldVideo');v.currentTime=0;v.play().catch(()=>{$('#videoStatus').textContent='Press Play on the video player.'});}
 });
-document.addEventListener('submit',e=>{if(e.target.dataset.check){e.preventDefault();submit(e.target.dataset.check,$('input',e.target).value)}});
+document.addEventListener('submit',e=>{if(e.target.dataset.factoryfix!==undefined){e.preventDefault();const g=S.game.factory,item=D.wf[g.i%D.wf.length],v=$('input',e.target).value;if(!v.trim())return;const correct=nz(v)===nz(item[1]);if(correct)g.score++;else{g.wrong=g.wrong||[];g.wrong.push(g.i)}g.last={correct};return render()}if(e.target.dataset.huntfix!==undefined){e.preventDefault();const g=S.game.hunt,v=$('input',e.target).value;if(!v.trim())return;g.fix=nz(v)===nz(huntItems[g.i][2]);if(g.fix)g.score++;return render()}if(e.target.dataset.check){e.preventDefault();submit(e.target.dataset.check,$('input',e.target).value)}});
 document.addEventListener('input',e=>{const d=e.target.dataset;if(d.note){S.notes[d.note]=e.target.value;save()}if(d.draft){const s=bs(d.draft);s.drafts[list(d.draft)[s.i]]=e.target.value;save()}});
 try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices()}catch(e){}
 $('#full').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{}};
