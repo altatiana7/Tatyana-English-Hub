@@ -155,6 +155,17 @@ main{display:flex;flex-direction:column}
 .guide .g-stage{margin-top:0;display:flex;flex-direction:column;justify-content:center;padding:16px 18px}
 .guide .g-sentence{font-size:17px}.guide .g-opts{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:12px;gap:8px}.guide .g-opt{font-size:14px;padding:11px 12px}
 @media(max-width:700px){.guide{grid-template-columns:1fr}.subtabs{justify-content:flex-start;flex-wrap:nowrap;overflow:auto;padding:7px 8px}.subtab{white-space:nowrap;padding:7px 12px;font-size:12px}}
+/* overview picture: exact 4:3 frame, no bars, click to enlarge */
+.overview-top{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}
+.genz-facts-board{aspect-ratio:1100/825;background:#fff;padding:0;position:relative;display:block}
+.genz-facts-board img{width:100%;height:100%;max-height:none;object-fit:cover;border-radius:0;display:block}
+.zoomable{cursor:zoom-in}
+.zoom-tag{position:absolute;right:8px;top:8px;background:rgba(21,94,97,.92);color:#fff;font-size:9px;font-weight:800;letter-spacing:.08em;padding:5px 8px;border-radius:6px;pointer-events:none}
+.lightbox{position:fixed;inset:0;z-index:50;background:rgba(20,35,34,.88);display:grid;place-items:center;padding:20px;cursor:zoom-out}
+.lightbox img{max-width:calc(100vw - 40px);max-height:calc(100vh - 40px);object-fit:contain;border-radius:10px;box-shadow:0 10px 50px rgba(0,0,0,.5)}
+.lightbox button{position:fixed;top:14px;right:16px;border:0;border-radius:8px;background:#fff;color:var(--navy);font-size:13px;font-weight:800;padding:9px 14px}
+@media(max-height:860px){.overview-top{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}.genz-facts-board img{max-height:none}}
+@media(max-width:700px){.overview-top{grid-template-columns:1fr}}
 </style>
 <!-- /LAYOUT-V3 -->
 </head>
@@ -171,7 +182,7 @@ main{display:flex;flex-direction:column}
 <section class="screen on overview">
   <div class="title"><div><h2>Money habits. Different generations.</h2><p>Explore how we pay, what we value and why we save.</p></div><div class="pill">START HERE</div></div>
   <div class="overview-top">
-    <figure class="cover-card genz-facts-board"><img src="assets/genz-money-facts.jpg?v=20261005" alt="Gen Z and Money — key facts and trends infographic"></figure>
+    <figure class="cover-card genz-facts-board"><img class="zoomable" src="assets/genz-money-facts.jpg?v=20261005" alt="Gen Z and Money — key facts and trends infographic"><span class="zoom-tag">CLICK TO ENLARGE</span></figure>
     <div class="quick-card">
       <p class="eyebrow">01 / QUICK CHOICE</p><h2>Cash, card or phone?</h2>
       <p class="quick-intro">You’re paying for something. What do you reach for first?</p>
@@ -210,7 +221,7 @@ main{display:flex;flex-direction:column}
 <section class="screen">
   <div class="title"><div><h2>Generations Money Guide</h2><p>Scan the poster and find who each clue describes. Then say whether it sounds fair — or like a stereotype.</p></div><div class="pill">GAME · POSTER HUNT</div></div>
   <div class="guide">
-    <figure><img src="assets/generations-money-guide.jpg?v=20261005" alt="Money habits across generations: Boomers, Gen X, Millennials and Gen Z — values, habits and finances"></figure>
+    <figure><img class="zoomable" src="assets/generations-money-guide.jpg?v=20261005" alt="Money habits across generations: Boomers, Gen X, Millennials and Gen Z — values, habits and finances"></figure>
     <div class="g-stage" id="huntStage"></div>
   </div>
 </section>
@@ -831,6 +842,10 @@ function checkCurrent(){
  }
 }
 show(getSavedActivity());
+/* click-to-enlarge pictures */
+function closeZoom(){const l=document.querySelector('.lightbox');if(l)l.remove()}
+document.querySelectorAll('img.zoomable').forEach(img=>{img.tabIndex=0;img.setAttribute('role','button');const open=()=>{closeZoom();const l=document.createElement('div');l.className='lightbox';l.innerHTML='<button type="button">CLOSE ✕</button>';const big=new Image();big.src=img.src;big.alt=img.alt;l.prepend(big);l.onclick=closeZoom;document.body.appendChild(l);l.querySelector('button').focus()};img.onclick=open;img.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.querySelector('.lightbox')){e.stopImmediatePropagation();closeZoom()}},true);
 </script>
 </body>
 </html>
