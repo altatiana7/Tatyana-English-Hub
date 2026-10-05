@@ -228,6 +228,52 @@ input.gap.ok{background:#e4f3e9;border-color:#3c9865}input.gap.no{background:#ff
 .memPanel .memoryCard.closed{font-size:24px}
 .flash{max-width:560px;margin-left:auto;margin-right:auto}
 @media(max-width:950px){.vocabGrid{grid-template-columns:1fr}}
+
+/* ===== A LEGENDARY FAMILY: full text + eight mechanics (2026-10-05) ===== */
+.tabs button{padding:5px 8px;font-size:14px;min-height:36px}
+.famGrid.txt{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+.famRead{max-height:calc(100vh - 128px);overflow:auto}
+.famGrid .famRead p{font-size:16.5px;line-height:1.55;margin:6px 0 0}
+.famRead b{background:#fff3ce;border-radius:5px;padding:0 3px}
+.famRead input.gap{width:8.2em;padding:2px 8px;margin:2px 3px}
+.famRead .gl{color:#c0392b;font-weight:800}
+.tcol{min-width:0}.tcol>.panel,.tcol>section.panel{margin:0 0 8px}
+.wordbox{margin:4px 0 0;font-size:15px;line-height:1.5}
+.options.tf{grid-template-columns:repeat(3,1fr)}
+.options.tf button{justify-content:center;min-height:52px}
+.options.tf button i{display:none}
+.options.tf:not(.answered) button:nth-child(1){background:#e4f3e9!important;border-color:#9fd3b3}
+.options.tf:not(.answered) button:nth-child(2){background:#ffebe7!important;border-color:#e9a898}
+.options.tf:not(.answered) button:nth-child(3){background:#e5f0ff!important;border-color:#a9c6ee}
+.tcol .exercise .q{font-size:clamp(19px,2vw,25px)}
+.huntAsk{margin:8px 0 6px;font-weight:800;color:#536e7d}
+.huntLine{display:flex;flex-wrap:wrap;gap:6px}
+.huntLine button{min-height:0;padding:7px 10px;font-size:clamp(18px,1.8vw,23px);font-weight:800;border:2px solid #c8dce8;border-radius:11px;background:#fff;opacity:1}
+.huntLine button:hover:not(:disabled){border-color:#7fb5cf;background:#eef9ff}
+.huntLine button.wrong{background:#ffebe7;border-color:#d9735c;color:#8a3526;text-decoration:line-through}
+.huntLine button:disabled:not(.wrong){color:#16384d;border-color:#e3ebf0}
+.huntLine button.shake{animation:shk .35s;border-color:#f0b92f}
+@keyframes shk{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.sortWord{margin:10px 0;padding:18px 10px;text-align:center;font-size:clamp(30px,4vw,48px);font-weight:900;border:3px dashed #7eb5d0;border-radius:18px;background:#f4fbff}
+.sortBtns{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sortBtns button{min-height:60px;font-size:20px;font-weight:900;border:2px solid #c8dce8;border-radius:16px;background:#fff;opacity:1}
+.sortBtns button:nth-child(1){background:#e5f0ff}.sortBtns button:nth-child(2){background:#ffeef3}.sortBtns button:nth-child(3){background:#fff3ce}
+.fwBank{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 8px}
+.fwBank button{min-height:0;padding:6px 12px;font-size:16px;font-weight:800;border:2px solid #7fb5cf;border-radius:999px;background:#eef9ff}
+.fwBank button:disabled{opacity:.3}
+.fwList{margin:0 0 10px;padding-left:22px}
+.fwList li{font-size:16px;line-height:1.9;margin:0}
+.fwGap{min-height:0;min-width:7em;padding:1px 10px;margin:0 3px;font-size:16px;font-weight:800;border:2px dashed #7fb5cf;border-radius:9px;background:#fff;vertical-align:baseline}
+.fwGap.sel{border-style:solid;border-color:#16384d;box-shadow:0 0 0 2px #ffd84a}
+.fwGap.ok{background:#e4f3e9;border:2px solid #3c9865}.fwGap.no{background:#ffebe7;border:2px solid #be614c}
+.trFrom{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px;font-size:clamp(18px,1.8vw,22px);font-weight:800}
+.trFrom b{background:#173f59;color:#fff;border-radius:9px;padding:4px 12px;font-size:.85em;letter-spacing:.04em}
+.tcol .builderAnswer{min-height:52px;padding:10px 14px}
+.tcol .builderTokens{margin:10px 0}
+.spk{margin:6px 0 0;padding-left:24px}.spk li{font-size:clamp(17px,1.7vw,21px);font-weight:700;line-height:1.4;margin:8px 0}
+.spkWords{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.spkWords span{border:2px solid #c8dce8;border-radius:999px;padding:5px 12px;font-weight:800;font-size:15.5px;background:#fff}
+@media(max-height:640px){.sortWord{padding:10px}.sortBtns button{min-height:50px}.fwList li{line-height:1.75}.famGrid .famRead p{font-size:15.5px;line-height:1.5}}
 </style></head><body><header><a class="link" href="index.html">← HOME</a><div class="brand"><small>GABI · GATEWAY B1 · LESSON 3</small><strong>MISSION: PEOPLE & FAMILY</strong></div><button id="full">Full screen</button><button id="reset">Reset</button></header><div id="resetConfirm" class="panel" hidden><p>Clear your answers and notes for this lesson on this device?</p><button id="confirmReset">Clear lesson</button> <button id="cancelReset">Keep my work</button></div><div class="shell"><aside><nav id="route" aria-label="Lesson activities"></nav><div class="routeMeta" id="progressText"></div><div class="progress"><div id="progressFill"></div></div><p class="routeMeta">Your answers stay on this device.<br>The lesson always opens at Activity 1.</p></aside><main id="main" class="workspace"></main></div><script>const D={"warmupQuiz":[{"question":"Which famous scientist later worked as Master of the Royal Mint and personally investigated counterfeiter?","options":["Isaac Newton","Nikola Tesla","Charles Darwin","Alan Turing"],"answer":"Isaac Newton","fact":"Newton became Warden and later Master of the Royal Mint. He took the job seriously and investigated counterfeiting cases."},{"question":"Whose first agreement with FC Barcelona was famously written on a paper napkin?","options":["Lionel Messi","Alexander Ovechkin","Michael Jackson","Ludwig van Beethoven"],"answer":"Lionel Messi","fact":"A preliminary agreement connected with Messi’s move to Barcelona was written on a napkin in 2000."},{"question":"Which composer originally admired Napoleon enough to dedicate a major symphony to him, then removed the dedication?","options":["Ludwig van Beethoven","Wolfgang Mozart","Johann Bach","Franz Schubert"],"answer":"Ludwig van Beethoven","fact":"Beethoven originally connected his Third Symphony, the Eroica, with Napoleon, but changed the dedication after Napoleon declared himself emperor."},{"question":"Which scientist named a newly discovered element after her homeland?","options":["Marie Skłodowska-Curie","Hedy Lamarr","Ada Lovelace","Rosalind Franklin"],"answer":"Marie Skłodowska-Curie","fact":"Curie named polonium after Poland, her homeland."},{"question":"Which inventor worked on alternating-current technology and also experimented with wireless transmission?","options":["Nikola Tesla","Charles Darwin","Nicolaus Copernicus","Isaac Newton"],"answer":"Nikola Tesla","fact":"Tesla is strongly associated with alternating-current systems and also carried out experiments in wireless power and radio-frequency technology."},{"question":"Which performer co-wrote “We Are the World” with Lionel Richie?","options":["Michael Jackson","Elvis Presley","Freddie Mercury","David Bowie"],"answer":"Michael Jackson","fact":"Michael Jackson and Lionel Richie wrote “We Are the World” for the 1985 USA for Africa charity recording."},{"question":"Which mathematician described the idea of a universal computing machine in 1936?","options":["Alan Turing","Isaac Newton","Nikola Tesla","Charles Darwin"],"answer":"Alan Turing","fact":"Turing’s 1936 paper introduced the abstract machine model now known as the Turing machine."},{"question":"Which scientist first trained in medicine but strongly disliked surgery before changing direction?","options":["Charles Darwin","Nicolaus Copernicus","Alan Turing","Marie Curie"],"answer":"Charles Darwin","fact":"Darwin studied medicine in Edinburgh but left the course; he later studied at Cambridge."},{"question":"Which astronomer proposed a heliocentric model in which Earth moves around the Sun?","options":["Nicolaus Copernicus","Isaac Newton","Nikola Tesla","Alan Turing"],"answer":"Nicolaus Copernicus","fact":"Copernicus developed a heliocentric model that placed the Sun near the centre of the planetary system."},{"question":"Which hockey star grew up in a family where his mother was an Olympic champion in basketball?","options":["Alexander Ovechkin","Lionel Messi","Wayne Gretzky","Sidney Crosby"],"answer":"Alexander Ovechkin","fact":"Ovechkin’s mother, Tatyana Ovechkina, was a two-time Olympic gold medallist in basketball with the Soviet team."},{"question":"Which Russian actor studied at a technical college before choosing an acting career?","options":["Konstantin Khabensky","Alexander Ovechkin","Michael Jackson","Lionel Messi"],"answer":"Konstantin Khabensky","fact":"Khabensky studied in a technical field before leaving and later training as an actor."},{"question":"Which Hollywood star was also an inventor who co-developed a frequency-hopping communication system?","options":["Hedy Lamarr","Marilyn Monroe","Grace Kelly","Audrey Hepburn"],"answer":"Hedy Lamarr","fact":"Hedy Lamarr and George Antheil patented a frequency-hopping system intended to make radio-controlled torpedoes harder to jam."},{"question":"Which novelist disappeared for eleven days in 1926, creating a major public mystery?","options":["Agatha Christie","Virginia Woolf","Jane Austen","George Eliot"],"answer":"Agatha Christie","fact":"Agatha Christie disappeared in December 1926 and was found eleven days later at a hotel in Harrogate."},{"question":"Which scientist was offered the presidency of Israel in 1952 but declined?","options":["Albert Einstein","Isaac Newton","Nikola Tesla","Alan Turing"],"answer":"Albert Einstein","fact":"After the death of Chaim Weizmann, Einstein was invited to become President of Israel but declined the offer."},{"question":"Which technology entrepreneur said a college calligraphy course later influenced the typography of the Macintosh?","options":["Steve Jobs","Bill Gates","Alan Turing","Nikola Tesla"],"answer":"Steve Jobs","fact":"Jobs later said that his calligraphy studies influenced the Macintosh’s attention to typography."}],"warmupWords":[
 ["counterfeiter","a person who illegally makes fake money","фальшивомонетчик · Newton investigated people who made fake coins."],
 ["Royal Mint","the organisation that makes a country's coins","Королевский монетный двор · Newton worked at the Royal Mint."],
@@ -292,6 +338,85 @@ bank('wfWrite',D.wf.map(x=>({...Q(x[3],x[1],null,x[4]),base:x[0].toUpperCase()})
 bank('wfText',D.socialText.map(x=>({...Q(x[0],x[1],null,'A noun is needed here: '+x[2].toLowerCase()+' → '+x[1]+'.'),base:x[2]})));
 bank('familyGap',D.familyGap.map(x=>Q(x[0],x[1],null,'Check the family map above. Correct relationship: '+x[1]+'.')));
 bank('familyQuiz',D.familyQuiz.map(x=>Q(...x)));
+/* ===== A LEGENDARY FAMILY: Student's Book p6, ex 2, 3a, 4, 5 ===== */
+const famText=['Chrissy Teigen is a famous model and food writer who is married to another celebrity. Her ',0,' is the Oscar-winning singer John Legend. They have two children, a ',1,' called Luna, and a ',2,' called Miles. In the photo, John has got Luna in his arms. Chrissy has got one sister, Tina. She is Luna and Miles’ ',3,'. John’s brothers, Vaughn and Ronald, are Luna and Miles’ ',4,'. Tina is John’s ',5,', and Vaughn and Ronald are Chrissy’s ',6,'. They aren’t in the photo. They’re a very happy family!'];
+const famKey=['husband','daughter','son','aunt','uncles','sister-in-law','brothers-in-law'];
+const famWords='aunt · brother/sister-in-law · cousin · daughter · father/mother-in-law · grandchild · grandfather/mother · grandparent · grandson/daughter · great-grandfather/mother · husband · nephew · niece · son · son/daughter-in-law · stepfather/mother · uncle · wife';
+const TF=(q,a,e)=>({q,a,o:['True','False','Not stated'],e,fixed:true});
+bank('famTF',[
+ TF('Chrissy Teigen writes about food.','True','Evidence: “a famous model and food writer”.'),
+ TF('John Legend has won an Oscar.','True','Evidence: “the Oscar-winning singer John Legend”.'),
+ TF('In the photo, Chrissy is holding Luna.','False','Evidence: “In the photo, John has got Luna in his arms.”'),
+ TF('Luna is older than Miles.','Not stated','The text gives their names, but not their ages.'),
+ TF('Chrissy is an only child.','False','Evidence: “Chrissy has got one sister, Tina.” An only child has no brothers or sisters.'),
+ TF('Miles is Tina’s nephew.','True','Tina is Luna and Miles’ aunt, so Miles is her nephew.'),
+ TF('Luna and Miles are twins.','Not stated','The text only says “a daughter called Luna, and a son called Miles”.'),
+ TF('Vaughn and Ronald are in the photo.','False','Evidence: “They aren’t in the photo.”'),
+ TF('Tina is married.','Not stated','The text says nothing about Tina’s husband or partner.'),
+ TF('John is Tina’s brother-in-law.','True','Tina is John’s sister-in-law, so John is her brother-in-law.'),
+ TF('Miles is in the photo.','Not stated','The text mentions only John and Luna in the photo.'),
+ TF('Chrissy’s husband is famous.','True','Evidence: she “is married to another celebrity”.')
+]);
+bank('famLogic',[
+ Q('Luna is Tina’s …','niece',['nephew','niece','cousin','granddaughter'],'Tina is Luna’s aunt. Your aunt’s or uncle’s word for you is niece (girl) or nephew (boy).'),
+ Q('John is Tina’s …','brother-in-law',['brother','brother-in-law','son-in-law','uncle'],'John is married to Tina’s sister, so he is her brother-in-law.'),
+ Q('Chrissy is Ronald’s …','sister-in-law',['sister','sister-in-law','niece','daughter-in-law'],'Chrissy is married to Ronald’s brother, so she is his sister-in-law.'),
+ Q('Chrissy’s mother is John’s …','mother-in-law',['stepmother','grandmother','mother-in-law','aunt'],'The mother of your husband or wife is your mother-in-law.'),
+ Q('John is Chrissy’s father’s …','son-in-law',['son','son-in-law','nephew','grandson'],'The husband of your daughter is your son-in-law.'),
+ Q('Chrissy’s mother is Miles’ …','grandmother',['great-grandmother','grandmother','aunt','mother-in-law'],'Your mother’s mother is your grandmother.'),
+ Q('Luna is John’s parents’ …','granddaughter',['daughter','niece','granddaughter','daughter-in-law'],'The daughter of your son or daughter is your granddaughter.'),
+ Q('Imagine Tina has a son. He is Luna’s …','cousin',['nephew','brother','cousin','uncle'],'The child of your aunt or uncle is your cousin.'),
+ Q('…and the same boy is Chrissy’s …','nephew',['nephew','niece','cousin','grandson'],'The son of your brother or sister is your nephew.'),
+ Q('Chrissy’s grandmother is Luna’s …','great-grandmother',['grandmother','great-grandmother','aunt','stepmother'],'Your mother’s grandmother is your great-grandmother.'),
+ Q('Imagine John’s father marries again. His new wife is John’s …','stepmother',['mother-in-law','stepmother','aunt','grandmother'],'Your father’s new wife is your stepmother. A mother-in-law is your husband’s or wife’s mother.'),
+ Q('Luna and Miles are Chrissy’s parents’ …','grandchildren',['children','grandchildren','cousins','nephews'],'Grandchild is male or female; the plural is grandchildren.')
+]);
+const huntItems=[
+ ['Chrissy Teigen is married with another celebrity.',4,'to','You are married TO someone.'],
+ ['Her husband is the Oscar-winning actor John Legend.',5,'singer','The text says “the Oscar-winning singer”.'],
+ ['They have two childs, Luna and Miles.',3,'children,','Child has an irregular plural: children.'],
+ ['In the photo, John have got Luna in his arms.',4,'has','John = he, so: John has got.'],
+ ['Tina is Luna and Miles’ uncle.',5,'aunt.','Tina is a woman: she is their aunt.'],
+ ['Vaughn and Ronald are Chrissy’s brother-in-laws.',5,'brothers-in-law.','The plural goes on the first word: brothers-in-law.'],
+ ['Chrissy has got one sister, Tina. He is the children’s aunt.',6,'She','Tina is a woman: She.'],
+ ['Tina, Vaughn and Ronald aren’t on the photo.',5,'in','We say IN the photo.']
+];
+const sortItems=[['nephew','M'],['cousin','B'],['daughter-in-law','F'],['grandchild','B'],['stepfather','M'],['niece','F'],['grandparent','B'],['great-grandmother','F'],['son-in-law','M'],['wife','F'],['uncle','M'],['aunt','F']];
+const sortNames={M:'Male',F:'Female',B:'Male or female'};
+const fwBank=['divorced','extended','immediate','one-parent','only child','partner','relative','single','twin'];
+const fwLines=[
+ ['If you’re ',0,', you aren’t married. If you’re married and then you end the marriage, you’re ',1,'.'],
+ ['An ',2,' doesn’t have any brothers or sisters.'],
+ ['You can use the word ',3,' to describe either a husband or wife, or the person that someone lives with.'],
+ ['',4,' families are families in which only the father or the mother lives at home and looks after the children.'],
+ ['Your ',5,' family is you, your parents and your brothers and sisters. Your ',6,' family includes grandparents, cousins, etc.'],
+ ['A ',7,' is one of two children born at the same time to the same mother.'],
+ ['A ',8,' is a member of your family, especially one who doesn’t live with you.']
+];
+const fwKey=['single','divorced','only child','partner','one-parent','immediate','extended','twin','relative'];
+function famFull(){return famText.map(x=>typeof x==='number'?'<b>'+esc(famKey[x])+'</b>':esc(x)).join('')}
+function withText(html){return `<div class="famGrid txt"><div class="panel reading famRead"><div class="kicker">A LEGENDARY FAMILY! · STUDENT’S BOOK P6</div><p>${famFull()}</p></div><div class="tcol">${html}</div></div>`}
+function famGapTask(){
+ return `<div class="famGrid txt"><div class="panel reading famRead"><div class="kicker">EX 3A · COMPLETE THE TEXT WITH THE CORRECT FORM OF THE WORDS</div><p>${famText.map(x=>typeof x==='number'?`<span class="gl">(${'abcdefg'[x]})</span><input class="gap" data-note="fg${x}" data-fg="${x}" value="${esc(S.notes['fg'+x]||'')}" autocomplete="off" autocapitalize="off" spellcheck="false">`:esc(x)).join('')}</p></div>
+ <div class="tcol"><div class="panel"><div class="kicker">EX 2 · THE FAMILY</div><p class="wordbox">${esc(famWords)}</p><p class="muted" style="margin:6px 0 0">Careful: some gaps need a plural.</p></div>
+ <div class="panel"><div class="row"><button class="primary" data-fgcheck>Check</button><button data-say="${esc(famText.map(x=>typeof x==='number'?famKey[x]:x).join(''))}">Listen and check (3b)</button><button data-fgshow>Show answers</button></div><p id="fgScore" style="margin:8px 0 0;font-weight:800"></p><p id="fgKey" class="answerReveal" hidden>${famKey.map((k,i)=>'('+'abcdefg'[i]+') '+k).join(' · ')}</p><div id="speechStatus" class="muted" role="status"></div></div></div></div>`}
+function huntGame(){
+ const g=S.game.hunt||(S.game.hunt={i:0,miss:0,found:false,score:0});
+ if(g.i>=huntItems.length)return `<div class="panel"><div class="resultTop"><div class="ring ${g.score===huntItems.length?'full':''}"><b>${g.score}</b><span>of ${huntItems.length}</span></div><div><h2>${g.score===huntItems.length?'Every mistake found first time.':'Hunt finished.'}</h2><p>You get a point when your first tap is the mistake.</p></div></div><button class="primary" data-hunt-restart>Hunt again</button></div>`;
+ const it=huntItems[g.i],words=it[0].split(' ');
+ return `<div class="panel"><div class="row spread"><span class="badge">${g.i+1} / ${huntItems.length}</span><span class="qscore"><b>${g.score}</b> first-time</span></div><p class="huntAsk">Tap the one wrong word.</p><div class="huntLine">${words.map((w,n)=>`<button data-hunt="${n}" ${g.found?'disabled':''} class="${g.found&&n===it[1]?'wrong':''} ${g.bad===n?'shake':''}">${esc(w)}</button>`).join('')}</div>
+ ${g.found?`<div class="fb ok"><b>${esc(words[it[1]])} → ${esc(it[2])}</b><span>${esc(it[3])}</span></div><div class="row" style="justify-content:flex-end;margin-top:10px"><button class="primary" data-hunt-next>${g.i===huntItems.length-1?'Finish →':'Next sentence →'}</button></div>`:(g.miss?`<div class="fb bad"><b>That word is fine.</b><span>Read the sentence again and check it against the text.</span></div>`:'')}</div>`}
+function sortGame(){
+ const g=S.game.sort||(S.game.sort={i:0,score:0,last:null,wrong:[]});
+ if(g.i>=sortItems.length)return `<div class="panel"><div class="resultTop"><div class="ring ${g.score===sortItems.length?'full':''}"><b>${g.score}</b><span>of ${sortItems.length}</span></div><div><h2>Sorted.</h2><p>Now choose three of these words and explain them: “My niece is my brother’s or sister’s daughter.”</p></div></div><div class="resultCols">${['M','F','B'].map(k=>`<div class="resultCol"><h3>${sortNames[k]}</h3>${sortItems.map((w,i)=>w[1]===k?`<div class="resultWord ${g.wrong.includes(i)?'miss':''}"><b>${esc(w[0])}</b></div>`:'').join('')}</div>`).join('')}</div><button class="primary" data-sort-restart style="margin-top:10px">Sort again</button></div>`;
+ const it=sortItems[g.i];
+ return `<div class="panel"><div class="row spread"><span class="badge">${g.i+1} / ${sortItems.length}</span><span class="qscore"><b>${g.score}</b> correct</span></div><div class="sortWord">${esc(it[0])}</div><div class="sortBtns">${['M','F','B'].map(k=>`<button data-sort="${k}" ${g.last?'disabled':''} class="${g.last?(k===it[1]?'correct':g.last.pick===k?'wrong':''):''}">${sortNames[k]}</button>`).join('')}</div>${g.last?`<div class="row" style="justify-content:flex-end;margin-top:10px"><button class="primary" data-sort-next>${g.i===sortItems.length-1?'Finish →':'Next word →'}</button></div>`:''}</div>`}
+function bankGame(){
+ const g=S.game.fw||(S.game.fw={fill:{},sel:0,checked:false});
+ const used=Object.values(g.fill);
+ return `<div class="panel fw"><div class="kicker">EX 4 · WORDS CONNECTED WITH THE FAMILY · TAP A GAP, THEN TAP A WORD</div><div class="fwBank">${fwBank.map(w=>`<button data-fwword="${esc(w)}" ${used.includes(w)?'disabled':''}>${esc(w)}</button>`).join('')}</div><ol class="fwList">${fwLines.map(l=>'<li>'+l.map(x=>typeof x==='number'?`<button class="fwGap ${g.sel===x?'sel':''} ${g.checked?(norm(g.fill[x]||'')===norm(fwKey[x])?'ok':'no'):''}" data-fwgap="${x}">${g.fill[x]?esc(x===4?g.fill[x].charAt(0).toUpperCase()+g.fill[x].slice(1):g.fill[x]):'&nbsp;'}</button>`:esc(x)).join('')+'</li>').join('')}</ol><div class="row"><button class="primary" data-fwcheck ${used.length<9?'disabled':''}>Check</button><button data-fwreset>Clear</button><b>${g.checked?(n=>n+' / 9 correct. '+(n===9?'Well done.':'Tap a red gap to change it.'))(fwKey.filter((k,i)=>norm(g.fill[i]||'')===norm(k)).length):''}</b></div></div>`}
+function speakTask(){return `<div class="famGrid"><div class="panel"><div class="kicker">EX 5 · USE IT … DON’T LOSE IT</div><ol class="spk"><li>Who is in your immediate family? For example, are you an only child?</li><li>How big is your extended family? Talk about your different relatives.</li><li>How often do you see your grandparents or other relatives?</li><li>Which member(s) of your family do you spend a lot of time with?</li></ol></div><div class="panel"><div class="kicker">USE AT LEAST FIVE OF THESE</div><div class="spkWords">${['immediate family','extended family','only child','relative','on my mother’s side','on my father’s side','brother-in-law / sister-in-law','cousin','nephew / niece','great-grandmother','twin','We get together…'].map(w=>'<span>'+esc(w)+'</span>').join('')}</div><div class="kicker" style="margin-top:12px">CHALLENGE</div><p style="margin:4px 0 0">Describe one relative without saying the word. Your teacher guesses: “She is my mother’s sister’s daughter.”</p></div></div>`}
+
 bank('videoMatch',D.videoWords.map((x,i)=>{const options=[x[0],D.videoWords[(i+4)%15][0],D.videoWords[(i+8)%15][0],D.videoWords[(i+11)%15][0]];return Q(x[1],x[0],options,x[0]+' — '+x[2]);}));
 bank('articles',D.articleQs.map(x=>Q(x[0],x[1],['a','an','the','—'],x[2])));
 bank('articleFix',D.articleFix.map(x=>Q(x[0],x[1],null,x[2])));
@@ -323,12 +448,12 @@ function drawExercise(id){const root=$('[data-exercise="'+id+'"] .exbody');if(!r
  if(s.ended){const missed=items.length-score;root.innerHTML=`<div class="resultTop"><div class="ring ${score===items.length?'full':''}"><b>${score}</b><span>of ${items.length}</span></div><div><h2>${score===items.length?'Perfect score.':score>=items.length*.7?'Good work.':'Keep going.'}</h2><p>${attempted} answered · ${missed} to fix. Tap a red number to see the explanation again.</p><div class="qdots">${banks[id].map((_,ix)=>{const a=s.answers[ix];return `<button class="qd ${a?(a.correct?'ok':'no'):''}" data-qjump="${id}" data-n="${ix}">${ix+1}</button>`}).join('')}</div></div></div><div class="row"><button class="primary" data-restart="${id}">Start again</button></div>`;return}
  if(!q){root.innerHTML='<p>No questions to show.</p>';return}
  const answer=s.answers[index];let options=q.o;
- if(options){const shift=index%options.length;options=options.slice(shift).concat(options.slice(0,shift))}
+ if(options&&!q.fixed){const shift=index%options.length;options=options.slice(shift).concat(options.slice(0,shift))}
  const last=s.i===indices.length-1,big=['famous','final','wordReview'].includes(id);
  const dots=indices.map((ix,n)=>{const a=s.answers[ix];return `<button class="qd ${a?(a.correct?'ok':'no'):''} ${n===s.i?'cur':''}" data-qjump="${id}" data-n="${n}" aria-label="Question ${n+1}">${n+1}</button>`}).join('');
  root.innerHTML=`<div class="qtop"><div class="qdots">${dots}</div><span class="qscore"><b>${score}</b> correct</span></div>
   <p class="q">${esc(q.q)}</p>${q.base?`<div class="badge">${esc(q.base)}</div>`:''}
-  ${options?`<div class="options lettered ${answer?'answered':''}">${options.map((o,n)=>{const st=answer?(norm(o)===norm(q.a)?'correct':o===answer.value?'wrong':'dim'):'';return `<button data-answer="${esc(o)}" data-bank="${id}" ${answer?'disabled':''} class="${st}"><i>${st==='correct'?'✓':st==='wrong'?'✕':'ABCDEF'[n]}</i><span>${esc(o)}</span></button>`}).join('')}</div>`
+  ${options?`<div class="options lettered ${q.fixed?'tf':''} ${answer?'answered':''}">${options.map((o,n)=>{const st=answer?(norm(o)===norm(q.a)?'correct':o===answer.value?'wrong':'dim'):'';return `<button data-answer="${esc(o)}" data-bank="${id}" ${answer?'disabled':''} class="${st}"><i>${st==='correct'?'✓':st==='wrong'?'✕':'ABCDEF'[n]}</i><span>${esc(o)}</span></button>`}).join('')}</div>`
    :`<form data-check="${id}" class="inputrow"><label style="flex:1">${id==='articleFix'?'Rewrite the complete sentence:':'Your answer:'}<input autocomplete="off" aria-label="Answer" data-draft="${id}" value="${esc(s.drafts[index]||answer?.value||'')}" ${answer?'disabled':''}></label><button class="primary" ${answer?'disabled':''}>Check</button></form>`}
   ${answer?`<div class="fb ${answer.correct?'ok':'bad'}" aria-live="polite"><b>${answer.correct?'Correct.':'Not quite. The answer is '+esc(q.a)+'.'}</b><span>${esc(q.e)}</span></div>`:'<div class="fb empty" aria-live="polite"></div>'}
   <div class="exnav"><button data-question="${id}" data-delta="-1" ${s.i===0?'disabled':''}>← Back</button>${answer&&!answer.correct?`<button data-retry="${id}">Try this one again</button>`:'<span></span>'}${last?(big?`<button class="primary" data-result="${id}">See result →</button>`:`<button class="primary" data-result="${id}">Finish →</button>`):`<button class="${answer?'primary':''}" data-question="${id}" data-delta="1">${answer?'Next question →':'Skip →'}</button>`}</div>`;
@@ -346,13 +471,13 @@ function dinnerRead(){return `<div class="panel reading"><h2>Family dinners: who
 
 const memoryPairs=D.warmupWords.slice(0,6).map((x,i)=>({id:i,front:x[0],back:x[1]}));
 const builderItems=[
- {answer:'Tina is Chrissy’s sister.',tokens:['Chrissy’s','Tina','sister.','is']},
- {answer:'Luna is John and Chrissy’s daughter.',tokens:['daughter.','John','Luna','Chrissy’s','is','and']},
- {answer:'Miles is Luna’s brother.',tokens:['brother.','Miles','Luna’s','is']},
- {answer:'Vaughn and Ronald are John’s brothers.',tokens:['John’s','brothers.','Vaughn','are','Ronald','and']},
- {answer:'Tina is Luna and Miles’ aunt.',tokens:['aunt.','Tina','Miles’','is','and','Luna']},
- {answer:'John is Tina’s brother-in-law.',tokens:['brother-in-law.','Tina’s','John','is']},
- {answer:'Luna and Miles are siblings.',tokens:['siblings.','Miles','Luna','are','and']}
+ {from:'Tina is Luna’s aunt.',key:'NIECE',answer:'Luna is Tina’s niece.',tokens:['Tina’s','niece.','Luna','is']},
+ {from:'John is Chrissy’s husband.',key:'WIFE',answer:'Chrissy is John’s wife.',tokens:['wife.','John’s','is','Chrissy']},
+ {from:'Vaughn and Ronald are Miles’ uncles.',key:'NEPHEW',answer:'Miles is Vaughn and Ronald’s nephew.',tokens:['Vaughn and Ronald’s','Miles','nephew.','is']},
+ {from:'Tina is John’s sister-in-law.',key:'BROTHER-IN-LAW',answer:'John is Tina’s brother-in-law.',tokens:['brother-in-law.','is','Tina’s','John']},
+ {from:'Chrissy and John are Luna and Miles’ parents.',key:'CHILDREN',answer:'Luna and Miles are Chrissy and John’s children.',tokens:['children.','Chrissy and John’s','are','Luna and Miles']},
+ {from:'Chrissy has got one sister.',key:'ONLY CHILD',answer:'Chrissy isn’t an only child.',tokens:['an','only child.','Chrissy','isn’t']},
+ {from:'Chrissy’s husband is a singer.',key:'MARRIED TO',answer:'Chrissy is married to a singer.',tokens:['a','married to','singer.','is','Chrissy']}
 ];
 const sprintItems=[
  Q('Tina is Luna’s …','aunt',['aunt','niece','cousin','sister']),
@@ -399,7 +524,7 @@ function sentenceBuilder(){
  if(g.i>=builderItems.length)return `<div class="gameHero"><div><span class="levelTag">LEVEL 05 · BUILDER COMPLETE</span><h2>Sentence mission complete</h2><p>Read the ${builderItems.length} sentences aloud, then move on or build them again.</p></div><button class="primary" data-build-restart>Build again</button></div><div class="resultList">${builderItems.map((it,i)=>`<div class="resultWord"><small>${i+1}</small><b>${esc(it.answer)}</b></div>`).join('')}</div>`;
  const item=builderItems[g.i];
  const chosen=new Set(g.chosen);
- return `<div class="gameHero"><div><span class="levelTag">LEVEL 05 · BUILD MODE</span><h2>Build the exact sentence</h2><p>Tap blocks in the correct order.</p></div><div class="gameScore"><strong>${g.i+1}/${builderItems.length}</strong><span>SENTENCE</span></div></div><div class="panel"><div class="builderAnswer">${g.chosen.length?g.chosen.map(i=>esc(item.tokens[i])).join(' '):'<span class="muted">Your sentence will appear here.</span>'}</div><div class="builderTokens">${item.tokens.map((t,i)=>`<button data-build="${i}" ${chosen.has(i)?'disabled':''}>${esc(t)}</button>`).join('')}</div><div class="row"><button data-build-clear>Clear</button><button class="primary" data-build-check ${g.chosen.length!==item.tokens.length?'disabled':''}>Check</button></div><div class="feedback ${g.checked?(g.correct?'ok':'bad'):''}">${g.checked?`<strong>${g.correct?'Correct.':'Try again.'}</strong>Target: ${esc(item.answer)}`:''}</div>${g.checked&&g.correct?'<button class="primary" data-build-next>Next sentence →</button>':''}</div>`;
+ return `<div class="gameHero"><div><span class="levelTag">LEVEL 05 · BUILD MODE</span><h2>Say it another way</h2><p>Use the word in capitals. Tap the blocks in order.</p></div><div class="gameScore"><strong>${g.i+1}/${builderItems.length}</strong><span>SENTENCE</span></div></div><div class="panel"><div class="trFrom"><span>${esc(item.from)}</span><b>${esc(item.key)}</b></div><div class="builderAnswer">${g.chosen.length?g.chosen.map(i=>esc(item.tokens[i])).join(' '):'<span class="muted">Your sentence will appear here.</span>'}</div><div class="builderTokens">${item.tokens.map((t,i)=>`<button data-build="${i}" ${chosen.has(i)?'disabled':''}>${esc(t)}</button>`).join('')}</div><div class="row"><button data-build-clear>Clear</button><button class="primary" data-build-check ${g.chosen.length!==item.tokens.length?'disabled':''}>Check</button></div><div class="feedback ${g.checked?(g.correct?'ok':'bad'):''}">${g.checked?`<strong>${g.correct?'Correct.':'Try again.'}</strong>${g.correct?esc(item.answer):'Look at the word in capitals and the ’s.'}`:''}</div>${g.checked&&g.correct?'<button class="primary" data-build-next>Next sentence →</button>':''}</div>`;
 }
 function sprintGame(){
  const g=S.game.sprint||(S.game.sprint={started:false,time:40,i:0,score:0,streak:0,best:0,ended:false});
@@ -433,11 +558,15 @@ function body(){
  if(S.step===2)return `<div class="gameHero"><div><span class="levelTag">LEVEL 03 · QUIZ MODE</span><h2>Use the vocabulary in context</h2><p>15 factual questions. One clear answer each.</p></div><div class="gameScore"><strong>01</strong><span>SINGLE CHOICE</span></div></div>`+exercise('famous','Famous People Quiz');
  if(S.step===3)return wordFactory();
  if(S.step===4){const t=S.tab[4]||0;
-  const ref=`<div class="ref"><b>The family:</b> Chrissy Teigen + John Legend (wife and husband) · their children Luna (daughter) and Miles (son) · Chrissy’s sister Tina · John’s brothers Vaughn and Ronald.</div>`;
-  return tabs(['1 · Read the family','2 · Match · 15 questions','3 · Build · 7 sentences'])+`<div id="taskPanel" role="tabpanel">`+[
-   `<div class="famGrid"><div class="panel reading"><div class="kicker">TEXT FOR THIS LEVEL</div><h3>A legendary family</h3><p>Chrissy Teigen is a model and food writer. Her husband is the singer John Legend. They have a daughter, Luna, and a son, Miles.</p><p>Chrissy’s sister Tina is the children’s aunt. John’s brothers, Vaughn and Ronald, are their uncles.</p><p class="muted">Tap a name on the right to see the relationship in a full sentence. Tasks 2 and 3 use only this family.</p></div><div>${familyMap()}</div></div>`,
-   ref+exercise('familyQuiz','Who is related to whom?'),
-   ref+sentenceBuilder()][t]+'</div>'}
+  return tabs(['1 · Text','2 · True / False','3 · Family logic','4 · Error hunt','5 · Sort','6 · Family words','7 · Transform','8 · Speak'])+`<div id="taskPanel" role="tabpanel">`+[
+   famGapTask(),
+   withText(exercise('famTF','True, False or Not stated?')),
+   withText(exercise('famLogic','Work it out')),
+   withText(huntGame()),
+   sortGame(),
+   bankGame(),
+   withText(sentenceBuilder()),
+   speakTask()][t]+'</div>'}
  if(S.step===5){const t=S.tab[5]||0;
   const gaps=[['By profession, Chris is a ',0,'.'],['He is ',1,' years old but uses make-up to appear over ',2,'.'],['Chris’s ',3,' doesn’t recognise Chris because of the make-up.'],['Recent studies say that by being ',4,' you can add up to ',5,' years to your life.'],['',6,' let Chris cross the street.'],['As a senior citizen Chris can sit down when using ',7,'.']];
   return tabs(['1 · Words · 15','2 · Predict','3 · Watch and answer','4 · Read: Ageism'])+`<div id="taskPanel" role="tabpanel">`+[
@@ -469,6 +598,18 @@ function render(){
 }
 function move(n){if(n<0||n>=titles.length)return;stopGameTimers();if(n!==S.step&&!S.done.includes(S.step))S.done.push(S.step);S.step=n;render();window.scrollTo({top:0,behavior:'auto'})}
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;const d=b.dataset;
+ if(d.fgcheck!==undefined){let ok=0;$$('[data-fg]').forEach(inp=>{const good=norm(inp.value)===famKey[+inp.dataset.fg];inp.classList.toggle('ok',good);inp.classList.toggle('no',!good);if(good)ok++});$('#fgScore').textContent=ok+' / 7 correct'+(ok===7?'. Well done.':'. Fix the red ones: check singular or plural.');return}
+ if(d.fgshow!==undefined){const k=$('#fgKey');k.hidden=!k.hidden;return}
+ if(d.hunt!==undefined){const g=S.game.hunt,it=huntItems[g.i];if(+d.hunt===it[1]){g.found=true;if(!g.miss)g.score++;g.bad=null}else{g.miss++;g.bad=+d.hunt}return render()}
+ if(d.huntNext!==undefined){const g=S.game.hunt;g.i++;g.miss=0;g.found=false;g.bad=null;return render()}
+ if(d.huntRestart!==undefined){S.game.hunt=null;return render()}
+ if(d.sort!==undefined){const g=S.game.sort,it=sortItems[g.i],ok=d.sort===it[1];if(ok)g.score++;else g.wrong.push(g.i);g.last={pick:d.sort,ok};return render()}
+ if(d.sortNext!==undefined){const g=S.game.sort;g.i++;g.last=null;return render()}
+ if(d.sortRestart!==undefined){S.game.sort=null;return render()}
+ if(d.fwgap!==undefined){const g=S.game.fw,x=+d.fwgap;if(g.fill[x]){delete g.fill[x];g.checked=false}g.sel=x;return render()}
+ if(d.fwword!==undefined){const g=S.game.fw;if(g.sel==null||g.fill[g.sel])g.sel=[0,1,2,3,4,5,6,7,8].find(n=>!g.fill[n]);if(g.sel==null)return;g.fill[g.sel]=d.fwword;g.checked=false;g.sel=[0,1,2,3,4,5,6,7,8].find(n=>!g.fill[n]);if(g.sel===undefined)g.sel=null;return render()}
+ if(d.fwcheck!==undefined){S.game.fw.checked=true;return render()}
+ if(d.fwreset!==undefined){S.game.fw=null;return render()}
  if(d.memoryRestart!==undefined){S.game.memory={open:[],matched:[]};save();return render()}
  if(d.memory!==undefined){
    const g=S.game.memory||(S.game.memory={open:[],matched:[]}),pos=+d.memory,pair=+d.pair;
