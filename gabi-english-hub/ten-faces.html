@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ten Faces, Ten Questions</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one classroom screen at a time — a wall of ten faces, then one big face with two giant verdict buttons. Single navy look, sized for the back row. */
+:root{
+  color-scheme:dark;
+  --navy:#14254a; --navy-deep:#0d1a36; --panel:#1d3263; --line:#33497f;
+  --cream:#fff5df; --muted:#aab8d8;
+  --sun:#ffc93c; --teal:#35cfc8; --go:#45c977; --stop:#f0645f;
+  --ink:#16203a; --paper:#fffdf7; --paper-line:#b9bfcc;
+  --display:"Montserrat","Arial",system-ui,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{background:var(--navy-deep);color:var(--cream);font-family:var(--body);font-size:18px;line-height:1.5;margin:0}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:20px 48px;display:flex;flex-direction:column;gap:24px}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.05}
+
+/* top bar */
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px}
+.brand{font-family:var(--display);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:15px;color:var(--teal)}
+.where{display:flex;flex-wrap:wrap;gap:8px;margin-right:auto}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-weight:600;font-size:15px}
+.nav{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border-radius:14px;padding:10px 18px;font-weight:700;background:var(--panel);border:2px solid var(--line)}
+.btn:hover{border-color:var(--teal)}
+.btn.sun{background:var(--sun);color:var(--ink);border-color:var(--sun)}
+.btn.on{background:var(--teal);border-color:var(--teal);color:var(--ink)}
+.btn.big{font-family:var(--display);font-size:24px;padding:16px 30px;border-radius:18px}
+
+/* home */
+.hero{background:var(--navy);border-radius:28px;padding:32px;display:flex;flex-direction:column;gap:20px}
+.hero h1{font-size:clamp(40px,7.4vw,84px);font-weight:700}
+.hero h1 b{color:var(--sun);font-weight:700}
+.hero p{margin:0;font-size:clamp(18px,2.2vw,24px);color:var(--muted);max-width:34em}
+.strip{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px}
+.strip img{display:block;width:100%;height:auto;border-radius:10px}
+.pick{display:flex;flex-direction:column;gap:12px}
+.pick h2{font-size:22px;font-weight:600;color:var(--muted)}
+.topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.topic{text-align:left;background:var(--navy);border:3px solid var(--line);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.topic strong{font-family:var(--display);font-size:22px;line-height:1.15}
+.topic span{color:var(--muted);font-size:15px}
+.topic[aria-pressed="true"]{border-color:var(--sun);background:var(--panel)}
+.topic[aria-pressed="true"] strong{color:var(--sun)}
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.start{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* wall of faces */
+.wallhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px}
+.wallhead h2{font-size:clamp(28px,4vw,44px);font-weight:700}
+.wallhead p{margin:0;color:var(--muted)}
+.wall{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.face{position:relative;background:var(--navy);border:5px solid var(--line);border-radius:22px;padding:0;overflow:hidden;display:flex;flex-direction:column;transition:transform .15s}
+.face:hover:not(:disabled){transform:translateY(-4px);border-color:var(--teal)}
+.face img{display:block;width:100%;height:auto}
+.face .nm{font-family:var(--display);font-weight:600;font-size:clamp(18px,2vw,24px);padding:8px 6px 10px}
+.face .tag{position:absolute;top:8px;right:8px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:22px;color:var(--ink)}
+.face[data-m="got"]{border-color:var(--go)} .face[data-m="got"] .tag{background:var(--go)}
+.face[data-m="not"]{border-color:var(--stop)} .face[data-m="not"] .tag{background:var(--stop)}
+.face:disabled{cursor:default;opacity:.55}
+.score{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.score .chip b{font-variant-numeric:tabular-nums}
+
+/* one question */
+.ask{background:var(--navy);border-radius:28px;padding:24px;display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:28px;align-items:center}
+.who{display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center}
+.who img{display:block;width:100%;height:auto;border-radius:22px;border:5px solid var(--teal)}
+.who h2{font-size:clamp(30px,4vw,46px);font-weight:700}
+.waves{display:flex;gap:5px;align-items:center;height:34px}
+.waves i{width:6px;height:8px;border-radius:3px;background:var(--teal)}
+.talking .waves i{animation:wv .7s ease-in-out infinite}
+.waves i:nth-child(2){animation-delay:.1s}.waves i:nth-child(3){animation-delay:.2s}.waves i:nth-child(4){animation-delay:.3s}.waves i:nth-child(5){animation-delay:.15s}.waves i:nth-child(6){animation-delay:.05s}
+@keyframes wv{50%{height:32px}}
+.say{display:flex;flex-direction:column;gap:18px;min-width:0}
+.tools{display:flex;flex-wrap:wrap;gap:10px}
+.qbox{min-height:150px;border:3px dashed var(--line);border-radius:22px;padding:22px;display:grid;place-items:center;text-align:center}
+.qbox p{margin:0;font-family:var(--display);font-weight:600;font-size:clamp(26px,3.8vw,48px);line-height:1.15;text-wrap:balance}
+.qbox.hid p{color:var(--muted);font-size:clamp(20px,2.4vw,28px);font-weight:500}
+.verdict{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.verdict button{font-family:var(--display);font-weight:700;font-size:clamp(30px,5vw,56px);padding:26px 12px;border-radius:26px;color:var(--ink)}
+.verdict .got{background:var(--go)} .verdict .not{background:var(--stop)}
+.verdict button:hover{filter:brightness(1.08)}
+.note{margin:0;color:var(--sun);font-size:16px}
+
+/* results */
+.res{background:var(--navy);border-radius:28px;padding:32px;display:flex;flex-direction:column;gap:22px;align-items:flex-start}
+.res .num{font-family:var(--display);font-weight:700;font-size:clamp(72px,14vw,150px);line-height:.9;color:var(--sun);font-variant-numeric:tabular-nums}
+.res .num small{font-size:.45em;color:var(--cream)}
+.res h2{font-size:clamp(26px,3.6vw,40px)}
+.mini{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px;width:100%}
+.mini div{border-radius:10px;overflow:hidden;border:4px solid var(--line)}
+.mini div[data-m="got"]{border-color:var(--go)} .mini div[data-m="not"]{border-color:var(--stop)}
+.mini img{display:block;width:100%;height:auto}
+
+/* all ten */
+.all{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.all li{background:var(--navy);border-radius:20px;padding:12px 16px;display:grid;grid-template-columns:128px minmax(0,1fr) auto;gap:16px;align-items:center}
+.all img{display:block;width:100%;height:auto;border-radius:12px}
+.all .t{min-width:0}
+.all .t small{display:block;color:var(--teal);font-weight:700;font-size:15px}
+.all .t span{font-family:var(--display);font-weight:500;font-size:clamp(20px,2.6vw,30px);line-height:1.2}
+.play{width:56px;height:56px;border-radius:50%;background:var(--teal);display:grid;place-items:center}
+.play svg{width:26px;height:26px}
+
+/* worksheet: a sheet of paper lying on the navy desk */
+.paper{background:var(--paper);color:var(--ink);border-radius:8px;padding:32px;display:flex;flex-direction:column;gap:18px;font-size:16px}
+.paper h2{font-size:28px} .paper h3{font-size:20px;margin-top:6px}
+.paper .meta{display:flex;flex-wrap:wrap;gap:8px 28px}
+.paper .meta span{flex:1 1 180px;border-bottom:1.5px solid var(--paper-line);padding-bottom:2px}
+.paper ol{margin:0;padding-left:26px;display:flex;flex-direction:column;gap:14px}
+.paper li{break-inside:avoid}
+.paper .q{font-weight:700}
+.rule{border-bottom:1.5px solid var(--paper-line);height:30px}
+.paper p{margin:0}
+.partB{display:flex;flex-direction:column;gap:16px;break-before:page}
+
+@media (max-width:760px){
+  .wall{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .strip,.mini{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .ask{grid-template-columns:minmax(0,1fr);padding:18px}
+  .who img{max-width:320px}
+  .hero,.res{padding:22px}
+  .all li{grid-template-columns:84px minmax(0,1fr) auto;gap:12px}
+  .paper{padding:20px}
+}
+@media (prefers-reduced-motion:reduce){.talking .waves i{animation:none}.face{transition:none}}
+@media print{
+  body{background:#fff}
+  .wrap{padding:0;max-width:none}
+  .bar,.sheet-tools{display:none!important}
+  .paper{border-radius:0;padding:0}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="bar">
+    <a class="brand" href="revision-unit1.html" style="text-decoration:none">Unit 1 Revision</a>
+    <div class="where" id="where"></div>
+    <nav class="nav" id="nav"></nav>
+  </header>
+  <main id="view"></main>
+</div>
+
+<script>
+const ED=[
+ {"t": "Unit 1 Revision", "s": "For Gabi · Gateway to the World B1 · age, family, fame", "lv": ["Words", "Grammar", "Articles", "Speaking"], "lvd": ["Explain, define, form nouns", "State and action verbs", "a, an, the or no article", "Opinions with reasons"], "q": [["What is the difference between being alone and being lonely?", "What do we call unfair treatment of people because of their age?", "Explain the word stereotype and give one example about teenagers.", "What is the noun from embarrass, and when did you last feel it?", "Who is your brother-in-law? Explain the relationship in one sentence.", "What is the opposite of a negative attitude, and who in your family has one?", "What is the noun from achieve? Tell me about one of yours.", "What does it mean to be open-minded?", "At what stage of life does retirement usually come, and what does a retired person do?", "Give me the nouns from explain, solve and connect."], ["What do you think about social media, and what are you thinking about right now?", "Why do the children of celebrities often want a private life?", "Is your English getting better this year? How do you know?", "What does your family usually talk about at dinner, and what are you all talking about this week?", "Do you believe that fame makes people happy? Why or why not?", "What are teenagers in your country doing more and more these days?", "Do you prefer talking to people face to face or online? Why?", "What does an elderly person need most: money, health or company?", "Are people's attitudes to old age changing? In what way?", "Who do you know who is working on an interesting project at the moment?"], ["What is the most important quality in a parent?", "Who is the most open-minded person in your family, and what does that person do?", "Do phones have a negative impact on family dinners?", "What do elderly people need from society?", "Describe a famous person, and then tell me what the person achieved.", "Is independence more important than safety for teenagers?", "What is the biggest problem that the elderly face today?", "Would you like to be a celebrity? What is the worst thing about fame?", "What was Marie Curie's job, and what did she name after her homeland?", "What is the difference between an adolescent and an adult?"], ["Is it fair that the children of famous people are photographed and discussed in public?", "Should parents post photos of their children online without asking them?", "Why do some people have stereotypical ideas about the elderly, and how can we change them?", "Is ageism a problem for teenagers as well as for older people? Give an example.", "Does a difficult childhood make a person stronger or weaker? Think of Beethoven.", "At what age should a person be treated as an adult, and why?", "What can teenagers and elderly people teach each other?", "Is it harder to be a teenager today than it was for your parents? Explain.", "Which matters more for success: talent, determination or family support?", "How do you imagine yourself at seventy? What will you be like?"]]},
+ {t:"Food",q:[
+  ["Do you drink coffee or tea?","What do you usually eat for breakfast?","What is your favorite fruit?","Can you cook?","Do you like spicy food?","What do you eat for lunch?","What food do you not like?","How often do you eat pizza?","What is your favorite dessert?","Who cooks in your family?"],
+  ["What is a dish you can cook well, and how do you make it?","Have you ever tried food from another country? What was it like?","Do you prefer eating at home or in a restaurant? Why?","What did you eat on your last birthday?","What food reminds you of your childhood?","How have your eating habits changed in the last few years?","What would you cook for a guest from another country?","Is it better to have a big breakfast or a big dinner?","What is the strangest food you have ever tried?","If you opened a café, what would be on the menu?"],
+  ["Why are cooking shows so popular, even with people who never cook?","Should schools teach every child how to cook?","How does the food people eat reflect their culture?","Is fast food to blame for health problems, or are people responsible for their own choices?","Would you eat meat grown in a laboratory? Why or why not?","How has food delivery changed the way families eat together?","Some people say we eat with our eyes first. How far do you agree?","What can be done to reduce the amount of food that is thrown away?","Is it fair that healthy food often costs more than unhealthy food?","If you could save only one traditional dish from your country, which would it be and why?"]]},
+ {t:"Health and Wellness",q:[
+  ["How many hours do you sleep?","Do you play any sports?","How often do you walk?","Do you drink a lot of water?","What time do you go to bed?","Do you like running?","What do you do when you have a cold?","Do you eat a lot of sweets?","How do you relax after school or work?","Are you a morning person?"],
+  ["What do you do to stay healthy?","Have you ever tried to give up a bad habit? What happened?","What helps you when you feel stressed?","How much time do you spend outdoors each week?","Do you think you get enough sleep? Why or why not?","What sport would you like to try, and why?","What was the last thing you did just to relax?","How do you feel after a long day in front of a screen?","What advice would you give to a friend who is always tired?","Is it easier to exercise alone or with other people?"],
+  ["Why do so many people know what is healthy but still not do it?","Is mental health taken as seriously as physical health where you live?","How far should governments go to make people live healthier lives?","Do fitness trackers and health apps actually make us healthier?","Is stress always harmful, or can it sometimes be useful?","Should employers be responsible for the wellbeing of their staff?","How has social media changed the way people feel about their bodies?","What does a healthy work-life balance really look like?","Why do you think people today sleep less than their grandparents did?","If you could change one thing about the way your country looks after people's health, what would it be?"]]},
+ {t:"Work and Career",q:[
+  ["What is your job, or what do you study?","Where do your parents work?","What time do you start work or school?","Do you work or study on weekends?","What job did you want when you were a child?","Do you like working in a team?","How do you get to work or school?","Do you use a computer every day?","What is a good job, in your opinion?","Would you like to be a teacher?"],
+  ["What do you like most about your job or your studies?","What is your dream job, and why?","Would you rather work from home or in an office?","What skills do you need for the job you want?","Have you ever had a job interview? How did it go?","What is the hardest part of working or studying for you?","Is it better to have a job you love or a job that pays well?","What is the best advice anyone has given you about work?","What would you do on your first day in a new job?","How do you usually prepare for an important task?"],
+  ["Is a university degree still necessary for a successful career?","How do you think the idea of a job for life has changed?","What makes someone a good leader rather than just a boss?","Should people be paid according to how hard they work or what they produce?","Is a four-day working week realistic for most professions?","How much of a person's identity should come from their job?","Which jobs do you think are underpaid, and why does that happen?","Is it wise to turn a hobby into a career?","How should young people choose a career when the job market keeps changing?","What would you do with your time if you never had to work again?"]]},
+ {t:"Technology and the Future",q:[
+  ["How often do you use your phone?","What apps do you use every day?","Do you play computer games?","Do you like taking photos?","Do you read books on paper or on a screen?","How do you listen to music?","Do you watch videos online?","Who do you send messages to most?","Can you live without the internet for a day?","What is your favorite website?"],
+  ["Which piece of technology could you not live without?","How has technology changed the way you learn?","What was the first phone or computer you remember using?","Do you spend too much time online? How do you know?","What is one app that really makes your life easier?","Would you like to have a robot at home? What would it do?","How do you think schools will be different in twenty years?","Have you ever had a problem because of technology? What happened?","Do you prefer talking face to face or sending messages? Why?","What invention would you like to see in the future?"],
+  ["Will artificial intelligence create more jobs than it destroys?","How much of your personal data are you willing to give away for convenience?","Should children be allowed to have smartphones before the age of twelve?","Has technology made people more connected or more lonely?","Who should be responsible when a self-driving car causes an accident?","Is it possible to trust what we see online any more?","Should there be limits on what scientists are allowed to invent?","How might daily life change if people regularly lived to one hundred and twenty?","Is space exploration worth the money while there are problems on Earth?","Which skill do you think will matter most in the world of the future?"]]},
+ {t:"Travel and Exploration",q:[
+  ["Do you like traveling?","Where did you go last summer?","Do you prefer the sea or the mountains?","How do you usually travel: by car, train or plane?","What do you take with you on a trip?","Have you ever been to another country?","Who do you like to travel with?","Do you like hotels or camping?","What city would you like to visit?","Do you take a lot of photos on holiday?"],
+  ["What is the best trip you have ever taken?","Where would you go if you had one free week and enough money?","Do you plan your trips carefully or decide things on the way?","What is the most beautiful place you have seen?","Have you ever got lost in a new place? What did you do?","What do you always do first when you arrive in a new city?","Would you rather travel alone or with a group? Why?","What place in your country should every visitor see?","What is something you learned while traveling?","Would you like to live in another country for a year? Where?"],
+  ["Does travel really broaden the mind, or is that just a saying?","Is mass tourism destroying the places people most want to see?","Should people fly less to protect the environment?","What is the difference between being a tourist and being a traveler?","Why do some people feel at home anywhere while others are always homesick?","Has the internet taken the sense of discovery out of travel?","Should popular cities limit the number of visitors they accept?","Is it better to know one place deeply or to see many places briefly?","Would you take a one-way trip to Mars if you had the chance?","What does the way a person travels tell you about their character?"]]}
+];
+const LV=["Beginner","Intermediate","Advanced"];
+const LVD=["Everyday questions","Real conversation","Deeper discussion"];
+const P=[
+ {n:"Nathan",skin:"#e6b48c",hc:"#3a2a22",hair:"short",shirt:"#35cfc8",bg:"#f3ead9",pitch:.85},
+ {n:"Emma",skin:"#f3cfb0",hc:"#d9a441",hair:"long",shirt:"#f0645f",bg:"#dfeef0",pitch:1.25},
+ {n:"Lucas",skin:"#7a4a30",hc:"#1c1614",hair:"short",shirt:"#ffc93c",bg:"#e9e4f3",pitch:.75,glasses:1,beard:1},
+ {n:"Sofia",skin:"#d49a6e",hc:"#241a18",hair:"curly",shirt:"#7b6be0",bg:"#f6e3d6",pitch:1.15},
+ {n:"Maya",skin:"#f0c9a6",hc:"#c9ccd3",hair:"bob",shirt:"#2f8f83",bg:"#e3ecdc",pitch:1.0,glasses:1},
+ {n:"Daniel",skin:"#f1c7a0",hc:"#15141a",hair:"short",shirt:"#3d6fd8",bg:"#f1ecd6",pitch:.95},
+ {n:"Olivia",skin:"#8b5a3c",hc:"#1e1512",hair:"bun",shirt:"#ffc93c",bg:"#dce8f4",pitch:1.3},
+ {n:"Noah",skin:"#c98e63",hc:"#2b1d16",hair:"beanie",hat:"#d8642f",shirt:"#4f7a52",bg:"#efe2e6",pitch:.8,beard:1},
+ {n:"Chloe",skin:"#f6d6bd",hc:"#8a4b2a",hair:"long",shirt:"#35cfc8",bg:"#f3ead9",pitch:1.2},
+ {n:"Ethan",skin:"#e8bb92",hc:"#5a3a22",hair:"curly",shirt:"#f0645f",bg:"#e0e9dd",pitch:.9,glasses:1}
+];
+function avatar(p){return `<img src="ten-faces/${p.n.toLowerCase()}.jpg" alt="${p.n}" width="800" height="450">`}
+const SPK=`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9Z" fill="#16203a"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="#16203a" stroke-width="2" stroke-linecap="round"/></svg>`;
+
+let S={ed:0,lv:0,marks:Array(10).fill(null),cur:0,reveal:false,slow:false,view:"home",redo:false,showQ:false};
+const $=s=>document.querySelector(s), view=$("#view");
+const qs=()=>ED[S.ed].q[S.lv];
+const lvn=i=>(ED[S.ed].lv||LV)[i], lvd=i=>(ED[S.ed].lvd||LVD)[i];
+const canSpeak="speechSynthesis" in window;
+let voices=[];
+function loadV(){try{voices=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang))}catch(e){}}
+if(canSpeak){loadV();try{speechSynthesis.onvoiceschanged=loadV}catch(e){}}
+function speak(i){
+  if(!canSpeak)return;
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(qs()[i]);
+    u.lang="en-US"; if(voices.length)u.voice=voices[i%voices.length];
+    u.pitch=P[i].pitch; u.rate=S.slow?.68:.95;
+    u.onstart=()=>document.body.classList.add("talking");
+    u.onend=u.onerror=()=>document.body.classList.remove("talking");
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function hush(){if(canSpeak)try{speechSynthesis.cancel()}catch(e){}document.body.classList.remove("talking")}
+function go(v){hush();S.view=v;render();window.scrollTo(0,0)}
+function newRound(){S.marks=Array(10).fill(null);S.redo=false;S.reveal=false}
+const got=()=>S.marks.filter(m=>m==="got").length, missed=()=>S.marks.filter(m=>m==="not").length;
+
+function render(){
+  const inGame=S.view!=="home";
+  $("#where").innerHTML=inGame?`<span class="chip">${ED[S.ed].t}</span><span class="chip">${lvn(S.lv)}</span>`:"";
+  $("#nav").innerHTML=inGame?[["home","Topics"],["wall","Faces"],["all","See all 10 questions"],["sheet","Worksheet"]]
+    .map(([v,l])=>`<button class="btn${S.view===v?" on":""}" data-go="${v}">${l}</button>`).join(""):"";
+  view.innerHTML=V[S.view]();
+}
+const V={
+ home:()=>`<div class="wrap" style="padding:0">
+  <section class="hero">
+    <h1>Ten faces. <b>Ten questions.</b></h1>
+    <p>Tap a face and that person asks a question out loud. No answer choices, nothing to read first. How much can you catch?</p>
+    <div class="strip">${P.map(avatar).join("")}</div>
+  </section>
+  <section class="pick"><h2>Pick a topic</h2>
+    <div class="topics">${ED.map((e,i)=>`<button class="topic" data-ed="${i}" aria-pressed="${S.ed===i}"><strong>${e.t}</strong><span>${e.s||e.q[0][0]}</span></button>`).join("")}</div>
+  </section>
+  <section class="pick"><h2>Pick a level</h2>
+    <div class="levels">${(ED[S.ed].lv||LV).map((l,i)=>`<button class="topic" data-lv="${i}" aria-pressed="${S.lv===i}"><strong>${lvn(i)}</strong><span>${lvd(i)}</span></button>`).join("")}</div>
+  </section>
+  <div class="start"><button class="btn sun big" data-start>Start: ${ED[S.ed].t}, ${lvn(S.lv)}</button></div>
+ </div>`,
+ wall:()=>`<div class="wrap" style="padding:0">
+  <div class="wallhead"><h2>${S.redo?"Second chance":"Tap a face"}</h2><p>${S.redo?"Only the questions marked Not yet are open.":"Listen. Answer. Try again."}</p></div>
+  <div class="wall">${P.map((p,i)=>`<button class="face" data-face="${i}" data-m="${S.marks[i]||""}" ${S.redo&&S.marks[i]==="got"?"disabled":""}>
+    ${avatar(p)}<span class="nm">${p.n}</span>${S.marks[i]?`<span class="tag">${S.marks[i]==="got"?"✓":"✗"}</span>`:""}</button>`).join("")}</div>
+  <div class="score"><span class="chip">Got it <b>${got()}</b></span><span class="chip">Not yet <b>${missed()}</b></span><span class="chip">Left <b>${10-got()-missed()}</b></span>
+    ${S.marks.every(Boolean)?`<button class="btn sun" data-go="res">See the results</button>`:""}</div>
+ </div>`,
+ ask:()=>{const i=S.cur,p=P[i],show=S.reveal||!canSpeak;return `<section class="ask">
+  <div class="who">${avatar(p)}<h2>${p.n}</h2><div class="waves" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+  <div class="say">
+    <div class="tools">
+      <button class="btn sun" data-again>Listen again</button>
+      <button class="btn${S.slow?" on":""}" data-slow aria-pressed="${S.slow}">Slower</button>
+      <button class="btn${S.reveal?" on":""}" data-reveal aria-pressed="${S.reveal}">${S.reveal?"Hide the question":"Show the question"}</button>
+    </div>
+    ${canSpeak?"":`<p class="note">This browser cannot read aloud, so the question is shown. Read it to the class.</p>`}
+    <div class="qbox${show?"":" hid"}"><p>${show?qs()[i]:"The question is hidden. Just listen."}</p></div>
+  </div>
+  <div class="verdict"><button class="got" data-mark="got">Got it</button><button class="not" data-mark="not">Not yet</button></div>
+ </section>`},
+ res:()=>{const g=got(),m=missed();return `<section class="res">
+  <div class="num">${g}<small> / 10</small></div>
+  <h2>${m===0?"Every question caught.":g>=7?"Strong ears. "+m+" to try again.":m+" questions slipped past. Hear them again."}</h2>
+  <div class="mini">${P.map((p,i)=>`<div data-m="${S.marks[i]||""}">${avatar(p)}</div>`).join("")}</div>
+  <div class="start">
+    ${m?`<button class="btn sun big" data-redo>Redo the ${m} missed</button>`:""}
+    <button class="btn" data-replay>Play this round again</button>
+    ${S.lv<ED[S.ed].q.length-1?`<button class="btn" data-next>Next: ${lvn(S.lv+1)}</button>`:""}
+    <button class="btn" data-go="all">See all 10 questions</button>
+  </div>
+ </section>`},
+ all:()=>`<div class="wrap" style="padding:0">
+  <div class="wallhead"><h2>All 10 questions</h2><p>Now interview each other. One rule: ask one more question about your partner's answer.</p></div>
+  <ol class="all">${qs().map((q,i)=>`<li>${avatar(P[i])}<div class="t"><small>${P[i].n}</small><span>${q}</span></div>
+    <button class="play" data-say="${i}" aria-label="Hear ${P[i].n}'s question">${SPK}</button></li>`).join("")}</ol>
+ </div>`,
+ sheet:()=>`<div class="wrap" style="padding:0">
+  <div class="start sheet-tools"><button class="btn${S.showQ?" on":""}" data-showq aria-pressed="${S.showQ}">${S.showQ?"Questions shown":"Blank: students write what they hear"}</button><button class="btn sun" data-print>Print</button></div>
+  <article class="paper">
+    <h2>10 Question Challenge: ${ED[S.ed].t}</h2>
+    <div class="meta"><span>Name:</span><span>Date:</span><span>Level: ${lvn(S.lv)}</span></div>
+    <h3>Part A. Listen, write, answer</h3>
+    <p>Write the question you hear. Then write your own full answer with a reason or an example.</p>
+    <ol>${qs().map(q=>`<li>${S.showQ?`<div class="q">${q}</div>`:`<div class="rule"></div>`}<div class="rule"></div><div class="rule"></div></li>`).join("")}</ol>
+    <div class="partB">
+      <h3>Part B. Ask a partner</h3>
+      <p>Choose three questions. Ask your partner and write down what they say.</p>
+      <ol>${[1,2,3].map(()=>`<li><div>Question I asked:</div><div class="rule"></div><div>My partner said:</div><div class="rule"></div><div class="rule"></div><div class="rule"></div></li>`).join("")}</ol>
+    </div>
+  </article>
+ </div>`
+};
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button"); if(!b)return; const d=b.dataset;
+  if("go" in d)return go(d.go);
+  if("ed" in d){S.ed=+d.ed;S.lv=Math.min(S.lv,ED[S.ed].q.length-1);return render()}
+  if("lv" in d){S.lv=+d.lv;return render()}
+  if("start" in d){newRound();return go("wall")}
+  if("face" in d){S.cur=+d.face;S.reveal=false;go("ask");return speak(S.cur)}
+  if("again" in d)return speak(S.cur);
+  if("slow" in d){S.slow=!S.slow;render();return speak(S.cur)}
+  if("reveal" in d){S.reveal=!S.reveal;return render()}
+  if("mark" in d){S.marks[S.cur]=d.mark;return go(S.marks.every(Boolean)?"res":"wall")}
+  if("redo" in d){S.marks=S.marks.map(m=>m==="not"?null:m);S.redo=true;return go("wall")}
+  if("replay" in d){newRound();return go("wall")}
+  if("next" in d){S.lv++;newRound();return go("wall")}
+  if("say" in d)return speak(+d.say);
+  if("print" in d)return window.print();
+  if("showq" in d){S.showQ=!S.showQ;return render()}
+});
+function start(data){if(data&&data.marks)S=Object.assign(S,data);
+  try{const u=new URLSearchParams(location.search),lv=u.get('lv');if(lv!==null&&ED[0].q[+lv]){S.ed=0;S.lv=+lv;newRound();S.view='wall'}}catch(e){}
+  render()}
+const hot=window.claude&&window.claude.hot;
+if(hot&&hot.snapshot)hot.snapshot(()=>S);
+if(hot&&hot.ready)hot.ready(start);else start((hot&&hot.data)||{});
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Revision · Unit 1</title>
+<style>
+:root{--ink:#16384d;--muted:#536e7d;--blue:#1f78a5;--blueD:#155d80;--line:#c8dce8;--ok:#2f8f6f;--okbg:#e6f6ee;--sand:#fff7df}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(180deg,#eef9ff 0,#f7fbff 52%,#fffaf1 100%);min-height:100vh;font-size:16px;line-height:1.4}
+a,button{font:inherit;color:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:3px solid #397baf;outline-offset:2px}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:9px 3%;background:#fff;border-bottom:2px solid #bcd7e6}
+header .brand{flex:1;min-width:200px}
+header small{display:block;color:var(--muted);font-size:12px;letter-spacing:.06em}
+header strong{display:block;font-size:20px;font-weight:900}
+.btn{border:2px solid var(--line);border-radius:12px;background:#f5fbff;padding:8px 14px;font-weight:700;text-decoration:none}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blueD)}
+main{max-width:1060px;margin:0 auto;padding:14px 16px 40px;display:flex;flex-direction:column;gap:12px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;color:var(--muted);font-size:14px}
+.bar{flex:1 1 180px;height:10px;border-radius:9px;background:#dcebf3;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+h2{margin:10px 0 0;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--blueD)}
+ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 12px}
+li.done{background:var(--okbg);border-color:#a9d9c4}
+.n{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:#fff;font-weight:900;font-size:18px;display:grid;place-items:center}
+li.done .n{background:var(--ok);border-color:var(--ok);color:#fff}
+.t{min-width:0}
+.t b{font-size:18px}
+.t .min{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:9px;background:var(--sand);font-size:13px;font-weight:700;white-space:nowrap}
+.t p{margin:3px 0 0;font-size:14.5px}
+.t p.why{color:var(--muted)}
+.acts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+@media(max-width:680px){li{grid-template-columns:44px minmax(0,1fr)}.acts{grid-column:1/-1;justify-content:flex-start}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><small>GATEWAY TO THE WORLD B1 · UNIT 1</small><strong>Lesson 4 · Revision</strong></div>
+  <a class="btn" href="index.html">Gabi Hub</a>
+  <button class="btn" id="reset">Start again</button>
+</header>
+<main>
+  <div class="meta"><span id="count"></span><div class="bar"><i id="fill"></i></div><span>60 minutes · tap the number when a step is finished</span></div>
+  <div id="list"></div>
+</main>
+<script>
+const PARTS=[
+ ["Warm up and recall",[
+  ["Warm-up: What Happens Next?",5,"Watch, stop, predict with will, might, won't.","Gets him talking before any correction starts.",[["Open","what-happens-next.html"]]],
+  ["Word Walls: Age and Attitudes",6,"Find the 15 adjectives; the nouns are traps.","Recognition first: the words must be familiar before he has to produce them.",[["Open","word-walls-age.html"]]],
+  ["Word Factory",6,"Sort by suffix: -ment, -ion, -ence. Read the red cards aloud.","Moves from recognising words to forming them.",[["Open","lesson3.html?step=3"]]]]],
+ ["Accuracy",[
+  ["Error Hunter",8,"One mistake per sentence: articles, family words, word formation. Find it and repair it.","Controlled practice of form, with a rule for every correction.",[["Open","lesson3.html?step=6"]]],
+  ["Timed Sprint",5,"Fast mixed questions on family, articles and word formation.","Speeds up recall so the forms are ready for speaking.",[["Open","lesson3.html?step=7"]]]]],
+ ["Listening and speaking",[
+  ["Ten Faces: Words, Grammar, Articles",12,"He hears each question once, text hidden, and answers in a full sentence. Mark Got it or Not yet.","Listening for meaning, then guided spoken answers that need the unit language.",[["Words","ten-faces.html?lv=0"],["Grammar","ten-faces.html?lv=1"],["Articles","ten-faces.html?lv=2"]]],
+  ["Ten Faces: Speaking",10,"Opinion questions on age, fame and family. Ask one follow-up question after each answer.","Free production: he chooses the language himself.",[["Open","ten-faces.html?lv=3"]]],
+  ["Second chance",5,"Stay on the results screen of step 7 and press Redo. Only the missed questions come back.","Immediate feedback and a successful second attempt.",[]]]],
+ ["Finish",[
+  ["Final check and homework",3,"15 mixed questions on noun suffixes, family and articles. Start in class, finish at home.","Shows what is secure and what still needs work before Unit 2.",[["Open","lesson3.html?step=9"]]]]]
+];
+const KEY='gabi-unit1-revision-v1';let done=[];try{done=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
+const total=PARTS.reduce((a,p)=>a+p[1].length,0);
+function draw(){let n=0,h='';
+ PARTS.forEach(p=>{h+=`<h2>${p[0]}</h2><ol>`+p[1].map(s=>{const i=n++;return `<li class="${done.includes(i)?'done':''}"><button class="n" data-i="${i}" aria-pressed="${done.includes(i)}" aria-label="Step ${i+1} finished">${i+1}</button><div class="t"><b>${s[0]}</b><span class="min">${s[1]} min</span><p>${s[2]}</p><p class="why">${s[3]}</p></div><div class="acts">${s[4].map(a=>`<a class="btn primary" href="${a[1]}">${a[0]}</a>`).join('')}</div></li>`}).join('')+'</ol>'});
+ document.getElementById('list').innerHTML=h;
+ document.getElementById('count').textContent=done.length+' / '+total+' steps done';
+ document.getElementById('fill').style.width=(done.length/total*100)+'%'}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(done))}catch(e){}}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b){const i=+b.dataset.i;done=done.includes(i)?done.filter(x=>x!==i):done.concat(i);save();draw()}
+ if(e.target.id==='reset'){done=[];save();draw()}});
+draw();
+</script>
+</body>
+</html>

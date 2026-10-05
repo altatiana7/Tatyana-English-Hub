@@ -167,7 +167,7 @@ const bridges=[
 'LEVEL 10 · Put the pieces together: word formation, family relationships and articles. Answer one question at a time, then review your corrections.'
 ];
 let saved={};try{saved=JSON.parse(localStorage.getItem('gabi-lesson3-game-v10')||'{}')}catch{}
-const S={step:0,tab:{},exercise:{},notes:{},flashes:{},done:[],game:{},...saved};S.step=0;S.game=S.game||{};
+const S={step:0,tab:{},exercise:{},notes:{},flashes:{},done:[],game:{},...saved};S.step=0;{const q=Number(new URLSearchParams(location.search).get('step'));if(q>0&&q<titles.length)S.step=q}S.game=S.game||{};
 function save(){try{localStorage.setItem('gabi-lesson3-game-v10',JSON.stringify(S))}catch{}}
 const banks={};
 function bank(id,items){banks[id]=items;return id}
