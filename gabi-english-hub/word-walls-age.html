@@ -81,6 +81,27 @@ main{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width
 @media(max-width:950px){.grid{grid-template-columns:repeat(4,1fr)}.wall{grid-template-columns:repeat(3,1fr)}.wall .brick{transform:none!important}}
 @media(max-width:560px){header small{display:none}header strong{font-size:16px}.btn{padding:8px 10px;font-size:13px}.grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:70px}.wall{grid-template-columns:repeat(2,1fr)}.levels{grid-template-columns:1fr}.fa{font-size:17px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* stage 2: scenes */
+.scene{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:16px;align-items:center;margin-top:4px}
+.scene img{display:block;width:100%;max-height:68vh;object-fit:contain;border-radius:16px}
+.sp{display:flex;flex-direction:column;gap:12px;min-width:0}
+.sent{margin:0;font-size:clamp(20px,2.2vw,30px);font-weight:700;line-height:1.3}
+.sent.wait{color:var(--muted);opacity:.45}
+.sent u{text-decoration:none;display:inline-block;min-width:4.5em;border-bottom:3px solid var(--blue);text-align:center;color:var(--blue)}
+.sent u.ok{border-color:#2f8f6f;color:#2f8f6f}.sent u.no{border-color:#c0392b;color:#c0392b}
+.ans{display:flex;gap:8px;flex-wrap:wrap}
+.ans input{flex:1 1 220px;min-width:0;font:inherit;font-size:24px;font-weight:800;padding:10px 14px;border:2px solid var(--line);border-radius:12px;color:var(--ink);background:#fff}
+.ans input.bad{border-color:#c0392b;animation:shk .3s}
+@keyframes shk{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.fbk{min-height:28px;font-size:18px;font-weight:700;color:var(--muted)}
+.sayit{background:var(--sand);border-radius:12px;padding:10px 14px;font-size:18px;font-weight:700}
+.review{flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px;margin-top:8px}
+.review div{display:grid;grid-template-columns:64px minmax(0,1fr);gap:10px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:12px;padding:6px 10px;font-size:15px}
+.review div.miss{background:#ffe6e0;border-color:#d9735c}
+.review img{width:64px;height:64px;object-fit:cover;border-radius:8px}
+@media(max-width:760px){.scene{grid-template-columns:1fr}.scene img{max-height:34vh}}
+@media(prefers-reduced-motion:reduce){.ans input.bad{animation:none}}
 </style>
 </head>
 <body>
@@ -128,10 +149,10 @@ function menu(){
   <p>Find the <b>15 adjectives</b> that describe people. Every adjective becomes a brick. The <b>nouns are traps</b>.</p>
   <div class="demo"><span>lonely</span><span class="trap">loneliness</span><span>patient</span><span class="trap">patience</span></div>
   <div class="levels">${Object.entries(LEVELS).map(([k,v])=>`<button class="level" data-level="${k}" aria-pressed="${k===level}">${v[0]}<small>${v[1]}</small></button>`).join('')}</div>
-  <button class="btn primary start" id="go">Start building →</button>
+  <button class="btn primary start" id="go">Start building →</button> <button class="btn start" id="sc">Stage 2 · Scenes</button>
  </div>`;
  A.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{level=b.dataset.level;try{localStorage.setItem('gabi-wordwalls-level',level)}catch(e){}menu()});
- $('#go').onclick=build;
+ $('#go').onclick=build;$('#sc').onclick=()=>scenes();
 }
 
 function build(){
@@ -171,6 +192,61 @@ function build(){
  });
 }
 
+
+/* Stage 2 · Scenes: one picture per adjective; type the adjective, then a related noun. No word list. */
+const SCENES=[
+ ['elderly','She is over eighty. The polite word for old is ___.','age','Old ___ is the stage of life after middle age.'],
+ ['middle-aged','He is about fifty: not young and not old. He is ___.','middle age','___ comes between early adulthood and old age.'],
+ ['retired','Today was his last day at the office. From tomorrow he is ___.','retirement','His colleagues are celebrating his ___.'],
+ ['lonely','He eats dinner by himself every evening and feels ___.','loneliness','___ is a serious problem for many older people.'],
+ ['independent','She does her own shopping and drives her own car. She is very ___.','independence','She does not want to lose her ___.'],
+ ['confident','She speaks to hundreds of people without fear. She is a ___ speaker.','confidence','Years of experience give her ___.'],
+ ['open-minded','He is trying virtual reality for the first time at seventy. He is ___.','opportunity','He sees new technology as an ___, not as a problem.'],
+ ['unfair','The young man is served first, although she was waiting before him. That is ___.','ageism','Treating people badly because of their age is called ___.'],
+ ['respectful','He gives his seat to an older passenger. He is ___.','respect','Giving up your seat is a sign of ___.'],
+ ['patient','He explains the phone again and again and never gets angry. He is ___.','patience','Teaching grandparents to use technology takes a lot of ___.'],
+ ['positive','It is pouring with rain, but he is laughing. He always stays ___.','attitude','He has a wonderful ___ to life.'],
+ ['negative','He is on a beautiful beach, but he sees only the bad side. He is ___.','enjoyment','He gets no ___ from his holiday at all.'],
+ ['active','She runs races at seventy-five. She is extremely ___.','achievement','Finishing the race is a real ___ at her age.'],
+ ['healthy','The doctor is smiling at his results. He is perfectly ___.','health','Good ___ matters more than money when you are old.'],
+ ['stereotypical','A grandmother knitting in a rocking chair with a cat: this picture of old age is ___.','stereotype','The idea that all old people stay at home and knit is a ___.']
+];
+const nrm=x=>String(x).trim().toLowerCase().replace(/[\s\-–]+/g,' ').replace(/[.!?]+$/,'');
+function scenes(only){
+ const order=(only||SCENES.map((_,i)=>i)).slice().sort(()=>Math.random()-.5);
+ let k=0,part=0,tries=0,score=0,hinted=false,missed=[],shown=['',''],state=['',''];
+ const gap=(txt,i)=>txt.replace('___',`<u class="${state[i]}">${shown[i]||'&nbsp;'}</u>`);
+ function draw(){
+  const id=order[k],sc=SCENES[id],fin=part===2;
+  A.innerHTML=`<div class="bar"><h2>Scenes<span>Type the missing word. There is no word list.</span></h2>
+    <span class="stat">${k+1} / ${order.length}</span><span class="stat">${score} pts</span>
+    <button class="btn" id="hint" ${fin?'disabled':''}>Hint</button><button class="btn" id="exit">Menu</button></div>
+   <div class="meter"><div style="width:${k/order.length*100}%"></div></div>
+   <div class="scene"><img src="age-scenes/${String(id+1).padStart(2,'0')}.jpg" alt="Scene ${id+1}">
+    <div class="sp"><p class="sent">${gap(sc[1],0)}</p><p class="sent ${part===0?'wait':''}">${gap(sc[3],1)}</p>
+     ${fin?`<div class="sayit">Now say it: what in the picture shows that this person is ${sc[0]}?</div><div class="ans"><button class="btn primary start" id="next">${k+1<order.length?'Next scene':'See the result'}</button></div>`
+       :`<form class="ans" id="f"><input id="a" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Missing word" placeholder="${part===0?'adjective':'noun'}"><button class="btn primary">Check</button></form>`}
+     <div class="fbk" id="fb" role="status"></div></div></div>`;
+  $('#exit').onclick=menu;
+  if(fin){$('#next').onclick=()=>{k++;part=0;tries=0;hinted=false;shown=['',''];state=['',''];k<order.length?draw():result()};$('#next').focus();return}
+  const inp=$('#a');inp.focus();
+  $('#hint').onclick=()=>{const w=sc[part*2];hinted=true;$('#fb').textContent='Starts with “'+w[0]+'”, '+w.replace(/[^a-z]/g,'').length+' letters.';inp.focus()};
+  $('#f').onsubmit=e=>{e.preventDefault();const w=sc[part*2];if(!inp.value.trim())return;
+   if(nrm(inp.value)===nrm(w)){if(tries===0&&!hinted)score++;shown[part]=w;state[part]='ok';say(w);part++;tries=0;hinted=false;draw()}
+   else if(++tries>=2){shown[part]=w;state[part]='no';if(!missed.includes(id))missed.push(id);part++;tries=0;hinted=false;draw();$('#fb').textContent='The word was “'+w+'”. Read the sentence aloud.'}
+   else{inp.classList.add('bad');setTimeout(()=>inp.classList.remove('bad'),320);$('#fb').textContent=(part===0?'Not this one. You need an adjective that describes the person.':'Not this one. You need a noun here.')+' One more try.';inp.select()}};
+ }
+ function result(){
+  A.innerHTML=`<div class="bar"><h2>Scenes complete<span>${missed.length?'Red cards: read them aloud, then retry them.':'Every word correct.'}</span></h2>
+    <span class="stat">${score} / ${order.length*2} pts</span>
+    ${missed.length?'<button class="btn primary" id="retry">Retry the '+missed.length+' missed</button>':''}<button class="btn" id="all">All scenes again</button><button class="btn" id="m">Menu</button></div>
+   <div class="review">${order.slice().sort((a,b)=>a-b).map(i=>`<div class="${missed.includes(i)?'miss':''}"><img src="age-scenes/${String(i+1).padStart(2,'0')}.jpg" alt=""><span>${SCENES[i][1].replace('___','<b>'+SCENES[i][0]+'</b>')} ${SCENES[i][3].replace('___','<b>'+SCENES[i][2]+'</b>')}</span></div>`).join('')}</div>`;
+  if(missed.length)$('#retry').onclick=()=>scenes(missed);
+  $('#all').onclick=()=>scenes();$('#m').onclick=menu;
+ }
+ draw();
+}
+
 function fell(found){
  A.innerHTML=`<div class="fell"><div class="kicker">OUT OF LIVES</div><h2>The wall fell down</h2><p>You placed ${found} of ${N} bricks. Adjectives describe people: <b>a lonely man</b>, not <b>a loneliness man</b>.</p>
  <button class="btn primary start" id="again">Try again</button> <button class="btn" id="m">Menu</button></div>`;
@@ -185,7 +261,8 @@ function wall(missed){
   <div class="meter"><div style="width:100%"></div></div>
   <div class="wall">${WORDS.map((x,i)=>`<button class="brick" data-w="${x[0]}" style="animation-delay:${i*45}ms"><b>${x[0]}</b><span>${x[1]}</span></button>`).join('')}</div>
   <div class="after"><span class="stat" style="border-color:var(--line);font-weight:700">Tap a brick to hear it. Then use it in a sentence about an older person you know.</span>
-   <button class="btn primary" id="again">Play again</button><button class="btn" id="m">Menu</button></div>`;
+   <button class="btn primary" id="sc">Stage 2 · Scenes →</button><button class="btn" id="again">Play again</button><button class="btn" id="m">Menu</button></div>`;
+ $('#sc').onclick=()=>scenes();
  A.querySelectorAll('.brick').forEach(b=>b.onclick=()=>say(b.dataset.w));
  $('#again').onclick=build;$('#m').onclick=menu;
 }
