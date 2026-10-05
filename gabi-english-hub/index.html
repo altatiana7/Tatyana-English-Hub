@@ -109,6 +109,48 @@ button{font:inherit}
 }
 @media(max-aspect-ratio:16/9){.cover{object-position:center center}}
 @media(min-aspect-ratio:16/9){.cover{object-position:center center}}
+
+/* ===== Interactive home: title, continue button, live tiles over the cover ===== */
+.hero{position:absolute;z-index:6;left:clamp(205px,15vw,282px);right:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none;
+  background:linear-gradient(180deg,rgba(6,34,70,.74) 0,rgba(6,34,70,.36) 24%,transparent 44%,transparent 66%,rgba(6,34,70,.62) 100%)}
+.hero>*{pointer-events:auto}
+.heroTop{padding:clamp(14px,3vh,34px) clamp(18px,3vw,46px) 0;color:#fff;max-width:900px}
+.heroTop .hi{display:inline-block;font-size:clamp(11px,.85vw,14px);font-weight:900;letter-spacing:.2em;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:6px 13px;backdrop-filter:blur(6px)}
+.heroTop h1{margin:clamp(6px,1.2vh,12px) 0 0;font-size:clamp(34px,5vw,74px);font-weight:900;line-height:.98;letter-spacing:-.025em;text-shadow:0 3px 22px rgba(0,25,60,.55)}
+.heroTop h1 em{font-style:normal;color:#ffd84a}
+.heroTop p{margin:clamp(5px,1vh,10px) 0 0;font-size:clamp(14px,1.35vw,20px);font-weight:700;text-shadow:0 2px 12px rgba(0,25,60,.6)}
+.go{margin-top:clamp(10px,2vh,18px);display:inline-flex;align-items:center;gap:14px;border:0;cursor:pointer;border-radius:18px;background:#ffd84a;color:#0a2b52;padding:clamp(9px,1.5vh,14px) clamp(16px,1.6vw,24px) clamp(9px,1.5vh,14px) clamp(10px,1vw,14px);box-shadow:0 6px 0 #d1a900,0 14px 30px rgba(0,25,60,.35);text-align:left;transition:transform .12s ease,box-shadow .12s ease}
+.go:hover{transform:translateY(-2px);box-shadow:0 8px 0 #d1a900,0 18px 34px rgba(0,25,60,.4)}
+.go:active{transform:translateY(4px);box-shadow:0 2px 0 #d1a900}
+.go i{width:clamp(40px,3.4vw,52px);height:clamp(40px,3.4vw,52px);border-radius:50%;background:#0a2b52;display:grid;place-items:center;flex:none}
+.go i::after{content:"";border-left:15px solid #ffd84a;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.go small{display:block;font-size:clamp(10px,.75vw,12px);font-weight:900;letter-spacing:.14em;opacity:.75}
+.go b{display:block;font-size:clamp(17px,1.6vw,24px);font-weight:900;line-height:1.1}
+.go .prog{display:flex;align-items:center;gap:8px;margin-top:5px;font-size:clamp(11px,.8vw,13px);font-weight:800}
+.go .prog span{display:block;width:clamp(90px,9vw,150px);height:7px;border-radius:9px;background:rgba(10,43,82,.2);overflow:hidden}
+.go .prog span u{display:block;height:100%;background:#0a2b52;border-radius:9px}
+.dock{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,.9vw,14px);padding:0 clamp(14px,2vw,30px) clamp(12px,2.2vh,22px)}
+.tile{position:relative;display:flex;align-items:center;gap:11px;min-height:clamp(70px,11vh,96px);border:1px solid rgba(255,255,255,.7);border-radius:18px;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);padding:8px 12px 8px 8px;text-align:left;cursor:pointer;color:#0a315f;box-shadow:0 8px 24px rgba(0,25,60,.25);transition:transform .14s ease,box-shadow .14s ease,background .14s ease;text-decoration:none;overflow:hidden}
+.tile:hover,.tile:focus-visible{transform:translateY(-5px);background:#fff;box-shadow:0 16px 34px rgba(0,25,60,.38);outline:none}
+.tile .th{flex:none;width:clamp(52px,5.2vw,78px);align-self:stretch;border-radius:12px;background:#0e2230 center/cover no-repeat}
+.tile .th.bricks{background:#5a2314;display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:4px}
+.tile .th.bricks u{display:block;border-radius:3px;background:linear-gradient(135deg,#c4552f,#8a3a22)}
+.tile .th.faces{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#fff}
+.tile .th.faces u{display:block;border-radius:5px;background:center/cover no-repeat}
+.tile small{display:block;font-size:clamp(9px,.7vw,11px);font-weight:900;letter-spacing:.13em;color:#1787cf}
+.tile b{display:block;font-size:clamp(14px,1.25vw,19px);font-weight:900;line-height:1.1;margin-top:2px}
+.tile span{display:block;font-size:clamp(11px,.85vw,13.5px);font-weight:700;color:#55718a;line-height:1.2;margin-top:3px}
+.tile.word{perspective:700px;padding:0;background:none;border:0;box-shadow:none;backdrop-filter:none;overflow:visible}
+.tile.word .fl{position:absolute;inset:0;transition:transform .5s;transform-style:preserve-3d}
+.tile.word.flip .fl{transform:rotateY(180deg)}
+.tile.word .fa,.tile.word .fb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:9px 14px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 8px 24px rgba(0,25,60,.25)}
+.tile.word .fa{background:#0a2b52;color:#fff}
+.tile.word .fa small{color:#ffd84a}.tile.word .fa b{font-size:clamp(18px,1.8vw,27px)}.tile.word .fa span{color:#b9d3ee}
+.tile.word .fb{transform:rotateY(180deg);background:linear-gradient(135deg,#c4552f,#8a3a22);color:#fff}
+.tile.word .fb small{color:#ffe6cc}.tile.word .fb span{color:#fff;font-size:clamp(12px,1vw,15px)}
+@media(max-width:1000px){.dock{grid-template-columns:repeat(2,minmax(0,1fr))}.tile span{display:none}.tile.word span{display:block}}
+@media(max-width:760px){.hero{left:190px}.dock{grid-template-columns:1fr}.tile .th{display:none}.heroTop p{display:none}}
+@media(max-height:560px){.tile span{display:none}.tile.word span{display:block}}
 @supports(height:100svh){.board{height:100svh}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -118,6 +160,21 @@ button{font:inherit}
   <img class="cover" id="mainCover" alt="Gabi English Hub cover">
   <div class="coverShade"></div>
   <div class="loader" id="loader">LOADING GABI HUB…</div>
+
+  <section class="hero" id="hero" aria-label="Home">
+    <div class="heroTop">
+      <span class="hi" id="hi">WELCOME BACK, GABI</span>
+      <h1>Your English <em>Hub</em></h1>
+      <p>Gateway to the World B1 · Unit 1 of 10 · Happy families</p>
+      <button class="go" id="continueBtn"><i></i><div><small>CONTINUE</small><b>Lesson 4 · Revision</b><div class="prog"><span><u id="progFill" style="width:0"></u></span><em id="progText" style="font-style:normal"></em></div></div></button>
+    </div>
+    <div class="dock">
+      <a class="tile" href="what-happens-next.html?v=20261005-v3"><div class="th" style="background-image:url(assets/whn/lamp.jpg)"></div><div><small>WARM-UP</small><b>What Happens Next?</b><span>Watch, stop, predict with will</span></div></a>
+      <a class="tile" href="word-walls-age.html?v=2"><div class="th bricks"><u></u><u></u><u></u><u></u><u></u><u></u></div><div><small>VOCABULARY GAME</small><b>Word Walls</b><span>15 adjectives, nouns are traps</span></div></a>
+      <a class="tile" href="ten-faces.html"><div class="th faces"><u style="background-image:url(ten-faces/emma.jpg)"></u><u style="background-image:url(ten-faces/daniel.jpg)"></u><u style="background-image:url(ten-faces/chloe.jpg)"></u><u style="background-image:url(ten-faces/ethan.jpg)"></u></div><div><small>LISTEN AND SPEAK</small><b>Ten Faces</b><span>Ten people ask you questions</span></div></a>
+      <button class="tile word" id="wordTile" aria-label="Word of the day, tap to flip"><div class="fl"><div class="fa"><small>WORD OF THE DAY · TAP</small><b id="wodWord"></b><span>What does it mean?</span></div><div class="fb"><small id="wodWord2"></small><span id="wodDef"></span></div></div></button>
+    </div>
+  </section>
 
   <aside class="sidebar" aria-label="Modules">
     <div class="brand"><b>GABI</b><span>GATEWAY B1 + FOCUS 2</span></div>
@@ -251,6 +308,21 @@ function closeLesson(){
 }
 document.getElementById('backBtn').onclick=closeLesson;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
+
+
+/* Interactive home */
+(function(){
+  const WOD=[['elderly','old (a polite word for people)'],['middle-aged','between about 40 and 60 years old'],['retired','no longer working because of your age'],['lonely','sad because you are alone'],['independent','able to live without help'],['confident','sure of yourself and your abilities'],['open-minded','ready to accept new, different ideas'],['unfair','not treating people equally'],['respectful','polite; showing that you value others'],['patient','able to wait without getting angry'],['stereotypical','based on a fixed idea about a group'],['argument','an angry discussion between people'],['independence','the freedom to do things without help'],['adolescence','the time when a child becomes an adult']];
+  const d=new Date(),w=WOD[(d.getFullYear()*366+d.getMonth()*31+d.getDate())%WOD.length];
+  document.getElementById('wodWord').textContent=w[0];document.getElementById('wodWord2').textContent=w[0].toUpperCase();document.getElementById('wodDef').textContent=w[1];
+  const tile=document.getElementById('wordTile');tile.onclick=()=>{tile.classList.toggle('flip');
+    try{if(tile.classList.contains('flip')){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w[0]);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}catch(e){}};
+  const h=d.getHours();document.getElementById('hi').textContent=(h<12?'GOOD MORNING':h<18?'GOOD AFTERNOON':'GOOD EVENING')+', GABI';
+  let done=0;const total=9;try{done=Math.min(total,(JSON.parse(localStorage.getItem('gabi-unit1-revision-v1')||'[]')||[]).length)}catch(e){}
+  document.getElementById('progFill').style.width=(done/total*100)+'%';
+  document.getElementById('progText').textContent=done?done+' of '+total+' steps done':'9 steps · 60 minutes';
+  document.getElementById('continueBtn').onclick=()=>openLesson(1,3);
+})();
 
 (async function loadNewCover(){
   const img=document.getElementById('mainCover');
