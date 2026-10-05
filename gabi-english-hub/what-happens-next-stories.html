@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · What Happens Next? · will for predictions</title>
+<style>
+:root{--ink:#16384d;--muted:#536e7d;--blue:#1f78a5;--blueD:#155d80;--line:#c8dce8;--sand:#fff3ce;--ok:#e4f3e9;--okD:#2f8a57;--bad:#ffe6e0;--badD:#c9604a}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(180deg,#eef9ff 0,#f7fbff 52%,#fffaf1 100%);display:flex;flex-direction:column;min-height:100vh}
+button,a{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+button:focus-visible,a:focus-visible{outline:3px solid #397baf;outline-offset:2px}
+button:disabled{opacity:.45;cursor:default}
+header{flex:none;display:flex;align-items:center;gap:14px;padding:9px 3%;background:#fff;border-bottom:2px solid #bcd7e6}
+header .brand{flex:1;min-width:0}
+header small{display:block;color:var(--muted);font-size:12px;letter-spacing:.06em}
+header strong{display:block;font-size:20px;font-weight:900;letter-spacing:.02em}
+.btn{border:2px solid var(--line);border-radius:12px;background:#fff;padding:9px 14px;font-weight:800;text-decoration:none;display:inline-block}
+.btn:hover:not(:disabled){background:#eaf2f7}
+.primary{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 4px 0 var(--blueD)}
+.primary:hover:not(:disabled){background:#1b6c95}
+main{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width:1450px;margin:0 auto;padding:12px 3% 14px}
+.kicker{font-size:12px;font-weight:900;letter-spacing:.16em;color:var(--blue)}
+
+/* menu */
+.menuTop{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.menuTop h1{margin:4px 0 0;font-size:clamp(34px,4.6vw,58px);font-weight:900;letter-spacing:-.02em;line-height:1}
+.menuTop p{margin:0;max-width:520px;font-size:17px;line-height:1.4;color:var(--muted)}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0 6px}
+.scale div{border-radius:14px;padding:10px 8px;text-align:center;font-weight:900;font-size:clamp(15px,1.5vw,20px);border:2px solid transparent}
+.scale small{display:block;margin-top:4px;font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--muted)}
+.scale .s1{background:#d6f0de;border-color:#8fcfa5}.scale .s2{background:#e8f6e3;border-color:#bfe0b0}.scale .s3{background:var(--sand);border-color:#f0cf69}.scale .s4{background:#ffeede;border-color:#f1c29a}.scale .s5{background:var(--bad);border-color:#e9a898}
+.rule{margin:0 0 14px;padding:10px 14px;background:#fff;border:2px solid var(--line);border-radius:14px;font-size:17px;line-height:1.45}
+.rule b{color:var(--blue)}.rule s{color:#a4442f}
+.cards{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{display:flex;flex-direction:column;text-align:left;padding:0;border:2px solid var(--line);border-radius:20px;background:#fff;overflow:hidden}
+.card:hover{border-color:#6fb0cf;box-shadow:0 8px 0 #b8dced;transform:translateY(-2px)}
+.card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#152e3e;min-height:0;flex:1}
+.card div{padding:12px 14px 14px}
+.card b{display:block;font-size:24px;font-weight:900}
+.card span{display:block;margin-top:4px;color:var(--muted);font-size:15px;line-height:1.35}
+.card em{display:inline-block;margin-top:8px;font-style:normal;font-size:12px;font-weight:900;letter-spacing:.08em;padding:5px 10px;border-radius:999px;background:#e5f5ff;border:1px solid #b8dced}
+.card em.done{background:var(--ok);border-color:#9fd3b3;color:#225f40}
+
+/* play */
+.play{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px}
+.stageWrap{min-width:0;min-height:0;display:flex;align-items:flex-start;justify-content:center}
+.stage{position:relative;width:min(100%,calc((100vh - 110px)*16/9));aspect-ratio:16/9;background:#0e2230;border-radius:18px;overflow:hidden}
+.stage #yt,.stage iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.side{display:flex;flex-direction:column;gap:10px;min-height:0}
+.box{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 14px}
+.score{display:flex;align-items:center;justify-content:space-between}
+.score b{font-size:40px;font-weight:900;line-height:1}
+.score span{font-size:12px;font-weight:900;letter-spacing:.1em;color:var(--muted)}
+.stops{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.stops li{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;padding:6px 8px;border-radius:10px;background:#f2f8fb}
+.stops li i{font-style:normal;min-width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#fff;border:1px solid var(--line);font-size:13px}
+.stops li.now{background:var(--sand)}.stops li.done{background:var(--ok)}
+.stops li time{margin-left:auto;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
+.side .btn{width:100%;text-align:center}
+.tiny{font-size:12.5px;line-height:1.4;color:var(--muted);margin:0}
+.tiny button{border:0;background:none;padding:0;color:var(--blue);font-weight:800;text-decoration:underline}
+
+/* overlay */
+.ov{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;gap:clamp(6px,1.2vh,12px);padding:clamp(12px,2.2vh,22px) clamp(14px,2.4vw,30px);background:rgba(244,251,255,.985);overflow:auto}
+.ov h2{margin:0;font-size:clamp(20px,2.5vw,32px);font-weight:900;line-height:1.15}
+.ov .step{display:flex;gap:6px;align-items:center}
+.ov .step i{font-style:normal;font-size:12px;font-weight:900;letter-spacing:.08em;padding:5px 10px;border-radius:999px;background:#fff;border:2px solid var(--line);color:var(--muted)}
+.ov .step i.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{text-align:left;border:2px solid var(--line);border-radius:14px;background:#fff;padding:clamp(8px,1.5vh,14px) 14px;font-weight:800;font-size:clamp(16px,1.75vw,22px);line-height:1.2}
+.opt:nth-child(1){background:#eef9ff}.opt:nth-child(2){background:#effaf4}.opt:nth-child(3){background:#fff7df}.opt:nth-child(4){background:#f5efff}
+.opt:hover:not(:disabled){border-color:#6fb0cf}
+.opt.own{grid-column:1/-1;background:#fff;border-style:dashed;text-align:center}
+.opt.pick{border-color:var(--blue);box-shadow:0 0 0 3px #b8dced}
+.sure{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sure button{border:2px solid var(--line);border-radius:14px;background:#fff;padding:clamp(8px,1.5vh,14px) 8px;font-weight:900;font-size:clamp(17px,1.8vw,23px)}
+.sure button small{display:block;margin-top:3px;font-size:12.5px;font-weight:700;color:var(--muted)}
+.sure .a{background:#d6f0de;border-color:#8fcfa5}.sure .b{background:var(--sand);border-color:#f0cf69}.sure .c{background:#ffeede;border-color:#f1c29a}
+.sure button.pick{box-shadow:0 0 0 4px var(--ink)}
+.sayBox{margin-top:auto;border-radius:16px;background:var(--ink);color:#fff;padding:clamp(10px,1.8vh,16px) 18px}
+.sayBox small{display:block;font-size:12px;font-weight:900;letter-spacing:.14em;color:#9fd2ec}
+.sayBox p{margin:4px 0 0;font-size:clamp(20px,2.4vw,31px);font-weight:900;line-height:1.2}
+.sayBox p u{text-decoration:none;color:#ffd866}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row .grow{flex:1}
+.res{display:grid;gap:8px}
+.res div{border-radius:14px;padding:10px 14px;font-size:clamp(17px,1.8vw,23px);font-weight:800;line-height:1.25;display:flex;gap:12px;align-items:center}
+.res .ok{background:var(--ok);border:2px solid #9fd3b3}.res .no{background:var(--bad);border:2px solid #e9a898}.res .fact{background:#fff;border:2px solid var(--line)}
+.res b{margin-left:auto;white-space:nowrap;font-size:.9em}
+.res small{display:block;font-size:12px;font-weight:900;letter-spacing:.1em;color:var(--muted)}
+.review{flex:1;min-height:0;overflow:auto;display:grid;gap:6px;align-content:start}
+.review div{display:flex;gap:10px;align-items:center;padding:8px 12px;border-radius:12px;font-weight:800;font-size:clamp(15px,1.5vw,19px)}
+.review .ok{background:var(--ok)}.review .no{background:var(--bad)}
+.review b{margin-left:auto;white-space:nowrap}
+.big{font-size:clamp(40px,6vw,72px);font-weight:900;line-height:1;margin:0}
+
+@media(max-width:950px){.play{grid-template-columns:1fr}.stage{width:100%}.cards{grid-template-columns:1fr}.scale{grid-template-columns:repeat(2,1fr)}.ov{position:fixed;z-index:40}}
+@media(max-width:560px){header small{display:none}header strong{font-size:16px}.opts{grid-template-columns:1fr}.sure{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <a class="btn" href="what-happens-next.html">← SHORT CLIPS</a>
+  <div class="brand"><small>GABI · WARM-UP · WILL FOR PREDICTIONS</small><strong>WHAT HAPPENS NEXT? · STORIES</strong></div>
+  <button class="btn" id="full">Full screen</button>
+</header>
+<main id="app"></main>
+<script>
+/* Each option: [base form, past form]. Sentences are built as
+   "<Subject> will probably <base>." and, after watching, "<Subject> <past>."  */
+const CLIPS=[
+ {id:'38y_1EWIE9I',title:'Snack Attack',note:'An old lady, a teenager and one packet of cookies.',stops:[
+  {t:50,s:'She',q:'The cookies are stuck in the machine. What will the old lady do?',o:[['hit and shake the machine','hit and shook the machine'],['ask the boy for help','asked the boy for help'],['put in more money','put in more money'],['walk away without the cookies','walked away without the cookies']]},
+  {t:115,s:'She',q:'The boy takes a cookie from the packet. What will the old lady do?',o:[['get angry and pull the packet away','got angry and pulled the packet away'],['smile and share the cookies','smiled and shared the cookies'],['move to another bench','moved to another bench'],['call a police officer','called a police officer']]},
+  {t:185,s:'He',q:'There is only one cookie left. What will the boy do?',o:[['eat the last cookie himself','ate the last cookie himself'],['break it in half and share it','broke it in half and shared it'],['give the whole cookie to her','gave the whole cookie to her'],['throw it to the birds','threw it to the birds']]},
+  {t:235,s:'She',q:'On the train she opens her bag. What will she find?',o:[['find her own packet of cookies','found her own packet of cookies'],['find the boy’s headphones','found the boy’s headphones'],['find that her ticket is missing','found that her ticket was missing'],['find her money from the machine','found her money from the machine']]}
+ ]},
+ {id:'w0ffwDYo00Q',title:'Cat Man Do',note:'A hungry cat and a man who will not wake up.',stops:[
+  {t:22,s:'The cat',q:'The man is still asleep. What will the cat do?',o:[['jump on the man','jumped on the man'],['go back to sleep','went back to sleep'],['leave the room quietly','left the room quietly'],['open the fridge','opened the fridge']]},
+  {t:62,s:'The cat',q:'Nothing works, so the cat leaves the bed. What will it come back with?',o:[['come back with a baseball bat','came back with a baseball bat'],['come back with an alarm clock','came back with an alarm clock'],['come back with its empty bowl','came back with its empty bowl'],['come back with a mouse','came back with a mouse']]},
+  {t:78,s:'The cat',q:'The man finally wakes up. What will the cat do?',o:[['look sweet and point to its mouth','looked sweet and pointed to its mouth'],['run away and hide','ran away and hid'],['hit him again','hit him again'],['fall asleep on the bed','fell asleep on the bed']]}
+ ]},
+ {id:'WjqiU5FgsYc',title:'The Present',note:'A boy, a video game and a surprise in a box.',stops:[
+  {t:50,s:'The box',q:'Mum puts a box on the table. What will be inside?',o:[['have a puppy inside','had a puppy inside'],['have a new video game inside','had a new video game inside'],['have a football inside','had a football inside'],['have a pair of trainers inside','had a pair of trainers inside']]},
+  {t:88,s:'He',q:'The boy sees that the puppy has only three legs. What will the boy do?',o:[['push the puppy away and play his game','pushed the puppy away and played his game'],['hug the puppy','hugged the puppy'],['call his mum','called his mum'],['take the puppy outside','took the puppy outside']]},
+  {t:170,s:'He',q:'The puppy keeps falling but never stops playing. What will the boy do now?',o:[['turn off the game and go outside to play','turned off the game and went outside to play'],['give the puppy back to his mum','gave the puppy back to his mum'],['kick the ball away','kicked the ball away'],['keep playing his video game','kept playing his video game']]}
+ ]}
+];
+const SURE={definitely:{label:'definitely',win:3,lose:-1,note:'right +3 · wrong −1'},probably:{label:'probably',win:2,lose:0,note:'right +2'},might:{label:'might',win:1,lose:0,note:'right +1'}};
+const KEY='gabi-whn-v1';
+let store={times:{},best:{}};
+try{store=Object.assign(store,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}};
+const A=document.getElementById('app'),$=s=>A.querySelector(s),$$=s=>[...A.querySelectorAll(s)];
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mmss=t=>Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');
+const low=s=>s==='She'||s==='He'?s.toLowerCase():s.charAt(0).toLowerCase()+s.slice(1);
+const stopTime=(ci,si)=>{const v=(store.times[CLIPS[ci].id]||[])[si];return typeof v==='number'?v:CLIPS[ci].stops[si].t};
+
+let player=null,timer=null,G=null,apiReady=null;
+function loadApi(){
+ if(apiReady)return apiReady;
+ apiReady=new Promise((res,rej)=>{
+  if(window.YT&&YT.Player)return res();
+  window.onYouTubeIframeAPIReady=()=>res();
+  const s=document.createElement('script');s.src='https://www.youtube.com/iframe_api';s.onerror=()=>rej(new Error('api'));document.head.appendChild(s);
+  setTimeout(()=>rej(new Error('timeout')),12000);
+ });
+ return apiReady;
+}
+function stopAll(){clearInterval(timer);timer=null;try{player&&player.destroy&&player.destroy()}catch(e){}player=null}
+
+function menu(){
+ stopAll();G=null;
+ A.innerHTML=`<div class="menuTop"><div><div class="kicker">WATCH · STOP · PREDICT</div><h1>What Happens Next?</h1></div>
+  <p>The clip stops at the best moment. Say what <b>will</b> happen, choose how sure you are, then watch and check.</p></div>
+ <div class="scale">
+  <div class="s1">will definitely<small>100% SURE</small></div><div class="s2">will probably<small>QUITE SURE</small></div><div class="s3">might<small>MAYBE</small></div><div class="s4">probably won’t<small>QUITE SURE NOT</small></div><div class="s5">definitely won’t<small>100% SURE NOT</small></div>
+ </div>
+ <p class="rule">Word order: she <b>will probably</b> share · she <b>probably won’t</b> share. &nbsp; Say <b>I don’t think she will</b> share, not <s>I think she won’t share</s>.</p>
+ <div class="cards">${CLIPS.map((c,i)=>`<button class="card" data-clip="${i}"><img alt="" src="https://img.youtube.com/vi/${c.id}/hqdefault.jpg"><div><b>${esc(c.title)}</b><span>${esc(c.note)}</span><em class="${store.best[c.id]!=null?'done':''}">${store.best[c.id]!=null?'BEST SCORE '+store.best[c.id]:c.stops.length+' STOPS'}</em></div></button>`).join('')}</div>`;
+ $$('[data-clip]').forEach(b=>b.onclick=()=>start(+b.dataset.clip));
+}
+
+function start(ci){
+ stopAll();
+ G={ci,k:0,score:0,pending:null,log:[],ended:false,busy:false};
+ const c=CLIPS[ci];
+ A.innerHTML=`<div class="play"><div class="stageWrap"><div class="stage" id="stage"><div id="yt"></div></div></div>
+  <aside class="side">
+   <div class="box score"><span>SCORE</span><b id="score">0</b></div>
+   <div class="box"><div class="kicker">${esc(c.title.toUpperCase())}</div><ul class="stops" id="stops"></ul></div>
+   <button class="btn primary" id="stopNow">Stop here &amp; predict</button>
+   <button class="btn" id="exit">All clips</button>
+   <p class="tiny">The clip stops by itself at the times above. If a stop comes too early or too late, press <b>Stop here &amp; predict</b> at the right moment: that time is saved for next time. <button id="resetT">Reset times</button></p>
+  </aside></div>`;
+ $('#exit').onclick=menu;
+ $('#stopNow').onclick=()=>{if(!player||G.busy)return;const t=player.getCurrentTime?player.getCurrentTime():0;
+  if(G.k<c.stops.length){const arr=store.times[c.id]||(store.times[c.id]=[]);arr[G.k]=Math.round(t);save()}
+  trigger()};
+ $('#resetT').onclick=()=>{delete store.times[c.id];save();drawStops()};
+ drawStops();
+ loadApi().then(()=>{
+  if(!G||G.ci!==ci)return;
+  player=new YT.Player('yt',{videoId:c.id,playerVars:{rel:0,modestbranding:1,playsinline:1},events:{onStateChange:e=>{if(e.data===0&&G&&!G.ended){G.ended=true;trigger()}}}});
+  timer=setInterval(()=>{
+   if(!G||G.busy||!player||!player.getCurrentTime||G.k>=c.stops.length)return;
+   let st=-1;try{st=player.getPlayerState()}catch(e){}
+   if(st===1&&player.getCurrentTime()>=stopTime(ci,G.k))trigger();
+  },200);
+ }).catch(()=>{const s=$('#stage');if(s)s.innerHTML='<div class="ov"><h2>The video player did not load.</h2><p>Check the internet connection and that YouTube opens on this computer, then reload the page.</p></div>'});
+}
+function drawStops(){
+ const c=CLIPS[G.ci],el=$('#stops');if(!el)return;
+ el.innerHTML=c.stops.map((s,i)=>`<li class="${i<G.k?'done':i===G.k?'now':''}"><i>${i+1}</i>Stop ${i+1}<time>${mmss(stopTime(G.ci,i))}</time></li>`).join('');
+ $('#score').textContent=G.score;
+}
+function overlay(html){
+ let o=$('#ov');if(!o){o=document.createElement('div');o.className='ov';o.id='ov';$('#stage').appendChild(o)}
+ o.innerHTML=html;return o;
+}
+function closeOverlay(){const o=$('#ov');if(o)o.remove()}
+
+/* A stop: first check the previous prediction (if any), then make the next one. */
+function trigger(){
+ if(!G||G.busy)return;G.busy=true;
+ try{player&&player.pauseVideo&&player.pauseVideo()}catch(e){}
+ if(G.pending)return outcome();
+ if(G.k<CLIPS[G.ci].stops.length&&!G.ended)return predict();
+ finish();
+}
+function resume(){G.busy=false;closeOverlay();drawStops();if(G.ended)return finish();try{player.playVideo()}catch(e){}}
+
+function predict(){
+ const c=CLIPS[G.ci],st=c.stops[G.k],P={pick:null,sure:null,wont:null};
+ const steps=n=>`<div class="step"><i class="${n===1?'on':''}">1 · WHAT?</i><i class="${n===2?'on':''}">2 · HOW SURE?</i><i class="${n===3?'on':''}">3 · WHAT WON’T HAPPEN?</i></div>`;
+ const sentence=()=>{const base=P.pick==='own'?'…':st.o[P.pick][0];
+  if(P.sure==='might')return `I think ${low(st.s)} <u>might</u> ${esc(base)}.`;
+  return `I think ${low(st.s)} <u>will ${P.sure||'…'}</u> ${esc(base)}.`};
+ const s1=()=>{overlay(`${steps(1)}<div class="kicker">STOP ${G.k+1} OF ${c.stops.length}</div><h2>${esc(st.q)}</h2>
+   <div class="opts">${st.o.map((o,i)=>`<button class="opt" data-o="${i}">${esc(o[0])}</button>`).join('')}<button class="opt own" data-o="own">My own idea</button></div>`);
+  $$('[data-o]').forEach(b=>b.onclick=()=>{P.pick=b.dataset.o==='own'?'own':+b.dataset.o;s2()})};
+ const s2=()=>{overlay(`${steps(2)}<h2>How sure are you?</h2>
+   <div class="sure">${Object.entries(SURE).map(([k,v],i)=>`<button class="${'abc'[i]} ${P.sure===k?'pick':''}" data-s="${k}">${k==='might'?'might':'will '+v.label}<small>${v.note}</small></button>`).join('')}</div>
+   <div class="sayBox"><small>SAY IT ALOUD</small><p id="say">${sentence()}</p></div>
+   <div class="row"><button class="btn" id="back">← Change idea</button><span class="grow"></span><button class="btn primary" id="next" ${P.sure?'':'disabled'}>Next →</button></div>`);
+  $$('[data-s]').forEach(b=>b.onclick=()=>{P.sure=b.dataset.s;s2()});
+  $('#back').onclick=s1;$('#next').onclick=s3};
+ const s3=()=>{const rest=st.o.map((o,i)=>i).filter(i=>i!==P.pick);
+  overlay(`${steps(3)}<h2>And what definitely won’t happen?</h2>
+   <div class="opts">${rest.map(i=>`<button class="opt ${P.wont===i?'pick':''}" data-w="${i}">${esc(st.o[i][0])}</button>`).join('')}</div>
+   <div class="sayBox"><small>SAY BOTH ALOUD</small><p>${sentence()}</p><p>${P.wont==null?'…':`${esc(st.s)} <u>definitely won’t</u> ${esc(st.o[P.wont][0])}.`}</p></div>
+   <div class="row"><button class="btn" id="back">← Back</button><span class="grow"></span><button class="btn primary" id="watch" ${P.wont==null?'disabled':''}>Watch and check →</button></div>`);
+  $$('[data-w]').forEach(b=>b.onclick=()=>{P.wont=+b.dataset.w;s3()});
+  $('#back').onclick=s2;
+  $('#watch').onclick=()=>{G.pending={k:G.k,...P};G.k++;resume()}};
+ s1();
+}
+
+function outcome(){
+ const c=CLIPS[G.ci],p=G.pending,st=c.stops[p.k];
+ overlay(`<div class="kicker">CHECK STOP ${p.k+1}</div><h2>So, what happened?</h2>
+  <div class="opts">${st.o.map((o,i)=>`<button class="opt" data-h="${i}">${esc(st.s)} ${esc(o[1])}.</button>`).join('')}
+  ${p.pick==='own'?'<button class="opt own" data-h="own">Gabi’s own idea happened.</button>':''}<button class="opt own" data-h="else">Something else happened.</button></div>
+  <div class="row"><span class="grow"></span><button class="btn" id="replay">Not sure · watch 10 seconds again</button></div>`);
+ $('#replay').onclick=()=>{try{player.seekTo(Math.max(0,player.getCurrentTime()-10),true)}catch(e){}
+  const hold=G.pending;G.pending=null;G.busy=false;closeOverlay();try{player.playVideo()}catch(e){}
+  setTimeout(()=>{if(G){G.pending=hold;trigger()}},10500)};
+ $$('[data-h]').forEach(b=>b.onclick=()=>{
+  const h=b.dataset.h==='own'?'own':b.dataset.h==='else'?'else':+b.dataset.h;
+  const right=p.pick===h,S=SURE[p.sure],pts=right?S.win:S.lose;
+  const wontRight=h!==p.wont,bonus=wontRight?1:0;
+  G.score+=pts+bonus;
+  const pred=(p.sure==='might'?`${st.s} might `:`${st.s} will ${p.sure} `)+(p.pick==='own'?'… (own idea)':st.o[p.pick][0]+'.');
+  const wont=`${st.s} definitely won’t ${st.o[p.wont][0]}.`;
+  G.log.push({t:pred,ok:right,pts},{t:wont,ok:wontRight,pts:bonus});
+  G.pending=null;
+  const fact=typeof h==='number'?`${st.s} ${st.o[h][1]}.`:h==='own'?'Gabi’s own idea happened.':'Something else happened.';
+  const more=G.k<c.stops.length&&!G.ended;
+  overlay(`<div class="kicker">CHECK STOP ${p.k+1}</div><h2>${right?'Good prediction.':'Not this time.'}</h2>
+   <div class="res"><div class="fact"><span><small>WHAT HAPPENED</small>${esc(fact)}</span></div>
+   <div class="${right?'ok':'no'}"><span><small>YOUR PREDICTION</small>${esc(pred)}</span><b>${pts>0?'+'+pts:pts}</b></div>
+   <div class="${wontRight?'ok':'no'}"><span><small>YOUR “WON’T”</small>${esc(wont)}</span><b>+${bonus}</b></div></div>
+   <div class="row" style="margin-top:auto"><span class="grow"></span><button class="btn primary" id="go">${more?'Next prediction →':G.ended?'See the result →':'Watch the ending →'}</button></div>`);
+  drawStops();
+  $('#go').onclick=()=>{if(more){predict()}else{resume()}};
+ });
+}
+
+function finish(){
+ const c=CLIPS[G.ci];G.busy=true;
+ clearInterval(timer);timer=null;try{player.pauseVideo()}catch(e){}
+ const max=c.stops.length*4;if(store.best[c.id]==null||G.score>store.best[c.id]){store.best[c.id]=G.score;save()}
+ const next=(G.ci+1)%CLIPS.length;
+ overlay(`<div class="row"><div><div class="kicker">${esc(c.title.toUpperCase())} · FINISHED</div><p class="big">${G.score} <span style="font-size:.4em;color:var(--muted)">/ ${max} points</span></p></div><span class="grow"></span>
+   <button class="btn" id="again">Play again</button><button class="btn primary" id="nextClip">Next clip: ${esc(CLIPS[next].title)} →</button></div>
+  <div class="review">${G.log.map(l=>`<div class="${l.ok?'ok':'no'}">${esc(l.t)}<b>${l.ok?'right':'wrong'} · ${l.pts>0?'+'+l.pts:l.pts}</b></div>`).join('')||'<p>No predictions were made.</p>'}</div>
+  <div class="sayBox"><small>NOW RETELL THE STORY</small><p>Tell the whole story in the past: “First… Then… In the end…”</p></div>`);
+ drawStops();
+ $('#again').onclick=()=>start(G.ci);$('#nextClip').onclick=()=>start(next);
+}
+
+document.getElementById('full').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}};
+menu();
+</script>
+</body>
+</html>
