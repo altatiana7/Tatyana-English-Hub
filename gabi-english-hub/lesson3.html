@@ -115,6 +115,66 @@ aside{top:76px}
 .resultList{margin-top:10px;background:#fff;border:2px solid #c8dce8;border-radius:18px;padding:10px 12px}
 .resultList .resultWord small{min-width:22px;text-align:center;font-weight:900}
 @media(max-width:650px){.resultCols{grid-template-columns:1fr}}
+
+/* ===== REPAIR PASS (2026-10-05): texts, video and Kahoot back; fits a 560px-high window ===== */
+header{padding:6px 3%}
+.shell{margin:8px auto}
+aside{top:62px;max-height:calc(100vh - 68px);overflow:auto;scrollbar-width:thin;padding-bottom:4px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px}
+.tabs button{min-height:38px;padding:6px 14px;font-size:15px;border-radius:12px;border:2px solid #c8dce8;flex:1 1 auto}
+.ref{background:#fff3ce;border:2px solid #f0cf69;border-radius:14px;padding:8px 14px;font-size:15.5px;line-height:1.4;margin-bottom:8px}
+.famGrid,.watchGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:10px;align-items:start}
+.watchGrid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
+.famGrid>.panel,.watchGrid>.panel{margin:0}
+.famGrid .reading{font-size:17px;line-height:1.5}.famGrid .reading p{line-height:1.5;margin:8px 0}
+.famGrid h3,.qs h3{margin:4px 0 6px}
+.famGrid .familyIntro{display:none}
+.famGrid .familyTree{padding:10px 12px}
+.famGrid .familyTree .treeLabel{margin-bottom:8px}
+.famGrid .personCard{min-height:56px!important;padding:8px 10px!important}
+.famGrid .personCard b{font-size:16px;margin-bottom:2px}
+.famGrid .familyLine{height:20px}.famGrid .familyLine:before{height:10px}.famGrid .familyLine:after{top:10px}
+.famGrid .familyDetail{margin-top:8px;padding:9px 12px;min-height:42px}
+.famGrid .familyCouple{padding:8px}
+.vid video{max-height:calc(100vh - 250px);background:#152e3e}
+.vid .row{margin-top:8px}
+.qs{max-height:calc(100vh - 150px);overflow:auto}
+.qs ol{margin:4px 0 10px;padding-left:22px}
+.qs li{margin:5px 0;line-height:1.55;font-size:16px}
+.qs details{margin:2px 0}.qs summary{padding:2px 0;font-size:14px;color:#1f6789}
+input.gap{display:inline-block;width:7.6em;padding:4px 8px;font-size:16px;margin:1px 3px;border-width:2px}
+input.gap.ok{background:#e4f3e9;border-color:#3c9865}input.gap.no{background:#ffebe7;border-color:#be614c}
+[data-predict][aria-pressed=true]{background:#1f78a5;border-color:#1f78a5;color:#fff}
+.rule{padding:10px 12px}.rule p{margin:0 0 8px;font-weight:800;font-size:17px}
+.kahoot{gap:12px}
+@media(max-height:640px){
+ #route{gap:4px}#route button{min-height:36px;padding:3px 8px}
+ #route button span{min-width:22px;height:22px}
+ aside>p.routeMeta{display:none}.routeMeta{margin:5px 0}
+ .flash{min-height:clamp(120px,26vh,200px)}
+ .memoryCard{min-height:64px}
+ .gameHero p{display:none}
+ .panel{padding:10px 14px;margin:8px 0}
+ .navbottom{margin-top:8px;padding:8px 0 10px}
+}
+.famGrid>div{min-width:0}
+.famGrid .familyTop{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.famGrid .familyCouple{grid-column:1/-1;order:-1;grid-template-columns:repeat(2,minmax(0,1fr))}
+.famGrid .familySide{grid-template-columns:minmax(0,1fr)}
+.famGrid .personCard{min-width:0}
+.famGrid .familyLine{display:none}
+.famGrid .familyChildren{margin-top:8px}
+.famGrid .familyCouple{gap:6px}
+.famGrid .personCard b{font-size:15px}.famGrid .personCard span{font-size:11px}
+.famGrid .familyChildren{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.options:has(button:nth-child(3):last-child){grid-template-columns:repeat(3,1fr)}
+@media(max-height:640px){
+ .q{margin:10px 0;font-size:clamp(20px,2.2vw,26px)}
+ .options{margin:8px 0}.options button{min-height:50px;padding:10px 14px}
+ .exnav{margin-top:8px}.feedback{margin:6px 0}
+ .exercise h3{margin:2px 0 6px;font-size:18px}
+}
+@media(max-width:950px){.famGrid,.watchGrid{grid-template-columns:1fr}.qs{max-height:none}}
 </style></head><body><header><a class="link" href="index.html">← HOME</a><div class="brand"><small>GABI · GATEWAY B1 · LESSON 3</small><strong>MISSION: PEOPLE & FAMILY</strong></div><button id="full">Full screen</button><button id="reset">Reset</button></header><div id="resetConfirm" class="panel" hidden><p>Clear your answers and notes for this lesson on this device?</p><button id="confirmReset">Clear lesson</button> <button id="cancelReset">Keep my work</button></div><div class="shell"><aside><nav id="route" aria-label="Lesson activities"></nav><div class="routeMeta" id="progressText"></div><div class="progress"><div id="progressFill"></div></div><p class="routeMeta">Your answers stay on this device.<br>The lesson always opens at Activity 1.</p></aside><main id="main" class="workspace"></main></div><script>const D={"warmupQuiz":[{"question":"Which famous scientist later worked as Master of the Royal Mint and personally investigated counterfeiter?","options":["Isaac Newton","Nikola Tesla","Charles Darwin","Alan Turing"],"answer":"Isaac Newton","fact":"Newton became Warden and later Master of the Royal Mint. He took the job seriously and investigated counterfeiting cases."},{"question":"Whose first agreement with FC Barcelona was famously written on a paper napkin?","options":["Lionel Messi","Alexander Ovechkin","Michael Jackson","Ludwig van Beethoven"],"answer":"Lionel Messi","fact":"A preliminary agreement connected with Messi’s move to Barcelona was written on a napkin in 2000."},{"question":"Which composer originally admired Napoleon enough to dedicate a major symphony to him, then removed the dedication?","options":["Ludwig van Beethoven","Wolfgang Mozart","Johann Bach","Franz Schubert"],"answer":"Ludwig van Beethoven","fact":"Beethoven originally connected his Third Symphony, the Eroica, with Napoleon, but changed the dedication after Napoleon declared himself emperor."},{"question":"Which scientist named a newly discovered element after her homeland?","options":["Marie Skłodowska-Curie","Hedy Lamarr","Ada Lovelace","Rosalind Franklin"],"answer":"Marie Skłodowska-Curie","fact":"Curie named polonium after Poland, her homeland."},{"question":"Which inventor worked on alternating-current technology and also experimented with wireless transmission?","options":["Nikola Tesla","Charles Darwin","Nicolaus Copernicus","Isaac Newton"],"answer":"Nikola Tesla","fact":"Tesla is strongly associated with alternating-current systems and also carried out experiments in wireless power and radio-frequency technology."},{"question":"Which performer co-wrote “We Are the World” with Lionel Richie?","options":["Michael Jackson","Elvis Presley","Freddie Mercury","David Bowie"],"answer":"Michael Jackson","fact":"Michael Jackson and Lionel Richie wrote “We Are the World” for the 1985 USA for Africa charity recording."},{"question":"Which mathematician described the idea of a universal computing machine in 1936?","options":["Alan Turing","Isaac Newton","Nikola Tesla","Charles Darwin"],"answer":"Alan Turing","fact":"Turing’s 1936 paper introduced the abstract machine model now known as the Turing machine."},{"question":"Which scientist first trained in medicine but strongly disliked surgery before changing direction?","options":["Charles Darwin","Nicolaus Copernicus","Alan Turing","Marie Curie"],"answer":"Charles Darwin","fact":"Darwin studied medicine in Edinburgh but left the course; he later studied at Cambridge."},{"question":"Which astronomer proposed a heliocentric model in which Earth moves around the Sun?","options":["Nicolaus Copernicus","Isaac Newton","Nikola Tesla","Alan Turing"],"answer":"Nicolaus Copernicus","fact":"Copernicus developed a heliocentric model that placed the Sun near the centre of the planetary system."},{"question":"Which hockey star grew up in a family where his mother was an Olympic champion in basketball?","options":["Alexander Ovechkin","Lionel Messi","Wayne Gretzky","Sidney Crosby"],"answer":"Alexander Ovechkin","fact":"Ovechkin’s mother, Tatyana Ovechkina, was a two-time Olympic gold medallist in basketball with the Soviet team."},{"question":"Which Russian actor studied at a technical college before choosing an acting career?","options":["Konstantin Khabensky","Alexander Ovechkin","Michael Jackson","Lionel Messi"],"answer":"Konstantin Khabensky","fact":"Khabensky studied in a technical field before leaving and later training as an actor."},{"question":"Which Hollywood star was also an inventor who co-developed a frequency-hopping communication system?","options":["Hedy Lamarr","Marilyn Monroe","Grace Kelly","Audrey Hepburn"],"answer":"Hedy Lamarr","fact":"Hedy Lamarr and George Antheil patented a frequency-hopping system intended to make radio-controlled torpedoes harder to jam."},{"question":"Which novelist disappeared for eleven days in 1926, creating a major public mystery?","options":["Agatha Christie","Virginia Woolf","Jane Austen","George Eliot"],"answer":"Agatha Christie","fact":"Agatha Christie disappeared in December 1926 and was found eleven days later at a hotel in Harrogate."},{"question":"Which scientist was offered the presidency of Israel in 1952 but declined?","options":["Albert Einstein","Isaac Newton","Nikola Tesla","Alan Turing"],"answer":"Albert Einstein","fact":"After the death of Chaim Weizmann, Einstein was invited to become President of Israel but declined the offer."},{"question":"Which technology entrepreneur said a college calligraphy course later influenced the typography of the Macintosh?","options":["Steve Jobs","Bill Gates","Alan Turing","Nikola Tesla"],"answer":"Steve Jobs","fact":"Jobs later said that his calligraphy studies influenced the Macintosh’s attention to typography."}],"warmupWords":[
 ["counterfeiter","a person who illegally makes fake money","фальшивомонетчик · Newton investigated people who made fake coins."],
 ["Royal Mint","the organisation that makes a country's coins","Королевский монетный двор · Newton worked at the Royal Mint."],
@@ -147,8 +207,8 @@ const titles=[
 'Memory Match',
 'Famous People Quiz',
 'Word Factory',
-'Family Match',
-'Sentence Builder',
+'A Legendary Family',
+'Video: To Be Old',
 'Error Hunter',
 'Timed Sprint',
 'Floor Is Lava',
@@ -159,15 +219,15 @@ const bridges=[
 'LEVEL 02 · Match the word with its meaning. Build fast recall before the quiz.',
 'LEVEL 03 · Now use the same vocabulary in real famous-person facts.',
 'LEVEL 04 · Sort the base word by suffix, then reveal the complete noun.',
-'LEVEL 05 · Match family relationships precisely. One relationship, one answer.',
-'LEVEL 06 · Build the full sentence from blocks. No guessing from a long text.',
+'LEVEL 05 · Read about the family, then match the relationships and build sentences.',
+'LEVEL 06 · Learn the words, predict, watch the video and check your answers.',
 'LEVEL 07 · Every sentence has one target mistake. Find it and repair it.',
 'LEVEL 08 · Fast mixed retrieval: family, articles and word formation.',
 'FINAL BOSS · The lava rises. Correct answers push it down; mistakes push it up.',
 'LEVEL 10 · Put the pieces together: word formation, family relationships and articles. Answer one question at a time, then review your corrections.'
 ];
 let saved={};try{saved=JSON.parse(localStorage.getItem('gabi-lesson3-game-v10')||'{}')}catch{}
-const S={step:0,tab:{},exercise:{},notes:{},flashes:{},done:[],game:{},...saved};S.step=0;{const q=Number(new URLSearchParams(location.search).get('step'));if(q>0&&q<titles.length)S.step=q}S.game=S.game||{};
+const S={step:0,tab:{},exercise:{},notes:{},flashes:{},done:[],game:{},...saved};S.step=0;S.flashes={};{const q=Number(new URLSearchParams(location.search).get('step'));if(q>0&&q<titles.length)S.step=q}S.game=S.game||{};
 function save(){try{localStorage.setItem('gabi-lesson3-game-v10',JSON.stringify(S))}catch{}}
 const banks={};
 function bank(id,items){banks[id]=items;return id}
@@ -214,7 +274,7 @@ function drawExercise(id){const root=$('[data-exercise="'+id+'"] .exbody');if(!r
  root.innerHTML=`<div class="row spread"><span class="badge">${s.i+1} / ${indices.length}</span><span>${score} correct · ${attempted} answered</span></div><p class="q">${esc(q.q)}</p>${q.base?`<div class="badge">${esc(q.base)}</div>`:''}${options?`<div class="options">${options.map(o=>`<button data-answer="${esc(o)}" data-bank="${id}" ${answer?'disabled':''} class="${answer&&(norm(o)===norm(q.a)?'correct':o===answer.value?'wrong':'')}">${esc(o)}</button>`).join('')}</div>`:`<form data-check="${id}" class="inputrow"><label style="flex:1">${id==='articleFix'?'Rewrite the complete sentence:':'Your answer:'}<input autocomplete="off" aria-label="Answer" data-draft="${id}" value="${esc(s.drafts[index]||answer?.value||'')}" ${answer?'disabled':''}></label><button class="primary" ${answer?'disabled':''}>Check</button></form>`}<div class="feedback ${answer?(answer.correct?'ok':'bad'):''}" aria-live="polite">${answer?`<strong>${answer.correct?'Correct.':'Not quite.'} Answer: ${esc(q.a)}</strong>${esc(q.e)}`:''}</div><div class="exnav"><button data-question="${id}" data-delta="-1" ${s.i===0?'disabled':''}>← Previous question</button>${answer?`<button data-retry="${id}">Retry this question</button>`:''}<button data-question="${id}" data-delta="1" ${s.i===indices.length-1?'disabled':''}>Next question →</button>${s.i===indices.length-1&&['famous','final','wordReview'].includes(id)?`<button class="primary" data-result="${id}">See result</button>`:''}</div>`;
 }
 function submit(id,value){const s=bs(id),index=list(id)[s.i];if(s.answers[index]||!String(value).trim())return;const q=banks[id][index];s.answers[index]={value,correct:norm(value)===norm(q.a)};save();drawExercise(id)}
-function flash(id,cards){const s=S.flashes[id]||(S.flashes[id]={i:0,back:false});const c=cards[s.i];return `<div class="panel"><div class="row spread"><span class="badge">${s.i+1} / ${cards.length}</span><span>Tap to flip</span></div><button class="flash" data-flip="${id}"><strong>${esc(s.back?c[1]:c[0])}</strong><span>${esc(s.back?(c[2]||''): 'What does it mean? Give an example.')}</span></button><div class="row spread" style="margin-top:12px"><button data-flash="${id}" data-delta="-1" ${s.i===0?'disabled':''}>← Previous word</button><button data-say="${esc(c[0])}">Listen</button><button data-flash="${id}" data-delta="1" ${s.i===cards.length-1?'disabled':''}>Next word →</button></div><div id="speechStatus" class="muted" role="status"></div></div>`}
+function flash(id,cards){const s=S.flashes[id]||(S.flashes[id]={i:0,back:false});const c=cards[s.i];return `<div class="panel"><div class="row spread"><span class="badge">${s.i+1} / ${cards.length}</span><span>Tap to flip</span></div><button class="flash" data-flip="${id}"><strong>${esc(s.back?c[1]:c[0])}</strong><span>${esc(s.back?(c[2]||''): 'What does it mean? Give an example.')}</span></button><div class="row spread" style="margin-top:12px"><button data-flash="${id}" data-delta="-1" ${s.i===0?'disabled':''}>← Previous word</button><button data-say="${esc(c[0])}">Listen</button>${s.i===cards.length-1?`<button class="primary" data-flash-reset="${id}">Start again from card 1</button>`:`<button class="primary" data-flash="${id}" data-delta="1">Next word →</button>`}</div><div id="speechStatus" class="muted" role="status"></div></div>`}
 const flashBanks={famous:D.warmupWords,video:D.videoWords,wf:D.wf.map(x=>[x[0],x[1],x[4]])};
 function tabs(names){const current=S.tab[S.step]||0;return `<div class="tabs" role="tablist" aria-label="Activity tasks">${names.map((n,i)=>`<button role="tab" id="tab-${S.step}-${i}" aria-controls="taskPanel" aria-selected="${i===current}" data-tab="${i}">${esc(n)}</button>`).join('')}</div>`}
 function note(id,prompt){return `<label><span>${esc(prompt)}</span><textarea data-note="${id}">${esc(S.notes[id]||'')}</textarea></label>`}
@@ -276,10 +336,10 @@ function wordFactory(){
 }
 function sentenceBuilder(){
  const g=S.game.builder||(S.game.builder={i:0,chosen:[],checked:false,correct:false});
- if(g.i>=builderItems.length)return `<div class="gameHero"><div><span class="levelTag">LEVEL 06 · BUILDER COMPLETE</span><h2>Sentence mission complete</h2><p>Read the ${builderItems.length} sentences aloud, then move on or build them again.</p></div><button class="primary" data-build-restart>Build again</button></div><div class="resultList">${builderItems.map((it,i)=>`<div class="resultWord"><small>${i+1}</small><b>${esc(it.answer)}</b></div>`).join('')}</div>`;
+ if(g.i>=builderItems.length)return `<div class="gameHero"><div><span class="levelTag">LEVEL 05 · BUILDER COMPLETE</span><h2>Sentence mission complete</h2><p>Read the ${builderItems.length} sentences aloud, then move on or build them again.</p></div><button class="primary" data-build-restart>Build again</button></div><div class="resultList">${builderItems.map((it,i)=>`<div class="resultWord"><small>${i+1}</small><b>${esc(it.answer)}</b></div>`).join('')}</div>`;
  const item=builderItems[g.i];
  const chosen=new Set(g.chosen);
- return `<div class="gameHero"><div><span class="levelTag">LEVEL 06 · BUILD MODE</span><h2>Build the exact sentence</h2><p>Tap blocks in the correct order.</p></div><div class="gameScore"><strong>${g.i+1}/${builderItems.length}</strong><span>SENTENCE</span></div></div><div class="panel"><div class="builderAnswer">${g.chosen.length?g.chosen.map(i=>esc(item.tokens[i])).join(' '):'<span class="muted">Your sentence will appear here.</span>'}</div><div class="builderTokens">${item.tokens.map((t,i)=>`<button data-build="${i}" ${chosen.has(i)?'disabled':''}>${esc(t)}</button>`).join('')}</div><div class="row"><button data-build-clear>Clear</button><button class="primary" data-build-check ${g.chosen.length!==item.tokens.length?'disabled':''}>Check</button></div><div class="feedback ${g.checked?(g.correct?'ok':'bad'):''}">${g.checked?`<strong>${g.correct?'Correct.':'Try again.'}</strong>Target: ${esc(item.answer)}`:''}</div>${g.checked&&g.correct?'<button class="primary" data-build-next>Next sentence →</button>':''}</div>`;
+ return `<div class="gameHero"><div><span class="levelTag">LEVEL 05 · BUILD MODE</span><h2>Build the exact sentence</h2><p>Tap blocks in the correct order.</p></div><div class="gameScore"><strong>${g.i+1}/${builderItems.length}</strong><span>SENTENCE</span></div></div><div class="panel"><div class="builderAnswer">${g.chosen.length?g.chosen.map(i=>esc(item.tokens[i])).join(' '):'<span class="muted">Your sentence will appear here.</span>'}</div><div class="builderTokens">${item.tokens.map((t,i)=>`<button data-build="${i}" ${chosen.has(i)?'disabled':''}>${esc(t)}</button>`).join('')}</div><div class="row"><button data-build-clear>Clear</button><button class="primary" data-build-check ${g.chosen.length!==item.tokens.length?'disabled':''}>Check</button></div><div class="feedback ${g.checked?(g.correct?'ok':'bad'):''}">${g.checked?`<strong>${g.correct?'Correct.':'Try again.'}</strong>Target: ${esc(item.answer)}`:''}</div>${g.checked&&g.correct?'<button class="primary" data-build-next>Next sentence →</button>':''}</div>`;
 }
 function sprintGame(){
  const g=S.game.sprint||(S.game.sprint={started:false,time:40,i:0,score:0,streak:0,best:0,ended:false});
@@ -313,12 +373,27 @@ function body(){
  if(S.step===1)return memoryGame();
  if(S.step===2)return `<div class="gameHero"><div><span class="levelTag">LEVEL 03 · QUIZ MODE</span><h2>Use the vocabulary in context</h2><p>15 factual questions. One clear answer each.</p></div><div class="gameScore"><strong>01</strong><span>SINGLE CHOICE</span></div></div>`+exercise('famous','Famous People Quiz');
  if(S.step===3)return wordFactory();
- if(S.step===4)return `<div class="gameHero"><div><span class="levelTag">LEVEL 05 · MATCH MODE</span><h2>Who is related to whom?</h2><p>15 concrete family relationship questions.</p></div><div class="gameScore"><strong>08</strong><span>MATCHING</span></div></div>`+exercise('familyQuiz','Family Match');
- if(S.step===5)return sentenceBuilder();
+ if(S.step===4){const t=S.tab[4]||0;
+  const ref=`<div class="ref"><b>The family:</b> Chrissy Teigen + John Legend (wife and husband) · their children Luna (daughter) and Miles (son) · Chrissy’s sister Tina · John’s brothers Vaughn and Ronald.</div>`;
+  return tabs(['1 · Read the family','2 · Match · 15 questions','3 · Build · 7 sentences'])+`<div id="taskPanel" role="tabpanel">`+[
+   `<div class="famGrid"><div class="panel reading"><div class="kicker">TEXT FOR THIS LEVEL</div><h3>A legendary family</h3><p>Chrissy Teigen is a model and food writer. Her husband is the singer John Legend. They have a daughter, Luna, and a son, Miles.</p><p>Chrissy’s sister Tina is the children’s aunt. John’s brothers, Vaughn and Ronald, are their uncles.</p><p class="muted">Tap a name on the right to see the relationship in a full sentence. Tasks 2 and 3 use only this family.</p></div><div>${familyMap()}</div></div>`,
+   ref+exercise('familyQuiz','Who is related to whom?'),
+   ref+sentenceBuilder()][t]+'</div>'}
+ if(S.step===5){const t=S.tab[5]||0;
+  const gaps=[['By profession, Chris is a ',0,'.'],['He is ',1,' years old but uses make-up to appear over ',2,'.'],['Chris’s ',3,' doesn’t recognise Chris because of the make-up.'],['Recent studies say that by being ',4,' you can add up to ',5,' years to your life.'],['',6,' let Chris cross the street.'],['As a senior citizen Chris can sit down when using ',7,'.']];
+  return tabs(['1 · Words · 15','2 · Predict','3 · Watch and answer','4 · Read: Ageism'])+`<div id="taskPanel" role="tabpanel">`+[
+   flash('video',flashBanks.video),
+   `<div class="panel"><h3>Before you watch: what will happen?</h3><p>Chris is a 36-year-old doctor. Make-up artists will make him look over 80. Then he will walk around London. Say each prediction aloud: “I think people will… because…”</p><div class="grid">${['Will strangers offer him help?','Will his own dad recognise him?','Will people treat him with more respect?','Will he enjoy being old?'].map((q,i)=>`<div class="rule"><p>${q}</p><div class="row">${['Yes, they will','No, they won’t','They might'].map(a=>`<button data-predict="${i}" data-value="${a}" aria-pressed="${S.notes['prediction'+i]===a}">${a}</button>`).join('')}</div></div>`).join('')}</div></div>`,
+   `<div class="watchGrid"><div class="panel vid"><video id="oldVideo" controls preload="metadata" playsinline poster="assets/lesson3/video-poster.jpg" src="assets/lesson3/to-be-old.mp4"></video><div class="row"><button data-video-restart>Play from the start</button><span class="muted">How does it feel to be old? · 2:40 · Student’s Book p10</span><span id="videoStatus" role="status"></span></div></div>
+    <div class="panel qs"><div class="kicker">FIRST WATCH · EX 2</div><ol class="q2"><li>How do people react to Chris as a senior citizen?${details('Show answer','Mostly in a positive way: they let him go up the stairs, bus drivers let him cross the street, he always finds a seat. But not everybody pays attention to him.')}</li><li>Is Chris generally happy or unhappy about being old?${details('Show answer','Generally happy.')}</li></ol>
+    <div class="kicker">SECOND WATCH · EX 3 · ONE OR TWO WORDS OR A NUMBER</div><ol class="q3">${gaps.map(g=>'<li>'+g.map(x=>typeof x==='number'?`<input class="gap" data-note="vg${x}" data-vg="${x}" value="${esc(S.notes['vg'+x]||'')}" autocomplete="off" autocapitalize="off" spellcheck="false">`:esc(x)).join('')+'</li>').join('')}</ol>
+    <div class="row"><button class="primary" data-vcheck>Check</button><button data-vshow>Show answers</button><b id="vgScore"></b></div><p id="vgKey" class="answerReveal" hidden>1 doctor · 2 36, 80 · 3 dad · 4 positive, seven · 5 Bus drivers · 6 public transport</p></div></div>`,
+   `<div class="famGrid"><div class="panel reading"><div class="kicker">STUDENT’S BOOK P10 · EX 4</div><h3>Ageism in the UK</h3><p>A study from the Royal Society for Public Health shows that almost a third of people of different ages think that ‘being lonely is just something that happens when you get old’. A quarter of millennials believe it’s normal for older people to be unhappy.</p><p>These negative ideas stop us from thinking of old age as an opportunity for new experiences. And they can lead to increased memory loss amongst senior citizens, a worse ability to recover from illness and a negative body image. But the study showed one positive attitude: 69% of people agreed that ‘fundamentally, older people are no different from people of other ages’.</p></div>
+    <div class="panel qs"><div class="kicker">ANSWER FROM THE TEXT</div><ol class="q2"><li>What negative ideas do people have about becoming old?${details('Show answer','They think old people are lonely and unhappy.')}</li><li>In what ways can negative attitudes be a problem for senior citizens?${details('Show answer','They stop us seeing old age as an opportunity, and can lead to memory loss, a worse ability to recover from illness and a negative body image.')}</li><li>What positive discovery did the research make?${details('Show answer','69% of people think older people are no different from people of other ages.')}</li></ol><div class="kicker">SPEAK</div><p>A quarter of millennials believe it’s normal for older people to be unhappy. Is that true in your country? Will it be true when you are 80?</p></div></div>`][t]+'</div>'}
  if(S.step===6)return `<div class="gameHero"><div><span class="levelTag">LEVEL 07 · HUNTER MODE</span><h2>Spot it. Fix it.</h2><p>One target error per item: family, articles or word formation.</p></div><div class="gameScore"><strong>13</strong><span>ERROR HUNTER</span></div></div>`+exercise('errorGame','Error Hunter');
  if(S.step===7)return sprintGame();
  if(S.step===8)return lavaGame();
- return `<div class="gameHero"><div><span class="levelTag">LEVEL 10 · REVIEW MODE</span><h2>Word Builder & Articles</h2><p>15 questions: noun suffixes, family relationships, stereotypes and a / an / the / no article. Choose one answer. Every correction includes a rule and an example.</p></div><div class="gameScore"><strong>15</strong><span>QUESTIONS</span></div></div>`+exercise('wordReview','Word Builder & Articles');
+ return `<div class="gameHero"><div><span class="levelTag">LEVEL 10 · REVIEW MODE</span><h2>Word Builder & Articles</h2><p>15 questions: noun suffixes, family relationships, stereotypes and a / an / the / no article. Choose one answer. Every correction includes a rule and an example.</p></div><div class="gameScore"><strong>15</strong><span>QUESTIONS</span></div></div>`+exercise('wordReview','Word Builder & Articles')+`<div class="panel row spread kahoot"><span><b>Extra game for the teacher: Kahoot · 15 questions.</b> <span class="muted">Opens on kahoot.com in a new tab. You host it from your Kahoot account and Gabi joins with the game PIN.</span></span><a class="link" href="https://create.kahoot.it/share/9028cb05-8110-410a-aeda-903887984c7d" target="_blank" rel="noopener">Open Kahoot</a></div>`;
 }
 function render(){
  const total=titles.length;
@@ -384,16 +459,27 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||
  if(d.restart){S.exercise[d.restart]={i:0,answers:{},drafts:{},started:true,ended:false};save();return drawExercise(d.restart)}
  if(d.review){bs(d.review).ended=false;bs(d.review).i=0;save();return drawExercise(d.review)}
  if(d.flip){S.flashes[d.flip].back=!S.flashes[d.flip].back;return render()}
+ if(d.flashReset){S.flashes[d.flashReset]={i:0,back:false};return render()}
  if(d.flash){S.flashes[d.flash].i+=+d.delta;S.flashes[d.flash].back=false;return render()}
- if(d.say){if(!('speechSynthesis' in window)){const s=$('#speechStatus');if(s)s.textContent='Audio is not supported by this browser.';return;}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(d.say);u.lang='en-GB';u.voice=speechSynthesis.getVoices().find(v=>v.lang==='en-GB')||null;speechSynthesis.speak(u);return}
+ if(d.say){const st=$('#speechStatus');if(!('speechSynthesis' in window)){if(st)st.textContent='Audio is not supported by this browser.';return;}
+  speechSynthesis.cancel();const vs=speechSynthesis.getVoices(),u=new SpeechSynthesisUtterance(d.say);u.lang='en-GB';u.rate=.9;
+  const v=vs.find(x=>x.lang==='en-GB')||vs.find(x=>x.lang==='en-US')||vs.find(x=>/^en/i.test(x.lang));if(v){u.voice=v;u.lang=v.lang}
+  else if(vs.length&&st)st.textContent='No English voice is installed in this browser. Try Chrome or Edge.';
+  u.onerror=()=>{if(st)st.textContent='The browser could not play the audio.'};speechSynthesis.speak(u);return}
  if(d.wordExample){$('#wordExample').textContent=d.wordExample;return}
  if(d.person){$('#familyDetail').textContent=d.person;return}
  if(d.reveal){const p=document.getElementById(d.reveal);p.hidden=!p.hidden;b.setAttribute('aria-expanded',String(!p.hidden));return}
  if(d.predict!==undefined){S.notes['prediction'+d.predict]=d.value;save();$$('[data-predict="'+d.predict+'"]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));return}
+ if(d.vcheck!==undefined||d.vshow!==undefined){
+  const KEY=[['doctor','a doctor'],['36','thirty-six','thirty six'],['80','eighty'],['dad','father','his dad'],['positive'],['seven','7'],['bus drivers','drivers','the bus drivers','bus driver'],['public transport','transport','the bus','buses']];
+  if(d.vshow!==undefined){const k=$('#vgKey');k.hidden=!k.hidden;return}
+  let ok=0;$$('[data-vg]').forEach(inp=>{const good=KEY[+inp.dataset.vg].includes(norm(inp.value));inp.classList.toggle('ok',good);inp.classList.toggle('no',!good);if(good)ok++});
+  $('#vgScore').textContent=ok+' / 8 correct'+(ok===8?'. Well done.':'. Watch again and fix the red ones.');return}
  if(d.videoRestart!==undefined){const v=$('#oldVideo');v.currentTime=0;v.play().catch(()=>{$('#videoStatus').textContent='Press Play on the video player.'});}
 });
 document.addEventListener('submit',e=>{if(e.target.dataset.check){e.preventDefault();submit(e.target.dataset.check,$('input',e.target).value)}});
 document.addEventListener('input',e=>{const d=e.target.dataset;if(d.note){S.notes[d.note]=e.target.value;save()}if(d.draft){const s=bs(d.draft);s.drafts[list(d.draft)[s.i]]=e.target.value;save()}});
+try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices()}catch(e){}
 $('#full').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch{}};
 $('#reset').onclick=()=>{const n=$('#resetConfirm');n.hidden=!n.hidden};$('#confirmReset').onclick=()=>{stopGameTimers();S.tab={};S.exercise={};S.notes={};S.flashes={};S.done=[];S.game={};$('#resetConfirm').hidden=true;move(0)};$('#cancelReset').onclick=()=>$('#resetConfirm').hidden=true;
 render();
