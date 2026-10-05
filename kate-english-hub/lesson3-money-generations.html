@@ -137,6 +137,24 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 @media(min-width:1300px) and (max-height:800px){:root{--z:1.25}}
 @media(max-height:860px){.cond-card{padding:10px;gap:6px}.cond-card .formula,.cond-card .example{font-size:11px;line-height:1.4;padding:6px 8px}#mapStage{padding:14px 18px}#mapStage .g-sentence{font-size:20px}}
 @media(max-width:700px){#activityNav{display:flex;gap:4px}header h1{font-size:18px}header p{display:none}}
+/* grouped pages: one sidebar item, buttons on top */
+main{display:flex;flex-direction:column}
+.screens{position:relative;flex:1;min-height:0}
+.subtabs{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line)}
+.subtab{border:1px solid #d5e0d7;background:#f2f5ef;color:var(--navy);border-radius:22px;padding:9px 18px;font-size:13px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:7px}
+.subtab span{font-size:10px;opacity:.6}.subtab:hover{background:#e1e8df}
+.subtab.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.subtab.link{background:#f3e9e0;border-color:#e2c9b9;color:#8a4d38}
+.screen.on{padding-top:14px;padding-bottom:14px}
+@media(max-height:1100px){.cond-card.open .when{display:none}}
+@media(max-height:800px){.phone{height:270px}.chat-wrap .g-end h3{font-size:24px}.chat-wrap .g-stage{padding:14px 18px}.title{margin-bottom:10px;padding-bottom:9px}}
+/* poster hunt */
+.guide{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px;align-items:stretch}
+.guide figure{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#dfe4e6;display:grid;place-items:center}
+.guide img{display:block;width:100%;height:auto}
+.guide .g-stage{margin-top:0;display:flex;flex-direction:column;justify-content:center;padding:16px 18px}
+.guide .g-sentence{font-size:17px}.guide .g-opts{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:12px;gap:8px}.guide .g-opt{font-size:14px;padding:11px 12px}
+@media(max-width:700px){.guide{grid-template-columns:1fr}.subtabs{justify-content:flex-start;flex-wrap:nowrap;overflow:auto;padding:7px 8px}.subtab{white-space:nowrap;padding:7px 12px;font-size:12px}}
 </style>
 <!-- /LAYOUT-V3 -->
 </head>
@@ -146,8 +164,10 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
   <div><h1>GEN Z &amp; MONEY</h1><p>Lesson 3 · money habits across generations</p></div>
   <div class="level">B2–C1 · interactive</div>
 </header>
-<nav class="lesson-nav" aria-label="Lesson activities"><p class="nav-label">LESSON 03 / EXPLORE</p><div id="activityNav"></div><div class="nav-note">14 activities · B2–C1</div></nav>
+<nav class="lesson-nav" aria-label="Lesson activities"><p class="nav-label">LESSON 03 / EXPLORE</p><div id="activityNav"></div><div class="nav-note">7 sections · 15 activities</div></nav>
 <main>
+<div class="subtabs" id="subTabs" hidden></div>
+<div class="screens">
 <section class="screen on overview">
   <div class="title"><div><h2>Money habits. Different generations.</h2><p>Explore how we pay, what we value and why we save.</p></div><div class="pill">START HERE</div></div>
   <div class="overview-top">
@@ -165,15 +185,15 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
     </div>
   </div>
   <div class="route-grid">
-    <button class="route-card" onclick="show(1)"><small>02 / WORDS INTO ACTION</small><strong>Money language</strong><i aria-hidden="true">↗</i><span>8 phrases · match and check</span></button>
-    <button class="route-card" onclick="show(2)"><small>03–10 / COMPARE &amp; DISCUSS</small><strong>Generations</strong><i aria-hidden="true">↗</i><span>Sort · rank · watch · group chat</span></button>
-    <button class="route-card" onclick="show(10)"><small>11–14 / LANGUAGE LAB</small><strong>What if…?</strong><i aria-hidden="true">↗</i><span>3 grammar games · final view</span></button>
+    <button class="route-card" onclick="show(1)"><small>02 / WORDS INTO ACTION</small><strong>Money language</strong><i aria-hidden="true">↗</i><span>8 phrases · phrasal verbs arcade</span></button>
+    <button class="route-card" onclick="show(2)"><small>03–05 / COMPARE &amp; DISCUSS</small><strong>Generations</strong><i aria-hidden="true">↗</i><span>Poster · sort · battle · group chat</span></button>
+    <button class="route-card" onclick="show(11)"><small>06–07 / GRAMMAR GAMES</small><strong>What if…?</strong><i aria-hidden="true">↗</i><span>3 grammar games · final view</span></button>
   </div>
-  <div class="overview-foot"><span>Choose any activity from the sidebar.</span><span>Make a claim. Give a reason. Avoid a stereotype.</span></div>
+  <div class="overview-foot"><span>Choose a section on the left, then an activity on top.</span><span>Make a claim. Give a reason. Avoid a stereotype.</span></div>
 </section>
 
-<section class="screen">
-  <div class="title"><div><h2>2. Money Language Sprint</h2><p>Match each phrase with the best meaning. Check instantly.</p></div><div class="pill">VOCABULARY</div></div>
+<section class="screen" data-k="vocab">
+  <div class="title"><div><h2>Money Language Sprint</h2><p>Match each phrase with the best meaning. Check instantly.</p></div><div class="pill">VOCABULARY</div></div>
   <div class="vocab" id="vocab">
     <div class="vitem" data-a="accumulate"><b>rack up debt</b><select><option value="">Choose…</option><option value="accumulate">gradually accumulate debt</option><option value="repay">repay what you owe</option><option value="extra">earn extra money</option></select></div>
     <div class="vitem" data-a="repay"><b>pay off debt</b><select><option value="">Choose…</option><option value="large">spend a lot</option><option value="repay">repay what you owe</option><option value="survive">cover basic costs</option></select></div>
@@ -188,7 +208,15 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>3. Generation Stereotype Sort</h2><p>Select a statement, then place it in the topic it belongs to. Discuss whether the statement is fair.</p></div><div class="pill">SORT + SPEAK</div></div>
+  <div class="title"><div><h2>Generations Money Guide</h2><p>Scan the poster and find who each clue describes. Then say whether it sounds fair — or like a stereotype.</p></div><div class="pill">GAME · POSTER HUNT</div></div>
+  <div class="guide">
+    <figure><img src="assets/generations-money-guide.jpg?v=20261005" alt="Money habits across generations: Boomers, Gen X, Millennials and Gen Z — values, habits and finances"></figure>
+    <div class="g-stage" id="huntStage"></div>
+  </div>
+</section>
+
+<section class="screen" data-k="sort">
+  <div class="title"><div><h2>Generation Stereotype Sort</h2><p>Select a statement, then place it in the topic it belongs to. Discuss whether the statement is fair.</p></div><div class="pill">SORT + SPEAK</div></div>
   <div class="sort-grid">
     <div class="statement-bank" id="statementBank">
       <button class="statement" data-t="MONEY">prefers saving to spending</button>
@@ -212,7 +240,7 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>4. The £5,000 Challenge</h2><p>Same situation, different generation. Who is most likely to do what?</p></div><div class="pill">SCENARIO</div></div>
+  <div class="title"><div><h2>The £5,000 Challenge</h2><p>Same situation, different generation. Who is most likely to do what?</p></div><div class="pill">SCENARIO</div></div>
   <div class="prompt" style="margin:0 0 10px">Each person unexpectedly receives £5,000. Choose the most likely first move, then justify without turning a stereotype into a fact.</div>
   <div class="money5000">
     <article class="person"><img src="https://images.pexels.com/photos/5473068/pexels-photo-5473068.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Older adult"><div class="body"><h3>Baby Boomer</h3><small>stability · savings · long-term security</small><button onclick="toggleReveal(this)">Choose / reveal</button><div class="reveal">Possible move: put most of it into savings or use it for a major planned expense.</div></div></article>
@@ -223,7 +251,7 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>5. Will Gen Z make cash cool again?</h2><p>Prediction before evidence. Decide what sounds plausible and explain why.</p></div><div class="pill">CASE STUDY</div></div>
+  <div class="title"><div><h2>Will Gen Z make cash cool again?</h2><p>Prediction before evidence. Decide what sounds plausible and explain why.</p></div><div class="pill">CASE STUDY</div></div>
   <div class="pred-grid">
     <div class="headline"><div class="kicker">GEN Z + MONEY</div><h3>Could physical cash become useful again?</h3><p>Consider control, debt, budgeting, inflation, side hustles and social-media money trends. The point is not to prove that “Gen Z uses cash”, but to examine why some young adults might deliberately choose it in certain situations.</p></div>
     <div class="predicts">
@@ -237,7 +265,7 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>6. Rank the reasons</h2><p>What could push a young person towards cash or stricter budgeting?</p></div><div class="pill">PRIORITISE</div></div>
+  <div class="title"><div><h2>Rank the reasons</h2><p>What could push a young person towards cash or stricter budgeting?</p></div><div class="pill">PRIORITISE</div></div>
   <div class="rank-wrap">
     <div class="reasons" id="reasons">
       <button class="reason" data-r="CONTROL"><b>CONTROL</b><span>Seeing money leave your hand feels concrete.</span></button>
@@ -256,7 +284,7 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>7. Generational Money Battle</h2><p>Who is most likely to say the sentence? Choose a person, then defend or challenge the choice.</p></div><div class="pill">GAME</div></div>
+  <div class="title"><div><h2>Generational Money Battle</h2><p>Who is most likely to say the sentence? Choose a person, then defend or challenge the choice.</p></div><div class="pill">GAME</div></div>
   <div class="battle" id="battle">
     <article class="person" data-person="boomer" onclick="battlePick(this)"><img src="https://images.pexels.com/photos/5473068/pexels-photo-5473068.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Baby Boomer"><div class="body"><h3>Baby Boomer</h3><small>security · saving · long-term planning</small></div></article>
     <article class="person" data-person="genx" onclick="battlePick(this)"><img src="https://images.pexels.com/photos/32585362/pexels-photo-32585362.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Generation X"><div class="body"><h3>Gen X</h3><small>practicality · balance · independence</small></div></article>
@@ -267,7 +295,7 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>8. Generation Shorts Lab</h2><p>Predict first, watch the comedy, then repair the stereotype into careful English.</p></div><div class="pill">WATCH + PLAY</div></div>
+  <div class="title"><div><h2>Generation Shorts Lab</h2><p>Predict first, watch the comedy, then repair the stereotype into careful English.</p></div><div class="pill">WATCH + PLAY</div></div>
   <div class="shorts-lab">
     <div class="short-list" id="shortList">
       <button class="short-tab on" data-short="wallet"><img src="https://i.ytimg.com/vi/5wr48BS7f2w/hqdefault.jpg" alt="Short about finding a wallet"><span><b>Found a Wallet</b><small>Money + generational behaviour</small></span></button>
@@ -290,8 +318,8 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
   </div>
 </section>
 
-<section class="screen">
-  <div class="title"><div><h2>9. Myth, possibly true, or not enough information?</h2><p>Challenge overgeneralisation. Then finish with your own position.</p></div><div class="pill">CRITICAL THINKING</div></div>
+<section class="screen" data-k="myth">
+  <div class="title"><div><h2>Myth, possibly true, or not enough information?</h2><p>Challenge overgeneralisation. Then finish with your own position.</p></div><div class="pill">CRITICAL THINKING</div></div>
   <div class="myth-grid">
     <div class="claim"><p>Gen Z is a cash-only generation.</p><div class="answers"><button onclick="selectSibling(this)">MYTH</button><button onclick="selectSibling(this)">POSSIBLY TRUE</button><button onclick="selectSibling(this)">NOT ENOUGH INFO</button></div></div>
     <div class="claim"><p>Some people may use cash because it makes a spending limit more visible.</p><div class="answers"><button onclick="selectSibling(this)">MYTH</button><button onclick="selectSibling(this)">POSSIBLY TRUE</button><button onclick="selectSibling(this)">NOT ENOUGH INFO</button></div></div>
@@ -303,7 +331,7 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>10. Generations Group Chat</h2><p>A family is organising Grandma’s birthday dinner. Read each message and guess who sent it — faster answers score more.</p></div><div class="pill">GAME · WHO SENT IT?</div></div>
+  <div class="title"><div><h2>Generations Group Chat</h2><p>A family is organising Grandma’s birthday dinner. Read each message and guess who sent it — faster answers score more.</p></div><div class="pill">GAME · WHO SENT IT?</div></div>
   <div class="g-hud">
     <div class="g-stat" id="chatStatP"><small>POINTS</small><b id="chatPoints">0</b></div>
     <div class="g-stat" id="chatStatS"><small>STREAK</small><b id="chatStreak">0</b></div>
@@ -317,7 +345,7 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>11. Conditionals Control Room</h2><p>Read the sentence, then tap the conditional it belongs to. Every correct hit unlocks a formula.</p></div><div class="pill">GAME · UNLOCK THE MAP</div></div>
+  <div class="title"><div><h2>Conditionals Control Room</h2><p>Read the sentence, then tap the conditional it belongs to. Every correct hit unlocks a formula.</p></div><div class="pill">GAME · UNLOCK THE MAP</div></div>
   <div class="g-hud">
     <div class="g-stat" id="mapStatU"><small>UNLOCKED</small><b id="mapUnlocked">0 / 5</b></div>
     <div class="g-stat" id="mapStatS"><small>FIRST TRY</small><b id="mapStars">0</b></div>
@@ -329,7 +357,7 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>12. Savings Rush</h2><p>Every correct conditional earns money. Spend it in the shop on upgrades and reach £3,000 in as few answers as you can.</p></div><div class="pill">GAME · EARN &amp; UPGRADE</div></div>
+  <div class="title"><div><h2>Savings Rush</h2><p>Every correct conditional earns money. Spend it in the shop on upgrades and reach £3,000 in as few answers as you can.</p></div><div class="pill">GAME · EARN &amp; UPGRADE</div></div>
   <div class="g-hud">
     <div class="g-stat" id="rushStatB"><small>BALANCE</small><b id="rushBalance">£0</b></div>
     <div class="g-stat" id="rushStatP"><small>PER ANSWER</small><b id="rushPay">£100</b></div>
@@ -342,7 +370,7 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>13. Mixed Conditionals Time Machine</h2><p>Two jumps per sentence: set the route, then choose the form. Get both right and you open a treasure chest.</p></div><div class="pill">GAME · MIXED</div></div>
+  <div class="title"><div><h2>Mixed Conditionals Time Machine</h2><p>Two jumps per sentence: set the route, then choose the form. Get both right and you open a treasure chest.</p></div><div class="pill">GAME · MIXED</div></div>
   <div class="g-hud">
     <div class="g-stat" id="tmStatC"><small>CRYSTALS</small><b id="tmCrystals">0</b></div>
     <div class="g-stat"><small>BEST</small><b id="tmBest">0</b></div>
@@ -353,7 +381,7 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>14. Final position</h2><p>How much does generation really matter when it comes to money?</p></div><div class="pill">FINAL SPEAK</div></div>
+  <div class="title"><div><h2>Final position</h2><p>How much does generation really matter when it comes to money?</p></div><div class="pill">FINAL SPEAK</div></div>
   <div class="bigquestion">“Your generation strongly shapes the way you spend and save.”</div>
   <div class="scale">
     <button onclick="selectOne(this,'.scale button')">1</button><button onclick="selectOne(this,'.scale button')">2</button><button onclick="selectOne(this,'.scale button')">3</button><button onclick="selectOne(this,'.scale button')">4</button><button onclick="selectOne(this,'.scale button')">5</button>
@@ -366,6 +394,7 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
   </div>
   <div class="prompt">Finish: “There may be some truth in generational patterns, but it would be an oversimplification to say that…”</div>
 </section>
+</div>
 </main>
 <footer>
   <button class="navbtn" id="prev" onclick="move(-1)">BACK</button>
@@ -375,26 +404,44 @@ footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8p
 </div>
 <script>
 const screens=[...document.querySelectorAll('.screen')];let current=0;
-const activityNames=['Overview','Money vocabulary','Stereotype sort','£5,000 challenge','Cash comeback','Rank the reasons','Money battle','Shorts lab','Myth or fact?','Group chat','Unlock the map','Savings Rush','Time machine','Final position'];
+const activityNames=['Overview','Money language','Money guide','Stereotype sort','£5,000 challenge','Cash comeback','Rank the reasons','Money battle','Shorts lab','Myth or fact?','Group chat','Unlock the map','Savings Rush','Time machine','Final position'];
+const GROUPS=[
+ {n:'Overview',s:[0]},
+ {n:'Money words',s:[1],links:[['Phrasal verbs arcade ↗','phrasal-verbs-money.html']]},
+ {n:'Generations',s:[2,3,4,7,10]},
+ {n:'Cash comeback',s:[5,6,9]},
+ {n:'Shorts lab',s:[8]},
+ {n:'Grammar games',s:[11,12,13]},
+ {n:'Final position',s:[14]}
+];
+const SEQ=GROUPS.flatMap(g=>g.s);
 const progress=document.getElementById('progress');
 const activityNav=document.getElementById('activityNav');
-screens.forEach((screen,i)=>{
-  screen.id='activity-'+i;
+const subTabs=document.getElementById('subTabs');
+screens.forEach((screen,i)=>{screen.id='activity-'+i});
+GROUPS.forEach((g,gi)=>{
   const b=document.createElement('button');b.className='nav-item';b.type='button';
-  const number=document.createElement('span');number.textContent=String(i+1).padStart(2,'0');
-  b.append(number,document.createTextNode(activityNames[i]));b.setAttribute('aria-controls',screen.id);
-  b.onclick=()=>show(i);activityNav.appendChild(b);
+  const number=document.createElement('span');number.textContent=String(gi+1).padStart(2,'0');
+  b.append(number,document.createTextNode(g.n));
+  b.onclick=()=>show(g.last!==undefined?g.last:g.s[0]);activityNav.appendChild(b);
 });
-const ACTIVITY_STORAGE_KEY='katya_lesson3_genz_money_activity';
+const ACTIVITY_STORAGE_KEY='katya_lesson3_genz_money_activity_v2';
 function show(i,options={}){
  current=Math.max(0,Math.min(screens.length-1,Number(i)||0));
+ const gi=GROUPS.findIndex(g=>g.s.includes(current)),g=GROUPS[gi];g.last=current;
  screens.forEach((s,j)=>{s.classList.toggle('on',j===current);s.setAttribute('aria-hidden',j===current?'false':'true')});
- [...activityNav.children].forEach((b,j)=>{b.classList.toggle('on',j===current);if(j===current)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});
+ [...activityNav.children].forEach((b,j)=>{b.classList.toggle('on',j===gi);if(j===gi)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});
+ subTabs.hidden=g.s.length<2&&!g.links;subTabs.innerHTML='';
+ if(!subTabs.hidden){
+  g.s.forEach((si,k)=>{const t=document.createElement('button');t.type='button';t.className='subtab'+(si===current?' on':'');t.innerHTML='<span>'+(k+1)+'</span>'+activityNames[si];t.onclick=()=>show(si);subTabs.appendChild(t)});
+  (g.links||[]).forEach(l=>{const a=document.createElement('a');a.className='subtab link';a.href=l[1];a.textContent=l[0];subTabs.appendChild(a)});
+ }
  if(!options.preserveScroll)screens[current].scrollTop=0;
- document.getElementById('prev').disabled=current===0;
- document.getElementById('next').textContent=current===screens.length-1?'OVERVIEW':'NEXT';
- document.getElementById('checkBtn').hidden=![1,2,8].includes(current);
- progress.textContent=String(current+1).padStart(2,'0')+' / '+screens.length+' · '+activityNames[current];
+ const pos=SEQ.indexOf(current);
+ document.getElementById('prev').disabled=pos===0;
+ document.getElementById('next').textContent=pos===SEQ.length-1?'OVERVIEW':'NEXT';
+ document.getElementById('checkBtn').hidden=!screens[current].dataset.k;
+ progress.textContent=String(gi+1).padStart(2,'0')+' / '+String(GROUPS.length).padStart(2,'0')+' · '+g.n+(g.s.length>1?' · '+activityNames[current]:'');
  try{localStorage.setItem(ACTIVITY_STORAGE_KEY,String(current))}catch(e){}
  const hash='#activity-'+current;
  if(location.hash!==hash){
@@ -410,7 +457,7 @@ function getSavedActivity(){
  }catch(e){}
  return 0;
 }
-function move(n){if(n>0&&current===screens.length-1){show(0);return}show(current+n)}
+function move(n){const pos=SEQ.indexOf(current);if(n>0&&pos===SEQ.length-1){show(0);return}show(SEQ[Math.max(0,pos+n)])}
 function choosePayment(button,type){
  selectOne(button,'.choice');document.querySelectorAll('.choice').forEach(b=>b.setAttribute('aria-pressed',b===button?'true':'false'));
  const reasons={cash:'I tend to use cash because I want to see how much I spend.',card:'I’m more likely to use a card because I can track my spending later.',phone:'I tend to pay with my phone because it’s quick and convenient.'};
@@ -750,12 +797,35 @@ function tmForm(btn){
   });
  }else tmDone();
 }
-mapStart();chatIntro();rushIntro();tmStart();
+/* --- poster hunt --- */
+const HUNT_GEN=['Boomers','Gen X','Millennials','Gen Z'];
+const HUNT_Q=[
+ ['Prefers cash, paper cheques and in-person banking.',0],
+ ['Juggles household expenses, childcare and ageing parents.',1],
+ ['Would rather spend on travel and events than on things.',2],
+ ['Earns from several sources: freelancing and side hustles.',3],
+ ['Was the first generation to widely adopt mobile banking.',2],
+ ['Uses investment apps, micro-investing and crypto.',3],
+ ['Sees buying a home as the main long-term investment.',0],
+ ['The highest earners — and spenders on consumer goods.',1]
+];
+let huntQueue=[],huntI=0,huntRight=0;
+function huntStart(){huntQueue=shuffle(HUNT_Q);huntI=0;huntRight=0;huntShow()}
+function huntShow(){
+ if(huntI>=huntQueue.length){$id('huntStage').innerHTML='<div class="g-end"><p class="g-kicker">POSTER HUNT</p><h3>'+huntRight+' / '+huntQueue.length+'</h3><p>Which box on the poster is the least fair? Rewrite it with <b>tend to</b> or <b>are more likely to</b>.</p><button class="navbtn primary g-start" type="button" onclick="huntStart()">PLAY AGAIN</button></div>';return}
+ $id('huntStage').innerHTML='<p class="g-kicker">CLUE '+(huntI+1)+' / '+huntQueue.length+' · WHO IS IT?</p><p class="g-sentence">'+huntQueue[huntI][0]+'</p><div class="g-opts" id="huntOpts">'+tiles(HUNT_GEN)+'</div><div class="g-row"><div class="g-msg" id="huntMsg">Find it on the poster.</div><button class="navbtn primary" id="huntNext" type="button" hidden onclick="huntI++;huntShow()">NEXT →</button></div>';
+ $id('huntOpts').querySelectorAll('.g-opt').forEach(b=>b.onclick=()=>{
+  const a=huntQueue[huntI][1],ok=Number(b.dataset.i)===a,m=$id('huntMsg');markTiles($id('huntOpts'),b,a);
+  if(ok){huntRight++;m.className='g-msg';m.innerHTML='<b>Yes — '+HUNT_GEN[a]+'.</b> Fair, or a stereotype?'}else{m.className='g-msg bad';m.innerHTML='The poster says <b>'+HUNT_GEN[a]+'</b>.';shakeEl('huntStage')}
+  const n=$id('huntNext');n.hidden=false;n.textContent=huntI===huntQueue.length-1?'RESULT →':'NEXT →';n.focus();
+ });
+}
+mapStart();chatIntro();rushIntro();tmStart();huntStart();
 
 function checkCurrent(){
- if(current===1){let score=0;document.querySelectorAll('#vocab .vitem').forEach(v=>{const ok=v.querySelector('select').value===v.dataset.a;v.classList.toggle('ok',ok);v.classList.toggle('wrong',!ok);if(ok)score++});document.getElementById('vocabFeedback').textContent=score+' / 8 correct.'}
- else if(current===2){document.querySelectorAll('.bucket[data-b] button').forEach(b=>b.classList.add(b.dataset.correct==='1'?'ok':'wrong'))}
- else if(current===8){
+ if(screens[current].dataset.k==='vocab'){let score=0;document.querySelectorAll('#vocab .vitem').forEach(v=>{const ok=v.querySelector('select').value===v.dataset.a;v.classList.toggle('ok',ok);v.classList.toggle('wrong',!ok);if(ok)score++});document.getElementById('vocabFeedback').textContent=score+' / 8 correct.'}
+ else if(screens[current].dataset.k==='sort'){document.querySelectorAll('.bucket[data-b] button').forEach(b=>b.classList.add(b.dataset.correct==='1'?'ok':'wrong'))}
+ else if(screens[current].dataset.k==='myth'){
   const expected=['MYTH','POSSIBLY TRUE','MYTH','POSSIBLY TRUE','POSSIBLY TRUE','MYTH'];
   document.querySelectorAll('.claim').forEach((c,i)=>{const s=c.querySelector('button.sel');c.querySelectorAll('button').forEach(b=>b.classList.remove('ok','wrong'));if(s)s.classList.add(s.textContent===expected[i]?'ok':'wrong')})
  }

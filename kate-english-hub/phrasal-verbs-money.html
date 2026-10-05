@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Katya · Phrasal Verbs Arcade · Money &amp; Spending</title>
+<style>
+:root{--ink:#223d3c;--navy:#155e61;--muted:#75827d;--line:#dfe6e0;--bg:#f5f5f0;--ok:#e0f2e5;--bad:#fce4e0;--accent:#c57e67;--z:1}
+*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg)}
+button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #50a49c;outline-offset:2px}[hidden]{display:none!important}
+.app{height:100dvh;display:grid;grid-template-rows:60px minmax(0,1fr)}
+header{display:flex;align-items:center;gap:14px;padding:8px 22px;background:#fff;border-bottom:1px solid var(--line)}
+header h1{font-size:21px;letter-spacing:-.04em;margin:0;font-weight:800;color:var(--navy);white-space:nowrap}
+.tag{font-size:10px;font-weight:800;letter-spacing:.08em;background:#e4eee8;color:var(--navy);padding:6px 10px;border-radius:20px;white-space:nowrap}
+.prog{margin-left:auto;display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:20px;padding:7px 12px;font-size:11px;font-weight:800;letter-spacing:.08em;color:#8a978f}
+.dots{display:flex;gap:5px}.dots i{width:10px;height:10px;border-radius:50%;background:#dfe6e0}.dots i.on{background:#3c9a7a}
+.hbtn{border:1px solid #d5e0d7;border-radius:8px;background:#f2f5ef;color:var(--navy);padding:8px 12px;font-size:11px;font-weight:800;letter-spacing:.04em;text-decoration:none;white-space:nowrap}
+main{overflow:auto;padding:22px 28px;display:flex;flex-direction:column;scrollbar-width:thin}
+main::before{content:"";flex:1 1 0}main::after{content:"";flex:1.5 1 0}
+.view{zoom:var(--z);width:100%;max-width:calc(1120px / var(--z));margin:0 auto;flex-shrink:0}
+@media(min-width:1000px) and (min-height:620px){:root{--z:1.2}}
+@media(min-width:1300px) and (min-height:720px){:root{--z:1.3}}
+@media(min-width:1650px) and (min-height:880px){:root{--z:1.5}}
+@media(min-width:2100px) and (min-height:1100px){:root{--z:1.8}}
+/* home */
+.home-h{font-size:13px;color:var(--muted);margin:0 0 12px;text-align:center}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tile{position:relative;border:2px solid var(--c);background:linear-gradient(160deg,#fff 0%,var(--t) 100%);border-radius:16px;padding:18px 14px 16px;text-align:center;color:var(--ink);min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;transition:transform .14s,box-shadow .14s}
+.tile:hover{transform:translateY(-4px);box-shadow:0 10px 22px -12px var(--c)}
+.tile .ico{width:44px;height:44px;border-radius:13px;background:var(--c);color:#fff;display:grid;place-items:center;font-size:20px;font-weight:800;margin-bottom:5px}
+.tile b{font-size:17px;letter-spacing:-.03em}.tile small{font-size:11px;color:#5f6f69;font-weight:600}
+.tile .done{position:absolute;top:10px;right:10px;font-size:10px;font-weight:800;letter-spacing:.06em;background:#3c9a7a;color:#fff;border-radius:20px;padding:4px 8px}
+.tile .rec{position:absolute;top:10px;left:12px;font-size:10px;font-weight:800;color:var(--c)}
+.t1{--c:#b98a1f;--t:#f6e7bd}.t2{--c:#2f8560;--t:#cdeede}.t3{--c:#b9503a;--t:#f6d7ce}.t4{--c:#2f6f9f;--t:#d3e4f3}.t5{--c:#7a5aa8;--t:#e4daf3}.t6{--c:#1f8a8a;--t:#cfeeee}.t7{--c:#b5567f;--t:#f6d9e6}.t8{--c:#a67a12;--t:#fbeaa5}
+/* activity */
+.title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.title h2{font-size:22px;letter-spacing:-.035em;margin:0}.title p{font-size:12px;color:var(--muted);margin:4px 0 0}
+.navbtn{border:1px solid #d5e0d7;border-radius:8px;background:#f2f5ef;color:var(--navy);padding:9px 14px;font-size:12px;font-weight:800;letter-spacing:.04em}
+.navbtn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.g-hud{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
+.g-stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 13px;min-width:92px}
+.g-stat small{display:block;font-size:9px;letter-spacing:.1em;font-weight:800;color:#8a978f}
+.g-stat b{display:block;font-size:19px;letter-spacing:-.03em;color:var(--navy);font-variant-numeric:tabular-nums}.g-stat.pop b{animation:gpop .35s}
+.g-goal{flex:1;min-width:180px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 13px;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.g-goal small{font-size:9px;letter-spacing:.1em;font-weight:800;color:#8a978f;display:flex;justify-content:space-between}
+.g-track{height:10px;background:#e3e9e0;border-radius:9px;overflow:hidden}.g-track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2c8a80,#155e61);border-radius:9px;transition:width .45s}
+.g-stage{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:10px;position:relative;overflow:hidden}
+.g-kicker{font-size:10px;letter-spacing:.12em;font-weight:800;color:var(--accent);margin:0 0 8px}
+.g-sentence{font-size:21px;line-height:1.45;font-weight:650;letter-spacing:-.02em;margin:0}
+.g-sentence u{text-decoration:none;background:#f3e9e0;border-bottom:3px solid var(--accent);padding:0 5px;border-radius:5px 5px 0 0}
+.story{font-size:14px;line-height:1.6;color:#5f6f69;margin:12px 2px 0}.story b{color:#1d5a37;background:var(--ok);padding:0 4px;border-radius:4px}
+.blank{display:inline-block;min-width:96px;text-align:center;border-bottom:3px solid var(--accent);color:var(--accent);padding:0 8px;border-radius:6px 6px 0 0}
+.blank.good{background:var(--ok);border-color:#5fa67b;color:#1d5a37}.blank.miss{background:var(--bad);border-color:#cd8e81;color:#823c2d}
+.g-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.g-opts.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g-opt{border:0;border-radius:11px;padding:14px 16px;font-size:16px;font-weight:700;color:#fff;text-align:left;display:flex;align-items:center;gap:10px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18);transition:transform .12s,filter .12s}
+.g-opt i{font-style:normal;font-size:15px;opacity:.9}
+.k0{background:#b9503a}.k1{background:#2f6f9f}.k2{background:#a67a12}.k3{background:#2f8560}
+.g-opt:not(:disabled):hover{transform:translateY(-2px);filter:brightness(1.1)}
+.g-opt.hit{outline:3px solid #1d5a37;outline-offset:2px}.g-opt.hit::after{content:"✓";margin-left:auto;font-size:18px}
+.g-opt.missed{opacity:.55;text-decoration:line-through}.g-opt.missed::after{content:"✕";margin-left:auto}.g-opt.dim{opacity:.28}
+.g-msg{min-height:22px;font-size:13.5px;line-height:1.45;margin-top:13px;color:var(--navy)}.g-msg.bad{color:#8a3f2f}
+.g-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px}
+.g-timer{position:absolute;left:0;top:0;height:5px;width:100%;background:#eef2ea}.g-timer i{display:block;height:100%;width:0;background:var(--accent)}
+.g-float{position:absolute;right:22px;top:16px;font-size:20px;font-weight:800;color:#1d5a37;animation:gfloat 1s forwards;pointer-events:none}
+.g-end{text-align:center;padding:8px 0}.g-end h3{font-size:30px;letter-spacing:-.04em;margin:4px 0;color:var(--navy)}.g-end p{font-size:14px;color:var(--muted);margin:4px 0 14px}
+.g-review{text-align:left;display:grid;gap:6px;margin:0 0 14px}.g-review div{font-size:12.5px;line-height:1.45;border:1px solid var(--line);border-radius:8px;padding:8px 11px;background:#fbf4f1}
+.g-start{font-size:14px;padding:12px 26px}
+.shake{animation:gshake .35s}
+@keyframes gshake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
+@keyframes gpop{50%{transform:scale(1.18)}}@keyframes gfloat{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-26px)}}
+@media(prefers-reduced-motion:reduce){.shake,.g-stat.pop b,.g-float{animation:none}.g-float{display:none}.flip-in{transition:none!important}}
+/* learn cards */
+.learn{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.lc{border:2px solid var(--line);background:#fff;border-radius:12px;padding:12px;text-align:left;color:var(--ink);min-height:118px;display:flex;flex-direction:column;gap:5px}
+.lc b{font-size:16px;color:var(--navy);letter-spacing:-.02em}.lc .hint{margin-top:auto;font-size:10px;font-weight:800;letter-spacing:.08em;color:#93a199}
+.lc .def,.lc .ex,.lc .note{display:none;font-size:11.5px;line-height:1.4}.lc .ex{font-style:italic;color:#5f6f69}.lc .note{font-size:10px;font-weight:800;letter-spacing:.05em;color:var(--accent)}
+.lc.open{border-color:#7bb390;background:#fbfdf9}.lc.open .def,.lc.open .ex,.lc.open .note{display:block}.lc.open .hint{display:none}
+/* flashcards */
+.flip{perspective:1200px;margin-top:10px}.flip-in{position:relative;height:210px;transition:transform .45s;transform-style:preserve-3d;cursor:pointer;border:0;background:none;width:100%;padding:0;color:inherit}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;border:2px solid var(--line);background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:18px;text-align:center}
+.face.back{transform:rotateY(180deg);background:#155e61;border-color:#155e61;color:#fff}
+.face .big{font-size:34px;font-weight:800;letter-spacing:-.04em}.face .mid{font-size:19px;font-weight:650;line-height:1.35;max-width:640px}.face small{font-size:11px;letter-spacing:.1em;font-weight:800;opacity:.6}
+.fbtns{display:flex;gap:10px;justify-content:center;margin-top:12px}.fbtns button{min-width:170px;padding:12px}
+.again{background:var(--bad)!important;border-color:#cd8e81!important;color:#823c2d!important}.know{background:var(--ok)!important;border-color:#7bb390!important;color:#1d5a37!important}
+/* type */
+.type-row{display:flex;gap:10px;margin-top:16px}.type-row input{flex:1;border:2px solid #d5e0d7;border-radius:11px;padding:13px 14px;font-size:17px;font-weight:650;color:var(--ink);background:#f8faf7;min-width:0}
+.type-row input.good{background:var(--ok);border-color:#5fa67b}.type-row input.miss{background:var(--bad);border-color:#cd8e81}
+.bank{font-size:12px;color:var(--muted);margin:10px 0 0;line-height:1.6}
+/* speaking */
+.speak{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+.ring{width:110px;height:110px;border-radius:50%;display:grid;place-items:center;font-size:30px;font-weight:800;color:var(--navy);background:conic-gradient(var(--navy) var(--p,0%),#e3e9e0 0)}
+.ring span{width:88px;height:88px;border-radius:50%;background:#fff;display:grid;place-items:center}
+.must{display:inline-block;margin-top:10px;font-size:12px;font-weight:800;letter-spacing:.04em;background:#f3e9e0;color:#8a4d38;border-radius:20px;padding:6px 12px}
+@media(max-width:800px){.app{grid-template-rows:auto minmax(0,1fr)}header{flex-wrap:wrap;padding:8px 12px;gap:8px}header h1{font-size:17px}.tag{display:none}main{padding:12px}.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}.tile{min-height:120px}.learn{grid-template-columns:repeat(2,minmax(0,1fr))}.g-opts,.g-opts.three{grid-template-columns:1fr}.g-sentence{font-size:18px}.speak{grid-template-columns:1fr;justify-items:center;text-align:center}.fbtns button{min-width:0;flex:1}.type-row{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <h1>PHRASAL VERBS ARCADE</h1><span class="tag">MONEY &amp; SPENDING · 10 VERBS</span>
+  <div class="prog"><span>PROGRESS</span><span class="dots" id="dots"></span><span id="progNum">0/8</span></div>
+  <button class="hbtn" type="button" onclick="resetAll()" title="Clear progress">RESET</button>
+  <a class="hbtn" href="lesson3-money-generations.html">← LESSON 3</a>
+</header>
+<main><div class="view" id="view"></div></main>
+</div>
+<script>
+const $id=id=>document.getElementById(id);
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pop(id){const e=$id(id);if(!e)return;e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
+const SHAPES=['▲','◆','●','■'];
+
+const VERBS=[
+ {v:'cut back (on)',def:'spend less on something',ex:'We’re cutting back on takeaways this month.',note:'cut – cut – cut'},
+ {v:'give away',def:'give something to someone for free',ex:'She gave her old bike away.',note:'SEPARABLE · give it away'},
+ {v:'pay back',def:'return money you borrowed',ex:'I’ll pay you back on Friday.',note:'SEPARABLE · pay me back'},
+ {v:'rip off',def:'charge someone far too much; cheat',ex:'That taxi driver ripped us off.',note:'INFORMAL · rip sb off'},
+ {v:'run up',def:'let a bill or debt grow bigger and bigger',ex:'He ran up a huge phone bill.',note:'run – ran – run'},
+ {v:'save up (for)',def:'keep money so you can buy something later',ex:'I’m saving up for a laptop.',note:'save up FOR + noun'},
+ {v:'sell out (of)',def:'have nothing left to sell',ex:'The tickets sold out in an hour.',note:'sell – sold – sold'},
+ {v:'shop around',def:'compare prices in different places before buying',ex:'Shop around before you choose a phone plan.',note:'NO OBJECT'},
+ {v:'splurge on',def:'spend a lot on something special as a treat',ex:'We splurged on a fancy dinner.',note:'splurge ON + noun'},
+ {v:'take back',def:'return something to the shop where you bought it',ex:'These shoes are too small — I’ll take them back.',note:'SEPARABLE · take it back'}
+];
+const BASE=VERBS.map(x=>x.v.replace(/ \(.*\)/,''));
+function opts4(correct){const others=shuffle(BASE.filter(b=>b!==correct)).slice(0,3);return shuffle([correct,...others])}
+
+const SITUATIONS=[
+ ['The headphones you ordered stopped working after two days. Luckily, you still have the receipt.','take back'],
+ ['Before choosing a phone contract, you check the offers of five different providers.','shop around'],
+ ['Your sister lent you £30 last week. Today you send her the money.','pay back'],
+ ['You put part of every pay cheque aside because you want a car next summer.','save up'],
+ ['A café next to the station charges £9 for a small bottle of water.','rip off'],
+ ['After three months of “buy now, pay later”, your bill has reached £2,000.','run up'],
+ ['You’re moving abroad, so you let the neighbours have your furniture for free.','give away'],
+ ['You passed your exams — tonight you’re ordering the most expensive dessert on the menu.','splurge on'],
+ ['Energy prices have gone up, so you decide to use the heating less.','cut back'],
+ ['You open the ticket app at 9:01 and every single seat is already gone.','sell out']
+];
+const SWAPS=[
+ ['Students often <u>accumulate</u> big phone bills when they travel.',['run up','save up','cut back on'],0,'run up a bill = let it grow.'],
+ ['The limited-edition trainers <u>were all gone</u> within an hour.',['ran up','sold out','gave away'],1,'sold out = none left to buy.'],
+ ['I’ll <u>return the money to you</u> on Friday, I promise.',['take you back','give you away','pay you back'],2,'pay sb back = return borrowed money.'],
+ ['That tour guide <u>overcharged us</u> — £40 for a ten-minute walk!',['ripped us off','ran us up','sold us out'],0,'rip sb off = charge far too much.'],
+ ['She’s <u>putting money aside</u> for a gap year.',['shopping around','saving up','cutting back'],1,'save up (for) = keep money for a goal.'],
+ ['We <u>compared offers</u> before we chose a bank.',['splurged','took back','shopped around'],2,'shop around = compare prices and offers.'],
+ ['He <u>spent a fortune on</u> a designer jacket.',['splurged on','cut back on','sold out of'],0,'splurge on = spend a lot as a treat.'],
+ ['These jeans don’t fit. I’m going to <u>return them to the shop</u>.',['pay them back','take them back','give them away'],1,'take sth back = return it to the shop.'],
+ ['The company is <u>handing out</u> samples <u>for free</u>.',['running up','saving up','giving away'],2,'give away = give for free.'],
+ ['My parents told me to <u>spend less on</u> games.',['cut back on','splurge on','shop around'],0,'cut back on = spend less on.']
+];
+const TYPES=[
+ ['I ___ £400 on my credit card last month.','run up · past',['ran up']],
+ ['They ___ at the airport — £15 for a sandwich!','rip off + us · past',['ripped us off']],
+ ['We’ve been ___ for a new laptop since January.','save up',['saving up']],
+ ['You should always ___ before you buy insurance.','shop around',['shop around']],
+ ['Don’t worry, I ___ tomorrow.','pay back + you · future',['will pay you back','\'ll pay you back','ll pay you back','am going to pay you back','\'m going to pay you back']],
+ ['Yesterday the tickets ___ in ten minutes.','sell out · past',['sold out']],
+ ['She’s ___ to a charity shop.','give away + her old clothes',['giving her old clothes away','giving away her old clothes']],
+ ['Since I lost my job, I ___ on eating out.','cut back · present perfect',['have cut back','\'ve cut back','ve cut back']],
+ ['Last weekend we ___ a fancy hotel.','splurge on · past',['splurged on']],
+ ['If the shoes don’t fit, just ___.','take back + them',['take them back']]
+];
+const STORY=[
+ ['Mia wanted a new phone, so in March she started to ___ for it.',['save up','sell out','rip off'],0],
+ ['To do that, she had to ___ on bubble tea and late-night taxis.',['splurge','cut back','shop around'],1],
+ ['By June she had enough, but she didn’t buy the first phone she saw — she decided to ___.',['take back','run up','shop around'],2],
+ ['One website added a £60 “handling fee”. It was clearly trying to ___ her ___.',['rip … off','pay … back','give … away'],0],
+ ['The model she wanted had ___ almost everywhere.',['saved up','sold out','cut back'],1],
+ ['She finally found one — but the screen was scratched, so she had to ___ it ___ to the shop.',['run … up','give … away','take … back'],2],
+ ['The second phone was perfect. With the money left over, she ___ a glittery case she didn’t really need.',['splurged on','cut back on','sold out of'],0],
+ ['Then she ___ the £20 she owed her brother, and felt very grown-up indeed.',['ran up','paid back','gave away'],1]
+];
+const STORY_FILL=['save up','cut back','shop around','rip her off','sold out','take it back','splurged on','paid back'];
+const SPEAK=[
+ ['What was the last thing you splurged on? Was it worth it?','splurge on'],
+ ['Have you ever been ripped off? What happened?','rip off'],
+ ['What are you saving up for at the moment?','save up for'],
+ ['If you had to cut back on one thing, what would it be?','cut back on'],
+ ['Do you shop around, or do you buy the first thing you see?','shop around'],
+ ['Is it easier to run up debt today than it was for your grandparents? Why?','run up'],
+ ['Have you ever taken something back to a shop? Tell the story.','take back'],
+ ['What would you happily give away — and what would you never give away?','give away'],
+ ['A friend never pays you back. What do you say to them?','pay back'],
+ ['Which things usually sell out fast in your city?','sell out']
+];
+const FINAL=[
+ ['Concert tickets ___ within minutes.',['sold out','ran up','gave away','paid back'],0],
+ ['I can’t come out tonight — I’m ___ for my holiday.',['selling out','saving up','ripping off','taking back'],1],
+ ['£8 for a coffee? They’re ___ tourists!',['paying back','cutting back','ripping off','shopping around'],2],
+ ['He ___ a huge bill at the hotel bar.',['saved up','shopped around','took back','ran up'],3],
+ ['Can you lend me £10? I’ll ___ on Monday.',['pay you back','take you back','rip you off','give you away'],0],
+ ['Five streaming subscriptions? We need to ___.',['save up','cut back','sell out','run up'],1],
+ ['This dress is too small. I’ll have to ___.',['pay it back','run it up','take it back','sell it out'],2],
+ ['It was her birthday, so she ___ a spa day.',['cut back on','sold out of','shopped around','splurged on'],3],
+ ['The radio station is ___ free festival tickets.',['giving away','paying back','saving up','running up'],0],
+ ['Don’t buy the first laptop you see — ___ first.',['sell out','shop around','splurge','pay back'],1]
+];
+
+/* ---------- progress ---------- */
+const ACTS=[
+ {id:'learn',n:'Meet the Verbs',s:'Tap to discover',ico:'💡',c:'t1'},
+ {id:'cards',n:'Flashcards',s:'Quick recall',ico:'⚡',c:'t2'},
+ {id:'sit',n:'What Would You Do?',s:'Situation → verb · speed quiz',ico:'🎯',c:'t3'},
+ {id:'swap',n:'Synonym Swap',s:'Say it like a native',ico:'🔁',c:'t4'},
+ {id:'story',n:'Mia’s New Phone',s:'Complete the story',ico:'🧩',c:'t5'},
+ {id:'type',n:'Type It Right',s:'Verb + tense · no options',ico:'⌨️',c:'t6'},
+ {id:'speak',n:'Hot Seat',s:'60 seconds of speaking',ico:'🎤',c:'t7'},
+ {id:'final',n:'Final Test',s:'Show what you know',ico:'🏆',c:'t8'}
+];
+const KEY='katya_pv_money_v1';
+let save={done:{},best:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.done&&s.best)save=s}catch(e){}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(save))}catch(e){}}
+function complete(id,score){save.done[id]=true;if(score!==undefined&&score>(save.best[id]||0))save.best[id]=score;persist();header()}
+function header(){
+ $id('dots').innerHTML=ACTS.map(a=>'<i class="'+(save.done[a.id]?'on':'')+'"></i>').join('');
+ $id('progNum').textContent=ACTS.filter(a=>save.done[a.id]).length+'/'+ACTS.length;
+}
+function resetAll(){save={done:{},best:{}};persist();header();home()}
+
+/* ---------- home ---------- */
+let timerId=null;
+function stopTimers(){if(timerId){clearInterval(timerId);timerId=null}}
+function home(){
+ stopTimers();
+ $id('view').innerHTML='<p class="home-h">Choose an activity. Left to right is the best order — the Final Test comes last.</p><div class="tiles">'+ACTS.map(a=>'<button type="button" class="tile '+a.c+'" onclick="openAct(\''+a.id+'\')">'+(save.done[a.id]?'<span class="done">DONE</span>':'')+(save.best[a.id]?'<span class="rec">BEST '+save.best[a.id].toLocaleString('en-GB')+'</span>':'')+'<span class="ico">'+a.ico+'</span><b>'+a.n+'</b><small>'+a.s+'</small></button>').join('')+'</div>';
+}
+function frame(id,sub,hud){
+ const a=ACTS.find(x=>x.id===id);
+ $id('view').innerHTML='<div class="title"><div><h2>'+a.n+'</h2><p>'+sub+'</p></div><button class="navbtn" type="button" onclick="home()">← ALL ACTIVITIES</button></div>'+(hud||'')+'<div id="body"></div>';
+}
+function openAct(id){stopTimers();({learn:actLearn,cards:actCards,sit:actSit,swap:actSwap,story:actStory,type:actType,speak:actSpeak,final:actFinal})[id]()}
+function nextAct(id){const i=ACTS.findIndex(a=>a.id===id);return i<ACTS.length-1?'<button class="navbtn g-start" type="button" onclick="openAct(\''+ACTS[i+1].id+'\')">NEXT: '+ACTS[i+1].n.toUpperCase()+' →</button>':'<button class="navbtn g-start" type="button" onclick="home()">ALL ACTIVITIES</button>'}
+
+/* ---------- 1 learn ---------- */
+function actLearn(){
+ frame('learn','Guess the meaning first, then tap the card to check. Open all ten.');
+ $id('body').innerHTML='<div class="learn">'+VERBS.map((x,i)=>'<button type="button" class="lc" data-i="'+i+'"><b>'+x.v+'</b><span class="def">'+x.def+'</span><span class="ex">'+x.ex+'</span><span class="note">'+x.note+'</span><span class="hint">TAP TO REVEAL</span></button>').join('')+'</div><div class="g-row"><div class="g-msg" id="lmsg">0 / 10 opened</div><span id="lnext"></span></div>';
+ document.querySelectorAll('.lc').forEach(c=>c.onclick=()=>{c.classList.add('open');const n=document.querySelectorAll('.lc.open').length;$id('lmsg').textContent=n+' / 10 opened';if(n===10){complete('learn');$id('lnext').innerHTML=nextAct('learn')}});
+}
+
+/* ---------- 2 flashcards ---------- */
+function actCards(){
+ frame('cards','Read the meaning, say the phrasal verb aloud, then flip. “Again” cards come back until you know them all.','<div class="g-hud"><div class="g-stat" id="cKnown"><small>KNOWN</small><b id="cK">0 / 10</b></div><div class="g-goal"><small><span>DECK</span><span id="cLeft"></span></small><div class="g-track"><i id="cBar"></i></div></div></div>');
+ let deck=shuffle(VERBS),known=0;
+ const draw=()=>{
+  $id('cK').textContent=known+' / 10';$id('cBar').style.width=known*10+'%';$id('cLeft').textContent=deck.length+' LEFT';
+  if(!deck.length){complete('cards');$id('body').innerHTML='<div class="g-stage"><div class="g-end"><p class="g-kicker">DECK CLEARED</p><h3>10 / 10 known</h3><p>Now use them under pressure.</p>'+nextAct('cards')+'</div></div>';return}
+  const x=deck[0];
+  $id('body').innerHTML='<div class="flip" id="flip"><button type="button" class="flip-in" aria-label="Flip the card"><span class="face"><small>WHICH PHRASAL VERB?</small><span class="mid">'+x.def+'</span><small>TAP TO FLIP</small></span><span class="face back"><span class="big">'+x.v+'</span><span class="mid" style="font-size:15px;font-weight:500">'+x.ex+'</span></span></button></div><div class="fbtns"><button type="button" class="navbtn again" id="again" disabled>↺ AGAIN</button><button type="button" class="navbtn know" id="know" disabled>✓ I KNEW IT</button></div>';
+  document.querySelector('.flip-in').onclick=()=>{$id('flip').classList.toggle('on');$id('again').disabled=$id('know').disabled=false};
+  $id('again').onclick=()=>{deck.push(deck.shift());draw()};
+  $id('know').onclick=()=>{deck.shift();known++;pop('cKnown');draw()};
+ };
+ draw();
+}
+
+/* ---------- quiz engine ---------- */
+function quiz(cfg){
+ // cfg: id, sub, items[{q,o,a,why,pre}], timed(ms), cols, kicker, after(i)
+ frame(cfg.id,cfg.sub,'<div class="g-hud"><div class="g-stat" id="qP"><small>POINTS</small><b id="qPts">0</b></div><div class="g-stat" id="qS"><small>STREAK</small><b id="qStk">0</b></div><div class="g-stat"><small>BEST</small><b>'+(save.best[cfg.id]||0).toLocaleString('en-GB')+'</b></div><div class="g-goal"><small><span>'+cfg.kicker+'</span><span id="qCnt"></span></small><div class="g-track"><i id="qBar"></i></div></div></div>');
+ let i=0,pts=0,stk=0,right=0,t0=0;const misses=[],items=cfg.items,MS=cfg.timed||20000;
+ const hud=()=>{$id('qPts').textContent=pts.toLocaleString('en-GB');$id('qStk').textContent=stk>=2?'×'+stk:stk;$id('qCnt').textContent=Math.min(i+1,items.length)+' / '+items.length;$id('qBar').style.width=(i/items.length*100)+'%'};
+ const show=()=>{
+  hud();
+  if(i>=items.length){
+   const pass=right>=Math.ceil(items.length*.8);if(!cfg.needPass||pass)complete(cfg.id,pts);else{if(pts>(save.best[cfg.id]||0)){save.best[cfg.id]=pts;persist()}}
+   $id('qBar').style.width='100%';
+   $id('body').innerHTML='<div class="g-stage"><div class="g-end"><p class="g-kicker">'+right+' / '+items.length+' CORRECT'+(cfg.needPass?(pass?' · PASSED':' · 8 NEEDED TO PASS'):'')+'</p><h3>'+(cfg.needPass&&pass?'🏆 ':'')+pts.toLocaleString('en-GB')+' points</h3><p>'+(right===items.length?'Flawless.':right>=items.length*.8?'Strong round.':'Open “Meet the Verbs” again, then replay.')+'</p>'+(misses.length?'<div class="g-review">'+misses.join('')+'</div>':'')+'<button class="navbtn primary g-start" type="button" id="qAgain">PLAY AGAIN</button> '+nextAct(cfg.id)+'</div></div>';
+   $id('qAgain').onclick=cfg.restart;return;
+  }
+  const it=items[i];
+  $id('body').innerHTML=(cfg.pre?cfg.pre(i):'')+'<div class="g-stage" id="qStage"><div class="g-timer"><i id="qT"></i></div><p class="g-kicker">'+cfg.kicker+' '+(i+1)+' / '+items.length+'</p><p class="g-sentence" id="qQ">'+it.q+'</p><div class="g-opts'+(it.o.length===3?' three':'')+'" id="qO">'+it.o.map((o,k)=>'<button type="button" class="g-opt k'+k+'" data-i="'+k+'"><i>'+SHAPES[k]+'</i>'+o+'</button>').join('')+'</div><div class="g-row"><div class="g-msg" id="qM">The orange bar is your speed bonus.</div><button class="navbtn primary" id="qN" type="button" hidden>NEXT →</button></div></div>';
+  $id('qO').querySelectorAll('.g-opt').forEach(b=>b.onclick=()=>pick(b));
+  $id('qN').onclick=()=>{i++;show()};
+  t0=Date.now();const t=$id('qT');t.style.width='100%';void t.offsetWidth;t.style.transition='width '+MS+'ms linear';t.style.width='0%';
+ };
+ const pick=btn=>{
+  const it=items[i],ok=Number(btn.dataset.i)===it.a,m=$id('qM'),t=$id('qT');
+  t.style.transition='none';t.style.width=getComputedStyle(t).width;
+  $id('qO').querySelectorAll('.g-opt').forEach(b=>{b.disabled=true;b.classList.add(Number(b.dataset.i)===it.a?'hit':b===btn?'missed':'dim')});
+  if(it.done)$id('qQ').innerHTML=it.done(ok);
+  if(ok){stk++;right++;const p=500+Math.round(Math.max(0,1-(Date.now()-t0)/MS)*50)*10+Math.min(stk-1,5)*100;pts+=p;m.className='g-msg';m.innerHTML='<b>+'+p+'</b>'+(it.why?' · '+it.why:'');const f=document.createElement('div');f.className='g-float';f.textContent='+'+p;$id('qStage').appendChild(f);setTimeout(()=>f.remove(),1000);pop('qP');if(stk>=2)pop('qS')}
+  else{stk=0;misses.push('<div>'+it.review+'</div>');m.className='g-msg bad';m.innerHTML='The answer is <b>'+it.o[it.a]+'</b>.'+(it.why?' '+it.why:'');$id('qStage').classList.add('shake')}
+  hud();$id('qBar').style.width=((i+1)/items.length*100)+'%';
+  const n=$id('qN');n.hidden=false;n.textContent=i===items.length-1?'SEE RESULT →':'NEXT →';n.focus();
+ };
+ show();
+}
+const gap=(s,w,cls)=>s.replace('___','<span class="blank '+(cls||'')+'">'+(w||'&nbsp;?&nbsp;')+'</span>');
+
+function actSit(){
+ const items=shuffle(SITUATIONS).map(([q,a])=>{const o=opts4(a);const d=VERBS[BASE.indexOf(a)];return {q,o,a:o.indexOf(a),why:d.v+' = '+d.def+'.',review:q+'<br><b>'+a+'</b> — '+d.def}});
+ quiz({id:'sit',sub:'Read the situation and pick the phrasal verb that fits. Faster = more points.',items,kicker:'SITUATION',restart:actSit});
+}
+function actSwap(){
+ const items=shuffle(SWAPS).map(([q,o,a,why])=>({q,o,a,why,review:q+'<br><b>'+o[a]+'</b> — '+why}));
+ quiz({id:'swap',sub:'Replace the highlighted words with a phrasal verb in the right form.',items,kicker:'SENTENCE',restart:actSwap});
+}
+function actStory(){
+ const items=STORY.map(([q,o,a],k)=>({q:gap(q.replace(' ___ to the shop',' to the shop').replace(' her ___.',' her.')),o,a,done:ok=>gap(q.replace(' it ___ to the shop',' to the shop').replace('___ her ___','___').replace('___ it','___'),STORY_FILL[k],ok?'good':'miss'),review:gap(q.replace(' it ___ to the shop',' to the shop').replace('___ her ___','___').replace('___ it','___'),STORY_FILL[k],'good')}));
+ quiz({id:'story',sub:'Eight gaps, one story. The finished sentences build up above.',items,kicker:'PART',timed:25000,restart:actStory,
+  pre:i=>i?'<p class="story">'+STORY.slice(0,i).map((s,k)=>s[0].replace(' it ___ to the shop',' to the shop').replace('___ her ___','___').replace('___ it','___').replace('___','<b>'+STORY_FILL[k]+'</b>')).join(' ')+'</p>':''});
+}
+function actFinal(){
+ const items=shuffle(FINAL).map(([q,o,a])=>({q:gap(q),o,a,done:ok=>gap(q,o[a],ok?'good':'miss'),review:gap(q,o[a],'good')}));
+ quiz({id:'final',sub:'Ten mixed questions. Get 8 right to pass and collect the trophy.',items,kicker:'QUESTION',timed:15000,needPass:true,restart:actFinal});
+}
+
+/* ---------- 6 type it ---------- */
+function norm(s){return s.toLowerCase().replace(/[’‘`]/g,"'").replace(/[.!?,]+$/,'').replace(/\s+/g,' ').trim()}
+function actType(){
+ frame('type','No options this time. Type the phrasal verb in the right tense — and put the object in the right place.','<div class="g-hud"><div class="g-stat" id="tR"><small>CORRECT</small><b id="tRight">0</b></div><div class="g-stat"><small>BEST</small><b>'+(save.best.type||0)+' / 10</b></div><div class="g-goal"><small><span>SENTENCE</span><span id="tCnt"></span></small><div class="g-track"><i id="tBar"></i></div></div></div>');
+ const items=shuffle(TYPES);let i=0,right=0,tries=0;const misses=[];
+ const show=()=>{
+  $id('tRight').textContent=right;$id('tCnt').textContent=Math.min(i+1,10)+' / 10';$id('tBar').style.width=i*10+'%';
+  if(i>=10){complete('type',right);$id('body').innerHTML='<div class="g-stage"><div class="g-end"><p class="g-kicker">TYPING ROUND OVER</p><h3>'+right+' / 10</h3><p>'+(right>=9?'Tenses and word order under control.':'Check the forms below, then try again.')+'</p>'+(misses.length?'<div class="g-review">'+misses.join('')+'</div>':'')+'<button class="navbtn primary g-start" type="button" onclick="actType()">PLAY AGAIN</button> '+nextAct('type')+'</div></div>';return}
+  const [q,hint]=items[i];tries=0;
+  $id('body').innerHTML='<div class="g-stage" id="tStage"><p class="g-kicker">SENTENCE '+(i+1)+' / 10 · USE: '+hint.toUpperCase()+'</p><p class="g-sentence" id="tQ">'+gap(q)+'</p><form class="type-row" id="tForm" autocomplete="off"><input id="tIn" aria-label="Your answer" placeholder="Type the missing words…" autocapitalize="off" spellcheck="false"><button class="navbtn primary" id="tGo">CHECK</button></form><div class="g-row"><div class="g-msg" id="tM">Two tries per sentence.</div><button class="navbtn primary" id="tN" type="button" hidden>NEXT →</button></div><p class="bank">'+BASE.join(' · ')+'</p></div>';
+  $id('tIn').focus();
+  $id('tForm').onsubmit=e=>{e.preventDefault();check()};
+  $id('tN').onclick=()=>{i++;show()};
+ };
+ const check=()=>{
+  const [q,hint,acc]=items[i],inp=$id('tIn'),val=norm(inp.value),m=$id('tM');if(!val)return;
+  const ok=acc.some(a=>norm(a)===val);tries++;
+  if(ok||tries>=2){
+   inp.disabled=true;$id('tGo').disabled=true;inp.className=ok?'good':'miss';
+   $id('tQ').innerHTML=gap(q,acc[0],ok?'good':'miss');
+   if(ok){right++;pop('tR');m.className='g-msg';m.innerHTML='<b>Correct'+(tries===1?' on the first try.':'.')+'</b>'}
+   else{misses.push('<div>'+gap(q,acc[0],'good')+'</div>');m.className='g-msg bad';m.innerHTML='The answer is <b>'+acc[0]+'</b>.'}
+   $id('tRight').textContent=right;$id('tBar').style.width=(i+1)*10+'%';
+   const n=$id('tN');n.hidden=false;n.textContent=i===9?'SEE RESULT →':'NEXT →';n.focus();
+  }else{inp.className='miss';m.className='g-msg bad';m.textContent='Not quite — check the tense and where the object goes. One more try.';$id('tStage').classList.add('shake');setTimeout(()=>$id('tStage').classList.remove('shake'),400);inp.select()}
+ };
+ show();
+}
+
+/* ---------- 7 speaking ---------- */
+function actSpeak(){
+ frame('speak','Draw a question and speak for 60 seconds. You must use the phrasal verb at least once. Three questions complete the round.','<div class="g-hud"><div class="g-stat" id="sA"><small>ANSWERED</small><b id="sN">0 / 3</b></div><div class="g-goal"><small><span>HOT SEAT</span><span>TEACHER DECIDES IF THE VERB WAS USED</span></small><div class="g-track"><i id="sBar"></i></div></div></div>');
+ let deck=shuffle(SPEAK),n=0;
+ const draw=()=>{
+  stopTimers();$id('sN').textContent=n+' / 3';$id('sBar').style.width=Math.min(100,n/3*100)+'%';
+  if(!deck.length)deck=shuffle(SPEAK);const [q,v]=deck.shift();let left=60,run=false;
+  $id('body').innerHTML='<div class="g-stage"><div class="speak"><div class="ring" id="ring"><span id="sec">60</span></div><div><p class="g-kicker">YOUR QUESTION</p><p class="g-sentence">'+q+'</p><span class="must">MUST USE: '+v.toUpperCase()+'</span></div></div><div class="g-row" style="margin-top:16px"><div class="g-msg" id="sM">Press START when you’re ready.</div><div style="display:flex;gap:8px"><button class="navbtn" type="button" id="sSkip">ANOTHER QUESTION</button><button class="navbtn primary" type="button" id="sGo">START 60s</button><button class="navbtn know" type="button" id="sOk">✓ VERB USED</button></div></div>'+(n>=3?'<div class="g-end" style="padding-top:14px">'+nextAct('speak')+'</div>':'')+'</div>';
+  const tick=()=>{left--;$id('sec').textContent=left;$id('ring').style.setProperty('--p',((60-left)/60*100)+'%');if(left<=0){stopTimers();$id('sM').textContent='Time! Did you use the verb?'}};
+  $id('sGo').onclick=()=>{if(run)return;run=true;$id('sGo').disabled=true;$id('sM').textContent='Speak! Give a reason and an example.';timerId=setInterval(tick,1000)};
+  $id('sSkip').onclick=draw;
+  $id('sOk').onclick=()=>{n++;pop('sA');if(n>=3)complete('speak');draw()};
+ };
+ draw();
+}
+
+header();home();
+</script>
+</body>
+</html>
