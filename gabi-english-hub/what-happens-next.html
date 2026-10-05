@@ -22,7 +22,7 @@ button:disabled{opacity:.4;cursor:default}
 .top .sp{flex:1}
 .scorePill{background:var(--ink);color:#fff}
 .scorePill b{color:var(--yellow);margin-left:6px;font-size:17px}
-.wrap{position:relative;z-index:1;height:100vh;display:grid;grid-template-columns:auto minmax(320px,470px);gap:26px;align-items:center;justify-content:center;padding:64px 22px 16px}
+.wrap{position:relative;z-index:1;height:100vh;display:grid;grid-template-columns:auto minmax(300px,440px) minmax(270px,340px);gap:18px;align-items:center;justify-content:center;padding:64px 22px 16px}
 .phone{position:relative;height:calc(100vh - 84px);aspect-ratio:9/16;max-width:100%;border-radius:26px;overflow:hidden;background:#0d1117;box-shadow:0 18px 50px rgba(0,0,0,.35)}
 .phone video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .again{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);white-space:nowrap}
@@ -63,11 +63,34 @@ button:disabled{opacity:.4;cursor:default}
 .dots button.on{background:var(--ink);border-color:var(--ink);color:#fff}
 .dots button.done{background:var(--ok);border-color:#8fcfa5}
 .big{font-size:clamp(46px,6vw,76px);font-weight:900;line-height:1;margin:6px 0 0}
+.help{background:var(--card);backdrop-filter:blur(10px);border-radius:26px;padding:16px 16px 14px;box-shadow:0 14px 40px rgba(0,0,0,.18);max-height:calc(100vh - 84px);overflow:auto}
+.help h2{margin:0 0 6px;font-size:12px;font-weight:900;letter-spacing:.14em;color:var(--muted)}
+.help h2:not(:first-child){margin-top:11px}
+.scheme{display:grid;gap:4px}
+.scheme div{display:flex;align-items:baseline;gap:8px;border-radius:9px;padding:4px 10px;font-weight:900;font-size:15.5px}
+.scheme small{font-size:11px;font-weight:900;letter-spacing:.08em;opacity:.7;min-width:16px}
+.scheme em{font-style:normal;font-weight:700;font-size:13px;opacity:.75;margin-left:auto;text-align:right}
+.p1{background:#d9ecff}.p2{background:#eceff3}.p3{background:#ffe680}.p4{background:#d6f0de}.p5{background:#ecdcff}
+.sample{border-radius:14px;background:#fff;border:2px solid var(--line);padding:7px 10px;font-size:17px;font-weight:900;line-height:1.45}
+.sample span{border-radius:6px;padding:1px 5px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.grp{display:grid;grid-template-columns:58px 1fr;gap:5px;align-items:start;margin-bottom:5px}
+.grp>b{font-size:11px;font-weight:900;letter-spacing:.06em;color:var(--muted);padding-top:8px;line-height:1.2}
+.grp .chips{gap:4px}
+.help .chip{padding:5px 8px;font-size:14.5px;border-radius:9px}
+.help .note{margin:6px 0 0;font-size:13px;line-height:1.35;font-weight:700;color:var(--muted)}
+.help .note b{color:var(--ink)}.help .note s{color:#a4442f}
+.say p .o{color:#9fd0ff}.say p .b{color:#d9b8ff}
+@media(max-width:1180px){
+ body{overflow:auto}
+ .wrap{height:auto;min-height:100vh;grid-template-columns:auto minmax(300px,470px);align-items:start}
+ .help{grid-column:1/-1;max-height:none}
+}
 @media(max-width:860px){
  body{overflow:auto}
  .wrap{height:auto;min-height:100vh;grid-template-columns:1fr;justify-items:center;padding-top:70px}
  .phone{height:auto;width:min(100%,360px)}
  .panel{max-height:none;width:100%}
+ .help{width:100%}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -89,6 +112,7 @@ button:disabled{opacity:.4;cursor:default}
     <button class="round again" id="again" hidden>↻ Watch again</button>
   </div>
   <section class="panel" id="panel" aria-live="polite"></section>
+  <aside class="help" id="help" aria-label="How to answer"></aside>
 </div>
 <script>
 /* To add a clip: put the .mp4 and a .jpg freeze-frame in assets/whn/ and add a line here.
@@ -97,10 +121,20 @@ button:disabled{opacity:.4;cursor:default}
 const CLIPS=[
  {file:'lamp',stop:0.77,subjects:['The ball','The man','The lamp'],
   words:['hit','miss','break','smash','bounce off','fall off the wall','score a goal','get into trouble'],
+  sample:['I’m pretty sure','the goalkeeper','will definitely','laugh','because it isn’t his house.'],
   fact:'The ball hit the lamp on the wall, and the man covered his face.',
   after:['What will the owner of the house say?','Who will pay for the lamp?','Will they play football there again?']}
 ];
 const SURE=[['will definitely','100%',3,-1],['will probably','quite sure',2,0],['might','maybe',1,0],['probably won’t','quite sure not',2,0],['definitely won’t','100% not',3,-1]];
+/* Opening phrases. kind: plain = "I think it will probably…", maybe = "Maybe it will…", neg = "I don't think it will…" */
+const OPEN=[
+ ['SURE',[['I’m sure','plain'],['I bet','plain'],['There’s no doubt','plain']]],
+ ['QUITE<br>SURE',[['I think','plain'],['I guess','plain'],['I reckon','plain'],['I expect','plain'],['In my opinion,','plain']]],
+ ['NOT<br>SURE',[['Maybe','maybe'],['Perhaps','maybe'],['I’m not sure, but','plain']]],
+ ['NO!',[['I don’t think','neg'],['I doubt','neg'],['There’s no way','neg']]]
+];
+const OPENERS=OPEN.flatMap(g=>g[1]);
+let opener=3;
 const $=id=>document.getElementById(id),v=$('v'),P=$('panel');
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let ci=0,score=0,done=[],S={},raf=0;
@@ -136,14 +170,36 @@ function replayAll(){
  const p=v.play();if(p&&p.catch)p.catch(()=>{});
 }
 function sentence(){
- const c=CLIPS[ci],subj=c.subjects[S.subj],s=S.sure==null?null:SURE[S.sure][0];
- return `I think ${esc(subj.charAt(0).toLowerCase()+subj.slice(1))} <u>${s?esc(s):'will'}</u> …`;
+ const c=CLIPS[ci],subj=c.subjects[S.subj],o=OPENERS[opener],sure=S.sure==null?null:SURE[S.sure][0];
+ const who=esc(subj.charAt(0).toLowerCase()+subj.slice(1));
+ let mid;
+ if(o[1]==='neg')mid='will';
+ else if(o[1]==='maybe')mid=sure&&sure.includes('won’t')?'won’t':sure==='might'?'might':'will';
+ else mid=sure||'will';
+ return `<span class="o">${esc(o[0])}</span> ${who} <u>${esc(mid)}</u> … <span class="b">because …</span>`;
+}
+function drawHelp(){
+ const c=CLIPS[ci],m=c.sample;
+ $('help').innerHTML=`<h2>HOW TO ANSWER</h2>
+  <div class="scheme">
+   <div class="p1"><small>1</small>Opening phrase<em>I think · Maybe</em></div>
+   <div class="p2"><small>2</small>Who or what<em>the ball</em></div>
+   <div class="p3"><small>3</small>will / won’t + how sure<em>will probably</em></div>
+   <div class="p4"><small>4</small>Verb<em>hit · break</em></div>
+   <div class="p5"><small>5</small>because + reason<em>because …</em></div>
+  </div>
+  <h2>MODEL ANSWER</h2>
+  <div class="sample"><span class="p1">${esc(m[0])}</span> <span class="p2">${esc(m[1])}</span> <span class="p3">${esc(m[2])}</span> <span class="p4">${esc(m[3])}</span> <span class="p5">${esc(m[4])}</span></div>
+  <h2>OPENING PHRASES · TAP ONE</h2>
+  ${(()=>{let n=0;return OPEN.map(g=>`<div class="grp"><b>${g[0]}</b><div class="chips">${g[1].map(o=>{const i=n++;return `<button class="chip ${i===opener?'on':''}" data-open="${i}">${esc(o[0])}</button>`}).join('')}</div></div>`).join('')})()}
+  <p class="note">After <b>I don’t think / I doubt / There’s no way</b> use <b>will</b>, not won’t: <b>I don’t think it will break</b>, not <s>I think it won’t break</s>.</p>`;
+ $('help').querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{opener=+b.dataset.open;drawHelp();if(S.phase==='predict'||S.phase==='reveal'||S.phase==='check')draw()});
 }
 function dots(){
  return CLIPS.length>1?`<div class="dots">${CLIPS.map((c,i)=>`<button data-go="${i}" class="${i===ci?'on':done.includes(i)?'done':''}">${i+1}</button>`).join('')}</div>`:'';
 }
 function draw(){
- const c=CLIPS[ci];$('score').textContent=score;let h='';
+ const c=CLIPS[ci];$('score').textContent=score;let h='';drawHelp();
  if(S.phase==='idle'||S.phase==='watching'){
   h=`<h1>Watch carefully.</h1><p class="lead">The clip will stop at the most interesting moment. Get ready to say what <b>will</b> happen.</p>
    <div class="lab">HOW SURE ARE YOU?</div><div class="chips sure">${SURE.map(s=>`<span class="chip">${esc(s[0])}</span>`).join('')}</div>
@@ -152,7 +208,7 @@ function draw(){
   h=`<h1>What happens next?</h1><p class="lead">Say what you think will happen.</p>
    <div class="lab">1 · WHO OR WHAT?</div><div class="chips">${c.subjects.map((s,i)=>`<button class="chip ${S.subj===i?'on':''}" data-subj="${i}">${esc(s)}</button>`).join('')}</div>
    <div class="lab">2 · HOW SURE ARE YOU?</div><div class="chips sure">${SURE.map((s,i)=>`<button class="chip ${S.sure===i?'on':''}" data-sure="${i}">${esc(s[0])}<small>+${s[2]}</small></button>`).join('')}</div>
-   <div class="say"><small>3 · SAY IT ALOUD</small><p>${sentence()}</p></div>
+   <div class="say"><small>3 · SAY IT ALOUD · FOLLOW THE SCHEME</small><p>${sentence()}</p></div>
    <p class="words">Useful words: ${c.words.map(w=>'<b>'+esc(w)+'</b>').join(' · ')}</p>
    <button class="go" id="see" ${S.sure==null?'disabled':''}>See what happens</button>`;
  }else if(S.phase==='reveal'){
@@ -160,6 +216,7 @@ function draw(){
  }else if(S.phase==='check'){
   const s=SURE[S.sure];
   h=`<h1>Were you right?</h1><div class="say"><small>YOUR PREDICTION</small><p>${sentence()}</p></div>
+   <div class="lab">REACT</div><div class="chips"><span class="chip">I knew it!</span><span class="chip">I was right.</span><span class="chip">I didn’t expect that.</span><span class="chip">What a surprise!</span></div>
    <div class="row"><button class="yn y" data-yn="1">Yes, I was right<small>+${s[2]} points</small></button><button class="yn n" data-yn="0">No, I was wrong<small>${s[3]<0?s[3]+' point':'0 points'}</small></button></div>`;
  }else if(S.phase==='after'){
   const last=ci===CLIPS.length-1;
