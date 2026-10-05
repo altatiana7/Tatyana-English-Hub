@@ -268,7 +268,7 @@ function wall(missed){
 }
 
 document.getElementById('full').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}};
-menu();
+if(new URLSearchParams(location.search).get('scenes'))scenes();else menu();
 </script>
 </body>
 </html>
