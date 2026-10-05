@@ -192,6 +192,95 @@ header>div:first-child{display:flex;align-items:center}
 /* embedded game fills the whole area */
 .screen.embed.on{padding:0;overflow:hidden}.screen.embed::before,.screen.embed::after{display:none}
 .screen.embed>iframe{zoom:1;max-width:none!important;width:100%;height:100%;flex:1;border:0;display:block;background:#eef0fb}
+/* ===== dark full-screen game theme ===== */
+.screen.game{background:radial-gradient(1100px 620px at 18% -10%,#33399a 0%,#1a1f5c 48%,#0c1034 100%);color:#fff}
+.screen.game.g-map{background:radial-gradient(1100px 620px at 18% -10%,#16706f 0%,#123f55 48%,#0b1f33 100%)}
+.screen.game.g-tm{background:radial-gradient(1100px 620px at 18% -10%,#6a2f9c 0%,#35206e 48%,#150f3a 100%)}
+.screen.game.on{padding:14px 20px}
+.screen.game::before,.screen.game::after{display:none}
+.screen.game>*{max-width:none!important;width:100%;zoom:var(--gz,1)}
+.screen.game .title{border-color:rgba(255,255,255,.16);margin-bottom:10px;padding-bottom:9px}
+.screen.game .title h2{color:#fff;font-size:24px}.screen.game .title p{color:#c3caf3;font-size:12.5px}
+.screen.game .pill{background:#ffd54a;color:#1b1f4b}
+.screen.game .g-stat,.screen.game .g-goal{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2)}
+.screen.game .g-stat small,.screen.game .g-goal small{color:#c3caf3}.screen.game .g-stat b{color:#ffd54a;font-size:22px}
+.screen.game .g-track{background:rgba(255,255,255,.18)}.screen.game .g-track i{background:linear-gradient(90deg,#ffb300,#ffe27a)}
+.screen.game .cells i{background:rgba(255,255,255,.18)}.screen.game .cells i.on{background:#ffd54a}.screen.game .cells i.off{background:#ff7b6b}
+.screen.game .navbtn{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#fff}
+.screen.game .navbtn:hover{background:rgba(255,255,255,.2)}
+.screen.game .navbtn.primary{background:#ffd54a;border-color:#ffd54a;color:#1b1f4b;font-size:14px;padding:11px 20px}
+.screen.game .g-stage{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);flex:1 0 auto;display:flex;flex-direction:column;padding:18px 22px}
+.screen.game .g-kicker{color:#ffc27a;font-size:11px}
+.screen.game .g-sentence{color:#fff;font-size:27px;line-height:1.4}
+.screen.game .blank{color:#ffd54a;border-color:#ffd54a}
+.screen.game .blank.good{background:#1f9d55;border-color:#7dffb0;color:#fff}.screen.game .blank.miss{background:#d64545;border-color:#ffb4a6;color:#fff}
+.screen.game .g-msg{color:#e4e9ff;font-size:15px}.screen.game .g-msg.bad{color:#ffc0b3}
+.screen.game .g-row{margin-top:auto;padding-top:8px}
+.screen.game .g-opts{flex:1;grid-auto-rows:minmax(64px,1fr);margin-top:14px}
+.screen.game .g-opt{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.35);color:#fff;font-size:20px}
+.screen.game .g-opt small{color:#c3caf3;font-size:12px}
+.screen.game .g-opt:not(:disabled):hover{background:rgba(255,255,255,.22);border-color:#ffd54a}
+.screen.game .g-opt.k{font-size:21px;padding:16px 20px;border-color:transparent}
+.screen.game .g-opt.k0,.screen.game .g-opt.k.k0:not(:disabled):hover{background:#e21b3c}
+.screen.game .g-opt.k1,.screen.game .g-opt.k.k1:not(:disabled):hover{background:#1368ce}
+.screen.game .g-opt.k2,.screen.game .g-opt.k.k2:not(:disabled):hover{background:#d89e00}
+.screen.game .g-opt.k3,.screen.game .g-opt.k.k3:not(:disabled):hover{background:#26890c}
+.screen.game .g-opt.k.hit{outline-color:#fff}
+.screen.game .g-end{margin:auto 0}.screen.game .g-end h3{color:#ffd54a;font-size:38px}.screen.game .g-end p{color:#d5dbfb;font-size:16px}
+.screen.game .g-review div{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff}.screen.game .g-review b{color:#ffd54a}
+.screen.game .g-float{color:#7dffb0}
+/* control room: five coloured doors */
+.screen.game #mapStage{flex:0 0 auto}
+.screen.game .cond-map{flex:1 0 auto;grid-auto-rows:1fr}
+.screen.game .cond-card{background:var(--cc);border-color:transparent;color:#fff;box-shadow:inset 0 -6px 0 rgba(0,0,0,.2);min-height:150px}
+.screen.game .cond-card[data-type=ZERO]{--cc:#12908e}.screen.game .cond-card[data-type=FIRST]{--cc:#1f6fd6}.screen.game .cond-card[data-type=SECOND]{--cc:#8e44c9}.screen.game .cond-card[data-type=THIRD]{--cc:#e0661c}.screen.game .cond-card[data-type=MIXED]{--cc:#d43a54}
+.screen.game .cond-card h3{color:#fff;font-size:20px}.screen.game .cond-card .when{color:rgba(255,255,255,.92);font-size:12.5px;display:block!important}
+.screen.game .cond-card:hover{border-color:#ffd54a}
+.screen.game .cond-card .lock{border-color:rgba(255,255,255,.6);color:#fff}
+.screen.game .cond-card.open{background:var(--cc);border-color:#ffd54a}
+.screen.game .cond-card .formula{background:#fff;color:#1b1f4b;font-size:12.5px}.screen.game .cond-card .example{background:rgba(0,0,0,.22);color:#fff;font-size:12px}
+.screen.game .cond-card.open .when{display:none!important}
+.screen.game .pips i{background:rgba(255,255,255,.35)}.screen.game .pips i.on{background:#ffd54a}
+.screen.game .cond-card.flash{background:#5c1020}
+/* time machine */
+.screen.game .tm-node{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3);color:#c3caf3;font-size:14px;padding:9px 20px}
+.screen.game .tm-node.cause{background:#e0661c;border-color:#ffc27a;color:#fff}.screen.game .tm-node.result{background:#1f9d55;border-color:#7dffb0;color:#fff}
+.screen.game .tm-arrow{background:rgba(255,255,255,.25)}.screen.game .tm-arrow.pn,.screen.game .tm-arrow.np{background:#ffd54a}
+.screen.game .tm-arrow.pn::after{border-left-color:#ffd54a}.screen.game .tm-arrow.np::after{border-right-color:#ffd54a}
+.screen.game .chest{background:linear-gradient(#ffe27a,#ffb300);border:0;color:#5a3a00;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18);font-size:26px}
+.screen.game .chest.mine{background:#1f9d55;color:#fff}
+/* millionaire */
+.mil-wrap{display:grid;grid-template-columns:minmax(0,1fr) 178px;gap:12px;flex:1 0 auto}
+.mil-main{display:flex;flex-direction:column;gap:10px;min-width:0}
+.mil-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.life{border:2px solid #8f9bff;background:linear-gradient(#2a318a,#171c5e);color:#fff;border-radius:999px;padding:7px 16px;text-align:center;line-height:1.15;transition:transform .12s}
+.life b{display:block;font-size:13px;letter-spacing:.04em;color:#ffd54a}.life small{font-size:9.5px;color:#c3caf3}
+.life:not(:disabled):hover{transform:translateY(-2px);border-color:#ffd54a}
+.life:disabled{opacity:.3;text-decoration:line-through}
+.mil-best{margin-left:auto;font-size:11px;font-weight:800;letter-spacing:.08em;color:#c3caf3}
+.mil-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;flex:1;grid-auto-rows:minmax(58px,1fr);margin-top:14px}
+.mil-opt{display:flex;align-items:center;gap:12px;border:2px solid #8f9bff;background:linear-gradient(#262d86,#141a56);color:#fff;border-radius:16px;padding:10px 20px;font-size:20px;font-weight:700;text-align:left;transition:transform .12s,border-color .12s}
+.mil-opt i{font-style:normal;color:#ffd54a;font-weight:800}
+.mil-opt:not(:disabled):hover{transform:translateY(-2px);border-color:#ffd54a}
+.mil-opt:disabled{opacity:1}
+.mil-opt.sel{background:linear-gradient(#ffb300,#e08600);border-color:#fff;color:#1b1f4b}.mil-opt.sel i{color:#1b1f4b}
+.mil-opt.right{background:linear-gradient(#27b866,#16803f);border-color:#7dffb0;animation:gpop .5s}
+.mil-opt.wrong{background:linear-gradient(#e0475a,#a11f33);border-color:#ffb4a6}
+.mil-opt.gone{opacity:.12}
+.mil-aud{display:flex;gap:14px;align-items:flex-end;height:74px;margin-top:10px}
+.mil-aud div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:11px;font-weight:800;color:#c3caf3}
+.mil-aud span{display:block;width:100%;max-width:70px;background:linear-gradient(#ffe27a,#ffb300);border-radius:5px 5px 0 0;margin:3px 0}
+.mil-ladder{list-style:none;margin:0;padding:8px;display:flex;flex-direction:column-reverse;gap:3px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:14px}
+.mil-ladder li{flex:1;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 10px;border-radius:7px;font-size:13px;font-weight:700;color:#aab3e8;font-variant-numeric:tabular-nums}
+.mil-ladder li small{font-size:10px;opacity:.7}
+.mil-ladder li.safe{color:#fff}.mil-ladder li.done{color:#7dffb0}
+.mil-ladder li.cur{background:linear-gradient(#ffb300,#e08600);color:#1b1f4b}
+.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}.confetti i{position:absolute;top:-12px;width:9px;height:14px;animation:cfall 2.6s linear forwards}
+@keyframes cfall{to{transform:translateY(700px) rotate(540deg);opacity:.2}}
+@media(prefers-reduced-motion:reduce){.confetti{display:none}}
+.screen.game .title p{display:none}.screen.game .title{margin-bottom:8px;padding-bottom:7px}.screen.game .title h2{font-size:21px}
+.screen.game .chests{margin-top:8px}.screen.game .chest{padding:7px;font-size:20px}.screen.game .tm-line{margin-bottom:8px}.screen.game.g-tm .g-opts{grid-auto-rows:minmax(54px,1fr);margin-top:10px}
+@media(max-width:700px){.screen.game>*{zoom:1}.mil-wrap{grid-template-columns:1fr}.mil-ladder{flex-direction:row-reverse;overflow:auto}.mil-ladder li{flex:0 0 auto}.mil-opts{grid-template-columns:1fr}.screen.game .g-sentence{font-size:20px}}
 </style>
 <!-- /LAYOUT-V3 -->
 </head>
@@ -380,7 +469,7 @@ header>div:first-child{display:flex;align-items:center}
   </div>
 </section>
 
-<section class="screen">
+<section class="screen game g-map">
   <div class="title"><div><h2>Conditionals Control Room</h2><p>Read the sentence, then tap the conditional it belongs to. Every correct hit unlocks a formula.</p></div><div class="pill">GAME · UNLOCK THE MAP</div></div>
   <div class="g-hud">
     <div class="g-stat" id="mapStatU"><small>UNLOCKED</small><b id="mapUnlocked">0 / 5</b></div>
@@ -392,20 +481,25 @@ header>div:first-child{display:flex;align-items:center}
   <div class="cond-map" id="condMap"></div>
 </section>
 
-<section class="screen">
-  <div class="title"><div><h2>Savings Rush</h2><p>Every correct conditional earns money. Spend it in the shop on upgrades and reach £3,000 in as few answers as you can.</p></div><div class="pill">GAME · EARN &amp; UPGRADE</div></div>
-  <div class="g-hud">
-    <div class="g-stat" id="rushStatB"><small>BALANCE</small><b id="rushBalance">£0</b></div>
-    <div class="g-stat" id="rushStatP"><small>PER ANSWER</small><b id="rushPay">£100</b></div>
-    <div class="g-stat" id="rushStatS"><small>STREAK</small><b id="rushStreak">0</b></div>
-    <div class="g-stat"><small>ANSWERS</small><b id="rushCount">0</b></div>
-    <div class="g-goal"><small><span>SAVINGS GOAL · £3,000</span><span id="rushBest">BEST: —</span></small><div class="g-track"><i id="rushBar"></i></div></div>
+<section class="screen game mil">
+  <div class="title"><div><h2>Conditional Millionaire</h2><p>12 questions from £100 to £1,000,000. Three lifelines. One wrong answer and you drop back to the last safe amount.</p></div><div class="pill">QUIZ SHOW</div></div>
+  <div class="mil-wrap">
+    <div class="mil-main">
+      <div class="mil-bar">
+        <button type="button" class="life" id="lifeFF" onclick="milFifty()"><b>50:50</b><small>remove two</small></button>
+        <button type="button" class="life" id="lifeAud" onclick="milAudience()"><b>ASK THE CLASS</b><small>see the vote</small></button>
+        <button type="button" class="life" id="lifeHint" onclick="milHint()"><b>TEXT A FRIEND</b><small>get a hint</small></button>
+        <span class="mil-best" id="milBest">BEST: —</span>
+        <button type="button" class="navbtn" id="milWalk" onclick="milWalk()">WALK AWAY</button>
+        <button type="button" class="navbtn" onclick="milStart()">RESTART</button>
+      </div>
+      <div class="g-stage" id="milStage"></div>
+    </div>
+    <ol class="mil-ladder" id="milLadder"></ol>
   </div>
-  <div class="g-stage" id="rushStage"></div>
-  <div class="shop" id="rushShop"></div>
 </section>
 
-<section class="screen">
+<section class="screen game g-tm">
   <div class="title"><div><h2>Mixed Conditionals Time Machine</h2><p>Two jumps per sentence: set the route, then choose the form. Get both right and you open a treasure chest.</p></div><div class="pill">GAME · MIXED</div></div>
   <div class="g-hud">
     <div class="g-stat" id="tmStatC"><small>CRYSTALS</small><b id="tmCrystals">0</b></div>
@@ -442,7 +536,7 @@ header>div:first-child{display:flex;align-items:center}
 </div>
 <script>
 const screens=[...document.querySelectorAll('.screen')];let current=0;
-const activityNames=['Overview','Money language','Money guide','Stereotype sort','£5,000 challenge','Cash comeback','Rank the reasons','Money battle','Shorts lab','Myth or fact?','Group chat','Unlock the map','Savings Rush','Time machine','Final position','Chat reply'];
+const activityNames=['Overview','Money language','Money guide','Stereotype sort','£5,000 challenge','Cash comeback','Rank the reasons','Money battle','Shorts lab','Myth or fact?','Group chat','Unlock the map','Millionaire','Time machine','Final position','Chat reply'];
 const GROUPS=[
  {n:'Overview',s:[0]},
  {n:'Money words',s:[1],links:[['Phrasal verbs arcade ↗','phrasal-verbs-money.html']]},
@@ -500,8 +594,9 @@ function getSavedActivity(){
 function setMenu(open){document.querySelector('.app').classList.toggle('full',!open);const b=document.getElementById('menuBtn');b.setAttribute('aria-expanded',open?'true':'false');b.textContent=open?'✕ HIDE MENU':'☰ MENU';fitScreen()}
 function fitScreen(){
  const m=document.querySelector('main'),root=document.documentElement;
- if(innerWidth<=700){root.style.removeProperty('--z');return}
+ if(innerWidth<=700){root.style.removeProperty('--z');root.style.removeProperty('--gz');return}
  const tabs=document.getElementById('subTabs'),h=m.clientHeight-(tabs.hidden?0:tabs.offsetHeight)-44,w=m.clientWidth-56;
+ root.style.setProperty('--gz',Math.max(.9,Math.min(2.4,(w+16)/1000,(h+16)/455)).toFixed(3));
  const B=document.querySelector('.app').classList.contains('full')?940:800,wf=w/B,hf=h/FIT_H;
  root.style.setProperty('--z',Math.max(1,Math.min(2.2,wf,Math.max(hf*1.3,1.3))).toFixed(3));
 }
@@ -616,7 +711,7 @@ function mapHud(){
 function mapShow(){
  mapTried=false;mapLocked=false;mapHud();
  if(mapI>=mapQueue.length){
-  $id('mapStage').innerHTML='<p class="g-kicker">MAP UNLOCKED · '+mapStars+' / '+mapQueue.length+' ON THE FIRST TRY</p><div class="g-row"><p class="g-sentence">'+(mapStars>=9?'Control room is yours. On to the Savings Rush!':mapStars>=6?'Solid. Read the formulas once more, then play again.':'Read the five formulas aloud, then try another round.')+'</p><button class="navbtn primary" type="button" onclick="mapStart()">PLAY AGAIN</button></div>';
+  $id('mapStage').innerHTML='<p class="g-kicker">MAP UNLOCKED · '+mapStars+' / '+mapQueue.length+' ON THE FIRST TRY</p><div class="g-row"><p class="g-sentence">'+(mapStars>=9?'Control room is yours. On to the Millionaire!':mapStars>=6?'Solid. Read the formulas once more, then play again.':'Read the five formulas aloud, then try another round.')+'</p><button class="navbtn primary" type="button" onclick="mapStart()">PLAY AGAIN</button></div>';
   return;
  }
  $id('mapStage').innerHTML='<p class="g-kicker">SENTENCE '+(mapI+1)+' / '+mapQueue.length+' · WHICH CONDITIONAL IS IT?</p><p class="g-sentence">'+mapQueue[mapI].s+'</p><div class="g-row"><div class="g-msg" id="mapMsg">Tap one of the five cards below.</div><button class="navbtn primary" id="mapNext" type="button" hidden onclick="mapI++;mapShow()">NEXT SENTENCE →</button></div>';
@@ -704,89 +799,92 @@ function chatEnd(){
  $id('chatStage').innerHTML='<div class="g-end"><p class="g-kicker">'+chatRight+' / '+CHAT_Q.length+' CORRECT'+(record?' · NEW BEST':'')+'</p><h3>'+chatPoints.toLocaleString('en-GB')+' points</h3><p style="margin-bottom:8px">Now talk: which clues did you use? Is texting style about <b>age</b> — or <b>personality</b>?</p><div class="prompt" style="text-align:left;margin:0 0 12px">1. Rewrite Mia’s message so Grandad understands it.<br>2. “Older people tend to… / Gen Z are more likely to…” — give two careful sentences about texting.<br>3. If your family had a group chat like this, who would you be?</div><button class="navbtn primary g-start" type="button" onclick="chatIntro();chatNext()">PLAY AGAIN</button></div>';
 }
 
-/* --- 12 · savings rush (earn & upgrade) --- */
-const RUSH_Q=[
- {s:'If you spend more than you earn, you ___ into debt.',o:['get','will get','would get'],a:'get',t:'ZERO',why:'a general truth: present → present.'},
- {s:'If prices keep rising, many people ___ back on non-essential spending.',o:['cut','will cut','would cut'],a:'will cut',t:'FIRST',why:'a real future possibility: present → will.'},
- {s:'If I ___ £10,000, I’d pay off my credit card first.',o:['have','had','had had'],a:'had',t:'SECOND',why:'imaginary now: past simple → would (I’d pay).'},
- {s:'If she ___ cash envelopes, she wouldn’t have overspent last month.',o:['used','had used','would use'],a:'had used',t:'THIRD',why:'unreal past: had + V3 → wouldn’t have overspent.'},
- {s:'If people don’t track small purchases, they often ___ where the money goes.',o:['forget','will forget','would forget'],a:'forget',t:'ZERO',why:'“often” signals a habit: present → present.'},
- {s:'If I earn extra money from my side hustle this month, I ___ it into savings.',o:['put','will put','would put'],a:'will put',t:'FIRST',why:'“this month” is a real possibility: present → will.'},
- {s:'If young people ___ less wary of debt, they might use credit cards more.',o:['are','were','had been'],a:'were',t:'SECOND',why:'imaginary present: were → might + V.'},
- {s:'If he had compared prices, he ___ less for the laptop.',o:['would pay','would have paid','will have paid'],a:'would have paid',t:'THIRD',why:'unreal past: had compared → would have paid.'},
- {s:'If inflation rises, everything usually ___ more expensive.',o:['gets','will get','would get'],a:'gets',t:'ZERO',why:'“usually” signals a general truth: present → present.'},
- {s:'If I were more frugal, I ___ coffee out every day.',o:['don\'t buy','won\'t buy','wouldn\'t buy'],a:'wouldn\'t buy',t:'SECOND',why:'imaginary now: If I were → wouldn’t + V.'},
- {s:'If you leave money in a savings account, it usually ___ interest.',o:['earns','will earn','would earn'],a:'earns',t:'ZERO',why:'“usually” signals a general truth: present → present.'},
- {s:'If the landlord puts the rent up next year, we ___ to move out.',o:['have','will have','would have'],a:'will have',t:'FIRST',why:'a real future possibility: present → will.'},
- {s:'If I ___ my bonus next week, I’ll finally pay off my overdraft.',o:['get','will get','got'],a:'get',t:'FIRST',why:'no “will” after IF: present simple → will.'},
- {s:'If I didn’t have a side hustle, I ___ to make ends meet.',o:['struggle','will struggle','would struggle'],a:'would struggle',t:'SECOND',why:'imaginary now: past simple → would + V.'},
- {s:'What would you do if you ___ a wallet full of cash?',o:['find','found','had found'],a:'found',t:'SECOND',why:'imaginary situation: would + V ← past simple.'},
- {s:'If I had known about the hidden fees, I ___ up for that app.',o:['wouldn\'t sign','wouldn\'t have signed','hadn\'t signed'],a:'wouldn\'t have signed',t:'THIRD',why:'unreal past: had known → wouldn’t have signed.'},
- {s:'If they ___ their spending during the trip, they wouldn’t have run out of money.',o:['tracked','had tracked','would have tracked'],a:'had tracked',t:'THIRD',why:'unreal past: had + V3 → wouldn’t have run out.'},
- {s:'If people ___ on credit, they often spend more than they planned.',o:['buy','will buy','bought'],a:'buy',t:'ZERO',why:'“often” signals a habit: present → present.'},
- {s:'Unless she cuts back on takeaways, she ___ anything this month.',o:['doesn\'t save','won\'t save','wouldn\'t save'],a:'won\'t save',t:'FIRST',why:'unless = if not; real future: present → won’t.'},
- {s:'If cash ___ completely, some people would find budgeting harder.',o:['disappears','disappeared','had disappeared'],a:'disappeared',t:'SECOND',why:'imaginary situation: past simple → would + V.'}
+/* --- conditional millionaire (quiz show) --- */
+const MIL_LADDER=[100,500,1000,2000,5000,10000,25000,50000,100000,250000,500000,1000000],MIL_SAFE=[2,5,8];
+const MIL_Q=[
+ [ {s:'If inflation rises, everything usually ___ more expensive.',o:['gets','will get','would get','got'],t:'ZERO',why:'“usually” = a general truth: present → present.'},
+   {s:'If people don’t track small purchases, they often ___ where the money goes.',o:['forget','will forget','would forget','forgot'],t:'ZERO',why:'“often” = a habit: present → present.'},
+   {s:'If I ___ my bonus next week, I’ll finally pay off my overdraft.',o:['get','will get','got','would get'],t:'FIRST',why:'no “will” after IF: present simple → will.'},
+   {s:'If I earn extra money from my side hustle this month, I ___ it into savings.',o:['will put','put','would put','had put'],t:'FIRST',why:'a real possibility this month: present → will.'},
+   {s:'Unless she cuts back on takeaways, she ___ anything this month.',o:['won\'t save','doesn\'t save','wouldn\'t save','didn\'t save'],t:'FIRST',why:'unless = if not; real future: present → won’t.'},
+   {s:'If the landlord puts the rent up next year, we ___ to move out.',o:['will have','have','would have','had'],t:'FIRST',why:'a real future possibility: present → will.'} ],
+ [ {s:'If I ___ £10,000, I’d pay off my credit card first.',o:['had','have','had had','would have'],t:'SECOND',why:'imaginary now: past simple → would (I’d pay).'},
+   {s:'If I were more frugal, I ___ coffee out every day.',o:['wouldn\'t buy','don\'t buy','won\'t buy','didn\'t buy'],t:'SECOND',why:'imaginary now: If I were → wouldn’t + V.'},
+   {s:'What would you do if you ___ a wallet full of cash?',o:['found','find','had found','would find'],t:'SECOND',why:'imaginary situation: would + V ← past simple.'},
+   {s:'If cash ___ completely, some people would find budgeting harder.',o:['disappeared','disappears','had disappeared','would disappear'],t:'SECOND',why:'imaginary situation: past simple → would + V.'},
+   {s:'If he had compared prices, he ___ less for the laptop.',o:['would have paid','would pay','will have paid','had paid'],t:'THIRD',why:'unreal past: had compared → would have paid.'},
+   {s:'If I had known about the hidden fees, I ___ up for that app.',o:['wouldn\'t have signed','wouldn\'t sign','hadn\'t signed','didn\'t sign'],t:'THIRD',why:'unreal past: had known → wouldn’t have signed.'},
+   {s:'If they ___ their spending during the trip, they wouldn’t have run out of money.',o:['had tracked','tracked','would have tracked','have tracked'],t:'THIRD',why:'unreal past: had + V3 → wouldn’t have run out.'} ],
+ [ {s:'If I had invested ten years ago, I ___ rich now.',o:['would be','would have been','will be','had been'],t:'MIXED',why:'past cause → present result: had invested → would be.'},
+   {s:'If she weren’t so generous, she ___ him the money last month.',o:['wouldn\'t have lent','wouldn\'t lend','hadn\'t lent','won\'t lend'],t:'MIXED',why:'present character → past result: weren’t → wouldn’t have lent.'},
+   {s:'If we had bought that flat in 2015, we ___ rent today.',o:['wouldn\'t be paying','wouldn\'t have paid','won\'t pay','hadn\'t paid'],t:'MIXED',why:'past cause → present result: had bought → wouldn’t be paying.'},
+   {s:'If he were better with money, he ___ bankrupt two years ago.',o:['wouldn\'t have gone','wouldn\'t go','hadn\'t gone','won\'t go'],t:'MIXED',why:'present character → past result: were → wouldn’t have gone.'},
+   {s:'___ I known the flat was so expensive, I would never have signed the contract.',o:['Had','If','Would','Have'],t:'THIRD (formal inversion)',why:'Had I known = If I had known.'},
+   {s:'Were I ___ the lottery, I would still keep my job.',o:['to win','win','won','winning'],t:'SECOND (formal inversion)',why:'Were I to win = If I won.'} ]
 ];
-const RUSH_BEST_KEY='katya_lesson3_rush_fewest',RUSH_GOAL=3000,RUSH_PAY=[100,200,400],RUSH_PAY_COST=[300,800],RUSH_STK=[10,30,60],RUSH_STK_COST=[200,600],RUSH_INS_COST=250;
-let rushQueue=[],rushQ=null,rushBalance=0,rushStreak=0,rushN=0,rushRight=0,rushMisses=[],rushLv={pay:0,stk:0,ins:false},rushOn=false,rushAnswered=false;
-function rushHud(){
- $id('rushBalance').textContent=money(rushBalance);$id('rushPay').textContent='£'+RUSH_PAY[rushLv.pay];
- $id('rushStreak').textContent=rushStreak>=2?'×'+rushStreak:rushStreak;$id('rushCount').textContent=rushN;
- const best=bestGet(RUSH_BEST_KEY);$id('rushBest').textContent='BEST: '+(best?best+' answers':'—');
- $id('rushBar').style.width=Math.max(0,Math.min(100,rushBalance/RUSH_GOAL*100))+'%';
- rushShop();
+const MIL_BEST_KEY='katya_lesson3_mil_best',MIL_AB=['A','B','C','D'];
+let milQs=[],milI=0,milLock=false,milOver=false,milLife={},milCur=null;
+function milPrep(q){const order=shuffle([0,1,2,3]);return {s:q.s,t:q.t,why:q.why,o:order.map(k=>q.o[k]),a:order.indexOf(0)}}
+function milStart(){
+ milQs=MIL_Q.flatMap(tier=>shuffle(tier).slice(0,4)).map(milPrep);milI=0;milOver=false;milLife={ff:true,aud:true,hint:true};
+ ['lifeFF','lifeAud','lifeHint'].forEach(id=>$id(id).disabled=false);milShow();
 }
-function rushShop(){
- const item=(id,name,desc,cost,label)=>{const can=rushOn&&cost!==null&&rushBalance>=cost;return '<div class="shop-item'+(can?' can':'')+'"><b>'+name+'</b><small>'+desc+'</small><button type="button" '+(can?'':'disabled')+' onclick="rushBuy(\''+id+'\')">'+(cost===null?label:'£'+cost)+'</button></div>'};
- const p=rushLv.pay,k=rushLv.stk;$id('rushShop').hidden=!rushOn&&rushN>0;
- $id('rushShop').innerHTML=
-  item('pay','Pay rise · level '+(p+1),p<2?'£'+RUSH_PAY[p]+' → £'+RUSH_PAY[p+1]+' per correct answer':'£'+RUSH_PAY[p]+' per correct answer',p<2?RUSH_PAY_COST[p]:null,'MAX')+
-  item('stk','Streak bonus · level '+(k+1),k<2?'+£'+RUSH_STK[k]+' → +£'+RUSH_STK[k+1]+' for each answer in a row':'+£'+RUSH_STK[k]+' for each answer in a row',k<2?RUSH_STK_COST[k]:null,'MAX')+
-  item('ins','Insurance',rushLv.ins?'Active: your next mistake costs nothing and keeps the streak':'Your next mistake costs nothing and keeps the streak',rushLv.ins?null:RUSH_INS_COST,'ACTIVE');
+function milLadder(){
+ $id('milLadder').innerHTML=MIL_LADDER.map((v,k)=>'<li class="'+(MIL_SAFE.includes(k)||k===11?'safe ':'')+(k<milI?'done':k===milI&&!milOver?'cur':'')+'"><small>'+(k+1)+'</small>'+money(v)+(MIL_SAFE.includes(k)?' ★':'')+'</li>').join('');
+ const b=bestGet(MIL_BEST_KEY);$id('milBest').textContent='BEST: '+(b?money(b):'—');$id('milWalk').disabled=milOver||milI===0;
 }
-function rushBuy(id){
- const cost=id==='pay'?RUSH_PAY_COST[rushLv.pay]:id==='stk'?RUSH_STK_COST[rushLv.stk]:RUSH_INS_COST;
- if(!rushOn||cost===undefined||rushBalance<cost||(id==='ins'&&rushLv.ins))return;
- rushBalance-=cost;if(id==='ins')rushLv.ins=true;else rushLv[id]++;
- rushHud();pop('rushStatB');if(id==='pay')pop('rushStatP');
+function milShow(){
+ milLock=false;milCur=milQs[milI];milLadder();
+ $id('milStage').innerHTML='<p class="g-kicker">QUESTION '+(milI+1)+' / 12 · FOR '+money(MIL_LADDER[milI])+'</p><p class="g-sentence" id="milSentence">'+fill(milCur.s)+'</p><div class="mil-opts" id="milOpts">'+milCur.o.map((o,k)=>'<button type="button" class="mil-opt" data-i="'+k+'"><i>'+MIL_AB[k]+':</i>'+o+'</button>').join('')+'</div><div id="milExtra"></div><div class="g-row"><div class="g-msg" id="milMsg">Choose carefully — the first tap is your final answer.</div><button class="navbtn primary" id="milNext" type="button" hidden>NEXT QUESTION →</button></div>';
+ $id('milOpts').querySelectorAll('.mil-opt').forEach(b=>b.onclick=()=>milPick(b));
 }
-function rushIntro(){
- rushOn=false;rushBalance=0;rushStreak=0;rushN=0;rushLv={pay:0,stk:0,ins:false};rushHud();
- $id('rushStage').innerHTML='<div class="g-end"><p class="g-kicker">HOW IT WORKS</p><h3>Earn. Upgrade. Reach £3,000.</h3><p>Correct form = money · answers in a row = streak bonus · wrong form = you lose half a payment.<br>Spend in the shop below at any time: a <b>pay rise</b> pays off fast.</p><button class="navbtn primary g-start" type="button" onclick="rushStart()">START</button></div>';
+function milPick(btn){
+ if(milLock||milOver||btn.classList.contains('gone'))return;milLock=true;
+ const q=milCur,msg=$id('milMsg');btn.classList.add('sel');msg.className='g-msg';msg.textContent='Final answer… let’s see.';
+ $id('milOpts').querySelectorAll('.mil-opt').forEach(b=>b.disabled=true);
+ setTimeout(()=>{
+  const ok=Number(btn.dataset.i)===q.a,right=$id('milOpts').querySelector('[data-i="'+q.a+'"]');
+  btn.classList.remove('sel');right.classList.add('right');if(!ok)btn.classList.add('wrong');
+  $id('milSentence').innerHTML=fill(q.s,q.o[q.a],ok?'good':'miss');
+  const n=$id('milNext');n.hidden=false;
+  if(ok){
+   const won=MIL_LADDER[milI];
+   if(milI===11){milEnd(won,'YOU ARE A MILLIONAIRE!',true);return}
+   msg.innerHTML='<b>Correct — '+money(won)+'!</b> '+q.t+': '+q.why+(MIL_SAFE.includes(milI)?' <b>Safe amount reached.</b>':'');
+   n.textContent='NEXT QUESTION →';n.onclick=()=>{milI++;milShow()};milI++;milLadder();milI--;
+  }else{
+   const safe=MIL_SAFE.filter(k=>k<milI).pop(),prize=safe===undefined?0:MIL_LADDER[safe];
+   msg.className='g-msg bad';msg.innerHTML='<b>'+q.o[q.a]+'</b> — '+q.t+': '+q.why;
+   shakeEl('milStage');n.textContent='SEE RESULT →';n.onclick=()=>milEnd(prize,'GAME OVER',false);
+  }
+  n.focus();
+ },1100);
 }
-function rushStart(){rushOn=true;rushQueue=[];rushBalance=0;rushStreak=0;rushN=0;rushRight=0;rushMisses=[];rushLv={pay:0,stk:0,ins:false};rushShow()}
-function rushShow(){
- if(rushBalance>=RUSH_GOAL){rushEnd();return}
- if(!rushQueue.length){rushQueue=shuffle(RUSH_Q);if(rushQ&&rushQueue[0]===rushQ)rushQueue.push(rushQueue.shift())}
- rushQ=rushQueue.shift();rushAnswered=false;rushHud();
- $id('rushStage').innerHTML='<p class="g-kicker">QUESTION '+(rushN+1)+' · CHOOSE THE FORM</p><p class="g-sentence" id="rushSentence">'+fill(rushQ.s)+'</p><div class="g-opts" id="rushOpts">'+tiles(rushQ.o)+'</div><div class="g-row"><div class="g-msg" id="rushMsg">&nbsp;</div><button class="navbtn primary" id="rushNext" type="button" hidden onclick="rushShow()">NEXT →</button></div>';
- $id('rushOpts').querySelectorAll('.g-opt').forEach(b=>b.onclick=()=>rushPick(b));
+function milEnd(prize,head,win){
+ milOver=true;const best=bestGet(MIL_BEST_KEY),record=prize>best;if(record)bestSet(MIL_BEST_KEY,prize);
+ if(win)milI=12;milLadder();
+ $id('milStage').innerHTML=(win?'<div class="confetti">'+Array.from({length:40},(_,k)=>'<i style="left:'+(k*2.5)+'%;background:'+['#ffd54a','#7dffb0','#ff7b9c','#8fd3ff'][k%4]+';animation-delay:'+(k%8)*0.12+'s"></i>').join('')+'</div>':'')+'<div class="g-end"><p class="g-kicker">'+head+(record?' · NEW BEST':'')+'</p><h3>You leave with '+money(prize)+'</h3><p>'+(win?'Twelve out of twelve. Every conditional, under pressure.':prize?'Not bad — and the safe amounts did their job. Go again for the million.':'Ouch. Check the formulas in the Control Room, then try again.')+'</p><button class="navbtn primary g-start" type="button" onclick="milStart()">PLAY AGAIN</button></div>';
+ ['lifeFF','lifeAud','lifeHint'].forEach(id=>$id(id).disabled=true);
 }
-function rushPick(btn){
- if(rushAnswered)return;rushAnswered=true;
- const q=rushQ,ai=q.o.indexOf(q.a),ok=Number(btn.dataset.i)===ai,msg=$id('rushMsg');
- markTiles($id('rushOpts'),btn,ai);rushN++;
- let delta=0;
- if(ok){
-  rushStreak++;rushRight++;
-  const bonus=Math.min(rushStreak-1,5)*RUSH_STK[rushLv.stk];delta=RUSH_PAY[rushLv.pay]+bonus;
-  msg.className='g-msg';msg.innerHTML='<b>'+q.t+'</b> — '+q.why+' <b>+£'+RUSH_PAY[rushLv.pay]+'</b>'+(bonus?' · streak +£'+bonus:'');
- }else{
-  if(!rushMisses.includes(q))rushMisses.push(q);
-  if(rushLv.ins){rushLv.ins=false;msg.className='g-msg bad';msg.innerHTML='Insurance used — no loss. It’s <b>'+q.t+'</b> — '+q.why}
-  else{rushStreak=0;delta=-RUSH_PAY[rushLv.pay]/2;msg.className='g-msg bad';msg.innerHTML='Impulse buy, −£'+(-delta)+'. It’s <b>'+q.t+'</b> — '+q.why}
-  shakeEl('rushStage');
- }
- rushBalance+=delta;
- $id('rushSentence').innerHTML=fill(q.s,q.a,ok?'good':'miss');
- if(delta)floatUp('rushStage',(delta>0?'+£':'−£')+Math.abs(delta),delta<0);
- rushHud();if(delta)pop('rushStatB');if(ok&&rushStreak>=2)pop('rushStatS');
- const n=$id('rushNext');n.hidden=false;n.textContent=rushBalance>=RUSH_GOAL?'SEE RESULT →':'NEXT →';n.focus();
+function milWalk(){if(milOver||milI===0||milLock)return;milEnd(MIL_LADDER[milI-1],'YOU WALKED AWAY',false)}
+function milUse(key,id){if(milOver||milLock||!milLife[key])return false;milLife[key]=false;$id(id).disabled=true;return true}
+function milFifty(){
+ if(!milUse('ff','lifeFF'))return;
+ const wrong=shuffle([0,1,2,3].filter(k=>k!==milCur.a)).slice(0,2);
+ wrong.forEach(k=>{const b=$id('milOpts').querySelector('[data-i="'+k+'"]');b.classList.add('gone');b.disabled=true});
+ $id('milMsg').textContent='Two wrong answers removed.';
 }
-function rushEnd(){
- rushOn=false;const best=bestGet(RUSH_BEST_KEY),record=!best||rushN<best;if(record)bestSet(RUSH_BEST_KEY,rushN);rushHud();
- const rank=rushN<=13?['MONEY MASTER','Smart upgrades and almost no mistakes.']:rushN<=17?['FRUGAL PRO','Nice investing. Fewer slips and an earlier pay rise will make it faster.']:['GOAL REACHED','You got there. Next time buy a pay rise early and protect your streak.'];
- $id('rushStage').innerHTML='<div class="g-end"><p class="g-kicker">'+rank[0]+(record?' · NEW BEST':'')+'</p><h3>£3,000 in '+rushN+' answers</h3><p>'+rushRight+' correct, '+(rushN-rushRight)+' wrong. '+rank[1]+'</p>'+(rushMisses.length?'<div class="g-review">'+rushMisses.map(q=>'<div>'+fill(q.s,q.a,'good')+'<br><b>'+q.t+'</b> — '+q.why+'</div>').join('')+'</div>':'')+'<button class="navbtn primary g-start" type="button" onclick="rushStart()">PLAY AGAIN</button></div>';
+function milAudience(){
+ if(!milUse('aud','lifeAud'))return;
+ const live=[0,1,2,3].filter(k=>!$id('milOpts').querySelector('[data-i="'+k+'"]').classList.contains('gone')),tier=Math.floor(milI/4);
+ let right=[68,54,42][tier]+Math.floor(Math.random()*12),left=100-right;const pct=[0,0,0,0];pct[milCur.a]=right;
+ const others=live.filter(k=>k!==milCur.a);others.forEach((k,n)=>{const v=n===others.length-1?left:Math.floor(left*(0.3+Math.random()*0.4));pct[k]=v;left-=v});
+ $id('milExtra').innerHTML='<div class="mil-aud">'+pct.map((v,k)=>'<div>'+v+'%<span style="height:'+Math.max(2,v*0.5)+'px"></span>'+MIL_AB[k]+'</div>').join('')+'</div>';
+ $id('milMsg').textContent='The class has voted. They are not always right…';
+}
+function milHint(){
+ if(!milUse('hint','lifeHint'))return;
+ $id('milMsg').innerHTML='Your friend texts: <b>“I’m pretty sure it’s '+milCur.t+'. '+milCur.why+'”</b>';
 }
 
 /* --- 13 · time machine (two steps + chest) --- */
@@ -899,7 +997,7 @@ function vmFinish(){
  $id('vmTime').textContent=vmClock(sec);$id('vmMsg').textContent=(record?'NEW BEST · ':'')+'Done'+(vmMiss?' · '+vmMiss+' mistake'+(vmMiss>1?'s':'')+' (+5 sec each)':' · no mistakes!');
  const e=$id('vmEnd');e.hidden=false;e.innerHTML='<b>Now use them.</b> Choose three phrases and make true sentences about you or someone you know — e.g. “I’m wary of buy-now-pay-later apps.”';
 }
-mapStart();chatIntro();rushIntro();tmStart();vmStart();huntStart();
+mapStart();chatIntro();milStart();tmStart();vmStart();huntStart();
 
 function checkCurrent(){
  if(screens[current].dataset.k==='vocab'){let score=0;document.querySelectorAll('#vocab .vitem').forEach(v=>{const ok=v.querySelector('select').value===v.dataset.a;v.classList.toggle('ok',ok);v.classList.toggle('wrong',!ok);if(ok)score++});document.getElementById('vocabFeedback').textContent=score+' / 8 correct.'}
