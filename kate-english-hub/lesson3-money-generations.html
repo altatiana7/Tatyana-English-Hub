@@ -25,224 +25,120 @@ footer{grid-column:2;grid-row:3;border-top:1px solid var(--line);background:#fff
 
 </style>
 
-<!-- COMPACT-DASHBOARD-V2 -->
+<!-- LAYOUT-V3 -->
 <style>
-/* Lesson 3 — compact classroom dashboard */
-.genz-facts-board{background:#f7f1e8;align-self:stretch}.genz-facts-board img{width:100%;height:100%;max-height:210px;object-fit:contain;object-position:center;border-radius:10px}
-:root{
-  --compact-max:1180px;
-  --compact-gap:8px;
-}
-.app{
-  grid-template-columns:146px minmax(0,1fr);
-  grid-template-rows:50px minmax(0,1fr) 38px;
-}
-header{padding:6px 16px}
-header h1{font-size:18px;letter-spacing:-.03em}
-header p{font-size:10px;margin-top:1px}
-.level{padding:5px 8px;font-size:9px}
-.lesson-nav{padding:10px 7px}
-.nav-label{margin:0 7px 7px;font-size:8px}
-.nav-item{
-  min-height:26px;
-  padding:6px 7px;
-  gap:6px;
-  margin:1px 0;
-  font-size:10px;
-  border-radius:6px;
-}
-.nav-item span{font-size:8px;min-width:14px}
-.nav-note{font-size:8px;margin-top:8px;padding:7px 6px}
-.screen{
-  padding:12px 16px;
-  overflow:auto;
-}
-.screen>*{max-width:var(--compact-max)}
-.title{
-  margin-bottom:9px;
-  padding-bottom:8px;
-}
-.title h2{font-size:18px}
-.title p{font-size:10px;margin-top:2px}
-.pill{font-size:8px;padding:4px 6px}
-.overview-top{
-  grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr);
-  gap:10px;
-  max-height:210px;
-}
-.cover-card{min-height:0;border-radius:10px}
-.cover-card img{
-  max-height:210px;
-  object-fit:cover;
-}
-.quick-card{
-  padding:11px 12px;
-  border-radius:10px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-.eyebrow{font-size:8px;margin-bottom:3px}
-.quick-card h2{font-size:20px;margin-bottom:2px}
-.quick-intro{font-size:10px;margin-bottom:7px}
-.choice-row{gap:5px}
-.choice{
-  min-height:48px;
-  padding:6px 7px;
-  border-radius:6px;
-}
-.choice strong{font-size:10px;margin-bottom:2px}
-.choice span{font-size:8px;line-height:1.25}
-.choice-response{font-size:9px;margin-top:6px;min-height:12px}
-.language-line{font-size:9px;margin-top:4px}
-.route-grid{
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:7px;
-  margin-top:9px;
-}
-.route-card{
-  min-height:0;
-  padding:8px 10px;
-  border-radius:8px;
-  gap:3px 7px;
-  align-items:center;
-}
-.route-card small{font-size:7px}
-.route-card strong{font-size:12px}
-.route-card span{
-  font-size:9px;
-  line-height:1.25;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.route-card i{font-size:14px}
-.overview-foot{font-size:8px;margin-top:7px}
-.grid2,.grid3,.vocab,.sort-grid,.money5000,.pred-grid,.rank-wrap,.battle,.myth-grid,.cond-map,.cond-rush,.mix-grid,.argument-grid{
-  gap:7px;
-}
-.card,.vitem,.person,.predict,.reason,.ranking,.claim,.cond-card,.cond-q,.mix-q,.arg{
-  border-radius:8px;
-}
-.card{padding:10px}
-.card h3{font-size:14px;margin-bottom:4px}
-.card p,.sub{font-size:11px;line-height:1.35}
-.bigquestion{font-size:19px;line-height:1.25;margin:0 0 8px}
-.prompt{padding:7px 10px;font-size:10px;line-height:1.35;margin-top:8px}
-.vocab{grid-template-columns:repeat(2,minmax(0,1fr))}
-.vitem{
-  padding:7px 8px;
-  grid-template-columns:minmax(105px,.65fr) minmax(0,1fr);
-  gap:6px;
-}
-.vitem b{font-size:11px}
-select{padding:6px 5px;font-size:10px}
-.feedback{font-size:10px;padding-top:7px}
-.sort-grid{grid-template-columns:minmax(195px,.72fr) minmax(0,1.28fr)}
-.statement-bank{gap:4px}
-.statement{padding:6px 8px;font-size:10px}
-.buckets{gap:6px}
-.bucket{min-height:58px;padding:7px}
-.bucket h4{font-size:8px;margin-bottom:3px}
-.bucket button{padding:4px 5px;font-size:9px;margin-top:3px}
-.bucket .language-tip{font-size:9px;line-height:1.4}
-.money5000,.battle{grid-template-columns:repeat(4,minmax(0,1fr))}
-.person img{height:92px}
-.person .body{padding:7px;gap:4px}
-.person h3{font-size:12px}
-.person small{font-size:9px;line-height:1.3}
-.person button,.cond-card button{padding:5px 6px;font-size:8px}
-.reveal{font-size:9px;line-height:1.3;padding-top:4px}
-.pred-grid{grid-template-columns:.7fr 1.3fr;gap:8px}
-.headline{padding:14px;border-radius:9px}
-.headline .kicker{font-size:8px}
-.headline h3{font-size:23px;margin:7px 0}
-.headline p{font-size:10px;line-height:1.4}
-.predicts{gap:5px}
-.predict{padding:7px;gap:5px}
-.predict b{font-size:10px}
-.predict button,.claim button,.mix-q button,.short-options button{
-  padding:4px 6px;
-  font-size:8px;
-}
-.rank-wrap{grid-template-columns:1.2fr 1fr}
-.reasons{gap:6px}
-.reason{padding:9px}
-.reason b{font-size:10px;margin-bottom:3px}
-.reason span{font-size:9px;line-height:1.3}
-.ranking{padding:7px;gap:3px}
-.rank-slot{padding:6px;min-height:31px;font-size:10px}
-.quote{margin-top:8px;padding:8px 10px;font-size:12px}
-.shorts-lab{grid-template-columns:158px minmax(0,1fr);gap:8px}
-.short-list{gap:5px}
-.short-tab{grid-template-columns:34px 1fr;gap:6px;padding:5px;border-radius:7px}
-.short-tab img{width:34px;height:42px}
-.short-tab b{font-size:9px}
-.short-tab small{font-size:8px;margin-top:2px}
-.short-stage{grid-template-columns:138px minmax(0,1fr);gap:8px}
-.short-media{max-height:275px;border-radius:8px}
-.short-play{bottom:8px;padding:7px 4px;font-size:8px}
-.short-game{gap:5px}
-.short-game h3{font-size:14px}
-.short-game p{font-size:9px}
-.short-step{padding:7px;border-radius:6px}
-.short-step b{font-size:8px;margin-bottom:4px}
-.short-game textarea{min-height:36px;padding:6px;font-size:10px}
-.short-save{padding:5px 7px;font-size:8px}
-.short-score{font-size:8px}
-.myth-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
-.claim{padding:8px}
-.claim p{font-size:10px;line-height:1.35;margin-bottom:6px}
-.cond-map{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
-.cond-card{padding:8px;gap:5px}
-.cond-card h3{font-size:11px}
-.cond-card .when{font-size:9px;line-height:1.3;min-height:34px}
-.formula,.example{font-size:9px;line-height:1.3;padding:6px}
-.cond-rush,.mix-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
-.cond-q{
-  padding:6px 7px;
-  grid-template-columns:minmax(0,1fr) 118px;
-  gap:6px;
-}
-.cond-q p,.mix-q p{font-size:10px;line-height:1.3}
-.cond-q select{font-size:9px;padding:5px}
-.cond-actions{gap:6px;margin-top:7px}
-.cond-result{font-size:10px}
-.mix-q{padding:7px}
-.mix-q p{margin-bottom:5px}
-.mix-explain{font-size:9px;margin-top:5px}
-.scale{gap:5px;margin:8px auto}
-.scale button{min-width:43px;padding:6px;font-size:14px}
-.argument-grid{gap:6px}
-.arg{padding:8px}
-.arg b{font-size:8px;margin-bottom:4px}
-.arg span{font-size:10px;line-height:1.3}
-footer{padding:4px 14px}
-.navbtn{padding:5px 9px;font-size:8px}
-.progress{font-size:8px}
-@media (min-width:900px) and (max-height:760px){
-  .overview-top{max-height:180px}
-  .cover-card img{max-height:180px}
-  .person img{height:78px}
-  .short-media{max-height:235px}
-  .route-card span{display:none}
-}
-@media(max-width:900px){
-  .app{grid-template-columns:132px minmax(0,1fr)}
-  .overview-top{grid-template-columns:.8fr 1.2fr}
-  .cond-map{grid-template-columns:repeat(3,1fr)}
-}
-@media(max-width:700px){
-  .app{grid-template-columns:1fr;grid-template-rows:48px 40px minmax(0,1fr) 38px}
-  .screen{padding:9px 10px}
-  .overview-top{grid-template-columns:1fr;max-height:none}
-  .cover-card{display:none}
-  .route-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .route-card span{display:none}
-  .money5000,.battle,.argument-grid{grid-template-columns:repeat(2,1fr)}
-}
+/* Lesson 3 — readable, centred layout + grammar games */
+:root{--z:1}
+.app{grid-template-columns:204px minmax(0,1fr);grid-template-rows:60px minmax(0,1fr) 52px}
+header{padding:8px 22px}header h1{font-size:22px}header p{font-size:12px}.level{font-size:11px}
+.lesson-nav{padding:16px 10px}.nav-label{font-size:10px}.nav-item{font-size:13.5px;min-height:36px;padding:8px 10px;gap:9px}.nav-item span{font-size:10px}.nav-note{font-size:10px}
+footer{padding:8px 22px}.navbtn{font-size:12px;padding:9px 16px;border-radius:8px}.progress{font-size:12px}
+.screen.on{display:flex;flex-direction:column;padding:22px 28px}
+.screen::before{content:"";flex:1 1 0}.screen::after{content:"";flex:1.6 1 0}
+.screen>*{zoom:var(--z);width:100%;max-width:calc(1120px / var(--z));flex-shrink:0}
+.genz-facts-board{background:#f7f1e8}.genz-facts-board img{width:100%;height:100%;max-height:300px;object-fit:contain;border-radius:10px}
+.overview-top{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+@media(min-width:1000px) and (min-height:620px){:root{--z:1.2}}
+@media(min-width:1300px) and (min-height:720px){:root{--z:1.34}}
+@media(min-width:1650px) and (min-height:880px){:root{--z:1.5}}
+@media(min-width:2100px) and (min-height:1100px){:root{--z:1.8}}
+@media(max-width:1000px){.app{grid-template-columns:170px minmax(0,1fr)}.nav-item{font-size:12px}}
+@media(max-width:700px){.app{grid-template-columns:1fr;grid-template-rows:54px 46px minmax(0,1fr) 50px}.screen.on{padding:12px}.nav-item{min-height:0;font-size:12px}.cover-card img{max-height:220px}}
+
+/* ---- games ---- */
+.g-hud{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
+.g-stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 13px;min-width:92px}
+.g-stat small{display:block;font-size:9px;letter-spacing:.1em;font-weight:800;color:#8a978f}
+.g-stat b{display:block;font-size:19px;letter-spacing:-.03em;color:var(--navy);font-variant-numeric:tabular-nums}
+.g-stat.pop b{animation:gpop .35s}
+.g-goal{flex:1;min-width:180px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 13px;display:flex;flex-direction:column;justify-content:center;gap:6px}
+.g-goal small{font-size:9px;letter-spacing:.1em;font-weight:800;color:#8a978f;display:flex;justify-content:space-between}
+.g-track{height:10px;background:#e3e9e0;border-radius:9px;overflow:hidden}.g-track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2c8a80,#155e61);border-radius:9px;transition:width .45s}
+.g-hud .navbtn{align-self:center}
+.g-stage{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:10px;position:relative;overflow:hidden}
+.g-kicker{font-size:10px;letter-spacing:.12em;font-weight:800;color:var(--accent);margin:0 0 8px}
+.g-sentence{font-size:22px;line-height:1.45;font-weight:650;letter-spacing:-.02em;margin:0}
+.blank{display:inline-block;min-width:96px;text-align:center;border-bottom:3px solid var(--accent);color:var(--accent);padding:0 8px;border-radius:6px 6px 0 0}
+.blank.good{background:var(--ok);border-color:#5fa67b;color:#1d5a37}.blank.miss{background:var(--bad);border-color:#cd8e81;color:#823c2d}
+.g-opts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}.g-opts.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g-opt{border:2px solid #d5e0d7;background:#f6f8f4;border-radius:11px;padding:13px 10px;font-size:16px;font-weight:700;color:var(--navy);transition:transform .12s,border-color .12s,background .12s}
+.g-opt small{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-top:3px}
+.g-opt:not(:disabled):hover{transform:translateY(-2px);border-color:var(--navy);background:#e7f0e9}
+.g-opt:disabled{opacity:1}.g-opt.dim{opacity:.4}
+.g-msg{min-height:22px;font-size:13.5px;line-height:1.45;margin-top:13px;color:var(--navy)}.g-msg b{font-weight:800}.g-msg.bad{color:#8a3f2f}
+.g-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:6px}
+.g-timer{position:absolute;left:0;top:0;height:5px;width:100%;background:#eef2ea}.g-timer i{display:block;height:100%;width:0;background:var(--accent)}
+.g-float{position:absolute;right:22px;top:16px;font-size:20px;font-weight:800;color:#1d5a37;animation:gfloat 1s forwards;pointer-events:none}.g-float.neg{color:#a04a37}
+.g-end{text-align:center;padding:10px 0}.g-end h3{font-size:30px;letter-spacing:-.04em;margin:4px 0;color:var(--navy)}.g-end p{font-size:14px;color:var(--muted);margin:4px 0 14px}
+.g-review{text-align:left;display:grid;gap:6px;margin:0 0 14px}.g-review div{font-size:12.5px;line-height:1.45;border:1px solid var(--line);border-radius:8px;padding:8px 11px;background:#fbf4f1}.g-review b{color:var(--navy)}
+.g-start{font-size:14px;padding:12px 26px}
+.shake{animation:gshake .35s}
+@keyframes gshake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
+@keyframes gpop{50%{transform:scale(1.18)}}
+@keyframes gfloat{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-26px)}}
+@media(prefers-reduced-motion:reduce){.shake,.g-stat.pop b,.g-float{animation:none}.g-float{display:none}}
+/* map game */
+.cond-map{margin-top:10px}
+.cond-card{text-align:left;color:var(--ink);font:inherit;cursor:pointer;border-width:2px;min-height:150px;transition:transform .12s,border-color .12s}
+.cond-card:hover{transform:translateY(-2px);border-color:var(--navy)}
+.cond-card h3{display:flex;justify-content:space-between;align-items:center;font-size:16px}
+.cond-card .when{min-height:0}.pips{display:flex;gap:4px}.pips i{width:9px;height:9px;border-radius:50%;background:#dfe6e0}.pips i.on{background:#3c9a7a}
+.cond-card .lock{margin-top:auto;font-size:10px;letter-spacing:.08em;font-weight:800;color:#93a199;border:1px dashed #c9d5cc;border-radius:6px;padding:8px;text-align:center}
+.cond-card.open{border-color:#7bb390;background:#fbfdf9}.cond-card.open .lock{display:none}
+.cond-card.flash{background:var(--bad);border-color:#cd8e81}
+/* time machine */
+.tm-line{display:flex;align-items:center;gap:10px;margin:0 0 14px}
+.tm-node{border:2px solid var(--line);border-radius:10px;padding:7px 16px;font-size:12px;font-weight:800;letter-spacing:.08em;color:#93a199;background:#f6f8f4}
+.tm-node.cause{background:#f3e9e0;border-color:var(--accent);color:#8a4d38}.tm-node.result{background:#e2f0e8;border-color:#408479;color:var(--navy)}
+.tm-node small{display:block;font-size:9px;letter-spacing:.06em;font-weight:700;opacity:.8}
+.tm-arrow{flex:1;height:3px;background:#dfe6e0;position:relative;border-radius:3px}.tm-arrow.pn,.tm-arrow.np{background:var(--navy)}
+.tm-arrow.pn::after,.tm-arrow.np::after{content:"";position:absolute;top:-5px;border:6.5px solid transparent}
+.tm-arrow.pn::after{right:-2px;border-left-color:var(--navy)}.tm-arrow.np::after{left:-2px;border-right-color:var(--navy)}
+.cells{display:flex;gap:4px}.cells i{flex:1;height:10px;border-radius:3px;background:#e3e9e0}.cells i.on{background:#3c9a7a}.cells i.off{background:#dba595}
+@media(max-width:700px){.g-sentence{font-size:18px}.g-opts{grid-template-columns:1fr}.g-opts.two{grid-template-columns:1fr}.cond-map{grid-template-columns:repeat(2,1fr)}.g-stat{min-width:0;flex:1}}
+.screen>*{margin-left:auto!important;margin-right:auto!important}
+/* quiz-show tiles */
+.g-opt.k{color:#fff;border-color:transparent;text-align:left;display:flex;align-items:center;gap:10px;padding:14px 16px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+.g-opt.k i{font-style:normal;font-size:15px;opacity:.9}
+.g-opt.k0{background:#b9503a}.g-opt.k1{background:#2f6f9f}.g-opt.k2{background:#a67a12}.g-opt.k3{background:#2f8560}
+.g-opt.k:not(:disabled):hover{filter:brightness(1.1);border-color:transparent}
+.g-opt.k.k0:not(:disabled):hover{background:#b9503a}.g-opt.k.k1:not(:disabled):hover{background:#2f6f9f}.g-opt.k.k2:not(:disabled):hover{background:#a67a12}.g-opt.k.k3:not(:disabled):hover{background:#2f8560}
+.g-opt.k.hit{outline:3px solid #1d5a37;outline-offset:2px}.g-opt.k.hit::after{content:"✓";margin-left:auto;font-size:18px}
+.g-opt.k.missed{opacity:.55;text-decoration:line-through}.g-opt.k.missed::after{content:"✕";margin-left:auto;text-decoration:none}
+.g-opt.k.dim{opacity:.28}
+/* shop */
+.shop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.shop-item{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center}
+.shop-item b{font-size:13px;color:var(--ink)}.shop-item small{font-size:11px;color:var(--muted);line-height:1.35;grid-column:1}
+.shop-item button{grid-column:2;grid-row:1/3;border:0;border-radius:8px;background:var(--navy);color:#fff;font-size:12px;font-weight:800;padding:9px 12px;min-width:74px}
+.shop-item button:disabled{background:#e3e9e0;color:#8a978f;opacity:1}
+.shop-item.can{border-color:#7bb390;box-shadow:0 0 0 2px #e0f2e5}
+/* chests */
+.chests{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.chest{border:2px dashed #c9a97a;background:#f7efe2;border-radius:11px;padding:12px;font-size:22px;font-weight:800;color:#8a5a2b;transition:transform .12s}
+.chest small{display:block;font-size:10px;letter-spacing:.1em}.chest:not(:disabled):hover{transform:translateY(-3px) rotate(-1deg)}
+.chest:disabled{opacity:.5}.chest.mine{opacity:1;border-style:solid;background:var(--ok);border-color:#5fa67b;color:#1d5a37}
+/* group chat */
+.chat-wrap{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:10px;margin-top:10px;align-items:stretch}
+.phone{background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;height:318px}
+.phone-top{background:var(--navy);color:#fff;padding:9px 14px;font-size:13px;font-weight:700}.phone-top small{display:block;font-size:10px;font-weight:500;opacity:.75}
+.chat-log{flex:1;overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px;background:#eef2ea;scrollbar-width:thin}
+.bubble{align-self:flex-start;max-width:90%;background:#fff;border-radius:4px 14px 14px 14px;padding:7px 12px 8px;font-size:14px;line-height:1.4;box-shadow:0 1px 0 #d8e0d9;animation:gbin .25s}
+.bubble .who{display:block;font-size:10px;font-weight:800;letter-spacing:.06em;color:#93a199;margin-bottom:1px}
+.bubble.live{outline:2px solid var(--accent)}
+.bubble.g0 .who{color:#b9503a}.bubble.g1 .who{color:#2f6f9f}.bubble.g2 .who{color:#8a6510}.bubble.g3 .who{color:#2f8560}
+.chat-wrap .g-stage{margin-top:0;display:flex;flex-direction:column;justify-content:center}
+.chat-wrap .g-opts{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:10px}
+@keyframes gbin{from{opacity:0;transform:translateY(8px)}}
+@media(max-width:700px){.chat-wrap,.shop{grid-template-columns:1fr}.phone{height:260px}}
+@media(max-height:860px){.cond-card.open .when{display:none}.genz-facts-board img{max-height:250px}.cond-card{min-height:132px}}
+.tm-arrow.np::after{left:-6px}.tm-arrow.pn::after{right:-6px}
+.choice{min-width:0}
+@media(min-width:1300px) and (max-height:800px){:root{--z:1.25}}
+@media(max-height:860px){.cond-card{padding:10px;gap:6px}.cond-card .formula,.cond-card .example{font-size:11px;line-height:1.4;padding:6px 8px}#mapStage{padding:14px 18px}#mapStage .g-sentence{font-size:20px}}
+@media(max-width:700px){#activityNav{display:flex;gap:4px}header h1{font-size:18px}header p{display:none}}
 </style>
-<!-- /COMPACT-DASHBOARD-V2 -->
+<!-- /LAYOUT-V3 -->
 </head>
 <body>
 <div class="app">
@@ -250,7 +146,7 @@ footer{padding:4px 14px}
   <div><h1>GEN Z &amp; MONEY</h1><p>Lesson 3 · money habits across generations</p></div>
   <div class="level">B2–C1 · interactive</div>
 </header>
-<nav class="lesson-nav" aria-label="Lesson activities"><p class="nav-label">LESSON 03 / EXPLORE</p><div id="activityNav"></div><div class="nav-note">13 activities · B2–C1</div></nav>
+<nav class="lesson-nav" aria-label="Lesson activities"><p class="nav-label">LESSON 03 / EXPLORE</p><div id="activityNav"></div><div class="nav-note">14 activities · B2–C1</div></nav>
 <main>
 <section class="screen on overview">
   <div class="title"><div><h2>Money habits. Different generations.</h2><p>Explore how we pay, what we value and why we save.</p></div><div class="pill">START HERE</div></div>
@@ -270,8 +166,8 @@ footer{padding:4px 14px}
   </div>
   <div class="route-grid">
     <button class="route-card" onclick="show(1)"><small>02 / WORDS INTO ACTION</small><strong>Money language</strong><i aria-hidden="true">↗</i><span>8 phrases · match and check</span></button>
-    <button class="route-card" onclick="show(2)"><small>03–09 / COMPARE &amp; DISCUSS</small><strong>Generations</strong><i aria-hidden="true">↗</i><span>Sort · rank · watch · challenge</span></button>
-    <button class="route-card" onclick="show(9)"><small>10–13 / LANGUAGE LAB</small><strong>What if…?</strong><i aria-hidden="true">↗</i><span>Conditionals · 16 questions · final view</span></button>
+    <button class="route-card" onclick="show(2)"><small>03–10 / COMPARE &amp; DISCUSS</small><strong>Generations</strong><i aria-hidden="true">↗</i><span>Sort · rank · watch · group chat</span></button>
+    <button class="route-card" onclick="show(10)"><small>11–14 / LANGUAGE LAB</small><strong>What if…?</strong><i aria-hidden="true">↗</i><span>3 grammar games · final view</span></button>
   </div>
   <div class="overview-foot"><span>Choose any activity from the sidebar.</span><span>Make a claim. Give a reason. Avoid a stereotype.</span></div>
 </section>
@@ -407,48 +303,57 @@ footer{padding:4px 14px}
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>10. Conditionals Control Room</h2><p>Rebuild the logic first: fact → real future → unreal now → unreal past → mixed time.</p></div><div class="pill">0 → 3 + MIXED</div></div>
-  <div class="cond-map">
-    <article class="cond-card"><h3>ZERO</h3><div class="when">Facts, routines, things that normally happen.</div><div class="formula">IF + Present Simple → Present Simple</div><div class="example">If people spend more than they earn, they get into debt.</div><button type="button" onclick="this.parentElement.classList.toggle('open')">REVEAL</button></article>
-    <article class="cond-card"><h3>FIRST</h3><div class="when">A real or possible future result.</div><div class="formula">IF + Present Simple → WILL + V</div><div class="example">If prices rise again, I’ll cut back on eating out.</div><button type="button" onclick="this.parentElement.classList.toggle('open')">REVEAL</button></article>
-    <article class="cond-card"><h3>SECOND</h3><div class="when">Imaginary / unlikely situation now or in the future.</div><div class="formula">IF + Past Simple → WOULD + V</div><div class="example">If I had £10,000, I’d pay off my debt first.</div><button type="button" onclick="this.parentElement.classList.toggle('open')">REVEAL</button></article>
-    <article class="cond-card"><h3>THIRD</h3><div class="when">Imaginary past: the real past cannot be changed.</div><div class="formula">IF + had + V3 → WOULD HAVE + V3</div><div class="example">If she had tracked her spending, she wouldn’t have overspent.</div><button type="button" onclick="this.parentElement.classList.toggle('open')">REVEAL</button></article>
-    <article class="cond-card"><h3>MIXED</h3><div class="when">Two times collide: past cause → present result, or present state → past result.</div><div class="formula">had + V3 → WOULD + V / Past Simple → WOULD HAVE + V3</div><div class="example">If I had saved more last year, I wouldn’t be broke now.</div><button type="button" onclick="this.parentElement.classList.toggle('open')">REVEAL</button></article>
+  <div class="title"><div><h2>10. Generations Group Chat</h2><p>A family is organising Grandma’s birthday dinner. Read each message and guess who sent it — faster answers score more.</p></div><div class="pill">GAME · WHO SENT IT?</div></div>
+  <div class="g-hud">
+    <div class="g-stat" id="chatStatP"><small>POINTS</small><b id="chatPoints">0</b></div>
+    <div class="g-stat" id="chatStatS"><small>STREAK</small><b id="chatStreak">0</b></div>
+    <div class="g-stat"><small>BEST</small><b id="chatBest">0</b></div>
+    <div class="g-goal"><small><span>MESSAGES</span><span id="chatCount">0 / 8</span></small><div class="g-track"><i id="chatBar"></i></div></div>
+  </div>
+  <div class="chat-wrap">
+    <div class="phone"><div class="phone-top">Grandma’s 70th · dinner plans<small>Grandad Alan, Mark, Sophie, Mia</small></div><div class="chat-log" id="chatLog"></div></div>
+    <div class="g-stage" id="chatStage"></div>
   </div>
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>11. Money Conditionals Rush</h2><p>Choose the form fast. Zero, First, Second and Third are mixed together.</p></div><div class="pill">10 QUESTIONS</div></div>
-  <div class="cond-rush" id="condRush">
-    <div class="cond-q" data-a="get"><p>1. If you spend more than you earn, you ___ into debt.</p><select><option value="">Choose…</option><option>get</option><option>will get</option><option>would get</option></select></div>
-    <div class="cond-q" data-a="will cut"><p>2. If prices keep rising, many people ___ back on non-essential spending.</p><select><option value="">Choose…</option><option>cut</option><option>will cut</option><option>would cut</option></select></div>
-    <div class="cond-q" data-a="had"><p>3. If I ___ £10,000, I’d pay off my credit card first.</p><select><option value="">Choose…</option><option>have</option><option>had</option><option>had had</option></select></div>
-    <div class="cond-q" data-a="had used"><p>4. If she ___ cash envelopes, she wouldn’t have overspent last month.</p><select><option value="">Choose…</option><option>used</option><option>had used</option><option>would use</option></select></div>
-    <div class="cond-q" data-a="forget"><p>5. If people don’t track small purchases, they often ___ where the money goes.</p><select><option value="">Choose…</option><option>forget</option><option>will forget</option><option>would forget</option></select></div>
-    <div class="cond-q" data-a="will put"><p>6. If I earn extra money from my side hustle this month, I ___ it into savings.</p><select><option value="">Choose…</option><option>put</option><option>will put</option><option>would put</option></select></div>
-    <div class="cond-q" data-a="were"><p>7. If young people ___ less wary of debt, they might use credit cards more.</p><select><option value="">Choose…</option><option>are</option><option>were</option><option>had been</option></select></div>
-    <div class="cond-q" data-a="would have paid"><p>8. If he had compared prices, he ___ less for the laptop.</p><select><option value="">Choose…</option><option>would pay</option><option>would have paid</option><option>will have paid</option></select></div>
-    <div class="cond-q" data-a="gets"><p>9. If inflation rises, everything usually ___ more expensive.</p><select><option value="">Choose…</option><option>gets</option><option>will get</option><option>would get</option></select></div>
-    <div class="cond-q" data-a="wouldn't buy"><p>10. If I were more frugal, I ___ coffee out every day.</p><select><option value="">Choose…</option><option>don't buy</option><option>won't buy</option><option>wouldn't buy</option></select></div>
+  <div class="title"><div><h2>11. Conditionals Control Room</h2><p>Read the sentence, then tap the conditional it belongs to. Every correct hit unlocks a formula.</p></div><div class="pill">GAME · UNLOCK THE MAP</div></div>
+  <div class="g-hud">
+    <div class="g-stat" id="mapStatU"><small>UNLOCKED</small><b id="mapUnlocked">0 / 5</b></div>
+    <div class="g-stat" id="mapStatS"><small>FIRST TRY</small><b id="mapStars">0</b></div>
+    <div class="g-goal"><small><span>MISSION PROGRESS</span><span id="mapCount">1 / 10</span></small><div class="g-track"><i id="mapBar"></i></div></div>
+    <button class="navbtn" type="button" onclick="mapRevealAll()">REVEAL ALL</button><button class="navbtn" type="button" onclick="mapStart()">RESTART</button>
   </div>
-  <div class="cond-actions"><button class="navbtn primary" type="button" onclick="checkCondRush()">CHECK 0–3</button><button class="navbtn" type="button" onclick="resetCondRush()">RESET</button><span class="cond-result" id="condRushResult">Score: 0 / 10</span></div>
+  <div class="g-stage" id="mapStage"></div>
+  <div class="cond-map" id="condMap"></div>
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>12. Mixed Conditionals Time Machine</h2><p>Decide which time causes which result. These are the ones people usually forget.</p></div><div class="pill">MIXED</div></div>
-  <div class="mix-grid" id="mixGrid">
-    <div class="mix-q" data-a="wouldn't be"><p>1. If I had saved more last year, I ___ so stressed about money now.</p><div class="mixopts"><button>wouldn't be</button><button>wouldn't have been</button><button>won't be</button></div><div class="mix-explain">Past cause → present result: had saved → wouldn’t be.</div></div>
-    <div class="mix-q" data-a="wouldn't have taken"><p>2. If she were more careful with money, she ___ that huge loan last year.</p><div class="mixopts"><button>wouldn't take</button><button>wouldn't have taken</button><button>hadn't taken</button></div><div class="mix-explain">Present characteristic → past result: were → wouldn’t have taken.</div></div>
-    <div class="mix-q" data-a="would have"><p>3. If he hadn’t quit his side hustle, he ___ more disposable income now.</p><div class="mixopts"><button>would have</button><button>would have had</button><button>will have</button></div><div class="mix-explain">Past action → present situation: hadn’t quit → would have.</div></div>
-    <div class="mix-q" data-a="wouldn't have bought"><p>4. If I weren’t so impulsive, I ___ those trainers yesterday.</p><div class="mixopts"><button>wouldn't buy</button><button>wouldn't have bought</button><button>hadn't bought</button></div><div class="mix-explain">Present trait → past consequence: weren’t → wouldn’t have bought.</div></div>
-    <div class="mix-q" data-a="wouldn't owe"><p>5. If they had avoided credit cards at university, they ___ so much money now.</p><div class="mixopts"><button>wouldn't owe</button><button>wouldn't have owed</button><button>don't owe</button></div><div class="mix-explain">Past cause → present result: had avoided → wouldn’t owe.</div></div>
-    <div class="mix-q" data-a="would have saved"><p>6. If Maya were better at budgeting, she ___ more before her trip.</p><div class="mixopts"><button>would save</button><button>would have saved</button><button>had saved</button></div><div class="mix-explain">Present ability/state → past consequence: were → would have saved.</div></div>
+  <div class="title"><div><h2>12. Savings Rush</h2><p>Every correct conditional earns money. Spend it in the shop on upgrades and reach £3,000 in as few answers as you can.</p></div><div class="pill">GAME · EARN &amp; UPGRADE</div></div>
+  <div class="g-hud">
+    <div class="g-stat" id="rushStatB"><small>BALANCE</small><b id="rushBalance">£0</b></div>
+    <div class="g-stat" id="rushStatP"><small>PER ANSWER</small><b id="rushPay">£100</b></div>
+    <div class="g-stat" id="rushStatS"><small>STREAK</small><b id="rushStreak">0</b></div>
+    <div class="g-stat"><small>ANSWERS</small><b id="rushCount">0</b></div>
+    <div class="g-goal"><small><span>SAVINGS GOAL · £3,000</span><span id="rushBest">BEST: —</span></small><div class="g-track"><i id="rushBar"></i></div></div>
   </div>
-  <div class="cond-actions"><button class="navbtn primary" type="button" onclick="checkMixed()">CHECK MIXED</button><button class="navbtn" type="button" onclick="resetMixed()">RESET</button><span class="cond-result" id="mixResult">Score: 0 / 6</span></div>
+  <div class="g-stage" id="rushStage"></div>
+  <div class="shop" id="rushShop"></div>
 </section>
 
 <section class="screen">
-  <div class="title"><div><h2>13. Final position</h2><p>How much does generation really matter when it comes to money?</p></div><div class="pill">FINAL SPEAK</div></div>
+  <div class="title"><div><h2>13. Mixed Conditionals Time Machine</h2><p>Two jumps per sentence: set the route, then choose the form. Get both right and you open a treasure chest.</p></div><div class="pill">GAME · MIXED</div></div>
+  <div class="g-hud">
+    <div class="g-stat" id="tmStatC"><small>CRYSTALS</small><b id="tmCrystals">0</b></div>
+    <div class="g-stat"><small>BEST</small><b id="tmBest">0</b></div>
+    <div class="g-goal"><small><span>FUEL CELLS · <span id="tmFuel">0 / 12</span></span><span id="tmCount">SENTENCE 1 / 6</span></small><div class="cells" id="tmCells"></div></div>
+    <button class="navbtn" type="button" onclick="tmStart()">RESTART</button>
+  </div>
+  <div class="g-stage" id="tmStage"></div>
+</section>
+
+<section class="screen">
+  <div class="title"><div><h2>14. Final position</h2><p>How much does generation really matter when it comes to money?</p></div><div class="pill">FINAL SPEAK</div></div>
   <div class="bigquestion">“Your generation strongly shapes the way you spend and save.”</div>
   <div class="scale">
     <button onclick="selectOne(this,'.scale button')">1</button><button onclick="selectOne(this,'.scale button')">2</button><button onclick="selectOne(this,'.scale button')">3</button><button onclick="selectOne(this,'.scale button')">4</button><button onclick="selectOne(this,'.scale button')">5</button>
@@ -470,7 +375,7 @@ footer{padding:4px 14px}
 </div>
 <script>
 const screens=[...document.querySelectorAll('.screen')];let current=0;
-const activityNames=['Overview','Money vocabulary','Stereotype sort','£5,000 challenge','Cash comeback','Rank the reasons','Money battle','Shorts lab','Myth or fact?','Conditional map','Conditionals 0–3','Mixed conditionals','Final position'];
+const activityNames=['Overview','Money vocabulary','Stereotype sort','£5,000 challenge','Cash comeback','Rank the reasons','Money battle','Shorts lab','Myth or fact?','Group chat','Unlock the map','Savings Rush','Time machine','Final position'];
 const progress=document.getElementById('progress');
 const activityNav=document.getElementById('activityNav');
 screens.forEach((screen,i)=>{
@@ -569,33 +474,283 @@ document.getElementById('shortSave').onclick=()=>{
   else{document.getElementById('shortRewrite').classList.remove('ok');document.getElementById('shortRewrite').classList.add('wrong')}
 };
 
-function checkCondRush(){
- let score=0;
- document.querySelectorAll('#condRush .cond-q').forEach(q=>{
-   const ok=q.querySelector('select').value===q.dataset.a;
-   q.classList.toggle('ok',ok);q.classList.toggle('wrong',!ok);if(ok)score++;
- });
- document.getElementById('condRushResult').textContent='Score: '+score+' / 10';
+/* ===== grammar games ===== */
+const $id=id=>document.getElementById(id);
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function pop(id){const e=$id(id);e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
+function money(n){return (n<0?'−£':'£')+Math.abs(n).toLocaleString('en-GB')}
+function fill(sentence,word,cls){return sentence.replace('___','<span class="blank '+(cls||'')+'">'+(word||'&nbsp;?&nbsp;')+'</span>')}
+
+/* --- 11 · unlock the map --- */
+const MAP_TYPES=[
+ {k:'ZERO',when:'Facts, routines, things that normally happen.',formula:'IF + Present Simple → Present Simple',example:'If people spend more than they earn, they get into debt.'},
+ {k:'FIRST',when:'A real or possible future result.',formula:'IF + Present Simple → WILL + V',example:'If prices rise again, I’ll cut back on eating out.'},
+ {k:'SECOND',when:'Imaginary / unlikely situation now or in the future.',formula:'IF + Past Simple → WOULD + V',example:'If I had £10,000, I’d pay off my debt first.'},
+ {k:'THIRD',when:'Imaginary past: the real past cannot be changed.',formula:'IF + had + V3 → WOULD HAVE + V3',example:'If she had tracked her spending, she wouldn’t have overspent.'},
+ {k:'MIXED',when:'Two times collide: past cause → present result, or present state → past result.',formula:'had + V3 → WOULD + V / Past Simple → WOULD HAVE + V3',example:'If I had saved more last year, I wouldn’t be broke now.'}
+];
+const MAP_Q=[
+ {s:'If you pay by card, the money leaves your account instantly.',t:'ZERO'},
+ {s:'If interest rates go up, loans cost more.',t:'ZERO'},
+ {s:'If I get a pay rise, I’ll start an emergency fund.',t:'FIRST'},
+ {s:'If you don’t set a budget, you’ll run out of money before payday.',t:'FIRST'},
+ {s:'If I won the lottery, I’d still keep my side hustle.',t:'SECOND'},
+ {s:'If rent were cheaper, more young people would live alone.',t:'SECOND'},
+ {s:'If we had booked earlier, we would have paid half the price.',t:'THIRD'},
+ {s:'If he hadn’t racked up so much debt, the bank would have given him a mortgage.',t:'THIRD'},
+ {s:'If I had invested ten years ago, I’d be rich now.',t:'MIXED'},
+ {s:'If she weren’t so generous, she wouldn’t have lent him the money.',t:'MIXED'}
+];
+const MAP_HINT={ZERO:'Is this one specific situation — or something that is always true?',FIRST:'Is this imaginary, or a real possibility that may still happen?',SECOND:'Is the situation real right now, or only imagined?',THIRD:'Look at the time: both halves are in the past, and nothing can be changed.',MIXED:'Look closely — the two halves are not in the same time.'};
+const MAP_WHY={ZERO:'general truth, present → present.',FIRST:'real future possibility, present → will.',SECOND:'imaginary now, past simple → would.',THIRD:'unreal past, had + V3 → would have + V3.',MIXED:'two different times in one sentence.'};
+let mapQueue=[],mapI=0,mapStars=0,mapTried=false,mapLocked=false,mapHits={};
+function mapStart(){
+ mapQueue=shuffle(MAP_Q);mapI=0;mapStars=0;mapHits={};
+ $id('condMap').innerHTML=MAP_TYPES.map(t=>'<button type="button" class="cond-card" data-type="'+t.k+'"><h3>'+t.k+'<span class="pips"><i></i><i></i></span></h3><div class="when">'+t.when+'</div><div class="formula">'+t.formula+'</div><div class="example">'+t.example+'</div><div class="lock">LOCKED · TAP TO ANSWER</div></button>').join('');
+ document.querySelectorAll('#condMap .cond-card').forEach(c=>c.onclick=()=>mapPick(c));
+ mapShow();
 }
-function resetCondRush(){
- document.querySelectorAll('#condRush .cond-q').forEach(q=>{q.classList.remove('ok','wrong');q.querySelector('select').value=''});
- document.getElementById('condRushResult').textContent='Score: 0 / 10';
+function mapHud(){
+ $id('mapUnlocked').textContent=document.querySelectorAll('#condMap .cond-card.open').length+' / 5';
+ $id('mapStars').textContent=mapStars;
+ $id('mapCount').textContent=Math.min(mapI+1,mapQueue.length)+' / '+mapQueue.length;
+ $id('mapBar').style.width=(mapI/mapQueue.length*100)+'%';
 }
-document.querySelectorAll('#mixGrid .mix-q button').forEach(b=>b.onclick=()=>{
- const q=b.closest('.mix-q');q.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');q.classList.remove('ok','wrong');
-});
-function checkMixed(){
- let score=0;
- document.querySelectorAll('#mixGrid .mix-q').forEach(q=>{
-   const s=q.querySelector('button.sel');const ok=!!s && s.textContent.trim()===q.dataset.a;
-   q.classList.toggle('ok',ok);q.classList.toggle('wrong',!ok);if(ok)score++;
- });
- document.getElementById('mixResult').textContent='Score: '+score+' / 6';
+function mapShow(){
+ mapTried=false;mapLocked=false;mapHud();
+ if(mapI>=mapQueue.length){
+  $id('mapStage').innerHTML='<p class="g-kicker">MAP UNLOCKED · '+mapStars+' / '+mapQueue.length+' ON THE FIRST TRY</p><div class="g-row"><p class="g-sentence">'+(mapStars>=9?'Control room is yours. On to the Savings Rush!':mapStars>=6?'Solid. Read the formulas once more, then play again.':'Read the five formulas aloud, then try another round.')+'</p><button class="navbtn primary" type="button" onclick="mapStart()">PLAY AGAIN</button></div>';
+  return;
+ }
+ $id('mapStage').innerHTML='<p class="g-kicker">SENTENCE '+(mapI+1)+' / '+mapQueue.length+' · WHICH CONDITIONAL IS IT?</p><p class="g-sentence">'+mapQueue[mapI].s+'</p><div class="g-row"><div class="g-msg" id="mapMsg">Tap one of the five cards below.</div><button class="navbtn primary" id="mapNext" type="button" hidden onclick="mapI++;mapShow()">NEXT SENTENCE →</button></div>';
 }
-function resetMixed(){
- document.querySelectorAll('#mixGrid .mix-q').forEach(q=>{q.classList.remove('ok','wrong');q.querySelectorAll('button').forEach(b=>b.classList.remove('sel'))});
- document.getElementById('mixResult').textContent='Score: 0 / 6';
+function mapPick(card){
+ if(mapLocked||mapI>=mapQueue.length)return;
+ const q=mapQueue[mapI],msg=$id('mapMsg');
+ if(card.dataset.type===q.t){
+  mapLocked=true;if(!mapTried){mapStars++;pop('mapStatS')}
+  const first=!card.classList.contains('open');card.classList.add('open');
+  mapHits[q.t]=(mapHits[q.t]||0)+1;card.querySelectorAll('.pips i').forEach((p,i)=>p.classList.toggle('on',i<mapHits[q.t]));
+  msg.className='g-msg';msg.innerHTML='<b>'+q.t+'</b> — '+MAP_WHY[q.t]+(first?' Formula unlocked.':'');
+  if(first)pop('mapStatU');
+  const n=$id('mapNext');n.hidden=false;n.textContent=mapI===mapQueue.length-1?'FINISH →':'NEXT SENTENCE →';n.focus();
+  $id('mapUnlocked').textContent=document.querySelectorAll('#condMap .cond-card.open').length+' / 5';$id('mapStars').textContent=mapStars;
+  $id('mapBar').style.width=((mapI+1)/mapQueue.length*100)+'%';
+ }else{
+  mapTried=true;card.classList.add('shake','flash');setTimeout(()=>card.classList.remove('shake','flash'),450);
+  msg.className='g-msg bad';msg.textContent='Not '+card.dataset.type+'. '+MAP_HINT[q.t];
+ }
 }
+function mapRevealAll(){document.querySelectorAll('#condMap .cond-card').forEach(c=>c.classList.add('open'));$id('mapUnlocked').textContent='5 / 5'}
+
+/* --- shared: quiz-show tiles + saved bests --- */
+const SHAPES=['▲','◆','●','■'];
+function tiles(opts){return opts.map((o,i)=>'<button type="button" class="g-opt k k'+i+'" data-i="'+i+'"><i>'+SHAPES[i]+'</i>'+o+'</button>').join('')}
+function markTiles(box,btn,answerIndex){box.querySelectorAll('.g-opt').forEach(b=>{b.disabled=true;b.classList.add(Number(b.dataset.i)===answerIndex?'hit':b===btn?'missed':'dim')})}
+function bestGet(k){try{return Number(localStorage.getItem(k))||0}catch(e){return 0}}
+function bestSet(k,v){try{localStorage.setItem(k,String(v))}catch(e){}}
+function shakeEl(id){const e=$id(id);e.classList.add('shake');setTimeout(()=>e.classList.remove('shake'),400)}
+function floatUp(id,text,neg){const f=document.createElement('div');f.className='g-float'+(neg?' neg':'');f.textContent=text;$id(id).appendChild(f);setTimeout(()=>f.remove(),1000)}
+
+/* --- 10 · generations group chat (speed quiz) --- */
+const CHAT_GEN=['Baby Boomer','Gen X','Millennial','Gen Z'],CHAT_NAME=['Grandad Alan','Mark (Dad)','Aunt Sophie','Mia'];
+const CHAT_Q=[
+ {m:'Hello everyone. I have booked the restaurant for Saturday at 7. I will pay by cheque. Regards, Grandad',g:0,clue:'A greeting, full sentences and a sign-off — written like a letter.'},
+ {m:'wait a cheque?? in 2026 💀 just tap ur phone grandad',g:3,clue:'No capitals, no full stops, “ur”, and 💀 meaning “that’s so funny”.'},
+ {m:'Fine by me. I’ll transfer my share tonight. K.',g:1,clue:'Short and practical — and the famous one-letter “K.”'},
+ {m:'Omg yes!! 😂 I’ll set up a split-the-bill link, so easy. Adulting is hard lol',g:2,clue:'😂, “lol”, “adulting” and double exclamation marks.'},
+ {m:'Thank you Sophie... What is a link... Do I need the internet for this...',g:0,clue:'Those dots… used as pauses rather than to end a thought.'},
+ {m:'ngl £60 each is a lot, im broke til payday. can i pay in instalments',g:3,clue:'“ngl” (not gonna lie), lowercase “im”, no question mark.'},
+ {m:'Just send me the bank details. No apps.',g:1,clue:'Direct, no emoji, wary of yet another app.'},
+ {m:'Can we do brunch instead? Cheaper AND we get avocado toast 🥑😂',g:2,clue:'Brunch, avocado toast and 😂 — the classic stereotype.'}
+];
+const CHAT_MS=20000,CHAT_BEST_KEY='katya_lesson3_chat_best';
+let chatI=-1,chatPoints=0,chatStreak=0,chatRight=0,chatT0=0;
+function chatHud(){
+ $id('chatPoints').textContent=chatPoints.toLocaleString('en-GB');$id('chatStreak').textContent=chatStreak>=2?'×'+chatStreak:chatStreak;
+ $id('chatBest').textContent=bestGet(CHAT_BEST_KEY).toLocaleString('en-GB');
+ const done=Math.max(0,chatI);$id('chatCount').textContent=Math.min(done+(chatI>=0&&chatI<CHAT_Q.length?1:0),CHAT_Q.length)+' / '+CHAT_Q.length;
+ $id('chatBar').style.width=(Math.min(Math.max(chatI,0),CHAT_Q.length)/CHAT_Q.length*100)+'%';
+}
+function chatIntro(){
+ chatI=-1;chatPoints=0;chatStreak=0;chatRight=0;$id('chatLog').innerHTML='<div class="bubble"><span class="who">GROUP CREATED</span>Grandma turns 70 on Saturday. The bill will be about £240 — four people, four ways of texting.</div>';chatHud();
+ $id('chatStage').innerHTML='<div class="g-end"><p class="g-kicker">HOW IT WORKS</p><h3>Who sent it?</h3><p>Eight messages. Up to <b>1,000 points</b> each — the faster you answer, the more you get. Streaks add a bonus.</p><button class="navbtn primary g-start" type="button" onclick="chatNext()">START</button></div>';
+}
+function chatNext(){
+ chatI++;chatHud();
+ if(chatI>=CHAT_Q.length){chatEnd();return}
+ const q=CHAT_Q[chatI],log=$id('chatLog');
+ log.querySelectorAll('.live').forEach(x=>x.classList.remove('live'));
+ const b=document.createElement('div');b.className='bubble live';b.id='chatLive';b.innerHTML='<span class="who">??? IS TYPING</span>'+q.m;log.appendChild(b);log.scrollTop=log.scrollHeight;
+ $id('chatStage').innerHTML='<div class="g-timer"><i id="chatTimer"></i></div><p class="g-kicker">MESSAGE '+(chatI+1)+' / '+CHAT_Q.length+' · WHO SENT IT?</p><div class="g-opts" id="chatOpts">'+tiles(CHAT_GEN)+'</div><div class="g-msg" id="chatMsg">Look at punctuation, emoji and abbreviations.</div><div class="g-row"><span></span><button class="navbtn primary" id="chatNextBtn" type="button" hidden onclick="chatNext()">NEXT MESSAGE →</button></div>';
+ $id('chatOpts').querySelectorAll('.g-opt').forEach(x=>x.onclick=()=>chatPick(x));
+ chatT0=Date.now();const t=$id('chatTimer');t.style.transition='none';t.style.width='100%';void t.offsetWidth;t.style.transition='width '+CHAT_MS+'ms linear';t.style.width='0%';
+}
+function chatPick(btn){
+ const q=CHAT_Q[chatI],ok=Number(btn.dataset.i)===q.g,msg=$id('chatMsg');
+ const t=$id('chatTimer');t.style.transition='none';t.style.width=getComputedStyle(t).width;
+ markTiles($id('chatOpts'),btn,q.g);
+ const live=$id('chatLive');live.removeAttribute('id');live.classList.add('g'+q.g);live.querySelector('.who').textContent=CHAT_NAME[q.g].toUpperCase()+' · '+CHAT_GEN[q.g].toUpperCase();
+ if(ok){
+  chatStreak++;chatRight++;
+  const pts=500+Math.round(Math.max(0,1-(Date.now()-chatT0)/CHAT_MS)*50)*10+Math.min(chatStreak-1,5)*100;chatPoints+=pts;
+  msg.className='g-msg';msg.innerHTML='<b>+'+pts+'</b> · '+q.clue;floatUp('chatStage','+'+pts);pop('chatStatP');if(chatStreak>=2)pop('chatStatS');
+ }else{
+  chatStreak=0;msg.className='g-msg bad';msg.innerHTML='It was <b>'+CHAT_NAME[q.g]+'</b> ('+CHAT_GEN[q.g]+'). '+q.clue;shakeEl('chatStage');
+ }
+ chatHud();$id('chatBar').style.width=((chatI+1)/CHAT_Q.length*100)+'%';
+ const n=$id('chatNextBtn');n.hidden=false;n.textContent=chatI===CHAT_Q.length-1?'SEE RESULT →':'NEXT MESSAGE →';n.focus();
+}
+function chatEnd(){
+ const record=chatPoints>bestGet(CHAT_BEST_KEY);if(record)bestSet(CHAT_BEST_KEY,chatPoints);chatHud();
+ $id('chatLog').querySelectorAll('.live').forEach(x=>x.classList.remove('live'));
+ $id('chatStage').innerHTML='<div class="g-end"><p class="g-kicker">'+chatRight+' / '+CHAT_Q.length+' CORRECT'+(record?' · NEW BEST':'')+'</p><h3>'+chatPoints.toLocaleString('en-GB')+' points</h3><p style="margin-bottom:8px">Now talk: which clues did you use? Is texting style about <b>age</b> — or <b>personality</b>?</p><div class="prompt" style="text-align:left;margin:0 0 12px">1. Rewrite Mia’s message so Grandad understands it.<br>2. “Older people tend to… / Gen Z are more likely to…” — give two careful sentences about texting.<br>3. If your family had a group chat like this, who would you be?</div><button class="navbtn primary g-start" type="button" onclick="chatIntro();chatNext()">PLAY AGAIN</button></div>';
+}
+
+/* --- 12 · savings rush (earn & upgrade) --- */
+const RUSH_Q=[
+ {s:'If you spend more than you earn, you ___ into debt.',o:['get','will get','would get'],a:'get',t:'ZERO',why:'a general truth: present → present.'},
+ {s:'If prices keep rising, many people ___ back on non-essential spending.',o:['cut','will cut','would cut'],a:'will cut',t:'FIRST',why:'a real future possibility: present → will.'},
+ {s:'If I ___ £10,000, I’d pay off my credit card first.',o:['have','had','had had'],a:'had',t:'SECOND',why:'imaginary now: past simple → would (I’d pay).'},
+ {s:'If she ___ cash envelopes, she wouldn’t have overspent last month.',o:['used','had used','would use'],a:'had used',t:'THIRD',why:'unreal past: had + V3 → wouldn’t have overspent.'},
+ {s:'If people don’t track small purchases, they often ___ where the money goes.',o:['forget','will forget','would forget'],a:'forget',t:'ZERO',why:'“often” signals a habit: present → present.'},
+ {s:'If I earn extra money from my side hustle this month, I ___ it into savings.',o:['put','will put','would put'],a:'will put',t:'FIRST',why:'“this month” is a real possibility: present → will.'},
+ {s:'If young people ___ less wary of debt, they might use credit cards more.',o:['are','were','had been'],a:'were',t:'SECOND',why:'imaginary present: were → might + V.'},
+ {s:'If he had compared prices, he ___ less for the laptop.',o:['would pay','would have paid','will have paid'],a:'would have paid',t:'THIRD',why:'unreal past: had compared → would have paid.'},
+ {s:'If inflation rises, everything usually ___ more expensive.',o:['gets','will get','would get'],a:'gets',t:'ZERO',why:'“usually” signals a general truth: present → present.'},
+ {s:'If I were more frugal, I ___ coffee out every day.',o:['don\'t buy','won\'t buy','wouldn\'t buy'],a:'wouldn\'t buy',t:'SECOND',why:'imaginary now: If I were → wouldn’t + V.'},
+ {s:'If you leave money in a savings account, it usually ___ interest.',o:['earns','will earn','would earn'],a:'earns',t:'ZERO',why:'“usually” signals a general truth: present → present.'},
+ {s:'If the landlord puts the rent up next year, we ___ to move out.',o:['have','will have','would have'],a:'will have',t:'FIRST',why:'a real future possibility: present → will.'},
+ {s:'If I ___ my bonus next week, I’ll finally pay off my overdraft.',o:['get','will get','got'],a:'get',t:'FIRST',why:'no “will” after IF: present simple → will.'},
+ {s:'If I didn’t have a side hustle, I ___ to make ends meet.',o:['struggle','will struggle','would struggle'],a:'would struggle',t:'SECOND',why:'imaginary now: past simple → would + V.'},
+ {s:'What would you do if you ___ a wallet full of cash?',o:['find','found','had found'],a:'found',t:'SECOND',why:'imaginary situation: would + V ← past simple.'},
+ {s:'If I had known about the hidden fees, I ___ up for that app.',o:['wouldn\'t sign','wouldn\'t have signed','hadn\'t signed'],a:'wouldn\'t have signed',t:'THIRD',why:'unreal past: had known → wouldn’t have signed.'},
+ {s:'If they ___ their spending during the trip, they wouldn’t have run out of money.',o:['tracked','had tracked','would have tracked'],a:'had tracked',t:'THIRD',why:'unreal past: had + V3 → wouldn’t have run out.'},
+ {s:'If people ___ on credit, they often spend more than they planned.',o:['buy','will buy','bought'],a:'buy',t:'ZERO',why:'“often” signals a habit: present → present.'},
+ {s:'Unless she cuts back on takeaways, she ___ anything this month.',o:['doesn\'t save','won\'t save','wouldn\'t save'],a:'won\'t save',t:'FIRST',why:'unless = if not; real future: present → won’t.'},
+ {s:'If cash ___ completely, some people would find budgeting harder.',o:['disappears','disappeared','had disappeared'],a:'disappeared',t:'SECOND',why:'imaginary situation: past simple → would + V.'}
+];
+const RUSH_BEST_KEY='katya_lesson3_rush_fewest',RUSH_GOAL=3000,RUSH_PAY=[100,200,400],RUSH_PAY_COST=[300,800],RUSH_STK=[10,30,60],RUSH_STK_COST=[200,600],RUSH_INS_COST=250;
+let rushQueue=[],rushQ=null,rushBalance=0,rushStreak=0,rushN=0,rushRight=0,rushMisses=[],rushLv={pay:0,stk:0,ins:false},rushOn=false,rushAnswered=false;
+function rushHud(){
+ $id('rushBalance').textContent=money(rushBalance);$id('rushPay').textContent='£'+RUSH_PAY[rushLv.pay];
+ $id('rushStreak').textContent=rushStreak>=2?'×'+rushStreak:rushStreak;$id('rushCount').textContent=rushN;
+ const best=bestGet(RUSH_BEST_KEY);$id('rushBest').textContent='BEST: '+(best?best+' answers':'—');
+ $id('rushBar').style.width=Math.max(0,Math.min(100,rushBalance/RUSH_GOAL*100))+'%';
+ rushShop();
+}
+function rushShop(){
+ const item=(id,name,desc,cost,label)=>{const can=rushOn&&cost!==null&&rushBalance>=cost;return '<div class="shop-item'+(can?' can':'')+'"><b>'+name+'</b><small>'+desc+'</small><button type="button" '+(can?'':'disabled')+' onclick="rushBuy(\''+id+'\')">'+(cost===null?label:'£'+cost)+'</button></div>'};
+ const p=rushLv.pay,k=rushLv.stk;$id('rushShop').hidden=!rushOn&&rushN>0;
+ $id('rushShop').innerHTML=
+  item('pay','Pay rise · level '+(p+1),p<2?'£'+RUSH_PAY[p]+' → £'+RUSH_PAY[p+1]+' per correct answer':'£'+RUSH_PAY[p]+' per correct answer',p<2?RUSH_PAY_COST[p]:null,'MAX')+
+  item('stk','Streak bonus · level '+(k+1),k<2?'+£'+RUSH_STK[k]+' → +£'+RUSH_STK[k+1]+' for each answer in a row':'+£'+RUSH_STK[k]+' for each answer in a row',k<2?RUSH_STK_COST[k]:null,'MAX')+
+  item('ins','Insurance',rushLv.ins?'Active: your next mistake costs nothing and keeps the streak':'Your next mistake costs nothing and keeps the streak',rushLv.ins?null:RUSH_INS_COST,'ACTIVE');
+}
+function rushBuy(id){
+ const cost=id==='pay'?RUSH_PAY_COST[rushLv.pay]:id==='stk'?RUSH_STK_COST[rushLv.stk]:RUSH_INS_COST;
+ if(!rushOn||cost===undefined||rushBalance<cost||(id==='ins'&&rushLv.ins))return;
+ rushBalance-=cost;if(id==='ins')rushLv.ins=true;else rushLv[id]++;
+ rushHud();pop('rushStatB');if(id==='pay')pop('rushStatP');
+}
+function rushIntro(){
+ rushOn=false;rushBalance=0;rushStreak=0;rushN=0;rushLv={pay:0,stk:0,ins:false};rushHud();
+ $id('rushStage').innerHTML='<div class="g-end"><p class="g-kicker">HOW IT WORKS</p><h3>Earn. Upgrade. Reach £3,000.</h3><p>Correct form = money · answers in a row = streak bonus · wrong form = you lose half a payment.<br>Spend in the shop below at any time: a <b>pay rise</b> pays off fast.</p><button class="navbtn primary g-start" type="button" onclick="rushStart()">START</button></div>';
+}
+function rushStart(){rushOn=true;rushQueue=[];rushBalance=0;rushStreak=0;rushN=0;rushRight=0;rushMisses=[];rushLv={pay:0,stk:0,ins:false};rushShow()}
+function rushShow(){
+ if(rushBalance>=RUSH_GOAL){rushEnd();return}
+ if(!rushQueue.length){rushQueue=shuffle(RUSH_Q);if(rushQ&&rushQueue[0]===rushQ)rushQueue.push(rushQueue.shift())}
+ rushQ=rushQueue.shift();rushAnswered=false;rushHud();
+ $id('rushStage').innerHTML='<p class="g-kicker">QUESTION '+(rushN+1)+' · CHOOSE THE FORM</p><p class="g-sentence" id="rushSentence">'+fill(rushQ.s)+'</p><div class="g-opts" id="rushOpts">'+tiles(rushQ.o)+'</div><div class="g-row"><div class="g-msg" id="rushMsg">&nbsp;</div><button class="navbtn primary" id="rushNext" type="button" hidden onclick="rushShow()">NEXT →</button></div>';
+ $id('rushOpts').querySelectorAll('.g-opt').forEach(b=>b.onclick=()=>rushPick(b));
+}
+function rushPick(btn){
+ if(rushAnswered)return;rushAnswered=true;
+ const q=rushQ,ai=q.o.indexOf(q.a),ok=Number(btn.dataset.i)===ai,msg=$id('rushMsg');
+ markTiles($id('rushOpts'),btn,ai);rushN++;
+ let delta=0;
+ if(ok){
+  rushStreak++;rushRight++;
+  const bonus=Math.min(rushStreak-1,5)*RUSH_STK[rushLv.stk];delta=RUSH_PAY[rushLv.pay]+bonus;
+  msg.className='g-msg';msg.innerHTML='<b>'+q.t+'</b> — '+q.why+' <b>+£'+RUSH_PAY[rushLv.pay]+'</b>'+(bonus?' · streak +£'+bonus:'');
+ }else{
+  if(!rushMisses.includes(q))rushMisses.push(q);
+  if(rushLv.ins){rushLv.ins=false;msg.className='g-msg bad';msg.innerHTML='Insurance used — no loss. It’s <b>'+q.t+'</b> — '+q.why}
+  else{rushStreak=0;delta=-RUSH_PAY[rushLv.pay]/2;msg.className='g-msg bad';msg.innerHTML='Impulse buy, −£'+(-delta)+'. It’s <b>'+q.t+'</b> — '+q.why}
+  shakeEl('rushStage');
+ }
+ rushBalance+=delta;
+ $id('rushSentence').innerHTML=fill(q.s,q.a,ok?'good':'miss');
+ if(delta)floatUp('rushStage',(delta>0?'+£':'−£')+Math.abs(delta),delta<0);
+ rushHud();if(delta)pop('rushStatB');if(ok&&rushStreak>=2)pop('rushStatS');
+ const n=$id('rushNext');n.hidden=false;n.textContent=rushBalance>=RUSH_GOAL?'SEE RESULT →':'NEXT →';n.focus();
+}
+function rushEnd(){
+ rushOn=false;const best=bestGet(RUSH_BEST_KEY),record=!best||rushN<best;if(record)bestSet(RUSH_BEST_KEY,rushN);rushHud();
+ const rank=rushN<=13?['MONEY MASTER','Smart upgrades and almost no mistakes.']:rushN<=17?['FRUGAL PRO','Nice investing. Fewer slips and an earlier pay rise will make it faster.']:['GOAL REACHED','You got there. Next time buy a pay rise early and protect your streak.'];
+ $id('rushStage').innerHTML='<div class="g-end"><p class="g-kicker">'+rank[0]+(record?' · NEW BEST':'')+'</p><h3>£3,000 in '+rushN+' answers</h3><p>'+rushRight+' correct, '+(rushN-rushRight)+' wrong. '+rank[1]+'</p>'+(rushMisses.length?'<div class="g-review">'+rushMisses.map(q=>'<div>'+fill(q.s,q.a,'good')+'<br><b>'+q.t+'</b> — '+q.why+'</div>').join('')+'</div>':'')+'<button class="navbtn primary g-start" type="button" onclick="rushStart()">PLAY AGAIN</button></div>';
+}
+
+/* --- 13 · time machine (two steps + chest) --- */
+const TM_Q=[
+ {s:'If I had saved more last year, I ___ so stressed about money now.',o:['wouldn\'t be','wouldn\'t have been','won\'t be'],a:'wouldn\'t be',r:'pn',why:'had saved (past) → wouldn’t be (now).'},
+ {s:'If she were more careful with money, she ___ that huge loan last year.',o:['wouldn\'t take','wouldn\'t have taken','hadn\'t taken'],a:'wouldn\'t have taken',r:'np',why:'were (her character now) → wouldn’t have taken (past).'},
+ {s:'If he hadn’t quit his side hustle, he ___ more disposable income now.',o:['would have','would have had','will have'],a:'would have',r:'pn',why:'hadn’t quit (past) → would have (now).'},
+ {s:'If I weren’t so impulsive, I ___ those trainers yesterday.',o:['wouldn\'t buy','wouldn\'t have bought','hadn\'t bought'],a:'wouldn\'t have bought',r:'np',why:'weren’t (my character now) → wouldn’t have bought (past).'},
+ {s:'If they had avoided credit cards at university, they ___ so much money now.',o:['wouldn\'t owe','wouldn\'t have owed','don\'t owe'],a:'wouldn\'t owe',r:'pn',why:'had avoided (past) → wouldn’t owe (now).'},
+ {s:'If Maya were better at budgeting, she ___ more before her trip.',o:['would save','would have saved','had saved'],a:'would have saved',r:'np',why:'were (her ability now) → would have saved (past).'}
+];
+const TM_BEST_KEY='katya_lesson3_tm_best';
+let tmQueue=[],tmI=0,tmCells=[],tmCrystals=0,tmRouteOk=false;
+function tmStart(){tmQueue=shuffle(TM_Q);tmI=0;tmCells=[];tmCrystals=0;tmShow()}
+function tmHud(){
+ $id('tmFuel').textContent=tmCells.filter(Boolean).length+' / 12';$id('tmCrystals').textContent=tmCrystals;$id('tmBest').textContent=bestGet(TM_BEST_KEY);
+ $id('tmCount').textContent=tmI>=tmQueue.length?'FINISHED':'SENTENCE '+(tmI+1)+' / '+tmQueue.length;
+ let h='';for(let i=0;i<12;i++)h+='<i class="'+(i<tmCells.length?(tmCells[i]?'on':'off'):'')+'"></i>';$id('tmCells').innerHTML=h;
+}
+function tmLine(r){
+ const past=r==='pn'?'cause':r==='np'?'result':'',now=r==='pn'?'result':r==='np'?'cause':'';
+ return '<div class="tm-line"><div class="tm-node '+past+'">PAST'+(past?'<small>'+past.toUpperCase()+'</small>':'')+'</div><div class="tm-arrow '+(r||'')+'"></div><div class="tm-node '+now+'">NOW'+(now?'<small>'+now.toUpperCase()+'</small>':'')+'</div></div>';
+}
+function tmShow(){
+ tmHud();
+ if(tmI>=tmQueue.length){
+  const fuel=tmCells.filter(Boolean).length,record=tmCrystals>bestGet(TM_BEST_KEY);if(record){bestSet(TM_BEST_KEY,tmCrystals);tmHud()}
+  $id('tmStage').innerHTML='<div class="g-end"><p class="g-kicker">JOURNEY COMPLETE'+(record?' · NEW BEST':'')+'</p><h3>'+tmCrystals+' crystals · '+fuel+' / 12 fuel</h3><p>'+(fuel>=11?'The time machine is fully charged. Mixed conditionals: sorted.':fuel>=8?'Nearly there. Set the route first — the form follows from it.':'Slow down on step 1: decide which half is the past and which is now.')+'</p><button class="navbtn primary g-start" type="button" onclick="tmStart()">PLAY AGAIN</button></div>';
+  return;
+ }
+ const q=tmQueue[tmI];
+ $id('tmStage').innerHTML='<div id="tmLineBox">'+tmLine('')+'</div><p class="g-kicker" id="tmKicker">STEP 1 · SET THE ROUTE</p><p class="g-sentence" id="tmSentence">'+fill(q.s)+'</p><div class="g-opts two" id="tmOpts"><button type="button" class="g-opt" data-r="pn">PAST → NOW<small>past cause, present result</small></button><button type="button" class="g-opt" data-r="np">NOW → PAST<small>present state, past result</small></button></div><div id="tmChests"></div><div class="g-row"><div class="g-msg" id="tmMsg">Which time causes which result?</div><button class="navbtn primary" id="tmNext" type="button" hidden onclick="tmI++;tmShow()">NEXT →</button></div>';
+ $id('tmOpts').querySelectorAll('.g-opt').forEach(b=>b.onclick=()=>tmRoute(b));
+}
+function tmRoute(btn){
+ const q=tmQueue[tmI],ok=btn.dataset.r===q.r,msg=$id('tmMsg');
+ tmRouteOk=ok;tmCells.push(ok);if(ok){tmCrystals+=10;pop('tmStatC')}else shakeEl('tmStage');tmHud();
+ $id('tmLineBox').innerHTML=tmLine(q.r);
+ msg.className='g-msg'+(ok?'':' bad');msg.innerHTML=(ok?'Route set, <b>+10</b>. ':'Not quite — the route is <b>'+(q.r==='pn'?'PAST → NOW':'NOW → PAST')+'</b>. ')+'Now choose the form.';
+ $id('tmKicker').textContent='STEP 2 · CHOOSE THE FORM';
+ const box=$id('tmOpts');box.className='g-opts';box.innerHTML=tiles(q.o);
+ box.querySelectorAll('.g-opt').forEach(b=>b.onclick=()=>tmForm(b));
+}
+function tmDone(){const n=$id('tmNext');n.hidden=false;n.textContent=tmI===tmQueue.length-1?'SEE RESULT →':'NEXT →';n.focus()}
+function tmForm(btn){
+ const q=tmQueue[tmI],ai=q.o.indexOf(q.a),ok=Number(btn.dataset.i)===ai,msg=$id('tmMsg');
+ tmCells.push(ok);if(ok){tmCrystals+=10;pop('tmStatC')}else shakeEl('tmStage');tmHud();
+ markTiles($id('tmOpts'),btn,ai);
+ $id('tmSentence').innerHTML=fill(q.s,q.a,ok?'good':'miss');
+ msg.className='g-msg'+(ok?'':' bad');msg.innerHTML=(ok?'<b>Correct, +10.</b> ':'<b>'+q.a+'</b> is the form. ')+q.why;
+ if(ok&&tmRouteOk){
+  $id('tmKicker').textContent='PERFECT JUMP · PICK A CHEST';
+  const prizes=shuffle([30,15,5]);
+  $id('tmChests').innerHTML='<div class="chests">'+prizes.map(p=>'<button type="button" class="chest" data-p="'+p+'">?<small>CHEST</small></button>').join('')+'</div>';
+  $id('tmChests').querySelectorAll('.chest').forEach(c=>c.onclick=()=>{
+   $id('tmChests').querySelectorAll('.chest').forEach(x=>{x.disabled=true;x.innerHTML='+'+x.dataset.p+'<small>CRYSTALS</small>'});
+   c.classList.add('mine');tmCrystals+=Number(c.dataset.p);tmHud();pop('tmStatC');floatUp('tmStage','+'+c.dataset.p);tmDone();
+  });
+ }else tmDone();
+}
+mapStart();chatIntro();rushIntro();tmStart();
 
 function checkCurrent(){
  if(current===1){let score=0;document.querySelectorAll('#vocab .vitem').forEach(v=>{const ok=v.querySelector('select').value===v.dataset.a;v.classList.toggle('ok',ok);v.classList.toggle('wrong',!ok);if(ok)score++});document.getElementById('vocabFeedback').textContent=score+' / 8 correct.'}
