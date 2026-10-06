@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kate · Homework · Money Words</title>
+<style>
+:root{--ink:#223d3c;--navy:#155e61;--muted:#5f6f6a;--line:#dfe6e0;--bg:#f5f5f0;--ok:#2f8a63;--okbg:#e0f2e5;--bad:#b9503c;--badbg:#fce4e0;--amber:#a87a12;--amberbg:#fdf1cf;
+--c1:#b9503c;--c2:#2f6fa3;--c3:#7a4fa3;--c4:#a87a12}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg);font-size:18px;overflow:hidden}
+button{font:inherit;cursor:pointer;color:inherit}
+.app{height:100vh;height:100dvh;display:grid;grid-template-rows:auto minmax(0,1fr)}
+header{background:#fff;border-bottom:1px solid var(--line);padding:8px 18px;display:flex;align-items:center;gap:16px}
+header h1{margin:0;font-size:20px;font-weight:900;color:var(--navy);letter-spacing:-.01em;white-space:nowrap}
+.steps{display:flex;gap:6px;flex:1;justify-content:center;min-width:0}
+.step{border:1px solid var(--line);background:#f2f5ef;border-radius:999px;padding:8px 15px;font-size:16px;font-weight:800;color:var(--navy);white-space:nowrap}
+.step.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.step.done:not(.on){background:var(--okbg);border-color:#b5dcc3}
+.step .n{opacity:.7;margin-right:5px}
+.reset{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 13px;font-size:15px;font-weight:800;color:var(--navy);white-space:nowrap}
+.stage{min-height:0;overflow:auto;padding:14px 22px 16px;display:flex;justify-content:center}
+.screen{width:100%;max-width:1040px;display:flex;flex-direction:column;min-height:0}
+.top{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.top h2{margin:0;font-size:25px;font-weight:900;letter-spacing:-.01em}
+.top p{margin:0;color:var(--muted);font-size:17px;flex:1}
+.hud{display:flex;gap:8px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:5px 13px;text-align:center;min-width:86px}
+.stat small{display:block;font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--muted)}
+.stat b{font-size:22px;color:var(--navy)}
+.bar{height:8px;border-radius:99px;background:#e2e8e1;overflow:hidden;margin-bottom:12px;flex:none}
+.bar i{display:block;height:100%;width:0;background:var(--navy);transition:width .3s}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px}
+.qcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 24px;text-align:center}
+.kicker{font-size:15px;font-weight:800;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+.qtext{font-size:27px;font-weight:800;line-height:1.3}
+.gap{display:inline-block;min-width:120px;border-bottom:3px solid var(--navy);color:var(--navy);padding:0 6px}
+.gap.filled{border-bottom-color:var(--ok);color:var(--ok)}
+.ru{color:var(--muted);font-size:19px;font-weight:600;margin-top:6px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{border:0;border-radius:14px;padding:15px 14px;font-size:21px;font-weight:800;color:#fff;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18);transition:transform .1s}
+.opt:nth-child(1){background:var(--c1)}.opt:nth-child(2){background:var(--c2)}.opt:nth-child(3){background:var(--c3)}.opt:nth-child(4){background:var(--c4)}
+.opt:not(:disabled):hover{transform:translateY(-2px)}
+.opt:disabled{cursor:default}
+.opts.answered .opt{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)}
+.opts.answered .opt.right{background:var(--ok);color:#fff;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18)}
+.opts.answered .opt.wrong{background:var(--bad);color:#fff;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18)}
+.foot{display:flex;align-items:center;gap:14px;min-height:62px;flex:none}
+.fb{flex:1;font-size:19px;line-height:1.35;border-radius:12px;padding:9px 14px}
+.fb.ok{background:var(--okbg)}.fb.bad{background:var(--badbg)}.fb.near{background:var(--amberbg)}
+.fb b{font-weight:900}
+.btn{border:0;border-radius:12px;padding:14px 22px;font-size:19px;font-weight:900;background:var(--navy);color:#fff;white-space:nowrap}
+.btn.ghost{background:#fff;color:var(--navy);box-shadow:inset 0 0 0 2px var(--line)}
+.btn:disabled{opacity:.45;cursor:default}
+/* cards */
+.decks{display:flex;gap:8px}
+.deck{border:2px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font-size:17px;font-weight:800;color:var(--navy)}
+.deck.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.flip{flex:1;min-height:210px;max-height:330px;perspective:1400px}
+.flip-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .45s;cursor:pointer}
+.flip-in.back{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 28px;text-align:center;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.face.f{background:var(--navy);color:#fff}
+.face.f .term{font-size:40px;font-weight:900;letter-spacing:-.01em}
+.face.f .tap{margin-top:12px;font-size:17px;opacity:.8;font-weight:700}
+.face.b{background:#fff;border:2px solid var(--navy);transform:rotateY(180deg);gap:7px}
+.face.b .term{font-size:22px;font-weight:900;color:var(--navy)}
+.face.b .rus{font-size:28px;font-weight:900}
+.face.b .def{font-size:20px;color:var(--muted)}
+.face.b .ex{font-size:21px;font-style:italic}
+.face.b .note{font-size:16px;font-weight:800;letter-spacing:.04em;color:var(--amber)}
+.cnav{display:flex;align-items:center;justify-content:center;gap:10px;flex:none;flex-wrap:wrap}
+.cnav .count{font-size:19px;font-weight:900;color:var(--navy);min-width:70px;text-align:center}
+/* type */
+.typerow{display:flex;gap:10px;justify-content:center}
+.typerow input{flex:1;max-width:520px;font:inherit;font-size:24px;font-weight:800;padding:13px 18px;border:3px solid var(--navy);border-radius:14px;color:var(--ink);background:#fff;text-align:center;outline:0}
+.typerow input.ok{border-color:var(--ok);background:var(--okbg)}.typerow input.bad{border-color:var(--bad);background:var(--badbg)}
+.hintline{text-align:center;font-size:19px;font-weight:800;color:var(--amber);min-height:26px;letter-spacing:.04em}
+/* write */
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 11px;font-size:16px;font-weight:700;color:var(--muted)}
+.chip.used{background:var(--ok);border-color:var(--ok);color:#fff}
+textarea{width:100%;flex:1;min-height:90px;font:inherit;font-size:21px;line-height:1.4;padding:13px 16px;border:2px solid var(--line);border-radius:14px;resize:none;outline:0;color:var(--ink);background:#fff}
+textarea:focus{border-color:var(--navy)}
+.wq{font-size:25px;font-weight:900;line-height:1.3}
+.wtip{font-size:18px;color:var(--muted)}
+/* finish */
+.finish{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px 26px;display:flex;flex-direction:column;gap:12px;min-height:0;flex:1}
+.finish h2{margin:0;font-size:28px;font-weight:900;color:var(--navy)}
+.big{font-size:22px;font-weight:800}
+.big b{font-size:40px;color:var(--navy);margin-right:6px}
+.review{flex:1;min-height:60px;overflow:auto;border-top:1px solid var(--line);padding-top:8px}
+.review div{font-size:18px;line-height:1.35;padding:6px 0;border-bottom:1px solid #eef2ed}
+.review .x{color:var(--bad);font-weight:800}.review .v{color:var(--ok);font-weight:900}
+.frow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;flex:none}
+.copied{font-size:18px;font-weight:800;color:var(--ok)}
+@media(max-height:620px){header{padding:5px 18px}.stage{padding:9px 22px 10px}.top{margin-bottom:6px}.top h2{font-size:22px}.bar{margin-bottom:8px}.main{gap:9px}.qcard{padding:11px 20px}.qtext{font-size:24px}.opt{padding:11px 12px;font-size:20px}.foot{min-height:54px}.btn{padding:11px 18px}.stat{padding:3px 11px}.stat b{font-size:20px}.flip{min-height:170px}.face.f .term{font-size:36px}.face.b .rus{font-size:25px}.finish{padding:13px 20px;gap:8px}.big b{font-size:32px}.wq{font-size:22px}textarea{min-height:70px;font-size:20px}}
+@media(max-width:1000px){header h1{display:none}.step .l{display:none}.step .n{margin:0;opacity:1}.step.on .l{display:inline;margin-left:5px}}
+@media(max-width:700px){body{overflow:auto}.app{height:auto;min-height:100dvh}.stage{overflow:visible;padding:12px}.top{flex-wrap:wrap}.top p{flex-basis:100%;order:3}.opts{grid-template-columns:1fr}.qtext{font-size:22px}.face.f .term{font-size:32px}.foot{flex-wrap:wrap}.typerow{flex-wrap:wrap}.typerow input{flex-basis:100%}.flip{min-height:300px;flex:none;height:300px}.finish{flex:none}.review{max-height:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <h1>MONEY WORDS · HOMEWORK</h1>
+  <nav class="steps" id="steps"></nav>
+  <button class="reset" id="resetAll" type="button">Start over</button>
+</header>
+<div class="stage"><div class="screen" id="screen"></div></div>
+</div>
+<script>
+const W=[
+{id:'rack',set:'m',t:'rack up debt',ru:'накапливать долги',def:'gradually build up more and more debt',ex:'He racked up debt on three credit cards.'},
+{id:'payoff',set:'m',t:'pay off debt',ru:'погасить долг полностью',def:'give back all the money you owe',ex:'It took her five years to pay off her student debt.'},
+{id:'hustle',set:'m',t:'side hustle',ru:'подработка, дополнительный заработок',def:'an extra job or income stream',ex:'Selling vintage clothes online is her side hustle.'},
+{id:'ends',set:'m',t:'make ends meet',ru:'сводить концы с концами',def:'have just enough money for basic costs',ex:'Many students work part-time to make ends meet.'},
+{id:'hard',set:'m',t:'hard-hit',ru:'сильно пострадавший',def:'badly affected by a problem',ex:'Young renters were hard-hit by rising prices.'},
+{id:'wary',set:'m',t:'wary of',ru:'относиться с опаской к',def:'not fully trusting; cautious about',ex:'Older people are often wary of new payment apps.'},
+{id:'shell',set:'m',t:'shell out',ru:'раскошелиться, выложить деньги',def:'pay a lot of money, often unwillingly',ex:'I had to shell out £90 for a taxi home.'},
+{id:'frugal',set:'m',t:'frugal',ru:'бережливый, экономный',def:'careful about spending; avoiding waste',ex:'She is frugal: she cooks at home and never wastes food.'},
+{id:'cut',set:'p',t:'cut back (on)',ru:'сокращать расходы (на что-то)',def:'spend less on something',ex:'We’re cutting back on takeaways this month.',note:'cut – cut – cut'},
+{id:'give',set:'p',t:'give away',ru:'отдавать даром, раздавать',def:'give something to someone for free',ex:'She gave her old bike away.',note:'SEPARABLE · give it away'},
+{id:'payback',set:'p',t:'pay back',ru:'возвращать долг',def:'return money you borrowed',ex:'I’ll pay you back on Friday.',note:'SEPARABLE · pay me back'},
+{id:'rip',set:'p',t:'rip off',ru:'обдирать, брать втридорога (разг.)',def:'charge someone far too much; cheat',ex:'That taxi driver ripped us off.',note:'INFORMAL · rip sb off'},
+{id:'run',set:'p',t:'run up',ru:'накопить (долг, большой счёт)',def:'let a bill or debt grow bigger and bigger',ex:'He ran up a huge phone bill.',note:'run – ran – run'},
+{id:'save',set:'p',t:'save up (for)',ru:'копить (на что-то)',def:'keep money so you can buy something later',ex:'I’m saving up for a laptop.',note:'save up FOR + noun'},
+{id:'sell',set:'p',t:'sell out (of)',ru:'распродать(ся)',def:'have nothing left to sell',ex:'The tickets sold out in an hour.',note:'sell – sold – sold'},
+{id:'shop',set:'p',t:'shop around',ru:'сравнивать цены, прицениваться',def:'compare prices in different places before buying',ex:'Shop around before you choose a phone plan.',note:'NO OBJECT'},
+{id:'splurge',set:'p',t:'splurge on',ru:'раскошелиться на что-то приятное',def:'spend a lot on something special as a treat',ex:'We splurged on a fancy dinner.',note:'splurge ON + noun'},
+{id:'take',set:'p',t:'take back',ru:'вернуть покупку в магазин',def:'return something to the shop where you bought it',ex:'These shoes are too small — I’ll take them back.',note:'SEPARABLE · take it back'}
+];
+const byId=Object.fromEntries(W.map(w=>[w.id,w]));
+// first option is always the correct one; options are shuffled on screen
+const GAPS=[
+['rack','He kept using three credit cards and ___ debt faster than he could count.',['racked up','paid off','shelled out','saved up']],
+['payoff','It took them ten years, but they finally ___ their student debt.',['paid off','racked up','gave away','took back']],
+['hustle','Teaching yoga at weekends is her ___ — her main job is in a bank.',['side hustle','rip-off','frugal','hard-hit']],
+['ends','With rent going up again, many families struggle to ___.',['make ends meet','shop around','sell out','shell out']],
+['hard','Small cafés were especially ___ by the rise in energy prices.',['hard-hit','frugal','wary','sold out']],
+['wary','My grandparents are ___ banking apps; they prefer to go to the branch.',['wary of','frugal with','hard-hit by','splurging on']],
+['shell','The car broke down on holiday and we had to ___ £300 on the spot for repairs.',['shell out','save up','cut back','shop around']],
+['frugal','She is very ___: she plans every meal and never throws food away.',['frugal','hard-hit','wary','sold out']],
+['cut','Prices are rising, so we are ___ eating out.',['cutting back on','saving up for','splurging on','selling out of']],
+['give','They didn’t sell their old sofa — they just ___ to a neighbour.',['gave it away','took it back','paid it back','ripped it off']],
+['payback','Can you lend me £20? I will ___ on Monday.',['pay you back','rip you off','give you away','take you back']],
+['rip','£9 for a bottle of water? That place really ___ tourists.',['rips off','pays back','gives away','shops around']],
+['run','He left the heating on all winter and ___ a huge bill.',['ran up','saved up','paid back','cut back']],
+['save','She is ___ a gap year in Asia, so she rarely goes out.',['saving up for','splurging on','ripping off','selling out of']],
+['sell','Sorry, we have ___ the blue ones; only red is left.',['sold out of','shopped around','run up','cut back on']],
+['shop','Don’t take the first offer — ___ and compare a few insurance companies.',['shop around','shell out','sell out','save up']],
+['splurge','After getting her bonus, she ___ a designer bag.',['splurged on','cut back on','shopped around','paid back']],
+['take','The jacket didn’t fit, so I ___ to the shop and got a refund.',['took it back','gave it away','paid it back','ran it up']]
+];
+// a = accepted answers, near = right phrase but wrong form
+const TYPES=[
+['save','I’m ___ a new laptop, so no holidays this year.','коплю на',['saving up for'],['save up for','saved up for','saves up for','saving for','saving up']],
+['sell','The concert tickets ___ in ten minutes.','распродались (Past Simple)',['sold out'],['sell out','sells out','selling out','sold out of']],
+['run','Last year he ___ a huge credit card bill.','накопил (Past Simple)',['ran up','racked up'],['run up','runs up','running up','rack up']],
+['rip','£8 for a cup of tea? We were ___!','нас ободрали (Passive)',['ripped off'],['rip off','rips off','ripping off','riped off']],
+['payback','Lend me £10 — I’ll ___ tomorrow, I promise.','верну тебе долг',['pay you back'],['pay back','pay back you','paid you back','pay it back']],
+['cut','Money is tight, so we need to ___ takeaways.','сократить расходы на',['cut back on','cut down on'],['cut back','cutting back on','cut down','cut on']],
+['shop','Always ___ before you buy a phone.','сравнивай цены',['shop around'],['shopping around','shopped around','shops around']],
+['splurge','For her birthday she ___ a weekend in Paris.','раскошелилась на (Past Simple)',['splurged on'],['splurge on','splurges on','splurged','splurging on']],
+['ends','It’s hard to ___ on one salary.','сводить концы с концами',['make ends meet'],['make end meet','made ends meet','making ends meet','make the ends meet']],
+['shell','I had to ___ £200 for a parking fine.','выложить',['shell out'],['shelled out','shelling out','shell']],
+['hustle','Driving for a taxi app is his ___.','подработка',['side hustle'],['side hustles','sidehustle','side-hustle','hustle']],
+['wary','My parents are ___ buying things online.','относятся с опаской к',['wary of'],['wary','wary about','weary of']],
+['payoff','They finally ___ their mortgage last spring.','полностью погасили (Past Simple)',['paid off'],['pay off','pays off','paying off','payed off','paid back']],
+['take','The shoes were too small, so I ___ to the shop.','вернула их (Past Simple)',['took them back'],['take them back','took back them','took it back','taken them back','took back']]
+];
+const WRITE=[
+['What are you saving up for at the moment? How long will it take?','Try: save up for · cut back on · frugal'],
+['What was the last thing you splurged on? Was it worth it?','Try: splurge on · shell out · shop around'],
+['Have you ever been ripped off? What happened?','Try: rip off · take back · pay back'],
+['If money got tight, what would you cut back on first — and what would you never give up?','Try: cut back on · make ends meet · side hustle'],
+['Is your generation better or worse with money than your parents’? Why?','Try: rack up debt · pay off debt · wary of · hard-hit']
+];
+const DETECT={rack:/\brack(s|ed|ing)?\s+up\b/,payoff:/\bpa(y|ys|id|ying)\s+(\S+\s+){0,3}off\b/,hustle:/\bside[\s-]hustle/,ends:/\bma(ke|kes|de|king)\s+ends\s+meet\b/,hard:/\bhard[\s-]hit\b/,wary:/\bwary\s+of\b/,shell:/\bshell(s|ed|ing)?\s+out\b/,frugal:/\bfrugal/,cut:/\bcut(s|ting)?\s+back\b/,give:/\bg(ive|ives|ave|iven|iving)\s+(\S+\s+){0,3}away\b/,payback:/\bpa(y|ys|id|ying)\s+(\S+\s+){0,3}back\b/,rip:/\brip(s|ped|ping)?\s+(\S+\s+){0,2}off\b|\brip-?off\b/,run:/\br(un|uns|an|unning)\s+up\b/,save:/\bsav(e|es|ed|ing)\s+up\b/,sell:/\bs(ell|ells|old|elling)\s+out\b/,shop:/\bshop(s|ped|ping)?\s+around\b/,splurge:/\bsplurg(e|es|ed|ing)\b/,take:/\bt(ake|akes|ook|aken|aking)\s+(\S+\s+){0,3}back\b/};
+
+const STEPS=[['cards','Cards'],['meaning','Meaning'],['gap','In context'],['type','Type it'],['write','My money']];
+const $=id=>document.getElementById(id);
+const screen=$('screen');
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let cur=0,done={},results={},answers=WRITE.map(()=>''),wq=0;
+
+function renderSteps(){
+  $('steps').innerHTML=STEPS.map((s,i)=>'<button type="button" class="step'+(i===cur?' on':'')+(done[s[0]]?' done':'')+'" data-i="'+i+'"><span class="n">'+(done[s[0]]&&i!==cur?'✓':i+1)+'</span><span class="l">'+s[1]+'</span></button>').join('');
+  $('steps').querySelectorAll('.step').forEach(b=>b.onclick=()=>go(+b.dataset.i));
+}
+function go(i){cur=i;renderSteps();({cards:startCards,meaning:startMeaning,gap:startGap,type:startType,write:startWrite})[STEPS[i][0]]();screen.parentElement.scrollTop=0}
+function nextLabel(){return cur<STEPS.length-1?'Step '+(cur+2)+' · '+STEPS[cur+1][1]+' →':''}
+
+/* ---------- 1 cards ---------- */
+let deck='m',ci=0;
+function startCards(){ci=0;drawCards(false)}
+function drawCards(back){
+  const list=W.filter(w=>w.set===deck),w=list[ci];
+  screen.innerHTML='<div class="top"><h2>Flashcards</h2><p>Say the meaning first, then turn the card to check.</p><div class="decks"><button type="button" class="deck'+(deck==='m'?' on':'')+'" data-d="m">Money words · 8</button><button type="button" class="deck'+(deck==='p'?' on':'')+'" data-d="p">Phrasal verbs · 10</button></div></div>'+
+  '<div class="main"><div class="flip"><div class="flip-in'+(back?' back':'')+'" id="card"><div class="face f"><div class="term">'+esc(w.t)+'</div><div class="tap">Tap to turn the card</div></div><div class="face b"><div class="term">'+esc(w.t)+'</div><div class="rus">'+esc(w.ru)+'</div><div class="def">'+esc(w.def)+'</div><div class="ex">'+esc(w.ex)+'</div>'+(w.note?'<div class="note">'+esc(w.note)+'</div>':'')+'</div></div></div>'+
+  '<div class="cnav"><button type="button" class="btn ghost" id="cPrev">← Back</button><button type="button" class="btn ghost" id="cSay">Listen</button><button type="button" class="btn" id="cFlip">Turn the card</button><span class="count">'+(ci+1)+' / '+list.length+'</span><button type="button" class="btn ghost" id="cNext">Next →</button><button type="button" class="btn" id="cGo">'+nextLabel()+'</button></div></div>';
+  screen.querySelectorAll('.deck').forEach(b=>b.onclick=()=>{deck=b.dataset.d;ci=0;drawCards(false)});
+  const flip=()=>$('card').classList.toggle('back');
+  $('card').onclick=flip;$('cFlip').onclick=flip;
+  $('cPrev').onclick=()=>{ci=(ci-1+list.length)%list.length;drawCards(false)};
+  $('cNext').onclick=()=>{ci=(ci+1)%list.length;if(ci===0&&deck==='m'){deck='p'}drawCards(false)};
+  $('cGo').onclick=()=>{done.cards=true;go(1)};
+  if(!('speechSynthesis' in window))$('cSay').style.display='none';
+  $('cSay').onclick=()=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w.t.replace(/[()]/g,'')+'. '+w.ex);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}catch(e){}};
+}
+
+/* ---------- 2 + 3 choice quizzes ---------- */
+let Q=null;
+function startMeaning(){
+  const qs=shuffle(W).map(w=>{const pool=shuffle(W.filter(x=>x.id!==w.id&&x.set===w.set)).slice(0,3);
+    return{kicker:'Which word or phrase means…',html:esc(w.def),opts:shuffle([w,...pool].map(x=>x.t)),right:w.t,why:'<b>'+esc(w.t)+'</b> — '+esc(w.ru)+'. <i>'+esc(w.ex)+'</i>',short:w.def}});
+  runQuiz('meaning','Meaning match','Read the meaning and choose the word.',qs);
+}
+function startGap(){
+  const qs=shuffle(GAPS).map(g=>{const w=byId[g[0]];
+    return{kicker:'Complete the sentence',html:esc(g[1]).replace('___','<span class="gap">&nbsp;</span>'),opts:shuffle(g[2]),right:g[2][0],why:'<b>'+esc(w.t)+'</b> — '+esc(w.ru)+' ('+esc(w.def)+').',short:g[1].replace('___','…')}});
+  runQuiz('gap','In context','Choose the phrase that fits — the form matters too.',qs);
+}
+function runQuiz(key,title,sub,qs){Q={key,title,sub,qs,i:0,score:0,pts:0,streak:0,best:0,miss:[]};drawQ()}
+function hud(){return '<div class="hud"><div class="stat"><small>QUESTION</small><b>'+(Q.i+1)+' / '+Q.qs.length+'</b></div><div class="stat"><small>POINTS</small><b id="pts">'+Q.pts+'</b></div><div class="stat"><small>STREAK</small><b id="streak">'+Q.streak+'</b></div></div>'}
+function drawQ(){
+  const q=Q.qs[Q.i];
+  screen.innerHTML='<div class="top"><h2>'+Q.title+'</h2><p>'+Q.sub+'</p>'+hud()+'</div><div class="bar"><i style="width:'+(Q.i/Q.qs.length*100)+'%"></i></div>'+
+  '<div class="main"><div class="qcard"><div class="kicker">'+q.kicker+'</div><div class="qtext" id="qtext">'+q.html+'</div></div><div class="opts" id="opts">'+q.opts.map(o=>'<button type="button" class="opt">'+esc(o)+'</button>').join('')+'</div>'+
+  '<div class="foot"><div class="fb" id="fb"></div><button type="button" class="btn" id="next" style="visibility:hidden">Next question →</button></div></div>';
+  [...$('opts').children].forEach(b=>b.onclick=()=>answerQ(b));
+}
+function answerQ(btn){
+  const q=Q.qs[Q.i],ok=btn.textContent===q.right,box=$('opts');
+  [...box.children].forEach(b=>{b.disabled=true;if(b.textContent===q.right){b.classList.add('right');b.textContent='✓ '+b.textContent}});
+  if(!ok){btn.classList.add('wrong');btn.textContent='✕ '+btn.textContent.replace(/^✓ /,'')}
+  box.classList.add('answered');
+  const g=screen.querySelector('.gap');if(g){g.textContent=q.right;g.classList.add('filled')}
+  if(ok){Q.score++;Q.streak++;Q.best=Math.max(Q.best,Q.streak);Q.pts+=100+Math.min(100,(Q.streak-1)*25)}else{Q.streak=0;Q.miss.push({q:q.short,you:btn.textContent.replace(/^✕ /,''),right:q.right})}
+  $('pts').textContent=Q.pts;$('streak').textContent=Q.streak;
+  $('fb').className='fb '+(ok?'ok':'bad');$('fb').innerHTML=(ok?'<b>Correct.</b> ':'<b>Not this time.</b> ')+q.why;
+  const n=$('next');n.style.visibility='visible';n.textContent=Q.i===Q.qs.length-1?'See result →':'Next question →';
+  n.onclick=()=>{Q.i++;if(Q.i>=Q.qs.length)finishQuiz();else drawQ()};n.focus();
+}
+function finishQuiz(){
+  done[Q.key]=true;results[Q.key]=Q.score+' / '+Q.qs.length;renderSteps();
+  showFinish(Q.title,Q.score,Q.qs.length,Q.pts,Q.best,Q.miss.map(m=>'<div>'+esc(m.q)+'<br><span class="x">✕ '+esc(m.you)+'</span> &nbsp; <span class="v">✓ '+esc(m.right)+'</span></div>'),()=>go(cur));
+}
+function showFinish(title,score,total,pts,best,rows,again){
+  const all=score===total;
+  screen.innerHTML='<div class="finish"><h2>'+title+' — '+(all?'perfect round':'round complete')+'</h2><div class="big"><b>'+score+' / '+total+'</b> correct · '+pts+' points · best streak '+best+'</div>'+
+  '<div class="review">'+(rows.length?'<div style="font-weight:900;border:0">Look again at these:</div>'+rows.join(''):'<div style="border:0">No mistakes — every answer was right.</div>')+'</div>'+
+  '<div class="frow"><button type="button" class="btn ghost" id="again">Play again</button>'+(nextLabel()?'<button type="button" class="btn" id="fwd">'+nextLabel()+'</button>':'')+'</div></div>';
+  $('again').onclick=again;if($('fwd'))$('fwd').onclick=()=>go(cur+1);
+}
+
+/* ---------- 4 type ---------- */
+let T=null;
+const norm=s=>s.toLowerCase().replace(/[’‘`]/g,"'").replace(/[.,!?;:]/g,'').replace(/\s+/g,' ').trim();
+function startType(){T={qs:shuffle(TYPES),i:0,score:0,pts:0,streak:0,best:0,miss:[]};drawT()}
+function drawT(){
+  const t=T.qs[T.i];T.tries=0;T.hint=false;T.over=false;
+  screen.innerHTML='<div class="top"><h2>Type it right</h2><p>No options: type the missing phrase in the correct form.</p><div class="hud"><div class="stat"><small>SENTENCE</small><b>'+(T.i+1)+' / '+T.qs.length+'</b></div><div class="stat"><small>POINTS</small><b id="pts">'+T.pts+'</b></div><div class="stat"><small>STREAK</small><b id="streak">'+T.streak+'</b></div></div></div><div class="bar"><i style="width:'+(T.i/T.qs.length*100)+'%"></i></div>'+
+  '<div class="main"><div class="qcard"><div class="qtext">'+esc(t[1]).replace('___','<span class="gap" id="tgap">&nbsp;</span>')+'</div><div class="ru">'+esc(t[2])+' · '+t[3][0].split(' ').length+' word'+(t[3][0].split(' ').length>1?'s':'')+'</div></div>'+
+  '<div class="hintline" id="hint"></div><div class="typerow"><input id="inp" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="type here"><button type="button" class="btn" id="chk">Check</button><button type="button" class="btn ghost" id="hintBtn">Hint</button></div>'+
+  '<div class="foot"><div class="fb" id="fb"></div><button type="button" class="btn" id="next" style="visibility:hidden">Next sentence →</button></div></div>';
+  const inp=$('inp');inp.focus();
+  inp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();if(T.over)$('next').click();else checkT()}};
+  $('chk').onclick=checkT;
+  $('hintBtn').onclick=()=>{T.hint=true;$('hint').textContent=t[3][0].split(' ').map(w=>w[0]+' '+'_ '.repeat(w.length-1).trim()).join('   /   ');inp.focus()};
+}
+function checkT(){
+  if(T.over)return;const t=T.qs[T.i],inp=$('inp'),v=norm(inp.value),w=byId[t[0]],fb=$('fb');
+  if(!v){inp.focus();return}
+  const ok=t[3].map(norm).includes(v);
+  if(!ok&&T.tries===0&&t[4].map(norm).includes(v)){T.tries=1;fb.className='fb near';fb.innerHTML='<b>Almost.</b> Right idea — check the form or the small words, then try once more.';inp.focus();inp.select();return}
+  T.over=true;inp.readOnly=true;$('chk').disabled=true;$('hintBtn').disabled=true;
+  $('tgap').textContent=t[3][0];$('tgap').classList.add('filled');
+  if(ok){T.score++;T.streak++;T.best=Math.max(T.best,T.streak);T.pts+=(T.hint||T.tries?50:100)+Math.min(100,(T.streak-1)*25);inp.classList.add('ok');fb.className='fb ok';fb.innerHTML='<b>Correct.</b> <b>'+esc(w.t)+'</b> — '+esc(w.ru)+'.'}
+  else{T.streak=0;T.miss.push({q:t[1].replace('___','…'),you:inp.value.trim(),right:t[3][0]});inp.classList.add('bad');fb.className='fb bad';fb.innerHTML='<b>The answer is “'+esc(t[3][0])+'”.</b> '+esc(w.t)+' — '+esc(w.ru)+'.'}
+  $('pts').textContent=T.pts;$('streak').textContent=T.streak;
+  const n=$('next');n.style.visibility='visible';n.textContent=T.i===T.qs.length-1?'See result →':'Next sentence →';
+  n.onclick=()=>{T.i++;if(T.i>=T.qs.length){done.type=true;results.type=T.score+' / '+T.qs.length;renderSteps();showFinish('Type it right',T.score,T.qs.length,T.pts,T.best,T.miss.map(m=>'<div>'+esc(m.q)+'<br><span class="x">✕ '+esc(m.you)+'</span> &nbsp; <span class="v">✓ '+esc(m.right)+'</span></div>'),()=>go(cur))}else drawT()};
+}
+
+/* ---------- 5 write ---------- */
+function usedIds(){const all=answers.join(' \n ').toLowerCase().replace(/[’‘`]/g,"'");return W.filter(w=>DETECT[w.id].test(all)).map(w=>w.id)}
+function startWrite(){wq=0;drawW()}
+function chipsHtml(){const u=usedIds();return W.map(w=>'<span class="chip'+(u.includes(w.id)?' used':'')+'">'+esc(w.t)+'</span>').join('')}
+function drawW(){
+  const q=WRITE[wq];
+  screen.innerHTML='<div class="top"><h2>My money</h2><p>Answer in 2–3 sentences. Use the lesson words — goal: at least 8.</p><div class="hud"><div class="stat"><small>QUESTION</small><b>'+(wq+1)+' / '+WRITE.length+'</b></div><div class="stat"><small>WORDS USED</small><b id="used">'+usedIds().length+' / 18</b></div></div></div>'+
+  '<div class="main" style="justify-content:flex-start"><div class="wq">'+esc(q[0])+'</div><div class="wtip">'+esc(q[1])+'</div><textarea id="ta" placeholder="Write your answer here…">'+esc(answers[wq])+'</textarea><div class="chips" id="chips">'+chipsHtml()+'</div>'+
+  '<div class="foot"><button type="button" class="btn ghost" id="wPrev"'+(wq===0?' disabled':'')+'>← Back</button><div style="flex:1"></div><button type="button" class="btn" id="wNext">'+(wq===WRITE.length-1?'Finish homework →':'Next question →')+'</button></div></div>';
+  const ta=$('ta');ta.oninput=()=>{answers[wq]=ta.value;$('chips').innerHTML=chipsHtml();$('used').textContent=usedIds().length+' / 18'};
+  $('wPrev').onclick=()=>{if(wq>0){wq--;drawW()}};
+  $('wNext').onclick=()=>{if(wq<WRITE.length-1){wq++;drawW()}else finishWrite()};
+}
+function finishWrite(){
+  done.write=true;renderSteps();const u=usedIds(),n=answers.filter(a=>a.trim()).length;
+  const txt=()=>'Kate · Homework · Money words\n'+['meaning','gap','type'].map((k,i)=>['Meaning','In context','Type it'][i]+': '+(results[k]||'not done')).join(' · ')+'\nLesson words used in writing: '+u.length+' / 18'+(u.length?' ('+u.map(i=>byId[i].t).join(', ')+')':'')+'\n\n'+WRITE.map((q,i)=>(i+1)+'. '+q[0]+'\n'+(answers[i].trim()||'—')).join('\n\n');
+  screen.innerHTML='<div class="finish"><h2>Homework complete</h2><div class="big"><b>'+u.length+' / 18</b> lesson words used · '+n+' of '+WRITE.length+' questions answered'+(u.length>=8?' · goal reached':'')+'</div>'+
+  '<div class="review"><div><b>Scores:</b> Meaning '+(results.meaning||'not done')+' · In context '+(results.gap||'not done')+' · Type it '+(results.type||'not done')+'</div>'+WRITE.map((q,i)=>'<div><b>'+esc(q[0])+'</b><br>'+(answers[i].trim()?esc(answers[i]):'<span class="x">no answer yet</span>')+'</div>').join('')+'</div>'+
+  '<div class="frow"><button type="button" class="btn" id="copy">Copy my answers for the teacher</button><button type="button" class="btn ghost" id="edit">Edit my answers</button><span class="copied" id="copied"></span></div></div>';
+  $('edit').onclick=()=>{wq=0;drawW()};
+  $('copy').onclick=()=>{const t=txt(),okMsg=()=>{$('copied').textContent='✓ Copied — paste it into a message to your teacher.'};
+    const fallback=()=>{const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();try{document.execCommand('copy');okMsg()}catch(e){$('copied').textContent='Select the text above and copy it.'}a.remove()};
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(okMsg,fallback);else fallback()};
+}
+$('resetAll').onclick=()=>{done={};results={};answers=WRITE.map(()=>'');deck='m';go(0)};
+go(0);
+</script>
+</body>
+</html>

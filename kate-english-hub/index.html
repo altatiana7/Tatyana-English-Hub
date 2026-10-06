@@ -456,11 +456,12 @@ html.teacher-mode #teacherRoot{display:grid!important}
     <div class="modules-panel" id="modulesPanel"></div>
 
     <button class="big-btn homework" id="homeworkBtn" onclick="toggleHomeworkPanel()">★ <span>Homework</span><span>⌄</span></button>
-    <div class="modules-panel" id="homeworkPanel">
+    <div class="modules-panel open" id="homeworkPanel">
       <div class="lesson-list open" style="display:grid;padding:3px 4px 6px 9px">
         <button onclick="openInfo('Homework · Lesson 1')"><span>Lesson 1</span><span>›</span></button>
         <button onclick="openHomeworkLesson(2)"><span>Lesson 2 · Generations</span><span>›</span></button>
         <button onclick="openHomeworkLesson(3)"><span>Lesson 3 · Music & Study</span><span>›</span></button>
+        <button onclick="openHomeworkLesson('money')" style="border:2px solid #efc12c;background:#fffbea"><span>Gen Z &amp; Money · Words <b class="hw-badge">NEW</b></span><span>›</span></button>
       </div>
     </div>
 
@@ -640,6 +641,10 @@ function openHomeworkLesson(lesson){
     title.textContent='Homework · Lesson 2 — Generations';
     frame.removeAttribute('srcdoc');
     frame.src='homework-lesson2-generations.html';
+  }else if(lesson==='money'){
+    title.textContent='Homework · Gen Z & Money — Words & Phrasal Verbs';
+    frame.removeAttribute('srcdoc');
+    frame.src='homework-lesson3-money.html?v=20261006-hw-money-1';
   }else if(lesson===3){
     title.textContent='Homework · Lesson 3 — Music & Study';
     frame.removeAttribute('srcdoc');
