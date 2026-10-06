@@ -7,22 +7,24 @@ const TYPES={
  habit:{n:'О себе: привычки и вкусы',c:'#2f6f9f',how:'Отвечай о себе в Present Simple: одна-две фразы с деталью.',fr:'I usually … · I’m keen on … · My favourite … is … because …'},
  country:{n:'О России и ровесниках',c:'#2c7f78',how:'Вопрос не о тебе: пиши о подростках, стране или своём регионе.',fr:'Most Russian teenagers … · In my country … · In my region …'},
  opinion:{n:'Мнение и причина',c:'#a8802a',how:'Нужна позиция и объяснение. Без because ответ неполный.',fr:'I think … because … · In my opinion, … · To my mind, …'},
- would:{n:'Would: мечты и советы',c:'#8f4d7c',how:'В вопросе would – в ответе тоже would.',fr:'I’d like to … because … · I’d advise you to … · If I were you, I’d …'},
+ would:{n:'Would: мечты и советы',c:'#8f4d7c',how:'В вопросе would – в ответе тоже would. На «If you could …, what would …?» отвечай: If I could, I would … because …',fr:'I’d like to … because … · I’d advise you to … · If I were you, I’d …'},
  past:{n:'Прошлое и опыт',c:'#66549a',how:'Время как в вопросе: Past Simple или Present Perfect.',fr:'When I was a child, I … · I have never … · The last … I’ve … was …'},
  future:{n:'Планы и будущее',c:'#b0683a',how:'Планы – going to, прогноз – will.',fr:'I’m going to … · I’m planning to … · I think … will …'}
 };
 const TK=Object.keys(TYPES);
-const ALLQ=[];L.forEach(x=>x.q.forEach((q,i)=>ALLQ.push({t:q.t,k:q.k,d:q.d,lead:i===0?x.lead:'',ans:x.ans[i],name:x.name})));
-const CNT={};TK.forEach(k=>CNT[k]=ALLQ.filter(q=>q.k===k).length);const DBL=ALLQ.filter(q=>q.d).length;
+const ALLQ=[];L.forEach(x=>x.q.forEach((q,i)=>ALLQ.push({t:q.t,k:q.k,d:q.d,lead:i===0?x.lead:'',ans:x.ans[i],name:x.name,own:x.src==='own'})));
+const BANKQ=ALLQ.filter(q=>!q.own),NB=L.filter(x=>x.src!=='own').length;
+const CNT={};TK.forEach(k=>CNT[k]=BANKQ.filter(q=>q.k===k).length);const DBL=BANKQ.filter(q=>q.d).length;
 const TENSE={past:['Уже случилось','Past Simple: Where did you …? What was …? Who gave you …?'],present:['Происходит сейчас','Present Simple или Continuous: What is … like? How often do you …? What are you …ing?'],future:['Ещё впереди','Future: When are you going to …? What will you …? Who is coming …?']};
-const PARTS=[['Обращение','Dear Emily,','Hi Emily, · Hello Emily,','На отдельной строке, после имени запятая.'],
- ['Благодарность за письмо','Thanks for your email. It was great to hear from you.','Thank you for your message. · I was glad to get your email.','Это ссылка на предыдущий контакт.'],
- ['Ответы на три вопроса','In your email you asked me about … Well, …','You asked me about … · As for your question, …','Отдельный абзац. На каждый вопрос – полный ответ.'],
- ['Реакция на новость','Anyway, great news about your puppy!','By the way, I’m glad you’ve joined the club. · Wow, a trip to London sounds amazing!','Мостик к своим вопросам.'],
- ['Три вопроса по теме','What …? How …? When …?','Все три – строго о том, что указано в задании.','Тот же абзац, что и реакция на новость.'],
- ['Завершающая фраза','I have to go now. Write back soon.','Sorry, I must dash. · Hope to hear from you soon. · Keep in touch!','Отдельная строка: причина закончить и надежда на ответ.'],
- ['Подпись-клише','Best wishes,','All the best, · Lots of love, · Take care,','Отдельная строка, запятая в конце.'],
- ['Имя','Rita','Только имя.','Отдельная строка, без точки.']];
+const PARTS=[['Обращение','Hi Emily,','Hello Emily, · Dear Emily,','На отдельной строке, слева.'],
+ ['Благодарность за письмо','Thanks for your email! Lovely to hear from you.','Many thanks for your email! · Great news about …! · Sorry to hear that …','Новый абзац. Реакция на новость – по желанию.'],
+ ['Мостик к ответам','Now I’d like to answer your questions.','I’ll be happy to answer your questions.','Начало второго абзаца.'],
+ ['Ответы на три вопроса','Personally, … · In my opinion, … because …','As a rule, … · Honestly, … · Speaking of …','Полно и точно на каждый вопрос; к каждому why – причина.'],
+ ['Мостик к вопросам','By the way, I’m so curious about your puppy.','Let me ask you some questions about …','Начало третьего абзаца.'],
+ ['Три вопроса по теме','What …? How …? When …?','Разные по смыслу, в нужном времени.','Не спрашивай то, что друг уже сообщил.'],
+ ['Надежда на дальнейший контакт','Hope to hear from you soon.','Write back soon. · Keep in touch. · Looking forward to hearing from you.','На отдельной строке, перед завершающей фразой.'],
+ ['Завершающая фраза','Best wishes,','All the best, · Take care, · Lots of love,','На отдельной строке, после неё запятая.'],
+ ['Подпись','Rita','Только имя, без фамилии.','На отдельной строке, без точки.']];
 const ST={order:null,placed:0,miss:0, typ:'habit', pool:null,pi:0,filt:'all',stage:0,score:0,streak:0,pick:null,dpick:null,show:false, ap:null,ai:0,apick:null,aval:['','',''],achk:false, cur:0};
 let cur=0;
 const STEPS=[['Структура','#4a4f8f',0,structure],['Разбор вопросов','#2f6f9f',0,analysis],['Отвечаю на вопросы','#2c7f78',0,answer],['Задаю вопросы','#4c7f4a',0,ask],['Пишу письмо','#b0683a',20,letter],['Банк писем','#66549a',0,bank]];
@@ -40,7 +42,7 @@ function structure(){
   head(done?'Структура письма. Справа от каждой части – фразы-замены.':'Восстановите порядок частей письма: выбирайте их справа по очереди.','Формат электронного письма по демоверсии ФИПИ: без адреса и даты');
   const stage=el('div','stage'),a=el('div','panel grow sk'),b=el('div','panel side col'+(done?' slim':''));
   PARTS.forEach((p,i)=>{const on=i<ST.placed;a.append(el('div','skrow'+(on?' on':''),'<i>'+(i+1)+'</i><div>'+(on?'<b>'+p[0]+'</b><span class="ph">'+esc(p[1])+'</span>'+'</div><div class="alt">'+(done?esc(p[2]):p[3]):'<span class="ph empty">…</span>')+'</div>'));});
-  if(done){b.append(el('h3',null,'Три правила'),el('p',null,'<b>Абзацы.</b> Благодарность, ответы, вопросы – каждый блок с новой строки.'),el('p',null,'<b>Объём.</b> 100–140 слов. Меньше 90 – ноль за всё задание; после 154 слова не проверяются.'),el('p',null,'<b>Стиль.</b> Письмо другу: сокращения (I’m, don’t) уместны, официальные обороты – нет.'),
+  if(done){b.append(el('h3',null,'Три правила'),el('p',null,'<b>Три абзаца.</b> Благодарность; мостик и ответы; мостик и вопросы. Каждый – с новой строки.'),el('p',null,'<b>Объём.</b> 100–140 слов. Меньше 90 – ноль за всё задание; после 154 слова не проверяются.'),el('p',null,'<b>Стиль.</b> Письмо другу: сокращения (I’m, don’t) уместны, официальные обороты – нет.'),
       el('p','note','Ошибок: '+ST.miss+'.'),btn('Повторить',()=>{ST.order=null;ST.placed=0;ST.miss=0;redraw();}));}
   else{b.append(el('div','note','Ошибок: '+ST.miss));const box=el('div','parts');ST.order.forEach(i=>{if(i<ST.placed)return;const t=btn('<b>'+PARTS[i][0]+'</b>'+esc(PARTS[i][1]),()=>{if(i===ST.placed){ST.placed++;redraw();}else{ST.miss++;t.classList.add('bad');b.firstChild.textContent='Ошибок: '+ST.miss;setTimeout(()=>t.classList.remove('bad'),500);}},'part');box.append(t);});b.append(box);}
   stage.append(a,b);main.append(stage);const nav=el('div','navrow');nav.append(el('span','note','Часть '+Math.min(ST.placed+1,PARTS.length)+' из '+PARTS.length),nextBtn());main.append(nav);
@@ -48,11 +50,11 @@ function structure(){
 
 /* ---------- 2. Разбор вопросов друга ---------- */
 function analysis(){
-  head('Что спрашивает друг: разбор всех писем банка','62 письма Открытого банка ФИПИ · '+ALLQ.length+' вопросов');
+  head('Что спрашивает друг: разбор всех писем банка',NB+' письма Открытого банка ФИПИ · '+BANKQ.length+' вопросов');
   const stage=el('div','stage'),a=el('div','grow col'),b=el('div','panel side col'),g=el('div','tgrid');
-  TK.forEach(k=>{const T=TYPES[k],t=el('button','ttile'+(k===ST.typ?' on':''),'<b>'+T.n+'</b><span class="big">'+CNT[k]+'</span><div class="meter"><i style="width:'+CNT[k]/CNT.habit*100+'%;background:'+T.c+'"></i></div><span>'+Math.round(CNT[k]/ALLQ.length*100)+'% вопросов</span>');t.type='button';t.style.setProperty('--c',T.c);t.onclick=()=>{ST.typ=k;redraw();};g.append(t);});
-  a.append(g,el('div','panel dbl','<b>Двойные вопросы: '+DBL+' из '+ALLQ.length+'.</b> В вопросе две части – «…, and why?», «why or why not?», «…and what are these?». Ответ только на первую часть засчитывается как неполный.'));
-  const T=TYPES[ST.typ],ex=ALLQ.filter(q=>q.k===ST.typ);
+  TK.forEach(k=>{const T=TYPES[k],t=el('button','ttile'+(k===ST.typ?' on':''),'<b>'+T.n+'</b><span class="big">'+CNT[k]+'</span><div class="meter"><i style="width:'+CNT[k]/CNT.habit*100+'%;background:'+T.c+'"></i></div><span>'+Math.round(CNT[k]/BANKQ.length*100)+'% вопросов</span>');t.type='button';t.style.setProperty('--c',T.c);t.onclick=()=>{ST.typ=k;redraw();};g.append(t);});
+  a.append(g,el('div','panel dbl','<b>Двойные вопросы: '+DBL+' из '+BANKQ.length+'.</b> Две части – «…, and why?», «why or why not?». Ответ только на первую часть неполный. <b>В типовых вариантах 2026 года</b> заметно чаще, чем в банке, встречается «If you could …, what would … and why?» – примерно каждый седьмой вопрос.'));
+  const T=TYPES[ST.typ],ex=BANKQ.filter(q=>q.k===ST.typ);
   b.append(el('h3',null,T.n),el('p',null,'<b>Как отвечать.</b> '+T.how),el('p','frame',esc(T.fr)),el('h3',null,'Примеры из банка'));
   ex.slice(0,2).forEach(q=>b.append(el('p','exq','<b>'+esc(q.t)+'</b><br><span>'+esc(q.ans)+'</span>')));
   b.querySelector('h3').style.color=T.c;
@@ -99,7 +101,7 @@ function ask(){
   const stage=el('div','stage'),a=el('div','panel grow qcard'),b=el('div','panel side col');a.style.justifyContent='flex-start';
   a.append(el('div','qhead','<span class="qnum">'+(ST.ai+1)+'</span><span class="qtitle">из '+ST.ap.length+' · письмо от '+esc(x.name)+'</span>'),el('div','qtext long','…'+esc(x.trig)+' …'),el('div','kim','<p class="task">Ask 3 questions about '+esc(x.about)+'.</p>'));
   if(ST.apick==null){const o=el('div','opts c3');Object.keys(TENSE).forEach(k=>{const bt=el('button','opt',TENSE[k][0]);bt.type='button';bt.onclick=()=>{ST.apick=k;redraw();};o.append(bt);});a.append(el('div','note','Когда это происходит? От этого зависит время в твоих вопросах.'),o);
-    b.append(el('h3',null,'Правила'),el('p',null,'<b>По теме.</b> Все три вопроса – о том, что названо в задании. Вопрос о другом не засчитывается.'),el('p',null,'<b>Время.</b> Смотри на новость друга: уже случилось, происходит или только будет.'),el('p',null,'<b>Разные.</b> Три разных вопроса, лучше с разными вопросительными словами.'));}
+    b.append(el('h3',null,'Правила'),el('p',null,'<b>По теме.</b> Все три вопроса – о том, что названо в задании. Вопрос о другом не засчитывается.'),el('p',null,'<b>Время.</b> Смотри на новость друга: уже случилось, происходит или только будет.'),el('p',null,'<b>Разные и новые.</b> Три разных по смыслу вопроса. Не спрашивай то, что друг уже сообщил.'),el('p','note','Самопроверка: ответь на свой вопрос сама. Если ответ начинается с темы задания (The trip was …), вопрос, как правило, по теме.'));}
   else{const ok=ST.apick===x.tt;a.append(el('div','verdict '+(ok?'ok':'bad'),'<b>'+(ok?'Верно.':'Посмотри ещё раз.')+'</b> '+TENSE[x.tt][0]+'. '+esc(TENSE[x.tt][1])));
     [0,1,2].forEach(i=>{const r=el('div','qrow'),inp=el('input','ans q3');inp.type='text';inp.value=ST.aval[i];inp.placeholder='Вопрос '+(i+1);inp.spellcheck=false;inp.autocomplete='off';inp.setAttribute('aria-label','Вопрос '+(i+1));inp.oninput=()=>{ST.aval[i]=inp.value;};
       if(ST.achk){const c=checkQ(ST.aval[i],ST.aval);inp.classList.add(c[0]?'ok':'bad');r.append(inp,el('span','note',c[1]));}else r.append(inp);a.append(r);});
@@ -113,14 +115,15 @@ function ask(){
 }
 
 /* ---------- 5. Пишу письмо целиком ---------- */
+const CARD=['На каждый из трёх вопросов дан полный и точный ответ.','К каждому why есть причина.','Мои вопросы – в том времени, которое задаёт новость друга.','Все три вопроса – о теме из задания.','Я не спрашиваю то, что друг уже сообщил.','Вопросы разные по смыслу.','Три абзаца выделены пропущенной или красной строкой.','Стиль неофициальный: нет Dear Sir, I am writing to…','Я перечитала письмо и исправила ошибки.','Уложилась в 20 минут.'];
 const dkey=()=>KEY+'-'+who+'-'+L[ST.cur].id;
 function checks(t){const lines=t.split('\n').map(s=>s.trim()).filter(Boolean),w=words(t),low=t.toLowerCase(),last=lines[lines.length-1]||'',prev=lines[lines.length-2]||'';
   return [['Обращение в первой строке',/^(dear|hi|hello)\s+\S+.*,\s*$/i.test(lines[0]||'')],['Благодарность за письмо',/thank|glad to|great to hear|nice to hear|good to hear|happy to/.test(low)],
-   ['Три вопроса другу',(t.match(/\?/g)||[]).length>=3,(t.match(/\?/g)||[]).length+' из 3'],['Завершающая фраза',/write back|hope to hear|hear from you|have to go|got to go|must go|must dash|keep in touch|looking forward/.test(low)],
-   ['Подпись-клише на отдельной строке',/^(best wishes|all the best|love|lots of love|take care|yours|best regards|warm wishes|cheers),?$/i.test(prev)],['Имя в последней строке',lines.length>3&&/^[A-Za-zА-Яа-яЁё]+$/.test(last)],
+   ['Три вопроса другу',(t.match(/\?/g)||[]).length>=3,(t.match(/\?/g)||[]).length+' из 3'],['Надежда на дальнейший контакт',/write back|hope to hear|hear from you|have to go|got to go|must go|must dash|keep in touch|looking forward/.test(low)],
+   ['Завершающая фраза на отдельной строке',/^(best wishes|all the best|love|lots of love|take care|yours|best regards|warm wishes|cheers),?$/i.test(prev)],['Подпись: только имя, последняя строка',lines.length>3&&/^[A-Za-zА-Яа-яЁё]+$/.test(last)],
    ['Объём 100–140 слов',w>=100&&w<=140,w+(w>=90&&w<100||w>140&&w<=154?' · допустимо':w<90&&w?' · меньше 90 – 0 баллов':w>154?' · лишнее не проверяется':'')]];}
 function letter(){
-  const x=L[ST.cur];head('Задание 37. Электронное письмо личного характера · 20 минут','Открытый банк ФИПИ · письмо '+(ST.cur+1)+' из '+L.length+(x.src==='pdf'?' · номер как в сборнике':' · дополнительное'));
+  const x=L[ST.cur];head('Задание 37. Электронное письмо личного характера · 20 минут',(x.src==='own'?'Составлено для сайта по темам кодификатора':'Открытый банк ФИПИ')+' · письмо '+(ST.cur+1)+' из '+L.length+(x.src==='pdf'?' · номер как в сборнике':''));
   const top=el('div','navrow'),sel=el('select','pick');sel.setAttribute('aria-label','Выбор письма');L.forEach((y,i)=>sel.append(new Option((i+1)+'. '+y.topic+' · '+y.name,i)));sel.value=ST.cur;sel.onchange=()=>{ST.cur=+sel.value;redraw();};
   top.append(sel,btn('Случайное письмо',()=>{ST.cur=Math.floor(Math.random()*L.length);redraw();},'sm'));main.append(top);
   const stage=el('div','stage'),a=el('div','panel side kim'),b=el('div','grow col wr'),c=el('div','panel chk');a.classList.add('p37');
@@ -132,6 +135,7 @@ function letter(){
   const nav=el('div','navrow'),msg=el('span','note');
   nav.append(btn('Скопировать для учителя',()=>{const t='Письмо 37 · '+NAMES[who]+' · №'+(ST.cur+1)+' '+x.topic+' ('+x.name+') · '+words(ta.value)+' слов\n\n'+ta.value;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{msg.textContent='Скопировано – вставь в сообщение учителю.';}).catch(()=>{msg.textContent='Не получилось скопировать: выдели текст и скопируй вручную.';});},'main'),
     btn('Образец письма',()=>{const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,'Образец · составлен для сайта'),el('pre','model',esc(x.model)),btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}),
+    btn('Карта самопроверки',()=>{const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,'Карта самопроверки · то, что не видит автоматическая проверка'));CARD.forEach(c=>{const l=el('label','ck'),i=el('input');i.type='checkbox';l.append(i,el('div',null,c));t.append(l);});t.append(btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}),
     btn('Очистить черновик',()=>{ta.value='';try{localStorage.removeItem(dkey());}catch(e){}paint();},'sm'),msg);main.append(nav);
 }
 /* ---------- 6. Банк писем и правила: по странице учителя «ЕГЭ 37 — письма ФИПИ» ---------- */
@@ -140,11 +144,11 @@ const BK={tab:0,q:'',open:{}};
 function promptText(x){return 'You have received an email message from your English-speaking pen-friend '+x.name+':\nFrom: '+x.name+'@mail.uk\nTo: Russian_friend@ege.ru\nSubject: '+(x.subject||x.topic)+'\n\n…'+x.lead+' '+x.q.map(q=>q.t).join(' ')+'\n…'+x.trig+' …\n\nWrite an email to '+x.name+'.\nIn your message:\n– answer '+x.g+' questions;\n– ask 3 questions about '+x.about+'.\nWrite 100–140 words.\nRemember the rules of email writing.';}
 function copy(t,msg){(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{msg.textContent='Скопировано.';}).catch(()=>{msg.textContent='Не получилось скопировать.';});}
 function bank(){
-  const top=el('div','navrow');[['Письма',0],['Ошибки и правила',1]].forEach(([n,k])=>{const b=btn(n,()=>{BK.tab=k;redraw();},BK.tab===k?'main':'');top.append(b);});top.append(el('span','note','1–55 – номера и темы как в вашем сборнике, 56–62 – дополнительные письма банка ФИПИ · образцы ответов составлены для сайта'));main.append(top);
+  const top=el('div','navrow');[['Письма',0],['Ошибки и правила',1]].forEach(([n,k])=>{const b=btn(n,()=>{BK.tab=k;redraw();},BK.tab===k?'main':'');top.append(b);});top.append(el('span','note','1–55 – как в вашем сборнике, 56–62 – ещё из банка ФИПИ, 63–89 – составлены для сайта по 27 темам кодификатора'));main.append(top);
   if(BK.tab===1){main.append(el('div','inst','<b>Ошибки, которые чаще всего съедают баллы</b>'));const g=el('div','rules');RULES.forEach(r=>g.append(el('div','rule','<h3>'+r[0]+'</h3><p>'+esc(r[1])+'</p>')));const st=el('div','stage');st.style.display='block';st.append(g);main.append(st);return;}
   const x=L[ST.cur],wrap=el('div','bank'),a=el('div','panel'),m=el('div','panel bmain'),r=el('div','panel bright');
   const inp=el('input','bsearch');inp.type='search';inp.placeholder='Поиск: тема, имя, вопрос…';inp.value=BK.q;inp.setAttribute('aria-label','Поиск письма');const list=el('div','blist'),cnt=el('div','note');
-  const fill=()=>{list.innerHTML='';const q=BK.q.toLowerCase();let n=0;L.forEach((y,i)=>{if(q&&!(y.topic+' '+y.subject+' '+y.name+' '+y.about+' '+y.q.map(z=>z.t).join(' ')).toLowerCase().includes(q))return;n++;const b=el('button','bitem'+(i===ST.cur?' on':''),(i+1)+'. '+esc(y.topic)+' · '+esc(y.name)+'<small>вопросы о: '+esc(y.about)+(y.src==='pdf'?'':' · дополнительное')+'</small>');b.type='button';b.onclick=()=>{ST.cur=i;BK.open={};redraw();};list.append(b);});cnt.textContent='показано: '+n;};
+  const fill=()=>{list.innerHTML='';const q=BK.q.toLowerCase();let n=0;L.forEach((y,i)=>{if(q&&!(y.topic+' '+y.subject+' '+y.name+' '+y.about+' '+y.q.map(z=>z.t).join(' ')).toLowerCase().includes(q))return;n++;const b=el('button','bitem'+(i===ST.cur?' on':''),(i+1)+'. '+esc(y.topic)+' · '+esc(y.name)+'<small>вопросы о: '+esc(y.about)+(y.src==='pdf'?'':y.src==='own'?' · по темам кодификатора':' · дополнительное')+'</small>');b.type='button';b.onclick=()=>{ST.cur=i;BK.open={};redraw();};list.append(b);});cnt.textContent='показано: '+n;};
   inp.oninput=()=>{BK.q=inp.value;fill();};fill();a.append(inp,cnt,list);
   const msg=el('span','note'),acts=el('div','navrow');
   acts.append(btn('Написать это письмо',()=>go(4),'acc'),btn('Открыть готовое письмо',()=>{const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,'Готовое письмо · '+words(x.model)+' слов'),el('pre','model',esc(x.model)),btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}),btn('Скопировать задание',()=>copy(promptText(x),msg),'sm'),btn('Скопировать ответ',()=>copy(x.model,msg),'sm'),msg);
