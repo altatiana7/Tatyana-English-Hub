@@ -15,27 +15,32 @@ const P4S=[{img:['img/exam-photo1.jpg','img/exam-photo2.jpg'],project:'Preparing
 
 /* Две ученицы: у каждой свои ответы, баллы и свой вариант устной части */
 const NAMES=['Рита','Катя'];
-const fresh=i=>({vr:i,g:{val:[],un:[],cur:0,done:false},w:{val:[],un:[],cur:0,done:false},v:{val:[],un:[],cur:0,done:false},r:{sel:{},act:0,done:false},
+const fresh=i=>({vr:i,g:{val:[],un:[],cur:0,done:false},w:{val:[],un:[],cur:0,done:false},v:{val:[],un:[],cur:0,done:false},r:{sel:{},act:0,done:false},l:{val:[],done:false},
   sp:{t1:null,t2:[null,null,null,null],t3:[null,null,null,null,null],k1:null,k2:null,k3:null},iv:{v:i,q:0,flip:false}});
 const ALL=[fresh(0),fresh(1)];let who=0,S=ALL[0];
 function paintWho(){const w=$('#who');w.innerHTML='';NAMES.forEach((n,i)=>{const b=el('button','tab'+(i===who?' on':''),n);b.type='button';b.onclick=()=>{who=i;S=ALL[i];paintWho();go(cur);};w.append(b);});}
 let cleanup=null,cur=0;
 
+/* Диалог для пробы аудирования на уроке: сборник учителя, вариант 3, задание 2 (первое прослушивание) */
+const LIS={st:['Max had a meeting with Mr. Harrison yesterday.','The school principal moved the date to June 14th.','Max is planning to contact some DJs on his own.','Sophie and Max agree on the decorations.','Sophie is worried about the cost of the snacks.','Max will send the invitations next week.','Sophie and Max will meet again tomorrow.'],key:[1,2,3,1,3,2,1]};
+/* Порядок урока: сначала устная часть и аудирование, затем грамматика и чтение */
 const STEPS=[
- {id:'g',label:'19–24',min:7,draw:()=>typed('g','Преобразуйте, если необходимо, слово, напечатанное заглавными буквами, так, чтобы оно грамматически соответствовало содержанию текста.')},
- {id:'w',label:'25–29',min:6,draw:()=>typed('w','Образуйте от слова, напечатанного заглавными буквами, однокоренное слово так, чтобы оно грамматически и лексически соответствовало содержанию текста.')},
- {id:'v',label:'30–36',min:7,draw:mcq},
- {id:'r',label:'Чтение 11',min:7,draw:read11},
- {id:'s1',label:'Устная 1',min:0,draw:speak1},
- {id:'s2',label:'Устная 2',min:0,draw:speak2},
- {id:'s3',label:'Устная 3',min:0,draw:speak3},
- {id:'s4',label:'Устная 4',min:0,draw:speak4},
- {id:'res',label:'Итоги',min:0,draw:results}
+ {id:'s3',label:'Интервью',color:'#7b5fc4',min:0,draw:speak3},
+ {id:'s2',label:'Вопросы',color:'#3f8fd6',min:0,draw:speak2},
+ {id:'s1',label:'Чтение вслух',color:'#2fa89a',min:0,draw:speak1},
+ {id:'s4',label:'Монолог',color:'#4faa55',min:0,draw:speak4},
+ {id:'l',label:'Аудирование',color:'#e39a1c',min:0,draw:listen},
+ {id:'g',label:'Грамматика',color:'#ea7f3c',min:7,draw:()=>typed('g','Преобразуйте, если необходимо, слово, напечатанное заглавными буквами, так, чтобы оно грамматически соответствовало содержанию текста.')},
+ {id:'w',label:'Словообразование',color:'#e5605f',min:6,draw:()=>typed('w','Образуйте от слова, напечатанного заглавными буквами, однокоренное слово так, чтобы оно грамматически и лексически соответствовало содержанию текста.')},
+ {id:'v',label:'Лексика',color:'#d0559f',min:7,draw:mcq},
+ {id:'r',label:'Чтение 11',color:'#8e5bd0',min:7,draw:read11},
+ {id:'res',label:'Итоги',color:'#2b2f4a',min:0,draw:results}
 ];
 function isDone(id){const sp=S.sp;return id==='s1'?sp.t1!=null:id==='s2'?sp.t2.every(x=>x!=null):id==='s3'?sp.t3.every(x=>x!=null):id==='s4'?(sp.k1!=null&&sp.k2!=null&&sp.k3!=null):id==='res'?false:S[id].done;}
-function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab'+(k===cur?' on':'')+(isDone(s.id)?' done':''),s.label);b.type='button';b.onclick=()=>go(k);tabs.append(b);});
+const lisErr=()=>LIS.key.filter((a,k)=>S.l.val[k]!==a).length,lisScore=()=>{const e=lisErr();return e===0?3:e===1?2:e===2?1:0;};
+function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':'')+(isDone(s.id)?' done':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.type='button';b.title=s.label;b.style.setProperty('--c',s.color);b.onclick=()=>go(k);tabs.append(b);});
   const on=tabs.querySelector('.on');if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'nearest'});}
-function go(k){if(cleanup){cleanup();cleanup=null;}cur=k;Clock.set(STEPS[k].min*60);paintTabs();main.innerHTML='';STEPS[k].draw();}
+function go(k){if(cleanup){cleanup();cleanup=null;}cur=k;document.body.style.setProperty('--step',STEPS[k].color);Clock.set(STEPS[k].min*60);paintTabs();main.innerHTML='';STEPS[k].draw();}
 function redraw(){if(cleanup){cleanup();cleanup=null;}paintTabs();main.innerHTML='';STEPS[cur].draw();}
 function nextBtn(){return cur<STEPS.length-1?btn('Дальше: '+STEPS[cur+1].label+' →',()=>go(cur+1),'main sp'):el('span');}
 function chips(items,st,filled,okFn){const c=el('div','chips');items.forEach((it,k)=>{const b=el('button','chip'+(k===st.cur?' on':'')+(st.done?(okFn(k)?' ok':' bad'):(filled(k)?' fill':'')),String(it.n));b.type='button';b.onclick=()=>{st.cur=k;redraw();};c.append(b);});return c;}
@@ -178,23 +183,37 @@ function speak3(){
   cleanup=()=>{stopT();au.pause();Rec.cancel();ov.remove();};
 }
 
+/* ---------- Аудирование: диалог, True / False / Not stated ---------- */
+function listen(){
+  const st=S.l;head('Вы услышите диалог. Определите, какие из утверждений A–G соответствуют содержанию текста (1 – True), какие не соответствуют (2 – False) и о чём в тексте не сказано (3 – Not stated).');
+  const au=el('audio','main');au.controls=true;au.preload='metadata';au.src='audio/lesson-dialogue.mp3';const r0=el('div','navrow');r0.append(au);main.append(r0);
+  const stage=el('div','stage'),a=el('div','panel grow'),names=['True','False','Not stated'];
+  LIS.st.forEach((t,k)=>{const r=el('div','score tf');r.append(el('span',null,'<b>'+'ABCDEFG'[k]+'</b> '+esc(t)));
+    names.forEach((nm,j)=>{const b=el('button',st.done?(j+1===LIS.key[k]?'ok':(st.val[k]===j+1?'bad':'')):(st.val[k]===j+1?'on':''),(j+1)+' · '+nm);b.type='button';b.disabled=st.done;b.onclick=()=>{st.val[k]=j+1;redraw();};r.append(b);});a.append(r);});
+  stage.append(a);main.append(stage);const nav=el('div','navrow');
+  if(st.done){nav.append(el('b',null,'Результат: '+lisScore()+' из 3 баллов · ошибок: '+lisErr()),el('span','note','0 ошибок – 3 балла, 1 – 2, 2 – 1, 3 и более – 0.'),nextBtn());}
+  else{nav.append(el('span','note','Сначала 20 секунд на чтение утверждений, затем запись. На уроке слушаем один раз; на экзамене запись звучит дважды.'),btn('Проверить задание',()=>{st.done=true;au.pause();redraw();},'acc sp'));}
+  main.append(nav);cleanup=()=>{au.pause();};
+}
+
 /* ---------- Итоги ---------- */
 function calc(){
   const g=D.g.items.filter((x,k)=>typedOk('g',k)).length,w=D.w.items.filter((x,k)=>typedOk('w',k)).length,v=D.v.items.filter((x,k)=>S.v.val[k]===x.a-1).length;
   const sp=S.sp,n=x=>x==null?0:x,t2=sp.t2.reduce((a,x)=>a+n(x),0),t3=sp.t3.reduce((a,x)=>a+n(x),0),t4=sp.k1===0?0:n(sp.k1)+n(sp.k2)+n(sp.k3);
-  return [['19–24 · грамматика',g,6,S.g.done],['25–29 · словообразование',w,5,S.w.done],['30–36 · лексика',v,7,S.v.done],['Чтение · задание 11',S.r.done?r11score():0,2,S.r.done],
-    ['Устная 1 · чтение вслух',n(sp.t1),1,sp.t1!=null],['Устная 2 · вопросы',t2,4,isDone('s2')],['Устная 3 · интервью',t3,5,isDone('s3')],['Устная 4 · монолог',t4,10,isDone('s4')]];
+  return [['Интервью · устная 3',t3,5,isDone('s3')],['Вопросы · устная 2',t2,4,isDone('s2')],['Чтение вслух · устная 1',n(sp.t1),1,sp.t1!=null],['Монолог · устная 4',t4,10,isDone('s4')],['Аудирование · диалог',S.l.done?lisScore():0,3,S.l.done],
+    ['Грамматика 19–24',g,6,S.g.done],['Словообразование 25–29',w,5,S.w.done],['Лексика 30–36',v,7,S.v.done],['Чтение · задание 11',S.r.done?r11score():0,2,S.r.done]];
 }
 function errList(){const out=[],un=[];
   [['g',k=>typedOk('g',k)],['w',k=>typedOk('w',k)],['v',k=>S.v.val[k]===D.v.items[k].a-1]].forEach(([key,ok])=>{if(!S[key].done)return;D[key].items.forEach((it,k)=>{
     const mine=key==='v'?(S.v.val[k]!=null?it.o[S.v.val[k]]:'—'):((S[key].val[k]||'').trim()||'—'),right=key==='v'?it.o[it.a-1]:it.show;
     if(!ok(k))out.push([it.n,it.tag,mine,right]);else if(S[key].un[k])un.push([it.n,it.tag,right]);});});
+  if(S.l.done)LIS.key.forEach((a,k)=>{if(S.l.val[k]!==a)out.push(['Диалог '+'ABCDEFG'[k],'Аудирование · True / False / Not stated',S.l.val[k]?['True','False','Not stated'][S.l.val[k]-1]:'—',['True','False','Not stated'][a-1]]);});
   if(S.r.done)D.r11.a.forEach((a,k)=>{if(S.r.sel[k]!==a)out.push(['11 '+AF[k],'Чтение · связность текста',S.r.sel[k]?String(S.r.sel[k]):'—',String(a)]);});return {out,un};}
 function reportText(){const r=calc(),e=errList(),sum=r.reduce((a,x)=>a+x[1],0),max=r.reduce((a,x)=>a+x[2],0);
   return 'ЕГЭ 2027 · диагностика, занятие 1 · '+NAMES[who]+'\n'+r.map(x=>x[0]+': '+(x[3]?x[1]:'—')+' / '+x[2]).join('\n')+'\nИтого на занятии: '+sum+' / '+max+'\n\nОшибки:\n'+(e.out.map(x=>x[0]+' · '+x[1]+' · ответ: '+x[2]+' · верно: '+x[3]).join('\n')||'нет')+'\n\nВерно, но с сомнением:\n'+(e.un.map(x=>x[0]+' · '+x[1]+' · '+x[2]).join('\n')||'нет');}
 function results(){
   const r=calc(),e=errList(),sum=r.reduce((a,x)=>a+x[1],0),max=r.reduce((a,x)=>a+x[2],0);
-  head(NAMES[who]+' · итоги диагностики на занятии · '+max+' из 82 первичных баллов экзамена. Остальные 42 балла (аудирование, чтение 10 и 12–18, письмо) – домашняя часть.');
+  head(NAMES[who]+' · итоги диагностики на занятии. Полное аудирование 1–9, чтение 10 и 12–18 и письмо – в домашней части.');
   const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
   a.append(el('h3',null,'Баллы по заданиям'));
   r.forEach(x=>{const p=x[2]?x[1]/x[2]:0;a.append(el('div','rrow','<span>'+x[0]+'</span><div class="meter"><i class="'+(!x[3]?'':p<.7?'low':p<.86?'mid':'high')+'" style="width:'+(x[3]?p*100:0)+'%"></i></div><b>'+(x[3]?x[1]:'—')+' / '+x[2]+'</b>'));});
@@ -209,4 +228,4 @@ function results(){
     btn('Сбросить всё и начать заново',()=>{location.reload();}),msg);
   const h=el('a','btn sp','Домашняя часть →');h.href='home1.html';nav.append(h);main.append(nav);
 }
-Clock.mount();paintWho();go(0);
+Clock.mount();paintWho();go(Math.min(STEPS.length-1,Math.max(0,(+location.hash.slice(1)||1)-1)));
