@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Lesson 5 · Online and writing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="skills.css?v=20261007d">
+</head>
+<body>
+<script src="skills.js?v=20261007d"></script>
+<script>
+/* Oxford Discover Futures 2: Unit 4 p42–43 (track 1.13), Unit 1 p10–11 (track 1.02), Unit 3 p34–35, Project p90–91.
+   Gateway to the World B1, Unit 1: Developing writing p15. */
+const S113=[['One','Hi there and welcome to Connect, our weekly look at the weird and wonderful world of social media.'],['Two','The big topic this week is online picture sharing. So let’s start with this picture, which I found on a friend’s gaming blog.'],['One','That’s such a cool image. It’s perfect for a blog about video games.'],['Two','Yeah, it’s nice, but it’s stolen.'],['One','Stolen? What do you mean?'],['Two','Well, my friend found it on Google Images and he simply pasted it into his blog, but it isn’t his picture.'],['One','Yeah, but in the blog it says it’s from Google Images.'],['Two','Yes, but that’s not enough. If you take a picture, it belongs to you. You own the picture and the copyright, the legal right to use it. If someone wants to use a picture, they have to find out who it belongs to and ask for permission to use it.'],['One','People don’t mind if you use their pictures.'],['Two','Um, yes they do! Some photographers make money from pictures. You can’t just steal them.'],['One','Sometimes it says online that everyone has permission to use the picture.'],['Two','Sure, in that case it’s fine to use it. Let’s look at another picture. This is a picture of a girl called Emma. Now, you tell me what’s wrong with it.'],['One','It looks okay to me. That’s so funny. Emma having a bad morning. Yes, it’s not her best look.'],['Two','And who shared the picture?'],['One','Oh, it was someone called Nick.'],['Two','Yeah, and look at the comments.'],['One','Ah, how embarrassing!'],['Two','Yes, I don’t think Nick thought carefully about this. He needed to consider how this would affect Emma. You don’t share a picture if it will embarrass someone. It’s good netiquette to ask for permission before you share, too.'],['One','Netiquette. I like that word. Netiquette is correct internet behavior, isn’t it?'],['Two','Right. So let’s look at a third picture with a netiquette problem.'],['One','What a nice invitation. What’s wrong with it?'],['Two','The problem isn’t in the picture. The problem is who is looking at it. The person posting this picture didn’t change their settings from public to private and hundreds of people can access the image, not just their family and friends. Sometimes people see the word party and they invite themselves.'],['One','Yeah, I guess you always need to think before you share.'],['Two','Yes, just think of PIC. P, I, C. Think of P for Permission. You need the owner’s permission to share an image that isn’t yours. I is for Information. Ask yourself if you’re giving too much information to strangers. Finally, C is for Comments. Before you share a picture, think of the comments it might receive.'],['One','PIC. Great, got it.']];
+const MAYA=`<p>Hi,</p><p>I’m Maya. I’m from Brighton in the UK. Let me tell you about myself.</p><p>I’ve got one brother and one sister. My sister and I are almost the same age and we go everywhere together. My father’s a teacher and my mother works in an office. What about you? Have you got a big or a small family?</p><p>I love listening to music. My favourite group is Wolf Alice. Right now, I’m listening to one of their new songs. I also enjoy doing all types of sports, but especially team sports like football and basketball. What about you? What do you like doing in your free time?</p><p>What are your favourite subjects at school? Mine are art and English. This year I have special art classes on Saturdays. I have a lot of homework during the week but I love reading when I can. At the moment I’m reading a great book about the Mexican artist Frida Kahlo.</p><p>Anyway, that’s all for now. Is there anything special you’d like to know about me?</p><p>Write back soon.<br>Best wishes,<br>Maya</p>`;
+const TASK=`<h4>Your task</h4><p>Your school is going to be part of the exchange. Write an email introducing yourself to Maya. Include:</p><ul><li>basic personal information</li><li>your family</li><li>your main hobby</li><li>your favourite subjects at school</li></ul><p>Reply to her questions and ask her about herself.</p>`;
+const contractions=t=>(t.match(/\b[A-Za-z]+['’](m|ve|s|re|d|ll|t)\b/g)||[]).length;
+Lesson.boot({kicker:'Lesson 5 · Unit 1',steps:[
+{stage:'Sharing',title:'Fair share?',hint:'Think of the Sharenting text. Is it OK to share a picture when …',
+ act:{type:'quiz',label:'Situation',opts:['OK to share','Not OK'],items:[
+  {q:'… it might be embarrassing for someone now or in the future?',a:'Not OK',why:'Remember the teenagers who don’t want people to see their baby photos.'},
+  {q:'… you give contact details with it, like a full name, an address or the name of a school?',a:'Not OK',why:'Strangers can find the person.'},
+  {q:'… you tag the picture with a private address?',a:'Not OK',why:'It shows everyone where somebody lives.'},
+  {q:'… someone has asked you to remove or not share the picture?',a:'Not OK',why:'It is their image. Respect the decision.'},
+  {q:'… you don’t know if the picture is protected by copyright?',a:'Not OK',why:'Find out who owns it and ask first.'},
+  {q:'… you have permission to use the picture?',a:'OK to share',why:'Permission is the key.'},
+  {q:'… you know the privacy settings and who can access the picture?',a:'OK to share',why:'You control who sees it.'},
+  {q:'… the place where you want to post it might not be secure?',a:'Not OK',why:'Other people could copy or misuse it.'}]}},
+{stage:'Sharing',title:'The Connect podcast',hint:'Answer from memory. Type full answers.',
+ side:{title:'Oxford Discover Futures 2 · p42',audio:[{src:'assets/audio/odf-1-13.mp3',label:'Connect: online picture sharing',script:S113}],gate:true,gateText:'Listen to the podcast first. They discuss three pictures.',gateBtn:'Show the questions'},
+ act:{type:'gaps',open:true,dense:true,items:[
+  {pre:'Picture 1, the gaming blog: why is it “stolen”?',long:1,kw:[['permission'],['copyright'],['belong'],['owner'],['ask']],model:'His friend copied it from Google Images without asking the owner, who has the copyright.'},
+  {pre:'Picture 2: who shared it, and what was wrong?',long:1,kw:[['nick'],['embarrass']],model:'Nick shared it. It embarrassed Emma and he didn’t ask her permission.'},
+  {pre:'What is netiquette?',long:1,kw:[['behav'],['polite'],['correct']],model:'Correct behaviour on the internet.'},
+  {pre:'Picture 3, the party invitation: what was the problem?',long:1,kw:[['private'],['public'],['setting'],['hundreds'],['everyone']],model:'The settings were public, so hundreds of people could see it and invite themselves.'},
+  {pre:'P, I, C: what do the three letters stand for?',long:1,kw:[['permission','information','comment']],model:'Permission, Information, Comments.'}]}},
+{stage:'Sharing',title:'Listen for numbers',hint:'An expert talks about identity theft. Catch the numbers and type them.',
+ side:{title:'Oxford Discover Futures 2 · p10–11',audio:[{src:'assets/audio/odf-1-02.mp3',label:'Protecting your identity online'}]},
+ act:{type:'gaps',dense:true,items:[
+  {post:'% of teenagers worry about identity theft.',ans:['76','seventy six']},
+  {post:'% of people say they have shared passwords with a friend.',ans:['23','twenty three']},
+  {post:'% of young people post the name of their school.',ans:['48','forty eight']},
+  {pre:'A basic password with five letters can be decoded in',post:'minutes.',ans:['10','ten']},
+  {pre:'A good password has at least',post:'characters.',ans:['8','eight']},
+  {post:'% of public Wi-Fi hotspots are not secure.',ans:['89','eighty nine']},
+  {pre:'Only',post:'% of people click on the links in phishing emails.',ans:['10','ten']}]}},
+{stage:'Sharing',title:'What the expert said',hint:'From memory. Type full answers.',
+ side:{title:'Listen again if you need to',audio:[{src:'assets/audio/odf-1-02.mp3',label:'Protecting your identity online'}]},
+ act:{type:'gaps',open:true,dense:true,items:[
+  {pre:'Give two examples of “careless sharing”.',long:1,kw:[['password'],['full name'],['school']],model:'Sharing passwords with a friend, using your full name online, posting the name of your school.'},
+  {pre:'What makes a good password?',long:1,kw:[['letters','numbers'],['symbols'],['eight'],['8']],model:'At least eight characters with a mix of letters, numbers and symbols.'},
+  {pre:'What kind of app does he recommend?',long:1,kw:[['password'],['remember'],['manage']],model:'An app that remembers and manages your passwords.'},
+  {pre:'How do hackers use Wi-Fi in cafes?',long:1,kw:[['hotspot'],['name'],['network']],model:'They create a hotspot with the name of the cafe and steal your information when you log on.'},
+  {pre:'What is phishing?',long:1,kw:[['email'],['link'],['bank']],model:'An email that seems to come from your bank and tells you to click on a link, which installs spying software.'}]}},
+{stage:'Sharing',title:'Internet safety words',hint:'Type the word. No list.',
+ act:{type:'gaps',cols:2,dense:true,items:[
+  {pre:'a secret number you use to identify yourself',ans:['pin','pin number','a pin'],long:1},
+  {pre:'someone who steals information online',ans:['hacker','a hacker'],long:1},
+  {pre:'to add a new program or app to your device',ans:['install','to install'],long:1},
+  {pre:'a place where Wi-Fi is available to everyone',ans:['hotspot','a hotspot','wi fi hotspot'],long:1},
+  {pre:'keeping your personal information secret',ans:['privacy'],long:1},
+  {pre:'a secret word that opens your account',ans:['password','a password'],long:1},
+  {pre:'to put a photo or message on social media',ans:['post','to post','share','upload'],long:1},
+  {pre:'a fake email that asks you to click on a link',ans:['phishing','phishing email','a phishing email'],long:1}]}},
+{stage:'Speaking',title:'Warn them',hint:'Give one minute of advice. Use at least three warning phrases.',
+ act:{type:'talk',label:'Advice',secs:60,chips:['Be careful not to …','Take care to …','Beware of …','Make sure that …','Whatever you do, don’t …','Keep an eye open for …'],cards:[
+  {q:'A parent posts about 1,000 photos of their child before the child is five. Give them advice.'},
+  {q:'Your friend shares passwords and uses free Wi-Fi everywhere. Warn him.'},
+  {q:'Explain the PIC rule to a ten-year-old who has just got a phone.'}]}},
+{stage:'Speaking',title:'Mini-debate',hint:'“Parents should ask their children before they post any photo of them.” <small>Facts you can use: about 1,000 photos before the age of five; fines of €45,000 in France; children over ten should be asked.</small>',
+ act:{type:'talk',label:'Round',secs:60,keepChips:true,chipLabel:'Debate phrases · tap when used',chips:['First of all, …','Secondly, …','The way I see it, …','For example, …','I’m sorry, but I have to disagree.','I’m not convinced by your point about …','To sum up, …'],cards:[
+  {q:'Speak for the statement. Two points, each with an example.'},
+  {q:'Now speak against the statement. Two points, each with an example.'},
+  {q:'Your teacher gives the opposite opinion. Respond to it politely.',secs:40},
+  {q:'Sum up: what do you really think?',secs:40}]}},
+{stage:'Writing',title:'Formal, neutral or informal?',hint:'A text to a friend, a letter from a school, an email to an exchange partner. Which is which?',
+ act:{type:'quiz',label:'Phrase',opts:['Formal','Neutral','Informal'],items:[
+  {q:'Hey, Sam',a:'Informal',why:'A text to a friend.'},{q:'Dear Mr. Hooper,',a:'Formal',why:'Title and surname.'},{q:'Dear Daniel,',a:'Neutral',why:'First name, but still polite.'},
+  {q:'How cool is that?',a:'Informal',why:'Formal: We are pleased. Neutral: I’m very excited.'},{q:'We are pleased to inform you that …',a:'Formal',why:'No contractions, official verbs.'},{q:'I’m very excited.',a:'Neutral',why:'Friendly but not slang.'},
+  {q:'Text me if you hear anything.',a:'Informal',why:'Formal: Please do not hesitate to contact us.'},{q:'Please do not hesitate to contact us.',a:'Formal',why:'A fixed formal phrase.'},{q:'Let me know if you need any information.',a:'Neutral',why:'Polite and simple.'},
+  {q:'Talk soon',a:'Informal',why:'Formal: Yours sincerely. Neutral: Best wishes.'},{q:'Yours sincerely,',a:'Formal',why:'Ends a letter to a named person.'},{q:'Best wishes,',a:'Neutral',why:'Works with people you don’t know well.'},
+  {q:'We are writing to you regarding …',a:'Formal',why:'Neutral: I’m just writing to …'},{q:'I’m just writing to say hello.',a:'Neutral',why:'A contraction and a friendly aim.'},{q:'Any news????',a:'Informal',why:'Repeated question marks and an incomplete sentence.'}]}},
+{stage:'Writing',title:'Maya’s email',hint:'Put the five paragraphs in the right order.',wide:true,
+ side:{title:'Student’s Book p15 · Maya, from Brighton, is your exchange partner',text:{html:MAYA,seconds:90},gate:true,gateText:'Read the email. The task appears when the text is hidden.'},
+ act:{type:'order',compact:true,from:'Tap the topics in the order of the paragraphs',items:['basic personal information','family','hobbies','favourite subjects at school','asking for a reply']}},
+{stage:'Writing',title:'What did Maya say?',hint:'The email is closed. Answer from memory.',
+ act:{type:'gaps',open:true,dense:true,items:[
+  {pre:'How many people are there in Maya’s immediate family?',long:1,kw:[['five'],['5']],model:'Five: Maya, her brother, her sister and their parents.'},
+  {pre:'What do her parents do?',long:1,kw:[['teacher'],['office']],model:'Her father is a teacher and her mother works in an office.'},
+  {pre:'What is she doing while she is writing the email?',long:1,kw:[['listening'],['music'],['song']],model:'She is listening to a new song by Wolf Alice.'},
+  {pre:'Would she prefer running or volleyball? Why?',long:1,kw:[['team']],model:'Volleyball, because she especially likes team sports.'},
+  {pre:'Which subject does she enjoy most? How do you know?',long:1,kw:[['art']],model:'Art: she has special art classes on Saturdays and is reading about Frida Kahlo.'},
+  {pre:'“I love listening to music. Right now, I’m listening …” Why two tenses?',long:1,kw:[['simple'],['continuous'],['now'],['general']],model:'Present simple for what she likes in general, present continuous for what is happening now.'}]}},
+{stage:'Writing',title:'Writing bank',hint:'Useful words in informal emails. One word in each gap.',
+ act:{type:'gaps',cols:2,items:[
+  {pre:'Begin with Dear Maya, or just',post:',',ans:['hi','hello','hey']},
+  {pre:'Thanks',post:'your email.',ans:['for']},
+  {pre:'It was great to',post:'from you.',ans:['hear']},
+  {pre:'How are',post:'?',ans:['things','you']},
+  {pre:'I hope you’re',post:'.',ans:['well','ok','fine']},
+  {pre:'Change the subject with',post:', …',ans:['anyway']},
+  {pre:'That’s',post:'for now.',ans:['all']},
+  {pre:'Write',post:'soon.',ans:['back']},
+  {pre:'All the',post:'!',ans:['best']},
+  {pre:'Best',post:',',ans:['wishes','regards']}]}},
+{stage:'Writing',title:'Plan your reply',hint:'Make a mind map before you write.',
+ side:{card:TASK},
+ act:{type:'map',centre:'My reply',branches:[{label:'1 · Basic information',ph:['name, age','town, country']},{label:'2 · My family',ph:['who','what they do']},{label:'3 · My main hobby',ph:['what','right now I’m …']},{label:'4 · School subjects',ph:['favourite','why']},{label:'Answers to Maya',ph:['big or small family?','free time?']},{label:'5 · Questions for Maya',ph:['question 1','question 2']}]}},
+{stage:'Writing',title:'Write to Maya',hint:'Write your email. The checklist turns green as you go.',
+ side:{card:sh=>{const d=sh.mapDef,v=sh.map||{};const plan=d?d.branches.map((b,i)=>{const w=[v[i+'_0'],v[i+'_1']].filter(Boolean).join(', ');return '<li><b>'+b.label+'</b>'+(w?': '+w.replace(/[<>&]/g,''):'')+'</li>'}).join(''):'';return TASK+(plan?'<h4>Your plan</h4><ul>'+plan+'</ul>':'')}},
+ act:{type:'write',min:90,max:140,ph:'Hi Maya,',checks:[
+  {label:'Starts with Hi or Dear Maya',test:t=>/^\s*(hi|hello|dear maya)\b/i.test(t)},
+  {label:'Replies to her email: Thanks for your email / It was great to hear from you',test:t=>/(thanks for your (e-?mail|message)|great to hear from you|hope you['’]?re well|how are things)/i.test(t)},
+  {label:'At least three contractions (I’m, I’ve, that’s)',test:t=>contractions(t)>=3},
+  {label:'Present continuous for now (I’m reading …)',test:t=>/\b(am|is|are)\s+\w+ing\b|['’](m|s|re)\s+\w+ing\b/i.test(t)},
+  {label:'Anyway, to change the subject',test:t=>/\banyway\b/i.test(t)},
+  {label:'At least two questions for Maya',test:t=>(t.match(/\?/g)||[]).length>=2},
+  {label:'Five short paragraphs',test:t=>t.split(/\n+/).filter(x=>x.trim().length>20).length>=4},
+  {label:'Ends with Write back soon / Best wishes / All the best',test:t=>/(write (back )?soon|best wishes|all the best|bye for now)/i.test(t)}]}}
+]});
+</script>
+</body>
+</html>
