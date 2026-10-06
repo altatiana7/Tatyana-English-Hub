@@ -5,246 +5,85 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Spotlight 11 · Brief Check-in</title>
 <style>
-:root{--ink:#173332;--teal:#006a68;--lime:#d9f16d;--paper:#f5f3eb;--muted:#49605c;--line:#17333225;--white:#fff}
-*{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
-button,select,input{font:inherit}button{cursor:pointer}
-button:focus-visible,select:focus-visible,input:focus-visible{outline:4px solid #df4e32;outline-offset:3px}
-header{height:76px;padding:0 4vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:var(--paper);position:relative;z-index:5}
-.brand{font-weight:900;letter-spacing:-1px;font-size:25px}.brand span{background:var(--lime);padding:5px 9px;border-radius:8px;margin-left:6px}
-.small{font-size:12px;letter-spacing:2px;font-weight:bold}.tools{display:flex;gap:12px;align-items:center}.tools button,.tools a,.back{background:transparent;border:1px solid #17333240;border-radius:30px;padding:11px 18px}.tools a{text-decoration:none;color:inherit}
-.hero{position:relative;min-height:310px;flex:1;background:url(cover.webp) center 47%/cover;display:flex;align-items:center}
-.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f5f3ebe8,transparent 68%)}
-.copy{position:relative;padding:30px 4vw;width:60%}.eyebrow{display:inline-block;background:var(--teal);color:white;padding:9px 13px;border-radius:5px;font-size:12px;letter-spacing:2px}
-h1{font-size:clamp(54px,6.5vw,105px);line-height:.93;letter-spacing:-5px;margin:21px 0}h1 em{font-style:normal;color:var(--teal)}
-.lead{font-size:18px;line-height:1.5;margin:0;max-width:460px}.home{height:calc(100svh - 76px);display:flex;flex-direction:column}
+:root{--ink:#173332;--teal:#006a68;--lime:#d9f16d;--paper:#f5f3eb;--line:#17333225;--good:#17683d;--bad:#9b2f24}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+button,input{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #df4e32;outline-offset:3px}
+header{height:76px;padding:0 4vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:var(--paper)}
+.brand{font-weight:900;letter-spacing:-1px;font-size:25px}.brand span{background:var(--lime);padding:5px 9px;border-radius:8px;margin-left:6px}.small{font-size:12px;letter-spacing:2px;font-weight:bold}
+.tools{display:flex;gap:12px;align-items:center}.tools button,.tools a,.back{background:transparent;border:1px solid #17333240;border-radius:30px;padding:11px 18px;color:inherit;text-decoration:none}
+.home{height:calc(100svh - 76px);display:flex;flex-direction:column}.hero{position:relative;min-height:310px;flex:1;background:url(cover.webp) center 47%/cover;display:flex;align-items:center}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f5f3ebe8,transparent 68%)}.copy{position:relative;padding:30px 4vw;width:60%}
+.eyebrow,.tag{display:inline-block;background:var(--teal);color:white;padding:9px 13px;border-radius:6px;font-size:11px;letter-spacing:1.6px;font-weight:800}
+h1{font-size:clamp(54px,6.5vw,105px);line-height:.93;letter-spacing:-5px;margin:21px 0}h1 em{font-style:normal;color:var(--teal)}.lead{font-size:18px;line-height:1.5;margin:0;max-width:430px}
 .navwrap{padding:22px 4vw 18px}.navlabel{display:flex;justify-content:space-between;margin-bottom:13px;font-size:12px;letter-spacing:1.6px;font-weight:bold}
-.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.card{border:0;text-align:left;border-radius:16px;padding:18px;min-height:137px;background:#e5e9df;color:var(--ink);transition:transform .2s,background .2s;position:relative}
-.card:nth-child(2){background:#ddebe7}.card:nth-child(3){background:#e7e1ef}.card:nth-child(4){background:#efdccf}.card:nth-child(5){background:var(--lime)}
-.card:hover{transform:translateY(-5px);background:var(--ink);color:white}.number{font-size:12px;opacity:.7;display:block;margin-bottom:16px}.card strong{font-size:clamp(19px,1.8vw,29px);line-height:1.04;display:block;letter-spacing:-.7px}.arrow{position:absolute;top:16px;right:18px;font-size:23px}
-.foot{font-size:11px;margin-top:13px;display:flex;justify-content:space-between;opacity:.7}
-.stage{display:none;height:calc(100svh - 76px);padding:20px 4vw 26px;overflow:auto}.stage.active{display:flex;flex-direction:column}
-.stagebar{display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:-20px;background:var(--paper);padding:8px 0 10px;z-index:4}
-.stage h2{font-size:clamp(38px,4.5vw,68px);letter-spacing:-2px;margin:16px 0 6px}.activity{max-width:1180px;width:100%;margin:0 auto}
-.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:15px;box-shadow:0 12px 30px #1733320c}
-.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.toolbar label{font-size:12px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
-select{border:1px solid #9fb0aa;border-radius:10px;padding:11px 38px 11px 12px;background:white;color:var(--ink);font-weight:700}
-.badge{background:var(--lime);padding:9px 12px;border-radius:999px;font-size:12px;font-weight:800}
-.sub{font-size:16px;color:var(--muted);line-height:1.5}.muted{color:var(--muted)}
-.action{border:0;background:var(--teal);color:white;padding:12px 18px;border-radius:10px;font-weight:800}.action.alt{background:var(--lime);color:var(--ink)}.action.ghost{background:#eef2ed;color:var(--ink)}
-audio{width:100%;margin:16px 0 10px}
-.taskgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}.task{background:#f5f7f2;border:1px solid #d8e0da;border-radius:12px;padding:12px}.task b{display:block;font-size:12px;letter-spacing:.8px;margin-bottom:8px}.task input{width:100%;border:1px solid #b8c4bd;border-radius:8px;padding:10px 11px;background:#fff;color:var(--ink)}
-.task.ok{border-color:#4f8d66;background:#edf8ef}.task.bad{border-color:#bb684f;background:#fff1eb}.feedback{font-size:12px;min-height:17px;margin-top:7px;font-weight:700}
-.resultbar{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);flex-wrap:wrap}.score{font-weight:900}
-.linkrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.linkrow a{text-decoration:none}
-.info{display:grid;grid-template-columns:1.3fr .7fr;gap:14px}.info>div{background:#f5f7f2;border-radius:12px;padding:16px}
-.variantlist{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:16px}.variantbtn{border:1px solid #c8d1cb;background:white;border-radius:10px;padding:12px;font-weight:800}.variantbtn:hover{background:var(--lime)}
-.empty{padding:28px;border:1px dashed #aebbb4;border-radius:14px;background:#fbfbf7;margin-top:16px}
-@media(max-width:850px){.small{display:none}.cards{grid-template-columns:repeat(2,1fr)}.card:last-child{grid-column:span 2}.taskgrid{grid-template-columns:1fr 1fr}.info{grid-template-columns:1fr}.variantlist{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:600px){header{height:65px}.brand{font-size:20px}.tools a{display:none}.home{height:auto;min-height:calc(100svh - 65px)}.hero{min-height:420px;background-position:60% center}.hero:before{background:linear-gradient(90deg,#f5f3ebed,#f5f3eb60)}.copy{width:88%;padding:30px 5vw}h1{font-size:62px;letter-spacing:-3px}.stage{height:calc(100svh - 65px);padding:16px}.taskgrid{grid-template-columns:1fr}.variantlist{grid-template-columns:repeat(3,1fr)}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.card{border:0;text-align:left;border-radius:16px;padding:18px;min-height:137px;background:#e5e9df;color:var(--ink);transition:.2s;position:relative}
+.card:nth-child(2){background:#ddebe7}.card:nth-child(3){background:#e7e1ef}.card:nth-child(4){background:#efdccf}.card:nth-child(5){background:var(--lime)}.card:hover{transform:translateY(-5px);background:var(--ink);color:white}
+.number{font-size:12px;opacity:.7;display:block;margin-bottom:16px}.card strong{font-size:clamp(19px,1.8vw,29px);line-height:1.04;display:block;letter-spacing:-.7px}.arrow{position:absolute;top:16px;right:18px;font-size:23px}.foot{font-size:11px;margin-top:13px;display:flex;justify-content:space-between;opacity:.7}
+.stage{display:none;height:calc(100svh - 76px);padding:16px 4vw 22px;overflow:hidden}.stage.active{display:flex;flex-direction:column}.stagebar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex:0 0 auto}
+.stageIntro{display:flex;justify-content:space-between;align-items:end;gap:16px}.stage h2{font-size:clamp(34px,4vw,60px);letter-spacing:-2px;margin:10px 0 4px}.stageIntro p{margin:0 0 9px;color:#55706a}
+.variants{display:flex;gap:7px;overflow-x:auto;padding:7px 1px 11px;flex:0 0 auto;scrollbar-width:thin}.variant{border:1px solid #17333235;background:white;border-radius:999px;padding:8px 12px;white-space:nowrap;font-weight:800}.variant.active{background:var(--teal);border-color:var(--teal);color:white}
+.workspace{min-height:0;flex:1;display:grid;grid-template-columns:minmax(0,1.18fr) minmax(310px,.82fr);gap:14px}.panel{min-height:0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px;display:flex;flex-direction:column}
+.panelHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}.panelHead strong{font-size:18px}.meta{font-size:12px;color:#60736f}
+.taskFrame{width:100%;min-height:0;flex:1;border:0;border-radius:10px;background:#eee}.fallback{font-size:12px;margin-top:8px;color:#60736f}.fallback a{color:var(--teal);font-weight:bold}
+.answerList{overflow:auto;min-height:0;padding-right:3px}.answerRow{display:grid;grid-template-columns:42px 1fr;gap:8px;align-items:center;margin-bottom:7px}.answerRow label{font-weight:900;text-align:center}
+.answerRow input{width:100%;border:1px solid #a9b9ae;border-radius:9px;padding:9px 10px;background:#fbfcfa}.answerRow input.correct{border-color:var(--good);background:#eef8f1}.answerRow input.wrong{border-color:var(--bad);background:#fff2f0}
+.feedback{grid-column:2;font-size:12px;min-height:14px;margin-top:-4px}.feedback.ok{color:var(--good)}.feedback.no{color:var(--bad)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.action{border:0;background:var(--teal);color:white;padding:11px 16px;border-radius:10px;font-weight:bold}.action.alt{background:var(--lime);color:var(--ink)}.score{margin-left:auto;align-self:center;font-weight:900}
+.audioPanel{max-width:920px;width:100%;margin:auto;background:#fff;border:1px solid var(--line);border-radius:20px;padding:clamp(18px,3vw,34px)}.audioTitle{font-size:clamp(30px,4vw,54px);letter-spacing:-1.5px;margin:8px 0 5px}.audioMeta,.note{color:#60736f}.audioMeta{margin:0 0 20px}audio{width:100%}.note{font-size:13px;line-height:1.5}
+.empty{margin:auto;max-width:700px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:32px;text-align:center}.empty h3{font-size:31px;margin:0 0 8px}.empty p{color:#60736f;line-height:1.55}.hidden{display:none!important}
+@media(max-width:900px){.workspace{grid-template-columns:1fr;overflow:auto}.panel{min-height:60svh}.taskFrame{min-height:52svh}.stage{overflow:auto}}
+@media(max-width:750px){header{height:65px}.small{display:none}.brand{font-size:21px}.tools a{display:none}.tools button{padding:9px 12px}.home{height:auto;min-height:calc(100svh - 65px)}.hero{min-height:430px;background-position:60% center}.hero:before{background:linear-gradient(90deg,#f5f3ebed,#f5f3eb60)}.copy{width:85%;padding:30px 5vw}h1{font-size:65px;letter-spacing:-3px}.cards{grid-template-columns:repeat(2,1fr)}.card:last-child{grid-column:span 2}.card{min-height:120px}.stage{height:calc(100svh - 65px);padding:13px 4vw 18px}.stage h2{font-size:38px}.stageIntro{display:block}}
+@media(min-width:751px) and (max-height:700px){header{height:60px}.home,.stage{height:calc(100svh - 60px)}h1{font-size:64px}.hero{min-height:240px}.card{min-height:110px;padding:13px}.number{margin-bottom:10px}.navwrap{padding-top:14px;padding-bottom:10px}.copy{padding-top:18px;padding-bottom:18px}.lead{font-size:16px}}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">SPOTLIGHT <span>11</span></div>
-  <div class="small">ENGLISH / BRIEF CHECK-IN</div>
-  <div class="tools"><a href="../spotlight-brief-check/">All grades</a><button id="fullscreen">Full screen</button></div>
-</header>
+<header><div class="brand">SPOTLIGHT <span>11</span></div><div class="small">ENGLISH / BRIEF CHECK-IN</div><div class="tools"><a href="../spotlight-brief-check/">All grades</a><button id="fullscreen">Full screen</button></div></header>
 
 <main id="home" class="home">
-  <section class="hero"><div class="copy">
-    <div class="eyebrow">YOUR VOICE. YOUR NEXT LEVEL.</div>
-    <h1>Brief<br><em>check-in.</em></h1>
-    <p class="lead">Tune in. Find your words. Make it click.<br>Five focused practice zones for Grade 11.</p>
-  </div></section>
-  <nav class="navwrap" aria-label="Lesson sections">
-    <div class="navlabel"><span>CHOOSE YOUR FOCUS</span><span id="progress">5 SECTIONS</span></div>
-    <div class="cards" id="cards"></div>
-    <div class="foot"><span>GRADE 11 · ENGLISH</span><span>Interactive practice hub</span></div>
-  </nav>
+<section class="hero"><div class="copy"><div class="eyebrow">YOUR VOICE. YOUR NEXT LEVEL.</div><h1>Brief<br><em>check-in.</em></h1><p class="lead">Tune in. Find your words. Make it click.<br>Five ways to get your English moving.</p></div></section>
+<nav class="navwrap" aria-label="Lesson sections"><div class="navlabel"><span>CHOOSE YOUR FOCUS</span><span>5 SECTIONS</span></div><div class="cards" id="cards"></div><div class="foot"><span>GRADE 11 · ENGLISH</span><span>Independent companion for Spotlight 11</span></div></nav>
 </main>
 
 <section id="stage" class="stage" aria-labelledby="sectionTitle">
-  <div class="stagebar">
-    <button class="back" id="back">← Back to cover</button>
-    <span class="badge" id="stageBadge">VARIANTS 1–20</span>
-  </div>
-  <div class="activity">
-    <h2 id="sectionTitle"></h2>
-    <div id="sectionBody"></div>
-  </div>
+<div class="stagebar"><button class="back" id="back">← Back to cover</button><span class="tag">PRACTICE</span></div>
+<div class="stageIntro"><div><h2 id="sectionTitle"></h2><p id="sectionLead"></p></div></div>
+<div id="variantBar" class="variants"></div>
+<div id="stageBody" class="workspace"></div>
 </section>
 
 <script src="data.js"></script>
 <script>
 const sections=[
-  ['Listening','TUNE IN'],
-  ['Vocabulary','FIND YOUR WORDS'],
-  ['Grammar','MAKE IT CLICK'],
-  ['Word Formation','BUILD A NEW WORD'],
-  ['Lesson Check-up','OWN YOUR PROGRESS']
+ ['Listening','TUNE IN','Full listening tracks: variants 2–20.'],
+ ['Vocabulary','FIND YOUR WORDS','Vocabulary practice stays as a separate section.'],
+ ['Grammar','MAKE IT CLICK','Tasks 20–28: transform the given word or phrase.'],
+ ['Word Formation','BUILD A NEW WORD','Tasks 29–34: form a new word that fits the context.'],
+ ['Lesson Check-up','OWN YOUR PROGRESS','A compact mixed check-up area.']
 ];
-const $=id=>document.getElementById(id);
-let current=0;
-let variant=2;
-
-$('cards').innerHTML=sections.map((s,i)=>`<button class="card" data-index="${i}"><span class="number">0${i+1} / ${s[1]}</span><span class="arrow" aria-hidden="true">↗</span><strong>${s[0]}</strong></button>`).join('');
-
-document.querySelectorAll('[data-index]').forEach(b=>b.onclick=()=>{
-  current=+b.dataset.index;
-  $('sectionTitle').textContent=sections[current][0];
-  $('home').style.display='none';
-  $('stage').classList.add('active');
-  renderSection();
-  $('back').focus();
-});
-
-function home(){
-  $('stage').classList.remove('active');
-  $('home').style.display='flex';
-  document.querySelectorAll('[data-index]')[current].focus();
-}
-$('back').onclick=home;
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('stage').classList.contains('active'))home()});
-
-$('fullscreen').onclick=async()=>{
-  try{
-    if(document.fullscreenElement)await document.exitFullscreen();
-    else await document.documentElement.requestFullscreen();
-  }catch{$('fullscreen').textContent='Use browser full screen'}
-};
+const $=id=>document.getElementById(id), BANK=window.SPOTLIGHT11_BANK;
+let current=0,currentVariant=1;
+$('cards').innerHTML=sections.map((s,i)=>`<button class="card" data-index="${i}"><span class="number">0${i+1} / ${s[1]}</span><span class="arrow">↗</span><strong>${s[0]}</strong></button>`).join('');
+document.querySelectorAll('[data-index]').forEach(b=>b.onclick=()=>{current=+b.dataset.index;currentVariant=current===0?2:1;$('sectionTitle').textContent=sections[current][0];$('sectionLead').textContent=sections[current][2];$('home').style.display='none';$('stage').classList.add('active');renderSection();$('back').focus()});
+$('back').onclick=home;document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('stage').classList.contains('active'))home()});
+function home(){$('stage').classList.remove('active');$('home').style.display='flex';document.querySelectorAll('[data-index]')[current].focus()}
+$('fullscreen').onclick=async()=>{try{document.fullscreenElement?await document.exitFullscreen():await document.documentElement.requestFullscreen()}catch{}};
 document.addEventListener('fullscreenchange',()=>{$('fullscreen').textContent=document.fullscreenElement?'Exit full screen':'Full screen'});
 
-function variantOptions(start=1,end=20){
-  return Array.from({length:end-start+1},(_,k)=>{
-    const n=start+k; return `<option value="${n}" ${n===variant?'selected':''}>Variant ${n}</option>`;
-  }).join('');
+function variants(){return current===0?Object.keys(BANK.audio).map(Number):(current===2||current===3?Array.from({length:20},(_,i)=>i+1):[])}
+function renderBar(){const arr=variants();$('variantBar').classList.toggle('hidden',!arr.length);$('variantBar').innerHTML=arr.map(v=>`<button class="variant ${v===currentVariant?'active':''}" data-v="${v}">Variant ${v}</button>`).join('');$('variantBar').querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{currentVariant=+b.dataset.v;renderSection()})}
+function renderSection(){renderBar();if(current===0)renderListening();else if(current===2)renderPractice('grammar',20,28,7,'Grammar');else if(current===3)renderPractice('wordFormation',29,34,8,'Word Formation');else renderEmpty()}
+function uploadedName(v){return v===2?'2(2).mp3':v===3?'3(1).mp3':v+'.mp3'}
+function renderListening(){const a=BANK.audio[currentVariant];$('stageBody').className='workspace';$('stageBody').innerHTML=`<article class="audioPanel"><span class="tag">LISTENING · FULL TRACK</span><h3 class="audioTitle">Variant ${currentVariant}</h3><p class="audioMeta">${uploadedName(currentVariant)} · ${a.duration} · full listening</p><audio controls preload="none"><source src="${BANK.audioUrl(currentVariant)}" type="audio/mpeg"></audio><p class="note">The audio is loaded only after Play is pressed, so all 19 tracks can stay inside one compact section.</p></article>`}
+function renderPractice(kind,start,end,page,label){
+ const key=BANK[kind][currentVariant],rows=[];
+ for(let n=start;n<=end;n++)rows.push(`<div class="answerRow"><label for="a${n}">${n}</label><input id="a${n}" data-q="${n}" autocomplete="off" spellcheck="false" placeholder="Type your answer"><div class="feedback" data-f="${n}"></div></div>`);
+ const pdf=BANK.variantPdf(currentVariant);
+ $('stageBody').className='workspace';$('stageBody').innerHTML=`<section class="panel"><div class="panelHead"><strong>Variant ${currentVariant} · task page</strong><span class="meta">${label} · ${start}–${end}</span></div><iframe class="taskFrame" title="Variant ${currentVariant} tasks" src="${pdf}#page=${page}&toolbar=0&navpanes=0&view=FitH"></iframe><div class="fallback">If the page preview is blocked, <a href="${pdf}#page=${page}" target="_blank" rel="noopener">open this task page</a>.</div></section><section class="panel"><div class="panelHead"><strong>Your answers</strong><span class="meta">automatic check</span></div><div class="answerList">${rows.join('')}</div><div class="actions"><button class="action" id="check">Check answers</button><button class="action alt" id="reset">Reset</button><span class="score" id="score"></span></div></section>`;
+ $('check').onclick=()=>check(kind,start,end);$('reset').onclick=()=>renderPractice(kind,start,end,page,label)
 }
-
-function toolbar(start=1){
-  return `<div class="toolbar"><label for="variantSelect">Choose variant</label><select id="variantSelect">${variantOptions(start,20)}</select><span class="badge">Tasks from the full variant</span></div>`;
-}
-function bindVariant(start=1){
-  const s=$('variantSelect');
-  if(!s)return;
-  if(variant<start){variant=start;s.value=variant}
-  s.onchange=()=>{variant=+s.value;renderSection()};
-}
-
-function renderSection(){
-  const bank=window.SPOTLIGHT11_BANK;
-  if(!bank){
-    $('sectionBody').innerHTML='<div class="empty">Material bank could not be loaded.</div>';
-    return;
-  }
-  $('stageBadge').textContent=current===0?'LISTENING · 19 TRACKS':'VARIANTS 1–20';
-  if(current===0)renderListening(bank);
-  if(current===1)renderVocabulary();
-  if(current===2)renderTasks(bank,'grammar',20,28,'Grammar · Tasks 20–28');
-  if(current===3)renderTasks(bank,'wordFormation',29,34,'Word Formation · Tasks 29–34');
-  if(current===4)renderCheckup(bank);
-}
-
-function renderListening(bank){
-  if(variant<2)variant=2;
-  $('sectionBody').innerHTML=`
-    <div class="panel">
-      ${toolbar(2)}
-      <p class="sub">All uploaded listening variants are organised here as individual audio players. Choose a variant, listen, then open the matching task sheet if you need the questions.</p>
-      <div class="info">
-        <div>
-          <strong>Listening · Variant ${variant}</strong>
-          <audio controls preload="metadata" src="${bank.audioUrl(variant)}"></audio>
-          <div class="muted">Duration: ${bank.audio[variant]?.duration||'—'}</div>
-        </div>
-        <div>
-          <strong>How to work</strong>
-          <p class="sub">1. Open the task sheet.<br>2. Play the audio.<br>3. Complete the listening tasks.<br>4. Replay only after the first attempt.</p>
-        </div>
-      </div>
-      <div class="linkrow">
-        <a class="action" href="${bank.variantPdf(variant)}" target="_blank" rel="noopener">Open Variant ${variant} Tasks</a>
-        <button class="action alt" id="nextAudio">Next audio →</button>
-      </div>
-    </div>`;
-  bindVariant(2);
-  $('nextAudio').onclick=()=>{variant=variant>=20?2:variant+1;renderSection()};
-}
-
-function renderVocabulary(){
-  $('sectionBody').innerHTML=`
-    <div class="panel">
-      <p class="sub">Vocabulary stays as a separate Spotlight 11 section so the existing hub structure is preserved.</p>
-      <div class="empty"><strong>Vocabulary bank</strong><br><span class="muted">Ready for module vocabulary and revision sets. No existing vocabulary material has been removed.</span></div>
-    </div>`;
-}
-
-function normalize(v){return String(v||'').trim().toLowerCase().replace(/[’]/g,"'").replace(/\s+/g,' ')}
-function renderTasks(bank,key,from,to,label){
-  if(variant<1)variant=1;
-  const set=bank[key][variant]||{};
-  const items=[];
-  for(let n=from;n<=to;n++){
-    const answers=set[n]||[];
-    items.push(`<div class="task" data-task="${n}" data-answers='${JSON.stringify(answers).replace(/'/g,"&#39;")}'><b>TASK ${n}</b><input autocomplete="off" spellcheck="false" placeholder="Type your answer"><div class="feedback"></div></div>`);
-  }
-  $('sectionBody').innerHTML=`
-    <div class="panel">
-      ${toolbar(1)}
-      <p class="sub"><strong>${label}</strong>. Enter your answers, then check the whole set. The original task wording is available in the matching variant PDF.</p>
-      <div class="linkrow"><a class="action ghost" href="${bank.variantPdf(variant)}" target="_blank" rel="noopener">Open source tasks</a></div>
-      <div class="taskgrid">${items.join('')}</div>
-      <div class="resultbar"><span class="score" id="score">Not checked yet</span><div><button class="action ghost" id="reset">Reset</button> <button class="action" id="check">Check answers</button></div></div>
-    </div>`;
-  bindVariant(1);
-  $('check').onclick=checkAnswers;
-  $('reset').onclick=()=>document.querySelectorAll('.task').forEach(t=>{t.classList.remove('ok','bad');t.querySelector('input').value='';t.querySelector('.feedback').textContent=''}); 
-}
-function checkAnswers(){
-  const tasks=[...document.querySelectorAll('.task')];
-  let good=0;
-  tasks.forEach(t=>{
-    const answers=JSON.parse(t.dataset.answers);
-    const value=normalize(t.querySelector('input').value);
-    const ok=answers.some(a=>normalize(a)===value);
-    t.classList.toggle('ok',ok);t.classList.toggle('bad',!ok);
-    const f=t.querySelector('.feedback');
-    if(ok){good++;f.textContent='Correct'}
-    else f.textContent='Answer: '+answers[0];
-  });
-  $('score').textContent=`${good} / ${tasks.length} correct`;
-}
-
-function renderCheckup(bank){
-  const buttons=Array.from({length:20},(_,i)=>`<button class="variantbtn" data-v="${i+1}">Variant ${i+1}</button>`).join('');
-  $('sectionBody').innerHTML=`
-    <div class="panel">
-      <p class="sub">Use this area as a fast route into a complete practice variant. Choose a number, then jump straight to Listening, Grammar or Word Formation.</p>
-      <div class="variantlist">${buttons}</div>
-      <div class="resultbar" id="quick" style="display:none">
-        <strong id="quickTitle"></strong>
-        <div>
-          <button class="action ghost" data-go="0">Listening</button>
-          <button class="action ghost" data-go="2">Grammar</button>
-          <button class="action ghost" data-go="3">Word Formation</button>
-          <a class="action" id="quickPdf" target="_blank" rel="noopener">Full tasks</a>
-        </div>
-      </div>
-    </div>`;
-  document.querySelectorAll('.variantbtn').forEach(b=>b.onclick=()=>{
-    variant=+b.dataset.v;
-    $('quick').style.display='flex';
-    $('quickTitle').textContent='Variant '+variant;
-    $('quickPdf').href=bank.variantPdf(variant);
-  });
-  document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{
-    current=+b.dataset.go;
-    if(current===0&&variant===1)variant=2;
-    $('sectionTitle').textContent=sections[current][0];
-    renderSection();
-  });
-}
+function norm(s){return String(s||'').trim().toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g,' ')}
+function check(kind,start,end){const key=BANK[kind][currentVariant];let score=0,total=end-start+1;for(let n=start;n<=end;n++){const input=document.querySelector('[data-q="'+n+'"]'),fb=document.querySelector('[data-f="'+n+'"]'),accepted=(key[n]||[]).map(norm),value=norm(input.value),ok=accepted.includes(value);input.classList.toggle('correct',ok);input.classList.toggle('wrong',!ok);fb.className='feedback '+(ok?'ok':'no');fb.textContent=ok?'Correct':'Answer: '+(key[n]||[])[0];if(ok)score++}$('score').textContent=score+' / '+total}
+function renderEmpty(){$('stageBody').className='workspace';$('stageBody').innerHTML=`<div class="empty"><h3>${sections[current][0]}</h3><p>This section remains separate so Listening, Grammar and Word Formation do not get mixed together.</p></div>`}
 </script>
 </body>
 </html>
