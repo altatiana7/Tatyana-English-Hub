@@ -115,10 +115,10 @@ function speakShell(taskHtml,phases,opts){
   const startB=btn('Начать',()=>{run.start();startB.textContent='Сначала';pauseB.disabled=skipB.disabled=false;pauseB.textContent='Пауза';},'main wide');
   const pauseB=btn('Пауза',()=>{pauseB.textContent=run.pause()?'Продолжить':'Пауза';},'sm'),skipB=btn('Пропустить',()=>run.skip(),'sm');pauseB.disabled=skipB.disabled=true;
   const ov=teacherPanel(opts.teachHtml,opts.rows);
-  const box=el('div','ctlbtns');box.append(startB,pauseB,skipB,recToggle(),btn('Оценка учителя',()=>{ov.hidden=false;},'acc sm wide'));
+  const box=el('div','ctlbtns');box.append(startB,pauseB,skipB,recToggle());if(opts.sample)box.append(btn('Примерный ответ',()=>showSample(opts.sample[0],opts.sample[1],'Это образец, а не единственно верный ответ. Текст составлен для сайта.'),'sm wide'));box.append(btn('Оценка учителя',()=>{ov.hidden=false;},'acc sm wide'));
   ctl.append(ring,label,box,recBox);stage.append(kim,ctl);main.append(stage);
   const nav=el('div','navrow');nav.append(btn('Вариант '+(S.vr+1)+' из 2',()=>{S.vr=1-S.vr;redraw();},'sm'),el('span','note',opts.note||''));nav.append(nextBtn());main.append(nav);
-  cleanup=()=>{run.stop();ov.remove();};return kim;
+  cleanup=()=>{run.stop();ov.remove();document.querySelectorAll('.overlay.smp').forEach(x=>x.remove());};return kim;
 }
 function speak1(){const READ1=READS[S.vr];
   speakShell('<p class="task">Task 1. Imagine that you are preparing a project with your friend. You have found some interesting material for the presentation and you want to read this text to your friend. You have 1.5 minutes to read the text silently, then be ready to read it out aloud. You will not have more than 1.5 minutes to read it.</p><div class="textbox">'+esc(READ1)+'</div>',
@@ -130,7 +130,7 @@ function speak1(){const READ1=READS[S.vr];
 function speak2(){const AD=ADS[S.vr];
   const kim=speakShell('<p class="task">Task 2. Study the advertisement.</p><div class="adt">'+esc(AD.title)+'</div><div class="adrow"><img src="'+AD.img+'" alt="Advertisement photo"><div><p class="task">'+esc(AD.intro)+' In 1.5 minutes you are to ask four direct questions to find out about the following:</p><ol id="pts">'+AD.points.map(p=>'<li>'+esc(p)+'</li>').join('')+'</ol><p class="task">You have 20 seconds to ask each question.</p></div></div>',
    [{label:'Подготовка',kind:'prep',sec:90}].concat(AD.points.map((p,k)=>({label:'Вопрос '+(k+1),kind:'answer',sec:20}))),
-   {name:NAMES[who]+'-task2',note:'Задание 2 · 4 балла · Открытый банк ФИПИ.',
+   {name:NAMES[who]+'-task2',note:'Задание 2 · 4 балла · Открытый банк ФИПИ.',sample:['Задание 2 · примерные вопросы','<ol class="smpl">'+AD.key.map((x,k)=>'<li><i>'+esc(AD.points[k])+'</i><br>'+esc(x).replace(/ \/ /g,'<br>')+'</li>').join('')+'</ol>'],
     onPhase:i=>{const li=[...document.querySelectorAll('#pts li')];li.forEach((x,k)=>{x.className=i<1?'':(k===i-1?'now':(k<i-1?'past':''));});},
     teachHtml:'<p>По <b>1 баллу</b> за вопрос: прямой вопрос по пункту, грамматически верный, понятный на слух. 0 – косвенный вопрос, ошибка в порядке слов или вспомогательном глаголе, вопрос не по пункту.</p><p><b>Возможные вопросы:</b><br>'+AD.key.map((x,k)=>(k+1)+'. '+esc(x)).join('<br>')+'</p>',
     rows:AD.points.map((p,k)=>scoreRow((k+1)+'. '+p,1,()=>S.sp.t2[k],n=>S.sp.t2[k]=n))});
@@ -138,7 +138,7 @@ function speak2(){const AD=ADS[S.vr];
 function speak4(){const P4=P4S[S.vr];
   speakShell('<div class="t4"><div><p class="task">Task 4. Imagine that you and your friend are doing a school project “'+esc(P4.project)+'”. You have found some photos to illustrate it but for technical reasons you cannot send them now. Leave a voice message to your friend explaining your choice of the photos and sharing some ideas about the project. In 2.5 minutes be ready to:</p><ul><li>explain the choice of the illustrations for the project by briefly describing them and noting the differences;</li><li>mention the advantages (1–2) of '+esc(P4.kind)+';</li><li>mention the disadvantages (1–2) of '+esc(P4.kind)+';</li><li>express your opinion on the subject of the project – '+esc(P4.pref)+'.</li></ul><p class="task">You will speak for not more than 3 minutes (12–15 sentences). You have to talk continuously.</p></div><div class="pics"><figure><figcaption>Photo 1</figcaption><img src="'+P4.img[0]+'" alt="Photo 1"></figure><figure><figcaption>Photo 2</figcaption><img src="'+P4.img[1]+'" alt="Photo 2"></figure></div></div>',
    [{label:'Подготовка',kind:'prep',sec:150},{label:'Ответ · голосовое сообщение',kind:'answer',sec:180}],
-   {name:NAMES[who]+'-task4',note:'Задание 4 · 10 баллов · Открытый банк ФИПИ.',
+   {name:NAMES[who]+'-task4',note:'Задание 4 · 10 баллов · Открытый банк ФИПИ.',sample:['Задание 4 · примерный ответ',SAMPLES.t4[S.vr].map(x=>{const a=x.split('|');return '<p><i>'+a[0]+'</i><br>'+esc(a[1])+'</p>';}).join('')],
     teachHtml:'<p><b>К1 Решение коммуникативной задачи (0–4):</b> раскрыты все 4 пункта плана, 12–15 фраз. При 0 по К1 всё задание – 0.</p><p><b>К2 Организация (0–3):</b> обращение к другу, вступление и заключение, логичность, средства связи.</p><p><b>К3 Языковое оформление (0–3):</b> лексика, грамматика, произношение.</p>',
     rows:[scoreRow('К1 · содержание',4,()=>S.sp.k1,n=>S.sp.k1=n),scoreRow('К2 · организация',3,()=>S.sp.k2,n=>S.sp.k2=n),scoreRow('К3 · язык',3,()=>S.sp.k3,n=>S.sp.k3=n)]});
 }
@@ -147,9 +147,9 @@ function speak3(){
   const st=S.iv,v=IV[st.v];let left=40,t=null;const au=new Audio();au.preload='auto';
   head('Task 3. You are going to give an interview. You have to answer five questions. Give full answers to the questions (2–3 sentences). Remember that you have 40 seconds to answer each question.');
   const top=el('div','ivtop'),sel=el('select');sel.setAttribute('aria-label','Вариант');IV.forEach((x,k)=>sel.append(new Option('Вариант '+(k+1),k)));sel.value=st.v;
-  sel.onchange=()=>{st.v=+sel.value;st.q=0;st.flip=false;redraw();};top.append(sel);
-  const qc=el('div','chips');v.q.forEach((q,k)=>{const b=el('button','chip'+(k===st.q?' on':''),String(k+1));b.type='button';b.onclick=()=>{st.q=k;st.flip=false;redraw();};qc.append(b);});top.append(el('span','note','Вопрос:'),qc);
-  const ov=teacherPanel('<p>По <b>1 баллу</b> за ответ: полный и точный ответ из 2–3 фраз, без ошибок, мешающих пониманию. 0 – ответ короче двух фраз, не на тот вопрос или с ошибкой во времени глагола.</p><p><b>Вопросы варианта:</b><br>'+v.q.map((x,k)=>(k+1)+'. '+esc(x)).join('<br>')+'</p>',v.q.map((q,k)=>scoreRow('Ответ '+(k+1),1,()=>S.sp.t3[k],n=>S.sp.t3[k]=n)));
+  sel.onchange=()=>{st.v=+sel.value;st.q=0;st.flip=false;st.smp=false;redraw();};top.append(sel);
+  const qc=el('div','chips');v.q.forEach((q,k)=>{const b=el('button','chip'+(k===st.q?' on':''),String(k+1));b.type='button';b.onclick=()=>{st.q=k;st.flip=false;st.smp=false;redraw();};qc.append(b);});top.append(el('span','note','Вопрос:'),qc);
+  const ov=teacherPanel('<p>По <b>1 баллу</b> за ответ: полный и точный ответ из 2–3 фраз, без ошибок, мешающих пониманию. 0 – ответ короче двух фраз, не на тот вопрос или с ошибкой во времени глагола.</p><p><b>Вопросы и примерные ответы:</b></p>'+v.q.map((x,k)=>'<p><b>'+(k+1)+'. '+esc(x)+'</b><br>'+esc(SAMPLES.iv[v.id][k])+'</p>').join(''),v.q.map((q,k)=>scoreRow('Ответ '+(k+1),1,()=>S.sp.t3[k],n=>S.sp.t3[k]=n)));
   top.append(btn('Вступление',()=>play('intro'),'sm'),btn('Оценка учителя',()=>{ov.hidden=false;},'acc sm sp'));main.append(top);
   const stage=el('div','stage'),card=el('div','ivcard'+(st.flip?' back':'')),side=el('div','panel ctl col');
   const ring=el('div','ring ans','<b>40</b><span>секунд</span>'),label=el('div','phase','Нажмите Play');
@@ -160,13 +160,13 @@ function speak3(){
     au.onended=()=>{if(what==='intro'){label.textContent='Теперь нажмите Play';}else runT();};au.onerror=()=>{label.textContent='Запись не загрузилась';};au.play().catch(()=>{label.textContent='Запись не загрузилась';});}
   const recBox=el('div','rec');
   function face(){card.className='ivcard'+(st.flip?' back':'');card.innerHTML='';
-    if(st.flip){card.append(el('div','ey','Question '+(st.q+1)+' · '+esc(v.theme)),el('div','qq',esc(v.q[st.q])),el('div','tip',IVTIP));}
+    if(st.flip){card.append(el('div','ey','Question '+(st.q+1)+' · '+esc(v.theme)),el('div','qq',esc(v.q[st.q])));if(st.smp)card.append(el('div','ey','Примерный ответ'),el('div','smpa',esc(SAMPLES.iv[v.id][st.q])));else card.append(el('div','tip',IVTIP));const sb=btn(st.smp?'Скрыть ответ':'Примерный ответ',()=>{st.smp=!st.smp;face();},'sm');card.append(sb);}
     else{card.append(el('div','ey','Question '+(st.q+1)+' of 5'),el('div','big','Listen and answer'),el('div','note','Вопрос только звучит. Текст – на обороте карточки.'));
       const pb=el('div','navrow');pb.append(btn('Play',()=>play('q'+(st.q+1)),'main'),btn('Replay',()=>play('q'+(st.q+1))),btn('Stop',()=>{au.pause();stopT();Rec.cancel();label.textContent='Остановлено';}));card.append(pb);}}
   face();
   const box=el('div','ctlbtns');box.append(btn('Таймер',runT,'sm'),btn('Сброс',()=>{stopT();Rec.cancel();left=40;paint();label.textContent='Нажмите Play';},'sm'),recToggle());
   side.append(ring,label,box,recBox);stage.append(card,side);main.append(stage);
-  const nav=el('div','navrow');const bk=btn('← Назад',()=>{st.q--;st.flip=false;redraw();}),fw=btn('Вперёд →',()=>{st.q++;st.flip=false;redraw();});bk.disabled=st.q===0;fw.disabled=st.q===4;
+  const nav=el('div','navrow');const bk=btn('← Назад',()=>{st.q--;st.flip=false;st.smp=false;redraw();}),fw=btn('Вперёд →',()=>{st.q++;st.flip=false;st.smp=false;redraw();});bk.disabled=st.q===0;fw.disabled=st.q===4;
   nav.append(bk,btn('Перевернуть карточку',()=>{st.flip=!st.flip;face();},'main'),fw,el('span','note','Задание 3 · 5 баллов · запись интервью из Открытого банка ФИПИ.'),nextBtn());main.append(nav);
   cleanup=()=>{stopT();au.pause();Rec.cancel();ov.remove();};
 }

@@ -51,3 +51,7 @@ function phaseRunner(o){ /* o: ring, label, phases[{label,kind,sec}], onPhase(i)
     get active(){return i>=0&&i<o.phases.length;}};
 }
 function ringEl(sec){return el('div','ring','<b>'+mmss(sec)+'</b><span>готово</span>');}
+
+/* Примерный ответ: панель справа, закрывается кнопкой или щелчком мимо */
+function showSample(title,html,note){document.querySelectorAll('.overlay.smp').forEach(x=>x.remove());const ov=el('div','overlay smp'+(html.length>900?' wide':'')),t=el('div','teach'),bd=el('div','smpb',html);t.append(el('h4',null,title),bd);if(note)t.append(el('p','note',note));t.append(btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}
+const sampleParas=txt=>esc(txt).split('\n\n').map(p=>'<p>'+p.replace(/\n/g,'<br>')+'</p>').join('');

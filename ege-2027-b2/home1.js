@@ -25,7 +25,7 @@ function isDone(id){return id==='l1'?cnt(S.l1)===6:id==='l2'?cnt(S.l2)===7:id===
 function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':'')+(isDone(s.id)?' done':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.title=s.label;b.type='button';b.onclick=()=>go(k);tabs.append(b);});
   const on=tabs.querySelector('.on');if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'nearest'});}
 function go(k){cur=k;if(k>2)audio.pause();Clock.set(STEPS[k].min*60);redraw();}
-function redraw(){paintTabs();main.innerHTML='';STEPS[cur].draw();}
+function redraw(){document.querySelectorAll('.overlay.smp').forEach(x=>x.remove());paintTabs();main.innerHTML='';STEPS[cur].draw();}
 function nextBtn(){return btn('Дальше: '+STEPS[cur+1].label+' →',()=>go(cur+1),'main sp');}
 /* ---------- Трудные случаи ---------- */
 const TR=window.TRICKY,TRN=TR.reduce((a,b)=>a+b.items.length,0);
@@ -117,7 +117,8 @@ function writing(n){
     msg.textContent='слов · нужно '+L.min+'–'+L.max+(w&&w<L.lo?' · меньше '+L.lo+' слов – 0 баллов за задание':w>L.hi?' · проверяются только первые '+L.max+' слов':(w&&!ok?' · в пределах допустимых 10%':''));};
   ta.oninput=()=>{S[key]=ta.value;save();upd();const t=tabs.children[cur];t&&t.classList.toggle('done',isDone(key));};upd();
   b.append(ta,wc);stage.append(a,b);main.append(stage);
-  const nav=el('div','navrow');nav.append(el('span','note','Пишите без словаря и переводчика: это диагностика, а не оценка.'),nextBtn());main.append(nav);
+  const nav=el('div','navrow');if(S.checked)nav.append(btn('Примерный ответ',()=>showSample('Задание '+n+' · примерный ответ',sampleParas(SAMPLES['w'+n]),words(SAMPLES['w'+n])+' слов. Это образец, а не единственно верный ответ. Текст составлен для сайта.'),'main'));
+  nav.append(el('span','note',S.checked?'Работа проверена. Сравните свой текст с примерным ответом; баллы поставит учитель.':'Пишите без словаря и переводчика: это диагностика, а не оценка. Примерный ответ откроется после проверки.'),nextBtn());main.append(nav);
 }
 
 /* ---------- Отчёт ---------- */
