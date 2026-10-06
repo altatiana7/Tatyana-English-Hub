@@ -14,14 +14,14 @@ const PROJ={subj:'what skills teenagers in Zetland consider most important for t
  problem:'developing skills for a future career',opinion:'the importance of preparing for a future career in one’s school years'};
 
 const STEPS=[
- {id:'l1',label:'Аудир. 1',min:0,draw:lis1},{id:'l2',label:'Аудир. 2',min:0,draw:lis2},{id:'l3',label:'Аудир. 3–9',min:0,draw:lis3},
+ {id:'l1',label:'Аудирование 1',min:0,draw:lis1},{id:'l2',label:'Аудирование 2',min:0,draw:lis2},{id:'l3',label:'Аудирование 3–9',min:0,draw:lis3},
  {id:'r10',label:'Чтение 10',min:8,draw:read10},{id:'r12',label:'Чтение 12–18',min:15,draw:read12},
  {id:'w37',label:'Письмо 37',min:20,draw:()=>writing(37)},{id:'w38',label:'Письмо 38',min:40,draw:()=>writing(38)},
  {id:'rep',label:'Отчёт',min:0,draw:report}
 ];
 const cnt=o=>Object.keys(o).filter(k=>o[k]!=null&&o[k]!=='').length;
 function isDone(id){return id==='l1'?cnt(S.l1)===6:id==='l2'?cnt(S.l2)===7:id==='l3'?cnt(S.l3)===7:id==='r10'?cnt(S.r10)===7:id==='r12'?cnt(S.r12)===7:id==='w37'?words(S.w37)>=90:id==='w38'?words(S.w38)>=180:S.checked;}
-function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab'+(k===cur?' on':'')+(isDone(s.id)?' done':''),s.label);b.type='button';b.onclick=()=>go(k);tabs.append(b);});
+function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':'')+(isDone(s.id)?' done':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.title=s.label;b.type='button';b.onclick=()=>go(k);tabs.append(b);});
   const on=tabs.querySelector('.on');if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'nearest'});}
 function go(k){cur=k;if(k>2)audio.pause();Clock.set(STEPS[k].min*60);redraw();}
 function redraw(){paintTabs();main.innerHTML='';STEPS[cur].draw();}
@@ -48,7 +48,7 @@ function lis2(){
     names.forEach((nm,j)=>{const b=lock(el('button',S.l2[k]===j+1?'on':'',(j+1)+' · '+nm));b.type='button';b.style.minWidth='122px';
       if(S.checked){if(j+1===D.lis.k2[k])b.style.cssText+='border-color:var(--ok);background:var(--okbg);color:#12603c';else if(S.l2[k]===j+1)b.style.cssText+='border-color:var(--bad);background:var(--badbg);color:#8f1f1f';}
       b.onclick=()=>{S.l2[k]=j+1;save();redraw();};r.append(b);});a.append(r);});
-  stage.append(a);main.append(stage);const nav=el('div','navrow');nav.append(btn('← Аудир. 1',()=>go(0),'sm'),nextBtn());main.append(nav);
+  stage.append(a);main.append(stage);const nav=el('div','navrow');nav.append(btn('← Аудирование 1',()=>go(0),'sm'),nextBtn());main.append(nav);
 }
 function chipsQ(first,n,curK,sel,key,okFn){const c=el('div','chips');for(let k=0;k<n;k++){const b=el('button','chip'+(k===curK?' on':'')+(S.checked?(okFn(k)?' ok':' bad'):(sel[k]!=null?' fill':'')),String(first+k));b.type='button';b.onclick=()=>{S[key]=k;save();redraw();};c.append(b);}return c;}
 function qCard(q,opts,first,k,sel,right,cls){const card=el('div','panel grow qcard');card.append(el('div','qhead','<span class="qnum">'+(first+k)+'</span>'));card.append(el('div','qtext long',esc(q)));
