@@ -46,53 +46,41 @@ function nextBtn(){return cur<STEPS.length-1?btn('Дальше: '+STEPS[cur+1].l
 function chips(items,st,filled,okFn){const c=el('div','chips');items.forEach((it,k)=>{const b=el('button','chip'+(k===st.cur?' on':'')+(st.done?(okFn(k)?' ok':' bad'):(filled(k)?' fill':'')),String(it.n));b.type='button';b.onclick=()=>{st.cur=k;redraw();};c.append(b);});return c;}
 function head(ru,title){const h=el('div','inst','<b>'+ru+'</b>'+(title?'<span class="src">Текст: '+esc(title)+' · Открытый банк ФИПИ</span>':''));main.append(h);}
 
-/* ---------- 19–24 и 25–29: ввод слова ---------- */
+/* ---------- 19–24 и 25–29: сплошной текст с пропусками ---------- */
 function typedOk(key,k){return D[key].items[k].acc.includes(norm(S[key].val[k]||''));}
+function noteBar(html,cls){return el('div','verdict flat'+(cls?' '+cls:''),html);}
 function typed(key,ru){
-  const d=D[key],st=S[key],it=d.items[st.cur];head(ru,d.title);
-  const stage=el('div','stage'),card=el('div','panel grow qcard');
-  const shown=st.done?esc(it.show):(st.val[st.cur]?esc(st.val[st.cur]):'&nbsp;');
-  card.append(el('div','qhead','<span class="qnum">'+it.n+'</span><span class="qtitle">'+(st.cur+1)+' из '+d.items.length+'</span>'));
-  card.append(el('div','qtext'+(it.text.length>260?' long':''),esc(it.text).replace('___','<span class="gap'+(st.done?(typedOk(key,st.cur)?' ok':' bad'):'')+'">'+shown+'</span>')));
-  const row=el('div','qrow');row.append(el('span','base',esc(it.base)));
-  const inp=el('input','ans');inp.type='text';inp.autocomplete='off';inp.spellcheck=false;inp.setAttribute('autocapitalize','off');inp.placeholder='Ваш ответ';inp.value=st.val[st.cur]||'';inp.setAttribute('aria-label','Ответ '+it.n);
-  if(st.done){inp.disabled=true;inp.classList.add(typedOk(key,st.cur)?'ok':'bad');}
-  inp.oninput=()=>{st.val[st.cur]=inp.value;const g=card.querySelector('.gap');g.innerHTML=inp.value?esc(inp.value):'&nbsp;';const c=main.querySelectorAll('.chip')[st.cur];c&&c.classList.toggle('fill',!!inp.value.trim());};
-  inp.onkeydown=e=>{if(e.key==='Enter'&&!st.done){if(st.cur<d.items.length-1){st.cur++;redraw();}}};
-  row.append(inp);
-  if(!st.done){const u=el('button','unsure'+(st.un[st.cur]?' on':''),st.un[st.cur]?'Сомневаюсь ✓':'Сомневаюсь');u.type='button';u.onclick=()=>{st.un[st.cur]=!st.un[st.cur];redraw();};row.append(u);}
-  card.append(row);
-  if(st.done){const ok=typedOk(key,st.cur);card.append(el('div','verdict '+(ok?'ok':'bad'),'<b>'+(ok?'Верно.':'Неверно.')+'</b> Ответ: <b>'+esc(it.show)+'</b>. '+esc(it.note)+(st.un[st.cur]&&ok?' <i>Отмечено «сомневаюсь» – повторить.</i>':'')));}
-  stage.append(card);main.append(stage);
-  const nav=el('div','navrow');nav.append(chips(d.items,st,k=>!!(st.val[k]||'').trim(),k=>typedOk(key,k)));
-  nav.append(btn('← Назад',()=>{st.cur--;redraw();},'sm'),btn('Вперёд →',()=>{st.cur++;redraw();},'sm'));
-  nav.children[1].disabled=st.cur===0;nav.children[2].disabled=st.cur===d.items.length-1;
-  if(st.done){const n=d.items.filter((x,k)=>typedOk(key,k)).length;nav.append(el('b',null,'Результат: '+n+' из '+d.items.length));nav.append(nextBtn());}
-  else nav.append(btn('Проверить раздел',()=>{st.done=true;st.cur=0;Clock.stop();redraw();},'acc sp'));
-  main.append(nav);if(!st.done)inp.focus();
+  const d=D[key],st=S[key];head(ru,d.title);
+  const stage=el('div','stage'),card=el('div','panel grow flow');card.append(el('h3',null,esc(d.title)));
+  const p=el('p');
+  d.items.forEach((it,k)=>{const parts=it.text.split('___');p.append(document.createTextNode(parts[0]));
+    const g=el('span','fgap'),nb=el('button','fnum'+(st.un[k]?' un':'')+(st.done?(typedOk(key,k)?' ok':' bad'):''),String(it.n));nb.type='button';nb.title=st.done?'Показать пояснение':'Отметить: сомневаюсь';
+    nb.onclick=()=>{if(st.done){st.cur=k;redraw();}else{st.un[k]=!st.un[k];nb.classList.toggle('un',!!st.un[k]);}};
+    const inp=el('input','ans fin'+(st.done?(typedOk(key,k)?' ok':' bad'):''));inp.type='text';inp.autocomplete='off';inp.spellcheck=false;inp.setAttribute('autocapitalize','off');inp.value=st.val[k]||'';inp.disabled=st.done;inp.setAttribute('aria-label','Ответ '+it.n);
+    inp.style.width=Math.max(8,it.show.length+4)+'ch';inp.oninput=()=>{st.val[k]=inp.value;};
+    g.append(nb,inp);if(st.done&&!typedOk(key,k))g.append(el('b','fright','→ '+esc(it.show)));g.append(el('span','base sm',esc(it.base)));p.append(g,document.createTextNode((parts[1]||'')+' '));});
+  card.append(p);stage.append(card);main.append(stage);
+  if(st.done){const it=d.items[st.cur],ok=typedOk(key,st.cur);main.append(noteBar('<b>'+it.n+'. '+(ok?'Верно':'Неверно')+': '+esc(it.show)+'.</b> '+esc(it.note)+(st.un[st.cur]&&ok?' <i>Отмечено «сомневаюсь» – повторить.</i>':''),ok?'ok':'bad'));}
+  const nav=el('div','navrow');
+  if(st.done){const n=d.items.filter((x,k)=>typedOk(key,k)).length;nav.append(el('b',null,'Результат: '+n+' из '+d.items.length),el('span','note','Нажмите номер пропуска, чтобы увидеть пояснение.'),nextBtn());}
+  else nav.append(el('span','note','Слово справа от пропуска поставьте в нужную форму. Если ответ угадан, нажмите номер пропуска: он станет жёлтым.'),btn('Проверить раздел',()=>{st.done=true;const w=d.items.findIndex((x,k)=>!typedOk(key,k));st.cur=w<0?0:w;Clock.stop();redraw();},'acc sp'));
+  main.append(nav);if(!st.done){const f=card.querySelector('input');f&&f.focus();}
 }
 
-/* ---------- 30–36: выбор из четырёх ---------- */
+/* ---------- 30–36: сплошной текст, выбор из четырёх в каждом пропуске ---------- */
 function mcq(){
-  const d=D.v,st=S.v,it=d.items[st.cur];head('Прочитайте текст с пропусками 30–36 и выберите для каждого пропуска один из четырёх вариантов.',d.title);
-  const pi=d.p.findIndex(p=>p.includes('{{'+it.n+'}}'));
-  const html=esc(d.p[pi]).replace(/\{\{(\d+)\}\}/g,(m,n)=>{const k=n-30,ch=st.val[k],me=k===st.cur,w=st.done?d.items[k].o[d.items[k].a-1]:(ch!=null?d.items[k].o[ch]:'');
-    return '<span class="gap'+(me?'':' dim')+(st.done?(ch===d.items[k].a-1?' ok':' bad'):'')+'">'+n+(w?' · '+esc(w):'')+'</span>';});
-  const stage=el('div','stage'),card=el('div','panel grow qcard');
-  card.append(el('div','qhead','<span class="qnum">'+it.n+'</span><span class="qtitle">абзац '+(pi+1)+' из '+d.p.length+'</span>'));
-  card.append(el('div','qtext long',html));
-  const o=el('div','opts');it.o.forEach((w,j)=>{const b=el('button','opt',(j+1)+') '+esc(w));b.type='button';
-    if(st.done){b.disabled=true;if(j===it.a-1)b.classList.add('ok');else if(st.val[st.cur]===j)b.classList.add('bad');}
-    else{if(st.val[st.cur]===j)b.classList.add('sel');b.onclick=()=>{st.val[st.cur]=j;if(st.cur<d.items.length-1)st.cur++;redraw();};}o.append(b);});
-  card.append(o);
-  if(st.done){const ok=st.val[st.cur]===it.a-1;card.append(el('div','verdict '+(ok?'ok':'bad'),'<b>'+(ok?'Верно.':'Неверно.')+'</b> '+esc(it.note)));}
-  stage.append(card);main.append(stage);
-  const ok=k=>st.val[k]===d.items[k].a-1,nav=el('div','navrow');nav.append(chips(d.items,st,k=>st.val[k]!=null,ok));
-  nav.append(btn('← Назад',()=>{st.cur--;redraw();},'sm'),btn('Вперёд →',()=>{st.cur++;redraw();},'sm'));
-  nav.children[1].disabled=st.cur===0;nav.children[2].disabled=st.cur===d.items.length-1;
-  if(st.done){nav.append(el('b',null,'Результат: '+d.items.filter((x,k)=>ok(k)).length+' из 7'));nav.append(nextBtn());}
-  else{const u=el('button','unsure'+(st.un[st.cur]?' on':''),st.un[st.cur]?'Сомневаюсь ✓':'Сомневаюсь');u.type='button';u.onclick=()=>{st.un[st.cur]=!st.un[st.cur];redraw();};nav.append(u);
-    nav.append(btn('Проверить раздел',()=>{st.done=true;st.cur=0;Clock.stop();redraw();},'acc sp'));}
+  const d=D.v,st=S.v,ok=k=>st.val[k]===d.items[k].a-1;head('Прочитайте текст с пропусками 30–36 и выберите для каждого пропуска один из четырёх вариантов.');
+  const stage=el('div','stage'),panel=el('div','panel grow flow'),card=el('div','cols');panel.append(card);
+  d.p.forEach(par=>{const p=el('p');par.split(/(\{\{\d+\}\})/).forEach(ch=>{const m=ch.match(/^\{\{(\d+)\}\}$/);if(!m){p.append(document.createTextNode(ch));return;}
+      const k=m[1]-30,it=d.items[k],g=el('span','fgap'),nb=el('button','fnum'+(st.un[k]?' un':'')+(st.done?(ok(k)?' ok':' bad'):''),String(it.n));nb.type='button';nb.title=st.done?'Показать пояснение':'Отметить: сомневаюсь';
+      nb.onclick=()=>{if(st.done){st.cur=k;redraw();}else{st.un[k]=!st.un[k];nb.classList.toggle('un',!!st.un[k]);}};
+      const sel=el('select','fsel'+(st.done?(ok(k)?' ok':' bad'):''));sel.setAttribute('aria-label','Пропуск '+it.n);sel.append(new Option('…',''));it.o.forEach((w,j)=>sel.append(new Option((j+1)+') '+w,j)));sel.value=st.val[k]==null?'':st.val[k];sel.disabled=st.done;
+      sel.onchange=()=>{st.val[k]=sel.value===''?null:+sel.value;};g.append(nb,sel);if(st.done&&!ok(k))g.append(el('b','fright','→ '+esc(it.o[it.a-1])));p.append(g);});card.append(p);});
+  stage.append(panel);main.append(stage);
+  if(st.done){const it=d.items[st.cur],o=ok(st.cur);main.append(noteBar('<b>'+it.n+'. '+(o?'Верно':'Неверно')+': '+esc(it.o[it.a-1])+'.</b> '+esc(it.note),o?'ok':'bad'));}
+  const nav=el('div','navrow');
+  if(st.done){nav.append(el('b',null,'Результат: '+d.items.filter((x,k)=>ok(k)).length+' из 7'),el('span','note','Нажмите номер пропуска, чтобы увидеть пояснение.'),nextBtn());}
+  else nav.append(el('span','note','Текст: '+esc(d.title)+' · Открытый банк ФИПИ. Если ответ угадан, нажмите номер пропуска: он станет жёлтым.'),btn('Проверить раздел',()=>{st.done=true;const w=d.items.findIndex((x,k)=>!ok(k));st.cur=w<0?0:w;Clock.stop();redraw();},'acc sp'));
   main.append(nav);
 }
 
