@@ -41,12 +41,19 @@ h1{font-size:clamp(54px,6.5vw,105px);line-height:.93;letter-spacing:-5px;margin:
 
 /* shared task pieces (em-based, scaled by .fit) */
 .qnum{flex:0 0 auto;min-width:1.7em;height:1.7em;padding:0 .2em;border-radius:.3em;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85em;font-weight:900}
-.items{display:grid;gap:.45em}.item{background:#fff;border:1px solid var(--line);border-radius:.5em;padding:.45em .6em;display:grid;grid-template-columns:auto 1fr auto;gap:.6em;align-items:start}
-.itxt{line-height:1.32}.gap{width:8.5em;max-width:60%;border:0;border-bottom:.12em solid var(--teal);background:#eef4ef;border-radius:.2em .2em 0 0;padding:0 .25em;font-size:1em;font-weight:800;text-align:center}
+.gap{width:8.5em;max-width:60%;border:0;border-bottom:.12em solid var(--teal);background:#eef4ef;border-radius:.2em .2em 0 0;padding:0 .25em;font-size:1em;font-weight:800;text-align:center}
 .gap.correct{background:#dff3e5;border-color:var(--good);color:var(--good)}.gap.wrong{background:#fde6e2;border-color:var(--bad);color:var(--bad)}
 .ans{display:inline-block;margin-left:.3em;font-weight:900;color:var(--good)}
 .given{background:var(--lime);border-radius:.3em;padding:.12em .45em;font-weight:900;white-space:nowrap;font-size:.92em;align-self:center}
-.src{font-size:.6em;color:#60736f;font-weight:400;margin-left:.4em;white-space:nowrap}
+
+/* timed quiz */
+.timer{flex:0 0 auto;width:clamp(140px,22vw,420px);height:14px;background:#fff;border:1px solid var(--line);border-radius:99px;overflow:hidden}.timerFill{display:block;height:100%;width:100%;background:var(--teal);transition:width .9s linear}.timerFill.low{background:var(--bad)}
+.quiz{display:grid;gap:.55em}.qStem{background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.5em .7em;font-weight:800;line-height:1.25;text-align:center}.blank{display:inline-block;width:4.5em;border-bottom:.12em solid var(--teal);margin:0 .2em}
+.qOpts{display:grid;grid-template-columns:1fr 1fr;gap:.4em}.qOpt{display:flex;align-items:center;gap:.5em;text-align:left;border:0;border-radius:.4em;padding:.45em .6em;font-size:1em;font-weight:800;line-height:1.15;color:#fff;min-height:2.6em}
+.qOpt.o0{background:#006a68}.qOpt.o1{background:#8a4f00}.qOpt.o2{background:#5b3f8f}.qOpt.o3{background:#1f5c96}.qLet{flex:0 0 auto;width:1.6em;height:1.6em;border-radius:.3em;background:#ffffff33;display:flex;align-items:center;justify-content:center}
+.qOpt.good{background:var(--good);outline:.14em solid var(--lime)}.qOpt.bad{background:var(--bad)}.qOpt.dim{background:#8c9a97}.qOpt:disabled{cursor:default}
+.result{display:grid;gap:.5em}.resTop{display:flex;align-items:center;gap:.8em;background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.4em .7em}.resScore{font-size:2.2em;font-weight:900;color:var(--teal);line-height:1;white-space:nowrap}.resTitle{font-weight:900}.result .big{font-size:.7em}
+.resList{display:grid;gap:.25em;font-size:.72em}.resRow{background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.3em .6em;display:grid;grid-template-columns:minmax(6em,auto) 1fr;gap:.7em;align-items:baseline;line-height:1.25}.resMark{color:var(--bad);font-weight:800}.resRow b{color:var(--good)}
 
 /* whole-text view */
 .passage{background:#fff;border:1px solid var(--line);border-radius:.5em;padding:.5em .8em;line-height:1.75}
@@ -72,7 +79,7 @@ h1{font-size:clamp(54px,6.5vw,105px);line-height:.93;letter-spacing:-5px;margin:
 .speakerBox .ans{display:block;margin:.15em 0 0;min-height:1em;font-size:.8em}
 .fieldList{display:grid;gap:.4em}.fieldRow{display:grid;grid-template-columns:auto minmax(0,1.25fr) minmax(0,1fr) auto;gap:.5em;align-items:center}.fieldRow strong{line-height:1.15}.fieldRow input{width:100%;border:2px solid #a9b9ae;border-radius:.3em;padding:.2em .4em;background:#fbfcfa;font-size:1em}.suffix{font-size:.8em;color:#60736f;white-space:nowrap}
 
-@media(max-width:900px){.qGrid{grid-template-columns:1fr}.bar h2{display:none}.stage{overflow:auto}.item{grid-template-columns:auto 1fr}.given{grid-column:2;justify-self:start}}
+@media(max-width:900px){.qGrid{grid-template-columns:1fr}.bar h2{display:none}.stage{overflow:auto}.qOpts{grid-template-columns:1fr}}
 @media(max-width:750px){.small,.tools a{display:none}.home{height:auto;min-height:calc(100svh - 46px)}.hero{min-height:380px;background-position:60% center}.hero:before{background:linear-gradient(90deg,#f5f3ebed,#f5f3eb60)}.copy{width:85%;padding:30px 5vw}h1{font-size:65px;letter-spacing:-3px}.cards{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:751px) and (max-height:700px){h1{font-size:60px;margin:14px 0}.card{min-height:100px;padding:12px}.number{margin-bottom:8px}.navwrap{padding-top:12px;padding-bottom:8px}.lead{font-size:16px}}
 </style>
@@ -99,19 +106,20 @@ h1{font-size:clamp(54px,6.5vw,105px);line-height:.93;letter-spacing:-5px;margin:
 <script src="data.js"></script>
 <script src="listening-data.js"></script>
 <script src="tasks-data.js"></script>
+<script src="module2-quiz.js"></script>
 <script>
 const sections=[['Listening','TUNE IN'],['Grammar','MAKE IT CLICK'],['Word Formation','BUILD A NEW WORD'],['Lesson Check-up','OWN YOUR PROGRESS']];
 const $=id=>document.getElementById(id),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const BANK=window.SPOTLIGHT11_BANK,LISTEN=window.SPOTLIGHT11_LISTENING||{},TASKS=window.SPOTLIGHT_TASKS,LKEYS=window.SPOTLIGHT_LISTEN_KEYS;
-let current=0,currentVariant=2,page=0,scale=1,cardIdx=0,cardBack=false,mix=[];
+let current=0,currentVariant=2,scale=1;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const norm=s=>String(s||'').trim().toLowerCase().replace(/[’‘`]/g,"'").replace(/[.!?]+$/,'').replace(/\s+/g,' ');
 
 /* ---------- cover / navigation ---------- */
 $('cards').innerHTML=sections.map((s,i)=>`<button class="card" data-index="${i}"><span class="number">0${i+1} / ${s[1]}</span><span class="arrow">↗</span><strong>${s[0]}</strong></button>`).join('');
-$$('[data-index]').forEach(b=>b.onclick=()=>{current=+b.dataset.index;currentVariant=2;page=0;cardIdx=0;cardBack=false;mix=[];answers={};renderItems.checked='';$('sectionTitle').textContent=sections[current][0];$('home').style.display='none';document.body.classList.add('inStage');$('stage').classList.add('active');renderSection()});
+$$('[data-index]').forEach(b=>b.onclick=()=>{current=+b.dataset.index;currentVariant=2;answers={};checkedSig='';quizSet=0;$('sectionTitle').textContent=sections[current][0];$('home').style.display='none';document.body.classList.add('inStage');$('stage').classList.add('active');renderSection()});
 $('back').onclick=home;
-function home(){closeTasks();$('stageBody').innerHTML='';$('subBar').innerHTML='';document.body.classList.remove('inStage');$('stage').classList.remove('active');$('home').style.display='flex'}
+function home(){stopQuiz();closeTasks();$('stageBody').innerHTML='';$('subBar').innerHTML='';document.body.classList.remove('inStage');$('stage').classList.remove('active');$('home').style.display='flex'}
 document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if($('overlay').classList.contains('open'))closeTasks();else if($('stage').classList.contains('active'))home()});
 
 /* ---------- full screen + text size ---------- */
@@ -125,34 +133,15 @@ window.addEventListener('resize',refit);drawSize();
 
 /* ---------- variants ---------- */
 function variants(){return current===0?Object.keys(BANK.audio).map(Number):current===3?[]:Array.from({length:19},(_,i)=>i+2)}
-function renderBar(){const arr=variants();$('variantBar').classList.toggle('hidden',!arr.length);$('variantBar').innerHTML=arr.map(v=>`<button class="chip ${v===currentVariant?'active':''}" data-v="${v}" title="Variant ${v}" aria-label="Variant ${v}">${v}</button>`).join('');$$('[data-v]',$('variantBar')).forEach(b=>b.onclick=()=>{currentVariant=+b.dataset.v;page=0;cardIdx=0;cardBack=false;renderSection()})}
+function renderBar(){const arr=variants();$('variantBar').classList.toggle('hidden',!arr.length);$('variantBar').innerHTML=arr.map(v=>`<button class="chip ${v===currentVariant?'active':''}" data-v="${v}" title="Variant ${v}" aria-label="Variant ${v}">${v}</button>`).join('');$$('[data-v]',$('variantBar')).forEach(b=>b.onclick=()=>{currentVariant=+b.dataset.v;renderSection()})}
 function renderSection(){renderBar();$('stageBody').className='fit';$('stageBody').style.cssText='';
  if(current===0)renderListening();
  else if(current===1)renderText(TASKS[currentVariant].slice(0,9).map(t=>mk(currentVariant,t)),'Tasks 20–28 · Put the word in the right grammar form');
  else if(current===2)renderText(TASKS[currentVariant].slice(9).map(t=>mk(currentVariant,t)),'Tasks 29–34 · Form a new word that fits the gap');
- else{if(!mix.length)newMix();renderItems(mix,'Mixed check-up · grammar forms and word formation',true)}
+ else startQuiz(quizSet)
  refit()}
 function mk(v,t){return{v,n:t[0],text:t[1],word:t[2],key:(t[0]<=28?BANK.grammar:BANK.wordFormation)[v][t[0]]}}
-function newMix(){const pick=(from,to)=>{const pool=[];for(let v=2;v<=20;v++)TASKS[v].forEach(t=>{if(t[0]>=from&&t[0]<=to)pool.push(mk(v,t))});pool.sort(()=>Math.random()-.5);return pool.slice(0,3)};mix=[...pick(20,28),...pick(29,34)].map((it,i)=>({...it,label:i+1}));page=0}
-
-/* ---------- gap-fill items (Grammar, Word Formation, Check-up) ---------- */
-const PER=3;let answers={};
-function renderItems(items,instr,isMix){
- const pages=Math.ceil(items.length/PER);if(page>=pages)page=0;
- const lab=it=>it.label||it.n;
- const tabs=Array.from({length:pages},(_,i)=>{const a=items[i*PER],b=items[Math.min(items.length,(i+1)*PER)-1];return `<button class="tab ${i===page?'active':''}" data-p="${i}">${lab(a)}–${lab(b)}</button>`}).join('');
- $('subBar').innerHTML=`${tabs}<button class="pill solid" id="check">Check</button><button class="pill lime" id="reset">Reset</button>${isMix?'<button class="pill" id="newSet">New set</button>':''}<span class="score" id="score"></span><span class="instr">${instr}</span>`;
- const key=it=>it.v+'-'+it.n;
- $('stageBody').innerHTML=`<div class="items">${items.slice(page*PER,page*PER+PER).map(it=>{const[a,b]=it.text.split('___');return `<div class="item"><div class="qnum">${lab(it)}</div><div class="itxt">${esc(a)}<input class="gap" data-k="${key(it)}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Answer ${lab(it)}" value="${esc(answers[key(it)]||'')}">${esc(b)}<span class="ans" data-a="${key(it)}"></span></div><div class="given">${esc(it.word)}${isMix?`<span class="src">V${it.v}</span>`:''}</div></div>`}).join('')}</div>`;
- $$('.gap').forEach(i=>i.oninput=()=>{answers[i.dataset.k]=i.value});
- $$('[data-p]').forEach(b=>b.onclick=()=>{page=+b.dataset.p;renderItems(items,instr,isMix);refit()});
- let checked=renderItems.checked===items.map(key).join();
- function mark(){let ok=0;items.forEach(it=>{const good=it.key.map(norm).includes(norm(answers[key(it)]));if(good)ok++;const inp=document.querySelector(`[data-k="${key(it)}"]`);if(inp){inp.classList.toggle('correct',good);inp.classList.toggle('wrong',!good);document.querySelector(`[data-a="${key(it)}"]`).textContent=good?'':'→ '+it.key[0]}});$('score').textContent=ok+' / '+items.length;refit()}
- $('check').onclick=()=>{renderItems.checked=items.map(key).join();checked=true;mark()};
- $('reset').onclick=()=>{items.forEach(it=>delete answers[key(it)]);renderItems.checked='';page=0;renderItems(items,instr,isMix);refit()};
- if(isMix)$('newSet').onclick=()=>{answers={};renderItems.checked='';newMix();renderSection()};
- if(checked)mark();
-}
+let answers={},checkedSig='';
 
 /* ---------- whole text on one screen (Grammar, Word Formation) ---------- */
 function renderText(items,instr){
@@ -163,10 +152,42 @@ function renderText(items,instr){
   return `${esc(a)}<span style="white-space:nowrap"><span class="qn">${it.n}</span>${mid}</span>${esc(b)} `}).join('')}</div>`;
  $$('.gap').forEach(i=>i.oninput=()=>{answers[i.dataset.k]=i.value});
  const mark=()=>{let ok=0;items.forEach(it=>{const k=key(it),good=it.key.map(norm).includes(norm(answers[k]));if(good)ok++;const inp=document.querySelector(`[data-k="${k}"]`);inp.classList.toggle('correct',good);inp.classList.toggle('wrong',!good);document.querySelector(`[data-a="${k}"]`).textContent=good?'':'→ '+it.key[0]});$('score').textContent=ok+' / '+items.length;refit()};
- $('check').onclick=()=>{renderItems.checked=sig;mark()};
- $('reset').onclick=()=>{items.forEach(it=>delete answers[key(it)]);renderItems.checked='';renderText(items,instr);refit()};
- if(renderItems.checked===sig)mark();
+ $('check').onclick=()=>{checkedSig=sig;mark()};
+ $('reset').onclick=()=>{items.forEach(it=>delete answers[key(it)]);checkedSig='';renderText(items,instr);refit()};
+ if(checkedSig===sig)mark();
 }
+
+/* ---------- lesson check-up: timed A–D quiz (Module 2) ---------- */
+const QUIZ=window.SPOTLIGHT9_M2,QSEC=30,LET=['A','B','C','D'];
+let quizSet=0,quiz=null,qTimer=null;
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function stopQuiz(){clearInterval(qTimer);qTimer=null}
+function startQuiz(set){stopQuiz();quizSet=set;
+ const src=set<QUIZ.length?QUIZ[set].q:shuffle(QUIZ.flatMap(t=>t.q)).slice(0,10);
+ quiz={i:0,left:QSEC,paused:false,locked:false,log:[],qs:shuffle(src).map(q=>({stem:q[0],right:q[1],opts:shuffle(q.slice(1))}))};
+ drawQuiz();tick()}
+function quizBar(){const tabs=[...QUIZ.map(t=>t.name),'Mixed'].map((n,i)=>`<button class="tab ${i===quizSet?'active':''}" data-set="${i}">${n}</button>`).join('');
+ const done=!quiz||quiz.i>=quiz.qs.length;
+ $('subBar').innerHTML=`${tabs}${done?'':`<button class="pill" id="qPause">${quiz.paused?'Resume':'Pause'}</button><span class="score" id="qCount">${quiz.i+1} / ${quiz.qs.length}</span><span class="timer"><span class="timerFill" id="qFill"></span></span><span class="score" id="qSec"></span>`}<span class="instr">${quizSet<QUIZ.length?QUIZ[quizSet].title:'Module 2 · ten questions from all three tests'}</span>`;
+ $$('[data-set]').forEach(b=>b.onclick=()=>startQuiz(+b.dataset.set));
+ if(!done)$('qPause').onclick=()=>{quiz.paused=!quiz.paused;quizBar();showTime()}}
+function showTime(){const f=$('qFill');if(!f)return;f.style.width=(quiz.left/QSEC*100)+'%';f.classList.toggle('low',quiz.left<=5);$('qSec').textContent=quiz.paused?'paused':quiz.left+' s'}
+function tick(){stopQuiz();qTimer=setInterval(()=>{if(!quiz||quiz.paused||quiz.locked)return;quiz.left--;showTime();if(quiz.left<=0)answer(null)},1000)}
+function drawQuiz(){const q=quiz.qs[quiz.i];quizBar();showTime();
+ const[a,b]=q.stem.split('___');
+ $('stageBody').innerHTML=`<div class="quiz"><div class="qStem">${esc(a)}${b===undefined?'':'<span class="blank"></span>'+esc(b)}</div><div class="qOpts">${q.opts.map((o,i)=>`<button class="qOpt o${i}" data-o="${i}"><span class="qLet">${LET[i]}</span><span>${esc(o)}</span></button>`).join('')}</div></div>`;
+ $$('[data-o]').forEach(btn=>btn.onclick=()=>answer(+btn.dataset.o));refit()}
+function answer(i){if(!quiz||quiz.locked)return;quiz.locked=true;const q=quiz.qs[quiz.i],chosen=i===null?null:q.opts[i],ok=chosen===q.right;
+ quiz.log.push({stem:q.stem,right:q.right,chosen,ok});
+ if(i===null){next();return}
+ $$('[data-o]').forEach(btn=>{const o=q.opts[+btn.dataset.o];btn.disabled=true;if(o===q.right)btn.classList.add('good');else if(+btn.dataset.o===i)btn.classList.add('bad');else btn.classList.add('dim')});
+ setTimeout(next,1300)}
+function next(){if(!quiz)return;quiz.i++;quiz.left=QSEC;quiz.locked=false;if(quiz.i>=quiz.qs.length){stopQuiz();drawResult()}else drawQuiz()}
+function drawResult(){quizBar();const ok=quiz.log.filter(l=>l.ok).length,miss=quiz.log.filter(l=>!l.ok);
+ const fill=l=>esc(l.stem).replace('___',`<b>${esc(l.right)}</b>`)+(l.stem.includes('___')?'':` <b>${esc(l.right)}</b>`);
+ $('stageBody').innerHTML=`<div class="result"><div class="resTop"><div class="resScore">${ok} / ${quiz.log.length}</div><div><div class="resTitle">${ok===quiz.log.length?'All correct':miss.length<=2?'Almost there':'Look at these again'}</div><div class="row" style="margin-top:.3em"><button class="big" id="qAgain">Play again</button>${quizSet<QUIZ.length?'<button class="big alt" id="qNextSet">Next test</button>':''}</div></div></div>${miss.length?`<div class="resList">${miss.map(l=>`<div class="resRow"><span class="resMark">${l.chosen===null?'no answer':'✕ '+esc(l.chosen)}</span><span>${fill(l)}</span></div>`).join('')}</div>`:''}</div>`;
+ $('qAgain').onclick=()=>startQuiz(quizSet);if($('qNextSet'))$('qNextSet').onclick=()=>startQuiz(quizSet+1);refit()}
+document.addEventListener('keydown',e=>{if(current!==3||!$('stage').classList.contains('active')||!quiz||quiz.i>=quiz.qs.length||e.target.matches('input,select'))return;const i=LET.indexOf(e.key.toUpperCase());if(i>=0)answer(i)});
 
 /* ---------- listening ---------- */
 let lChecked=false,weWentFull=false;
