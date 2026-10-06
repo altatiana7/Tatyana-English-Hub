@@ -6,74 +6,71 @@
 <meta http-equiv="Cache-Control" content="no-cache">
 <title>Gabi · Revision · Unit 1</title>
 <style>
-:root{--ink:#16384d;--muted:#536e7d;--blue:#1f78a5;--blueD:#155d80;--line:#c8dce8;--ok:#2f8f6f;--okbg:#e6f6ee;--sand:#fff7df}
+:root{--ink:#0f2438;--ink2:#1b3a57;--yellow:#ffd43b;--mute:#9fb6c9}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(180deg,#eef9ff 0,#f7fbff 52%,#fffaf1 100%);min-height:100vh;font-size:16px;line-height:1.4}
-a,button{font:inherit;color:inherit;cursor:pointer}
-a:focus-visible,button:focus-visible{outline:3px solid #397baf;outline-offset:2px}
-header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:9px 3%;background:#fff;border-bottom:2px solid #bcd7e6}
-header .brand{flex:1;min-width:200px}
-header small{display:block;color:var(--muted);font-size:12px;letter-spacing:.06em}
-header strong{display:block;font-size:20px;font-weight:700}
-.btn{border:2px solid var(--line);border-radius:12px;background:#f5fbff;padding:8px 14px;font-weight:700;text-decoration:none}
-.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
-.btn.primary:hover{background:var(--blueD)}
-main{max-width:1060px;margin:0 auto;padding:14px 16px 40px;display:flex;flex-direction:column;gap:12px}
-.meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;color:var(--muted);font-size:14px}
-.bar{flex:1 1 180px;height:10px;border-radius:9px;background:#dcebf3;overflow:hidden}
-.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
-h2{margin:10px 0 0;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--blueD)}
-ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:14px;padding:10px 12px}
-li.done{background:var(--okbg);border-color:#a9d9c4}
-.n{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:#fff;font-weight:700;font-size:18px;display:grid;place-items:center}
-li.done .n{background:var(--ok);border-color:var(--ok);color:#fff}
-.t{min-width:0}
-.t b{font-size:18px}
-.t .min{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:9px;background:var(--sand);font-size:13px;font-weight:700;white-space:nowrap}
-.t p{margin:3px 0 0;font-size:14.5px}
-.t p.why{color:var(--muted)}
-.acts{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
-@media(max-width:680px){li{grid-template-columns:44px minmax(0,1fr)}.acts{grid-column:1/-1;justify-content:flex-start}}
+html,body{height:100%}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--ink);color:#fff;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+@supports(height:100svh){body{height:100svh}}
+button,a{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+.bar{flex:none;display:flex;align-items:center;gap:12px;height:52px;padding:0 12px;background:var(--ink)}
+.home{flex:none;height:36px;padding:0 14px;border-radius:999px;border:0;background:var(--ink2);font-weight:700;font-size:15px;text-decoration:none;display:inline-flex;align-items:center}
+.home:hover,.arrow:hover,.chip:hover{background:#264d72}
+.now{flex:1 1 220px;min-width:0;line-height:1.15}
+.now small{display:block;font-size:12px;font-weight:700;letter-spacing:.09em;color:var(--yellow);text-transform:uppercase}
+.now b{display:block;font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.steps{flex:none;display:flex;align-items:center;gap:5px}
+.steps i{width:10px;height:2px;background:#33536f;border-radius:2px}
+.chip{width:34px;height:34px;border-radius:50%;border:0;background:var(--ink2);font-weight:700;font-size:15px;color:#dbe7f1;padding:0}
+.chip.seen{background:#2c6a59;color:#fff}
+.chip.on{background:var(--yellow);color:var(--ink)}
+.arrow{flex:none;height:36px;border:0;border-radius:999px;background:var(--ink2);font-weight:700;font-size:15px;padding:0 14px}
+.arrow.next{background:var(--yellow);color:var(--ink)}
+.arrow.next:hover{background:#ffe066}
+iframe{flex:1;min-height:0;width:100%;border:0;background:#eef6fb;display:block}
+@media(max-width:1000px){.now small{display:none}.now b{font-size:16px}.chip{width:28px;height:28px;font-size:13px}.steps{gap:3px}.steps i{width:5px}}
+@media(max-width:760px){.steps i{display:none}.home span{display:none}.bar{gap:6px;padding:0 6px}.chip{width:24px;height:24px;font-size:12px}}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand"><small>GATEWAY TO THE WORLD B1 · UNIT 1</small><strong>Lesson 4 · Revision</strong></div>
-  <a class="btn" href="index.html">Gabi Hub</a>
-  <button class="btn" id="reset">Start again</button>
-</header>
-<main>
-  <div class="meta"><span id="count"></span><div class="bar"><i id="fill"></i></div><span>60 minutes · tap the number when a step is finished</span></div>
-  <div id="list"></div>
-</main>
+<div class="bar">
+  <a class="home" href="index.html" aria-label="Back to Gabi Hub">←<span>&nbsp;Hub</span></a>
+  <div class="now"><small id="stage"></small><b id="title"></b></div>
+  <div class="steps" id="steps" role="tablist" aria-label="Lesson steps"></div>
+  <button class="arrow" id="prev" aria-label="Previous step">‹</button>
+  <button class="arrow next" id="next"></button>
+</div>
+<iframe id="frame" title="Lesson activity" allow="autoplay; fullscreen" allowfullscreen></iframe>
 <script>
-const PARTS=[
- ["Warm up and recall",[
-  ["Warm-up: What Happens Next?",5,"Watch, stop, predict with will, might, won't.","Gets him talking before any correction starts.",[["Open","what-happens-next.html"]]],
-  ["Word Walls: Age and Attitudes",9,"Stage 1: find the 15 adjectives; the nouns are traps. Stage 2, Scenes: look at the picture and type the adjective, then the noun. No word list.","Recognition first, then recall from a picture with no options.",[["Wall","word-walls-age.html?v=2"],["Scenes","word-walls-age.html?scenes=1&v=2"]]],
-  ["Word Factory",6,"Build 18 nouns from stem tiles and suffix tiles. Some stems are spelling traps. Read the finished wall aloud.","Moves from recognising words to forming them.",[["Open","lesson3.html?step=3"]]]]],
- ["Accuracy",[
-  ["Error Hunter",6,"One mistake per sentence: articles, family words, word formation. Find it and repair it.","Controlled practice of form, with a rule for every correction.",[["Open","lesson3.html?step=6"]]],
-  ["Speed Zone: Sprint + Lava",5,"Timed Sprint and Floor Is Lava on one page: fast mixed questions on family, articles and word formation.","Speeds up recall so the forms are ready for speaking.",[["Open","lesson3.html?step=7"]]]]],
- ["Listening and speaking",[
-  ["Ten Faces: Words, Grammar, Articles",11,"He hears each question once, text hidden, and answers in a full sentence. Mark Got it or Not yet.","Listening for meaning, then guided spoken answers that need the unit language.",[["Words","ten-faces.html?lv=0"],["Grammar","ten-faces.html?lv=1"],["Articles","ten-faces.html?lv=2"]]],
-  ["Ten Faces: Speaking",10,"Opinion questions on age, fame and family. Ask one follow-up question after each answer.","Free production: he chooses the language himself.",[["Open","ten-faces.html?lv=3"]]],
-  ["Second chance",5,"Stay on the results screen of step 7 and press Redo. Only the missed questions come back.","Immediate feedback and a successful second attempt.",[]]]],
- ["Finish",[
-  ["Reach Higher: final check and homework",3,"Student’s Book p136: five tasks from memory, all typed. Start in class, finish at home.","Shows what is secure and what still needs work before Unit 2.",[["Open","lesson3.html?step=9"]]]]]
+const V='20261006r1';
+const STEPS=[
+ ['Warm-up','What Happens Next?','what-happens-next.html?embed=1'],
+ ['Words','Word Wall','word-walls-age.html?embed=1'],
+ ['Words','Scenes','word-walls-age.html?scenes=1&embed=1'],
+ ['Words','Word Factory','lesson3.html?step=3&embed=1'],
+ ['Accuracy','Error Hunter','lesson3.html?step=6&embed=1'],
+ ['Accuracy','Speed Zone','lesson3.html?step=7&embed=1'],
+ ['Listen and speak','Ten Faces: Words','ten-faces.html?lv=0&embed=1'],
+ ['Listen and speak','Ten Faces: Grammar','ten-faces.html?lv=1&embed=1'],
+ ['Listen and speak','Ten Faces: Articles','ten-faces.html?lv=2&embed=1'],
+ ['Listen and speak','Ten Faces: Speaking','ten-faces.html?lv=3&embed=1'],
+ ['Final check','Reach Higher','lesson3.html?step=9&embed=1']
 ];
-const KEY='gabi-unit1-revision-v1';let done=[];try{done=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){}
-const total=PARTS.reduce((a,p)=>a+p[1].length,0);
-function draw(){let n=0,h='';
- PARTS.forEach(p=>{h+=`<h2>${p[0]}</h2><ol>`+p[1].map(s=>{const i=n++;return `<li class="${done.includes(i)?'done':''}"><button class="n" data-i="${i}" aria-pressed="${done.includes(i)}" aria-label="Step ${i+1} finished">${i+1}</button><div class="t"><b>${s[0]}</b><span class="min">${s[1]} min</span><p>${s[2]}</p><p class="why">${s[3]}</p></div><div class="acts">${s[4].map(a=>`<a class="btn primary" href="${a[1]}">${a[0]}</a>`).join('')}</div></li>`}).join('')+'</ol>'});
- document.getElementById('list').innerHTML=h;
- document.getElementById('count').textContent=done.length+' / '+total+' steps done';
- document.getElementById('fill').style.width=(done.length/total*100)+'%'}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(done))}catch(e){}}
-document.addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b){const i=+b.dataset.i;done=done.includes(i)?done.filter(x=>x!==i):done.concat(i);save();draw()}
- if(e.target.id==='reset'){done=[];save();draw()}});
-draw();
+let cur=0;const seen=new Set();
+const $=id=>document.getElementById(id);
+function draw(){
+  $('steps').innerHTML=STEPS.map((s,i)=>(i&&s[0]!==STEPS[i-1][0]?'<i></i>':'')+`<button class="chip${i===cur?' on':seen.has(i)?' seen':''}" data-i="${i}" role="tab" aria-selected="${i===cur}" title="${s[1]}">${i+1}</button>`).join('');
+  $('stage').textContent='Revision · Unit 1 · '+STEPS[cur][0];
+  $('title').textContent=(cur+1)+' / '+STEPS.length+' · '+STEPS[cur][1];
+  $('prev').style.visibility=cur?'visible':'hidden';
+  $('next').textContent=cur===STEPS.length-1?'Start again':'Next ›';
+}
+function go(i){seen.add(cur);cur=i;if(i===0&&seen.size>=STEPS.length)seen.clear();$('frame').src=STEPS[i][2]+'&v='+V;draw()}
+$('steps').onclick=e=>{const b=e.target.closest('[data-i]');if(b)go(+b.dataset.i)};
+$('prev').onclick=()=>{if(cur)go(cur-1)};
+$('next').onclick=()=>{if(cur===STEPS.length-1){seen.clear();cur=0;go(0)}else go(cur+1)};
+try{localStorage.removeItem('gabi-unit1-revision-v1')}catch(e){}
+go(0);
 </script>
 </body>
 </html>

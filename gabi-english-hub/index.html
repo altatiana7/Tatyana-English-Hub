@@ -281,7 +281,7 @@ document.getElementById('homeBtn').onclick=()=>{
 
 function openLesson(n,i){
   if(n===1 && i===2){ location.href='lesson3.html?v=20261005-tiles-v20'; return; }
-  if(n===1 && i===3){ location.href='revision-unit1.html?v=20261005-v4'; return; }
+  if(n===1 && i===3){ location.href='revision-unit1.html?v=20261006-r1'; return; }
   if(n===1){
     location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20261001-clean-layout-v9';
     return;
@@ -318,9 +318,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
   const tile=document.getElementById('wordTile');tile.onclick=()=>{tile.classList.toggle('flip');
     try{if(tile.classList.contains('flip')){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w[0]);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}catch(e){}};
   const h=d.getHours();document.getElementById('hi').textContent=(h<12?'GOOD MORNING':h<18?'GOOD AFTERNOON':'GOOD EVENING')+', GABI';
-  let done=0;const total=9;try{done=Math.min(total,(JSON.parse(localStorage.getItem('gabi-unit1-revision-v1')||'[]')||[]).length)}catch(e){}
-  document.getElementById('progFill').style.width=(done/total*100)+'%';
-  document.getElementById('progText').textContent=done?done+' of '+total+' steps done':'9 steps · 60 minutes';
+  document.getElementById('progText').textContent='11 steps · 60 minutes';
   document.getElementById('continueBtn').onclick=()=>openLesson(1,3);
 })();
 
