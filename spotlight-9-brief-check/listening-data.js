@@ -59,7 +59,7 @@ window.SPOTLIGHT11_LISTENING = {
     ],
     topics:["Getting on with other animals","Choosing your pet’s diet","Making sure the pet is healthy","Finding a suitable pet","Buying toys for your pet","Travelling with pets"],
     fields:[
-      {n:6,label:"Current job",suffix:"years old"},
+      {n:6,label:"Current job"},
       {n:7,label:"Number of followers on social media"},
       {n:8,label:"Hobby"},
       {n:9,label:"Pet"},

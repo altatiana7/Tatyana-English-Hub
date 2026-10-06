@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spotlight 9 · Brief Check-in</title>
+<style>
+:root{--ink:#173332;--teal:#006a68;--lime:#d9f16d;--paper:#f5f3eb;--line:#17333225;--good:#17683d;--bad:#9b2f24}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%}body{background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #df4e32;outline-offset:2px}
+.hidden{display:none!important}
+
+/* cover */
+header{height:46px;padding:0 2.2vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:var(--paper)}
+body.inStage header{display:none}
+.brand{font-weight:900;letter-spacing:-.5px;font-size:19px}.brand span{background:var(--lime);padding:3px 7px;border-radius:6px;margin-left:5px}.small{font-size:12px;letter-spacing:2px;font-weight:bold}
+.tools{display:flex;gap:8px;align-items:center}
+.pill{background:transparent;border:1px solid #17333240;border-radius:30px;padding:.4em .9em;font-size:clamp(14px,1.2vw,21px);line-height:1.2;text-decoration:none;white-space:nowrap;color:inherit}
+.pill.solid{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:800}.pill.lime{background:var(--lime);border-color:var(--lime);font-weight:800}
+.home{height:calc(100svh - 46px);display:flex;flex-direction:column}.hero{position:relative;min-height:240px;flex:1;background:url(cover.webp) center 47%/cover;display:flex;align-items:center}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#f5f3ebe8,transparent 68%)}.copy{position:relative;padding:24px 4vw;width:60%}
+.eyebrow,.tag{display:inline-block;background:var(--teal);color:white;padding:9px 13px;border-radius:6px;font-size:12px;letter-spacing:1.6px;font-weight:800}
+h1{font-size:clamp(54px,6.5vw,105px);line-height:.93;letter-spacing:-5px;margin:21px 0}h1 em{font-style:normal;color:var(--teal)}.lead{font-size:18px;line-height:1.5;margin:0;max-width:430px}
+.navwrap{padding:18px 4vw 14px}.navlabel{display:flex;justify-content:space-between;margin-bottom:11px;font-size:12px;letter-spacing:1.6px;font-weight:bold}
+.cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.card{border:0;text-align:left;border-radius:16px;padding:16px;min-height:118px;background:#e5e9df;color:var(--ink);transition:.2s;position:relative}
+.card:nth-child(2){background:#ddebe7}.card:nth-child(3){background:#e7e1ef}.card:nth-child(4){background:#efdccf}.card:nth-child(5){background:var(--lime)}.card:hover{transform:translateY(-5px);background:var(--ink);color:white}
+.number{font-size:12px;opacity:.7;display:block;margin-bottom:12px}.card strong{font-size:clamp(19px,1.8vw,29px);line-height:1.04;display:block;letter-spacing:-.7px}.arrow{position:absolute;top:14px;right:16px;font-size:23px}.foot{font-size:12px;margin-top:11px;display:flex;justify-content:space-between;opacity:.7}
+
+/* stage */
+.stage{display:none;height:100svh;padding:6px 1.4vw 10px;overflow:hidden;flex-direction:column}.stage.active{display:flex}
+.bar{display:flex;align-items:center;gap:8px;flex:0 0 auto;min-height:36px;padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid var(--line)}
+.bar h2,.bar strong{font-size:clamp(19px,1.7vw,30px);letter-spacing:-.3px;margin:0 4px 0 2px;white-space:nowrap}.spacer{flex:1}
+.chips{display:flex;gap:3px;overflow-x:auto;padding:2px 0;flex:0 1 auto;min-width:0;scrollbar-width:none;align-items:center}
+.chip{flex:0 0 auto;border:1px solid #17333235;background:#fff;border-radius:999px;min-width:clamp(27px,2.3vw,44px);height:clamp(27px,2.3vw,44px);padding:0 5px;font-weight:800;font-size:clamp(13px,1.15vw,21px);line-height:1}
+.chip.active,.seg button.active,.tab.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.seg{display:flex;flex:0 0 auto;border:1px solid #17333240;border-radius:30px;overflow:hidden}.seg button{border:0;background:#fff;padding:.4em .75em;font-size:clamp(13px,1.1vw,20px);font-weight:800;white-space:nowrap}
+.sub{display:flex;align-items:center;gap:6px;flex:0 0 auto;margin-bottom:6px;flex-wrap:wrap}
+.tab{border:1px solid #17333235;background:#fff;border-radius:999px;padding:.4em .9em;font-weight:800;font-size:clamp(14px,1.2vw,21px);white-space:nowrap}
+.score{font-weight:900;font-size:clamp(16px,1.5vw,26px);margin-left:6px}.instr{font-size:clamp(14px,1.2vw,21px);color:var(--teal);font-weight:800;margin-left:8px}
+.fit{flex:1;min-height:0;overflow:auto;font-size:30px}
+
+/* shared task pieces (em-based, scaled by .fit) */
+.qnum{flex:0 0 auto;min-width:1.7em;height:1.7em;padding:0 .2em;border-radius:.3em;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85em;font-weight:900}
+.items{display:grid;gap:.45em}.item{background:#fff;border:1px solid var(--line);border-radius:.5em;padding:.45em .6em;display:grid;grid-template-columns:auto 1fr auto;gap:.6em;align-items:start}
+.itxt{line-height:1.32}.gap{width:8.5em;max-width:60%;border:0;border-bottom:.12em solid var(--teal);background:#eef4ef;border-radius:.2em .2em 0 0;padding:0 .25em;font-size:1em;font-weight:800;text-align:center}
+.gap.correct{background:#dff3e5;border-color:var(--good);color:var(--good)}.gap.wrong{background:#fde6e2;border-color:var(--bad);color:var(--bad)}
+.ans{display:inline-block;margin-left:.3em;font-weight:900;color:var(--good)}
+.given{background:var(--lime);border-radius:.3em;padding:.12em .45em;font-weight:900;white-space:nowrap;font-size:.92em;align-self:center}
+.src{font-size:.6em;color:#60736f;font-weight:400;margin-left:.4em;white-space:nowrap}
+
+/* listening */
+.audioPanel{width:100%;max-width:min(92vw,900px);background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:clamp(18px,1.7vw,30px)}
+.audioTitle{font-size:2em;letter-spacing:-1px;margin:.1em 0}.audioMeta{margin:0 0 .5em;font-size:.8em;color:#60736f}audio{width:100%}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.big{border:0;background:var(--teal);color:#fff;padding:.55em 1em;border-radius:10px;font-weight:bold;font-size:1em;text-decoration:none}.big.alt{background:var(--lime);color:var(--ink)}.big.ghost{background:#fff;color:var(--ink);border:1px solid #17333240}
+.overlay{position:fixed;inset:0;background:var(--paper);z-index:50;display:none;flex-direction:column;padding:6px 1.4vw 8px}.overlay.open{display:flex}
+.audioSlot{flex:1;min-width:120px;display:flex;justify-content:flex-end}.audioSlot audio{width:100%;max-width:460px;height:34px}
+.part{display:none}.part.active{display:block}
+.qGrid{display:grid;grid-template-columns:1fr 1fr;gap:.5em}.qCard{background:#fff;border:1px solid var(--line);border-radius:.5em;padding:.5em .6em;display:grid;grid-template-columns:auto 1fr;gap:.5em;align-items:start}
+.qstem{font-weight:800;line-height:1.18;margin-bottom:.3em}.opts{display:grid;gap:.12em}.opt{display:flex;gap:.45em;align-items:flex-start;line-height:1.22;cursor:pointer;border-radius:.3em;padding:.05em .25em}.opt:hover{background:#eef4ef}.opt input{flex:0 0 auto;width:.85em;height:.85em;margin:.2em 0 0;accent-color:var(--teal)}
+.opt.correct{background:#dff3e5;color:var(--good);font-weight:800}.opt.wrong{background:#fde6e2;color:var(--bad)}
+.board{background:#fff;border:1px solid var(--line);border-radius:.5em;padding:.6em .8em}
+.topicList{display:grid;grid-template-columns:1fr 1fr;gap:.35em 1.2em;line-height:1.2;margin-bottom:.8em;font-size:1.12em}.topicList strong{color:var(--teal)}
+.speakerGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:.4em}.speakerBox{background:#f4f7f3;border-radius:.4em;padding:.4em;text-align:center}.speakerBox label{display:block;font-weight:900;font-size:1.3em;line-height:1;margin-bottom:.2em;color:var(--teal)}
+.speakerBox select{width:100%;border:2px solid #a9b9ae;border-radius:.3em;padding:.15em;background:#fff;font-size:1.15em;font-weight:800;text-align:center}
+.speakerBox select.correct,.fieldRow input.correct{border-color:var(--good);background:#dff3e5}.speakerBox select.wrong,.fieldRow input.wrong{border-color:var(--bad);background:#fde6e2}
+.speakerBox .ans{display:block;margin:.15em 0 0;min-height:1em;font-size:.8em}
+.fieldList{display:grid;gap:.4em}.fieldRow{display:grid;grid-template-columns:auto minmax(0,1.25fr) minmax(0,1fr) auto;gap:.5em;align-items:center}.fieldRow strong{line-height:1.15}.fieldRow input{width:100%;border:2px solid #a9b9ae;border-radius:.3em;padding:.2em .4em;background:#fbfcfa;font-size:1em}.suffix{font-size:.8em;color:#60736f;white-space:nowrap}
+
+/* vocabulary cards */
+.flipWrap{height:100%;display:flex;flex-direction:column;gap:.4em}.flip{flex:1;min-height:0;background:#fff;border:1px solid var(--line);border-radius:.5em;padding:.6em .9em;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:.4em}
+.flip.back{background:#eef8f1;border-color:var(--good)}.flipWord{font-size:2.2em;font-weight:900;letter-spacing:-.02em;line-height:1}.flip.back .flipWord{color:var(--good)}.flipHint{font-size:.5em;letter-spacing:.15em;font-weight:800;color:var(--teal)}.flipSent{line-height:1.3;max-width:34em}.flipSent b{color:var(--good)}
+.flipNav{display:flex;gap:8px;justify-content:center;align-items:center;flex:0 0 auto;font-size:clamp(16px,1.5vw,26px)}
+
+@media(max-width:900px){.qGrid{grid-template-columns:1fr}.bar h2{display:none}.stage{overflow:auto}.item{grid-template-columns:auto 1fr}.given{grid-column:2;justify-self:start}}
+@media(max-width:750px){.small,.tools a{display:none}.home{height:auto;min-height:calc(100svh - 46px)}.hero{min-height:380px;background-position:60% center}.hero:before{background:linear-gradient(90deg,#f5f3ebed,#f5f3eb60)}.copy{width:85%;padding:30px 5vw}h1{font-size:65px;letter-spacing:-3px}.cards{grid-template-columns:repeat(2,1fr)}.card:last-child{grid-column:span 2}}
+@media(min-width:751px) and (max-height:700px){h1{font-size:60px;margin:14px 0}.card{min-height:100px;padding:12px}.number{margin-bottom:8px}.navwrap{padding-top:12px;padding-bottom:8px}.lead{font-size:16px}}
+</style>
+</head>
+<body>
+<header><div class="brand">SPOTLIGHT <span>9</span></div><div class="small">ENGLISH / BRIEF CHECK-IN</div><div class="tools"><a class="pill" href="../spotlight-brief-check/">All grades</a><button class="pill fsBtn">Full screen</button></div></header>
+
+<main id="home" class="home">
+<section class="hero"><div class="copy"><div class="eyebrow">YOUR VOICE. YOUR NEXT LEVEL.</div><h1>Brief<br><em>check-in.</em></h1><p class="lead">Tune in. Find your words. Make it click.<br>Five ways to get your English moving.</p></div></section>
+<nav class="navwrap" aria-label="Lesson sections"><div class="navlabel"><span>CHOOSE YOUR FOCUS</span><span>5 SECTIONS</span></div><div class="cards" id="cards"></div><div class="foot"><span>GRADE 9 · ENGLISH</span><span>Independent companion for Spotlight 9</span></div></nav>
+</main>
+
+<section id="stage" class="stage" aria-labelledby="sectionTitle">
+<div class="bar"><button class="pill" id="back">← Cover</button><h2 id="sectionTitle"></h2><div id="variantBar" class="chips"></div><span class="spacer"></span><div class="seg sizeSeg" title="Text size"></div><button class="pill fsBtn">Full screen</button></div>
+<div id="subBar" class="sub"></div>
+<div id="stageBody" class="fit"></div>
+</section>
+
+<div id="overlay" class="overlay" aria-hidden="true">
+<div class="bar"><button class="pill" id="closeTasks">← Close</button><strong id="ovTitle"></strong><div id="partTabs" style="display:flex;gap:5px"></div><button class="pill solid" id="lCheck">Check</button><button class="pill lime" id="lReset">Reset</button><span class="score" id="lScore"></span><div class="audioSlot" id="audioSlot"></div><div class="seg sizeSeg" title="Text size"></div><button class="pill fsBtn">Full screen</button></div>
+<div id="ovBody" class="fit"></div>
+</div>
+
+<script src="data.js"></script>
+<script src="listening-data.js"></script>
+<script src="tasks-data.js"></script>
+<script>
+const sections=[['Listening','TUNE IN'],['Vocabulary','FIND YOUR WORDS'],['Grammar','MAKE IT CLICK'],['Word Formation','BUILD A NEW WORD'],['Lesson Check-up','OWN YOUR PROGRESS']];
+const $=id=>document.getElementById(id),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const BANK=window.SPOTLIGHT11_BANK,LISTEN=window.SPOTLIGHT11_LISTENING||{},TASKS=window.SPOTLIGHT_TASKS,LKEYS=window.SPOTLIGHT_LISTEN_KEYS;
+let current=0,currentVariant=1,page=0,scale=1,cardIdx=0,cardBack=false,mix=[];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=s=>String(s||'').trim().toLowerCase().replace(/[’‘`]/g,"'").replace(/[.!?]+$/,'').replace(/\s+/g,' ');
+
+/* ---------- cover / navigation ---------- */
+$('cards').innerHTML=sections.map((s,i)=>`<button class="card" data-index="${i}"><span class="number">0${i+1} / ${s[1]}</span><span class="arrow">↗</span><strong>${s[0]}</strong></button>`).join('');
+$$('[data-index]').forEach(b=>b.onclick=()=>{current=+b.dataset.index;currentVariant=current===0?2:1;page=0;cardIdx=0;cardBack=false;mix=[];answers={};renderItems.checked='';$('sectionTitle').textContent=sections[current][0];$('home').style.display='none';document.body.classList.add('inStage');$('stage').classList.add('active');renderSection()});
+$('back').onclick=home;
+function home(){closeTasks();$('stageBody').innerHTML='';$('subBar').innerHTML='';document.body.classList.remove('inStage');$('stage').classList.remove('active');$('home').style.display='flex'}
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if($('overlay').classList.contains('open'))closeTasks();else if($('stage').classList.contains('active'))home()});
+
+/* ---------- full screen + text size ---------- */
+async function toggleFull(){try{document.fullscreenElement?await document.exitFullscreen():await document.documentElement.requestFullscreen()}catch{}}
+$$('.fsBtn').forEach(b=>b.onclick=toggleFull);
+document.addEventListener('fullscreenchange',()=>{$$('.fsBtn').forEach(b=>b.textContent=document.fullscreenElement?'Exit full screen':'Full screen');refit()});
+function drawSize(){$$('.sizeSeg').forEach(s=>{s.innerHTML=`<button data-s="1" class="${scale===1?'active':''}">Board</button><button data-s="0.74" class="${scale!==1?'active':''}">Online</button>`;$$('[data-s]',s).forEach(b=>b.onclick=()=>{scale=+b.dataset.s;drawSize();refit()})})}
+function fit(box){if(!box||!box.offsetParent)return;let lo=12,hi=110;while(hi-lo>1){const m=(lo+hi)>>1;box.style.fontSize=m+'px';(box.scrollHeight<=box.clientHeight&&box.scrollWidth<=box.clientWidth)?lo=m:hi=m}box.style.fontSize=Math.max(14,Math.round(lo*scale))+'px'}
+function refit(){if($('overlay').classList.contains('open'))fit($('ovBody'));else if(!$('stage').classList.contains('active'))return;else if(current===1)fitCard();else if(current!==0)fit($('stageBody'))}
+window.addEventListener('resize',refit);drawSize();
+
+/* ---------- variants ---------- */
+function variants(){return current===0?Object.keys(BANK.audio).map(Number):current===4?[]:Array.from({length:20},(_,i)=>i+1)}
+function renderBar(){const arr=variants();$('variantBar').classList.toggle('hidden',!arr.length);$('variantBar').innerHTML=arr.map(v=>`<button class="chip ${v===currentVariant?'active':''}" data-v="${v}" title="Variant ${v}" aria-label="Variant ${v}">${v}</button>`).join('');$$('[data-v]',$('variantBar')).forEach(b=>b.onclick=()=>{currentVariant=+b.dataset.v;page=0;cardIdx=0;cardBack=false;renderSection()})}
+function renderSection(){renderBar();$('stageBody').className='fit';$('stageBody').style.cssText='';
+ if(current===0)renderListening();
+ else if(current===1)renderCards();
+ else if(current===2)renderItems(TASKS[currentVariant].slice(0,9).map(t=>mk(currentVariant,t)),'Tasks 20–28 · Put the word in the right grammar form');
+ else if(current===3)renderItems(TASKS[currentVariant].slice(9).map(t=>mk(currentVariant,t)),'Tasks 29–34 · Form a new word that fits the gap');
+ else{if(!mix.length)newMix();renderItems(mix,'Mixed check-up · grammar forms and word formation',true)}
+ refit()}
+function mk(v,t){return{v,n:t[0],text:t[1],word:t[2],key:(t[0]<=28?BANK.grammar:BANK.wordFormation)[v][t[0]]}}
+function newMix(){const pick=(from,to)=>{const pool=[];for(let v=1;v<=20;v++)TASKS[v].forEach(t=>{if(t[0]>=from&&t[0]<=to)pool.push(mk(v,t))});pool.sort(()=>Math.random()-.5);return pool.slice(0,3)};mix=[...pick(20,28),...pick(29,34)].map((it,i)=>({...it,label:i+1}));page=0}
+
+/* ---------- gap-fill items (Grammar, Word Formation, Check-up) ---------- */
+const PER=3;let answers={};
+function renderItems(items,instr,isMix){
+ const pages=Math.ceil(items.length/PER);if(page>=pages)page=0;
+ const lab=it=>it.label||it.n;
+ const tabs=Array.from({length:pages},(_,i)=>{const a=items[i*PER],b=items[Math.min(items.length,(i+1)*PER)-1];return `<button class="tab ${i===page?'active':''}" data-p="${i}">${lab(a)}–${lab(b)}</button>`}).join('');
+ $('subBar').innerHTML=`${tabs}<button class="pill solid" id="check">Check</button><button class="pill lime" id="reset">Reset</button>${isMix?'<button class="pill" id="newSet">New set</button>':''}<span class="score" id="score"></span><span class="instr">${instr}</span>`;
+ const key=it=>it.v+'-'+it.n;
+ $('stageBody').innerHTML=`<div class="items">${items.slice(page*PER,page*PER+PER).map(it=>{const[a,b]=it.text.split('___');return `<div class="item"><div class="qnum">${lab(it)}</div><div class="itxt">${esc(a)}<input class="gap" data-k="${key(it)}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Answer ${lab(it)}" value="${esc(answers[key(it)]||'')}">${esc(b)}<span class="ans" data-a="${key(it)}"></span></div><div class="given">${esc(it.word)}${isMix?`<span class="src">V${it.v}</span>`:''}</div></div>`}).join('')}</div>`;
+ $$('.gap').forEach(i=>i.oninput=()=>{answers[i.dataset.k]=i.value});
+ $$('[data-p]').forEach(b=>b.onclick=()=>{page=+b.dataset.p;renderItems(items,instr,isMix);refit()});
+ let checked=renderItems.checked===items.map(key).join();
+ function mark(){let ok=0;items.forEach(it=>{const good=it.key.map(norm).includes(norm(answers[key(it)]));if(good)ok++;const inp=document.querySelector(`[data-k="${key(it)}"]`);if(inp){inp.classList.toggle('correct',good);inp.classList.toggle('wrong',!good);document.querySelector(`[data-a="${key(it)}"]`).textContent=good?'':'→ '+it.key[0]}});$('score').textContent=ok+' / '+items.length;refit()}
+ $('check').onclick=()=>{renderItems.checked=items.map(key).join();checked=true;mark()};
+ $('reset').onclick=()=>{items.forEach(it=>delete answers[key(it)]);renderItems.checked='';page=0;renderItems(items,instr,isMix);refit()};
+ if(isMix)$('newSet').onclick=()=>{answers={};renderItems.checked='';newMix();renderSection()};
+ if(checked)mark();
+}
+
+/* ---------- vocabulary flip cards ---------- */
+function renderCards(){
+ const items=TASKS[currentVariant].slice(9).map(t=>mk(currentVariant,t));if(cardIdx>=items.length)cardIdx=0;const it=items[cardIdx];const[a,b]=it.text.split('___');
+ $('subBar').innerHTML=`<span class="instr" style="margin-left:0">Word building · say the new word, then flip the card to check</span>`;
+ $('stageBody').className='';$('stageBody').style.cssText='flex:1;min-height:0;display:flex;flex-direction:column;gap:8px';
+ $('stageBody').innerHTML=`<div class="fit" id="cardFit" style="display:flex"><div class="flip ${cardBack?'back':''}" style="width:100%">${cardBack?`<div class="flipHint">ANSWER</div><div class="flipWord">${esc(it.key[0])}</div><div class="flipSent">${esc(a)}<b>${esc(it.key[0])}</b>${esc(b)}</div>`:`<div class="flipHint">FORM A NEW WORD FROM</div><div class="flipWord">${esc(it.word)}</div><div class="flipSent">${esc(a)}<span style="display:inline-block;width:5em;border-bottom:.12em solid var(--teal)">&nbsp;</span>${esc(b)}</div>`}</div></div><div class="flipNav"><button class="pill" id="cPrev">← Back</button><button class="pill solid" id="cFlip">Flip the card</button><button class="pill" id="cNext">Next →</button><span class="score">${cardIdx+1} / ${items.length}</span></div>`;
+ $('cPrev').onclick=()=>{cardIdx=(cardIdx+items.length-1)%items.length;cardBack=false;renderCards()};
+ $('cNext').onclick=()=>{cardIdx=(cardIdx+1)%items.length;cardBack=false;renderCards()};
+ $('cFlip').onclick=()=>{cardBack=!cardBack;renderCards()};
+ fitCard();
+}
+function fitCard(){const box=$('cardFit');if(!box)return;const card=box.firstElementChild;let lo=12,hi=110;while(hi-lo>1){const m=(lo+hi)>>1;box.style.fontSize=m+'px';(card.scrollHeight<=box.clientHeight+1&&card.scrollWidth<=box.clientWidth+1)?lo=m:hi=m}box.style.fontSize=Math.max(14,Math.round(lo*.88*scale))+'px'}
+
+/* ---------- listening ---------- */
+let lChecked=false,weWentFull=false;
+function renderListening(){
+ $('subBar').innerHTML='';
+ const a=BANK.audio[currentVariant],set=LISTEN[currentVariant];
+ $('stageBody').className='';$('stageBody').style.cssText='flex:1;min-height:0;overflow:auto';
+ $('stageBody').innerHTML=`<aside class="audioPanel"><span class="tag">LISTENING · VARIANT ${currentVariant}</span><p class="audioMeta" style="margin-top:.6em">Full track · ${a.duration} · the recording is played twice</p><div id="audioHome"><audio id="track" controls preload="none"><source src="${BANK.audioUrl(currentVariant)}" type="audio/mpeg"></audio></div><div class="row"><button class="big" id="openBoard">Open tasks · for the board</button><button class="big alt" id="openOnline">Open tasks · for online lessons</button></div></aside>`;
+ const qs=set.q.map(q=>`<div class="qCard"><div class="qnum">${q.n}</div><div><div class="qstem">${q.stem}</div><div class="opts">${q.options.map((o,i)=>`<label class="opt"><input type="radio" name="q${q.n}" value="${i+1}"><span>${i+1}) ${o}</span></label>`).join('')}</div></div></div>`).join('');
+ const topics=set.topics.map((t,i)=>`<div><strong>${i+1}.</strong> ${t}</div>`).join('');
+ const speakers=['A','B','C','D','E'].map((s,i)=>`<div class="speakerBox"><label>${s}</label><select data-sp="${i}" aria-label="Speaker ${s}"><option value="">—</option>${[1,2,3,4,5,6].map(n=>`<option value="${n}">${n}</option>`).join('')}</select><span class="ans"></span></div>`).join('');
+ const fields=set.fields.map((f,i)=>`<div class="fieldRow"><div class="qnum">${f.n}</div><strong>${f.label}</strong><input type="text" data-f="${i}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Task ${f.n}: ${f.label}"><span class="suffix">${f.suffix||''}<span class="ans"></span></span></div>`).join('');
+ $('ovTitle').textContent=`Variant ${currentVariant}`;$('lScore').textContent='';lChecked=false;
+ $('ovBody').innerHTML=`<div class="part" data-part="0"><div class="qGrid">${qs}</div></div><div class="part" data-part="1"><div class="board"><div class="topicList">${topics}</div><div class="speakerGrid">${speakers}</div></div></div><div class="part" data-part="2"><div class="board"><div class="fieldList">${fields}</div></div></div>`;
+ $('partTabs').innerHTML=['Tasks 1–4','Task 5','Tasks 6–11'].map((t,i)=>`<button class="tab" data-tab="${i}">${t}</button>`).join('');
+ $$('[data-tab]').forEach(b=>b.onclick=()=>showPart(+b.dataset.tab));
+ $('openBoard').onclick=()=>openTasks(1,true);$('openOnline').onclick=()=>openTasks(0.74,false);
+}
+function openTasks(s,full){scale=s;drawSize();moveAudio($('audioSlot'));$('overlay').classList.add('open');$('overlay').setAttribute('aria-hidden','false');showPart(0);if(full&&!document.fullscreenElement){document.documentElement.requestFullscreen().then(()=>{weWentFull=true}).catch(()=>{})}}
+function showPart(i){$$('.part',$('ovBody')).forEach(p=>p.classList.toggle('active',+p.dataset.part===i));$$('[data-tab]').forEach(b=>b.classList.toggle('active',+b.dataset.tab===i));refit()}
+function moveAudio(to){const a=$('track');if(!a||!to||a.parentNode===to)return;const playing=!a.paused;to.appendChild(a);if(playing&&a.paused)a.play().catch(()=>{})}
+function closeTasks(){if(!$('overlay').classList.contains('open'))return;if(weWentFull&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});weWentFull=false;moveAudio($('audioHome'));$('overlay').classList.remove('open');$('overlay').setAttribute('aria-hidden','true');refit()}
+$('closeTasks').onclick=closeTasks;
+$('lCheck').onclick=()=>{const k=LKEYS[currentVariant],body=$('ovBody');let ok=0;
+ [1,2,3,4].forEach((n,i)=>{const right=k.c[i];$$(`input[name="q${n}"]`,body).forEach(r=>{const lab=r.closest('.opt');lab.classList.remove('correct','wrong');if(r.value===right)lab.classList.add('correct');else if(r.checked)lab.classList.add('wrong');if(r.checked&&r.value===right)ok++})});
+ $$('[data-sp]',body).forEach(s=>{const right=k.m[+s.dataset.sp],good=s.value===right;if(good)ok++;s.classList.toggle('correct',good);s.classList.toggle('wrong',!good);s.nextElementSibling.textContent=good?'':'→ '+right});
+ $$('[data-f]',body).forEach(f=>{const acc=k.f[+f.dataset.f],good=acc.map(norm).includes(norm(f.value));if(good)ok++;f.classList.toggle('correct',good);f.classList.toggle('wrong',!good);f.parentNode.querySelector('.ans').textContent=good?'':' → '+acc[0]});
+ $('lScore').textContent=ok+' / 15';lChecked=true;refit()};
+$('lReset').onclick=()=>{const body=$('ovBody');$$('input[type=radio]',body).forEach(r=>r.checked=false);$$('select,input[type=text]',body).forEach(e=>{e.value='';e.classList.remove('correct','wrong')});$$('.opt',body).forEach(o=>o.classList.remove('correct','wrong'));$$('.ans',body).forEach(a=>a.textContent='');$('lScore').textContent='';lChecked=false;refit()};
+</script>
+</body>
+</html>
