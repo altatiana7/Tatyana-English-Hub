@@ -1,5 +1,5 @@
 /* Тренажёр задания 38: структура и клише → чтение данных → проблема и вывод → текст целиком. */
-const T=window.W38,main=$('#main'),tabs=$('#tabs'),NAMES=['Рита','Катя'],KEY='ege2027b2-w38';
+const T=window.W38,main=$('#main'),tabs=$('#tabs'),NAMES=['Ученица 1','Ученица 2'],KEY='ege2027b2-w38';
 let who=0;try{who=+localStorage.getItem(KEY+'-who')||0;}catch(e){}
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const ST={cur:0,kind:1,par:0,qs:null,qi:0,pick:null,score:0,showP:false};let cur=0;

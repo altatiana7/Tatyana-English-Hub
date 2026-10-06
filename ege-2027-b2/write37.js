@@ -1,6 +1,6 @@
 /* Тренажёр письма (задание 37): структура → разбор вопросов → ответы → свои вопросы → письмо целиком.
    Игровые шаги каждый раз начинаются с нуля; сохраняется только черновик письма. */
-const L=window.W37,main=$('#main'),tabs=$('#tabs'),NAMES=['Рита','Катя'],KEY='ege2027b2-w37';
+const L=window.W37,main=$('#main'),tabs=$('#tabs'),NAMES=['Ученица 1','Ученица 2'],KEY='ege2027b2-w37';
 let who=0;try{who=+localStorage.getItem(KEY+'-who')||0;}catch(e){}
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const TYPES={
@@ -24,7 +24,7 @@ const PARTS=[['Обращение','Hi Emily,','Hello Emily, · Dear Emily,','Н
  ['Три вопроса по теме','What …? How …? When …?','Разные по смыслу, в нужном времени.','Не спрашивай то, что друг уже сообщил.'],
  ['Надежда на дальнейший контакт','Hope to hear from you soon.','Write back soon. · Keep in touch. · Looking forward to hearing from you.','На отдельной строке, перед завершающей фразой.'],
  ['Завершающая фраза','Best wishes,','All the best, · Take care, · Lots of love,','На отдельной строке, после неё запятая.'],
- ['Подпись','Rita','Только имя, без фамилии.','На отдельной строке, без точки.']];
+ ['Подпись','Anna','Только имя, без фамилии.','На отдельной строке, без точки.']];
 const ST={order:null,placed:0,miss:0, typ:'habit', pool:null,pi:0,filt:'all',stage:0,score:0,streak:0,pick:null,dpick:null,show:false, ap:null,ai:0,apick:null,aval:['','',''],achk:false, cur:0};
 let cur=0;
 const STEPS=[['Структура','#4a4f8f',0,structure],['Разбор вопросов','#2f6f9f',0,analysis],['Отвечаю на вопросы','#2c7f78',0,answer],['Задаю вопросы','#4c7f4a',0,ask],['Пишу письмо','#b0683a',20,letter],['Банк писем','#66549a',0,bank]];

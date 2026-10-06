@@ -14,7 +14,7 @@ const P4S=[{img:['img/exam-photo1.jpg','img/exam-photo2.jpg'],project:'Preparing
  {img:['img/stress-photo1.jpg','img/stress-photo2.jpg'],project:'Fighting stress',kind:'the two ways to fight stress',pref:'which of these ways to fight stress presented in the pictures you’d prefer and why'}];
 
 /* Две ученицы: у каждой свои ответы, баллы и свой вариант устной части */
-const NAMES=['Рита','Катя'];
+const NAMES=['Ученица 1','Ученица 2'];
 const fresh=i=>({vr:i,g:{val:[],un:[],cur:0,done:false},w:{val:[],un:[],cur:0,done:false},v:{val:[],un:[],cur:0,done:false},r:{sel:{},act:0,done:false},l:{val:[],done:false},
   sp:{t1:null,t2:[null,null,null,null],t3:[null,null,null,null,null],k1:null,k2:null,k3:null},iv:{v:i,q:0,flip:false}});
 const ALL=[fresh(0),fresh(1)];let who=0,S=ALL[0];

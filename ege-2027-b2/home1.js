@@ -2,7 +2,7 @@
    Работа длинная, поэтому черновик хранится в этом браузере до нажатия «Очистить всё». */
 const D=window.DIAG,main=$('#main'),tabs=$('#tabs'),KEY='ege2027b2-home1';
 const blank=()=>({l1:{},l2:{},l3:{},r10:{},r12:{},w37:'',w38:'',q3:0,q12:0,checked:false});
-const NAMES=['Рита','Катя'];let who=0;try{who=+localStorage.getItem(KEY+'-who')||0;}catch(e){}
+const NAMES=['Ученица 1','Ученица 2'];let who=0;try{who=+localStorage.getItem(KEY+'-who')||0;}catch(e){}
 let S=blank();const load=()=>{S=blank();try{const s=JSON.parse(localStorage.getItem(KEY+'-'+who)||'null');if(s)S=Object.assign(blank(),s);}catch(e){}};load();
 const save=()=>{try{localStorage.setItem(KEY+'-'+who,JSON.stringify(S));}catch(e){}};
 function paintWho(){const w=$('#who');w.innerHTML='';NAMES.forEach((n,i)=>{const b=el('button','tab'+(i===who?' on':''),n);b.type='button';b.onclick=()=>{who=i;try{localStorage.setItem(KEY+'-who',i);}catch(e){}load();paintWho();go(0);};w.append(b);});}
@@ -116,7 +116,7 @@ function report(){
   const nav=el('div','navrow'),msg=el('span','note');
   if(!S.checked)nav.append(btn('Проверить работу',()=>{S.checked=true;save();redraw();},'acc'));
   else{nav.append(btn('Скопировать отчёт',()=>{(navigator.clipboard?navigator.clipboard.writeText(reportText()):Promise.reject()).then(()=>{msg.textContent='Скопировано – вставьте в сообщение учителю.';}).catch(()=>{msg.textContent='Не получилось скопировать – скачайте файл.';});},'main'));
-    const d=el('a','btn','Скачать отчёт файлом');d.download='ege-diagnostic-home-'+(who?'katya':'rita')+'.txt';d.href=URL.createObjectURL(new Blob([reportText()],{type:'text/plain;charset=utf-8'}));nav.append(d);}
+    const d=el('a','btn','Скачать отчёт файлом');d.download='ege-diagnostic-home-'+(who?'student2':'student1')+'.txt';d.href=URL.createObjectURL(new Blob([reportText()],{type:'text/plain;charset=utf-8'}));nav.append(d);}
   nav.append(msg);const clr=btn('Очистить всё',()=>{if(clr.dataset.sure){try{localStorage.removeItem(KEY+'-'+who);}catch(e){}S=blank();go(0);}else{clr.dataset.sure=1;clr.textContent='Точно очистить? Нажмите ещё раз';}},'sm sp');nav.append(clr);main.append(nav);
 }
 Clock.mount();paintWho();go(0);

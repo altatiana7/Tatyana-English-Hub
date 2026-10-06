@@ -138,7 +138,7 @@ const R=[
  ['Where was the exhibition held?','What was the oldest map you saw?','Who did you go with?']]
 ];
 const W=window.W37;
-R.forEach((r,i)=>{const n=r[0],ans=r[8],ask=r[9],me='Rita';
+R.forEach((r,i)=>{const n=r[0],ans=r[8],ask=r[9],me='Anna';
  const model='Hi '+n+',\n\nThanks for your email! It was lovely to hear from you. Sorry I haven’t written earlier.\n\nNow I’d like to answer your questions. '+ans.join(' ')+'\n\nBy the way, I’m really curious about '+r[6]+'. '+ask.join(' ')+'\n\nI hope to hear from you soon.\n\nBest wishes,\n'+me;
  W.push({g:r[1],topic:r[2],id:100+i+1,name:n,email:true,subject:r[2],lead:r[3],q:r[4].map(q=>({t:q[0],k:q[1],d:!!q[2]})),about:r[6],trig:r[5],tt:r[7],ans:ans,ask:ask,model:model,src:'own'});});
 })();
