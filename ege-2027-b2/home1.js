@@ -1,7 +1,7 @@
 /* Домашняя часть диагностики: аудирование 1–9, чтение 10 и 12–18, письмо 37 и 38.
    Работа длинная, поэтому черновик хранится в этом браузере до нажатия «Очистить всё». */
 const D=window.DIAG,main=$('#main'),tabs=$('#tabs'),KEY='ege2027b2-home1';
-const blank=()=>({l1:{},l2:{},l3:{},r10:{},r12:{},w37:'',w38:'',q3:0,q12:0,checked:false});
+const blank=()=>({l1:{},l2:{},l3:{},r10:{},r12:{},w37:'',w38:'',q3:0,q12:0,tr:{},tb:0,checked:false});
 const NAMES=['Ученица 1','Ученица 2'];let who=0;try{who=+localStorage.getItem(KEY+'-who')||0;}catch(e){}
 let S=blank();const load=()=>{S=blank();try{const s=JSON.parse(localStorage.getItem(KEY+'-'+who)||'null');if(s)S=Object.assign(blank(),s);}catch(e){}};load();
 const save=()=>{try{localStorage.setItem(KEY+'-'+who,JSON.stringify(S));}catch(e){}};
@@ -17,15 +17,39 @@ const STEPS=[
  {id:'l1',label:'Аудирование 1',min:0,draw:lis1},{id:'l2',label:'Аудирование 2',min:0,draw:lis2},{id:'l3',label:'Аудирование 3–9',min:0,draw:lis3},
  {id:'r10',label:'Чтение 10',min:8,draw:read10},{id:'r12',label:'Чтение 12–18',min:15,draw:read12},
  {id:'w37',label:'Письмо 37',min:20,draw:()=>writing(37)},{id:'w38',label:'Письмо 38',min:40,draw:()=>writing(38)},
+ {id:'tr',label:'Трудное',min:15,draw:tricky},
  {id:'rep',label:'Отчёт',min:0,draw:report}
 ];
 const cnt=o=>Object.keys(o).filter(k=>o[k]!=null&&o[k]!=='').length;
-function isDone(id){return id==='l1'?cnt(S.l1)===6:id==='l2'?cnt(S.l2)===7:id==='l3'?cnt(S.l3)===7:id==='r10'?cnt(S.r10)===7:id==='r12'?cnt(S.r12)===7:id==='w37'?words(S.w37)>=90:id==='w38'?words(S.w38)>=180:S.checked;}
+function isDone(id){return id==='l1'?cnt(S.l1)===6:id==='l2'?cnt(S.l2)===7:id==='l3'?cnt(S.l3)===7:id==='r10'?cnt(S.r10)===7:id==='r12'?cnt(S.r12)===7:id==='w37'?words(S.w37)>=90:id==='w38'?words(S.w38)>=180:id==='tr'?TRN===Object.keys(S.tr).filter(k=>S.tr[k]!==''&&S.tr[k]!=null).length:S.checked;}
 function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':'')+(isDone(s.id)?' done':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.title=s.label;b.type='button';b.onclick=()=>go(k);tabs.append(b);});
   const on=tabs.querySelector('.on');if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'nearest'});}
 function go(k){cur=k;if(k>2)audio.pause();Clock.set(STEPS[k].min*60);redraw();}
 function redraw(){paintTabs();main.innerHTML='';STEPS[cur].draw();}
 function nextBtn(){return btn('Дальше: '+STEPS[cur+1].label+' →',()=>go(cur+1),'main sp');}
+/* ---------- Трудные случаи ---------- */
+const TR=window.TRICKY,TRN=TR.reduce((a,b)=>a+b.items.length,0);
+const SHORT=['Грамматика','Словообразование','Лексика','True / False / NS','Чтение','Вопросы','Письмо и монолог'];
+const trOk=(b,i)=>{const it=b.items[i],v=S.tr[b.id+i];return b.type==='typed'?it[2].includes(norm(v||'')):v===it[2];};
+const trScore=()=>TR.reduce((a,b)=>a+b.items.filter((x,i)=>trOk(b,i)).length,0);
+function tricky(){
+  const b=TR[S.tb];head('Трудные случаи · '+b.name+'. '+b.inst,'По методическим рекомендациям ФИПИ 2024–2025 · задания составлены для сайта');
+  const top=el('div','navrow'),ch=el('div','chips');TR.forEach((x,k)=>{const n=x.items.filter((y,i)=>S.tr[x.id+i]!=null&&S.tr[x.id+i]!=='').length,c=el('button','chip'+(k===S.tb?' on':'')+(S.checked?(x.items.every((y,i)=>trOk(x,i))?' ok':' bad'):(n===x.items.length?' fill':'')),SHORT[k]);c.type='button';c.onclick=()=>{S.tb=k;save();redraw();};ch.append(c);});top.append(ch);main.append(top);
+  const stage=el('div','stage'),a=el('div','panel grow trk');
+  b.items.forEach((it,i)=>{const key=b.id+i,row=el('div','trow'),ok=trOk(b,i);
+    if(b.type==='typed'){const parts=it[0].split('___'),p=el('div','tq');p.append(el('b','tn',String(i+1)),document.createTextNode(parts[0]));
+      const inp=lock(el('input','ans fin'+mark(ok)));inp.type='text';inp.autocomplete='off';inp.spellcheck=false;inp.setAttribute('autocapitalize','off');inp.value=S.tr[key]||'';inp.setAttribute('aria-label','Ответ '+(i+1));
+      inp.oninput=()=>{S.tr[key]=inp.value;save();const t=tabs.children[cur];t&&t.classList.toggle('done',isDone('tr'));};
+      p.append(inp);if(S.checked&&!ok)p.append(el('b','fright',' → '+esc(it[3])+' '));p.append(el('span','base sm',it[1]),document.createTextNode(parts[1]||''));row.append(p);
+      if(S.checked)row.append(el('div','texp'+(ok?'':' bad'),esc(it[4])));}
+    else{row.append(el('div','tq','<b class="tn">'+(i+1)+'</b>'+it[0]));const o=el('div','topts');it[1].forEach((t,j)=>{const bt=lock(el('button','opt sm'+(S.checked?(j===it[2]?' ok':(S.tr[key]===j?' bad':'')):(S.tr[key]===j?' sel':'')),esc(t)));bt.type='button';bt.onclick=()=>{S.tr[key]=j;save();redraw();};o.append(bt);});row.append(o);
+      if(S.checked)row.append(el('div','texp'+(ok?'':' bad'),esc(it[3])));}
+    a.append(row);});
+  stage.append(a);main.append(stage);const nav=el('div','navrow');
+  nav.append(btn('← Назад',()=>{S.tb--;save();redraw();},'sm'),btn('Вперёд →',()=>{S.tb++;save();redraw();},'sm'),el('span','note',S.checked?'Верно: '+trScore()+' из '+TRN+'. Пояснения – под каждым заданием.':'Блок '+(S.tb+1)+' из '+TR.length+'. Пояснения откроются после проверки работы на вкладке «Отчёт».'),nextBtn());
+  nav.children[0].disabled=S.tb===0;nav.children[1].disabled=S.tb===TR.length-1;main.append(nav);
+}
+function trErrors(){const out=[];TR.forEach(b=>b.items.forEach((it,i)=>{if(!trOk(b,i)){const v=S.tr[b.id+i];out.push(b.name+' · '+(b.type==='typed'?it[1]+': '+((v||'').trim()||'—')+' → '+it[3]:it[0].replace(/<br>/g,' ').replace(/“|”/g,'"').slice(0,70)+'… : '+(v==null?'—':it[1][v])+' → '+it[1][it[2]]));}}));return out;}
 function head(ru,src){main.append(el('div','inst','<b>'+ru+'</b>'+(src?'<span class="src">'+src+'</span>':'')));}
 function lisHead(ru){head(ru);const r=el('div','navrow');r.append(audio);main.append(r);}
 function lock(e){if(S.checked)e.disabled=true;return e;}
@@ -101,16 +125,17 @@ const errs=(sel,key)=>key.filter((a,k)=>sel[k]!==a).length;
 const by3=e=>e===0?3:e===1?2:e===2?1:0,by2=e=>e===0?2:e===1?1:0;
 function scores(){return [['Аудирование 1',by2(errs(S.l1,D.lis.k1)),2],['Аудирование 2',by3(errs(S.l2,D.lis.k2)),3],['Аудирование 3–9',7-errs(S.l3,D.lis.k3),7],['Чтение 10',by3(errs(S.r10,D.r10.a)),3],['Чтение 12–18',7-errs(S.r12,D.r12.a),7]];}
 function line(lbl,sel,key,first,letters){return lbl+': '+key.map((a,k)=>(letters?letters[k]:first+k)+'='+(sel[k]==null?'–':sel[k])+(sel[k]===a?'':' (верно '+a+')')).join(', ');}
-function reportText(){const r=scores();return 'ЕГЭ 2027 · диагностика · домашняя часть · '+NAMES[who]+'\n'+r.map(x=>x[0]+': '+x[1]+' / '+x[2]).join('\n')+'\nИтого с автоматической проверкой: '+r.reduce((a,x)=>a+x[1],0)+' / 22\n\n'+
+function reportText(){const r=scores();return 'ЕГЭ 2027 · диагностика · домашняя часть · '+NAMES[who]+'\n'+r.map(x=>x[0]+': '+x[1]+' / '+x[2]).join('\n')+'\nИтого с автоматической проверкой: '+r.reduce((a,x)=>a+x[1],0)+' / 22\nТрудные случаи (вне баллов ЕГЭ): '+trScore()+' / '+TRN+'\n\n'+
   [line('Аудирование 1',S.l1,D.lis.k1,0,'ABCDEF'),line('Аудирование 2',S.l2,D.lis.k2,0,AG),line('Аудирование 3–9',S.l3,D.lis.k3,3),line('Чтение 10',S.r10,D.r10.a,0,AG),line('Чтение 12–18',S.r12,D.r12.a,12)].join('\n')+
-  '\n\n=== Задание 37 · '+words(S.w37)+' слов ===\n'+(S.w37.trim()||'(нет ответа)')+'\n\n=== Задание 38 · '+words(S.w38)+' слов ===\n'+(S.w38.trim()||'(нет ответа)')+'\n';}
+  '\n\n=== Трудные случаи · ошибки ===\n'+(trErrors().join('\n')||'ошибок нет')+'\n\n=== Задание 37 · '+words(S.w37)+' слов ===\n'+(S.w37.trim()||'(нет ответа)')+'\n\n=== Задание 38 · '+words(S.w38)+' слов ===\n'+(S.w38.trim()||'(нет ответа)')+'\n';}
 function report(){
   head(NAMES[who]+' · '+(S.checked?'работа проверена. Отправьте отчёт учителю: письмо 37 и 38 оценивает учитель по критериям ФИПИ.':'проверьте, что вверху выбрано ваше имя. Когда всё готово, нажмите «Проверить работу». После проверки ответы изменить нельзя.'));
   const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
-  if(!S.checked){a.append(el('h3',null,'Что сделано'));STEPS.slice(0,7).forEach(s=>a.append(el('div','rrow','<span>'+s.label+'</span><span class="note">'+(isDone(s.id)?'готово':'не закончено')+'</span><b>'+(isDone(s.id)?'✓':'—')+'</b>')));
+  if(!S.checked){a.append(el('h3',null,'Что сделано'));STEPS.slice(0,8).forEach(s=>a.append(el('div','rrow','<span>'+s.label+'</span><span class="note">'+(isDone(s.id)?'готово':'не закончено')+'</span><b>'+(isDone(s.id)?'✓':'—')+'</b>')));
     b.append(el('h3',null,'Как отправить'),el('p',null,'1. Нажмите «Проверить работу».<br>2. Нажмите «Скопировать отчёт» и вставьте текст в сообщение учителю – или скачайте файл и отправьте его.'),el('p','note','В отчёт попадают ответы, баллы и оба письменных текста.'));}
   else{const r=scores();a.append(el('h3',null,'Баллы · автоматическая проверка'));r.forEach(x=>{const p=x[1]/x[2];a.append(el('div','rrow','<span>'+x[0]+'</span><div class="meter"><i class="'+(p<.7?'low':p<.86?'mid':'high')+'" style="width:'+p*100+'%"></i></div><b>'+x[1]+' / '+x[2]+'</b>'));});
     a.append(el('div','rrow','<span class="total">Итого</span><span class="note">письмо (20 баллов) оценит учитель</span><b class="total">'+r.reduce((s,x)=>s+x[1],0)+' / 22</b>'));
+    {const t=trScore(),p=t/TRN;a.append(el('div','rrow','<span>Трудные случаи</span><div class="meter"><i class="'+(p<.7?'low':p<.86?'mid':'high')+'" style="width:'+p*100+'%"></i></div><b>'+t+' / '+TRN+'</b>'));}
     b.append(el('h3',null,'Письменная часть'),el('p',null,'Задание 37: <b>'+words(S.w37)+'</b> слов (нужно 100–140).<br>Задание 38: <b>'+words(S.w38)+'</b> слов (нужно 200–250).'),el('p','note','Ошибки в заданиях видны на вкладках: зелёным – верно, красным – неверно, после стрелки – правильный ответ.'));}
   res.append(a,b);main.append(res);
   const nav=el('div','navrow'),msg=el('span','note');
