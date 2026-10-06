@@ -102,13 +102,13 @@ h1{font-size:clamp(54px,6.5vw,105px);line-height:.93;letter-spacing:-5px;margin:
 const sections=[['Listening','TUNE IN'],['Vocabulary','FIND YOUR WORDS'],['Grammar','MAKE IT CLICK'],['Word Formation','BUILD A NEW WORD'],['Lesson Check-up','OWN YOUR PROGRESS']];
 const $=id=>document.getElementById(id),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const BANK=window.SPOTLIGHT11_BANK,LISTEN=window.SPOTLIGHT11_LISTENING||{},TASKS=window.SPOTLIGHT_TASKS,LKEYS=window.SPOTLIGHT_LISTEN_KEYS;
-let current=0,currentVariant=1,page=0,scale=1,cardIdx=0,cardBack=false,mix=[];
+let current=0,currentVariant=2,page=0,scale=1,cardIdx=0,cardBack=false,mix=[];
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const norm=s=>String(s||'').trim().toLowerCase().replace(/[’‘`]/g,"'").replace(/[.!?]+$/,'').replace(/\s+/g,' ');
 
 /* ---------- cover / navigation ---------- */
 $('cards').innerHTML=sections.map((s,i)=>`<button class="card" data-index="${i}"><span class="number">0${i+1} / ${s[1]}</span><span class="arrow">↗</span><strong>${s[0]}</strong></button>`).join('');
-$$('[data-index]').forEach(b=>b.onclick=()=>{current=+b.dataset.index;currentVariant=current===0?2:1;page=0;cardIdx=0;cardBack=false;mix=[];answers={};renderItems.checked='';$('sectionTitle').textContent=sections[current][0];$('home').style.display='none';document.body.classList.add('inStage');$('stage').classList.add('active');renderSection()});
+$$('[data-index]').forEach(b=>b.onclick=()=>{current=+b.dataset.index;currentVariant=2;page=0;cardIdx=0;cardBack=false;mix=[];answers={};renderItems.checked='';$('sectionTitle').textContent=sections[current][0];$('home').style.display='none';document.body.classList.add('inStage');$('stage').classList.add('active');renderSection()});
 $('back').onclick=home;
 function home(){closeTasks();$('stageBody').innerHTML='';$('subBar').innerHTML='';document.body.classList.remove('inStage');$('stage').classList.remove('active');$('home').style.display='flex'}
 document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if($('overlay').classList.contains('open'))closeTasks();else if($('stage').classList.contains('active'))home()});
@@ -123,7 +123,7 @@ function refit(){if($('overlay').classList.contains('open'))fit($('ovBody'));els
 window.addEventListener('resize',refit);drawSize();
 
 /* ---------- variants ---------- */
-function variants(){return current===0?Object.keys(BANK.audio).map(Number):current===4?[]:Array.from({length:20},(_,i)=>i+1)}
+function variants(){return current===0?Object.keys(BANK.audio).map(Number):current===4?[]:Array.from({length:19},(_,i)=>i+2)}
 function renderBar(){const arr=variants();$('variantBar').classList.toggle('hidden',!arr.length);$('variantBar').innerHTML=arr.map(v=>`<button class="chip ${v===currentVariant?'active':''}" data-v="${v}" title="Variant ${v}" aria-label="Variant ${v}">${v}</button>`).join('');$$('[data-v]',$('variantBar')).forEach(b=>b.onclick=()=>{currentVariant=+b.dataset.v;page=0;cardIdx=0;cardBack=false;renderSection()})}
 function renderSection(){renderBar();$('stageBody').className='fit';$('stageBody').style.cssText='';
  if(current===0)renderListening();
@@ -133,7 +133,7 @@ function renderSection(){renderBar();$('stageBody').className='fit';$('stageBody
  else{if(!mix.length)newMix();renderItems(mix,'Mixed check-up · grammar forms and word formation',true)}
  refit()}
 function mk(v,t){return{v,n:t[0],text:t[1],word:t[2],key:(t[0]<=28?BANK.grammar:BANK.wordFormation)[v][t[0]]}}
-function newMix(){const pick=(from,to)=>{const pool=[];for(let v=1;v<=20;v++)TASKS[v].forEach(t=>{if(t[0]>=from&&t[0]<=to)pool.push(mk(v,t))});pool.sort(()=>Math.random()-.5);return pool.slice(0,3)};mix=[...pick(20,28),...pick(29,34)].map((it,i)=>({...it,label:i+1}));page=0}
+function newMix(){const pick=(from,to)=>{const pool=[];for(let v=2;v<=20;v++)TASKS[v].forEach(t=>{if(t[0]>=from&&t[0]<=to)pool.push(mk(v,t))});pool.sort(()=>Math.random()-.5);return pool.slice(0,3)};mix=[...pick(20,28),...pick(29,34)].map((it,i)=>({...it,label:i+1}));page=0}
 
 /* ---------- gap-fill items (Grammar, Word Formation, Check-up) ---------- */
 const PER=3;let answers={};
