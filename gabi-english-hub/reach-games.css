@@ -1,0 +1,82 @@
+/* Reach Higher missions · navy + yellow, one screen each */
+.rh{--n:#0f2438;--y:#ffd43b;--yd:#d1a900;--l:#c5d6e4;--m:#55708a;--ok:#1f8a5b;--okb:#e2f5ea;--no:#c8452f;--nob:#fdeae5;
+  background:#fff;border:2px solid var(--l);border-radius:18px;padding:12px 16px;color:var(--n);height:min(430px,calc(100vh - 78px));min-height:330px;overflow:hidden;display:flex;flex-direction:column}
+.rh>div{flex:1;min-height:0}
+.rh button{font:inherit;cursor:pointer;color:var(--n);border:2px solid var(--l);background:#fff;border-radius:12px;padding:8px 14px;font-weight:700;font-size:17px;min-height:0;box-shadow:none}
+.rh button:disabled{cursor:default;opacity:.45}
+.rh button:focus-visible,.rh input:focus-visible{outline:3px solid #1f6fb5;outline-offset:2px}
+.rh .rhMain{background:var(--y);border-color:var(--y);box-shadow:0 4px 0 var(--yd);padding:9px 20px}
+.rh .rhMain:hover{background:#ffe066}
+.rh .rhGhost{font-size:15px;font-weight:600;color:var(--m)}
+.rh input{font:inherit;font-size:22px;font-weight:700;color:var(--n);border:2px solid var(--n);border-radius:12px;padding:8px 14px;min-width:0;flex:1 1 220px;background:#fff}
+.rhHead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.rhTag{display:inline-block;background:var(--n);color:#fff;border-radius:999px;padding:4px 12px;font-size:14px;font-weight:700}
+.rhScore{font-size:18px}
+.rhForm{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.rhRow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.rhNote{margin:8px 0 0;color:var(--m);font-size:15px}
+.rhFb{border-radius:12px;padding:8px 14px;margin:0 0 10px;font-size:17px;line-height:1.35}
+.rhFb b{display:block}.rhFb.ok{background:var(--okb);border:2px solid #9dd3b6}.rhFb.no{background:var(--nob);border:2px solid #f0b3a6}
+.rhDots{display:flex;gap:4px}.rhDots i{width:12px;height:12px;border-radius:50%;background:#dbe6ef}.rhDots i.ok{background:var(--ok)}.rhDots i.no{background:var(--no)}.rhDots i.cur{background:var(--y);box-shadow:0 0 0 2px var(--n)}
+.rhPlay{min-width:0;display:flex;flex-direction:column}
+/* end */
+.rhEnd{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:18px;height:100%}
+.rhEndTop h3{font-size:28px;margin:10px 0 6px;line-height:1.15}.rhEndTop p{margin:0 0 14px;font-size:18px;color:var(--m)}
+.rhReview{min-height:0;display:flex;flex-direction:column}.rhReview>b{font-size:16px;margin-bottom:6px}
+.rhReview ol{margin:0;padding:0 6px 0 0;list-style:none;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.rhReview li{border:2px solid var(--l);border-radius:10px;padding:6px 10px;font-size:15.5px;line-height:1.3}
+.rhReview li span{display:block}.rhReview li em{font-style:normal;font-weight:700;color:var(--ok)}.rhReview li small{color:var(--m);font-size:14px;margin-left:8px}
+.rhClean{align-self:center;font-size:18px;color:var(--ok);font-weight:700}
+/* bomb */
+.bombGrid{display:grid;grid-template-columns:230px minmax(0,1fr);gap:22px;align-items:center;height:100%}
+.bomb{text-align:center}.bombBall{width:150px;height:150px;border-radius:50%;margin:0 auto 12px;background:radial-gradient(circle at 35% 30%,#3a5573,#0f2438 62%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 8px 0 #07131f}
+.bombBall b{font-size:60px;line-height:1;font-variant-numeric:tabular-nums}.bombBall span{font-size:14px;opacity:.8}
+.bomb.hot .bombBall{background:radial-gradient(circle at 35% 30%,#e86a4d,#8f2412 62%);animation:rhPulse .5s infinite alternate}
+@keyframes rhPulse{to{transform:scale(1.05)}}
+.fuse{height:12px;border-radius:9px;background:#dbe6ef;overflow:hidden}.fuse u{display:block;height:100%;background:linear-gradient(90deg,#c8452f,#ffb020);transition:width .25s linear}
+.bomb p{margin:8px 0 0;font-size:14.5px;color:var(--m);line-height:1.3}
+.bombClue{display:flex;align-items:center;gap:16px;margin:6px 0 16px}
+.bombClue .letter{flex:none;width:84px;height:84px;border-radius:18px;background:var(--y);box-shadow:0 5px 0 var(--yd);display:grid;place-items:center;font-size:54px}
+.bombClue p{margin:0;font-size:clamp(22px,2.4vw,30px);font-weight:700;line-height:1.2}
+/* jeopardy */
+.jeo{display:flex;flex-direction:column;height:100%}
+.jeoBoard{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.jeoCol{display:grid;grid-template-rows:auto repeat(4,minmax(0,1fr));gap:8px;min-height:0}
+.jeoCol>b{text-align:center;font-size:17px;background:var(--n);color:#fff;border-radius:10px;padding:6px 4px}
+.rh .jeoCol button{background:#1b3f66;border-color:#1b3f66;color:var(--y);font-size:clamp(22px,2.6vw,32px);font-weight:800;padding:0}
+.rh .jeoCol button:hover:not(:disabled){background:#24538a}
+.rh .jeoCol button.ok{background:var(--okb);border-color:#9dd3b6;color:var(--ok);opacity:1}
+.rh .jeoCol button.no{background:var(--nob);border-color:#f0b3a6;color:var(--no);opacity:1}
+.jeoClue{display:flex;flex-direction:column;height:100%}
+.jeoQ{font-size:clamp(24px,2.8vw,34px);font-weight:700;line-height:1.2;margin:14px 0 18px;max-width:26em}
+/* millionaire */
+.milGrid{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:18px;height:100%}
+.milQ{font-size:clamp(21px,2.3vw,28px);font-weight:700;line-height:1.25;margin:4px 0 10px}
+.milOpts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.rh .milOpts button{display:flex;align-items:center;gap:10px;text-align:left;font-size:18px;font-weight:600;padding:8px 12px;border-radius:999px;border-color:var(--n)}
+.milOpts i{flex:none;font-style:normal;font-weight:800;color:#b8860b}
+.rh .milOpts button.ok{background:var(--okb);border-color:var(--ok);opacity:1}.rh .milOpts button.no{background:var(--nob);border-color:var(--no);opacity:1}.rh .milOpts button.dim{opacity:.75}
+.life{display:flex;gap:6px}.rh .life button{font-size:14.5px;padding:5px 12px;border-radius:999px;border-color:var(--n)}
+.ladder{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;justify-content:space-between;background:var(--n);border-radius:14px;padding:8px 10px;color:#9fb6c9;font-weight:700;font-size:14.5px;min-height:0}
+.ladder li{display:flex;gap:10px;padding:1px 8px;border-radius:7px;line-height:1.35}.ladder li span{width:20px;text-align:right;opacity:.7}
+.ladder li.safe{color:#fff}.ladder li.won{color:#6fd1a0}.ladder li.cur{background:var(--y);color:var(--n)}
+/* lava */
+.lavaGrid{display:grid;grid-template-columns:150px minmax(0,1fr);gap:22px;height:100%}
+.shaft{position:relative;border-radius:16px;background:#1b2b3c;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;color:#fff;padding-top:14px;min-height:0}
+.lavaFill{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(180deg,#ffb020,#e2491d 40%,#a31d0b);transition:height .25s linear}
+.shaft b{position:relative;font-size:40px;line-height:1;font-variant-numeric:tabular-nums}.shaft span{position:relative;font-size:14px;opacity:.85}
+.shaft.hot{box-shadow:0 0 0 4px #e2491d inset}
+.lavaDef{font-size:clamp(24px,2.7vw,33px);font-weight:700;line-height:1.2;margin:14px 0 18px;max-width:24em}
+/* boss */
+.bossGrid{display:grid;grid-template-columns:240px minmax(0,1fr);gap:22px;height:100%;align-items:start}
+.boss{background:var(--n);color:#fff;border-radius:16px;padding:14px}
+.boss .rhTag{background:var(--y);color:var(--n)}
+.hp{height:22px;border-radius:11px;background:#33536f;overflow:hidden;margin:12px 0 6px}.hp u{display:block;height:100%;background:linear-gradient(90deg,#e2491d,#ffb020);transition:width .35s}
+.hpN{font-size:26px;font-variant-numeric:tabular-nums}.boss p{margin:8px 0 0;font-size:14.5px;color:#c5d6e4;line-height:1.35}
+.bossQ{font-size:clamp(24px,2.7vw,33px);font-weight:700;line-height:1.3;margin:8px 0 16px}
+.bossQ .gap{display:inline-block;min-width:74px;text-align:center;border-bottom:4px solid var(--n);padding:0 6px}
+.bossQ .gap.ok{color:var(--ok);border-color:var(--ok)}.bossQ .gap.no{color:var(--no);border-color:var(--no)}
+.artRow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.rh .artRow button{font-size:26px;padding:14px 6px;border-color:var(--n)}
+.ruleRow{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.rh .ruleRow button{font-size:17px;border-color:var(--n)}
+@media(max-width:760px){.rh{height:auto;overflow:visible}.bombGrid,.lavaGrid,.bossGrid,.milGrid,.rhEnd{grid-template-columns:1fr}.ladder{display:none}.shaft{height:70px}.milOpts{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.bomb.hot .bombBall{animation:none}}
