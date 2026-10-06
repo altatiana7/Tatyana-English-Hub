@@ -1,15 +1,24 @@
 /* Занятие 1 · диагностика в формате ЕГЭ. Ничего не сохраняется: страница каждый раз открывается чистой. */
 const D=window.DIAG,main=$('#main'),tabs=$('#tabs');
-const READ1="Many people believe that our brain simply rests while we are asleep. In fact, scientists have discovered that it stays surprisingly busy throughout the night. During deep sleep the brain sorts through everything we have learned during the day and decides which information is worth keeping. Important facts and skills are moved into long-term memory, while unnecessary details are thrown away. This explains why students who sleep for at least eight hours usually remember new material better than those who study late into the night. Researchers have also found that sleep helps us to solve difficult problems. People who were given a puzzle in the evening were twice as likely to find the answer after a good night’s rest. Nevertheless, about a third of teenagers regularly get less sleep than they need, mainly because of bright screens and early school timetables. Doctors therefore advise switching off all gadgets an hour before going to bed.";
-const AD={title:'Enjoy our hop-on-hop-off sightseeing tour!',intro:'You are considering going on the sightseeing tour and now you’d like to get more information.',points:['operation hours','starting point','tourist attractions to see','price for one person'],
-  key:['What are the operation hours of the tour? / When does the tour operate?','Where is the starting point of the tour? / Where does the tour start?','What tourist attractions can I see during the tour?','How much is the tour for one person? / What is the price for one person?']};
+const READ_A="Many people believe that our brain simply rests while we are asleep. In fact, scientists have discovered that it stays surprisingly busy throughout the night. During deep sleep the brain sorts through everything we have learned during the day and decides which information is worth keeping. Important facts and skills are moved into long-term memory, while unnecessary details are thrown away. This explains why students who sleep for at least eight hours usually remember new material better than those who study late into the night. Researchers have also found that sleep helps us to solve difficult problems. People who were given a puzzle in the evening were twice as likely to find the answer after a good night’s rest. Nevertheless, about a third of teenagers regularly get less sleep than they need, mainly because of bright screens and early school timetables. Doctors therefore advise switching off all gadgets an hour before going to bed.";
+const READ_B="Honey is the only food that practically never goes bad. Archaeologists have found pots of honey in ancient Egyptian tombs which were over three thousand years old and still perfectly good to eat. The secret lies in its chemistry. Honey contains very little water and a lot of sugar, so bacteria simply cannot survive in it. Besides, bees add a special enzyme which produces a natural disinfectant. To make just one kilogram of honey, bees have to visit about four million flowers and fly a distance equal to several trips around the world. Throughout history people have used honey not only as a sweetener but also as a medicine. Doctors in ancient Greece treated wounds and burns with it, and modern research has confirmed that this method really works. Nevertheless, scientists warn that honey should not be given to children under the age of one.";
+const READS=[READ_A,READ_B],RNOTE=["throughout, discovered, learned, unnecessary, puzzle, therefore, twice","archaeologists, ancient, tombs, chemistry, bacteria, enzyme, disinfectant, throughout, wounds"];
+const ADS=[{img:"img/ad-tour.jpg",title:'Enjoy our hop-on-hop-off sightseeing tour!',intro:'You are considering going on the sightseeing tour and now you’d like to get more information.',points:['operation hours','starting point','tourist attractions to see','price for one person'],
+  key:['What are the operation hours of the tour? / When does the tour operate?','Where is the starting point of the tour? / Where does the tour start?','What tourist attractions can I see during the tour?','How much is the tour for one person? / What is the price for one person?']},
+ {img:'img/ad-lang.jpg',title:'Individual language classes with native speakers!',intro:'You are considering taking some lessons and now you’d like to get more information.',points:['location','price for one lesson','duration of the lesson','languages available'],
+  key:['Where are the classes held? / Where are you located?','How much does one lesson cost? / What is the price for one lesson?','How long does the lesson last? / What is the duration of the lesson?','What languages are available? / What languages can I learn?']}];
 const IV=[{id:'iv16',theme:'Science',q:['What science subjects have you studied? Which of them did you enjoy?','Are there any inventions or discoveries which have negative effects?','What would you like scientists to discover or invent in the future? Why?','Which scientist of the past or the present do you admire? Why?','What discovery or invention can you not live without? Why?']},
   {id:'iv33',theme:'Planning the day',q:['What do you usually do on a typical day?','Do you usually make a plan for your day? Why or why not?','How do you make sure you will not forget any important tasks for the day?','Do you think it’s a good idea to use mobile tools and applications to plan your day?','Do you think time management courses can be useful for school students? Why or why not?']}];
 const IVTIP='Полный ответ из 2–3 фраз: прямой ответ → причина или пример. Время глагола – как в вопросе.';
-const P4={project:'Preparing for exams',kind:'the two types of preparing for exams',pref:'which type of preparing for exams you’d prefer as a school student and why'};
+const P4S=[{img:['img/exam-photo1.jpg','img/exam-photo2.jpg'],project:'Preparing for exams',kind:'the two types of preparing for exams',pref:'which type of preparing for exams you’d prefer as a school student and why'},
+ {img:['img/stress-photo1.jpg','img/stress-photo2.jpg'],project:'Fighting stress',kind:'the two ways to fight stress',pref:'which of these ways to fight stress presented in the pictures you’d prefer and why'}];
 
-const S={g:{val:[],un:[],cur:0,done:false},w:{val:[],un:[],cur:0,done:false},v:{val:[],un:[],cur:0,done:false},r:{sel:{},act:0,done:false},
-  sp:{t1:null,t2:[null,null,null,null],t3:[null,null,null,null,null],k1:null,k2:null,k3:null},iv:{v:0,q:0,flip:false}};
+/* Две ученицы: у каждой свои ответы, баллы и свой вариант устной части */
+const NAMES=['Рита','Катя'];
+const fresh=i=>({vr:i,g:{val:[],un:[],cur:0,done:false},w:{val:[],un:[],cur:0,done:false},v:{val:[],un:[],cur:0,done:false},r:{sel:{},act:0,done:false},
+  sp:{t1:null,t2:[null,null,null,null],t3:[null,null,null,null,null],k1:null,k2:null,k3:null},iv:{v:i,q:0,flip:false}});
+const ALL=[fresh(0),fresh(1)];let who=0,S=ALL[0];
+function paintWho(){const w=$('#who');w.innerHTML='';NAMES.forEach((n,i)=>{const b=el('button','tab'+(i===who?' on':''),n);b.type='button';b.onclick=()=>{who=i;S=ALL[i];paintWho();go(cur);};w.append(b);});}
 let cleanup=null,cur=0;
 
 const STEPS=[
@@ -115,28 +124,28 @@ function speakShell(taskHtml,phases,opts){
   const ov=teacherPanel(opts.teachHtml,opts.rows);
   const box=el('div','ctlbtns');box.append(startB,pauseB,skipB,recToggle(),btn('Оценка учителя',()=>{ov.hidden=false;},'acc sm wide'));
   ctl.append(ring,label,box,recBox);stage.append(kim,ctl);main.append(stage);
-  const nav=el('div','navrow');nav.append(el('span','note',opts.note||''));nav.append(nextBtn());main.append(nav);
+  const nav=el('div','navrow');nav.append(btn('Вариант '+(S.vr+1)+' из 2',()=>{S.vr=1-S.vr;redraw();},'sm'),el('span','note',opts.note||''));nav.append(nextBtn());main.append(nav);
   cleanup=()=>{run.stop();ov.remove();};return kim;
 }
-function speak1(){
+function speak1(){const READ1=READS[S.vr];
   speakShell('<p class="task">Task 1. Imagine that you are preparing a project with your friend. You have found some interesting material for the presentation and you want to read this text to your friend. You have 1.5 minutes to read the text silently, then be ready to read it out aloud. You will not have more than 1.5 minutes to read it.</p><div class="textbox">'+esc(READ1)+'</div>',
    [{label:'Подготовка · читайте про себя',kind:'prep',sec:90},{label:'Ответ · читайте вслух',kind:'answer',sec:90}],
-   {name:'task1',note:'Задание 1 · 1 балл · текст составлен для сайта по образцу ФИПИ ('+words(READ1)+' слов).',
-    teachHtml:'<p><b>1 балл:</b> речь воспринимается легко, нет необоснованных пауз; фразовое ударение и интонация без нарушений; не более 5 фонетических ошибок, из них не более 2 искажают смысл.</p><p><b>0:</b> текст не дочитан или ошибок больше.</p><p>Отмечайте: throughout, discovered, learned, unnecessary, puzzle, therefore, twice, окончания -ed, паузы на запятых.</p>',
+   {name:NAMES[who]+'-task1',note:'Задание 1 · 1 балл · текст составлен для сайта по образцу ФИПИ ('+words(READ1)+' слов).',
+    teachHtml:'<p><b>1 балл:</b> речь воспринимается легко, нет необоснованных пауз; фразовое ударение и интонация без нарушений; не более 5 фонетических ошибок, из них не более 2 искажают смысл.</p><p><b>0:</b> текст не дочитан или ошибок больше.</p><p>Отмечайте: '+RNOTE[S.vr]+', окончания -ed, паузы на запятых.</p>',
     rows:[scoreRow('Чтение вслух',1,()=>S.sp.t1,n=>S.sp.t1=n)]});
 }
-function speak2(){
-  const kim=speakShell('<p class="task">Task 2. Study the advertisement.</p><div class="adt">'+esc(AD.title)+'</div><div class="adrow"><img src="img/ad-tour.jpg" alt="Advertisement photo"><div><p class="task">'+esc(AD.intro)+' In 1.5 minutes you are to ask four direct questions to find out about the following:</p><ol id="pts">'+AD.points.map(p=>'<li>'+esc(p)+'</li>').join('')+'</ol><p class="task">You have 20 seconds to ask each question.</p></div></div>',
+function speak2(){const AD=ADS[S.vr];
+  const kim=speakShell('<p class="task">Task 2. Study the advertisement.</p><div class="adt">'+esc(AD.title)+'</div><div class="adrow"><img src="'+AD.img+'" alt="Advertisement photo"><div><p class="task">'+esc(AD.intro)+' In 1.5 minutes you are to ask four direct questions to find out about the following:</p><ol id="pts">'+AD.points.map(p=>'<li>'+esc(p)+'</li>').join('')+'</ol><p class="task">You have 20 seconds to ask each question.</p></div></div>',
    [{label:'Подготовка',kind:'prep',sec:90}].concat(AD.points.map((p,k)=>({label:'Вопрос '+(k+1),kind:'answer',sec:20}))),
-   {name:'task2',note:'Задание 2 · 4 балла · Открытый банк ФИПИ.',
+   {name:NAMES[who]+'-task2',note:'Задание 2 · 4 балла · Открытый банк ФИПИ.',
     onPhase:i=>{const li=[...document.querySelectorAll('#pts li')];li.forEach((x,k)=>{x.className=i<1?'':(k===i-1?'now':(k<i-1?'past':''));});},
     teachHtml:'<p>По <b>1 баллу</b> за вопрос: прямой вопрос по пункту, грамматически верный, понятный на слух. 0 – косвенный вопрос, ошибка в порядке слов или вспомогательном глаголе, вопрос не по пункту.</p><p><b>Возможные вопросы:</b><br>'+AD.key.map((x,k)=>(k+1)+'. '+esc(x)).join('<br>')+'</p>',
     rows:AD.points.map((p,k)=>scoreRow((k+1)+'. '+p,1,()=>S.sp.t2[k],n=>S.sp.t2[k]=n))});
 }
-function speak4(){
-  speakShell('<div class="t4"><div><p class="task">Task 4. Imagine that you and your friend are doing a school project “'+esc(P4.project)+'”. You have found some photos to illustrate it but for technical reasons you cannot send them now. Leave a voice message to your friend explaining your choice of the photos and sharing some ideas about the project. In 2.5 minutes be ready to:</p><ul><li>explain the choice of the illustrations for the project by briefly describing them and noting the differences;</li><li>mention the advantages (1–2) of '+esc(P4.kind)+';</li><li>mention the disadvantages (1–2) of '+esc(P4.kind)+';</li><li>express your opinion on the subject of the project – '+esc(P4.pref)+'.</li></ul><p class="task">You will speak for not more than 3 minutes (12–15 sentences). You have to talk continuously.</p></div><div class="pics"><figure><figcaption>Photo 1</figcaption><img src="img/exam-photo1.jpg" alt="Photo 1"></figure><figure><figcaption>Photo 2</figcaption><img src="img/exam-photo2.jpg" alt="Photo 2"></figure></div></div>',
+function speak4(){const P4=P4S[S.vr];
+  speakShell('<div class="t4"><div><p class="task">Task 4. Imagine that you and your friend are doing a school project “'+esc(P4.project)+'”. You have found some photos to illustrate it but for technical reasons you cannot send them now. Leave a voice message to your friend explaining your choice of the photos and sharing some ideas about the project. In 2.5 minutes be ready to:</p><ul><li>explain the choice of the illustrations for the project by briefly describing them and noting the differences;</li><li>mention the advantages (1–2) of '+esc(P4.kind)+';</li><li>mention the disadvantages (1–2) of '+esc(P4.kind)+';</li><li>express your opinion on the subject of the project – '+esc(P4.pref)+'.</li></ul><p class="task">You will speak for not more than 3 minutes (12–15 sentences). You have to talk continuously.</p></div><div class="pics"><figure><figcaption>Photo 1</figcaption><img src="'+P4.img[0]+'" alt="Photo 1"></figure><figure><figcaption>Photo 2</figcaption><img src="'+P4.img[1]+'" alt="Photo 2"></figure></div></div>',
    [{label:'Подготовка',kind:'prep',sec:150},{label:'Ответ · голосовое сообщение',kind:'answer',sec:180}],
-   {name:'task4',note:'Задание 4 · 10 баллов · Открытый банк ФИПИ.',
+   {name:NAMES[who]+'-task4',note:'Задание 4 · 10 баллов · Открытый банк ФИПИ.',
     teachHtml:'<p><b>К1 Решение коммуникативной задачи (0–4):</b> раскрыты все 4 пункта плана, 12–15 фраз. При 0 по К1 всё задание – 0.</p><p><b>К2 Организация (0–3):</b> обращение к другу, вступление и заключение, логичность, средства связи.</p><p><b>К3 Языковое оформление (0–3):</b> лексика, грамматика, произношение.</p>',
     rows:[scoreRow('К1 · содержание',4,()=>S.sp.k1,n=>S.sp.k1=n),scoreRow('К2 · организация',3,()=>S.sp.k2,n=>S.sp.k2=n),scoreRow('К3 · язык',3,()=>S.sp.k3,n=>S.sp.k3=n)]});
 }
@@ -153,7 +162,7 @@ function speak3(){
   const ring=el('div','ring ans','<b>40</b><span>секунд</span>'),label=el('div','phase','Нажмите Play');
   const paint=()=>{ring.querySelector('b').textContent=left;ring.style.background='conic-gradient(var(--acc) '+(left/40*360)+'deg,#f3ddd6 0)';ring.classList.toggle('end',left===0);};
   const stopT=()=>{clearInterval(t);t=null;};
-  const runT=()=>{stopT();left=40;paint();label.textContent='Ответ';beep(880,200);Rec.start();const end=Date.now()+40000;t=setInterval(()=>{left=Math.max(0,Math.ceil((end-Date.now())/1000));paint();if(left===0){stopT();label.textContent='Время вышло';beep(520,500);Rec.stop(recBox,v.id+'-q'+(st.q+1));}},200);};
+  const runT=()=>{stopT();left=40;paint();label.textContent='Ответ';beep(880,200);Rec.start();const end=Date.now()+40000;t=setInterval(()=>{left=Math.max(0,Math.ceil((end-Date.now())/1000));paint();if(left===0){stopT();label.textContent='Время вышло';beep(520,500);Rec.stop(recBox,NAMES[who]+'-'+v.id+'-q'+(st.q+1));}},200);};
   function play(what){stopT();Rec.cancel();left=40;paint();au.pause();au.src='audio/'+v.id+'-'+what+'.mp3';label.textContent=what==='intro'?'Звучит вступление':'Звучит вопрос';
     au.onended=()=>{if(what==='intro'){label.textContent='Теперь нажмите Play';}else runT();};au.onerror=()=>{label.textContent='Запись не загрузилась';};au.play().catch(()=>{label.textContent='Запись не загрузилась';});}
   const recBox=el('div','rec');
@@ -182,10 +191,10 @@ function errList(){const out=[],un=[];
     if(!ok(k))out.push([it.n,it.tag,mine,right]);else if(S[key].un[k])un.push([it.n,it.tag,right]);});});
   if(S.r.done)D.r11.a.forEach((a,k)=>{if(S.r.sel[k]!==a)out.push(['11 '+AF[k],'Чтение · связность текста',S.r.sel[k]?String(S.r.sel[k]):'—',String(a)]);});return {out,un};}
 function reportText(){const r=calc(),e=errList(),sum=r.reduce((a,x)=>a+x[1],0),max=r.reduce((a,x)=>a+x[2],0);
-  return 'ЕГЭ 2027 · диагностика, занятие 1\n'+r.map(x=>x[0]+': '+(x[3]?x[1]:'—')+' / '+x[2]).join('\n')+'\nИтого на занятии: '+sum+' / '+max+'\n\nОшибки:\n'+(e.out.map(x=>x[0]+' · '+x[1]+' · ответ: '+x[2]+' · верно: '+x[3]).join('\n')||'нет')+'\n\nВерно, но с сомнением:\n'+(e.un.map(x=>x[0]+' · '+x[1]+' · '+x[2]).join('\n')||'нет');}
+  return 'ЕГЭ 2027 · диагностика, занятие 1 · '+NAMES[who]+'\n'+r.map(x=>x[0]+': '+(x[3]?x[1]:'—')+' / '+x[2]).join('\n')+'\nИтого на занятии: '+sum+' / '+max+'\n\nОшибки:\n'+(e.out.map(x=>x[0]+' · '+x[1]+' · ответ: '+x[2]+' · верно: '+x[3]).join('\n')||'нет')+'\n\nВерно, но с сомнением:\n'+(e.un.map(x=>x[0]+' · '+x[1]+' · '+x[2]).join('\n')||'нет');}
 function results(){
   const r=calc(),e=errList(),sum=r.reduce((a,x)=>a+x[1],0),max=r.reduce((a,x)=>a+x[2],0);
-  head('Итоги диагностики на занятии · '+max+' из 82 первичных баллов экзамена. Остальные 42 балла (аудирование, чтение 10 и 12–18, письмо) – домашняя часть.');
+  head(NAMES[who]+' · итоги диагностики на занятии · '+max+' из 82 первичных баллов экзамена. Остальные 42 балла (аудирование, чтение 10 и 12–18, письмо) – домашняя часть.');
   const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
   a.append(el('h3',null,'Баллы по заданиям'));
   r.forEach(x=>{const p=x[2]?x[1]/x[2]:0;a.append(el('div','rrow','<span>'+x[0]+'</span><div class="meter"><i class="'+(!x[3]?'':p<.7?'low':p<.86?'mid':'high')+'" style="width:'+(x[3]?p*100:0)+'%"></i></div><b>'+(x[3]?x[1]:'—')+' / '+x[2]+'</b>'));});
@@ -197,7 +206,7 @@ function results(){
   res.append(a,b);main.append(res);
   const nav=el('div','navrow'),msg=el('span','note');
   nav.append(btn('Скопировать итоги',()=>{const t=reportText();(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{msg.textContent='Скопировано – вставьте в заметки или сообщение.';}).catch(()=>{msg.textContent='Не получилось скопировать автоматически.';});},'main'),
-    btn('Начать диагностику заново',()=>{location.reload();}),msg);
+    btn('Сбросить всё и начать заново',()=>{location.reload();}),msg);
   const h=el('a','btn sp','Домашняя часть →');h.href='home1.html';nav.append(h);main.append(nav);
 }
-Clock.mount();go(0);
+Clock.mount();paintWho();go(0);

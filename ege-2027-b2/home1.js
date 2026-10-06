@@ -2,8 +2,10 @@
    Работа длинная, поэтому черновик хранится в этом браузере до нажатия «Очистить всё». */
 const D=window.DIAG,main=$('#main'),tabs=$('#tabs'),KEY='ege2027b2-home1';
 const blank=()=>({l1:{},l2:{},l3:{},r10:{},r12:{},w37:'',w38:'',q3:0,q12:0,checked:false});
-let S=blank();try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s)S=Object.assign(blank(),s);}catch(e){}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
+const NAMES=['Рита','Катя'];let who=0;try{who=+localStorage.getItem(KEY+'-who')||0;}catch(e){}
+let S=blank();const load=()=>{S=blank();try{const s=JSON.parse(localStorage.getItem(KEY+'-'+who)||'null');if(s)S=Object.assign(blank(),s);}catch(e){}};load();
+const save=()=>{try{localStorage.setItem(KEY+'-'+who,JSON.stringify(S));}catch(e){}};
+function paintWho(){const w=$('#who');w.innerHTML='';NAMES.forEach((n,i)=>{const b=el('button','tab'+(i===who?' on':''),n);b.type='button';b.onclick=()=>{who=i;try{localStorage.setItem(KEY+'-who',i);}catch(e){}load();paintWho();go(0);};w.append(b);});}
 let cur=0;const AG='ABCDEFG';
 const audio=el('audio','main');audio.controls=true;audio.preload='none';audio.src='audio/listening.mp3';
 const EMAIL={from:'Emily@mail.uk',to:'Russian_friend@ege.ru',subj:'School rules',
@@ -99,11 +101,11 @@ const errs=(sel,key)=>key.filter((a,k)=>sel[k]!==a).length;
 const by3=e=>e===0?3:e===1?2:e===2?1:0,by2=e=>e===0?2:e===1?1:0;
 function scores(){return [['Аудирование 1',by2(errs(S.l1,D.lis.k1)),2],['Аудирование 2',by3(errs(S.l2,D.lis.k2)),3],['Аудирование 3–9',7-errs(S.l3,D.lis.k3),7],['Чтение 10',by3(errs(S.r10,D.r10.a)),3],['Чтение 12–18',7-errs(S.r12,D.r12.a),7]];}
 function line(lbl,sel,key,first,letters){return lbl+': '+key.map((a,k)=>(letters?letters[k]:first+k)+'='+(sel[k]==null?'–':sel[k])+(sel[k]===a?'':' (верно '+a+')')).join(', ');}
-function reportText(){const r=scores();return 'ЕГЭ 2027 · диагностика · домашняя часть\n'+r.map(x=>x[0]+': '+x[1]+' / '+x[2]).join('\n')+'\nИтого с автоматической проверкой: '+r.reduce((a,x)=>a+x[1],0)+' / 22\n\n'+
+function reportText(){const r=scores();return 'ЕГЭ 2027 · диагностика · домашняя часть · '+NAMES[who]+'\n'+r.map(x=>x[0]+': '+x[1]+' / '+x[2]).join('\n')+'\nИтого с автоматической проверкой: '+r.reduce((a,x)=>a+x[1],0)+' / 22\n\n'+
   [line('Аудирование 1',S.l1,D.lis.k1,0,'ABCDEF'),line('Аудирование 2',S.l2,D.lis.k2,0,AG),line('Аудирование 3–9',S.l3,D.lis.k3,3),line('Чтение 10',S.r10,D.r10.a,0,AG),line('Чтение 12–18',S.r12,D.r12.a,12)].join('\n')+
   '\n\n=== Задание 37 · '+words(S.w37)+' слов ===\n'+(S.w37.trim()||'(нет ответа)')+'\n\n=== Задание 38 · '+words(S.w38)+' слов ===\n'+(S.w38.trim()||'(нет ответа)')+'\n';}
 function report(){
-  head(S.checked?'Работа проверена. Отправьте отчёт учителю: письмо 37 и 38 оценивает учитель по критериям ФИПИ.':'Когда всё готово, нажмите «Проверить работу». После проверки ответы изменить нельзя.');
+  head(NAMES[who]+' · '+(S.checked?'работа проверена. Отправьте отчёт учителю: письмо 37 и 38 оценивает учитель по критериям ФИПИ.':'проверьте, что вверху выбрано ваше имя. Когда всё готово, нажмите «Проверить работу». После проверки ответы изменить нельзя.'));
   const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
   if(!S.checked){a.append(el('h3',null,'Что сделано'));STEPS.slice(0,7).forEach(s=>a.append(el('div','rrow','<span>'+s.label+'</span><span class="note">'+(isDone(s.id)?'готово':'не закончено')+'</span><b>'+(isDone(s.id)?'✓':'—')+'</b>')));
     b.append(el('h3',null,'Как отправить'),el('p',null,'1. Нажмите «Проверить работу».<br>2. Нажмите «Скопировать отчёт» и вставьте текст в сообщение учителю – или скачайте файл и отправьте его.'),el('p','note','В отчёт попадают ответы, баллы и оба письменных текста.'));}
@@ -114,7 +116,7 @@ function report(){
   const nav=el('div','navrow'),msg=el('span','note');
   if(!S.checked)nav.append(btn('Проверить работу',()=>{S.checked=true;save();redraw();},'acc'));
   else{nav.append(btn('Скопировать отчёт',()=>{(navigator.clipboard?navigator.clipboard.writeText(reportText()):Promise.reject()).then(()=>{msg.textContent='Скопировано – вставьте в сообщение учителю.';}).catch(()=>{msg.textContent='Не получилось скопировать – скачайте файл.';});},'main'));
-    const d=el('a','btn','Скачать отчёт файлом');d.download='ege-diagnostic-home.txt';d.href=URL.createObjectURL(new Blob([reportText()],{type:'text/plain;charset=utf-8'}));nav.append(d);}
-  nav.append(msg);const clr=btn('Очистить всё',()=>{if(clr.dataset.sure){try{localStorage.removeItem(KEY);}catch(e){}S=blank();go(0);}else{clr.dataset.sure=1;clr.textContent='Точно очистить? Нажмите ещё раз';}},'sm sp');nav.append(clr);main.append(nav);
+    const d=el('a','btn','Скачать отчёт файлом');d.download='ege-diagnostic-home-'+(who?'katya':'rita')+'.txt';d.href=URL.createObjectURL(new Blob([reportText()],{type:'text/plain;charset=utf-8'}));nav.append(d);}
+  nav.append(msg);const clr=btn('Очистить всё',()=>{if(clr.dataset.sure){try{localStorage.removeItem(KEY+'-'+who);}catch(e){}S=blank();go(0);}else{clr.dataset.sure=1;clr.textContent='Точно очистить? Нажмите ещё раз';}},'sm sp');nav.append(clr);main.append(nav);
 }
-Clock.mount();go(0);
+Clock.mount();paintWho();go(0);
