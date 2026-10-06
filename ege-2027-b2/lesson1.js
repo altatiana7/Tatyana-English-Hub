@@ -25,15 +25,15 @@ let cleanup=null,cur=0;
 const LIS={st:['Max had a meeting with Mr. Harrison yesterday.','The school principal moved the date to June 14th.','Max is planning to contact some DJs on his own.','Sophie and Max agree on the decorations.','Sophie is worried about the cost of the snacks.','Max will send the invitations next week.','Sophie and Max will meet again tomorrow.'],key:[1,2,3,1,3,2,1]};
 /* Порядок урока: сначала устная часть и аудирование, затем грамматика и чтение */
 const STEPS=[
- {id:'s3',label:'Интервью',color:'#7b5fc4',min:0,draw:speak3},
- {id:'s2',label:'Вопросы',color:'#3f8fd6',min:0,draw:speak2},
- {id:'s1',label:'Чтение вслух',color:'#2fa89a',min:0,draw:speak1},
- {id:'s4',label:'Монолог',color:'#4faa55',min:0,draw:speak4},
- {id:'l',label:'Аудирование',color:'#e39a1c',min:0,draw:listen},
- {id:'g',label:'Грамматика',color:'#ea7f3c',min:7,draw:()=>typed('g','Преобразуйте, если необходимо, слово, напечатанное заглавными буквами, так, чтобы оно грамматически соответствовало содержанию текста.')},
- {id:'w',label:'Словообразование',color:'#e5605f',min:6,draw:()=>typed('w','Образуйте от слова, напечатанного заглавными буквами, однокоренное слово так, чтобы оно грамматически и лексически соответствовало содержанию текста.')},
- {id:'v',label:'Лексика',color:'#d0559f',min:7,draw:mcq},
- {id:'r',label:'Чтение 11',color:'#8e5bd0',min:7,draw:read11},
+ {id:'s3',label:'Интервью',color:'#4a4f8f',min:0,draw:speak3},
+ {id:'s2',label:'Вопросы',color:'#2f6f9f',min:0,draw:speak2},
+ {id:'s1',label:'Чтение вслух',color:'#2c7f78',min:0,draw:speak1},
+ {id:'s4',label:'Монолог',color:'#4c7f4a',min:0,draw:speak4},
+ {id:'l',label:'Аудирование',color:'#a8802a',min:0,draw:listen},
+ {id:'g',label:'Грамматика',color:'#b0683a',min:7,draw:()=>typed('g','Преобразуйте, если необходимо, слово, напечатанное заглавными буквами, так, чтобы оно грамматически соответствовало содержанию текста.')},
+ {id:'w',label:'Словообразование',color:'#a85050',min:6,draw:()=>typed('w','Образуйте от слова, напечатанного заглавными буквами, однокоренное слово так, чтобы оно грамматически и лексически соответствовало содержанию текста.')},
+ {id:'v',label:'Лексика',color:'#8f4d7c',min:7,draw:mcq},
+ {id:'r',label:'Чтение 11',color:'#66549a',min:7,draw:read11},
  {id:'res',label:'Итоги',color:'#2b2f4a',min:0,draw:results}
 ];
 function isDone(id){const sp=S.sp;return id==='s1'?sp.t1!=null:id==='s2'?sp.t2.every(x=>x!=null):id==='s3'?sp.t3.every(x=>x!=null):id==='s4'?(sp.k1!=null&&sp.k2!=null&&sp.k3!=null):id==='res'?false:S[id].done;}
