@@ -18,8 +18,8 @@ header{position:fixed;top:0;left:0;right:0;z-index:20;height:58px;padding:0 2vw;
 .tools a,.tools button,.back{border:1px solid #17333233;background:transparent;border-radius:999px;padding:10px 15px;text-decoration:none;color:var(--ink)}
 .tools a:hover,.tools button:hover,.back:hover{background:white}
 #home{height:100svh;display:grid;place-items:center;padding:0;background:#dbe8e7}
-.cover-shell{position:relative;width:100vw;height:100svh;border-radius:0;overflow:hidden;background:#d9e7e7}
-#cover{display:block;width:100%;height:100%;object-fit:contain;object-position:center;background:#d9e7e7}
+.cover-shell{position:relative;width:min(100vw,177.7778svh);height:min(100svh,56.25vw);aspect-ratio:16/9;border-radius:0;overflow:hidden;background:#d9e7e7}
+#cover{display:block;width:100%;height:100%;object-fit:fill;object-position:center;background:#d9e7e7}
 .hotspot{position:absolute;border:2px solid transparent;background:transparent;border-radius:18px;cursor:pointer;transition:.18s ease}
 .hotspot:hover{border-color:white;box-shadow:0 0 0 4px #ffffff55,0 16px 34px #0c354a44;background:#ffffff0f;transform:translateY(-2px)}
 .hotspot:focus-visible{outline:4px solid #fff;outline-offset:-8px;background:#ffffff22}
@@ -36,7 +36,7 @@ h1{font-size:clamp(48px,7vw,88px);letter-spacing:-4px;line-height:.92;margin:16p
 .pill{border:1px solid #17333222;border-radius:14px;padding:13px 16px;background:#f8faf9;font-weight:700}
 .loading{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(145deg,#dbeceb,#dce8f1);font-weight:800;letter-spacing:1px;color:#47636b}
 .loaded .loading{display:none}
-@media(max-width:700px){header{height:54px;padding:0 10px}.small{display:none}.brand{font-size:19px}#home,#stage{height:100svh}#home{padding:0}.cover-shell{width:100vw;height:100svh;border-radius:0}.tools a,.tools button{padding:7px 9px;font-size:11px}.hotspot{border-radius:10px}.hotspot span{display:none}#stage{padding:72px 16px 16px}.stage-main{padding:28px 22px}h1{letter-spacing:-2px}}
+@media(max-width:700px){header{height:54px;padding:0 10px}.small{display:none}.brand{font-size:19px}#home,#stage{height:100svh}#home{padding:0}.cover-shell{width:min(100vw,177.7778svh);height:min(100svh,56.25vw);aspect-ratio:16/9;border-radius:0}.tools a,.tools button{padding:7px 9px;font-size:11px}.hotspot{border-radius:10px}.hotspot span{display:none}#stage{padding:72px 16px 16px}.stage-main{padding:28px 22px}h1{letter-spacing:-2px}}
 </style>
 </head>
 <body>
