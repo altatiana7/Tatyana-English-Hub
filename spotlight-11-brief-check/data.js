@@ -8,7 +8,7 @@ window.SPOTLIGHT11_BANK = {
     14:{duration:"25:23"},15:{duration:"24:25"},16:{duration:"25:43"},17:{duration:"25:18"},
     18:{duration:"25:28"},19:{duration:"25:07"},20:{duration:"24:43"}
   },
-  audioUrl: n => `https://onvid.org/d_ar/oge/oge2026_var/engl/OGE_2026_Anglijskij_yazyk_20var_variant-${String(n).padStart(2,"0")}_Audir.mp3`,
+  audioUrl: n => `audio/v${String(n).padStart(2,"0")}.mp3`,
   grammar: {
     1:{20:["earlier"],21:["was mixing"],22:["was"],23:["did not know","didn't know"],24:["myself"],25:["is"],26:["knives"],27:["lit","lighted"],28:["is served"]},
     2:{20:["them"],21:["is used"],22:["third"],23:["has made","'s made"],24:["will like","'ll like"],25:["smiled"],26:["had"],27:["tomatoes"],28:["cannot","can't"]},
