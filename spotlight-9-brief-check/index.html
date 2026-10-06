@@ -48,12 +48,12 @@ h1{font-size:clamp(54px,6.5vw,105px);line-height:.93;letter-spacing:-5px;margin:
 
 /* timed quiz */
 .timer{flex:0 0 auto;width:clamp(140px,22vw,420px);height:14px;background:#fff;border:1px solid var(--line);border-radius:99px;overflow:hidden}.timerFill{display:block;height:100%;width:100%;background:var(--teal);transition:width .9s linear}.timerFill.low{background:var(--bad)}
-.quiz{display:grid;gap:.55em}.qStem{background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.5em .7em;font-weight:800;line-height:1.25;text-align:center}.blank{display:inline-block;width:4.5em;border-bottom:.12em solid var(--teal);margin:0 .2em}
+.quiz{display:grid;gap:.55em}.qStem{background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.35em .7em .5em;font-weight:900;font-size:1.5em;line-height:1.15;text-align:center}.qCap{font-size:.36em;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:.5em}
 .qOpts{display:grid;grid-template-columns:1fr 1fr;gap:.4em}.qOpt{display:flex;align-items:center;gap:.5em;text-align:left;border:0;border-radius:.4em;padding:.45em .6em;font-size:1em;font-weight:800;line-height:1.15;color:#fff;min-height:2.6em}
 .qOpt.o0{background:#006a68}.qOpt.o1{background:#8a4f00}.qOpt.o2{background:#5b3f8f}.qOpt.o3{background:#1f5c96}.qLet{flex:0 0 auto;width:1.6em;height:1.6em;border-radius:.3em;background:#ffffff33;display:flex;align-items:center;justify-content:center}
 .qOpt.good{background:var(--good);outline:.14em solid var(--lime)}.qOpt.bad{background:var(--bad)}.qOpt.dim{background:#8c9a97}.qOpt:disabled{cursor:default}
 .result{display:grid;gap:.5em}.resTop{display:flex;align-items:center;gap:.8em;background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.4em .7em}.resScore{font-size:2.2em;font-weight:900;color:var(--teal);line-height:1;white-space:nowrap}.resTitle{font-weight:900}.result .big{font-size:.7em}
-.resList{display:grid;gap:.25em;font-size:.72em}.resRow{background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.3em .6em;display:grid;grid-template-columns:minmax(6em,auto) 1fr;gap:.7em;align-items:baseline;line-height:1.25}.resMark{color:var(--bad);font-weight:800}.resRow b{color:var(--good)}
+.resList{display:grid;gap:.25em;font-size:.72em;grid-template-columns:auto 1fr}.resRow{grid-column:1/-1;grid-template-columns:subgrid!important}.resRow{background:#fff;border:1px solid var(--line);border-radius:.4em;padding:.3em .6em;display:grid;grid-template-columns:minmax(6em,38%) 1fr;gap:.7em;align-items:baseline;line-height:1.25}.resMark{color:var(--bad);font-weight:800}.resRow b{color:var(--good)}
 
 /* whole-text view */
 .passage{background:#fff;border:1px solid var(--line);border-radius:.5em;padding:.5em .8em;line-height:1.75}
@@ -162,20 +162,21 @@ const QUIZ=window.SPOTLIGHT9_M2,QSEC=30,LET=['A','B','C','D'];
 let quizSet=0,quiz=null,qTimer=null;
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 function stopQuiz(){clearInterval(qTimer);qTimer=null}
+function makeQs(g){const qs=[];const one=(a,b,cap)=>g.w.forEach(w=>{const wrong=shuffle(g.w.filter(x=>x!==w)).slice(0,3).map(x=>x[b]);qs.push({cap,stem:w[a],right:w[b],opts:shuffle([w[b],...wrong])})});
+ one(0,1,'Choose the translation');if(g.both)one(1,0,'Choose the English');return qs}
 function startQuiz(set){stopQuiz();quizSet=set;
- const src=set<QUIZ.length?QUIZ[set].q:shuffle(QUIZ.flatMap(t=>t.q)).slice(0,10);
- quiz={i:0,left:QSEC,paused:false,locked:false,log:[],qs:shuffle(src).map(q=>({stem:q[0],right:q[1],opts:shuffle(q.slice(1))}))};
+ const pool=set<QUIZ.length?makeQs(QUIZ[set]):QUIZ.flatMap(makeQs);
+ quiz={i:0,left:QSEC,paused:false,locked:false,log:[],qs:shuffle(pool).slice(0,10)};
  drawQuiz();tick()}
 function quizBar(){const tabs=[...QUIZ.map(t=>t.name),'Mixed'].map((n,i)=>`<button class="tab ${i===quizSet?'active':''}" data-set="${i}">${n}</button>`).join('');
  const done=!quiz||quiz.i>=quiz.qs.length;
- $('subBar').innerHTML=`${tabs}${done?'':`<button class="pill" id="qPause">${quiz.paused?'Resume':'Pause'}</button><span class="score" id="qCount">${quiz.i+1} / ${quiz.qs.length}</span><span class="timer"><span class="timerFill" id="qFill"></span></span><span class="score" id="qSec"></span>`}<span class="instr">${quizSet<QUIZ.length?QUIZ[quizSet].title:'Module 2 · ten questions from all three tests'}</span>`;
+ $('subBar').innerHTML=`${tabs}${done?'':`<button class="pill" id="qPause">${quiz.paused?'Resume':'Pause'}</button><span class="score" id="qCount">${quiz.i+1} / ${quiz.qs.length}</span><span class="timer"><span class="timerFill" id="qFill"></span></span><span class="score" id="qSec"></span>`}<span class="instr">${quizSet<QUIZ.length?QUIZ[quizSet].title:'Module 2 · ten words from all the tests'}</span>`;
  $$('[data-set]').forEach(b=>b.onclick=()=>startQuiz(+b.dataset.set));
  if(!done)$('qPause').onclick=()=>{quiz.paused=!quiz.paused;quizBar();showTime()}}
 function showTime(){const f=$('qFill');if(!f)return;f.style.width=(quiz.left/QSEC*100)+'%';f.classList.toggle('low',quiz.left<=5);$('qSec').textContent=quiz.paused?'paused':quiz.left+' s'}
 function tick(){stopQuiz();qTimer=setInterval(()=>{if(!quiz||quiz.paused||quiz.locked)return;quiz.left--;showTime();if(quiz.left<=0)answer(null)},1000)}
 function drawQuiz(){const q=quiz.qs[quiz.i];quizBar();showTime();
- const[a,b]=q.stem.split('___');
- $('stageBody').innerHTML=`<div class="quiz"><div class="qStem">${esc(a)}${b===undefined?'':'<span class="blank"></span>'+esc(b)}</div><div class="qOpts">${q.opts.map((o,i)=>`<button class="qOpt o${i}" data-o="${i}"><span class="qLet">${LET[i]}</span><span>${esc(o)}</span></button>`).join('')}</div></div>`;
+ $('stageBody').innerHTML=`<div class="quiz"><div class="qStem"><div class="qCap">${q.cap}</div>${esc(q.stem)}</div><div class="qOpts">${q.opts.map((o,i)=>`<button class="qOpt o${i}" data-o="${i}"><span class="qLet">${LET[i]}</span><span>${esc(o)}</span></button>`).join('')}</div></div>`;
  $$('[data-o]').forEach(btn=>btn.onclick=()=>answer(+btn.dataset.o));refit()}
 function answer(i){if(!quiz||quiz.locked)return;quiz.locked=true;const q=quiz.qs[quiz.i],chosen=i===null?null:q.opts[i],ok=chosen===q.right;
  quiz.log.push({stem:q.stem,right:q.right,chosen,ok});
@@ -184,7 +185,7 @@ function answer(i){if(!quiz||quiz.locked)return;quiz.locked=true;const q=quiz.qs
  setTimeout(next,1300)}
 function next(){if(!quiz)return;quiz.i++;quiz.left=QSEC;quiz.locked=false;if(quiz.i>=quiz.qs.length){stopQuiz();drawResult()}else drawQuiz()}
 function drawResult(){quizBar();const ok=quiz.log.filter(l=>l.ok).length,miss=quiz.log.filter(l=>!l.ok);
- const fill=l=>esc(l.stem).replace('___',`<b>${esc(l.right)}</b>`)+(l.stem.includes('___')?'':` <b>${esc(l.right)}</b>`);
+ const fill=l=>`${esc(l.stem)} — <b>${esc(l.right)}</b>`;
  $('stageBody').innerHTML=`<div class="result"><div class="resTop"><div class="resScore">${ok} / ${quiz.log.length}</div><div><div class="resTitle">${ok===quiz.log.length?'All correct':miss.length<=2?'Almost there':'Look at these again'}</div><div class="row" style="margin-top:.3em"><button class="big" id="qAgain">Play again</button>${quizSet<QUIZ.length?'<button class="big alt" id="qNextSet">Next test</button>':''}</div></div></div>${miss.length?`<div class="resList">${miss.map(l=>`<div class="resRow"><span class="resMark">${l.chosen===null?'no answer':'✕ '+esc(l.chosen)}</span><span>${fill(l)}</span></div>`).join('')}</div>`:''}</div>`;
  $('qAgain').onclick=()=>startQuiz(quizSet);if($('qNextSet'))$('qNextSet').onclick=()=>startQuiz(quizSet+1);refit()}
 document.addEventListener('keydown',e=>{if(current!==3||!$('stage').classList.contains('active')||!quiz||quiz.i>=quiz.qs.length||e.target.matches('input,select'))return;const i=LET.indexOf(e.key.toUpperCase());if(i>=0)answer(i)});
