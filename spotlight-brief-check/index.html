@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spotlight · Brief Checking Hub</title>
+<style>
+:root{--ink:#173332;--paper:#f5f3eb;--teal:#0c7776;--sky:#8cc9dc;--sand:#e9d5b8;--lime:#d9f16d;--white:#fff}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+body{min-height:100svh;display:grid;place-items:center;padding:28px}
+main{width:min(1180px,100%);display:grid;gap:24px}
+.top{display:flex;align-items:end;justify-content:space-between;gap:24px}
+.eyebrow{font-size:12px;letter-spacing:2px;font-weight:800;color:var(--teal)}
+h1{font-size:clamp(44px,7vw,88px);line-height:.92;letter-spacing:-4px;margin:10px 0 0}
+.note{max-width:390px;line-height:1.5;color:#526763;margin:0 0 4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{position:relative;min-height:360px;border-radius:28px;text-decoration:none;color:inherit;overflow:hidden;padding:28px;border:1px solid #17333222;box-shadow:0 20px 50px #17333216;transition:.22s ease}
+.card:hover{transform:translateY(-6px);box-shadow:0 26px 60px #17333225}
+.card:focus-visible{outline:4px solid #df4e32;outline-offset:5px}
+.ten{background:linear-gradient(145deg,#dff2f0 0%,#b9dce9 48%,#eadbc7 100%)}
+.eleven{background:linear-gradient(145deg,#f3f0e6 0%,#dbe8df 45%,#d9f16d 100%)}
+.badge{display:inline-flex;align-items:center;gap:9px;background:#ffffffc9;border:1px solid #ffffffdd;border-radius:999px;padding:10px 14px;font-size:12px;font-weight:800;letter-spacing:1.4px}
+.grade{font-size:clamp(68px,10vw,130px);letter-spacing:-8px;line-height:.86;margin-top:56px;font-weight:900}
+.title{font-size:clamp(26px,3vw,40px);font-weight:900;letter-spacing:-1.5px;margin-top:12px}
+.meta{margin-top:9px;color:#435955;font-size:14px;line-height:1.5;max-width:420px}
+.go{position:absolute;right:24px;bottom:24px;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:white;font-size:30px}
+.footer{display:flex;justify-content:space-between;gap:20px;font-size:12px;color:#657672}
+@media(max-width:760px){body{padding:18px}.top{align-items:start;flex-direction:column}.grid{grid-template-columns:1fr}.card{min-height:280px}.grade{margin-top:34px}.footer{flex-direction:column}}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <div>
+      <div class="eyebrow">SPOTLIGHT · ENGLISH</div>
+      <h1>Brief<br>Checking Hub</h1>
+    </div>
+    <p class="note">Choose the class first. Each grade keeps its own materials, layout and lesson flow, but both live under one clear entry point.</p>
+  </div>
+
+  <section class="grid" aria-label="Choose grade">
+    <a class="card ten" href="../spotlight-10-brief-check/">
+      <span class="badge">GRADE 10 · SPOTLIGHT 10</span>
+      <div class="grade">10</div>
+      <div class="title">Brief Checking</div>
+      <div class="meta">Listening · Vocabulary · Grammar · Word Formation · Student Book · Lesson Check</div>
+      <span class="go" aria-hidden="true">→</span>
+    </a>
+
+    <a class="card eleven" href="../spotlight-11-brief-check/">
+      <span class="badge">GRADE 11 · SPOTLIGHT 11</span>
+      <div class="grade">11</div>
+      <div class="title">Brief Check-in</div>
+      <div class="meta">Listening · Vocabulary · Grammar · Word Formation · Lesson Check-up</div>
+      <span class="go" aria-hidden="true">→</span>
+    </a>
+  </section>
+
+  <div class="footer">
+    <span>One hub · two separate grade spaces</span>
+    <span>Designed for quick lesson access</span>
+  </div>
+</main>
+</body>
+</html>
