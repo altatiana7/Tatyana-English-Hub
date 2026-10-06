@@ -29,6 +29,9 @@ button:disabled{opacity:.4;cursor:default}
 .startBtn{position:absolute;inset:0;border:0;background:rgba(13,17,23,.38);color:#fff;display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;font-weight:900;font-size:22px}
 .startBtn i{width:92px;height:92px;border-radius:50%;background:var(--yellow);display:grid;place-items:center}
 .startBtn i::after{content:"";border-left:30px solid var(--ink);border-top:19px solid transparent;border-bottom:19px solid transparent;margin-left:8px}
+.frozen{position:absolute;left:10px;right:10px;top:50px;background:#ffd21f;color:#14181f;border-radius:14px;padding:8px 12px;text-align:center;line-height:1.2;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+.frozen b{display:block;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.frozen span{display:block;font-size:19px;font-weight:900}
+.fail{position:absolute;left:10px;right:10px;top:50px;background:#fff;color:#14181f;border:3px solid #d9482f;border-radius:14px;padding:10px 12px;font-size:16px;line-height:1.3;z-index:2}.fail b{display:block;font-size:18px}
 .count{position:absolute;left:14px;top:14px;background:rgba(13,17,23,.7);color:#fff;font-weight:900;font-size:13px;letter-spacing:.06em;padding:6px 11px;border-radius:999px}
 .panel{background:var(--card);backdrop-filter:blur(10px);border-radius:26px;padding:clamp(18px,2.6vh,28px) clamp(18px,2vw,28px);box-shadow:0 14px 40px rgba(0,0,0,.18);max-height:calc(100vh - 84px);overflow:auto}
 .panel h1{margin:0;font-size:clamp(30px,3.5vw,44px);font-weight:900;line-height:1;letter-spacing:-.02em}
@@ -108,6 +111,8 @@ html.embed .top a.round,html.embed .top #full,html.embed .top button.round{displ
   <div class="phone" id="phone">
     <video id="v" playsinline preload="auto"></video>
     <span class="count" id="count"></span>
+    <div class="frozen" id="frozen" hidden><b>Paused</b><span>What will happen next?</span></div>
+    <div class="fail" id="fail" hidden><b>The video did not start.</b><span>Press play on the video. If it stays black, reload the page.</span></div>
     <button class="startBtn" id="start"><i></i><span>Watch the clip</span></button>
     <button class="round again" id="again" hidden>↻ Watch again</button>
   </div>
@@ -142,32 +147,37 @@ let ci=0,score=0,done=[],S={},raf=0;
 function load(i){
  ci=i;const c=CLIPS[i];cancelAnimationFrame(raf);
  S={phase:'idle',subj:0,sure:null};
- v.pause();v.src='assets/whn/'+c.file+'.mp4';v.poster='assets/whn/'+c.file+'.jpg';v.load();
+ v.pause();v.controls=false;$('fail').hidden=true;v.src='assets/whn/'+c.file+'.mp4';v.poster='assets/whn/'+c.file+'.jpg';v.load();
  $('bg').style.backgroundImage='url(assets/whn/'+c.file+'.jpg)';
  $('count').textContent='CLIP '+(i+1)+' / '+CLIPS.length;
  $('start').hidden=false;$('again').hidden=true;
  draw();
 }
+function failed(){$('fail').hidden=false;$('start').hidden=true;v.controls=true}
+function go(){$('fail').hidden=true;const p=v.play();if(p&&p.catch)p.catch(e=>{if(!e||e.name!=='AbortError')failed()})}
+v.addEventListener('error',failed);
+v.addEventListener('playing',()=>{$('fail').hidden=true});
 function watchTo(stop,then){
  cancelAnimationFrame(raf);
  const tick=()=>{if(v.currentTime>=stop){v.pause();try{v.currentTime=stop}catch(e){}then();return}
   if(v.ended){then();return}raf=requestAnimationFrame(tick)};
- const p=v.play();if(p&&p.catch)p.catch(()=>{});raf=requestAnimationFrame(tick);
+ go();raf=requestAnimationFrame(tick);
 }
 function firstPart(){
  const c=CLIPS[ci];$('start').hidden=true;$('again').hidden=true;S.phase='watching';draw();
  try{v.currentTime=0}catch(e){}
+ v.playbackRate=c.lead||0.5;
  watchTo(c.stop,()=>{S.phase='predict';$('again').hidden=false;draw()});
 }
 function reveal(){
- cancelAnimationFrame(raf);$('again').hidden=true;S.phase='reveal';draw();
+ cancelAnimationFrame(raf);$('again').hidden=true;S.phase='reveal';v.playbackRate=1;draw();
  v.onended=()=>{v.onended=null;S.phase='check';$('again').hidden=false;draw()};
- const p=v.play();if(p&&p.catch)p.catch(()=>{});
+ go();
 }
 function replayAll(){
- cancelAnimationFrame(raf);$('again').hidden=true;try{v.currentTime=0}catch(e){}
+ cancelAnimationFrame(raf);$('again').hidden=true;v.playbackRate=1;try{v.currentTime=0}catch(e){}
  v.onended=()=>{v.onended=null;$('again').hidden=false};
- const p=v.play();if(p&&p.catch)p.catch(()=>{});
+ go();
 }
 function sentence(){
  const c=CLIPS[ci],subj=c.subjects[S.subj],o=OPENERS[opener],sure=S.sure==null?null:SURE[S.sure][0];
@@ -199,7 +209,7 @@ function dots(){
  return CLIPS.length>1?`<div class="dots">${CLIPS.map((c,i)=>`<button data-go="${i}" class="${i===ci?'on':done.includes(i)?'done':''}">${i+1}</button>`).join('')}</div>`:'';
 }
 function draw(){
- const c=CLIPS[ci];$('score').textContent=score;let h='';drawHelp();
+ const c=CLIPS[ci];$('score').textContent=score;let h='';drawHelp();$('frozen').hidden=S.phase!=='predict';
  if(S.phase==='idle'||S.phase==='watching'){
   h=`<h1>Watch carefully.</h1><p class="lead">The clip will stop at the most interesting moment. Get ready to say what <b>will</b> happen.</p>
    <div class="lab">HOW SURE ARE YOU?</div><div class="chips sure">${SURE.map(s=>`<span class="chip">${esc(s[0])}</span>`).join('')}</div>
