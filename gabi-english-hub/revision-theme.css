@@ -1,0 +1,33 @@
+/* One look for every step inside the Revision lesson (loaded only in embed mode).
+   Hub palette: navy frame, light sheet, white cards, taxi-yellow main button. */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800;900&display=swap");
+:root{--rv-navy:#0f2438;--rv-sheet:#e9f1f8;--rv-card:#fff;--rv-line:#c5d6e4;--rv-yellow:#ffd43b;--rv-yellowD:#d1a900;--rv-blue:#1f6fb5;--rv-muted:#55708a;
+  --ink:#0f2438;--muted:#55708a;--blue:#1f6fb5;--blueD:#17558c;--line:#c5d6e4}
+html.embed body{background:var(--rv-navy)!important;color:var(--rv-navy);font-family:"Figtree","Segoe UI",Arial,sans-serif}
+html.embed button,html.embed input,html.embed select,html.embed textarea{font-family:inherit}
+html.embed h1,html.embed h2,html.embed h3{font-family:"Montserrat","Figtree",Arial,sans-serif;letter-spacing:-.01em}
+/* main action = the hub's yellow button */
+html.embed .primary,html.embed .btn.sun,html.embed .action{background:var(--rv-yellow)!important;border-color:var(--rv-yellow)!important;color:var(--rv-navy)!important;box-shadow:0 4px 0 var(--rv-yellowD)!important}
+html.embed .primary:hover,html.embed .btn.sun:hover,html.embed .action:hover{background:#ffe066!important}
+
+/* Word Walls */
+html.embed.pg-ww body{padding:0 8px 8px}
+html.embed.pg-ww main{background:var(--rv-sheet);border-radius:18px;max-width:none}
+html.embed.pg-ww .kicker{color:var(--rv-blue)}
+html.embed.pg-ww .level[aria-pressed=true]{border-color:var(--rv-navy);background:#fff6cf;box-shadow:0 4px 0 #e6d48a}
+
+/* Lesson 3 activities */
+html.embed.pg-l3 .shell{background:var(--rv-sheet);border-radius:18px;max-width:none!important;margin:0 8px 8px!important;padding:8px 2%!important;min-height:calc(100vh - 8px)}
+
+/* What Happens Next */
+html.embed.pg-whn #bg{display:none}
+html.embed.pg-whn .wrap{height:calc(100vh - 8px);margin:0 8px;background:var(--rv-sheet);border-radius:18px;padding:60px 22px 10px}
+html.embed.pg-whn .top{padding:12px 26px}
+html.embed.pg-whn .panel,html.embed.pg-whn .help{background:#fff;backdrop-filter:none;box-shadow:none;border:2px solid var(--rv-line)}
+html.embed.pg-whn .scorePill{background:var(--rv-navy);box-shadow:none}
+
+/* Ten Faces: same sheet instead of the dark room */
+html.embed.pg-tf{color-scheme:light;--navy:#fff;--navy-deep:#e9f1f8;--panel:#fff;--line:#c5d6e4;--cream:#0f2438;--muted:#55708a;--teal:#1f6fb5;--sun:#ffd43b;--ink:#0f2438;--body:"Figtree","Segoe UI",Arial,sans-serif}
+html.embed.pg-tf body>.wrap{background:var(--rv-sheet);border-radius:18px;max-width:none;margin:0 8px 8px;min-height:calc(100vh - 8px);padding-inline:max(20px,calc((100% - 1120px)/2))}
+html.embed.pg-tf .btn.on{color:#fff}
+html.embed.pg-tf .face .nm{color:var(--rv-navy)}
