@@ -7,10 +7,10 @@
 <title>Gabi · Homework · Teen Talk Time</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="../gabi-english-hub/skills.css?v=20261007g">
+<link rel="stylesheet" href="../gabi-english-hub/skills.css?v=20261007h">
 </head>
 <body>
-<script src="../gabi-english-hub/skills.js?v=20261007g"></script>
+<script src="../gabi-english-hub/skills.js?v=20261007h"></script>
 <script>
 /* Homework after Lesson 4. Gateway to the World B1, Unit 1, Listening p12 (track 06, Teen Talk Time).
    Every fact below repeats the keys already used in lesson4.html. The lesson itself is not changed.
@@ -65,15 +65,15 @@ Lesson.boot({kicker:'Homework · 7 October',hub:'./',steps:[
 {stage:'Write',title:'Plan your call',hint:'Now it is about you. Key words only.',
  side:{card:TASK},
  act:{type:'map',centre:'Arguments at home',branches:[{label:'We argue about',ph:['topic 1','topic 2']},{label:'My parents say',ph:['“Put your …”','“You never …”']},{label:'I say',ph:['my answer','my reason']},{label:'Fair or unfair?',ph:['fair / unfair','because …']},{label:'My solution',ph:['I could …','we should …']},{label:'When I am a parent',ph:['I will …','I won’t …']}]}},
-{stage:'Write',title:'Your call to Teen Talk Time',hint:'Write what you say on the radio. <small>The list on the right turns green as you write.</small>',
+{stage:'Write',title:'Your call to Teen Talk Time',hint:'Write what you say on the radio. <small>The list on the right turns green as you write. When you finish, press Submit to teacher.</small>',
  side:{card:sh=>{const d=sh.mapDef,v=sh.map||{};const plan=d?d.branches.map((b,i)=>{const w=[v[i+'_0'],v[i+'_1']].filter(Boolean).join(', ');return '<li><b>'+b.label+'</b>'+(w?': '+w.replace(/[<>&]/g,''):'')+'</li>'}).join(''):'';return TASK+(plan?'<h4>Your plan</h4><ul>'+plan+'</ul>':'')}},
- act:{type:'write',min:70,max:110,ph:'Hi, my name’s …',checks:[
-  {label:'Says who you are: name and age',test:t=>/(my name|i['’]?m\s+\w+|i am\s+\w+)/i.test(t)&&/\b(\d{1,2}|eleven|twelve|thirteen|fourteen)\b/i.test(t)},
+ act:{type:'write',submit:true,min:70,max:110,ph:'Hi, my name’s …',checks:[
+  {label:'Your name and age',test:t=>/(my name|i['’]?m\s+\w+|i am\s+\w+)/i.test(t)&&/\b(\d{1,2}|eleven|twelve|thirteen|fourteen)\b/i.test(t)},
   {label:'We argue about …',test:t=>/\bargu\w*\s+(with\s+[\w\s]{1,25}\s+)?(about|over)\b/i.test(t)},
-  {label:'What a parent says: My mum / dad always says … or hates it when …',test:t=>/(always (says?|tells?)|hates? it when|doesn['’]?t like it when|says? that|[“"][^”"]{3,}[”"])/i.test(t)},
-  {label:'Your opinion: I think … / In my opinion …',test:t=>/\b(i (really )?(think|believe)|in my opinion|i would say|speaking personally)\b/i.test(t)},
-  {label:'Fair or unfair, with because',test:t=>/\b(un)?fair\b/i.test(t)&&/\bbecause\b/i.test(t)},
-  {label:'A solution (should / could) and the future (will / won’t / might)',test:t=>/\b(should|could)\b/i.test(t)&&/\b(will|won['’]?t|might)\b|['’]ll\b/i.test(t)}]}},
+  {label:'My mum / dad always says …',test:t=>/(always (says?|tells?)|hates? it when|doesn['’]?t like it when|says? that|[“"][^”"]{3,}[”"])/i.test(t)},
+  {label:'I think … / In my opinion …',test:t=>/\b(i (really )?(think|believe)|in my opinion|i would say|speaking personally)\b/i.test(t)},
+  {label:'Fair or unfair + because',test:t=>/\b(un)?fair\b/i.test(t)&&/\bbecause\b/i.test(t)},
+  {label:'should / could + will / won’t',test:t=>/\b(should|could)\b/i.test(t)&&/\b(will|won['’]?t|might)\b|['’]ll\b/i.test(t)}]}},
 {stage:'Speak',title:'Say it aloud',hint:'You only hear the question. Start the timer and speak for 40 seconds. <small>Use your plan and your phrases. Flip the card only if you need to see the question.</small>',
  act:{type:'talk',label:'Question',secs:40,chipLabel:'Tap each phrase you use',chips:SAY,cards:[
   {say:'What do you and your parents argue about?',audio:'media/l6/q1.mp3',q:'What do you and your parents argue about?'},

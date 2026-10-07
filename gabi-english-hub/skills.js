@@ -139,11 +139,12 @@ talk:{view(a,s){const c=a.cards[s.i],n=a.cards.length,secs=c.secs||a.secs||40,le
   if(d.back!==undefined||d.fwd!==undefined){hush();clearInterval(tick);s.run=false;s.left=null;s.flip=false;s.played=false;if(!a.keepChips)s.used={};s.i=d.back!==undefined?s.i-1:(s.i+1)%a.cards.length;return redrawAct()}}},
 map:{view(a,s){return `<div class="map"><div class="hub">${esc(a.centre)}</div><div class="branches">${a.branches.map((b,i)=>`<label><b>${esc(b.label)}</b>${Array.from({length:b.n||2},(_,k)=>`<input data-map="${i}_${k}" value="${esc(s.val[i+'_'+k]||'')}" placeholder="${esc((b.ph||[])[k]||'key words')}" autocomplete="off">`).join('')}</label>`).join('')}</div></div><p class="muted">Key words only, no sentences. The plan stays next to you on the writing step.</p>`},
  input(a,s,t){if(t.dataset.map!==undefined){s.val[t.dataset.map]=t.value;SHARED.map=s.val;SHARED.mapDef=a}}},
-write:{view(a,s){return `${a.to?`<div class="mailHead compose"><div><b>To: ${esc(a.to)}</b><span>${esc(a.subject||'')}</span></div></div>`:''}<div class="write"><textarea data-text data-auto placeholder="${esc(a.ph||'Write here')}" spellcheck="false">${esc(s.text)}</textarea><div class="wside"><b id="wc"></b><ul id="chk"></ul><button class="ghost" data-copy>Copy the text</button><span id="copied" class="muted"></span></div></div>`},
+write:{view(a,s){return `${a.to?`<div class="mailHead compose"><div><b>To: ${esc(a.to)}</b><span>${esc(a.subject||'')}</span></div></div>`:''}<div class="write"><textarea data-text data-auto placeholder="${esc(a.ph||'Write here')}" spellcheck="false">${esc(s.text)}</textarea><div class="wside"><b id="wc"></b><ul id="chk"></ul>${a.submit?`<button class="main" data-send>${s.code?'Copy the code again':'Submit to teacher'}</button><span class="muted" id="sentMsg">${s.code?(s.shared?'Choose your teacher in the list.':'Code copied. Paste it in your chat with your teacher.'):''}</span>${s.code?`<input type="hidden" data-code value="${esc(s.code)}">`:''}`:`<button class="ghost" data-copy>Copy the text</button><span id="copied" class="muted"></span>`}</div></div>`},
  after(a,s){const t=s.text,n=words(t);const wc=$('#wc');if(!wc)return;wc.textContent=n+' words'+(a.min?' · aim for '+a.min+'–'+a.max:'');wc.className=a.min&&n>=a.min&&n<=a.max?'ok':'';
   $('#chk').innerHTML=a.checks.map(c=>`<li class="${c.test(t)?'ok':''}">${esc(c.label)}</li>`).join('')},
  input(a,s,t){if(t.dataset.text!==undefined){s.text=t.value;this.after(a,s)}},
- click(a,s,d){if(d.copy!==undefined){const done=()=>{const c=$('#copied');if(c)c.textContent='Copied.'};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(s.text).then(done,()=>{});else{const ta=$('[data-text]');ta.select();try{document.execCommand('copy');done()}catch(e){}}}}}
+ click(a,s,d){if(d.send!==undefined){const rep=(CFG.steps.find(x=>x.act&&x.act.type==='report')||{}).act||{};return sendCode(rep,s,()=>{redrawAct();ACT.write.after(a,s)})}
+  if(d.copy!==undefined){const done=()=>{const c=$('#copied');if(c)c.textContent='Copied.'};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(s.text).then(done,()=>{});else{const ta=$('[data-text]');ta.select();try{document.execCommand('copy');done()}catch(e){}}}}}
 };
 ACT.total={view(a,s){let sum=0,max=0,all=true;const rows=a.parts.map(p=>{const st=ST[p.step],ac=CFG.steps[p.step].act;let got=0,done=false;
    if(ac.type==='gaps'){done=!!st.checked;got=ac.items.filter((it,i)=>judge(it,(st.val||{})[i])===true).length*(p.half?.5:1)}
@@ -171,15 +172,16 @@ async function reportCode(a){const raw=new TextEncoder().encode(JSON.stringify(r
 function reportTodo(){const L=[];CFG.steps.forEach((st,i)=>{const ac=st.act,s=ST[i]||{};if(!ac)return;let ok=true;
   if(ac.type==='gaps')ok=ac.items.every((_,k)=>(s.val||{})[k])&&(ac.free||!!s.checked);else if(ac.type==='quiz')ok=!!s.done;else if(ac.type==='write')ok=!!s.text&&(!ac.min||words(s.text)>=ac.min);else if(ac.type==='map')ok=Object.values(s.val||SHARED.map||{}).filter(Boolean).length>=ac.branches.length;else if(ac.type==='talk')ok=Object.keys(s.spoke||{}).length>=ac.cards.length;
   if(!ok)L.push(i+1)});return L}
+function sendCode(a,s,fin){reportCode(a).then(code=>{s.code=code;s.shared=false;
+  const copy=()=>{if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(code).catch(()=>{});return Promise.resolve()};
+  copy().then(()=>{let touch=false;try{touch=matchMedia('(pointer:coarse)').matches}catch(e){}if(touch&&navigator.share){s.shared=true;navigator.share({text:code}).catch(()=>{s.shared=false;fin()})}fin()})})}
 ACT.report={view(a,s){const todo=reportTodo();
   return `<div class="write send"><textarea readonly data-report spellcheck="false">${esc(reportText(a))}</textarea><div class="wside">
    ${todo.length?`<b class="todo">Not finished: step${todo.length>1?'s':''} ${todo.join(', ')}</b><span class="muted">You can go back and finish, or send it as it is.</span>`:`<b class="ok">Everything is done.</b>`}
    <button class="main" data-send data-auto>${s.code?'Copy the code again':'Send to teacher'}</button>
    ${s.code?`<span class="muted" id="sentMsg">${s.shared?'Choose your teacher in the list.':'Your homework code is copied. Open your chat with your teacher, paste it (Ctrl + V) and send.'}</span><input readonly class="codeBox" data-code value="${esc(s.code)}" aria-label="Homework code">`:`<span class="muted">This makes a homework code for your teacher.</span>`}</div></div>`},
- click(a,s,d){if(d.send!==undefined){reportCode(a).then(code=>{s.code=code;const fin=()=>redrawAct();
-   const copy=()=>{if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(code).catch(()=>{});return Promise.resolve()};
-   copy().then(()=>{let touch=false;try{touch=matchMedia('(pointer:coarse)').matches}catch(e){}if(touch&&navigator.share){s.shared=true;navigator.share({text:code}).catch(()=>{s.shared=false;fin()})}fin()})})}
-  if(d.code!==undefined){}}};
+ click(a,s,d){if(d.send!==undefined)sendCode(a,s,redrawAct)}};
+
 function judge(it,v){const raw=String(v||'').trim().toLowerCase();if(raw&&(it.ans||[]).some(x=>String(x).toLowerCase()===raw))return true;const n=nz(v);if(!n)return false;if((it.ans||[]).some(x=>nz(x)===n))return true;if(it.kw){return it.kw.some(g=>g.every(k=>n.includes(k)))?true:'near'}return false}
 function review(rows){return rows.length?`<div class="review"><b>Look again</b><ol>${rows.map(r=>`<li><span>${esc(r[0])}</span><em>${esc(r[1])}</em>${r[2]?`<small>${esc(r[2])}</small>`:''}</li>`).join('')}</ol></div>`:'<p class="clean">Nothing to review.</p>'}
 
