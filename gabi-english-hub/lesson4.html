@@ -7,10 +7,10 @@
 <title>Gabi · Lesson 4 · Listening and speaking</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="skills.css?v=20261007d">
+<link rel="stylesheet" href="skills.css?v=20261007e">
 </head>
 <body>
-<script src="skills.js?v=20261007d"></script>
+<script src="skills.js?v=20261007e"></script>
 <script>
 /* Gateway to the World B1, Unit 1: Listening p12 (track 06), Developing speaking p14 (tracks 07–08).
    Oxford Discover Futures 2, Unit 3: What makes a good conversation? p32–33 (tracks 1.08, 1.09). */
@@ -18,8 +18,25 @@ const INTEREST=['Really?','Oh yes?','That’s interesting!','That’s amazing!',
 const HD=`<h4>Holly</h4><ul><li>one brother (20) at university, one sister (12) at school</li><li>plays basketball at the weekend</li><li>likes video games</li><li>favourite school subject: biology</li></ul>
 <h4>Dylan</h4><ul><li>one sister (14) at school</li><li>plays football at the weekend</li><li>likes sport</li><li>favourite school subject: biology</li></ul>`;
 const S07=[['Holly','So, Dylan … Have you got any brothers or sisters?'],['Dylan','Yes, I’ve got a sister. She’s 14. She studies at my school. What about you?'],['Holly','I’ve got one brother and one sister.'],['Dylan','How old are they? Do they live at home?'],['Holly','Yes, they do. My brother is 15 and my sister is 12. They’re both studying at my school.'],['Dylan','Cool. So … What do you do at the weekend?'],['Holly','I play basketball on Saturdays.'],['Dylan','Really? How often do you play?'],['Holly','I play in a team, so we train twice a week. I love watching basketball too. My favourite team is the Golden State Warriors. What about you? Do you like basketball?'],['Dylan','Hmm … Not really … I don’t really like sport. I prefer playing video games. On Saturdays my friends come to my house and we play together. Spider-Man is our favourite.'],['Holly','Oh, I hate video games!'],['Dylan','What about school? What’s your favourite school subject?'],['Holly','That’s easy – biology!'],['Dylan','Really? That’s my favourite too!']];
+const AGEISM=`<h4>Ageism in the UK</h4><p>A study from the Royal Society for Public Health shows that almost a third of people of different ages think that ‘being lonely is just something that happens when you get old’. A quarter of millennials believe it’s normal for older people to be unhappy.</p><p>These negative ideas stop us from thinking of old age as an opportunity for new experiences. And they can lead to increased memory loss amongst senior citizens, a worse ability to recover from illness and a negative body image. But the study showed one positive attitude: 69% of people agreed that ‘fundamentally, older people are no different from people of other ages’.</p>`;
+const CALLERS=[{n:'Oliver',img:'assets/l4/oliver.jpg'},{n:'Emma',img:'assets/l4/emma.jpg'},{n:'Harry',img:'assets/l4/harry.jpg'},{n:'Charlotte',img:'assets/l4/charlotte.jpg'},{n:'Poppy',img:'assets/l4/poppy.jpg'}];
+const Z=['-','–','—','no article','no','x','0','nothing'];
 Lesson.boot({kicker:'Lesson 4 · Unit 1',steps:[
-{stage:'Lead-in',title:'What parents say',hint:'Who says these things at home? Complete each one. <small>More than one word can be right. Then name three more things that cause arguments between parents and teenagers.</small>',
+{stage:'Think',title:'Sentence, phrase, word',hint:'Read the text from last lesson again. Choose three things and type them. <small>Great Thinkers · Student’s Book p11</small>',
+ side:{title:'Student’s Book p10',text:{html:AGEISM}},photo:{src:'age-scenes/09.jpg',pos:'center 25%'},
+ act:{type:'gaps',free:true,after:'Now explain your three choices aloud. What idea connects them?',items:[
+  {pre:'One sentence that talks about a key idea',ph:'copy the sentence'},
+  {pre:'One phrase that moved you, interested you or provoked you',ph:'a few words'},
+  {pre:'One word that is central to the text',ph:'one word'}]}},
+{stage:'Think',title:'Attitudes to teenagers',hint:'Now think about the other end of life. <small>Great learners are open-minded and positive towards others.</small>',
+ photo:{src:'assets/l4/teens.jpg',alt:'A group of teenagers',cap:'What do people think when they see them?'},
+ act:{type:'talk',label:'Question',secs:60,chips:['In my opinion, …','People often think that …','That isn’t fair because …','For example, …','I really believe that …','On the other hand, …'],cards:[
+  {q:'What negative attitudes do you think exist towards teenagers? Are they justified?'},
+  {q:'Has anyone ever treated you badly just because you are a teenager? Was it fair?'},
+  {q:'What positive attitudes should society have towards teenagers?'},
+  {q:'Why is it important to notice and question stereotypes about teenagers and senior citizens?'},
+  {q:'Learner profile: how open-minded and positive towards others are you, from 1 to 5? Name one way to improve.',secs:40}]}},
+{stage:'Lead-in',title:'What parents say',photo:{src:'assets/l4/bedroom.jpg',alt:'A messy teenage bedroom',cap:'What do parents say about this?'},hint:'Who says these things at home? Complete each one. <small>More than one word can be right. Then name three more things that cause arguments between parents and teenagers.</small>',
  act:{type:'gaps',items:[
   {pre:'Put your',post:'down!',ans:['phone','mobile','mobile phone','tablet','smartphone']},
   {pre:'Tidy your',post:'!',ans:['room','bedroom','desk']},
@@ -27,10 +44,10 @@ Lesson.boot({kicker:'Lesson 4 · Unit 1',steps:[
   {pre:'Turn the',post:'down!',ans:['music','radio','volume','tv','sound']},
   {pre:'Switch the',post:'off!',ans:['tv','television','computer','phone','light','console','music']}]}},
 {stage:'Listening',title:'Teen Talk Time',hint:'Listen once. Which five causes of arguments do the teenagers mention?',
- side:{title:'Radio programme · Student’s Book p12',audio:[{src:'assets/audio/gw-06.mp3',label:'Teen Talk Time'}],gate:true,gateText:'Listen first. The list appears after the programme.'},
+ side:{look:'radio',people:CALLERS,title:'Radio programme · Student’s Book p12',audio:[{src:'assets/audio/gw-06.mp3',label:'Teen Talk Time'}],gate:true,gateText:'Listen first. The list appears after the programme.'},
  act:{type:'pick',items:[{t:'video games',ok:1,note:'Oliver'},{t:'pocket money',ok:0},{t:'a noisy little sister',ok:1,note:'Emma'},{t:'clothes',ok:0},{t:'homework and studying',ok:1,note:'Harry'},{t:'coming home late',ok:0},{t:'a future career',ok:1,note:'Charlotte'},{t:'phones at dinner',ok:0},{t:'a messy bedroom',ok:1,note:'Poppy'},{t:'friends',ok:0}]}},
 {stage:'Listening',title:'Who …?',hint:'Listen again. One description fits nobody.',
- side:{title:'Listen again',audio:[{src:'assets/audio/gw-06.mp3',label:'Teen Talk Time'}]},
+ side:{look:'radio',people:CALLERS,title:'Listen again',audio:[{src:'assets/audio/gw-06.mp3',label:'Teen Talk Time'}]},
  act:{type:'quiz',label:'Who',opts:['Oliver','Emma','Harry','Charlotte','Poppy','Nobody'],items:[
   {q:'… feels that his or her father or mother is never happy with what he or she does after school?',a:'Harry',why:'When he plays, his dad says “Why aren’t you working?” When he revises, his dad says “You need to relax!”'},
   {q:'… accepts that he or she does something wrong but thinks that it isn’t very important?',a:'Poppy',why:'“I know my bedroom is a mess, but I just don’t care.”'},
@@ -39,7 +56,7 @@ Lesson.boot({kicker:'Lesson 4 · Unit 1',steps:[
   {q:'… argues with a parent because they disagree about a free-time activity?',a:'Oliver',why:'His dad hates it when he plays video games.'},
   {q:'… has arguments with a family member, but not because of a problem with a parent?',a:'Emma',why:'Her problem is her little sister.'}]}},
 {stage:'Listening',title:'Details',hint:'Answer in a full sentence. Type it yourself.',
- side:{title:'Listen again if you need to',audio:[{src:'assets/audio/gw-06.mp3',label:'Teen Talk Time'}]},
+ side:{look:'radio',people:CALLERS,title:'Listen again if you need to',audio:[{src:'assets/audio/gw-06.mp3',label:'Teen Talk Time'}]},
  act:{type:'gaps',open:true,dense:true,items:[
   {pre:'What does Oliver like about his family situation?',long:1,kw:[['independen']],model:'His parents give him a lot of independence.'},
   {pre:'Why does Emma’s mum protect Emma’s sister?',long:1,kw:[['ten'],['10'],['young'],['little']],model:'Because she is only ten.'},
@@ -52,7 +69,24 @@ Lesson.boot({kicker:'Lesson 4 · Unit 1',steps:[
   {q:'Do you think arguments between parents and teenagers are inevitable? What makes you say that?'},
   {q:'Which of the five teenagers do you agree with most? Why?'},
   {q:'What will you argue about with your own children? Use will, might and won’t.'}]}},
-{stage:'Conversation',title:'Do or don’t?',hint:'What makes a good conversation? Decide fast.',
+{stage:'Grammar',title:'Understanding your parents',hint:'Type a, an, the or a dash (-) for no article. Then say which rule explains each one. <small>Student’s Book p13 · 1 general · 2 specific or mentioned before · 3 first mention, one of many · 4 unique · 5 a job</small>',
+ act:{type:'gaps',inline:true,tail:'adult.',items:[
+  {pre:'Dean Burnett is',ans:['a'],model:'a · rule 3'},
+  {pre:'doctor of neuroscience. He is also',ans:['the'],model:'the · rule 4'},
+  {pre:'author of',ans:['a'],model:'a · rule 3'},
+  {pre:'new book called ‘Why your parents are driving you up the wall and what to do about it’. He wrote',ans:['the'],model:'the · rule 2'},
+  {pre:'book to help',ans:Z,model:'– · rule 1'},
+  {pre:'teenagers to understand their parents. There are lots of books for',ans:Z,model:'– · rule 1'},
+  {pre:'parents about this question, but not many written for',ans:Z,model:'– · rule 1'},
+  {pre:'young people. He says that',ans:Z,model:'– · rule 1'},
+  {pre:'problems in',ans:['the'],model:'the · rule 4'},
+  {pre:'relationship between',ans:Z,model:'– · rule 1'},
+  {pre:'youngsters and',ans:Z,model:'– · rule 1'},
+  {pre:'adults are nothing new.',ans:['the'],model:'The · rule 4'},
+  {pre:'ancient Greek philosopher Socrates talked about them 2500 years ago! Dean thinks that',ans:['the'],model:'the · rule 4'},
+  {pre:'key to understanding your parents is to simply realise that your brain works differently when you are',ans:['a'],model:'a · rule 3'},
+  {pre:'teenager and when you are',ans:['an'],model:'an · rule 3'}]}},
+{stage:'Conversation',title:'Do or don’t?',photo:{src:'assets/l4/conversation.jpg',alt:'Two teenagers talking',cap:'Good conversation or bad?'},hint:'What makes a good conversation? Decide fast.',
  act:{type:'quiz',label:'Rule',opts:['Do','Don’t'],items:[
   {q:'Only talk about yourself.',a:'Don’t',why:'A conversation needs two people who both speak and listen.'},
   {q:'Show interest with gestures.',a:'Do',why:'Nodding, smiling and eye contact show you are listening.'},
@@ -65,7 +99,7 @@ Lesson.boot({kicker:'Lesson 4 · Unit 1',steps:[
   {q:'Look at your phone if you get a message.',a:'Don’t',why:'The person in front of you comes first.'},
   {q:'Interrupt the speaker to give your opinion.',a:'Don’t',why:'Wait until they finish.'}]}},
 {stage:'Conversation',title:'Three conversations',hint:'Listen to each conversation once, then answer from memory.',
- side:{title:'Oxford Discover Futures 2 · p32',audio:[{src:'assets/audio/odf-1-08-1.mp3',label:'1 · Emily and Ed'},{src:'assets/audio/odf-1-08-2.mp3',label:'2 · Mrs Lane and Connor'},{src:'assets/audio/odf-1-08-3.mp3',label:'3 · Sara and Max'}],gate:true,gateText:'Listen to all three first.',gateBtn:'Show the questions'},
+ side:{look:'radio',title:'Oxford Discover Futures 2 · p32',audio:[{src:'assets/audio/odf-1-08-1.mp3',label:'1 · Emily and Ed'},{src:'assets/audio/odf-1-08-2.mp3',label:'2 · Mrs Lane and Connor'},{src:'assets/audio/odf-1-08-3.mp3',label:'3 · Sara and Max'}],gate:true,gateText:'Listen to all three first.',gateBtn:'Show the questions'},
  act:{type:'quiz',label:'Question',shuffle:false,cols:1,items:[
   {q:'Emily and Ed: how successful was the conversation?',o:['Very successful','Pretty successful','Not successful'],a:'Not successful',why:'Emily only talks about herself, calls to someone else and answers her phone. Ed hardly speaks.'},
   {q:'What do we learn about Ed?',o:['He has a new baby brother','Almost nothing: he is “not too bad”','He goes to yoga lessons'],a:'Almost nothing: he is “not too bad”',why:'Emily never asks him a real question.'},
@@ -76,7 +110,7 @@ Lesson.boot({kicker:'Lesson 4 · Unit 1',steps:[
   {q:'Why didn’t Sara take the weekend job?',o:['The shop was too far away','Her parents want her to study for her exams','She is training for a marathon'],a:'Her parents want her to study for her exams',why:'She can get a job next summer.'},
   {q:'What is Max training for, and when is it?',o:['A marathon in three weeks','A football final next month','A swimming race at the weekend'],a:'A marathon in three weeks',why:'He joined an athletics club last year.'}]}},
 {stage:'Conversation',title:'Show interest',hint:'Listen and react aloud first. Then choose the best reply.',
- act:{type:'quiz',label:'Reply',cols:1,items:[
+ act:{type:'quiz',label:'Reply',cols:1,chat:true,items:[
   {q:'Listen and react.',plain:'I’m always so nervous during exams!',audio:'assets/audio/odf-1-09-1.mp3',o:['I know what you mean.','Who was that, then?','Where was that, then?'],a:'I know what you mean.',why:'“I’m always so nervous during exams!” You share the feeling.'},
   {q:'Listen and react.',plain:'Did you know that our noses and ears never stop growing?',audio:'assets/audio/odf-1-09-2.mp3',o:['What about you?','Really? That’s weird!','I know what you mean.'],a:'Really? That’s weird!',why:'“Did you know that our noses and ears never stop growing?” React to the surprising fact.'},
   {q:'Listen and react.',plain:'I was on vacation last week.',audio:'assets/audio/odf-1-09-3.mp3',o:['Oh yes? Where was that, then?','Who was that, then?','That’s weird!'],a:'Oh yes? Where was that, then?',why:'“I was on vacation last week.” Ask for more.'},
@@ -84,7 +118,7 @@ Lesson.boot({kicker:'Lesson 4 · Unit 1',steps:[
   {q:'Listen and react.',plain:'Guess who I saw at the concert!',audio:'assets/audio/odf-1-09-5.mp3',o:['I know what you mean.','How about you?','Who was that, then?'],a:'Who was that, then?',why:'“Guess who I saw at the concert!”'},
   {q:'Listen and react.',plain:'I don’t eat chocolate because it makes me sick.',audio:'assets/audio/odf-1-09-6.mp3',o:['Really? That’s interesting!','Who was that, then?','Oh yes? When was that, then?'],a:'Really? That’s interesting!',why:'“I don’t eat chocolate because it makes me sick.”'}]}},
 {stage:'Speaking',title:'Holly and Dylan',hint:'They meet for the first time. Find four differences between the cards and what they say.',
- side:{title:'Student’s Book p14',audio:[{src:'assets/audio/gw-07.mp3',label:'Holly and Dylan',script:S07}],card:HD,gate:true,gateText:'Read the cards, then listen.',gateBtn:'Show the list'},
+ side:{title:'Student’s Book p14',audio:[{src:'assets/audio/gw-07.mp3',label:'Holly and Dylan',script:S07}],people:[{n:'Holly',img:'assets/l4/holly.jpg'},{n:'Dylan',img:'assets/l4/dylan.jpg'}],card:HD,gate:true,gateText:'Read the cards, then listen.',gateBtn:'Show the list'},
  act:{type:'pick',notes:true,items:[
   {t:'Holly’s brother is 15 and at school',ok:1,note:'The card says 20, at university.'},
   {t:'Holly’s sister is 14',ok:0},
@@ -115,7 +149,7 @@ Lesson.boot({kicker:'Lesson 4 · Unit 1',steps:[
   {q:'What’s your favourite school subject?',a:'Down ↘',why:'Wh- questions go down.'},
   {q:'How often do you see your grandparents?',a:'Down ↘',why:'Wh- questions go down.'},
   {q:'What about you?',a:'Down ↘',why:'It works like a Wh- question.'}]}},
-{stage:'Speaking',title:'Summer camp',hint:'Card 1: you ask. Cards 2–7: you only hear the question. <small>Exam tip: never just Yes or No. Add two details, then return the question.</small>',
+{stage:'Speaking',title:'Summer camp',photo:{src:'assets/l4/camp.jpg',alt:'Teenagers at a summer camp',cap:'Your new friend at camp'},hint:'Card 1: you ask. Cards 2–7: you only hear the question. <small>Exam tip: never just Yes or No. Add two details, then return the question.</small>',
  act:{type:'talk',label:'Card',keepChips:false,cards:[
   {tag:'Role-play',secs:90,html:'You meet an English teenager at a summer camp. Find out about brothers or sisters, the weekend, free time, school subjects and one more thing.',chips:['Have you got any …?','How old …?','What do they do?','What do you do at the weekend?','What do you like doing …?','What’s your favourite …?','What about you?','your own question']},
   {say:'Have you got any brothers or sisters?',q:'Have you got any brothers or sisters?',chips:['more than Yes or No','two details','What about you?']},
@@ -124,7 +158,7 @@ Lesson.boot({kicker:'Lesson 4 · Unit 1',steps:[
   {say:'What is your favourite school subject, and why?',q:'What’s your favourite school subject, and why?',chips:['more than Yes or No','two details','What about you?']},
   {say:'Do you like playing video games?',q:'Do you like playing video games?',chips:['more than Yes or No','two details','What about you?']},
   {say:'Which member of your family do you spend the most time with?',q:'Which member of your family do you spend the most time with?',chips:['more than Yes or No','two details','What about you?']}]}},
-{stage:'Speaking',title:'Tell me about …',hint:'One speaks for 40 seconds. The listener shows interest with at least three different phrases. Then swap.',
+{stage:'Speaking',title:'Tell me about …',photo:{src:'assets/family.jpg',alt:'A family outdoors',pos:'center 60%'},hint:'One speaks for 40 seconds. The listener shows interest with at least three different phrases. Then swap.',
  act:{type:'talk',label:'Topic',secs:40,chipLabel:'Listener: tap each phrase you use',chips:INTEREST,cards:['your family','what you did last weekend','a place you like','your hobbies','a celebration you enjoyed','a film you enjoyed','the last holiday you had','a concert or match you went to','the last time you went to the dentist'].map(t=>({html:'Tell me about … <b>'+t+'</b>'}))}}
 ]});
 </script>

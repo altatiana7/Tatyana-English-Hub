@@ -9,7 +9,10 @@ const esc=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;',
 const nz=s=>String(s||'').toLowerCase().replace(/[’‘`´]/g,"'").replace(/[-–—]/g,' ').replace(/[^a-z0-9' ]/g,' ').replace(/\s+/g,' ').trim();
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const words=t=>(String(t).trim().match(/[A-Za-z’']+/g)||[]).length;
-let CFG,cur=0,ST=[],seen=new Set(),tick=0,EMBED=false,SHARED={};
+let CFG,cur=0,ST=[],seen=new Set(),tick=0,EMBED=false,SHARED={},PH={},STAGES=[];
+const has=src=>!!src&&PH[src]===true;
+const mono=n=>`<i class="mono">${esc(String(n).charAt(0))}</i>`;
+const face=(p)=>has(p.img)?`<img src="${esc(p.img)}" alt="">`:mono(p.n);
 
 /* ---------- speech fallback ---------- */
 function say(lines,onend){try{speechSynthesis.cancel();const vs=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang));const names=[...new Set(lines.map(l=>l[0]))];let n=0;
@@ -22,36 +25,51 @@ function boot(cfg){CFG=cfg;EMBED=new URLSearchParams(location.search).has('embed
   <div class="now"><small id="stage"></small><b id="title"></b></div><div class="steps" id="steps" role="tablist" aria-label="Lesson steps"></div>
   <button class="arrow" id="prev" aria-label="Previous step">‹</button><button class="arrow next" id="next"></button></div>
   <main class="sheet" id="sheet"></main>`;
- ST=cfg.steps.map(()=>({}));
+ ST=cfg.steps.map(()=>({}));STAGES=[...new Set(cfg.steps.map(x=>x.stage))];
  $('#steps').onclick=e=>{const b=e.target.closest('[data-i]');if(b)go(+b.dataset.i)};
  $('#prev').onclick=()=>{if(cur)go(cur-1)};
  $('#next').onclick=()=>{if(cur===CFG.steps.length-1){if(EMBED)return;ST=CFG.steps.map(()=>({}));SHARED={};seen.clear();go(0)}else go(cur+1)};
  const sh=$('#sheet');sh.addEventListener('click',onClick);sh.addEventListener('submit',e=>{e.preventDefault();const f=e.target.closest('[data-form]');if(f)act('submit',f.dataset.form,f)});sh.addEventListener('input',onInput);
- go(0)}
+ const srcs=new Set();cfg.steps.forEach(st=>{if(st.photo)srcs.add(st.photo.src);const sd=st.side||{};(sd.people||[]).forEach(p=>p.img&&srcs.add(p.img));if(sd.mail&&sd.mail.img)srcs.add(sd.mail.img)});
+ let left=srcs.size,started=false;const start=()=>{if(started)return;started=true;go(0)};if(!left)return start();setTimeout(start,1800);
+ srcs.forEach(src=>{const im=new Image();im.onload=()=>{PH[src]=true;if(--left<=0)start()};im.onerror=()=>{PH[src]=false;if(--left<=0)start()};im.src=src})}
 function go(i){hush();clearInterval(tick);tick=0;seen.add(cur);cur=i;drawBar();draw()}
 function drawBar(){const S=CFG.steps;
  $('#steps').innerHTML=S.map((s,i)=>(i&&s.stage!==S[i-1].stage?'<i></i>':'')+`<button class="chip${i===cur?' on':seen.has(i)?' seen':''}" data-i="${i}" role="tab" aria-selected="${i===cur}" title="${esc(s.title)}">${i+1}</button>`).join('');
  $('#stage').textContent=CFG.kicker+' · '+S[cur].stage;$('#title').textContent=(cur+1)+' / '+S.length+' · '+S[cur].title;
  $('#prev').style.visibility=cur?'visible':'hidden';const last=cur===S.length-1;$('#next').textContent=last?'Start again':'Next ›';$('#next').style.visibility=last&&EMBED?'hidden':'visible'}
 function draw(){const step=CFG.steps[cur],s=ST[cur];if(!s.init){s.init=true;initAct(step.act,s)}
- const side=step.side?sideHTML(step.side,s):'';const gated=step.side&&step.side.gate&&!s.open;
- $('#sheet').className='sheet'+(side?' two':'')+(step.wide?' wide':'');
- $('#sheet').innerHTML=(side?`<aside class="side">${side}</aside>`:'')+`<section class="work"><p class="hint">${step.hint||''}</p>${gated?`<div class="gate"><b>${esc(step.side.gateText||'Listen first. The task stays hidden.')}</b>${step.side.text?'':`<button class="main" data-open>${esc(step.side.gateBtn||'Show the task')}</button>`}</div>`:`<div class="act" id="act">${actHTML(step.act,s)}</div>`}</section>`;
- bindSide(step.side,s);const a=$('#sheet [data-auto]');if(a&&!gated)a.focus()}
-function redrawAct(){const step=CFG.steps[cur],s=ST[cur];const el=$('#act');if(el){el.innerHTML=actHTML(step.act,s);const a=el.querySelector('[data-auto]');if(a)a.focus()}}
+ const photo=step.photo&&has(step.photo.src)?`<figure class="photo${step.side?'':' full'}"><img src="${esc(step.photo.src)}" alt="${esc(step.photo.alt||'')}" style="object-position:${esc(step.photo.pos||'center')}">${step.photo.cap?`<figcaption>${esc(step.photo.cap)}</figcaption>`:''}</figure>`:'';
+ const side=(step.side?sideHTML(step.side,s):'')+photo;const gated=step.side&&step.side.gate&&!s.open;const look=step.side&&step.side.look?' look-'+step.side.look:'';
+ const sh=$('#sheet');sh.className='sheet'+(side?' two':'')+(step.wide?' wide':'')+(!step.side&&photo?' pic':'');sh.dataset.stage=STAGES.indexOf(step.stage)%6;
+ sh.innerHTML=(side?`<aside class="side${look}">${side}</aside>`:'')+`<section class="work"><p class="hint">${step.hint||''}</p>${gated?`<div class="gate"><b>${esc(step.side.gateText||'Listen first. The task stays hidden.')}</b>${step.side.text?'':`<button class="main" data-open>${esc(step.side.gateBtn||'Show the task')}</button>`}</div>`:`<div class="act" id="act">${actHTML(step.act,s)}</div>`}</section>`;
+ bindSide(step.side,s);bindPlayers();const a=$('#sheet [data-auto]');if(a&&!gated)a.focus()}
+function redrawAct(){const step=CFG.steps[cur],s=ST[cur];const el=$('#act');if(el){el.innerHTML=actHTML(step.act,s);bindPlayers();const a=el.querySelector('[data-auto]');if(a)a.focus()}}
 
+/* ---------- audio player ---------- */
+const mmss=t=>{t=Math.max(0,Math.floor(t||0));return Math.floor(t/60)+':'+String(t%60).padStart(2,'0')};
+function player(a,k,auto){return `<div class="pl" data-pl="${k}"><button class="plb" data-plbtn aria-label="Play or pause"></button><div class="plm"><span>${esc(a.label||'Recording')}</span><div class="plt" data-pltrack><u></u></div></div><b class="pltime">0:00</b><button class="plr" data-plback aria-label="Back ten seconds">−10 s</button><i class="eq" aria-hidden="true"><s></s><s></s><s></s><s></s><s></s></i><audio preload="metadata" src="${esc(a.src)}" ${auto?'data-autoplay':''}></audio></div>`}
+function bindPlayers(){document.querySelectorAll('.pl:not([data-b])').forEach(box=>{box.dataset.b=1;const el=box.querySelector('audio'),bar=box.querySelector('.plt u'),tm=box.querySelector('.pltime');
+  const paint=()=>{bar.style.width=(el.duration?el.currentTime/el.duration*100:0)+'%';tm.textContent=mmss(el.currentTime)+(el.duration?' / '+mmss(el.duration):'')};
+  el.addEventListener('timeupdate',paint);el.addEventListener('loadedmetadata',paint);
+  el.addEventListener('play',()=>{box.classList.add('on');const sd=box.closest('.side');if(sd)sd.classList.add('live')});
+  ['pause','ended'].forEach(ev=>el.addEventListener(ev,()=>{box.classList.remove('on');const sd=box.closest('.side');if(sd&&!sd.querySelector('.pl.on'))sd.classList.remove('live')}));
+  box.querySelector('[data-pltrack]').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect();if(el.duration)el.currentTime=(e.clientX-r.left)/r.width*el.duration});
+  el.addEventListener('error',()=>{const sd=CFG.steps[cur].side,a=sd&&sd.audio&&sd.audio[+box.dataset.pl];box.classList.add('tts');
+   box.innerHTML=a&&a.script?`<button class="plb" data-say="${box.dataset.pl}" aria-label="Play"></button><div class="plm"><span>${esc(a.label||'Recording')}</span><em>Read aloud by the browser until the recording is added.</em></div><button class="plr" data-stop>Stop</button>`:`<div class="plm"><span>${esc((a&&a.label)||'Recording')}</span><em>The recording is missing.</em></div>`},{once:true});
+  if(el.dataset.autoplay!==undefined){const p=el.play();if(p&&p.catch)p.catch(()=>{})}})}
 /* ---------- side panel ---------- */
 function sideHTML(sd,s){let h='';
+ if(sd.look==='radio')h+=`<div class="onair"><i></i>On air</div>`;
  if(sd.title)h+=`<b class="sideT">${esc(sd.title)}</b>`;
- if(sd.audio)h+=sd.audio.map((a,k)=>`<div class="aud" data-aud="${k}">${a.label?`<span>${esc(a.label)}</span>`:''}<audio controls preload="metadata" src="${esc(a.src)}"></audio></div>`).join('');
+ if(sd.audio)h+=sd.audio.map((a,k)=>player(a,k)).join('');
+ if(sd.people)h+=`<div class="people">${sd.people.map(p=>`<div>${face(p)}<b>${esc(p.n)}</b></div>`).join('')}</div>`;
+ const mail=sd.mail?`<div class="mailHead">${face({n:sd.mail.from,img:sd.mail.img})}<div><b>${esc(sd.mail.from)}</b><span>${esc(sd.mail.sub)}</span></div><em>to me</em></div>`:'';
  if(sd.text){if(s.hidden)h+=`<div class="gone"><b>The text is hidden.</b><span>Work from memory.</span><button class="ghost" data-peek>Teacher: show it again</button></div>`;
-  else h+=`<div class="text">${sd.text.html}</div>${sd.text.seconds?`<div class="count"><u id="countBar"></u></div><div class="row"><span id="countN" class="muted"></span><button class="main" data-hide>Hide the text and start</button></div>`:''}`}
+  else h+=`${mail}<div class="text">${sd.text.html}</div>${sd.text.seconds?`<div class="count"><u id="countBar"></u></div><div class="row"><span id="countN" class="muted"></span><button class="main" data-hide>Hide the text and start</button></div>`:''}`}
  if(sd.card)h+=`<div class="card">${typeof sd.card==='function'?sd.card(SHARED):sd.card}</div>`;
  return h}
 function bindSide(sd,s){if(!sd)return;
- if(sd.audio)document.querySelectorAll('.aud').forEach(box=>{const a=sd.audio[+box.dataset.aud],el=box.querySelector('audio');
-  el.addEventListener('error',()=>{if(!a.script){box.innerHTML+='<em class="muted">The recording is missing.</em>';return}
-   box.innerHTML=`${a.label?`<span>${esc(a.label)}</span>`:''}<div class="row"><button class="main" data-say="${box.dataset.aud}">Play</button><button class="ghost" data-stop>Stop</button></div><em class="muted">Read aloud by the browser until the recording is added.</em>`},{once:true})});
  if(sd.text&&sd.text.seconds&&!s.hidden){let left=s.left==null?sd.text.seconds:s.left;const paint=()=>{const b=$('#countBar'),n=$('#countN');if(!b)return clearInterval(tick);b.style.width=(left/sd.text.seconds*100)+'%';n.textContent=left+' seconds to read'};paint();
   tick=setInterval(()=>{left--;s.left=left;if(left<=0){clearInterval(tick);s.hidden=true;s.open=true;draw()}else paint()},1000)}}
 
@@ -71,14 +89,18 @@ quiz:{view(a,s){const n=s.items.length;
   if(s.done)return `<div class="end"><div><span class="tag">${esc(a.label||'Result')}</span><h3>${s.ok} of ${n} correct</h3><p>${s.ok===n?'No mistakes.':'Look at the ones you missed, then play again.'}</p><button class="main" data-again>Play again</button></div>${review(s.miss)}</div>`;
   const q=s.items[s.i],opts=q.o||a.opts,done=s.pick!=null,right=typeof q.a==='number'?opts[q.a]:q.a;
   return `<div class="qhead"><span class="tag">${esc(a.label||'Question')} ${s.i+1} of ${n}</span><b>${s.ok} correct</b></div>
-   ${q.audio?`<div class="aud inline"><audio controls src="${esc(q.audio)}" ${done?'':'autoplay'}></audio></div>`:''}
+   ${q.audio?`<div class="bubble in">${player({src:q.audio,label:q.who||'Listen'},'q',!done)}</div>`:''}
    <p class="q${q.small?' small':''}">${q.html||esc(q.q)}</p>
-   <div class="opts n${opts.length}${a.cols?' c'+a.cols:''}">${opts.map((o,k)=>`<button data-opt="${k}" class="${done?(o===right?'ok':o===s.pick?'no':'dim'):''}" ${done?'disabled':''}>${esc(o)}</button>`).join('')}</div>
+   <div class="opts n${opts.length}${a.cols?' c'+a.cols:''}${a.chat?' chat':''}">${opts.map((o,k)=>`<button data-opt="${k}" class="${done?(o===right?'ok':o===s.pick?'no':'dim'):''}" ${done?'disabled':''}>${esc(o)}</button>`).join('')}</div>
    ${done?fb(s.pick===right,s.pick===right?'Correct.':'The answer is: '+esc(right),q.why?esc(q.why):'')+`<button class="main" data-next data-auto>${s.i===n-1?'See the result':'Next'}</button>`:''}`},
  click(a,s,d){if(d.opt!==undefined&&s.pick==null){const q=s.items[s.i],opts=q.o||a.opts,right=typeof q.a==='number'?opts[q.a]:q.a;s.pick=opts[+d.opt];if(s.pick===right)s.ok++;else s.miss.push([q.plain||q.q||'',right,q.why||'']);return redrawAct()}
   if(d.next!==undefined){s.i++;s.pick=null;if(s.i>=s.items.length)s.done=true;return redrawAct()}
   if(d.again!==undefined){s.init=false;initAct(a,s);s.init=true;return redrawAct()}}},
 gaps:{view(a,s){const n=a.items.length;let ok=0;
+  if(a.inline){const body=a.items.map((it,i)=>{const v=s.val[i]||'';let st='';if(s.checked){const g=judge(it,v);st=g===true?'ok':'no';if(g===true)ok++}
+    return `${it.html?it.pre:esc(it.pre||'')} <span class="ig ${st}"><input data-gap="${i}" value="${esc(v)}" ${i===0?'data-auto':''} autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Gap ${i+1}">${s.show?`<em>${esc(it.model||it.ans[0])}</em>`:''}</span> `}).join('')+esc(a.tail||'');
+   return `<form data-form="gaps"><p class="cloze">${body}</p><div class="row"><button class="main">Check</button><button type="button" class="ghost" data-show>${s.show?'Hide the answers':'Show the answers'}</button>${s.checked?`<b class="score">${ok} of ${n} correct</b>`:''}</div></form>`}
+  if(a.free)return `<ol class="gaps free">${a.items.map((it,i)=>`<li><span>${esc(it.pre)}</span><input class="long" data-gap="${i}" value="${esc(s.val[i]||'')}" placeholder="${esc(it.ph||'')}" autocomplete="off" spellcheck="false" ${i===0?'data-auto':''}></li>`).join('')}</ol>${a.after?`<p class="afterNote">${esc(a.after)}</p>`:''}`;
   const rows=a.items.map((it,i)=>{const v=s.val[i]||'';let st='';if(s.checked){const good=judge(it,v);st=good===true?'ok':good==='near'?'near':'no';if(good===true)ok++}
    return `<li class="${st}">${it.pre?`<span>${it.html?it.pre:esc(it.pre)}</span>`:''}<input data-gap="${i}" value="${esc(v)}" class="${it.long?'long':''}" placeholder="${esc(it.ph||'')}" autocomplete="off" autocapitalize="off" spellcheck="false" ${i===0?'data-auto':''}>${it.post?`<span>${esc(it.post)}</span>`:''}${s.show?`<em>${esc(it.model||it.ans[0])}</em>`:''}</li>`}).join('');
   return `<form data-form="gaps"><ol class="gaps${a.dense?' dense':''}${a.cols===2?' two':''}">${rows}</ol><div class="row"><button class="main">Check</button>${a.test&&!s.checked?'':`<button type="button" class="ghost" data-show>${s.show?'Hide the answers':'Show the answers'}</button>`}${s.checked?`<b class="score">${ok} of ${n}${a.open?' match the key. Compare the yellow ones with the model answer.':' correct'}</b>`:''}</div></form>`},
@@ -115,7 +137,7 @@ talk:{view(a,s){const c=a.cards[s.i],n=a.cards.length,secs=c.secs||a.secs||40,le
   if(d.back!==undefined||d.fwd!==undefined){hush();clearInterval(tick);s.run=false;s.left=null;s.flip=false;s.played=false;if(!a.keepChips)s.used={};s.i=d.back!==undefined?s.i-1:(s.i+1)%a.cards.length;return redrawAct()}}},
 map:{view(a,s){return `<div class="map"><div class="hub">${esc(a.centre)}</div><div class="branches">${a.branches.map((b,i)=>`<label><b>${esc(b.label)}</b>${Array.from({length:b.n||2},(_,k)=>`<input data-map="${i}_${k}" value="${esc(s.val[i+'_'+k]||'')}" placeholder="${esc((b.ph||[])[k]||'key words')}" autocomplete="off">`).join('')}</label>`).join('')}</div></div><p class="muted">Key words only, no sentences. The plan stays next to you on the writing step.</p>`},
  input(a,s,t){if(t.dataset.map!==undefined){s.val[t.dataset.map]=t.value;SHARED.map=s.val;SHARED.mapDef=a}}},
-write:{view(a,s){return `<div class="write"><textarea data-text data-auto placeholder="${esc(a.ph||'Write here')}" spellcheck="false">${esc(s.text)}</textarea><div class="wside"><b id="wc"></b><ul id="chk"></ul><button class="ghost" data-copy>Copy the text</button><span id="copied" class="muted"></span></div></div>`},
+write:{view(a,s){return `${a.to?`<div class="mailHead compose"><div><b>To: ${esc(a.to)}</b><span>${esc(a.subject||'')}</span></div></div>`:''}<div class="write"><textarea data-text data-auto placeholder="${esc(a.ph||'Write here')}" spellcheck="false">${esc(s.text)}</textarea><div class="wside"><b id="wc"></b><ul id="chk"></ul><button class="ghost" data-copy>Copy the text</button><span id="copied" class="muted"></span></div></div>`},
  after(a,s){const t=s.text,n=words(t);const wc=$('#wc');if(!wc)return;wc.textContent=n+' words'+(a.min?' · aim for '+a.min+'–'+a.max:'');wc.className=a.min&&n>=a.min&&n<=a.max?'ok':'';
   $('#chk').innerHTML=a.checks.map(c=>`<li class="${c.test(t)?'ok':''}">${esc(c.label)}</li>`).join('')},
  input(a,s,t){if(t.dataset.text!==undefined){s.text=t.value;this.after(a,s)}},
@@ -132,6 +154,8 @@ function review(rows){return rows.length?`<div class="review"><b>Look again</b><
 /* ---------- events ---------- */
 function act(kind,name,el,d){const step=CFG.steps[cur],s=ST[cur],A=step.act&&ACT[step.act.type];if(!A)return;if(kind==='submit'&&A.submit)A.submit(step.act,s,el)}
 function onClick(e){const b=e.target.closest('button');if(!b||b.disabled)return;const d=b.dataset,step=CFG.steps[cur],s=ST[cur];
+ if(d.plbtn!==undefined||d.plback!==undefined){const box=b.closest('.pl'),el=box.querySelector('audio');if(d.plback!==undefined){el.currentTime=Math.max(0,el.currentTime-10);return}
+  if(el.paused){document.querySelectorAll('audio').forEach(x=>{if(x!==el)x.pause()});try{speechSynthesis.cancel()}catch(_){}const p=el.play();if(p&&p.catch)p.catch(()=>{})}else el.pause();return}
  if(d.open!==undefined){s.open=true;hush();return draw()}
  if(d.hide!==undefined){clearInterval(tick);s.hidden=true;s.open=true;return draw()}
  if(d.peek!==undefined){s.hidden=false;s.left=null;return draw()}
