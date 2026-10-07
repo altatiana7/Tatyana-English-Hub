@@ -17,7 +17,9 @@ const face=(p)=>has(p.img)?`<img src="${esc(p.img)}" alt="">`:mono(p.n);
 /* ---------- speech fallback ---------- */
 function say(lines,onend){try{speechSynthesis.cancel();const vs=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang));const names=[...new Set(lines.map(l=>l[0]))];let n=0;
   lines.forEach(l=>{const u=new SpeechSynthesisUtterance(l[1]);u.lang='en-GB';u.rate=.95;const k=names.indexOf(l[0]);if(vs.length)u.voice=vs[k%vs.length];u.pitch=k%2?0.8:1.15;u.onend=()=>{n++;if(n===lines.length&&onend)onend()};speechSynthesis.speak(u)})}catch(e){}}
-function hush(){try{speechSynthesis.cancel()}catch(e){}document.querySelectorAll('audio').forEach(a=>{try{a.pause()}catch(e){}})}
+let CLIP=null;
+function hush(){try{speechSynthesis.cancel()}catch(e){}if(CLIP){try{CLIP.pause()}catch(e){}CLIP=null}document.querySelectorAll('audio').forEach(a=>{try{a.pause()}catch(e){}})}
+function playClip(src,text){hush();if(!src)return say([['q',text]]);const el=new Audio(src);CLIP=el;let fell=false;const fb=()=>{if(fell||CLIP!==el)return;fell=true;CLIP=null;say([['q',text]])};el.addEventListener('error',fb);const p=el.play();if(p&&p.catch)p.catch(fb)}
 
 /* ---------- shell ---------- */
 function boot(cfg){CFG=cfg;EMBED=new URLSearchParams(location.search).has('embed');document.documentElement.classList.toggle('embed',EMBED);
@@ -128,11 +130,11 @@ talk:{view(a,s){const c=a.cards[s.i],n=a.cards.length,secs=c.secs||a.secs||40,le
    ${chips.length?`<div class="chips"><b class="lab">${esc(a.chipLabel||'Tap a phrase when he uses it')} · <span id="usedN">${Object.values(s.used).filter(Boolean).length}</span> used</b>${chips.map((p,k)=>`<button data-used="${k}" class="${s.used[k]?'on':''}">${esc(p)}</button>`).join('')}</div>`:''}
    <div class="row nav3"><button class="ghost" data-back ${s.i===0?'disabled':''}>Back</button>${c.say?`<button class="ghost" data-flip>${s.flip?'Hide the text':'Flip the card'}</button>`:''}<button class="main" data-fwd>${s.i===n-1?'First card':'Next card'}</button></div>`},
  click(a,s,d){const c=a.cards[s.i],secs=c.secs||a.secs||40;
-  if(d.play!==undefined){s.played=true;hush();say([['q',c.say]]);return}
+  if(d.play!==undefined){s.played=true;playClip(c.audio,c.say);return}
   if(d.stop!==undefined){hush();return}
   if(d.flip!==undefined){s.flip=!s.flip;return redrawAct()}
   if(d.used!==undefined){s.used[+d.used]=!s.used[+d.used];return redrawAct()}
-  if(d.timer!==undefined){if(s.run){s.run=false;clearInterval(tick);return redrawAct()}if(s.left===0||s.left==null)s.left=secs;s.run=true;clearInterval(tick);
+  if(d.timer!==undefined){(s.spoke=s.spoke||{})[s.i]=1;if(s.run){s.run=false;clearInterval(tick);return redrawAct()}if(s.left===0||s.left==null)s.left=secs;s.run=true;clearInterval(tick);
     tick=setInterval(()=>{s.left--;const R=34,C=2*Math.PI*R,f=$('#tf'),n=$('#tn');if(f){f.setAttribute('stroke-dashoffset',C*(1-s.left/secs));n.textContent=s.left}if(s.left<=0){s.run=false;clearInterval(tick);redrawAct()}},1000);return redrawAct()}
   if(d.back!==undefined||d.fwd!==undefined){hush();clearInterval(tick);s.run=false;s.left=null;s.flip=false;s.played=false;if(!a.keepChips)s.used={};s.i=d.back!==undefined?s.i-1:(s.i+1)%a.cards.length;return redrawAct()}}},
 map:{view(a,s){return `<div class="map"><div class="hub">${esc(a.centre)}</div><div class="branches">${a.branches.map((b,i)=>`<label><b>${esc(b.label)}</b>${Array.from({length:b.n||2},(_,k)=>`<input data-map="${i}_${k}" value="${esc(s.val[i+'_'+k]||'')}" placeholder="${esc((b.ph||[])[k]||'key words')}" autocomplete="off">`).join('')}</label>`).join('')}</div></div><p class="muted">Key words only, no sentences. The plan stays next to you on the writing step.</p>`},
@@ -154,9 +156,30 @@ function reportText(a){const L=[a.name||CFG.kicker,''];CFG.steps.forEach((st,i)=
   else if(ac.type==='pick')L.push('   '+(ac.items.filter((it,k)=>s.sel&&s.sel[k]).map(it=>it.t).join(', ')||'not done'));
   else if(ac.type==='map'){const v=s.val||SHARED.map||{};ac.branches.forEach((b,k)=>L.push('   '+b.label+': '+(Array.from({length:b.n||2},(_,j)=>v[k+'_'+j]).filter(Boolean).join(', ')||'—')))}
   else if(ac.type==='write')L.push('   '+(s.text?words(s.text)+' words':'not written'),s.text||'');
-  else if(ac.type==='talk')L.push('   spoken aloud, '+ac.cards.length+' questions');L.push('')});return L.join('\n')}
-ACT.report={view(a,s){return `<div class="write"><textarea readonly data-report spellcheck="false">${esc(reportText(a))}</textarea><div class="wside"><b>Ready to send</b><button class="main" data-copy data-auto>Copy my homework</button><span id="copied" class="muted"></span></div></div>`},
- click(a,s,d){if(d.copy!==undefined){const t=reportText(a),done=()=>{const c=$('#copied');if(c)c.textContent='Copied. Now paste it in a message to your teacher.'};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,()=>{});else{const ta=$('[data-report]');ta.select();try{document.execCommand('copy');done()}catch(e){}}}}};
+  else if(ac.type==='talk')L.push('   answered aloud: '+Object.keys(s.spoke||{}).length+' of '+ac.cards.length+' questions');L.push('')});return L.join('\n')}
+function reportData(a){return {assignment:a.assignment,submitted:new Date().toISOString(),steps:CFG.steps.map((st,i)=>{const ac=st.act,s=ST[i]||{};if(!ac||ac.type==='report')return null;
+  if(ac.type==='gaps'){const v=s.val||{};return {v:ac.items.map((_,k)=>v[k]||''),c:s.checked?1:0}}
+  if(ac.type==='quiz')return {ok:s.ok||0,n:ac.items.length,d:s.done?1:0};
+  if(ac.type==='pick')return {v:ac.items.map((_,k)=>s.sel&&s.sel[k]?1:0)};
+  if(ac.type==='map'){const v=s.val||SHARED.map||{};return {v:ac.branches.map((b,k)=>Array.from({length:b.n||2},(_,j)=>v[k+'_'+j]||''))}}
+  if(ac.type==='write')return {t:s.text||''};
+  if(ac.type==='talk')return {n:Object.keys(s.spoke||{}).length,of:ac.cards.length};return null})}}
+const b64u=bytes=>{let t='';bytes.forEach(b=>t+=String.fromCharCode(b));return btoa(t).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')};
+async function reportCode(a){const raw=new TextEncoder().encode(JSON.stringify(reportData(a)));const pre=a.prefix||'HW';
+  try{if(typeof CompressionStream==='function'){const cs=new CompressionStream('deflate-raw');const w=cs.writable.getWriter();w.write(raw);w.close();const buf=new Uint8Array(await new Response(cs.readable).arrayBuffer());return pre+'.'+b64u(buf)}}catch(e){}
+  return pre+'r.'+b64u(raw)}
+function reportTodo(){const L=[];CFG.steps.forEach((st,i)=>{const ac=st.act,s=ST[i]||{};if(!ac)return;let ok=true;
+  if(ac.type==='gaps')ok=ac.items.every((_,k)=>(s.val||{})[k])&&(ac.free||!!s.checked);else if(ac.type==='quiz')ok=!!s.done;else if(ac.type==='write')ok=!!s.text&&(!ac.min||words(s.text)>=ac.min);else if(ac.type==='map')ok=Object.values(s.val||SHARED.map||{}).filter(Boolean).length>=ac.branches.length;else if(ac.type==='talk')ok=Object.keys(s.spoke||{}).length>=ac.cards.length;
+  if(!ok)L.push(i+1)});return L}
+ACT.report={view(a,s){const todo=reportTodo();
+  return `<div class="write send"><textarea readonly data-report spellcheck="false">${esc(reportText(a))}</textarea><div class="wside">
+   ${todo.length?`<b class="todo">Not finished: step${todo.length>1?'s':''} ${todo.join(', ')}</b><span class="muted">You can go back and finish, or send it as it is.</span>`:`<b class="ok">Everything is done.</b>`}
+   <button class="main" data-send data-auto>${s.code?'Copy the code again':'Send to teacher'}</button>
+   ${s.code?`<span class="muted" id="sentMsg">${s.shared?'Choose your teacher in the list.':'Your homework code is copied. Open your chat with your teacher, paste it (Ctrl + V) and send.'}</span><input readonly class="codeBox" data-code value="${esc(s.code)}" aria-label="Homework code">`:`<span class="muted">This makes a homework code for your teacher.</span>`}</div></div>`},
+ click(a,s,d){if(d.send!==undefined){reportCode(a).then(code=>{s.code=code;const fin=()=>redrawAct();
+   const copy=()=>{if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(code).catch(()=>{});return Promise.resolve()};
+   copy().then(()=>{let touch=false;try{touch=matchMedia('(pointer:coarse)').matches}catch(e){}if(touch&&navigator.share){s.shared=true;navigator.share({text:code}).catch(()=>{s.shared=false;fin()})}fin()})})}
+  if(d.code!==undefined){}}};
 function judge(it,v){const raw=String(v||'').trim().toLowerCase();if(raw&&(it.ans||[]).some(x=>String(x).toLowerCase()===raw))return true;const n=nz(v);if(!n)return false;if((it.ans||[]).some(x=>nz(x)===n))return true;if(it.kw){return it.kw.some(g=>g.every(k=>n.includes(k)))?true:'near'}return false}
 function review(rows){return rows.length?`<div class="review"><b>Look again</b><ol>${rows.map(r=>`<li><span>${esc(r[0])}</span><em>${esc(r[1])}</em>${r[2]?`<small>${esc(r[2])}</small>`:''}</li>`).join('')}</ol></div>`:'<p class="clean">Nothing to review.</p>'}
 
