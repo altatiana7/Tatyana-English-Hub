@@ -4,23 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache">
-<title>Gabi · Homework 4 · Teen Talk Time</title>
+<title>Gabi · Homework · Teen Talk Time</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="skills.css?v=20261007e">
+<link rel="stylesheet" href="../gabi-english-hub/skills.css?v=20261007f">
 </head>
 <body>
-<script src="skills.js?v=20261007e"></script>
+<script src="../gabi-english-hub/skills.js?v=20261007f"></script>
 <script>
 /* Homework after Lesson 4. Gateway to the World B1, Unit 1, Listening p12 (track 06, Teen Talk Time).
    Every fact below repeats the keys already used in lesson4.html. The lesson itself is not changed.
    Aim: give Gabi the words and ideas to talk about arguments at home (Critical thinkers, lesson 4, step 7). */
-const CALLERS=[{n:'Oliver',img:'assets/l4/oliver.jpg'},{n:'Emma',img:'assets/l4/emma.jpg'},{n:'Harry',img:'assets/l4/harry.jpg'},{n:'Charlotte',img:'assets/l4/charlotte.jpg'},{n:'Poppy',img:'assets/l4/poppy.jpg'}];
-const TTT=[{src:'assets/audio/gw-06.mp3',label:'Teen Talk Time'}];
+const CALLERS=[{n:'Oliver',img:'../gabi-english-hub/assets/l4/oliver.jpg'},{n:'Emma',img:'../gabi-english-hub/assets/l4/emma.jpg'},{n:'Harry',img:'../gabi-english-hub/assets/l4/harry.jpg'},{n:'Charlotte',img:'../gabi-english-hub/assets/l4/charlotte.jpg'},{n:'Poppy',img:'../gabi-english-hub/assets/l4/poppy.jpg'}];
+const TTT=[{src:'../gabi-english-hub/assets/audio/gw-06.mp3',label:'Teen Talk Time'}];
 const ADV=[['should'],['shouldn'],['could'],['why don'],['how about'],['try'],['if i were']];
 const TASK=`<h4>Your call to Teen Talk Time</h4><p>You phone the programme. Tell the presenter:</p><ul><li>who you are</li><li>what you and your parents argue about</li><li>what they say and what you say</li><li>if it is fair, and why</li><li>your solution</li></ul>`;
 const SAY=['I think …','because …','For example, …','My mum / dad always says …','It’s fair / It isn’t fair','In my family …'];
-Lesson.boot({kicker:'Homework · Lesson 4',steps:[
+Lesson.boot({kicker:'Homework · 7 October',hub:'./',steps:[
 {stage:'Listen',title:'Fix the facts',hint:'Listen to the programme again. Then correct each sentence: one fact in it is wrong. <small>Write a full sentence. No text to look at: use your ears and your memory.</small>',
  side:{look:'radio',people:CALLERS,title:'Radio programme · Student’s Book p12',audio:TTT,gate:true,gateText:'Listen first. The sentences appear after the programme.',gateBtn:'Show the sentences'},
  act:{type:'gaps',open:true,dense:true,items:[
@@ -49,7 +49,7 @@ Lesson.boot({kicker:'Homework · Lesson 4',steps:[
   {q:'Losing your phone.',a:'Not inevitable',why:'You can avoid it if you are careful.'},
   {q:'A baby growing into a child.',a:'Inevitable',why:'It is a stage of life.'},
   {q:'Forgetting your homework.',a:'Not inevitable',why:'You can avoid it.'}]}},
-{stage:'Think',title:'Give advice',photo:{src:'assets/l4/teens.jpg',alt:'A group of teenagers'},hint:'Five teenagers, five problems. Write one piece of advice for each. <small>Use: You should … · You could … · Why don’t you …?</small>',
+{stage:'Think',title:'Give advice',photo:{src:'../gabi-english-hub/assets/l4/teens.jpg',alt:'A group of teenagers'},hint:'Five teenagers, five problems. Write one piece of advice for each. <small>Use: You should … · You could … · Why don’t you …?</small>',
  act:{type:'gaps',open:true,dense:true,items:[
   {pre:'Oliver: his dad hates it when he plays video games.',long:1,kw:ADV,model:'You should show your dad that your homework is finished first.'},
   {pre:'Emma: her little sister is noisy and their mum protects her.',long:1,kw:ADV,model:'Why don’t you tell your mum calmly how you feel?'},
@@ -65,7 +65,7 @@ Lesson.boot({kicker:'Homework · Lesson 4',steps:[
 {stage:'Write',title:'Plan your call',hint:'Now it is about you. Key words only.',
  side:{card:TASK},
  act:{type:'map',centre:'Arguments at home',branches:[{label:'We argue about',ph:['topic 1','topic 2']},{label:'My parents say',ph:['“Put your …”','“You never …”']},{label:'I say',ph:['my answer','my reason']},{label:'Fair or unfair?',ph:['fair / unfair','because …']},{label:'My solution',ph:['I could …','we should …']},{label:'When I am a parent',ph:['I will …','I won’t …']}]}},
-{stage:'Write',title:'Your call to Teen Talk Time',hint:'Write what you say on the radio. Then copy the text and send it to your teacher.',
+{stage:'Write',title:'Your call to Teen Talk Time',hint:'Write what you say on the radio. <small>The list on the right turns green as you write.</small>',
  side:{card:sh=>{const d=sh.mapDef,v=sh.map||{};const plan=d?d.branches.map((b,i)=>{const w=[v[i+'_0'],v[i+'_1']].filter(Boolean).join(', ');return '<li><b>'+b.label+'</b>'+(w?': '+w.replace(/[<>&]/g,''):'')+'</li>'}).join(''):'';return TASK+(plan?'<h4>Your plan</h4><ul>'+plan+'</ul>':'')}},
  act:{type:'write',min:70,max:110,ph:'Hi, my name’s …',checks:[
   {label:'Says who you are: name and age',test:t=>/(my name|i['’]?m\s+\w+|i am\s+\w+)/i.test(t)&&/\b(\d{1,2}|eleven|twelve|thirteen|fourteen)\b/i.test(t)},
@@ -81,7 +81,9 @@ Lesson.boot({kicker:'Homework · Lesson 4',steps:[
   {say:'Which of the five teenagers is most like you? Why?',q:'Which of the five teenagers is most like you? Why?'},
   {say:'Is it fair when parents choose what their children study? Why?',q:'Is it fair when parents choose what their children study? Why?'},
   {say:'What will you argue about with your own children?',q:'What will you argue about with your own children? Use will, might and won’t.'},
-  {say:'Are arguments between parents and teenagers inevitable? Why?',q:'Are arguments between parents and teenagers inevitable? Why?',sub:'inevitable = you cannot avoid it'}]}}
+  {say:'Are arguments between parents and teenagers inevitable? Why?',q:'Are arguments between parents and teenagers inevitable? Why?',sub:'inevitable = you cannot avoid it'}]}},
+{stage:'Send',title:'Send your homework',hint:'This is everything you wrote. Copy it and send it to your teacher.',
+ act:{type:'report',name:'Gabi · Homework · Teen Talk Time'}}
 ]});
 </script>
 </body>

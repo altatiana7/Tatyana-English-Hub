@@ -148,6 +148,15 @@ ACT.total={view(a,s){let sum=0,max=0,all=true;const rows=a.parts.map(p=>{const s
    if(ac.type==='quiz'){done=!!st.done;got=st.ok||0}
    if(!done)all=false;sum+=got;max+=p.max;return `<li class="${done?'':'wait'}"><span>${esc(p.label)}</span><b>${done?got+' / '+p.max:'not finished'}</b></li>`}).join('');
   const pct=sum/max;return `<div class="total"><ul>${rows}</ul><div class="sum"><b>${sum} / ${max}</b><span>${!all?'Finish and check every part to see the real total.':pct>=.9?'Excellent. Unit 1 is secure.':pct>=.75?'Good. Look again at the parts with lost points.':'Go back to the weakest part before Unit 2.'}</span></div></div>`}};
+function reportText(a){const L=[a.name||CFG.kicker,''];CFG.steps.forEach((st,i)=>{const ac=st.act,s=ST[i]||{};if(!ac||ac.type==='report')return;L.push((i+1)+'. '+st.title);
+  if(ac.type==='gaps'){const v=s.val||{};ac.items.forEach((it,k)=>L.push('   '+[it.pre,'['+(v[k]||'—')+']',it.post].filter(Boolean).join(' ')));if(!ac.free)L.push('   '+(s.checked?ac.items.filter((it,k)=>judge(it,v[k])===true).length+' of '+ac.items.length+(ac.open?' match the key':' correct'):'not checked'))}
+  else if(ac.type==='quiz')L.push('   '+(s.done?s.ok+' of '+s.items.length+' correct':s.items&&(s.i||s.pick!=null)?'not finished: '+s.ok+' correct so far':'not done'));
+  else if(ac.type==='pick')L.push('   '+(ac.items.filter((it,k)=>s.sel&&s.sel[k]).map(it=>it.t).join(', ')||'not done'));
+  else if(ac.type==='map'){const v=s.val||SHARED.map||{};ac.branches.forEach((b,k)=>L.push('   '+b.label+': '+(Array.from({length:b.n||2},(_,j)=>v[k+'_'+j]).filter(Boolean).join(', ')||'—')))}
+  else if(ac.type==='write')L.push('   '+(s.text?words(s.text)+' words':'not written'),s.text||'');
+  else if(ac.type==='talk')L.push('   spoken aloud, '+ac.cards.length+' questions');L.push('')});return L.join('\n')}
+ACT.report={view(a,s){return `<div class="write"><textarea readonly data-report spellcheck="false">${esc(reportText(a))}</textarea><div class="wside"><b>Ready to send</b><button class="main" data-copy data-auto>Copy my homework</button><span id="copied" class="muted"></span></div></div>`},
+ click(a,s,d){if(d.copy!==undefined){const t=reportText(a),done=()=>{const c=$('#copied');if(c)c.textContent='Copied. Now paste it in a message to your teacher.'};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(done,()=>{});else{const ta=$('[data-report]');ta.select();try{document.execCommand('copy');done()}catch(e){}}}}};
 function judge(it,v){const raw=String(v||'').trim().toLowerCase();if(raw&&(it.ans||[]).some(x=>String(x).toLowerCase()===raw))return true;const n=nz(v);if(!n)return false;if((it.ans||[]).some(x=>nz(x)===n))return true;if(it.kw){return it.kw.some(g=>g.every(k=>n.includes(k)))?true:'near'}return false}
 function review(rows){return rows.length?`<div class="review"><b>Look again</b><ol>${rows.map(r=>`<li><span>${esc(r[0])}</span><em>${esc(r[1])}</em>${r[2]?`<small>${esc(r[2])}</small>`:''}</li>`).join('')}</ol></div>`:'<p class="clean">Nothing to review.</p>'}
 
