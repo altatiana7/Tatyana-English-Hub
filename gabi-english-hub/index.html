@@ -67,6 +67,9 @@ button{font:inherit}
 .moduleBtn .name{font-size:clamp(9px,.72vw,13px);font-weight:700;line-height:1.05}
 .moduleBtn .arrow{font-size:17px;color:#62a7ca;transition:transform .12s ease}
 .moduleBtn.open .arrow{transform:rotate(90deg)}
+.hwBtn{display:block;text-decoration:none;background:#fff3c4!important;color:#0a2b52!important;border-color:#e8c53a!important}
+.hwLink{display:inline-flex;align-items:center;margin:clamp(10px,2vh,18px) 0 0 12px;vertical-align:bottom;text-decoration:none;border-radius:14px;background:rgba(255,255,255,.94);color:#0a2b52;padding:clamp(8px,1.3vh,12px) 16px;font-size:clamp(13px,1.05vw,16px);font-weight:800;box-shadow:0 8px 24px rgba(0,25,60,.3)}
+.hwLink small{display:block;font-size:clamp(10px,.75vw,12px);letter-spacing:.14em;color:#1787cf}
 .lessons{display:none;padding:4px 2px 1px 14px}
 .lessons.open{display:grid;gap:4px}
 .lessonBtn{
@@ -168,7 +171,7 @@ button{font:inherit}
       <span class="hi" id="hi">WELCOME BACK, GABI</span>
       <h1>Your English <em>Hub</em></h1>
       <p>Gateway to the World B1 · Unit 1 of 10 · Happy families</p>
-      <button class="go" id="continueBtn"><i></i><div><small>CONTINUE</small><b>Lesson 4 · Listening and speaking</b><div class="prog"><span><u id="progFill" style="width:0"></u></span><em id="progText" style="font-style:normal"></em></div></div></button>
+      <button class="go" id="continueBtn"><i></i><div><small>CONTINUE</small><b>Lesson 4 · Listening and speaking</b><div class="prog"><span><u id="progFill" style="width:0"></u></span><em id="progText" style="font-style:normal"></em></div></div></button><a class="hwLink" href="homework4.html?v=20261007-hw1"><span><small>HOMEWORK</small>Teen Talk Time · 8 steps</span></a>
     </div>
     <div class="dock">
       <a class="tile" href="what-happens-next.html?v=20261007-b"><div class="th" style="background-image:url(assets/whn/lamp.jpg)"></div><div><small>WARM-UP</small><b>What Happens Next?</b><span>Watch, stop, predict with will</span></div></a>
@@ -200,7 +203,7 @@ const modules=[
    {title:'Vocabulary & Grammar',note:'Ages & stages · family · Present Simple vs Continuous'},
    {title:'Reading & Grammar',note:'Sharenting · state/action verbs · articles'},
    {title:'People & Perspectives',note:'Famous People Quiz · Word Formation · Family · Video · Articles'},
-   {title:'Listening & Speaking',note:'Teen Talk Time · good conversation · showing interest · asking for personal information'},
+   {title:'Listening & Speaking',note:'Teen Talk Time · good conversation · showing interest · asking for personal information',hw:{title:'Teen Talk Time',href:'homework4.html?v=20261007-hw1'}},
    {title:'Online & Writing',note:'Fair Share · identity online · mini-debate · formal or informal · email to Maya'},
    {title:'Revision',note:'Unit 1 step by step · warm-up · Word Walls · accuracy · Ten Faces · Reach Higher · Test yourself'}]},
  {title:'Law and order',lessons:[
@@ -253,7 +256,7 @@ function renderNav(){
         <span class="arrow">›</span>
       </button>
       <div class="lessons" id="lessons-${mi}">
-        ${m.lessons.map((l,li)=>`<button class="lessonBtn" data-m="${mi}" data-l="${li}">Lesson ${li+1} · ${l.title}</button>`).join('')}
+        ${m.lessons.map((l,li)=>`<button class="lessonBtn" data-m="${mi}" data-l="${li}">Lesson ${li+1} · ${l.title}</button>`+(l.hw?`<a class="lessonBtn hwBtn" href="${l.hw.href}">Homework ${li+1} · ${l.hw.title}</a>`:'')).join('')}
       </div>
     </div>`).join('');
 
@@ -271,7 +274,7 @@ function renderNav(){
       }
     };
   });
-  nav.querySelectorAll('.lessonBtn').forEach(btn=>{
+  nav.querySelectorAll('button.lessonBtn').forEach(btn=>{
     btn.onclick=()=>openLesson(Number(btn.dataset.m)+1,Number(btn.dataset.l));
   });
 }

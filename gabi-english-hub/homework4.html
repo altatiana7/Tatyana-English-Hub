@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Homework 4 · Teen Talk Time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="skills.css?v=20261007e">
+</head>
+<body>
+<script src="skills.js?v=20261007e"></script>
+<script>
+/* Homework after Lesson 4. Gateway to the World B1, Unit 1, Listening p12 (track 06, Teen Talk Time).
+   Every fact below repeats the keys already used in lesson4.html. The lesson itself is not changed.
+   Aim: give Gabi the words and ideas to talk about arguments at home (Critical thinkers, lesson 4, step 7). */
+const CALLERS=[{n:'Oliver',img:'assets/l4/oliver.jpg'},{n:'Emma',img:'assets/l4/emma.jpg'},{n:'Harry',img:'assets/l4/harry.jpg'},{n:'Charlotte',img:'assets/l4/charlotte.jpg'},{n:'Poppy',img:'assets/l4/poppy.jpg'}];
+const TTT=[{src:'assets/audio/gw-06.mp3',label:'Teen Talk Time'}];
+const ADV=[['should'],['shouldn'],['could'],['why don'],['how about'],['try'],['if i were']];
+const TASK=`<h4>Your call to Teen Talk Time</h4><p>You phone the programme. Tell the presenter:</p><ul><li>who you are</li><li>what you and your parents argue about</li><li>what they say and what you say</li><li>if it is fair, and why</li><li>your solution</li></ul>`;
+const SAY=['I think …','because …','For example, …','My mum / dad always says …','It’s fair / It isn’t fair','In my family …'];
+Lesson.boot({kicker:'Homework · Lesson 4',steps:[
+{stage:'Listen',title:'Fix the facts',hint:'Listen to the programme again. Then correct each sentence: one fact in it is wrong. <small>Write a full sentence. No text to look at: use your ears and your memory.</small>',
+ side:{look:'radio',people:CALLERS,title:'Radio programme · Student’s Book p12',audio:TTT,gate:true,gateText:'Listen first. The sentences appear after the programme.',gateBtn:'Show the sentences'},
+ act:{type:'gaps',open:true,dense:true,items:[
+  {pre:'Oliver plays video games before he does his homework.',long:1,kw:[['finish'],['after']],model:'He only plays when he finishes all his homework.'},
+  {pre:'Emma’s little sister is twelve.',long:1,kw:[['ten'],['10']],model:'Her sister is only ten.'},
+  {pre:'Harry’s dad is a doctor.',long:1,kw:[['headmaster'],['head','teacher'],['school']],model:'His dad is the headmaster at Harry’s school.'},
+  {pre:'Charlotte’s mum wants her to study law.',long:1,kw:[['medicine'],['doctor']],model:'Her mum wants her to study medicine.'},
+  {pre:'Poppy thinks her messy bedroom is a serious problem.',long:1,kw:[['care'],['not','problem'],['n t','problem'],['important'],['normal']],model:'She knows it is a mess, but she doesn’t care.'}]}},
+{stage:'Language',title:'How to talk about arguments',hint:'One word in each gap. <small>You will need these phrases to talk about your own family.</small>',
+ act:{type:'gaps',cols:2,items:[
+  {pre:'Oliver’s dad hates it',post:'he plays video games.',ans:['when','if']},
+  {pre:'Emma often argues',post:'her little sister.',ans:['with']},
+  {pre:'Harry and his dad argue',post:'studying.',ans:['about','over']},
+  {pre:'Charlotte’s mum',post:'her to study medicine.',ans:['wants','expects','tells','told','wanted']},
+  {pre:'Charlotte needs to decide',post:'herself.',ans:['for','by']},
+  {pre:'Poppy’s bedroom is a',post:'.',ans:['mess']},
+  {pre:'Poppy doesn’t',post:'about her messy room.',ans:['care','worry','think']},
+  {pre:'Parents and teenagers',post:'things differently.',ans:['see','do','understand']}]}},
+{stage:'Language',title:'Inevitable or not?',hint:'A new word for the next lesson. <small><b>inevitable</b> = you cannot stop it or avoid it. It always happens.</small>',
+ act:{type:'quiz',label:'Situation',opts:['Inevitable','Not inevitable'],items:[
+  {q:'Getting older every year.',a:'Inevitable',why:'Nobody can stop it.'},
+  {q:'Failing a test.',a:'Not inevitable',why:'You can avoid it if you study.'},
+  {q:'Winter coming after autumn.',a:'Inevitable',why:'It happens every year.'},
+  {q:'Being late for school.',a:'Not inevitable',why:'You can avoid it: leave home earlier.'},
+  {q:'Mistakes when you learn a language.',a:'Inevitable',why:'Everybody makes them. It is part of learning.'},
+  {q:'Losing your phone.',a:'Not inevitable',why:'You can avoid it if you are careful.'},
+  {q:'A baby growing into a child.',a:'Inevitable',why:'It is a stage of life.'},
+  {q:'Forgetting your homework.',a:'Not inevitable',why:'You can avoid it.'}]}},
+{stage:'Think',title:'Give advice',photo:{src:'assets/l4/teens.jpg',alt:'A group of teenagers'},hint:'Five teenagers, five problems. Write one piece of advice for each. <small>Use: You should … · You could … · Why don’t you …?</small>',
+ act:{type:'gaps',open:true,dense:true,items:[
+  {pre:'Oliver: his dad hates it when he plays video games.',long:1,kw:ADV,model:'You should show your dad that your homework is finished first.'},
+  {pre:'Emma: her little sister is noisy and their mum protects her.',long:1,kw:ADV,model:'Why don’t you tell your mum calmly how you feel?'},
+  {pre:'Harry: his dad is never happy with what he does after school.',long:1,kw:ADV,model:'You could make a plan with your dad: time to study and time to relax.'},
+  {pre:'Charlotte: her mum wants her to study medicine.',long:1,kw:ADV,model:'You should explain to your mum what you really want to study.'},
+  {pre:'Poppy: her bedroom is a mess and she doesn’t care.',long:1,kw:ADV,model:'Why don’t you tidy it once a week? Then your parents won’t complain.'}]}},
+{stage:'Think',title:'Do you agree?',hint:'Type one sentence for each idea. Start with <b>I agree because …</b> or <b>I disagree because …</b>',
+ act:{type:'gaps',free:true,after:'Now read your four sentences aloud. Which of the five teenagers is most like you?',items:[
+  {pre:'Video games are fine when your homework is finished.',ph:'I agree / I disagree because …'},
+  {pre:'Parents should choose what their children study.',ph:'I agree / I disagree because …'},
+  {pre:'A messy bedroom is not important.',ph:'I agree / I disagree because …'},
+  {pre:'Parents are always right.',ph:'I agree / I disagree because …'}]}},
+{stage:'Write',title:'Plan your call',hint:'Now it is about you. Key words only.',
+ side:{card:TASK},
+ act:{type:'map',centre:'Arguments at home',branches:[{label:'We argue about',ph:['topic 1','topic 2']},{label:'My parents say',ph:['“Put your …”','“You never …”']},{label:'I say',ph:['my answer','my reason']},{label:'Fair or unfair?',ph:['fair / unfair','because …']},{label:'My solution',ph:['I could …','we should …']},{label:'When I am a parent',ph:['I will …','I won’t …']}]}},
+{stage:'Write',title:'Your call to Teen Talk Time',hint:'Write what you say on the radio. Then copy the text and send it to your teacher.',
+ side:{card:sh=>{const d=sh.mapDef,v=sh.map||{};const plan=d?d.branches.map((b,i)=>{const w=[v[i+'_0'],v[i+'_1']].filter(Boolean).join(', ');return '<li><b>'+b.label+'</b>'+(w?': '+w.replace(/[<>&]/g,''):'')+'</li>'}).join(''):'';return TASK+(plan?'<h4>Your plan</h4><ul>'+plan+'</ul>':'')}},
+ act:{type:'write',min:70,max:110,ph:'Hi, my name’s …',checks:[
+  {label:'Says who you are: name and age',test:t=>/(my name|i['’]?m\s+\w+|i am\s+\w+)/i.test(t)&&/\b(\d{1,2}|eleven|twelve|thirteen|fourteen)\b/i.test(t)},
+  {label:'We argue about …',test:t=>/\bargu\w*\s+(with\s+[\w\s]{1,25}\s+)?(about|over)\b/i.test(t)},
+  {label:'What a parent says: My mum / dad always says … or hates it when …',test:t=>/(always (says?|tells?)|hates? it when|doesn['’]?t like it when|says? that|[“"][^”"]{3,}[”"])/i.test(t)},
+  {label:'Your opinion: I think … / In my opinion …',test:t=>/\b(i (really )?(think|believe)|in my opinion|i would say|speaking personally)\b/i.test(t)},
+  {label:'Fair or unfair, with because',test:t=>/\b(un)?fair\b/i.test(t)&&/\bbecause\b/i.test(t)},
+  {label:'A solution (should / could) and the future (will / won’t / might)',test:t=>/\b(should|could)\b/i.test(t)&&/\b(will|won['’]?t|might)\b|['’]ll\b/i.test(t)}]}},
+{stage:'Speak',title:'Say it aloud',hint:'You only hear the question. Start the timer and speak for 40 seconds. <small>Use your plan and your phrases. Flip the card only if you need to see the question.</small>',
+ act:{type:'talk',label:'Question',secs:40,chipLabel:'Tap each phrase you use',chips:SAY,cards:[
+  {say:'What do you and your parents argue about?',q:'What do you and your parents argue about?'},
+  {say:'What do your parents always say to you?',q:'What do your parents always say to you?'},
+  {say:'Which of the five teenagers is most like you? Why?',q:'Which of the five teenagers is most like you? Why?'},
+  {say:'Is it fair when parents choose what their children study? Why?',q:'Is it fair when parents choose what their children study? Why?'},
+  {say:'What will you argue about with your own children?',q:'What will you argue about with your own children? Use will, might and won’t.'},
+  {say:'Are arguments between parents and teenagers inevitable? Why?',q:'Are arguments between parents and teenagers inevitable? Why?',sub:'inevitable = you cannot avoid it'}]}}
+]});
+</script>
+</body>
+</html>
