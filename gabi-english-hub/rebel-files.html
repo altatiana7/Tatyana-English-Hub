@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rebel Files</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700&family=Archivo+Black&display=swap">
+<style>
+/* Layout: one screen. Slim top strip (name, four round tabs, score) and a single poster card that fills the rest. Each round repaints the ground. */
+:root{
+  color-scheme:light;
+  --ink:#14122b;
+  --paper:#ffffff;
+  --sun:#ffd60a;
+  --r0:#2b3be0; --r1:#d81b72; --r2:#00806f; --r3:#d9480f;
+  --ground:var(--r0);
+  --good:#0f8a4b; --good-bg:#d9f7e6;
+  --bad:#c81e2b; --bad-bg:#ffe1e3;
+  --muted:#5a5873;
+  --display:"Archivo Black","Arial Black",Impact,sans-serif;
+  --body:"Archivo","Segoe UI",Arial,sans-serif;
+}
+html,body{height:100%}
+html{overflow:hidden}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:18px;font-weight:500;
+  padding-inline:16px;padding-block:12px;box-sizing:border-box;transition:background .35s}
+body[data-round="1"]{--ground:var(--r1)} body[data-round="2"]{--ground:var(--r2)} body[data-round="3"]{--ground:var(--r3)}
+body[data-round="end"]{--ground:var(--ink)}
+*{box-sizing:border-box}
+.wrap{max-width:1100px;margin:0 auto;height:100%;display:flex;flex-direction:column;gap:12px}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;color:#fff}
+.hub{font:700 15px var(--body);color:#fff;text-decoration:none;border:2px solid #fff;padding:6px 12px}
+.hub:hover{background:#fff;color:var(--ink)}
+.brand{font-family:var(--display);font-size:22px;letter-spacing:.02em;text-transform:uppercase;margin:0}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;flex:1;min-width:0}
+.tab{font:700 15px var(--body);color:#fff;background:transparent;border:2px solid #fff;padding:6px 12px;cursor:pointer}
+.tab[aria-current="true"]{background:var(--sun);color:var(--ink);border-color:var(--ink)}
+.score{font-family:var(--display);font-size:20px;background:var(--ink);color:var(--sun);padding:6px 14px;font-variant-numeric:tabular-nums}
+.card{flex:1;min-height:0;overflow:auto;background:var(--paper);border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);
+  padding:18px 24px;display:flex;flex-direction:column;gap:14px;margin:0 8px 8px 0}
+.meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-weight:700;font-size:16px;color:var(--muted)}
+.worth{background:var(--sun);color:var(--ink);padding:2px 10px;border:2px solid var(--ink)}
+.who{font-family:var(--display);font-size:20px;text-transform:uppercase;color:var(--ground);margin:0}
+.q{font-size:clamp(21px,2.5vw,28px);font-weight:700;line-height:1.3;margin:0;text-wrap:balance}
+.clues{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.clues li{font-size:clamp(20px,2.3vw,25px);font-weight:700;padding:8px 14px;border-left:8px solid var(--ground);background:#f1f1f8}
+.clues li.locked{color:var(--muted);font-weight:500;font-size:18px;background:transparent;border-left-color:#c9c9d9}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+input[type=text]{flex:1;min-width:0;font:700 22px var(--body);padding:10px 14px;border:3px solid var(--ink);background:#fff;color:var(--ink)}
+.btn{font:700 19px var(--body);padding:11px 20px;border:3px solid var(--ink);background:var(--sun);color:var(--ink);cursor:pointer;box-shadow:4px 4px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.btn.plain{background:#fff}
+.btn.go{background:var(--ink);color:#fff}
+.btn:disabled{opacity:.45;cursor:default}
+:focus-visible{outline:4px solid var(--sun);outline-offset:2px}
+.card :focus-visible{outline-color:var(--ground)}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.chip{font:700 20px var(--body);padding:14px 10px;border:3px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--sun)}
+.chip.right{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.chip.wrong{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.fb{font-size:20px;font-weight:700;padding:10px 14px;border:3px solid;margin:0}
+.fb.ok{background:var(--good-bg);border-color:var(--good);color:var(--good)}
+.fb.no{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.fb.note{background:#f1f1f8;border-color:var(--ink);color:var(--ink)}
+.fb span{color:var(--ink);font-weight:500}
+.foot{margin-top:auto;display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.speak{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+.phr{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.phr li{font-size:18px;padding:5px 10px;border:2px dashed var(--ink)}
+.timer{display:flex;flex-direction:column;align-items:center;gap:8px}
+.timer svg{width:120px;height:120px}
+.timer text{font:400 34px var(--display);fill:var(--ink)}
+.pts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pts b{font-size:18px}
+.end h2{font-family:var(--display);font-size:clamp(28px,4vw,44px);text-transform:uppercase;margin:0;line-height:1.05}
+.end .big{font-family:var(--display);font-size:clamp(40px,6vw,64px);color:var(--r1);font-variant-numeric:tabular-nums;line-height:1}
+.endtop{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+.miss{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;overflow:auto;min-height:60px;flex:1}
+.miss li{font-size:18px;padding:8px 12px;background:#f1f1f8;border-left:6px solid var(--bad)}
+.miss b{color:var(--good)}
+@media (max-width:640px){
+  .card{padding:14px;box-shadow:5px 5px 0 var(--ink)}
+  .chips{grid-template-columns:repeat(2,1fr)}
+  .speak{grid-template-columns:1fr}
+  .brand{font-size:18px}
+}
+@media (prefers-reduced-motion:reduce){body{transition:none}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <a class="hub" href="index.html?v=20261007-rf">&larr; Hub</a>
+    <h1 class="brand">Rebel Files</h1>
+    <nav class="tabs" id="tabs" aria-label="Rounds"></nav>
+    <div class="score" id="score" aria-live="polite">0</div>
+  </header>
+  <main class="card" id="card"></main>
+</div>
+
+<script>
+const ROUNDS=['1 Who am I?','2 Missing word','3 Pick all','4 Speak'];
+const HEROES=['Lionel Messi','Nikola Tesla','Beethoven','Michael Jackson','Frank Ocean','Dynamo'];
+const DATA=[
+ {r:0,t:'who',name:'Lionel Messi',a:['messi','lionel'],clues:['Doctors said I was too small to play.','My first contract was written on a paper napkin.','I left Argentina for Barcelona when I was thirteen.']},
+ {r:0,t:'who',name:'Nikola Tesla',a:['tesla','nikola'],clues:['I was born during a lightning storm.','I went to America and worked for Thomas Edison.','My ideas about electricity light up your home today.']},
+ {r:0,t:'who',name:'Ludwig van Beethoven',a:['beethoven','ludwig'],clues:['My father made me practise late at night.','I went on writing music when I could not hear it.','My Ninth Symphony ends with the Ode to Joy.']},
+ {r:0,t:'who',name:'Michael Jackson',a:['jackson','michael'],clues:['I was on stage when I was still a small child.','My four older brothers were in the band with me.','People call me the King of Pop.']},
+ {r:0,t:'who',name:'Frank Ocean',a:['ocean','frank'],clues:['A hurricane flooded my recording studio.','I drove to Los Angeles to start again.','My stage surname is a huge body of water.']},
+ {r:0,t:'who',name:'Dynamo',a:['dynamo'],clues:['Bigger boys bullied me at school.','My grandfather taught me my first tricks.','On TV I walked on the River Thames.']},
+
+ {r:1,t:'gap',who:'Lionel Messi',q:'As a boy he needed expensive medicine because he did not ___ fast enough.',a:['grow','growth','growing']},
+ {r:1,t:'gap',who:'Lionel Messi',q:'His first Barcelona contract was written on a paper ___.',a:['napkin','serviette','tissue']},
+ {r:1,t:'gap',who:'Nikola Tesla',q:'He was born in the middle of a ___ storm.',a:['lightning','thunder','thunderstorm']},
+ {r:1,t:'gap',who:'Nikola Tesla',q:'In America his first boss was Thomas ___.',a:['edison']},
+ {r:1,t:'gap',who:'Beethoven',q:'He kept composing after he lost his ___.',a:['hearing']},
+ {r:1,t:'gap',who:'Beethoven',q:'After his Ninth Symphony he could not hear the audience ___.',a:['clapping','applause','applauding','clap','cheering']},
+ {r:1,t:'gap',who:'Michael Jackson',q:'His most famous dance move is the ___.',a:['moonwalk','moon walk']},
+ {r:1,t:'gap',who:'Michael Jackson',q:'His album ___ is the best-selling album of all time.',a:['thriller']},
+ {r:1,t:'gap',who:'Frank Ocean',q:'Hurricane ___ destroyed his studio in New Orleans.',a:['katrina']},
+ {r:1,t:'gap',who:'Frank Ocean',q:'After the hurricane he moved to the city of ___.',a:['los angeles','la','l a']},
+ {r:1,t:'gap',who:'Dynamo',q:'He learned his first magic tricks from his ___.',a:['grandfather','grandpa','granddad','grandad']},
+ {r:1,t:'gap',who:'Dynamo',q:'In London he walked across the River ___.',a:['thames']},
+
+ {r:2,t:'multi',q:'Who made music?',a:[2,3,4],why:'Beethoven composed, Michael Jackson and Frank Ocean sang.'},
+ {r:2,t:'multi',q:'Who was born in Europe?',a:[1,2,5],why:'Tesla in Croatia, Beethoven in Germany, Dynamo in England.'},
+ {r:2,t:'multi',q:'Who was born before 1900?',a:[1,2],why:'Beethoven in 1770, Tesla in 1856.'},
+ {r:2,t:'multi',q:'Who uses a stage name, not the name he was born with?',a:[4,5],why:'Frank Ocean was born Christopher Breaux, Dynamo is Steven Frayne.'},
+ {r:2,t:'multi',q:'Who is still alive today?',a:[0,4,5],why:'Messi, Frank Ocean and Dynamo.'},
+
+ {r:3,t:'speak',q:'Which two of these six people had the most similar problem? Explain why.',ph:['I think … and … are similar because …','Both of them …','The difference is that …']},
+ {r:3,t:'speak',q:'Choose one hero. How did being different help him?',ph:['He was different because …','At first people …, but later …','That is why he …']},
+ {r:3,t:'speak',q:'Retell one story in 40 seconds: who, the problem, what he did, the result.',ph:['This is the story of …','The problem was that …','In the end …']}
+];
+const MAX={who:3,gap:2,multi:3,speak:3};
+let items=[],i=0,tick=null;
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+function lev(a,b){const d=[];for(let x=0;x<=a.length;x++){d[x]=[x];}for(let y=1;y<=b.length;y++)d[0][y]=y;
+  for(let x=1;x<=a.length;x++)for(let y=1;y<=b.length;y++)d[x][y]=Math.min(d[x-1][y]+1,d[x][y-1]+1,d[x-1][y-1]+(a[x-1]===b[y-1]?0:1));
+  return d[a.length][b.length];}
+function matches(input,answers){const n=norm(input);if(!n)return false;const words=n.split(' ');
+  return answers.some(a=>{const tol=a.length>=8?2:a.length>=5?1:0;
+    if(words.includes(a)||n===a)return true;
+    if(a.includes(' ')&&n.includes(a))return true;
+    return lev(n,a)<=tol||words.some(w=>lev(w,a)<=tol);});}
+function shuffle(arr){for(let k=arr.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[arr[k],arr[j]]=[arr[j],arr[k]];}return arr;}
+
+function start(){
+  items=[];
+  for(let r=0;r<4;r++)items.push(...shuffle(DATA.filter(d=>d.r===r)).map(d=>({...d,s:{clues:1,tries:0,sel:[],done:false,pts:0,given:'',msg:''}})));
+  i=0;render();
+}
+const total=()=>items.reduce((n,it)=>n+it.s.pts,0);
+const maxTotal=()=>items.reduce((n,it)=>n+MAX[it.t],0);
+
+function drawTop(round){
+  document.body.dataset.round=round;
+  document.getElementById('tabs').innerHTML=ROUNDS.map((n,r)=>`<button class="tab" data-r="${r}" aria-current="${r===round}">${n}</button>`).join('');
+  document.getElementById('score').textContent=total()+' / '+maxTotal();
+}
+document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;
+  i=items.findIndex(it=>it.r===+b.dataset.r);render();});
+
+function finish(it,pts,ok,msg){it.s.done=true;it.s.pts=pts;it.s.ok=ok;it.s.msg=msg;render();}
+function nextBtn(){return `<button class="btn go" id="next">${i===items.length-1?'See result':'Next'}</button>`;}
+
+function render(){
+  clearInterval(tick);tick=null;
+  const card=document.getElementById('card');
+  if(i>=items.length)return renderEnd(card);
+  const it=items[i],s=it.s;drawTop(it.r);
+  const inRound=items.filter(x=>x.r===it.r),pos=inRound.indexOf(it)+1;
+  let worth=MAX[it.t];
+  if(it.t==='who')worth=4-s.clues; if(it.t==='gap')worth=s.tries?1:2;
+  let h=`<div class="meta"><span>${esc(ROUNDS[it.r].slice(2))} · ${pos} of ${inRound.length}</span>`+
+    (s.done?`<span class="worth">+${s.pts}</span>`:it.t==='speak'?'<span class="worth">Teacher gives up to 3</span>':`<span class="worth">Worth ${worth}</span>`)+`</div>`;
+  const fb=s.done?`<p class="fb ${s.ok?'ok':'no'}">${s.msg}</p>`:s.msg?`<p class="fb note">${s.msg}</p>`:'';
+
+  if(it.t==='who'){
+    h+=`<p class="q">Read the clue. Type the name.</p><ul class="clues">`+
+      it.clues.map((c,k)=>k<s.clues||s.done?`<li>${esc(c)}</li>`:`<li class="locked">Clue ${k+1} is hidden. Opening it costs 1 point.</li>`).join('')+`</ul>`;
+    if(!s.done)h+=`<div class="row"><input type="text" id="ans" autocomplete="off" spellcheck="false" placeholder="Name" aria-label="Your answer">
+      <button class="btn" id="check">Check</button>${s.clues<3?'<button class="btn plain" id="more">Next clue</button>':''}</div>`;
+  }
+  if(it.t==='gap'){
+    h+=`<p class="who">${esc(it.who)}</p><p class="q">${esc(it.q).replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')}</p>`;
+    if(!s.done)h+=`<div class="row"><input type="text" id="ans" autocomplete="off" spellcheck="false" placeholder="Missing word" aria-label="Your answer">
+      <button class="btn" id="check">Check</button></div>`;
+  }
+  if(it.t==='multi'){
+    h+=`<p class="q">${esc(it.q)} Choose everyone who fits.</p><div class="chips">`+HEROES.map((n,k)=>{
+      const on=s.sel.includes(k);let cls='';
+      if(s.done){if(it.a.includes(k))cls=' right';else if(on)cls=' wrong';}
+      return `<button class="chip${cls}" data-k="${k}" aria-pressed="${on}" ${s.done?'disabled':''}>${n}</button>`;}).join('')+`</div>`;
+    if(!s.done)h+=`<div class="row"><button class="btn" id="check">Check</button></div>`;
+  }
+  if(it.t==='speak'){
+    h+=`<div class="speak"><div style="display:flex;flex-direction:column;gap:12px;min-width:0"><p class="q">${esc(it.q)}</p>
+      <ul class="phr">${it.ph.map(p=>`<li>${esc(p)}</li>`).join('')}</ul></div>
+      <div class="timer"><svg viewBox="0 0 120 120" role="img" aria-label="Timer"><circle cx="60" cy="60" r="52" fill="none" stroke="#e3e3ee" stroke-width="10"/>
+      <circle id="ring" cx="60" cy="60" r="52" fill="none" stroke="var(--ground)" stroke-width="10" stroke-dasharray="326.7" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+      <text id="sec" x="60" y="72" text-anchor="middle">40</text></svg>
+      <div class="row"><button class="btn plain" id="tgo">Start</button><button class="btn plain" id="trs">Reset</button></div></div></div>`;
+    if(!s.done)h+=`<div class="pts"><b>Teacher:</b>${[0,1,2,3].map(p=>`<button class="btn" data-p="${p}">${p}</button>`).join('')}<span>0 no answer · 1 a few words · 2 clear · 3 clear with reasons</span></div>`;
+  }
+  h+=fb+`<div class="foot">${s.done?nextBtn():''}</div>`;
+  card.innerHTML=h;card.scrollTop=0;
+
+  const ans=document.getElementById('ans'),check=document.getElementById('check');
+  if(ans){ans.focus();ans.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check.click();}});}
+  if(s.done)document.getElementById('next').focus();
+  const nx=document.getElementById('next');if(nx)nx.onclick=()=>{i++;render();};
+
+  if(it.t==='who'&&!s.done){
+    const more=document.getElementById('more');if(more)more.onclick=()=>{s.clues++;s.msg='';render();};
+    check.onclick=()=>{const v=ans.value.trim();if(!v)return;s.given=v;
+      if(matches(v,it.a))return finish(it,4-s.clues,true,`✓ Yes, ${esc(it.name)}. <span>+${4-s.clues}</span>`);
+      if(s.clues<3){s.clues++;s.msg=`✕ Not ${esc(v)}. Here is another clue.`;return render();}
+      finish(it,0,false,`✕ It was <span>${esc(it.name)}.</span>`);};
+  }
+  if(it.t==='gap'&&!s.done){
+    check.onclick=()=>{const v=ans.value.trim();if(!v)return;s.given=v;
+      if(matches(v,it.a))return finish(it,s.tries?1:2,true,`✓ Correct: <span>${esc(it.a[0])}. +${s.tries?1:2}</span>`);
+      if(!s.tries){s.tries=1;s.msg=`✕ Not “${esc(v)}”. One more try. It starts with <b>${it.a[0][0].toUpperCase()}</b> and has ${it.a[0].replace(' ','').length} letters.`;return render();}
+      finish(it,0,false,`✕ The word was <span>${esc(it.a[0])}.</span>`);};
+  }
+  if(it.t==='multi'&&!s.done){
+    card.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{const k=+c.dataset.k;s.sel=s.sel.includes(k)?s.sel.filter(x=>x!==k):[...s.sel,k];
+      c.setAttribute('aria-pressed',s.sel.includes(k));});
+    check.onclick=()=>{if(!s.sel.length)return;s.given=s.sel.map(k=>HEROES[k]).join(', ');
+      const ok=s.sel.length===it.a.length&&it.a.every(k=>s.sel.includes(k));
+      finish(it,ok?3:0,ok,(ok?'✓ All of them. ':'✕ Not quite. ')+`<span>${esc(it.why)}</span>`);};
+  }
+  if(it.t==='speak'){
+    let left=40;const ring=document.getElementById('ring'),sec=document.getElementById('sec'),go=document.getElementById('tgo');
+    const paint=()=>{sec.textContent=left;ring.setAttribute('stroke-dashoffset',326.7*(1-left/40));};
+    const stop=()=>{clearInterval(tick);tick=null;go.textContent='Start';};
+    go.onclick=()=>{if(tick)return stop();if(left===0){left=40;paint();}go.textContent='Stop';
+      tick=setInterval(()=>{left--;paint();if(left<=0)stop();},1000);};
+    document.getElementById('trs').onclick=()=>{stop();left=40;paint();};
+    card.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{const p=+b.dataset.p;s.given='spoken answer';
+      finish(it,p,p>=2,`${p>=2?'✓':'✕'} Teacher gave <span>${p} of 3.</span>`);});
+  }
+}
+
+function renderEnd(card){
+  drawTop(-1);document.body.dataset.round='end';
+  const t=total(),m=maxTotal(),pc=t/m;
+  const rank=pc>=.85?'Rebel legend':pc>=.65?'World changer':pc>=.45?'Rising rebel':'Read the stories again';
+  const lost=items.filter(it=>it.s.pts<MAX[it.t]);
+  const line=it=>{const what=it.t==='who'?it.clues[0]:it.q;
+    const right=it.t==='who'?it.name:it.t==='gap'?it.a[0]:it.t==='multi'?it.a.map(k=>HEROES[k]).join(', '):'';
+    const got=!it.s.done?'skipped':it.t==='speak'?it.s.pts+' of 3':'you: '+it.s.given+(it.s.ok?' (not on the first try)':'');
+    return `<li>${esc(what)} <span>(${esc(got)})</span>${right?` → <b>${esc(right)}</b>`:''}</li>`;};
+  card.innerHTML=`<div class="end endtop"><div><div class="meta">Final result</div><h2>${rank}</h2></div>
+    <div class="big">${t} / ${m}</div><button class="btn go" id="again">Play again</button></div>
+    ${lost.length?`<p class="q">Where points were lost</p><ul class="miss">${lost.map(line).join('')}</ul>`:'<p class="fb ok">✓ Every answer was right the first time.</p>'}`;
+  document.getElementById('again').onclick=start;
+}
+start();
+</script>
+
+</html>

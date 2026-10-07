@@ -129,12 +129,14 @@ button{font:inherit}
 .go .prog{display:flex;align-items:center;gap:8px;margin-top:5px;font-size:clamp(11px,.8vw,13px);font-weight:800}
 .go .prog span{display:block;width:clamp(90px,9vw,150px);height:7px;border-radius:9px;background:rgba(10,43,82,.2);overflow:hidden}
 .go .prog span u{display:block;height:100%;background:#0a2b52;border-radius:9px}
-.dock{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,.9vw,14px);padding:0 clamp(14px,2vw,30px) clamp(12px,2.2vh,22px)}
+.dock{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,.9vw,14px);padding:0 clamp(14px,2vw,30px) clamp(12px,2.2vh,22px)}
 .tile{position:relative;display:flex;align-items:center;gap:11px;min-height:clamp(70px,11vh,96px);border:1px solid rgba(255,255,255,.7);border-radius:18px;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);padding:8px 12px 8px 8px;text-align:left;cursor:pointer;color:#0a315f;box-shadow:0 8px 24px rgba(0,25,60,.25);transition:transform .14s ease,box-shadow .14s ease,background .14s ease;text-decoration:none;overflow:hidden}
 .tile:hover,.tile:focus-visible{transform:translateY(-5px);background:#fff;box-shadow:0 16px 34px rgba(0,25,60,.38);outline:none}
 .tile .th{flex:none;width:clamp(52px,5.2vw,78px);align-self:stretch;border-radius:12px;background:#0e2230 center/cover no-repeat}
 .tile .th.bricks{background:#5a2314;display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:4px}
 .tile .th.bricks u{display:block;border-radius:3px;background:linear-gradient(135deg,#c4552f,#8a3a22)}
+.tile .th.rebel{display:grid;place-items:center;background:#2b3be0}
+.tile .th.rebel u{text-decoration:none;font:900 30px Arial Black,Arial,sans-serif;color:#ffd60a}
 .tile .th.faces{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#fff}
 .tile .th.faces u{display:block;border-radius:5px;background:center/cover no-repeat}
 .tile small{display:block;font-size:clamp(9px,.7vw,11px);font-weight:700;letter-spacing:.13em;color:#1787cf}
@@ -172,6 +174,7 @@ button{font:inherit}
       <a class="tile" href="what-happens-next.html?v=20261007-b"><div class="th" style="background-image:url(assets/whn/lamp.jpg)"></div><div><small>WARM-UP</small><b>What Happens Next?</b><span>Watch, stop, predict with will</span></div></a>
       <a class="tile" href="word-walls-age.html?v=2"><div class="th bricks"><u></u><u></u><u></u><u></u><u></u><u></u></div><div><small>VOCABULARY GAME</small><b>Word Walls</b><span>15 adjectives, nouns are traps</span></div></a>
       <a class="tile" href="ten-faces.html"><div class="th faces"><u style="background-image:url(ten-faces/emma.jpg)"></u><u style="background-image:url(ten-faces/daniel.jpg)"></u><u style="background-image:url(ten-faces/chloe.jpg)"></u><u style="background-image:url(ten-faces/ethan.jpg)"></u></div><div><small>LISTEN AND SPEAK</small><b>Ten Faces</b><span>Ten people ask you questions</span></div></a>
+      <a class="tile" href="rebel-files.html?v=20261007-rf"><div class="th rebel"><u>R</u></div><div><small>QUIZ GAME</small><b>Rebel Files</b><span>Six heroes, answer from memory</span></div></a>
       <button class="tile word" id="wordTile" aria-label="Word of the day, tap to flip"><div class="fl"><div class="fa"><small>WORD OF THE DAY · TAP</small><b id="wodWord"></b><span>What does it mean?</span></div><div class="fb"><small id="wodWord2"></small><span id="wodDef"></span></div></div></button>
     </div>
   </section>
