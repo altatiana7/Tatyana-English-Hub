@@ -120,7 +120,7 @@ h1{font-size:clamp(54px,6.5vw,105px);line-height:.93;letter-spacing:-5px;margin:
 <script src="tasks-data.js"></script>
 <script>
 const sections=[['Listening','TUNE IN'],['Grammar','MAKE IT CLICK'],['Word Formation','BUILD A NEW WORD'],['Vocabulary','FIND YOUR WORDS']];
-const GRADES={10:[1,2,3,4,5],11:[6,7,8,9,10]};
+const ALLV=[1,2,3,4,5,6,7,8,9,10],GRADES={10:ALLV,11:ALLV};
 const $=id=>document.getElementById(id),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const KEYS=window.EGE_KEYS,LISTEN=window.EGE_LISTENING,TASKS=window.EGE_TASKS;
 let current=0,grade=10,currentVariant=1,scale=1,answers={},checkedSig='';
@@ -133,7 +133,7 @@ $$('[data-index]').forEach(b=>b.onclick=()=>{current=+b.dataset.index;currentVar
 $('back').onclick=home;
 function home(){closeTasks();$('stageBody').innerHTML='';$('subBar').innerHTML='';document.body.classList.remove('inStage');$('stage').classList.remove('active');$('home').style.display='flex'}
 document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if($('overlay').classList.contains('open'))closeTasks();else if($('stage').classList.contains('active'))home()});
-function drawGrade(){$$('.gradeSeg').forEach(s=>{s.innerHTML=[10,11].map(g=>`<button data-g="${g}" class="${g===grade?'active':''}">Grade ${g}</button>`).join('');$$('[data-g]',s).forEach(b=>b.onclick=()=>{grade=+b.dataset.g;currentVariant=GRADES[grade][0];answers={};checkedSig='';drawGrade();if($('stage').classList.contains('active'))renderSection()})});$('gradeNote').textContent=`GRADE ${grade} · VARIANTS ${GRADES[grade][0]}–${GRADES[grade][4]}`}
+function drawGrade(){$$('.gradeSeg').forEach(s=>{s.innerHTML=[10,11].map(g=>`<button data-g="${g}" class="${g===grade?'active':''}">Grade ${g}</button>`).join('');$$('[data-g]',s).forEach(b=>b.onclick=()=>{grade=+b.dataset.g;drawGrade();if($('stage').classList.contains('active'))renderSection()})});$('gradeNote').textContent=`GRADE ${grade} · VARIANTS 1–10`;const sg=document.querySelector('#stage .gradeSeg');if(sg)sg.classList.toggle('hidden',current!==3)}
 drawGrade();
 
 /* ---------- full screen + text size ---------- */
@@ -147,7 +147,7 @@ window.addEventListener('resize',refit);drawSize();
 
 /* ---------- variants ---------- */
 function renderBar(){$('variantBar').innerHTML=GRADES[grade].map(v=>`<button class="chip ${v===currentVariant?'active':''}" data-v="${v}" title="Variant ${v}" aria-label="Variant ${v}">${v}</button>`).join('');$$('[data-v]',$('variantBar')).forEach(b=>b.onclick=()=>{currentVariant=+b.dataset.v;renderSection()})}
-function renderSection(){renderBar();$('stageBody').className='fit';$('stageBody').style.cssText='';const t=TASKS[currentVariant];
+function renderSection(){drawGrade();renderBar();$('stageBody').className='fit';$('stageBody').style.cssText='';const t=TASKS[currentVariant];
  if(current===0)renderListening();
  else if(current===1)renderText(t.g,'Tasks 19–24 · Put the word in the right grammar form');
  else if(current===2)renderText(t.w,'Tasks 25–29 · Form a new word that fits the gap');
@@ -171,7 +171,7 @@ function renderText(part,instr){
 /* ---------- whole text with four-option gaps (Vocabulary, tasks 30–36) ---------- */
 function renderVocab(part){
  const v=currentVariant,sig='v'+v,LET=['A','B','C','D'];
- $('subBar').innerHTML=`<button class="pill solid" id="check">Check</button><button class="pill lime" id="reset">Reset</button><span class="score" id="score"></span><span class="instr">Tasks 30–36 · Choose A, B, C or D for each gap</span>`;
+ $('subBar').innerHTML=`<button class="pill solid" id="check">Check</button><button class="pill lime" id="reset">Reset</button><span class="score" id="score"></span><span class="instr">Exam tasks 30–36 · Choose A, B, C or D · Spotlight ${grade} word list will be added here</span>`;
  const body=part.text.split('\n').map(p=>'<p>'+esc(p).replace(/\{(\d+)\}/g,(m,n)=>{const k=v+'-'+n;return `<span style="white-space:nowrap"><span class="qn">${n}</span><select class="pick" data-k="${k}" data-n="${n}" aria-label="Gap ${n}"><option value="">· · ·</option>${part.opts[n].map((o,i)=>`<option value="${i+1}" ${answers[k]==i+1?'selected':''}>${LET[i]}) ${esc(o)}</option>`).join('')}</select><span class="ans" data-a="${k}"></span></span>`})+'</p>').join('');
  $('stageBody').innerHTML=`<div class="passage"><h3>${esc(part.title)}</h3>${body}</div>`;
  $$('.pick').forEach(s=>s.onchange=()=>{answers[s.dataset.k]=s.value});
