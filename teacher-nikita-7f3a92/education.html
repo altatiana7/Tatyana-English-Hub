@@ -4,470 +4,475 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
-<title>Nikita · Room 8 → Education & Society</title>
+<title>Nikita · Is Modern Education Preparing Us for Real Life?</title>
 <style>
-:root{--navy:#0c2235;--navy2:#173a55;--paper:#f4f0e8;--cream:#fffaf2;--ink:#17212b;--muted:#66727d;--gold:#b88955;--red:#9e3d38;--green:#2f6d5d;--line:rgba(12,34,53,.14)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;background:var(--paper);color:var(--ink)}
-body{overflow-x:hidden}.app{min-height:100vh;display:grid;grid-template-columns:235px 1fr}.side{position:sticky;top:0;height:100vh;background:linear-gradient(180deg,#091c2d,#14354f);padding:20px 14px;color:#fff;overflow:auto}.brand{font-family:Georgia,serif;font-size:24px;font-weight:700}.meta{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#c5d0d8;margin:6px 0 20px}.menu{display:grid;gap:7px}.menu button{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);color:#fff;border-radius:12px;padding:11px 12px;text-align:left;font-weight:800;cursor:pointer}.menu button:hover,.menu button.active{background:#fff;color:var(--navy)}.back{display:block;margin-top:18px;color:#fff;text-decoration:none;font-size:13px}
-main{min-width:0}.top{padding:18px 26px;background:#fff;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center;position:sticky;top:0;z-index:5}.title{font-family:Georgia,serif;font-size:25px;color:var(--navy)}.route{font-size:12px;color:var(--muted);font-weight:800}.wrap{padding:24px}.screen{display:none;max-width:1220px;margin:0 auto}.screen.active{display:block}
-.hero{background:linear-gradient(110deg,rgba(7,24,38,.96),rgba(15,48,70,.82)),url('https://images.unsplash.com/photo-1519452575417-564c1401ecc0?auto=format&fit=crop&w=1800&q=85') center/cover;border-radius:28px;padding:42px;color:#fff;box-shadow:0 18px 45px rgba(7,24,38,.18)}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#e3bc90;font-weight:900}.hero h1{font-family:Georgia,serif;font-size:58px;line-height:.98;margin:12px 0 16px;max-width:850px}.hero p{font-size:20px;line-height:1.5;max-width:820px;color:#edf3f6}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.chip{border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:8px 11px;background:rgba(255,255,255,.08);font-size:13px;font-weight:800}
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 8px 24px rgba(12,34,53,.06)}h2{font-family:Georgia,serif;font-size:34px;color:var(--navy);margin:0 0 10px}h3{margin:0 0 10px;color:var(--navy)}p,li{line-height:1.5}.lead{font-size:17px;color:var(--muted)}.prompt{font-family:Georgia,serif;font-size:24px;line-height:1.35;color:var(--navy);padding:16px;border-left:4px solid var(--gold);background:var(--cream);border-radius:12px}.statement{padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:#fbfcfd;margin:10px 0}.statement strong{color:var(--red)}.video{position:relative;padding-top:56.25%;border-radius:20px;overflow:hidden;background:#000;box-shadow:0 12px 35px rgba(0,0,0,.18)}.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-button.action{border:0;border-radius:12px;background:var(--navy);color:#fff;padding:10px 14px;font-weight:800;cursor:pointer}button.alt{background:var(--green)}button.gold{background:#9a6a38}.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.answer{display:none;margin-top:12px;padding:12px;background:#eef7f4;border:1px dashed #8ab3a6;border-radius:12px}.grammar{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g{padding:14px;border-radius:15px;border:1px solid var(--line);background:#fff}.g b{color:var(--red)}.timeline{display:flex;gap:8px;flex-wrap:wrap}.node{padding:10px 13px;border-radius:999px;background:#e9eef2;font-weight:900;color:var(--navy)}.node.current{background:#f0dfcb;color:#754a25}.task{padding:14px;border:1px solid var(--line);border-radius:15px;background:#fff;margin:10px 0}.small{font-size:13px;color:var(--muted)}textarea{width:100%;min-height:90px;border:1px solid #cbd8df;border-radius:12px;padding:12px;font:inherit}.badge{display:inline-block;padding:7px 10px;border-radius:999px;background:#efe6da;color:#744d2b;font-size:12px;font-weight:900}.final{background:linear-gradient(135deg,#fffaf2,#eef6f8);border:1px solid var(--line);border-radius:22px;padding:22px}
-.rushelp{display:none;margin-top:10px;padding:11px 12px;border-radius:12px;background:#fff4e8;border:1px dashed #d5a56d;color:#56391f;font-size:14px;line-height:1.45}
-.flashwrap{display:grid;place-items:center;margin-top:16px}
-.flashcard{width:min(760px,100%);height:300px;perspective:1200px;cursor:pointer}
-.flashinner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
-.flashcard.flipped .flashinner{transform:rotateY(180deg)}
-.flashface{position:absolute;inset:0;backface-visibility:hidden;border:1px solid var(--line);border-radius:24px;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 12px 30px rgba(12,34,53,.09)}
-.flashfront{background:linear-gradient(135deg,#ffffff,#eef6f8)}
-.flashback{transform:rotateY(180deg);background:linear-gradient(135deg,#fff8ef,#ffffff)}
-.flashword{font-family:Georgia,serif;font-size:38px;color:var(--navy);font-weight:700}
-.flashru{font-size:26px;font-weight:900;color:#7b4b26;margin-bottom:10px}
-.flashnav{display:flex;gap:12px;align-items:center;justify-content:center;margin-top:14px;flex-wrap:wrap}
-.counter{font-weight:900;color:var(--navy)}
-.case{padding:15px;border-radius:16px;border:1px solid var(--line);background:#fff;margin:12px 0}
-.case h3{margin-bottom:8px}
-.triple{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
-.triple div{padding:10px;border-radius:11px;background:#f6f8f9;border:1px solid var(--line);font-size:14px}
-.teacherhint{display:none;margin-top:10px;padding:11px;border-radius:12px;background:#eef5ff;border:1px dashed #9db7d2;color:#28445e;font-size:14px}
-@media(max-width:900px){.app{grid-template-columns:1fr}.side{position:relative;height:auto}.menu{grid-template-columns:repeat(2,1fr)}.top{position:relative}.grid2,.grid3,.grammar{grid-template-columns:1fr}.hero h1{font-size:42px}.wrap{padding:14px}}
+:root{--navy:#0c2235;--navy2:#173a55;--paper:#f4f0e8;--cream:#fffaf2;--ink:#17212b;--muted:#5d6975;--gold:#a8763f;--red:#a3362f;--redbg:#fbe9e7;--green:#23705c;--greenbg:#e4f3ee;--line:rgba(12,34,53,.16)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Inter,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink);font-size:18px}
+body{overflow:hidden}
+button{font:inherit;cursor:pointer}
+.bar{height:52px;background:linear-gradient(90deg,#091c2d,#14354f);color:#fff;display:flex;align-items:center;gap:10px;padding:0 14px}
+.brand{font-family:Georgia,serif;font-weight:700;font-size:19px;white-space:nowrap;margin-right:6px}
+.tabs{display:flex;gap:4px;flex:1;min-width:0;overflow:hidden}
+.tabs button{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff;border-radius:9px;padding:7px 9px;font-size:15px;font-weight:700;white-space:nowrap}
+.tabs button:hover{background:rgba(255,255,255,.18)}
+.tabs button.on{background:#fff;color:var(--navy)}
+.bar .util{border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;border-radius:9px;padding:7px 10px;font-size:15px;font-weight:700;white-space:nowrap;text-decoration:none}
+.bar .util:hover{background:rgba(255,255,255,.16)}
+.stage{height:calc(100vh - 52px);overflow:hidden;position:relative}
+.scr{display:none;height:100%;padding:14px 26px 12px;flex-direction:column;max-width:1280px;margin:0 auto}
+.scr.on{display:flex}
+h2{font-family:Georgia,serif;font-size:26px;color:var(--navy);margin:0;line-height:1.15}
+.sub{color:var(--muted);font-size:17px;margin:3px 0 0}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:10px}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;min-height:44px}
+.count{font-weight:800;color:var(--navy);font-size:17px}
+.btn{border:0;border-radius:11px;background:var(--navy);color:#fff;padding:10px 18px;font-weight:800;font-size:17px}
+.btn:hover{background:var(--navy2)}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.btn.ghost:hover{background:#f1ede4}
+.btn.gold{background:var(--gold)}
+.btn:disabled{opacity:.4;cursor:default}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 22px;box-shadow:0 8px 22px rgba(12,34,53,.06)}
+.big{font-family:Georgia,serif;font-size:28px;line-height:1.3;color:var(--navy)}
+.q{font-size:24px;line-height:1.35;font-weight:600;color:var(--navy)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;min-height:0}
+.opts{display:grid;gap:9px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{border:2px solid var(--line);background:#fff;border-radius:12px;padding:11px 14px;font-size:19px;text-align:left;color:var(--ink);font-weight:600}
+.opt:hover:not(:disabled){border-color:var(--navy)}
+.opt:disabled{cursor:default;color:var(--ink);opacity:1}
+.opt.ok{border-color:var(--green);background:var(--greenbg)}
+.opt.bad{border-color:var(--red);background:var(--redbg)}
+.exp{margin-top:10px;padding:10px 14px;border-radius:12px;font-size:18px;line-height:1.4;background:#fff;border:1px solid var(--line)}
+.exp b.v{color:var(--green)} .exp b.x{color:var(--red)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:16px;font-weight:600;color:var(--navy)}
+button.chip:hover{border-color:var(--navy)}
+.chip.sel{background:var(--navy);color:#fff;border-color:var(--navy)}
+.label{font-size:15px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:0;border-radius:22px;overflow:hidden;background:linear-gradient(120deg,#0a2033,#173a55);color:#fff;flex:1;min-height:0}
+.hero .txt{padding:26px 32px;display:flex;flex-direction:column;justify-content:center}
+.hero h1{font-family:Georgia,serif;font-size:clamp(30px,4.6vh + 10px,46px);line-height:1.08;margin:8px 0 12px}
+.hero p{font-size:19px;line-height:1.45;color:#e6eef3;margin:0 0 16px}
+.hero .ph{background:url('../graduation.jpg') center 22%/cover;min-height:0}
+.hero .label{color:#e3bc90}
+.route{display:flex;flex-wrap:wrap;gap:6px}
+.route span{border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 11px;font-size:16px}
+/* flip card */
+.flip{height:min(300px,46vh);perspective:1400px;cursor:pointer;width:min(820px,100%);margin:0 auto}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.f .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 30px;box-shadow:0 10px 26px rgba(12,34,53,.08)}
+.face.a{background:linear-gradient(135deg,#fff,#eef5f7)}
+.face.b{background:linear-gradient(135deg,#fff8ee,#fff);transform:rotateY(180deg)}
+.term{font-family:Georgia,serif;font-size:34px;font-weight:700;color:var(--navy);line-height:1.2}
+.ex{font-size:19px;line-height:1.45;color:var(--ink);margin-top:12px;max-width:680px}
+.ru{font-size:25px;font-weight:800;color:#6f431f}
+.ask{font-size:20px;margin-top:12px;color:var(--navy);max-width:680px;line-height:1.4}
+.stake{display:flex;gap:8px;align-items:center}
+.stake button{border:2px solid var(--line);background:#fff;border-radius:10px;padding:6px 12px;font-size:16px;font-weight:700;color:var(--navy)}
+.stake button.on{border-color:var(--navy);background:var(--navy);color:#fff}
+.score{font-weight:800;font-size:18px;color:var(--navy)}
+.review{overflow:auto;max-height:100%;display:grid;gap:7px}
+.review div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:17px;line-height:1.35}
+.review s{color:var(--red)} .review b{color:var(--green)}
+.photo{border-radius:16px;background:center 20%/cover;min-height:0}
+.frame{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.frame div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 11px;font-size:16px;line-height:1.3}
+.frame b{display:block;color:var(--gold);font-size:15px;text-transform:uppercase;letter-spacing:.05em}
+.inp{font:inherit;font-size:22px;padding:9px 14px;border:2px solid var(--navy);border-radius:11px;width:min(460px,100%);background:#fff}
+.inp.ok{border-color:var(--green);background:var(--greenbg)} .inp.bad{border-color:var(--red);background:var(--redbg)}
+.pills{display:flex;gap:6px}
+.pills button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:16px;font-weight:700;color:var(--navy)}
+.pills button.on{background:var(--navy);color:#fff}
+.timer{font-family:Georgia,serif;font-size:50px;font-weight:700;color:var(--navy);line-height:1}
+.timer.end{color:var(--red)}
+.plan{min-height:46px;max-height:88px;overflow:auto;border:2px dashed var(--line);border-radius:12px;padding:8px 12px;font-size:18px;line-height:1.4;background:#fffdf8}
+/* drawers */
+.drawer{position:absolute;top:0;right:0;bottom:0;width:min(430px,92vw);background:#fff;border-left:1px solid var(--line);box-shadow:-14px 0 40px rgba(12,34,53,.18);padding:16px 18px;overflow:auto;transform:translateX(105%);transition:transform .25s;z-index:20}
+.drawer.on{transform:none}
+.drawer h3{margin:0 0 8px;font-family:Georgia,serif;color:var(--navy);font-size:22px}
+.drawer p,.drawer li{font-size:17px;line-height:1.45;margin:0 0 9px}
+.drawer ul{padding-left:20px;margin:0 0 9px}
+.drawer .rus{background:#fff4e8;border-radius:10px;padding:9px 11px;color:#56391f}
+.drawer .x{position:absolute;top:10px;right:12px;border:0;background:none;font-size:24px;color:var(--muted)}
+table.g{border-collapse:collapse;width:100%;font-size:16px}
+table.g td{border-bottom:1px solid var(--line);padding:6px 4px;vertical-align:top;line-height:1.35}
+table.g td:first-child{font-weight:800;color:var(--red);white-space:nowrap;padding-right:10px}
+@media(max-height:620px){.scr{padding:9px 24px 8px}h2{font-size:23px}.head{margin-bottom:7px}.q{font-size:22px}.big{font-size:25px}.opt{padding:8px 13px;font-size:18px}.card{padding:13px 18px}.term{font-size:30px}.foot{margin-top:7px}.exp{font-size:17px;padding:8px 12px;margin-top:7px}.timer{font-size:42px}}
+@media(max-width:900px){body{overflow:auto}.bar{height:auto;flex-wrap:wrap;padding:8px}.tabs{flex-wrap:wrap}.stage{height:auto;overflow:visible}.scr{height:auto}.cols,.hero,.frame{grid-template-columns:1fr}.hero .ph{height:220px}}
 </style>
 </head>
 <body>
-<div class="app">
-<aside class="side">
-<div class="brand">Nikita · Unit 8</div>
-<div class="meta">26 September 2026 · Education & Society</div><div id="teacherModeBadge" style="display:none;margin:0 0 14px;padding:7px 9px;border:1px solid rgba(255,255,255,.25);border-radius:10px;font-size:11px;font-weight:900;letter-spacing:.08em">TEACHER MODE</div>
-<div class="menu">
-<button class="active" onclick="show('home',this)">0. Home</button>
-<button onclick="show('facts',this)">1. Unexpected T / F</button>
-<button onclick="show('cards',this)">2. Quizlet Vocabulary</button>
-<button onclick="show('connect',this)">3. Connect the dots</button>
-<button onclick="show('predict',this)">4. Room 8 · Predict</button>
-<button onclick="show('watch',this)">5. Watch + Discussion + WF/Grammar</button>
-<button onclick="show('infer',this)">6. Inference</button>
-<button onclick="show('grammar',this)">7. Grammar Lab</button>
-<button onclick="show('bias',this)">8. Survivorship Bias</button>
-<button onclick="show('bridge',this)">9. Education</button>
-<button onclick="show('debate',this)">10. Debate</button>
-<button onclick="show('exit',this)">11. Exit challenge</button>
+<div class="bar">
+  <div class="brand">Nikita · Education</div>
+  <div class="tabs" id="tabs"></div>
+  <button class="util" id="tBtn">Notes</button>
+  <a class="util" href="./">Hub</a>
 </div>
-<a class="back" href="./">← Nikita Hub</a>
-</aside>
-<main>
-<div class="top"><div class="title">ROOM 8 → Who shapes the way we think?</div><div class="route">Education → Society → Voting → Prison → Religion</div></div>
-<div class="wrap">
-
-<section id="home" class="screen active">
-<div class="hero">
-<div class="eyebrow">LessonStream-style story lesson</div>
-<h1>Who shapes the way we think?</h1>
-<p>A short film, a prison cell and one impossible object. Use the story to connect our previous topics with Unit 8: <strong>Education</strong>.</p>
-<div class="chips"><span class="chip">Room 8</span><span class="chip">critical thinking</span><span class="chip">education</span><span class="chip">institutions</span><span class="chip">modal perfects</span></div>
-</div>
-<div class="card" style="margin-top:16px"><h3>Teacher route — transitions</h3><button class="action alt" onclick="toggle('routeHelp')">Show all bridges EN + RU</button><div id="routeHelp" class="teacherhint">
-<b>0→1:</b> Unexpected facts → challenge first instincts.<br>
-<b>1→2:</b> Facts create a language need → Quizlet vocabulary.<br>
-<b>2→3:</b> Vocabulary → connect society, education, voting, prison and religion.<br>
-<b>3→4:</b> Institutions and rules → Room 8 story.<br>
-<b>4→5:</b> Prediction → test it against evidence.<br>
-<b>5→6:</b> Events → motives and interpretation.<br>
-<b>6→7:</b> Interpretation of the past → modal perfects.<br>
-<b>7→8:</b> One person’s reasoning → survivorship bias.<br>
-<b>8→9:</b> Bias → purpose of education.<br>
-<b>9→10:</b> Education → real institutions and previous topics.<br>
-<b>10→11:</b> Discussion → final position.<br><br>
-<b>RU:</b> логика урока: широкий контекст → история → доказательства → грамматика → когнитивная ошибка → лексика → образование → применение → итог.
-</div></div>
-<div class="grid3" style="margin-top:16px">
-<div class="card"><h3>Past</h3><p>Prison · religion · elections & voting.</p></div>
-<div class="card"><h3>Today</h3><p>Education as an institution that can shape choices, beliefs and opportunities.</p></div>
-<div class="card"><h3>Grammar</h3><p><b>must have / might have / could have / should have + V3</b>.</p></div>
-</div>
-</section>
-
-
-<section id="facts" class="screen">
-<div class="card" style="margin-bottom:16px"><span class="badge">STARTER</span><p><b>EN:</b> “Before we start, let’s see how reliable our first instincts are. Some of these facts sound wrong — but aren’t.”</p><button class="action gold" onclick="toggle('factsIntroRU')">RU</button><div id="factsIntroRU" class="rushelp">«Для начала проверим, насколько надёжна наша первая реакция. Некоторые факты звучат неправдоподобно, но оказываются правдой.» Это подводит к теме: интуиция ≠ доказательство.</div></div>
-<h2>1. Unexpected Facts — True or False?</h2>
-<p class="lead">Choose first. Open the answer only after Nikita explains his reasoning.</p>
-
-<div class="case"><h3>1. Voting</h3><p><b>Austria allows citizens to vote in national elections from the age of 16.</b></p>
-<div class="row"><button class="action" onclick="toggle('tf1')">Answer + teacher note</button></div>
-<div id="tf1" class="teacherhint"><b>TRUE.</b> Austria lowered the voting age to 16 for nationwide elections in 2007 and was the first country in Europe to do so for all elections.<br><br><b>RU:</b> Правда. В Австрии голосовать на общенациональных выборах можно с 16 лет.<br><b>Ask:</b> “Does a lower voting age necessarily mean younger voters are less informed?”</div></div>
-
-<div class="case"><h3>2. Prison + Education</h3><p><b>There are school departments in every Norwegian prison.</b></p>
-<div class="row"><button class="action" onclick="toggle('tf2')">Answer + teacher note</button></div>
-<div id="tf2" class="teacherhint"><b>TRUE.</b> A 2025 Norwegian government report states that there are school departments in all Norwegian prisons.<br><br><b>RU:</b> Правда. В норвежских тюрьмах есть школьные подразделения.<br><b>Ask:</b> “Should education in prison be treated as a right, a privilege, or a rehabilitation tool?”</div></div>
-
-<div class="case"><h3>3. Prison + Rights</h3><p><b>In Norway, prisoners can lose their right to basic education simply because they are serving a sentence.</b></p>
-<div class="row"><button class="action" onclick="toggle('tf3')">Answer + teacher note</button></div>
-<div id="tf3" class="teacherhint"><b>FALSE.</b> Norwegian guidance says prisoners have rights to primary and upper-secondary education on the same basis as the general population, within the limits of imprisonment.<br><br><b>RU:</b> Неправда. Сам факт заключения не отменяет право на базовое образование.<br><b>Useful phrase:</b> <i>retain the right to education</i> — сохранять право на образование.</div></div>
-
-<div class="case"><h3>4. Religion + Knowledge</h3><p><b>People who personally know someone from another religion tend to know less about that religion.</b></p>
-<div class="row"><button class="action" onclick="toggle('tf4')">Answer + teacher note</button></div>
-<div id="tf4" class="teacherhint"><b>FALSE.</b> In a Pew survey, people with more religiously diverse social networks generally knew more about religion. For example, those who personally knew a Muslim were much more likely to identify Ramadan correctly.<br><br><b>RU:</b> Неправда. Более разнообразный круг общения был связан с лучшими знаниями о религиях.<br><b>Vocabulary:</b> <i>religiously diverse social network</i> — религиозно разнообразный круг общения.</div></div>
-
-<div class="case"><h3>5. Religion + Education</h3><p><b>Taking a class about world religions is associated with higher factual knowledge about religion.</b></p>
-<div class="row"><button class="action" onclick="toggle('tf5')">Answer + teacher note</button></div>
-<div id="tf5" class="teacherhint"><b>TRUE.</b> In Pew’s 2019 U.S. survey, people who had taken a world-religions class answered more factual religion questions correctly on average than those who had not.<br><br><b>RU:</b> Правда. Участники, изучавшие мировые религии, в среднем лучше отвечали на фактические вопросы о религии.<br><b>Bridge:</b> “So education can change not only what we know, but also what assumptions we make.”</div></div>
-
-<div class="case"><h3>6. Evidence</h3><p><b>If a statistic is factually correct, it cannot be misleading.</b></p>
-<div class="row"><button class="action" onclick="toggle('tf6')">Answer + teacher note</button></div>
-<div id="tf6" class="teacherhint"><b>FALSE.</b> A statistic can be technically correct but misleading if the sample is selective, key cases are missing, or the denominator/context is hidden.<br><br><b>RU:</b> Неправда. Цифра может быть формально верной, но вводить в заблуждение из-за выборки или отсутствующего контекста.<br><b>Key phrase:</b> <i>technically true but misleading</i>.</div></div>
-
-<div class="card" style="margin-top:16px"><h3>Vocabulary next</h3><p><b>EN:</b> “We already need words like evidence, sample, assumption and misleading. Let’s train that language before we start the main discussion.”</p><button class="action gold" onclick="toggle('factsToVocabRU')">RU</button><div id="factsToVocabRU" class="rushelp">«Нам уже понадобились слова evidence, sample, assumption, misleading. Сначала натренируем эту лексику, а потом пойдём в основное обсуждение.»</div></div>
-</section>
-
-<section id="connect" class="screen">
-<div class="card" style="margin-bottom:16px"><p><b>EN:</b> “Now that we have the language, let’s use it to connect the bigger ideas: what actually shapes the way people think and behave?”</p><button class="action gold" onclick="toggle('bridge01ru')">RU</button><div id="bridge01ru" class="rushelp">«Прежде чем говорить об образовании, давай посмотрим шире: что вообще формирует то, как люди думают и ведут себя?» Логика: от общей темы урока → к институтам и обществу.</div></div>
-<h2>3. Connect the dots</h2>
-<p class="lead">No textbook yet. Explain the connection between all five ideas.</p>
-<div class="timeline"><span class="node">PRISON</span><span class="node">RELIGION</span><span class="node">VOTING</span><span class="node current">EDUCATION</span></div>
-<div class="grid2" style="margin-top:16px">
-<div class="card"><div class="prompt">What do prisons, religious communities, elections and schools all have in common?</div></div>
-<div class="card"><h3>Push the answer further</h3><ul><li>Which institutions create rules?</li><li>Which institutions shape beliefs?</li><li>Which ones give people second chances?</li><li>Which ones should teach critical thinking?</li></ul></div>
-</div>
-<div class="card" style="margin-top:16px"><h3>One-sentence challenge</h3><p>Use all five words in one intelligent sentence: <b>education · society · voting · prison · religion</b>.</p>
-<div class="row"><button class="action alt" onclick="toggle('connectHelp')">Teacher help EN + RU</button><button class="action gold" onclick="toggle('connectVocab')">Possible vocabulary</button></div>
-<div id="connectHelp" class="teacherhint"><b>Possible answer EN:</b> “All these institutions shape the way people behave, think and make decisions. They can influence values, opportunities and a person’s place in society.”<br><br><b>По-русски:</b> «Все эти институты формируют то, как люди ведут себя, думают и принимают решения. Они могут влиять на ценности, возможности и место человека в обществе.»</div>
-<div id="connectVocab" class="rushelp"><b>society</b> — общество; <b>social environment</b> — социальная среда; <b>environment</b> — среда / окружение в широком смысле; <b>surroundings</b> — непосредственное физическое окружение; <b>background</b> — происхождение, жизненный/социальный фон; <b>community</b> — сообщество; <b>peer group</b> — круг сверстников; <b>upbringing</b> — воспитание; <b>social circle</b> — круг общения; <b>influence</b> — влияние; <b>shape someone’s views</b> — формировать взгляды; <b>affect behaviour</b> — влиять на поведение.</div>
-</div>
-</section>
-
-<section id="predict" class="screen">
-<div class="card" style="margin-bottom:16px"><p><b>EN:</b> “Institutions shape behaviour partly through rules, expectations and consequences. Let’s test that idea in a story where one warning changes everything.”</p><button class="action gold" onclick="toggle('bridge12ru')">RU</button><div id="bridge12ru" class="rushelp">«Институты формируют поведение через правила, ожидания и последствия. Проверим эту идею на истории, где одно предупреждение меняет всё.» Логика: общество/институты → конкретная история Room 8.</div></div>
-<h2>4. Room 8 — predict before watching</h2>
-<p class="lead">Do not reveal the plot. Give Nikita only the situation.</p>
-<div class="grid2">
-<div class="card"><div class="prompt">A man is taken into a prison cell. His cellmate tells him not to open a mysterious box.</div><h3 style="margin-top:14px">Predict</h3><ol><li>What could be inside?</li><li>Why might the cellmate be afraid?</li><li>What would make you open it?</li><li>What kind of film is this?</li></ol></div>
-<div class="card"><h3>Language target</h3><div class="statement"><strong>It might be…</strong> because…</div><div class="statement"><strong>The cellmate must know…</strong></div><div class="statement"><strong>He could be hiding…</strong></div><div class="statement"><strong>If I were him, I would…</strong></div></div>
-</div>
-</section>
-
-<section id="watch" class="screen">
-<div class="card" style="margin-bottom:16px"><p><b>EN:</b> “You’ve made your prediction. Now let’s see what the character actually does — and whether the evidence supports your theory.”</p><button class="action gold" onclick="toggle('bridge23ru')">RU</button><div id="bridge23ru" class="rushelp">«Ты сделал прогноз. Теперь посмотрим, что герой действительно сделает и подтверждают ли факты твою версию.» Логика: prediction → проверка гипотезы фактами.</div></div>
-<h2>5. Watch Room 8</h2>
-<p class="lead">Watch in stages. Stop before each major reveal and make a prediction.</p>
-<div class="video"><iframe src="https://player.vimeo.com/video/64878402" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Room 8"></iframe></div>
-<div class="grid3" style="margin-top:16px">
-<div class="card"><span class="badge">STOP 1</span><h3 style="margin-top:9px">Before the box is opened</h3><p>What do you think the rule “don’t open it” really means?</p></div>
-<div class="card"><span class="badge">STOP 2</span><h3 style="margin-top:9px">After the first reveal</h3><p>Explain what you think is happening without using “magic”.</p></div>
-<div class="card"><span class="badge">STOP 3</span><h3 style="margin-top:9px">Before the ending</h3><p>Predict the consequence of his decision.</p></div>
-</div>
-
-<div class="card" style="margin-top:16px">
-<h3>Discussion after the video</h3>
-<ol>
-<li>Was the prisoner’s curiosity rational, reckless, or both?</li>
-<li>Why are warnings sometimes more tempting than reassuring?</li>
-<li>Who had more power in the room: the person with information or the person willing to act?</li>
-<li>Did the prisoner make a free choice, or was he manipulated by the situation?</li>
-<li>What role did uncertainty play in his decision?</li>
-<li>Would an educated person necessarily make a better decision in the same situation?</li>
-<li>Is curiosity always a positive trait?</li>
-<li>When does critical thinking become overthinking?</li>
-<li>Can rules protect people from themselves?</li>
-<li>Should we trust experience more than instructions?</li>
-<li>What evidence should the prisoner have looked for before acting?</li>
-<li>Did the cellmate communicate effectively?</li>
-<li>Can fear make people ignore good advice?</li>
-<li>What does the film suggest about control and knowledge?</li>
-<li>How does the story connect to prisons, voting, religion or education?</li>
-</ol>
-<button class="action alt" onclick="toggle('videoDiscussHelp')">Teacher answers EN + RU</button>
-<div id="videoDiscussHelp" class="teacherhint"><b>Useful EN ideas:</b> curiosity can be adaptive but also risky; information creates power; uncertainty increases impulsive decisions; warnings can trigger reactance; rules can reduce risk but also limit autonomy; critical thinking requires evidence, not just suspicion.<br><br><b>RU:</b> любопытство может помогать, но и создавать риск; информация даёт власть; неопределённость усиливает импульсивные решения; предупреждение иногда вызывает желание сделать наоборот; правила снижают риск, но ограничивают автономию; критическое мышление требует доказательств, а не просто недоверия.</div>
-</div>
-
-<div class="card" style="margin-top:16px">
-<h3>Word Formation — Video Summary</h3>
-<p class="small">Change the word in brackets. Use one derived form in each gap.</p>
-<p>
-A new prisoner enters a cell where the atmosphere immediately feels <b>1. ________</b> (THREAT). His cellmate behaves with unusual <b>2. ________</b> (CAUTIOUS) and warns him not to touch a mysterious box. At first, the prisoner reacts with visible <b>3. ________</b> (CURIOUS), but the warning only increases his <b>4. ________</b> (INTEREST). The lack of a clear <b>5. ________</b> (EXPLAIN) makes the situation even more disturbing. Instead of accepting the rule, he begins to question its <b>6. ________</b> (VALID). His decision is shaped by uncertainty, suspicion and a desire for <b>7. ________</b> (INDEPENDENT). The box becomes a symbol of forbidden <b>8. ________</b> (KNOW), while the cellmate represents experience and <b>9. ________</b> (AWARE). When the prisoner finally acts, the result is both shocking and <b>10. ________</b> (PREDICT). His choice reveals how easily people can confuse confidence with <b>11. ________</b> (WISE). It also shows the psychological <b>12. ________</b> (ATTRACT) of things that are forbidden. The film encourages the viewer to think about personal <b>13. ________</b> (RESPONSIBLE), the limits of free choice and the consequences of poor <b>14. ________</b> (JUDGE). In the end, the story becomes a powerful <b>15. ________</b> (ILLUSTRATE) of how incomplete information can lead to dangerous decisions.
-</p>
-<button class="action alt" onclick="toggle('wfAnswers')">Show answers</button>
-<div id="wfAnswers" class="answer">1 threatening · 2 caution · 3 curiosity · 4 interest · 5 explanation · 6 validity · 7 independence · 8 knowledge · 9 awareness · 10 unpredictable · 11 wisdom · 12 attraction · 13 responsibility · 14 judgement/judgment · 15 illustration</div>
-</div>
-
-<div class="card" style="margin-top:16px">
-<h3>Grammar — Video Summary</h3>
-<p class="small">Open the brackets. Change the form so the whole summary is grammatically correct.</p>
-<p>
-When the prisoner <b>1. ________</b> (ENTER) the cell, he immediately notices that his cellmate is hiding something. The older man warns him that he <b>2. ________</b> (NOT TOUCH) the box, but the warning has the opposite effect. By the time the prisoner finally opens it, he <b>3. ________</b> already ________ (BECOME) obsessed with finding out what is inside. He probably thinks that the cellmate <b>4. ________</b> (HIDE) something important from him. If he <b>5. ________</b> (TRUST) the warning, the situation might have ended differently. Instead, he acts as if the danger <b>6. ________</b> (NOT BE) real. The cellmate, however, behaves as though he <b>7. ________</b> (SEE) the same mistake before. The prisoner <b>8. ________</b> (MUST / REALISE) that his decision could have consequences, but curiosity is stronger. Once the box is opened, events develop in a way he <b>9. ________</b> (NOT EXPECT). He <b>10. ________</b> (SHOULD / LISTEN) more carefully to the warning. He also <b>11. ________</b> (COULD / ASK) more questions before acting. The film suggests that people often make poor decisions when they <b>12. ________</b> (GIVE) only partial information. It also shows that a person may ignore evidence if that evidence <b>13. ________</b> (CONFLICT) with what they want to believe. By the end of the story, the viewer understands that the prisoner <b>14. ________</b> (MIGHT / AVOID) the outcome if he had interpreted the warning differently. The whole episode <b>15. ________</b> (CAN / SEE) as a lesson about curiosity, judgement and the limits of incomplete information.
-</p>
-<button class="action alt" onclick="toggle('grAnswers')">Show answers</button>
-<div id="grAnswers" class="answer">1 entered · 2 mustn’t / should not touch · 3 had already become · 4 was hiding · 5 had trusted · 6 were not / wasn’t · 7 had seen · 8 must have realised · 9 had not expected · 10 should have listened · 11 could have asked · 12 are given · 13 conflicts · 14 might have avoided · 15 can be seen</div>
-</div>
-</section>
-
-<section id="infer" class="screen">
-<div class="card" style="margin-bottom:16px"><p><b>EN:</b> “We know what happened. The harder question is why it happened. Let’s move from events to motives, evidence and interpretation.”</p><button class="action gold" onclick="toggle('bridge34ru')">RU</button><div id="bridge34ru" class="rushelp">«Мы знаем, что произошло. Более сложный вопрос — почему. Переходим от событий к мотивам, доказательствам и интерпретации.» Логика: просмотр → анализ.</div></div>
-<h2>6. Inference challenge</h2>
-<p class="lead">No simple comprehension questions. Infer motives and causes.</p>
-<div class="grid2">
-<div class="card"><h3>What probably happened?</h3>
-<div class="task">1. Why did the cellmate warn him?</div>
-<div class="task">2. Why did the prisoner ignore the warning?</div>
-<div class="task">3. Was curiosity his weakness, his strength, or both?</div>
-<div class="task">4. Who has the real power in the room?</div>
-<button class="action alt" onclick="toggle('inferHelp')">Teacher help EN + RU</button>
-<div id="inferHelp" class="teacherhint"><b>Possible answers EN:</b><br>1) He may have seen the same thing happen before.<br>2) Curiosity, distrust or a desire for control may have pushed him to act.<br>3) Curiosity is useful when it leads to discovery, but dangerous when warnings are ignored.<br>4) The person who understands the system has more power than the person who is simply physically stronger.<br><br><b>RU:</b><br>1) Возможно, он уже видел, как это происходило раньше.<br>2) Любопытство, недоверие или желание контролировать ситуацию могли подтолкнуть его к действию.<br>3) Любопытство полезно, когда ведёт к открытию, но опасно, когда игнорируются предупреждения.<br>4) Больше власти у того, кто понимает систему.</div>
-</div>
-<div class="card"><h3>Evidence hunt</h3>
-<p>For every answer, give one piece of visual or behavioural evidence from the film.</p>
-<textarea placeholder="Evidence from the film..."></textarea>
-</div>
-</div>
-</section>
-
-<section id="grammar" class="screen">
-<div class="card" style="margin-bottom:16px"><p><b>EN:</b> “Once we start explaining past motives, we need language for certainty, possibility, missed chances and criticism.”</p><button class="action gold" onclick="toggle('bridge45ru')">RU</button><div id="bridge45ru" class="rushelp">«Когда мы объясняем мотивы и решения в прошлом, нам нужен язык для уверенности, вероятности, упущенных возможностей и критики.» Логика: анализ → modal perfects.</div></div>
-<h2>7. Grammar Lab — modal perfects</h2>
-<p class="lead">Use the film to reconstruct the past and judge decisions.</p>
-<div class="grammar">
-<div class="g"><b>must have + V3</b><p>Strong deduction about the past.</p><p><i>The cellmate must have seen this happen before.</i></p><button class="action gold" onclick="toggle('ruMust')">Объяснение по-русски</button><div id="ruMust" class="rushelp"><b>must have + V3</b> = почти уверенный вывод о прошлом: «должно быть / наверняка». Мы не видели событие, но по фактам делаем сильный вывод. Пример: <i>He must have known.</i> — Он, должно быть, знал.</div></div>
-<div class="g"><b>might / may have + V3</b><p>Possible explanation.</p><p><i>He might have thought the box was harmless.</i></p><button class="action gold" onclick="toggle('ruMight')">Объяснение по-русски</button><div id="ruMight" class="rushelp"><b>might/may have + V3</b> = возможное объяснение прошлого: «возможно, он…». Уверенность ниже, чем с <i>must have</i>. Пример: <i>He might have misunderstood.</i> — Возможно, он неправильно понял.</div></div>
-<div class="g"><b>could have + V3</b><p>Alternative possibility / missed option.</p><p><i>He could have left the box alone.</i></p><button class="action gold" onclick="toggle('ruCould')">Объяснение по-русски</button><div id="ruCould" class="rushelp"><b>could have + V3</b> = вариант, который был возможен в прошлом, но не произошёл: «мог бы». Пример: <i>He could have walked away.</i> — Он мог бы уйти.</div></div>
-<div class="g"><b>should / shouldn’t have + V3</b><p>Criticism or regret.</p><p><i>He shouldn’t have ignored the warning.</i></p><button class="action gold" onclick="toggle('ruShould')">Объяснение по-русски</button><div id="ruShould" class="rushelp"><b>should have + V3</b> = «следовало сделать», <b>shouldn’t have + V3</b> = «не следовало делать». Используем для критики или сожаления о прошлом.</div></div>
-<div class="g"><b>can’t have + V3</b><p>Strong negative deduction.</p><p><i>The box can’t have been harmless.</i></p><button class="action gold" onclick="toggle('ruCant')">Объяснение по-русски</button><div id="ruCant" class="rushelp"><b>can’t have + V3</b> = сильный отрицательный вывод: «не мог / не могло быть». Пример: <i>He can’t have known everything.</i></div></div>
-</div>
-<div class="card" style="margin-top:16px">
-<h3>Transform the ideas</h3>
-<ol>
-<li>The cellmate probably knew the danger. → <b>must have</b></li>
-<li>Perhaps the prisoner misunderstood the warning. → <b>might have</b></li>
-<li>He had another option: leave the box closed. → <b>could have</b></li>
-<li>Opening the box was a bad decision. → <b>shouldn’t have</b></li>
-<li>Maybe the system was designed to trap curious people. → <b>might have</b></li>
-</ol>
-<button class="action alt" onclick="toggle('ga')">Show model answers</button>
-<div id="ga" class="answer">1. The cellmate <b>must have known</b> the danger. 2. The prisoner <b>might have misunderstood</b> the warning. 3. He <b>could have left</b> the box closed. 4. He <b>shouldn’t have opened</b> the box. 5. The system <b>might have been designed</b> to trap curious people.</div>
-</div>
-</section>
-
-
-<section id="bias" class="screen">
-<div class="card" style="margin-bottom:16px"><p><b>EN:</b> “We’ve used grammar to reconstruct one person’s decision. Now let’s ask a bigger question: can whole groups make bad decisions because they are looking at incomplete evidence?”</p><button class="action gold" onclick="toggle('bridge56ru')">RU</button><div id="bridge56ru" class="rushelp">«Мы восстановили решение одного человека. Теперь вопрос шире: могут ли целые группы ошибаться, потому что смотрят на неполные данные?» Логика: личное решение → когнитивная ошибка и данные.</div></div>
-<h2>8. Survivorship Bias — What are we missing?</h2>
-<p class="lead">Start with the evidence. Do not reveal the term immediately.</p>
-
-<div class="card">
-<h3>Mystery case — You are the analyst</h3>
-<div class="prompt">During WWII, analysts studied planes that returned from combat. Many had bullet holes in the wings and fuselage, but very few around the engines and cockpit. Where should extra armour be added?</div>
-<div class="row"><button class="action" onclick="toggle('biasReveal')">Reveal the missing question</button><button class="action alt" onclick="toggle('biasTeacher')">Teacher note RU</button></div>
-<div id="biasReveal" class="answer"><b>What about the planes that never came back?</b><br>The returning aircraft are only the survivors. Hits to areas with few holes on returning planes may have been fatal.</div>
-<div id="biasTeacher" class="teacherhint"><b>Для тебя:</b> сначала не называй «ошибку выжившего». Пусть Никита сам выберет, где усиливать броню. Потом спроси: <b>Which group is missing from the data?</b> — «Какой группы не хватает в данных?»</div>
-</div>
-
-<div class="grid2" style="margin-top:16px">
-<div class="card">
-<h3>Definition</h3>
-<p><b>Survivorship bias</b> is the tendency to focus on successful or visible cases while overlooking those that failed, disappeared or were excluded.</p>
-<button class="action gold" onclick="toggle('biasRU')">Перевод / объяснение</button>
-<div id="biasRU" class="rushelp">Ошибка выжившего — мы смотрим на тех, кто «дошёл до финиша», и забываем о тех, кто исчез из выборки. Поэтому данные могут казаться убедительными, хотя картина неполная.</div>
-</div>
-<div class="card">
-<h3>Core question</h3>
-<div class="prompt">Which group is missing from the data?</div>
-<p class="small">Use this question in every case below.</p>
-</div>
-</div>
-
-<div class="case">
-<h3>Case A — University</h3>
-<p>“Several famous entrepreneurs dropped out of university and became extremely successful. Therefore, university is unnecessary.”</p>
-<div class="triple"><div><b>Visible group</b><br>successful dropouts</div><div><b>Missing group</b><br>dropouts who struggled or failed</div><div><b>Better conclusion</b><br>success stories alone are not enough</div></div>
-<button class="action alt" onclick="toggle('caseAHelp')">Teacher answers EN + RU</button>
-<div id="caseAHelp" class="teacherhint"><b>EN:</b> “The sample is not representative. We hear about exceptional dropouts, but not about people who left university and later struggled. University may still improve average outcomes.”<br><br><b>RU:</b> «Выборка нерепрезентативна. Мы слышим об исключительных успешных случаях, но не о тех, кто бросил вуз и столкнулся с трудностями. Университет всё равно может улучшать средние шансы.»</div>
-</div>
-
-<div class="case">
-<h3>Case B — Language learning</h3>
-<p>“Ten people became fluent in a foreign language through self-study. Therefore, self-study is the best method.”</p>
-<div class="triple"><div><b>Visible</b><br>successful self-learners</div><div><b>Missing</b><br>people who used the same method but quit</div><div><b>Ask</b><br>What other variables mattered?</div></div>
-<button class="action alt" onclick="toggle('caseBHelp')">Teacher answers EN + RU</button>
-<div id="caseBHelp" class="teacherhint"><b>Possible EN:</b> “Motivation, previous language experience, contact with native speakers, time available and the learner’s social environment may all have influenced the outcome.”<br><br><b>RU:</b> «На результат могли влиять мотивация, предыдущий опыт изучения языков, контакт с носителями, количество времени и социальная среда учащегося.»</div>
-</div>
-
-<div class="case">
-<h3>Case C — Prison rehabilitation</h3>
-<p>“These former prisoners completed education programmes and now have successful careers. Therefore, prison education always prevents reoffending.”</p>
-<div class="triple"><div><b>Visible</b><br>successful former prisoners</div><div><b>Missing</b><br>participants who reoffended</div><div><b>Check</b><br>sample size, motivation, comparison group</div></div>
-<button class="action alt" onclick="toggle('caseCHelp')">Teacher answers EN + RU</button>
-<div id="caseCHelp" class="teacherhint"><b>EN:</b> “Education may help, but we need a comparison group. Motivation, family support, employment and the social environment after release may also affect reoffending.”<br><br><b>RU:</b> «Образование может помогать, но нужна группа сравнения. На повторные преступления также могут влиять мотивация, поддержка семьи, работа и социальная среда после освобождения.»</div>
-</div>
-
-<div class="case">
-<h3>Case D — Social media</h3>
-<p>“Every successful productivity influencer I follow wakes up at 5 a.m. Therefore, waking up at 5 makes people successful.”</p>
-<p><b>Upgrade:</b> correlation does not necessarily mean causation.</p>
-<div class="row"><button class="action gold" onclick="toggle('corrRU')">Объяснение по-русски</button><button class="action alt" onclick="toggle('caseDHelp')">Teacher answer EN + RU</button></div>
-<div id="corrRU" class="rushelp"><b>Correlation ≠ causation:</b> два явления могут встречаться вместе, но одно не обязательно является причиной другого. Ранний подъём может сопровождать успех, но не доказывает, что именно он его вызвал.</div>
-<div id="caseDHelp" class="teacherhint"><b>EN:</b> “Waking up early may be associated with a certain lifestyle, but it does not prove causation. Discipline, income, health, job type and personal routines may be confounding factors.”<br><br><b>RU:</b> «Ранний подъём может быть связан с определённым образом жизни, но не доказывает причинность. Дисциплина, доход, здоровье, тип работы и привычки могут быть дополнительными факторами.»</div>
-</div>
-
-<div class="card">
-<h3>Modal Perfects — use the bias cases</h3>
-<ul>
-<li>The analysts <b>must have focused</b> on the planes that returned.</li>
-<li>They <b>might have overlooked</b> the missing aircraft.</li>
-<li>They <b>could have reached</b> a different conclusion.</li>
-<li>They <b>should have considered</b> the planes that never returned.</li>
-<li>The returned planes <b>can’t have represented</b> the whole population.</li>
-</ul>
-</div>
-</section>
-
-<section id="cards" class="screen">
-<div class="card" style="margin-bottom:16px"><p><b>EN:</b> “The facts already gave us the problem. Now let’s learn the language we’ll need to explain it precisely.”</p><button class="action gold" onclick="toggle('bridge67ru')">RU</button><div id="bridge67ru" class="rushelp">«Факты уже показали нам проблему. Теперь выучим язык, который понадобится, чтобы точно её объяснить.» Логика: True/False → vocabulary → discussion.</div></div>
-<h2>2. Quizlet-style Vocabulary — Language First</h2>
-<p class="lead">Click the card to flip it. Learn the word, Russian meaning and one natural example.</p>
-<div class="flashwrap">
-<div id="flashCard" class="flashcard" onclick="flipCard()">
-<div class="flashinner">
-<div class="flashface flashfront"><div class="small">Tap to reveal</div><div id="flashFront" class="flashword"></div></div>
-<div class="flashface flashback"><div id="flashBackRu" class="flashru"></div><div id="flashBackEn"></div></div>
-</div>
-</div>
-<div class="flashnav">
-<button class="action" onclick="prevFlash(event)">◀</button>
-<span id="flashCounter" class="counter"></span>
-<button class="action" onclick="nextFlash(event)">▶</button>
-<button class="action alt" onclick="speakFlash(event)">🔊 Listen</button>
-</div>
-</div>
-
-<div class="card" style="margin-top:18px">
-<h3>Collocation Sprint</h3>
-<div class="grid2">
-<div>
-<p><b>draw</b> → a conclusion</p>
-<p><b>gather</b> → evidence</p>
-<p><b>analyse</b> → data</p>
-<p><b>challenge</b> → an assumption</p>
-</div>
-<div>
-<p><b>identify</b> → a pattern</p>
-<p><b>support</b> → a claim</p>
-<p><b>overlook</b> → a factor</p>
-<p><b>take</b> → something into account</p>
-</div>
-</div>
-<button class="action gold" onclick="toggle('collRU')">Русские подсказки</button>
-<div id="collRU" class="rushelp">draw a conclusion — сделать вывод; gather evidence — собрать доказательства/данные; analyse data — анализировать данные; challenge an assumption — поставить предположение под сомнение; identify a pattern — выявить закономерность; support a claim — подтвердить утверждение; overlook a factor — упустить фактор; take into account — принять во внимание.</div>
-</div>
-</section>
-
-<section id="bridge" class="screen">
-<div class="card" style="margin-bottom:16px"><p><b>EN:</b> “If people can be misled by incomplete evidence, education should do more than give facts. It should teach us how to question them.”</p><button class="action gold" onclick="toggle('bridge78ru')">RU</button><div id="bridge78ru" class="rushelp">«Если неполные данные могут вводить нас в заблуждение, образование должно не только давать факты, но и учить задавать к ним вопросы.» Логика: survivorship bias → зачем вообще нужно образование.</div></div>
-<h2>9. Education</h2>
-<div class="prompt">If curiosity can get a person into trouble, should education teach obedience — or intelligent curiosity?</div>
-<div class="grid2" style="margin-top:16px">
-<div class="card"><h3>Rank these purposes of education</h3><ol><li>getting qualifications</li><li>getting a job</li><li>learning to question information</li><li>learning social rules</li><li>becoming an informed citizen</li><li>understanding other cultures</li><li>changing your future</li></ol>
-<button class="action alt" onclick="toggle('eduHelp')">Teacher help EN + RU</button>
-<div id="eduHelp" class="teacherhint"><b>Possible EN:</b> “Education should prepare people to function in society, question unreliable information, make informed decisions and adapt to changing environments.”<br><br><b>RU:</b> «Образование должно помогать человеку жить в обществе, критически относиться к ненадёжной информации, принимать обоснованные решения и адаптироваться к меняющейся среде.»</div>
-</div>
-<div class="card"><h3>Outcomes Unit 8 vocabulary</h3><div class="statement"><b>qualification</b> — an official record of achievement</div><div class="statement"><b>degree</b> — university qualification</div><div class="statement"><b>approach to teaching</b></div><div class="statement"><b>be under pressure</b></div><div class="statement"><b>make an effort</b></div><div class="statement"><b>value education</b></div></div>
-</div>
-<div class="card" style="margin-top:16px"><h3>Institution comparison</h3><p>Complete orally:</p><ul><li>Prisons are expected to…</li><li>Religious institutions can…</li><li>Elections allow citizens to…</li><li>Schools should…</li><li>A good education system must not…</li></ul></div>
-</section>
-
-<section id="debate" class="screen">
-<div class="card" style="margin-bottom:16px"><p><b>EN:</b> “Now let’s test whether critical thinking actually transfers to real institutions: prisons, religion, elections and education itself.”</p><button class="action gold" onclick="toggle('bridge89ru')">RU</button><div id="bridge89ru" class="rushelp">«Теперь проверим, переносится ли критическое мышление на реальные институты: тюрьмы, религию, выборы и само образование.» Логика: теория образования → применение к прошлым темам Никиты.</div></div>
-<h2>10. Final debate — Education & Society</h2>
-<div class="prompt">“The purpose of education is not to tell people what to think, but to teach them how to think.”</div>
-<div class="grid3" style="margin-top:16px">
-<div class="card"><h3>Prison</h3><p>Should prisoners have access to higher education?</p><button class="action alt" onclick="toggle('debPrison')">Possible answer</button><div id="debPrison" class="teacherhint"><b>EN:</b> “Access to education may support rehabilitation and improve employment prospects, but programmes should be evaluated using representative data, not only success stories.”<br><b>RU:</b> «Доступ к образованию может помогать реабилитации и трудоустройству, но программы нужно оценивать по репрезентативным данным, а не только по историям успеха.»</div></div>
-<div class="card"><h3>Religion</h3><p>Should schools teach about religions to improve cultural understanding?</p><button class="action alt" onclick="toggle('debReligion')">Possible answer</button><div id="debReligion" class="teacherhint"><b>EN:</b> “Teaching about religion can broaden students’ worldview if it is descriptive, comparative and does not promote one belief system.”<br><b>RU:</b> «Изучение религий может расширять мировоззрение, если оно носит описательный и сравнительный характер и не продвигает одну систему взглядов.»</div></div>
-<div class="card"><h3>Elections</h3><p>Should civic and media literacy be compulsory at school?</p><button class="action alt" onclick="toggle('debElections')">Possible answer</button><div id="debElections" class="teacherhint"><b>EN:</b> “Students should learn how to assess sources, distinguish evidence from opinion and recognise misleading statistics before they become voters.”<br><b>RU:</b> «Ученикам стоит учиться оценивать источники, отличать факты от мнений и распознавать вводящую в заблуждение статистику ещё до того, как они станут избирателями.»</div></div>
-</div>
-<div class="card" style="margin-top:16px"><h3>Rule</h3><p>In your answer, use at least <b>4 modal perfects</b>, <b>3 survivorship-bias collocations</b> and refer to at least <b>3 previous topics</b>.</p></div>
-</section>
-
-<section id="exit" class="screen">
-<div class="card" style="margin-bottom:16px"><p><b>EN:</b> “You’ve analysed the evidence, challenged assumptions and connected the topics. Now reduce everything to one clear position.”</p><button class="action gold" onclick="toggle('bridge910ru')">RU</button><div id="bridge910ru" class="rushelp">«Ты проанализировал данные, поставил под сомнение предположения и связал темы. Теперь сведи всё к одной чёткой позиции.» Логика: дискуссия → итоговый 60-second answer.</div></div>
-<h2>11. Exit challenge</h2>
-<div class="final">
-<h3>60 seconds. No notes.</h3>
-<p class="prompt">Can education change the kind of choices a person makes?</p>
-<p>Include:</p>
-<ul><li>one reference to <b>Room 8</b>;</li><li>one reference to <b>prison / rehabilitation</b>;</li><li>one reference to <b>religion or voting</b>;</li><li><b>must have / might have / could have / should have</b>.</li></ul>
-</div>
-</section>
-
-</div>
-</main>
+<div class="stage">
+  <section class="scr" id="s0"></section>
+  <section class="scr" id="s1"></section>
+  <section class="scr" id="s2"></section>
+  <section class="scr" id="s3"></section>
+  <section class="scr" id="s4"></section>
+  <section class="scr" id="s5"></section>
+  <section class="scr" id="s6"></section>
+  <section class="scr" id="s7"></section>
+  <section class="scr" id="s8"></section>
+  <section class="scr" id="s9"></section>
+  <section class="scr" id="s10"></section>
+  <aside class="drawer" id="notes"><button class="x" aria-label="Close" onclick="closeDrawers()">✕</button><div id="notesBody"></div></aside>
+  <aside class="drawer" id="ref"><button class="x" aria-label="Close" onclick="closeDrawers()">✕</button>
+    <h3>Past modals: quick reference</h3>
+    <table class="g">
+      <tr><td>must have + V3</td><td>I'm almost sure it happened. <i>She must have cheated.</i><br>Наверняка, должно быть.</td></tr>
+      <tr><td>can't have + V3</td><td>I'm almost sure it didn't. <i>He can't have written it himself.</i><br>Не может быть, чтобы.</td></tr>
+      <tr><td>might / may have + V3</td><td>One possible explanation. <i>They might have run out of money.</i><br>Возможно.</td></tr>
+      <tr><td>could have + V3</td><td>It was possible, but it didn't happen. <i>He could have gone to Oxford.</i><br>Мог бы (но не стал).</td></tr>
+      <tr><td>should(n't) have + V3</td><td>Criticism or regret. <i>They should have taught us this.</i><br>Следовало / не следовало.</td></tr>
+      <tr><td>needn't have + V3</td><td>You did it, and it was unnecessary. <i>I needn't have revised chapter 9.</i><br>Зря сделал.</td></tr>
+      <tr><td>didn't need to + V</td><td>It wasn't necessary, so you probably didn't do it. <i>I didn't need to revise it.</i><br>Не было необходимости.</td></tr>
+    </table>
+    <p style="margin-top:10px"><b>Trap:</b> <i>mustn't have</i> is not used for deduction. Say <i>can't have</i>.</p>
+  </aside>
 </div>
 <script>
-const TEACHER_MODE = new URLSearchParams(location.search).get('teacher') === '1';
-function applyTeacherMode(){
-  const badge=document.getElementById('teacherModeBadge');
-  if(TEACHER_MODE && badge) badge.style.display='block';
+'use strict';
+const $=(s,r=document)=>r.querySelector(s);
+const el=(h)=>{const t=document.createElement('template');t.innerHTML=h.trim();return t.content.firstElementChild};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
-  document.querySelectorAll('.rushelp,.teacherhint').forEach(el=>{
-    if(!TEACHER_MODE) el.style.display='none';
-  });
-
-  document.querySelectorAll('button').forEach(btn=>{
-    const t=(btn.textContent||'').trim().toLowerCase();
-    const teacherButton =
-      t.includes('teacher') ||
-      t==='ru' ||
-      t.includes('по-русски') ||
-      t.includes('русские') ||
-      t.includes('перевод / объяснение') ||
-      t.includes('possible vocabulary') ||
-      t.includes('possible answer') ||
-      t.includes('show all bridges');
-    if(teacherButton && !TEACHER_MODE) btn.style.display='none';
-  });
-
-  const flashRu=document.getElementById('flashBackRu');
-  if(flashRu && !TEACHER_MODE) flashRu.style.display='none';
-
-  const routeCard=[...document.querySelectorAll('.card')].find(c=>c.querySelector('h3')?.textContent.includes('Teacher route'));
-  if(routeCard && !TEACHER_MODE) routeCard.style.display='none';
-}
-window.addEventListener('DOMContentLoaded',applyTeacherMode);
-
-function show(id,btn){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.menu button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
-function toggle(id){
-  const e=document.getElementById(id);
-  if(!e) return;
-  if((e.classList.contains('rushelp')||e.classList.contains('teacherhint'))&&!TEACHER_MODE) return;
-  e.style.display=e.style.display==='block'?'none':'block'
-}
-const flashData=[
-{f:'survivorship bias',ru:'ошибка выжившего',en:'We focus on survivors and overlook the failures.'},
-{f:'evidence',ru:'данные / доказательства',en:'What evidence supports this claim?'},
-{f:'missing data',ru:'недостающие данные',en:'Missing data can change the conclusion.'},
-{f:'a representative sample',ru:'репрезентативная выборка',en:'Is this sample representative of the whole group?'},
-{f:'a biased sample',ru:'искажённая выборка',en:'A biased sample can produce misleading results.'},
-{f:'draw a conclusion',ru:'сделать вывод',en:'Do not draw a conclusion too quickly.'},
-{f:'overlook a factor',ru:'упустить фактор',en:'Researchers may overlook an important factor.'},
-{f:'misleading',ru:'вводящий в заблуждение',en:'The statistic is technically true but misleading.'},
-{f:'distort the picture',ru:'искажать общую картину',en:'Missing cases can distort the picture.'},
-{f:'take into account',ru:'принимать во внимание',en:'We need to take failure into account.'},
-{f:'challenge an assumption',ru:'поставить предположение под сомнение',en:'Good analysts challenge their assumptions.'},
-{f:'correlation',ru:'корреляция',en:'Correlation does not necessarily mean causation.'},
-{f:'society',ru:'общество',en:'Education prepares people to function in society.'},
-{f:'social environment',ru:'социальная среда',en:'A person’s social environment can shape behaviour.'},
-{f:'environment',ru:'среда / окружение',en:'The learning environment affects motivation.'},
-{f:'surroundings',ru:'непосредственное окружение',en:'His surroundings changed after he left prison.'},
-{f:'background',ru:'происхождение / жизненный фон',en:'Family background can influence educational choices.'},
-{f:'community',ru:'сообщество',en:'A strong community can support rehabilitation.'},
-{f:'upbringing',ru:'воспитание',en:'Upbringing can shape values and habits.'},
-{f:'worldview',ru:'мировоззрение',en:'Learning another language can broaden your worldview.'},
-{f:'social norms',ru:'социальные нормы',en:'Schools transmit social norms as well as knowledge.'},
-{f:'peer group',ru:'круг сверстников',en:'A peer group can strongly influence behaviour.'}
+/* ---------- content ---------- */
+const TABS=['Start','Warm-up','If…','Words','Use it','Phrasals','Bias','Modals','Grammar + WF','Debate','Wrap-up'];
+const NOTES=[
+ {en:'“For a few weeks we have talked about prisons, religion and voting. Today: the institution all of us have been through. Did it do its job?”',ru:'Тема урока: готовит ли образование к реальной жизни. Фильм Room 8 в этот урок не входит. Порядок: позиция, грамматика из Unit 8 (условные, уровень выше), сочетания, фразовые глаголы, ошибка выжившего, past modals (продолжение had to / could из Unit 8), 16 предложений Grammar + Word Formation, дебаты, итог.'},
+ {en:'Let him choose first, then make him defend it for about a minute. Use the challenge line to push back whatever he chooses.',ru:'Три утверждения, по одному на экран. После выбора появляется схема ответа и возражение, которое вы озвучиваете. Цель: развернутый ответ с примером и уступкой.'},
+ {en:'“Your book gives you the first conditional with if. Here is the same grammar one level up.”',ru:'Привязка к учебнику: Outcomes Unit 8, First Conditional. В книге только if; здесь unless, provided (that), in case, even if и формальное Should you… Упражнения из самого учебника можно задать на дом и проверить за пять минут.'},
+ {en:'“Read the example, guess the meaning, then flip. Answer the question on the back using the collocation.”',ru:'12 сочетаний. На лицевой стороне пример, на обороте перевод и личный вопрос. Следите, чтобы в ответе прозвучало само сочетание.'},
+ {en:'“Before you answer, decide how sure you are. Confident answers win three points and lose two.”',ru:'10 предложений. Ставка на уверенность: Safe +1 / 0, Confident +3 / −2. В конце разбор ошибок.'},
+ {en:'“Ten phrasal verbs every student needs. Same rule: bet on how sure you are.”',ru:'10 фразовых глаголов по теме учёбы (drop out, fall behind, catch up, keep up with, hand in, go over, brush up on, scrape through, pick up, put off). После ответа показывается перевод. Попросите Никиту сказать о себе одно предложение с каждым, где он ошибся.'},
+ {en:'“Here is a famous kind of story. What exactly does it prove?”',ru:'Пять экранов: история успеха, самолёты Абрахама Вальда, определение, три утверждения «кого не хватает в данных», вопросы про образование. Сначала ответ Никиты, потом раскрытие.'},
+ {en:'“Now we judge the past: what must have happened, what should have been done differently.”',ru:'Две части: Choose (6 ситуаций с ловушками) и Judge it (4 карточки для говорения: критика + альтернатива). Справка открывается кнопкой Reference.'},
+ {en:'“Sixteen sentences. Type the answer and check it. Eight grammar, eight word formation.”',ru:'Свободный ввод, проверка сразу, в конце счёт и разбор ошибок. Принимаются варианты написания (memorised / memorized, needn’t / need not).'},
+ {en:'“You don’t choose your side. The page does.”',ru:'Кнопка Assign side случайно назначает сторону. Три раунда: Opening 2:00, Rebuttal 1:30, Switch sides 1:00. Фразы справа нажимаются и попадают в план речи. Аргументы обеих сторон ниже.',extra:'<p><b>For:</b> literacy and numeracy are real-life skills; school teaches deadlines, cooperation and how to learn; graduates earn more and are unemployed less often on average; nobody can predict which practical skills will matter in 20 years.</p><p><b>Against:</b> teaching to the test rewards memory, not judgement; almost no financial, legal or media literacy; employers retrain graduates anyway; curricula change far more slowly than the job market.</p>'},
+ {en:'“Give me your final position in three sentences, with the language from today.”',ru:'Финальная позиция: три предложения, минимум два сочетания, один фразовый глагол и один past modal. Кнопка Shuffle меняет набор сочетаний. Справа домашнее задание.'}
 ];
-let fi=0;
-function renderFlash(){const d=flashData[fi];document.getElementById('flashFront').textContent=d.f;document.getElementById('flashBackRu').textContent=d.ru;document.getElementById('flashBackEn').textContent=d.en;document.getElementById('flashCounter').textContent=(fi+1)+' / '+flashData.length;document.getElementById('flashCard').classList.remove('flipped')}
-function flipCard(){document.getElementById('flashCard').classList.toggle('flipped')}
-function nextFlash(e){e.stopPropagation();fi=(fi+1)%flashData.length;renderFlash()}
-function prevFlash(e){e.stopPropagation();fi=(fi-1+flashData.length)%flashData.length;renderFlash()}
-function speakFlash(e){e.stopPropagation();if('speechSynthesis' in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(flashData[fi].f);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}
-renderFlash();
+
+const WARM=[
+ {t:'School teaches you to pass exams, not to think.',
+  agree:'So how did you learn to think? Was school really no part of it?',
+  dis:'Name one school task where the “right answer” was your own opinion, not the teacher’s.',
+  dep:'Depends on what, exactly: the subject, the teacher, or the system?'},
+ {t:'A university degree is the most overpriced product of the 21st century.',
+  agree:'Would you let a surgeon without a degree operate on you? A lawyer without one defend you?',
+  dis:'Then why do so many graduates work in jobs that never required their degree?',
+  dep:'Which degrees are worth the price, and who should decide that?'},
+ {t:'Everything you really need for adult life, you learned outside the classroom.',
+  agree:'Reading, writing, percentages: where did those come from?',
+  dis:'Who taught you to deal with money, contracts, or a difficult boss?',
+  dep:'Give me one thing from each side: classroom and outside.'}
+];
+
+const WORDS=[
+ ['bridge the gap between theory and practice','Internships are meant to <b>bridge the gap between theory and practice</b>.','преодолеть разрыв между теорией и практикой','Where was this gap widest in your own education?'],
+ ['take something at face value','Never <b>take</b> university rankings <b>at face value</b>.','принимать что-либо за чистую монету','What did you take at face value at school and later doubt?'],
+ ['challenge conventional wisdom','Good teachers let students <b>challenge conventional wisdom</b>.','ставить под сомнение общепринятые взгляды','Which “everybody knows” idea about education would you challenge?'],
+ ['question an assumption','She <b>questioned the assumption</b> that more homework means better results.','подвергать сомнению допущение','Which assumption about success did your parents never question?'],
+ ['draw a misleading conclusion','From one famous dropout, people <b>draw a misleading conclusion</b>.','сделать ошибочный вывод','When did you last draw a misleading conclusion from one example?'],
+ ['rote learning','<b>Rote learning</b> gets you through the test and out of your head by Friday.','зубрёжка, механическое заучивание','Is rote learning ever the right tool? For what?'],
+ ['transferable skills','Clear writing and teamwork are <b>transferable skills</b>.','универсальные навыки, полезные в любой работе','Which transferable skill do you rely on most?'],
+ ['teach to the test','Under pressure for results, schools <b>teach to the test</b>.','натаскивать на экзамен','Were you taught to the test? What was lost?'],
+ ['a well-rounded education','<b>A well-rounded education</b> includes arts and sport, not only maths.','разностороннее образование','What is missing from a well-rounded education today?'],
+ ['be ill-equipped for','Many graduates <b>are ill-equipped for</b> their first real negotiation.','быть плохо подготовленным к','What were you ill-equipped for at eighteen?'],
+ ['hands-on experience','One month of <b>hands-on experience</b> taught me more than a year of lectures.','практический опыт','Where did you get your most useful hands-on experience?'],
+ ['anecdotal evidence','“My uncle never studied and he is rich” is <b>anecdotal evidence</b>.','единичные случаи из жизни вместо данных','Why is anecdotal evidence so persuasive?']
+];
+
+const USE=[
+ {q:'He got a first-class degree but had never worked a day in his life: he had zero ____.',o:['hands-on experience','transferable skills','rote learning','conventional wisdom'],e:'Hands-on experience = doing the real thing. Transferable skills he may well have.'},
+ {q:'“My cousin never studied and he’s rich” is just ____; it tells us nothing about most people.',o:['anecdotal evidence','conventional wisdom','a misleading conclusion','an assumption'],e:'One personal story = anecdotal evidence. The misleading conclusion is what people draw from it.'},
+ {q:'Don’t ____ league tables ____: check how they are calculated.',o:['take … at face value','draw … a conclusion','question … an assumption','teach … to the test'],e:'Take something at face value = accept it without checking.'},
+ {q:'When teachers ____, students learn the exam format rather than the subject.',o:['teach to the test','bridge the gap','challenge conventional wisdom','question assumptions'],e:'Teach to the test = prepare for the exam only.'},
+ {q:'Teamwork, clear writing and problem-solving are ____: useful in any job.',o:['transferable skills','hands-on experience','a well-rounded education','rote learning'],e:'Transferable = they move with you from job to job.'},
+ {q:'Finland decided to ____ and abolished most standardised testing.',o:['challenge conventional wisdom','take it at face value','teach to the test','draw a misleading conclusion'],e:'Challenge conventional wisdom = go against what everyone assumes is true.'},
+ {q:'Many graduates feel ____ taxes, contracts and rent.',o:['ill-equipped for','well-rounded for','transferable to','misleading about'],e:'Be ill-equipped for = lack the skills or knowledge for something.'},
+ {q:'We memorised forty poems and understood none of them. That’s ____ at its worst.',o:['rote learning','hands-on experience','anecdotal evidence','a well-rounded education'],e:'Rote learning = memorising by repetition without understanding.'},
+ {q:'If you only look at famous dropouts, you’ll ____ about the value of a degree.',o:['draw a misleading conclusion','question an assumption','bridge the gap','take it at face value'],e:'Draw a conclusion; here a misleading one, because the sample is incomplete.'},
+ {q:'A year in industry is supposed to ____ what you study and what you actually do.',o:['bridge the gap between','question the assumption between','challenge the wisdom of','take at face value'],e:'Bridge the gap between A and B.'}
+];
+
+const COND=[
+ {q:'If she ____ the scholarship, she’ll study abroad.',o:['gets','will get','would get','got'],e:'The rule from the book: if + present, will + verb. No will after if.'},
+ {q:'You won’t get a place ____ you pass the entrance exam.',o:['unless','provided','in case','even if'],e:'Unless = if … not. Если не сдашь.'},
+ {q:'You can retake the module ____ you pay the fee.',o:['provided that','unless','in case','even if'],e:'Provided (that) = only on this condition. При условии, что.'},
+ {q:'Take a copy of your certificate ____ they ask for it.',o:['in case','unless','as long as','provided'],e:'In case = as a precaution; they may or may not ask. На случай, если.'},
+ {q:'____ you fail, you will still have learned something.',o:['Even if','Unless','In case','As long as'],e:'Even if = the result is the same either way. Даже если.'},
+ {q:'____ you need any help with the application, contact the office.',o:['Should','Would','Unless','Will'],e:'Formal first conditional with inversion: Should you need = If you need.'}
+];
+const PHR=[
+ {q:'He ____ university in his second year to start a company.',o:['dropped out of','fell out of','broke out of','got through'],e:'Drop out (of) = бросить учёбу.'},
+ {q:'I missed three weeks and ____ with the coursework.',o:['fell behind','kept up','caught up','got through'],e:'Fall behind (with) = отстать.'},
+ {q:'It took her the whole summer to ____ with the rest of the class.',o:['catch up','keep on','make up','pick up'],e:'Catch up (with) = догнать, наверстать.'},
+ {q:'The pace was brutal; hardly anyone could ____ the reading list.',o:['keep up with','put up with','come up with','get away with'],e:'Keep up with = успевать, не отставать. Put up with = терпеть.'},
+ {q:'All essays must be ____ by Friday noon.',o:['handed in','handed out','given up','put off'],e:'Hand in = сдать работу. Hand out = раздать.'},
+ {q:'Let’s ____ the main points once more before the exam.',o:['go over','look up','get over','take over'],e:'Go over = пройтись ещё раз, повторить. Get over = пережить.'},
+ {q:'I need to ____ my French before the trip; I haven’t used it for years.',o:['brush up on','drop out of','hand in','fall behind'],e:'Brush up on = освежить, подтянуть.'},
+ {q:'She didn’t shine: she just ____ the final exam with 51%.',o:['scraped through','dropped out of','went over','handed in'],e:'Scrape through = еле-еле сдать.'},
+ {q:'He never studied it formally; he just ____ Spanish from his flatmates.',o:['picked up','brushed up','caught up','looked up'],e:'Pick up = нахвататься, выучить между делом.'},
+ {q:'Stop ____ the dissertation; the deadline won’t move.',o:['putting off','putting up','handing in','dropping out'],e:'Put off = откладывать.'}
+];
+
+const SPOT=[
+ {c:'“Old buildings were simply built better. Look how many are still standing.”',a:'Missing: all the badly built old buildings that collapsed or were pulled down. We only see the ones that lasted.'},
+ {c:'“Every successful entrepreneur I’ve read about took huge risks.”',a:'Missing: everyone who took the same risks and went bankrupt. Nobody writes their biographies.'},
+ {c:'“My grandfather smoked all his life and lived to ninety-five.”',a:'Missing: the smokers who died at fifty-five. They are not at the family dinner to tell their story.'}
+];
+
+const MODALS=[
+ {q:'Anna failed the exam after partying all week.<br>She ____ harder.',o:['should have studied','must have studied','could study','needn’t have studied'],e:'Should have + V3: criticism of a past decision.'},
+ {q:'Tom got 100% without attending a single lecture.<br>He ____ the material already.',o:['must have known','should have known','can’t have known','needn’t have known'],e:'Must have + V3: a confident deduction from evidence.'},
+ {q:'I revised chapter 9 for hours, and it wasn’t even in the exam.<br>I ____ it.',o:['needn’t have revised','didn’t need to revise','mustn’t have revised','couldn’t have revised'],e:'Needn’t have: you did it, and it turned out unnecessary. Didn’t need to: you knew, so you didn’t do it.'},
+ {q:'She says she wrote the 5,000-word essay in one hour.<br>She ____ it herself.',o:['can’t have written','mustn’t have written','shouldn’t have written','might have written'],e:'Can’t have + V3: confident negative deduction. Mustn’t have is not used this way.'},
+ {q:'He had an offer from a top university but turned it down.<br>He ____ there. The choice was his.',o:['could have studied','must have studied','should study','can’t have studied'],e:'Could have + V3: it was possible, but it didn’t happen.'},
+ {q:'Nobody knows why the school dropped philosophy.<br>They ____ short of teachers, or of money.',o:['might have been','must have been','should have been','can’t have been'],e:'Two guesses and no evidence: might have, not must have.'}
+];
+const JUDGE=[
+ {s:'A school spent its whole budget on tablets. Two years later they sit in a cupboard.',m:'They should have trained the teachers first. They could have piloted it in one class.'},
+ {s:'A student chose law because her parents insisted. She left after a year.',m:'She shouldn’t have given in. Her parents might have thought they were protecting her.'},
+ {s:'A teacher failed half the class to “keep standards high”. Most of them gave up the subject.',m:'He must have believed fear motivates. He could have given them a second attempt.'},
+ {s:'A government cut arts and sport to add more maths hours. Maths results did not move.',m:'They can’t have looked at the evidence. They should have asked teachers first.'}
+];
+
+const GWF=[
+ {k:'Grammar',q:'If schools ____ (TEACH) us how to manage money, I wouldn’t have made so many mistakes in my twenties.',a:['had taught']},
+ {k:'Grammar',q:'She ____ (MUST / CHEAT) in the exam: nobody improves from 40% to 95% in a week.',a:['must have cheated']},
+ {k:'Grammar',q:'I wish my teachers ____ (ENCOURAGE) us to ask more questions when I was at school.',a:['had encouraged']},
+ {k:'Grammar',q:'Critical thinking ____ (SHOULD / TEACH) from primary school, not left until university.',a:['should be taught']},
+ {k:'Grammar',q:'He ____ (NEED / NOT / MEMORISE) all those dates: the exam turned out to be open-book.',a:['needn\'t have memorised','need not have memorised','neednt have memorised']},
+ {k:'Grammar',q:'By the time today’s students graduate, half of what they learned in year one ____ (BECOME) outdated.',a:['will have become']},
+ {k:'Grammar',q:'It’s high time universities ____ (START) measuring skills rather than attendance.',a:['started']},
+ {k:'Grammar',q:'Had I known how little of my degree I would use, I ____ (CHOOSE) a different subject.',a:['would have chosen','\'d have chosen','might have chosen','could have chosen']},
+ {k:'Word formation',q:'Many employers complain that graduates are ____ (PREPARE) for the workplace.',a:['unprepared','underprepared','ill-prepared','ill prepared']},
+ {k:'Word formation',q:'The story is inspiring, but statistically it is ____ (LEAD).',a:['misleading']},
+ {k:'Word formation',q:'There is a common ____ (ASSUME) that a degree guarantees a good job.',a:['assumption']},
+ {k:'Word formation',q:'The reform was criticised for its ____ (EFFECT): results didn’t improve at all.',a:['ineffectiveness']},
+ {k:'Word formation',q:'Good teachers encourage intellectual ____ (CURIOUS).',a:['curiosity']},
+ {k:'Word formation',q:'Exam results are not a ____ (RELY) measure of intelligence.',a:['reliable']},
+ {k:'Word formation',q:'His success was largely ____ (ATTRIBUTE) to luck and timing.',a:['attributable']},
+ {k:'Word formation',q:'The ____ (MAJOR) of dropouts never appear in success stories.',a:['majority']}
+];
+
+const PHRASES={
+ 'Open':['I’d argue that…','The evidence suggests…','Let me start with a concrete case:'],
+ 'Concede':['Admittedly,…','That’s a fair point, but…','I take your point; however,…'],
+ 'Rebut':['That argument rests on the assumption that…','That’s anecdotal evidence.','You’re drawing a conclusion from the survivors only.'],
+ 'Close':['On balance,…','Which brings me back to…']
+};
+const ROUNDS=[['Opening speech',120],['Rebuttal',90],['Switch sides',60]];
+
+/* ---------- shell ---------- */
+let cur=0;
+const tabs=$('#tabs');
+TABS.forEach((t,i)=>{const b=el(`<button>${t}</button>`);b.onclick=()=>go(i);tabs.append(b)});
+function closeDrawers(){document.querySelectorAll('.drawer').forEach(d=>d.classList.remove('on'))}
+function go(i){cur=i;closeDrawers();stopTimer();
+  [...tabs.children].forEach((b,j)=>b.classList.toggle('on',j===i));
+  document.querySelectorAll('.scr').forEach((s,j)=>s.classList.toggle('on',j===i));
+  RENDER[i]();
+  const n=NOTES[i];$('#notesBody').innerHTML=`<h3>${TABS[i]}: teacher notes</h3><p><b>Say:</b> ${n.en}</p><p class="rus">${n.ru}</p>${n.extra||''}`;}
+$('#tBtn').onclick=()=>{const d=$('#notes'),on=d.classList.contains('on');closeDrawers();if(!on)d.classList.add('on')};
+function openRef(){closeDrawers();$('#ref').classList.add('on')}
+const nextStep=(label)=>`<button class="btn gold" onclick="go(${cur+1})">${label||'Next step'} →</button>`;
+
+/* generic multiple-choice quiz */
+function quiz(root,title,sub,items,opt={}){
+  let i=0,score=0,stake=1,wrong=[];
+  const order=items.map(it=>({...it,opts:shuffle(it.o),ans:it.o[0]}));
+  function draw(){
+    const it=order[i];
+    root.innerHTML=`<div class="head"><div><h2>${title}</h2><p class="sub">${sub}</p></div>
+      <div style="display:flex;gap:14px;align-items:center">${opt.extraHead||''}${opt.stake?`<div class="stake"><button data-s="1">Safe +1</button><button data-s="3">Confident +3 / −2</button></div>`:''}<span class="score">Score ${score}</span></div></div>
+      <div class="body"><div class="q" style="margin-bottom:12px">${it.q}</div>
+      <div class="opts two">${it.opts.map(o=>`<button class="opt">${esc(o)}</button>`).join('')}</div>
+      <div id="x"></div></div>
+      <div class="foot"><span class="count">${i+1} / ${order.length}</span><span id="nx"></span></div>`;
+    if(opt.onDraw)opt.onDraw(root);
+    const sb=[...root.querySelectorAll('.stake button')];
+    const mark=()=>sb.forEach(b=>b.classList.toggle('on',+b.dataset.s===stake));
+    sb.forEach(b=>b.onclick=()=>{stake=+b.dataset.s;mark()});mark();
+    root.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const ok=b.textContent===it.ans;
+      root.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(o.textContent===it.ans)o.classList.add('ok')});
+      sb.forEach(s=>s.disabled=true);
+      if(ok){score+=opt.stake?stake:1}else{b.classList.add('bad');if(opt.stake&&stake===3)score-=2;wrong.push({q:it.q,y:b.textContent,a:it.ans})}
+      root.querySelector('.score').textContent='Score '+score;
+      $('#x',root).innerHTML=`<div class="exp"><b class="${ok?'v':'x'}">${ok?'Correct.':'Not quite.'}</b> ${it.e}</div>`;
+      $('#nx',root).innerHTML=`<button class="btn">${i<order.length-1?'Next question →':'See result →'}</button>`;
+      $('#nx button',root).onclick=()=>{i++;stake=1;i<order.length?draw():end()};
+    });
+  }
+  function end(){
+    root.innerHTML=`<div class="head"><div><h2>${title}: result</h2><p class="sub">Score ${score}${opt.stake?'':' / '+order.length}. ${wrong.length?'Go through the mistakes aloud.':'No mistakes.'}</p></div></div>
+      <div class="body" style="justify-content:flex-start"><div class="review">${wrong.length?wrong.map(w=>`<div>${w.q.replace('<br>',' ')}<br><s>${esc(w.y)}</s> → <b>${esc(w.a)}</b></div>`).join(''):'<div>Every answer was correct. Ask Nikita to explain two of them in his own words.</div>'}</div></div>
+      <div class="foot"><button class="btn ghost" id="again">Play again</button>${opt.after||nextStep()}</div>`;
+    $('#again',root).onclick=()=>quiz(root,title,sub,items,opt);
+    if(opt.onEnd)opt.onEnd(root);
+  }
+  draw();
+}
+
+/* ---------- screens ---------- */
+const RENDER=[];
+
+RENDER[0]=()=>{$('#s0').innerHTML=`<div class="hero"><div class="txt">
+  <div class="label">Discussion lesson · B2–C1</div>
+  <h1>Is modern education preparing us for real life?</h1>
+  <p>Take a position, test it against evidence, and defend the opposite side.</p>
+  <div class="route"><span>Outcomes Unit 8</span><span>Conditionals</span><span>12 collocations</span><span>10 phrasal verbs</span><span>Survivorship bias</span><span>Past modals</span><span>Debate</span></div>
+  <div style="margin-top:18px"><button class="btn gold" onclick="go(1)">Start →</button></div>
+  </div><div class="ph" role="img" aria-label="A university graduate in cap and gown"></div></div>`};
+
+RENDER[1]=()=>{let i=0;const r=$('#s1');
+  function draw(pick){const w=WARM[i];
+    r.innerHTML=`<div class="head"><div><h2>Take a position</h2><p class="sub">Choose first. Then defend your choice for one minute.</p></div></div>
+    <div class="body"><div class="card big" style="margin-bottom:12px">“${w.t}”</div>
+    <div class="opts" style="grid-template-columns:repeat(3,1fr)">${[['agree','Agree'],['dis','Disagree'],['dep','It depends']].map(([k,l])=>`<button class="opt ${pick===k?'ok':''}" data-k="${k}" style="text-align:center">${l}</button>`).join('')}</div>
+    ${pick?`<div class="frame" style="margin-top:12px"><div><b>Claim</b>I’d argue that…</div><div><b>Reason</b>The main reason is…</div><div><b>Example</b>Take … for instance.</div><div><b>Concession</b>Admittedly, … but…</div></div>
+    <div class="exp"><b>Challenge:</b> ${w[pick]}</div>`:''}</div>
+    <div class="foot"><button class="btn ghost" ${i?'':'disabled'} id="p">← Back</button><span class="count">${i+1} / ${WARM.length}</span>${i<WARM.length-1?'<button class="btn" id="n">Next statement →</button>':nextStep('Unit 8 grammar')}</div>`;
+    r.querySelectorAll('.opt').forEach(b=>b.onclick=()=>draw(b.dataset.k));
+    $('#p',r).onclick=()=>{i--;draw()};const n=$('#n',r);if(n)n.onclick=()=>{i++;draw()};}
+  draw()};
+
+RENDER[2]=()=>quiz($('#s2'),'Unit 8 grammar, one level up','The first conditional from your book, with more than just “if”.',COND,{});
+
+RENDER[3]=()=>{let i=0;const r=$('#s3');
+  function draw(){const w=WORDS[i];
+    r.innerHTML=`<div class="head"><div><h2>Collocations</h2><p class="sub">Guess the meaning from the example, then flip and answer the question.</p></div></div>
+    <div class="body"><div class="flip" id="fc"><div class="in">
+      <div class="face a"><div class="term">${w[0]}</div><div class="ex">${w[1]}</div></div>
+      <div class="face b"><div class="ru">${w[2]}</div><div class="ask">${w[3]}</div></div></div></div></div>
+    <div class="foot"><button class="btn ghost" id="p" ${i?'':'disabled'}>← Back</button><span><button class="btn" id="f">Flip card</button> <span class="count" style="margin-left:10px">${i+1} / ${WORDS.length}</span></span>
+    ${i<WORDS.length-1?'<button class="btn ghost" id="n">Next →</button>':'<span><button class="btn ghost" id="re">Start again</button> '+nextStep('Use it')+'</span>'}</div>`;
+    const fc=$('#fc',r);fc.onclick=$('#f',r).onclick=()=>fc.classList.toggle('f');
+    $('#p',r).onclick=()=>{i--;draw()};const n=$('#n',r);if(n)n.onclick=()=>{i++;draw()};const re=$('#re',r);if(re)re.onclick=()=>{i=0;draw()};}
+  draw()};
+
+RENDER[4]=()=>quiz($('#s4'),'Use it','Choose the collocation. Bet on how sure you are.',USE,{stake:true});
+
+RENDER[5]=()=>quiz($('#s5'),'Phrasal verbs for study','Choose the phrasal verb. Bet on how sure you are.',PHR,{stake:true});
+
+const PLANE=`<svg viewBox="0 0 320 220" style="width:100%;height:100%;max-height:230px" role="img" aria-label="Diagram of a bomber seen from above with bullet holes marked on the wings, fuselage and tail">
+<g fill="#dfe6ea" stroke="#0c2235" stroke-width="2"><path d="M150 12 Q160 2 170 12 L174 80 L300 112 L300 128 L174 122 L170 178 L204 194 L204 204 L160 198 L116 204 L116 194 L150 178 L146 122 L20 128 L20 112 L146 80 Z"/>
+<rect x="92" y="88" width="16" height="30" rx="5"/><rect x="212" y="88" width="16" height="30" rx="5"/></g>
+<g fill="#a3362f">${[[40,118],[58,112],[66,122],[262,116],[280,120],[250,111],[272,112],[160,140],[154,152],[166,158],[160,128],[134,196],[186,197],[160,190],[150,168],[170,146]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="4"/>`).join('')}</g></svg>`;
+
+RENDER[6]=()=>{let i=0,st={};const r=$('#s6');const N=5;
+  const mc=(key,q,opts,ans,exp)=>{const p=st[key];
+    return `<div class="q" style="margin-bottom:10px">${q}</div><div class="opts">${opts.map((o,j)=>`<button class="opt ${p!=null&&j===ans?'ok':''} ${p===j&&j!==ans?'bad':''}" data-j="${j}" data-key="${key}" ${p!=null?'disabled':''}>${o}</button>`).join('')}</div>${p!=null?`<div class="exp"><b class="${p===ans?'v':'x'}">${p===ans?'Exactly.':'Look again.'}</b> ${exp}</div>`:''}`};
+  function body(){
+    if(i===0)return `<div class="cols" style="grid-template-columns:260px 1fr"><div class="photo" style="background-image:url('../young-adult.jpg')" role="img" aria-label="A young man smiling"></div><div>
+      <div class="card" style="margin-bottom:10px"><div class="label">Business magazine, cover story</div><div class="big" style="font-size:23px">He dropped out at 19. Today his company is worth $2 billion. “University would only have slowed me down.”</div></div>
+      ${mc('a','What does this story prove?',['University is not necessary for success.','Dropping out improves your chances.','Very little: it shows one winner and none of the others.'],2,'We see the one who made it. Thousands dropped out with the same confidence and are not on any cover.')}</div></div>`;
+    if(i===1)return `<div class="cols" style="grid-template-columns:1fr 1.25fr;align-items:center"><div class="card" style="padding:8px">${PLANE}</div><div>
+      <p style="margin:0 0 10px;font-size:19px;line-height:1.4">1943. Bombers come back from missions full of bullet holes. The red dots show where the returning planes were hit. The military can add armour, but only a little.</p>
+      ${mc('b','Where should the armour go?',['Where the dots are: wings, fuselage, tail.','Where there are no dots: engines and cockpit.','Evenly over the whole plane.'],1,'Statistician Abraham Wald: planes hit in the engines never came back, so they are missing from the data.')}</div></div>`;
+    if(i===2)return `<div class="card" style="text-align:center"><div class="label">The name for this mistake</div><div class="term">survivorship bias</div><p class="ex" style="margin:10px auto 0">Judging by the cases that survived a selection process and overlooking those that did not, because they are no longer visible.</p><p class="ru" style="font-size:21px;margin:12px 0 0">ошибка выжившего</p></div>
+      <div class="chips" style="margin-top:12px;justify-content:center"><span class="chip">an incomplete sample</span><span class="chip">the silent majority</span><span class="chip">overlook the failures</span><span class="chip">draw a misleading conclusion</span></div>`;
+    if(i===3)return `<div class="q" style="margin-bottom:10px">Who is missing from the data?</div><div class="opts">${SPOT.map((s,j)=>`<div class="card" style="padding:10px 16px"><div style="display:flex;justify-content:space-between;gap:12px;align-items:center"><span style="font-size:20px;font-weight:600">${s.c}</span><button class="btn ghost" data-sp="${j}" style="white-space:nowrap">${st['s'+j]?'Hide':'Reveal'}</button></div>${st['s'+j]?`<div style="margin-top:6px;font-size:18px;color:var(--green);font-weight:600">${s.a}</div>`:''}</div>`).join('')}</div>`;
+    return `<div class="cols"><div class="card"><div class="label">Back to education</div><ol style="margin:0;padding-left:22px;font-size:20px;line-height:1.5"><li>Which success stories shaped your own decisions about studying?</li><li>“Our graduates earn 40% more.” What would you ask the university before believing it?</li><li>Whose stories about school do we never hear?</li><li>Is “I turned out fine” a good argument for keeping a system unchanged?</li></ol></div>
+      <div class="card"><div class="label">Language to use</div><div class="chips"><span class="chip">That’s anecdotal evidence.</span><span class="chip">We’re only looking at the survivors.</span><span class="chip">I wouldn’t take that at face value.</span><span class="chip">That rests on the assumption that…</span><span class="chip">What about those who…?</span><span class="chip">The sample is incomplete.</span></div></div></div>`;}
+  function draw(){
+    r.innerHTML=`<div class="head"><div><h2>Survivorship bias</h2><p class="sub">${['A success story.','A wartime puzzle.','Name it.','Spot it: say who is missing, then reveal.','Discuss.'][i]}</p></div></div>
+    <div class="body">${body()}</div>
+    <div class="foot"><button class="btn ghost" id="p" ${i?'':'disabled'}>← Back</button><span class="count">${i+1} / ${N}</span>${i<N-1?'<button class="btn" id="n">Next →</button>':nextStep('Past modals')}</div>`;
+    r.querySelectorAll('.opt[data-key]').forEach(b=>b.onclick=()=>{st[b.dataset.key]=+b.dataset.j;draw()});
+    r.querySelectorAll('[data-sp]').forEach(b=>b.onclick=()=>{const k='s'+b.dataset.sp;st[k]=!st[k];draw()});
+    $('#p',r).onclick=()=>{i--;draw()};const n=$('#n',r);if(n)n.onclick=()=>{i++;draw()};}
+  draw()};
+
+RENDER[7]=()=>{const r=$('#s7');
+  const pills=(m)=>`<div class="pills"><button class="${m==='c'?'on':''}" data-m="c">Choose</button><button class="${m==='j'?'on':''}" data-m="j">Judge it</button></div><button class="btn ghost" onclick="openRef()" style="padding:6px 14px;font-size:16px">Reference</button>`;
+  const wire=()=>r.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>b.dataset.m==='c'?choose():judge());
+  function choose(){quiz(r,'Past modals','Which one fits? Explain why the others don’t.',MODALS,{extraHead:pills('c'),onDraw:wire,onEnd:(root)=>{$('#go',root).onclick=judge},after:'<button class="btn gold" id="go">Judge it →</button>'})}
+  function judge(){let i=0,show=false;
+    (function draw(){const j=JUDGE[i];
+      r.innerHTML=`<div class="head"><div><h2>Judge the decision</h2><p class="sub">Two sentences: one criticism, one alternative or explanation.</p></div><div style="display:flex;gap:14px;align-items:center">${pills('j')}</div></div>
+      <div class="body"><div class="card big" style="font-size:25px;margin-bottom:10px">${j.s}</div>
+      <div class="chips"><span class="chip">They should have…</span><span class="chip">They shouldn’t have…</span><span class="chip">They could have…</span><span class="chip">They must have…</span><span class="chip">They might have…</span><span class="chip">They can’t have…</span></div>
+      ${show?`<div class="exp"><b>One possible answer:</b> ${j.m}</div>`:''}</div>
+      <div class="foot"><button class="btn ghost" id="p" ${i?'':'disabled'}>← Back</button><span><button class="btn ghost" id="sm">${show?'Hide sample':'Show sample'}</button> <span class="count" style="margin-left:10px">${i+1} / ${JUDGE.length}</span></span>${i<JUDGE.length-1?'<button class="btn" id="n">Next →</button>':nextStep('Grammar + WF')}</div>`;
+      wire();$('#sm',r).onclick=()=>{show=!show;draw()};$('#p',r).onclick=()=>{i--;show=false;draw()};const n=$('#n',r);if(n)n.onclick=()=>{i++;show=false;draw()};})();}
+  choose()};
+
+const norm=s=>s.toLowerCase().replace(/[’‘`]/g,"'").replace(/memoriz/g,'memoris').replace(/\s+/g,' ').replace(/[.!]+$/,'').trim();
+RENDER[8]=()=>{const r=$('#s8');let i=0,score=0,wrong=[];
+  function draw(){const it=GWF[i];let done=false;
+    r.innerHTML=`<div class="head"><div><h2>Grammar + Word Formation</h2><p class="sub">${it.k==='Grammar'?'Put the verb in brackets into the correct form.':'Form a word from the one in brackets.'}</p></div><div style="display:flex;gap:14px;align-items:center"><span class="chip">${it.k}</span><span class="score">Score ${score} / ${GWF.length}</span></div></div>
+    <div class="body"><div class="q" style="margin-bottom:14px">${it.q}</div>
+    <form id="f" style="display:flex;gap:10px;flex-wrap:wrap"><input class="inp" id="in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your answer"><button class="btn" id="ck">Check</button></form><div id="x"></div></div>
+    <div class="foot"><span class="count">${i+1} / ${GWF.length}</span><span id="nx"></span></div>`;
+    const inp=$('#in',r);inp.focus();
+    $('#f',r).onsubmit=e=>{e.preventDefault();if(done||!inp.value.trim())return;done=true;
+      const ok=it.a.map(norm).includes(norm(inp.value));inp.readOnly=true;inp.classList.add(ok?'ok':'bad');$('#ck',r).disabled=true;
+      if(ok)score++;else wrong.push({q:it.q,y:inp.value.trim(),a:it.a[0]});
+      r.querySelector('.score').textContent=`Score ${score} / ${GWF.length}`;
+      $('#x',r).innerHTML=`<div class="exp"><b class="${ok?'v':'x'}">${ok?'Correct.':'Not quite.'}</b> ${esc(it.q).replace('____','<b class="v">'+esc(it.a[0])+'</b>').replace(/\s*\([A-Z /]+\)/,'')}</div>`;
+      $('#nx',r).innerHTML=`<button class="btn">${i<GWF.length-1?'Next sentence →':'See result →'}</button>`;
+      const nb=$('#nx button',r);nb.focus();nb.onclick=()=>{i++;i<GWF.length?draw():end()};};}
+  function end(){r.innerHTML=`<div class="head"><div><h2>Grammar + Word Formation: result</h2><p class="sub">${score} / ${GWF.length}. ${wrong.length?'Read the corrected sentences aloud.':'No mistakes.'}</p></div></div>
+    <div class="body" style="justify-content:flex-start"><div class="review">${wrong.length?wrong.map(w=>`<div>${esc(w.q)}<br><s>${esc(w.y)}</s> → <b>${esc(w.a)}</b></div>`).join(''):'<div>All sixteen correct. Ask Nikita to turn two of the sentences into opinions of his own.</div>'}</div></div>
+    <div class="foot"><button class="btn ghost" id="again">Start again</button>${nextStep('Debate')}</div>`;
+    $('#again',r).onclick=()=>RENDER[8]();}
+  draw()};
+
+let tick=null;function stopTimer(){if(tick){clearInterval(tick);tick=null}}
+RENDER[9]=()=>{const r=$('#s9');let side=null,rd=0,left=ROUNDS[0][1],plan=[];
+  const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  function draw(){
+    r.innerHTML=`<div class="head"><div><h2>Debate</h2><p class="sub">Motion: “Modern education prepares us for real life.”</p></div>
+      <div class="pills">${ROUNDS.map((x,j)=>`<button class="${j===rd?'on':''}" data-r="${j}">${j+1}. ${x[0]}</button>`).join('')}</div></div>
+    <div class="body"><div class="cols" style="grid-template-columns:1fr 1.5fr">
+      <div class="card" style="text-align:center;display:flex;flex-direction:column;justify-content:center;gap:8px">
+        <div class="label" style="margin:0">Nikita argues</div>
+        <div class="big" id="side">${side?(side==='for'?'FOR the motion':'AGAINST the motion'):'not assigned yet'}</div>
+        <div><button class="btn ghost" id="as">${side?'Swap side':'Assign side'}</button></div>
+        <div class="timer ${left===0?'end':''}" id="tm">${fmt(left)}</div>
+        <div><button class="btn" id="go">${tick?'Pause':'Start'}</button> <button class="btn ghost" id="rs">Reset</button></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;min-height:0">
+        ${Object.entries(PHRASES).map(([k,v])=>`<div style="display:flex;gap:8px;align-items:baseline"><b style="width:76px;color:var(--gold);font-size:15px;text-transform:uppercase;letter-spacing:.05em">${k}</b><div class="chips" style="flex:1">${v.map(p=>`<button class="chip ${plan.includes(p)?'sel':''}">${p}</button>`).join('')}</div></div>`).join('')}
+        <div class="plan" id="plan">${plan.length?plan.map(esc).join(' <span style="color:var(--gold)">/</span> '):'<span style="color:var(--muted)">Tap phrases to build the speech plan.</span>'}</div>
+      </div></div></div>
+    <div class="foot"><button class="btn ghost" id="cl">Clear plan</button>${nextStep('Wrap-up')}</div>`;
+    r.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{stopTimer();rd=+b.dataset.r;left=ROUNDS[rd][1];if(rd===2&&side)side=side==='for'?'against':'for';plan=[];draw()});
+    $('#as',r).onclick=()=>{side=side?(side==='for'?'against':'for'):(Math.random()<.5?'for':'against');draw()};
+    $('#go',r).onclick=()=>{if(tick){stopTimer();draw();return}if(left===0)left=ROUNDS[rd][1];
+      tick=setInterval(()=>{left--;const t=$('#tm',r);if(t){t.textContent=fmt(left);if(left<=0){t.classList.add('end');stopTimer();draw()}}},1000);draw()};
+    $('#rs',r).onclick=()=>{stopTimer();left=ROUNDS[rd][1];draw()};
+    $('#cl',r).onclick=()=>{plan=[];draw()};
+    r.querySelectorAll('button.chip').forEach(b=>b.onclick=()=>{const p=b.textContent;plan=plan.includes(p)?plan.filter(x=>x!==p):[...plan,p];draw()});}
+  draw()};
+
+RENDER[10]=()=>{const r=$('#s10');let pick=shuffle(WORDS).slice(0,3).map(w=>w[0]);
+  function draw(){r.innerHTML=`<div class="head"><div><h2>Final position</h2><p class="sub">Is modern education preparing us for real life? Three sentences.</p></div></div>
+    <div class="body"><div class="cols">
+      <div class="card"><div class="label">Use at least two of these</div><div class="chips" style="margin-bottom:10px">${pick.map(p=>`<span class="chip">${p}</span>`).join('')}</div>
+        <div class="label" style="margin-top:8px">One phrasal verb</div><div class="chips" style="margin-bottom:8px"><span class="chip">drop out</span><span class="chip">fall behind</span><span class="chip">catch up</span><span class="chip">brush up on</span><span class="chip">scrape through</span><span class="chip">put off</span></div>
+        <div class="label">And one past modal</div><div class="chips"><span class="chip">should have</span><span class="chip">could have</span><span class="chip">must have</span><span class="chip">needn’t have</span></div>
+        <div style="margin-top:8px"><button class="btn ghost" id="sh" style="padding:6px 14px;font-size:16px">Shuffle collocations</button></div></div>
+      <div class="card"><div class="label">Homework</div><ol style="margin:0;padding-left:22px;font-size:19px;line-height:1.45"><li><b>Write 150–180 words:</b> “One thing my education should have taught me, and one thing it got right.” Use at least four collocations, three phrasal verbs and two past modals.</li><li><b>Find one success story online</b> and be ready to say who is missing from it.</li><li><b>Outcomes Unit 8:</b> finish the exercises in the book for a quick check next time.</li></ol></div>
+    </div></div>
+    <div class="foot"><button class="btn ghost" onclick="go(0)">Back to start</button><a class="btn ghost" style="text-decoration:none" href="./room8.html">Optional film lesson: Room 8</a></div>`;
+    $('#sh',r).onclick=()=>{pick=shuffle(WORDS).slice(0,3).map(w=>w[0]);draw()};}
+  draw()};
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawers()});
+go(0);
 </script>
 </body>
 </html>
