@@ -158,7 +158,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
         <button class="t-home" id="tHome">Home</button>
         <div id="tModules"></div><button class="t-usefultool" id="tUsefulTool" aria-label="Useful Tool">USEFUL TOOL</button><button class="t-covernotes" id="tCoverNotes" aria-label="Teacher Notes">Teacher Notes</button>
       </aside>
-      <main class="t-work"><button class="t-board-fullscreen" id="tBoardFullscreen">На весь экран</button><button class="t-speaking-tab" id="tSpeakingTab" aria-label="Open Speaking activity">SPEAKING</button>
+      <main class="t-work"><button class="t-board-fullscreen" id="tBoardFullscreen">На весь экран</button><button class="t-speaking-tab" id="tSpeakingTab" aria-label="Open Speaking activity">SPEAKING</button><button class="t-speaking-tab" id="tRevisionTab" style="top:calc(35% + 180px)" aria-label="Open Lesson 4, Generations Revision">REVISION</button>
         <section class="t-cover"><img class="t-art" id="tArt" alt="Katya English Hub — Small steps. Big progress."></section><section class="t-module-dialog" id="tModuleDialog" role="dialog" aria-modal="true" aria-labelledby="tModuleTitle" hidden><h2 id="tModuleTitle"></h2><p>Материалы этого модуля пока не добавлены.</p><button id="tModuleClose">Назад</button></section>
         <section class="t-view" id="tView">
           <div class="t-top">
@@ -199,7 +199,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
       {module:'Module 1',lessons:[
         {id:'m1l1',title:'Lesson 1 · Elections in Russia',url:'extra-practice-elections-russia.html'},
         {id:'m1l2',title:'Lesson 2 · Generations',url:'homework-lesson2-generations.html'},
-        {id:'m1l3',title:'Lesson 3 · Gen Z & Money',url:'lesson3-money-generations.html?v=20261005-show-v7'}
+        {id:'m1l3',title:'Lesson 3 · Gen Z & Money',url:'lesson3-money-generations.html?v=20261009-l3'}
       ]},
       ...Array.from({length:7},(_,i)=>({module:'Module '+(i+2),lessons:[
         {id:'m'+(i+2)+'l1',title:'Lesson 1',url:''},
@@ -280,6 +280,17 @@ html.teacher-mode #teacherRoot{display:grid!important}
       document.getElementById('tNotes').classList.remove('on');
       document.getElementById('tPlaceholder').classList.remove('on');
       const fr=document.getElementById('tFrame');fr.style.display='block';fr.src='speaking-music-studying.html';
+      document.getElementById('tView').classList.add('on');
+    };
+    document.getElementById('tRevisionTab').onclick=()=>{
+      current='m1l4_revision';
+      document.querySelectorAll('#teacherRoot .t-lesson').forEach(x=>x.classList.remove('active'));
+      document.getElementById('tTitle').textContent='Lesson 4 · Generations Revision';
+      document.getElementById('tNotesTitle').textContent='Lesson 4 · Generations Revision · Notes';
+      document.getElementById('tNoteText').value=localStorage.getItem('katya_teacher_'+current)||'';
+      document.getElementById('tNotes').classList.remove('on');
+      document.getElementById('tPlaceholder').classList.remove('on');
+      const fr=document.getElementById('tFrame');fr.style.display='block';fr.src='lesson4-generations-revision.html?v=20261009-rev1';
       document.getElementById('tView').classList.add('on');
     };
     document.getElementById('tHome').onclick=goHome;

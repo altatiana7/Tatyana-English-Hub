@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Kate · Lesson 4 · Generations Revision</title>
+<style>
+:root{--ink:#1d3534;--navy:#155e61;--deep:#0f4447;--muted:#5f716c;--line:#d9e2db;--bg:#f5f5f0;--card:#fff;--ok:#1f8a4c;--okbg:#dff3e6;--bad:#c2452f;--badbg:#fbe2dc;--accent:#c57e67;--gold:#f3c14b}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg)}
+body{overflow:hidden}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid #50a49c;outline-offset:2px}
+[hidden]{display:none!important}
+.app{height:100dvh;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:50px minmax(0,1fr)}
+header{display:flex;align-items:center;gap:10px;padding:0 12px;background:var(--deep);color:#fff}
+header h1{font-size:17px;margin:0;font-weight:800;white-space:nowrap;letter-spacing:-.01em}
+.chips{display:flex;gap:5px;flex:1;min-width:0;justify-content:center;overflow:hidden}
+.chip{border:1px solid rgba(255,255,255,.28);background:transparent;color:#e3efec;border-radius:20px;padding:6px 11px;font-size:14px;font-weight:600;white-space:nowrap;display:flex;gap:6px;align-items:center}
+.chip b{font-weight:800;opacity:.75}
+.chip.on{background:var(--gold);border-color:var(--gold);color:#22302e}
+.chip.on b{opacity:1}
+.hbtn{border:0;background:rgba(255,255,255,.14);color:#fff;border-radius:8px;padding:7px 12px;font-size:14px;font-weight:700;white-space:nowrap}
+.hbtn.primary{background:var(--gold);color:#22302e}
+.hbtn:disabled{opacity:.35;cursor:default}
+main{min-height:0;position:relative}
+.screen{position:absolute;inset:0;display:none;padding:clamp(10px,2.2vh,22px) clamp(14px,2.4vw,34px);flex-direction:column;gap:clamp(8px,1.6vh,16px);min-height:0}
+.screen.on{display:flex}
+.sub{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.sub h2{margin:0;font-size:clamp(22px,3.6vh,30px);color:var(--navy);letter-spacing:-.02em}
+.sub p{margin:0;font-size:clamp(16px,2.5vh,19px);color:var(--muted)}
+.panel{flex:1;min-height:0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:clamp(12px,2.4vh,24px) clamp(16px,2.2vw,30px);display:flex;flex-direction:column;gap:clamp(8px,1.8vh,18px)}
+.panel.dark{background:linear-gradient(160deg,#103f43,#17595c);border-color:#0d3538;color:#fff}
+.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.spacer{flex:1}
+.tag{font-size:15px;font-weight:800;letter-spacing:.06em;padding:5px 12px;border-radius:20px;background:rgba(255,255,255,.14)}
+.panel:not(.dark) .tag{background:#e8efe9;color:var(--navy)}
+.bar{flex:1;height:10px;border-radius:6px;background:rgba(255,255,255,.18);overflow:hidden;min-width:80px}
+.bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .25s}
+.qtext{font-size:clamp(22px,4.1vh,31px);font-weight:700;line-height:1.3;flex:1;display:flex;align-items:center;min-height:0}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,1.6vh,14px)}
+.opt{border:2px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;border-radius:12px;padding:clamp(9px,2vh,16px) 16px;font-size:clamp(18px,3vh,22px);font-weight:600;text-align:left;line-height:1.25}
+.opt:hover:not(:disabled){background:rgba(255,255,255,.18)}
+.opt:disabled{cursor:default}
+.opt.right{background:#1f8a4c;border-color:#7fe0a3}
+.opt.wrong{background:#b63d29;border-color:#ffb3a3}
+.fb{display:flex;align-items:center;gap:14px;min-height:clamp(44px,8vh,60px)}
+.fb span{flex:1;font-size:clamp(17px,2.7vh,20px);line-height:1.3}
+.btn{border:0;border-radius:10px;padding:11px 20px;font-size:18px;font-weight:800;background:var(--gold);color:#22302e;white-space:nowrap}
+.btn.ghost{background:transparent;border:2px solid currentColor;color:inherit}
+.btn.teal{background:var(--navy);color:#fff}
+.btn:disabled{opacity:.4;cursor:default}
+.end{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(12px,2vw,26px)}
+.end h3{margin:0 0 8px;font-size:clamp(20px,3.2vh,24px)}
+.end .big{font-size:clamp(34px,7vh,54px);font-weight:800;color:var(--gold);line-height:1.1}
+.list{overflow:auto;min-height:0;display:grid;gap:8px;align-content:start;font-size:clamp(17px,2.6vh,19px);line-height:1.35}
+.list div{background:rgba(255,255,255,.1);border-radius:10px;padding:9px 12px}
+.panel:not(.dark) .list div{background:#f0f4ef}
+.col{display:flex;flex-direction:column;gap:10px;min-height:0}
+/* warm-up */
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.yn button{border:0;border-radius:14px;padding:clamp(12px,2.6vh,20px);font-size:clamp(20px,3.4vh,26px);font-weight:800}
+.yn .me{background:var(--gold);color:#22302e}
+.yn .notme{background:rgba(255,255,255,.16);color:#fff}
+/* shorts */
+.shorts{flex:1;min-height:0;display:grid;grid-template-columns:minmax(200px,26%) minmax(0,1fr) minmax(0,1.15fr);gap:clamp(10px,1.4vw,20px)}
+.stabs{display:grid;gap:8px;align-content:start}
+.stab{border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;text-align:left;font-size:18px;font-weight:700;line-height:1.25}
+.stab small{display:block;font-size:15px;font-weight:500;color:var(--muted);margin-top:2px}
+.stab.on{border-color:var(--navy);background:#e6f1ee}
+.media{background:#0c2325;border-radius:14px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;min-height:0}
+.media img{width:100%;height:100%;object-fit:cover;opacity:.75}
+.media iframe{width:100%;height:100%;border:0}
+.media .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.media .paste{padding:16px;color:#fff;display:grid;gap:10px;width:100%;font-size:17px;line-height:1.35}
+.media input{width:100%;padding:10px;border-radius:8px;border:0;font-size:16px;color:#1d3534}
+.steps{display:flex;flex-direction:column;gap:clamp(6px,1.4vh,12px);min-height:0;overflow:auto}
+.step{border:1px solid var(--line);border-radius:12px;padding:clamp(5px,1.2vh,12px) 12px;background:#fafbf8}
+.step b{display:block;font-size:15px;letter-spacing:.05em;color:var(--navy);margin-bottom:clamp(3px,.8vh,6px)}
+.pick{display:flex;gap:7px;flex-wrap:wrap}
+.pick button{border:2px solid var(--line);background:#fff;border-radius:9px;padding:clamp(4px,1vh,7px) 12px;font-size:17px;font-weight:700}
+.pick button.sel{background:var(--navy);border-color:var(--navy);color:#fff}
+.starter{font-size:clamp(18px,2.9vh,21px);font-weight:700;margin-top:clamp(3px,.9vh,7px);color:var(--ink);min-height:1.3em}
+.link{border:0;background:none;color:var(--navy);text-decoration:underline;font-size:15px;padding:0;text-align:left}
+/* reading */
+.read{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(12px,1.8vw,24px)}
+.read h3{margin:0;font-size:clamp(18px,2.9vh,21px);color:var(--navy)}
+.qs{margin:0;padding-left:1.2em;font-size:clamp(18px,2.9vh,21px);line-height:1.4;display:grid;gap:6px}
+.words{display:flex;flex-wrap:wrap;gap:8px}
+.word{border:2px solid var(--line);background:#fff;border-radius:10px;padding:7px 12px;font-size:18px;font-weight:700}
+.word.sel{background:var(--navy);border-color:var(--navy);color:#fff}
+.def{font-size:clamp(18px,2.8vh,20px);line-height:1.35;background:#eef4ef;border-radius:10px;padding:10px 14px;min-height:3.2em}
+.open{display:block;text-align:center;text-decoration:none;background:var(--accent);color:#fff;border-radius:12px;padding:clamp(10px,2vh,16px);font-size:clamp(19px,3vh,22px);font-weight:800}
+.open small{display:block;font-size:15px;font-weight:500;opacity:.9;margin-top:2px}
+/* hot seat */
+.hot{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(250px,.8fr);gap:clamp(12px,2vw,26px)}
+.must{font-size:clamp(18px,2.9vh,21px)}
+.must b{background:var(--gold);color:#22302e;border-radius:8px;padding:3px 10px;margin-left:6px;display:inline-block}
+.ringwrap{display:flex;flex-direction:column;align-items:center;gap:10px;justify-content:center}
+.ring{width:clamp(110px,24vh,170px);height:clamp(110px,24vh,170px);position:relative}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:9}
+.ring .t{stroke:rgba(255,255,255,.18)}
+.ring .p{stroke:var(--gold);stroke-linecap:round;transition:stroke-dashoffset .25s linear}
+.ring span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(30px,6.5vh,46px);font-weight:800}
+.pts{display:grid;gap:7px;width:100%}
+.pts button{border:2px solid rgba(255,255,255,.3);background:rgba(255,255,255,.08);color:#fff;border-radius:10px;padding:8px 10px;font-size:17px;font-weight:700}
+.pts button.sel{background:var(--gold);border-color:var(--gold);color:#22302e}
+.over{position:fixed;inset:0;background:rgba(10,30,32,.85);display:flex;align-items:center;justify-content:center;z-index:9;padding:16px}
+.over img{max-width:100%;max-height:100%;border-radius:10px;background:#fff}
+.over button{position:absolute;top:12px;right:12px}
+@media(max-width:1340px){header h1{font-size:15px}.chip{padding:6px 8px;font-size:13px}.hbtn{padding:7px 9px;font-size:13px}}
+@media(max-width:1160px){.chip span{display:none}.chip{padding:6px 10px}}
+@media(max-width:760px){body{overflow:auto}.app{height:auto;min-height:100dvh}.screen{position:static}.end,.read,.hot,.shorts{grid-template-columns:1fr}.opts{grid-template-columns:1fr}header h1{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <h1>Lesson 4 · Generations Revision</h1>
+  <div class="chips" id="chips"></div>
+  <button class="hbtn" id="prev" type="button">← Back</button>
+  <button class="hbtn primary" id="next" type="button">Next →</button>
+</header>
+<main>
+
+<!-- 1 WARM-UP -->
+<section class="screen" data-name="Warm-up">
+  <div class="sub"><h2>How Gen Z are you?</h2><p>Ten things people say about your generation. Is it you?</p></div>
+  <div class="panel dark" id="warm"></div>
+</section>
+
+<!-- 2 HOMEWORK CHECK -->
+<section class="screen" data-name="Homework check">
+  <div class="sub"><h2>Homework check · Money Words</h2><p>New sentences, same words. No notes.</p></div>
+  <div class="panel dark" id="quizHw"></div>
+</section>
+
+<!-- 3 RECAP -->
+<section class="screen" data-name="Recap">
+  <div class="sub"><h2>Recap · Talking about generations</h2><p>Careful language, comparing, generation-gap idioms.</p></div>
+  <div class="panel dark" id="quizGen"></div>
+</section>
+
+<!-- 4 SHORTS LAB -->
+<section class="screen" data-name="Shorts lab">
+  <div class="sub"><h2>Generation Shorts Lab</h2><p>Predict, watch the comedy, then turn the joke into careful English.</p><span class="spacer"></span><span class="tag" id="shortScore">0 / 12</span></div>
+  <div class="panel" style="padding:clamp(10px,2vh,18px)">
+    <div class="shorts">
+      <div class="stabs" id="stabs"></div>
+      <div class="media" id="media"></div>
+      <div class="steps">
+        <div class="step"><b>1 · PREDICT: WHO GETS LAUGHED AT MOST?</b><div class="pick" id="pPredict"><button>Boomers</button><button>Gen X</button><button>Millennials</button><button>Gen Z</button></div></div>
+        <div class="step"><b>2 · AFTER WATCHING: WHAT WAS IT?</b><div class="pick" id="pRate"><button>Funny stereotype</button><button>Fair observation</button><button>Too general</button></div></div>
+        <div class="step"><b>3 · SAY IT CAREFULLY</b><div class="pick" id="pHedge"><button data-s="Some people in this generation …">Some …</button><button data-s="This generation may …">… may …</button><button data-s="This generation tends to …">… tend to …</button><button data-s="They are more likely to … than …">… more likely to …</button></div><div class="starter" id="starter">Choose a starter and finish the sentence out loud.</div></div>
+        <div class="row"><button class="btn teal" id="pDone" type="button">Said it ✓</button><button class="link" id="pChange" type="button">Change this video</button><button class="link" id="pReset" type="button">Reset videos</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 READING A -->
+<section class="screen" data-name="Being 30">
+  <div class="sub"><h2>Reading · Being 30: then, now and tomorrow</h2><p>C1 reading test on test-english.com, 7 questions.</p></div>
+  <div class="panel"><div class="read" id="readA"></div></div>
+</section>
+
+<!-- 6 READING B -->
+<section class="screen" data-name="Dumber?">
+  <div class="sub"><h2>Reading · Are we becoming dumber?</h2><p>C1 reading test on test-english.com, 7 questions.</p></div>
+  <div class="panel"><div class="read" id="readB"></div></div>
+</section>
+
+<!-- 7 HOT SEAT -->
+<section class="screen" data-name="Hot seat">
+  <div class="sub"><h2>Hot seat</h2><p>40 seconds. Agree or disagree, and use the phrase.</p></div>
+  <div class="panel dark" id="hot"></div>
+</section>
+
+</main>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;return e};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* ---------- navigation ---------- */
+const screens=[...document.querySelectorAll('.screen')];let cur=0;
+screens.forEach((s,i)=>{const b=el('button','chip','<b>'+(i+1)+'</b><span>'+s.dataset.name+'</span>');b.type='button';b.title=s.dataset.name;b.onclick=()=>go(i);$('chips').appendChild(b)});
+function go(i){
+  cur=Math.max(0,Math.min(screens.length-1,i));
+  screens.forEach((s,k)=>s.classList.toggle('on',k===cur));
+  [...$('chips').children].forEach((c,k)=>c.classList.toggle('on',k===cur));
+  $('prev').disabled=cur===0;
+  $('next').textContent=cur===screens.length-1?'Restart ↺':'Next →';
+  if(cur!==3)stopVideo();
+  if(cur!==6)hotStop();
+}
+$('prev').onclick=()=>go(cur-1);
+$('next').onclick=()=>{if(cur===screens.length-1){resetAll();go(0)}else go(cur+1)};
+
+/* ---------- 1 warm-up ---------- */
+const WARM=[
+ 'I would rather send a text or a voice message than make a phone call.',
+ 'I hardly ever carry cash.',
+ 'I compare prices online before I buy almost anything.',
+ 'I watch videos at faster speed or with subtitles on.',
+ 'I would choose flexible hours over a higher salary.',
+ 'I get most of my news from social media.',
+ 'I have a side hustle, or I would like to have one.',
+ 'I cannot imagine working for one company my whole life.',
+ 'I find it hard to put my phone away for a whole evening.',
+ 'I think my parents’ generation had it easier with housing.'
+];
+let wi=0,wMe=[],wNot=[];
+function warmRender(){
+  const p=$('warm');p.innerHTML='';
+  if(wi<WARM.length){
+    const top=el('div','row');top.innerHTML='<span class="tag">'+(wi+1)+' / '+WARM.length+'</span><div class="bar"><i style="width:'+(wi/WARM.length*100)+'%"></i></div><span class="tag">THAT’S ME: '+wMe.length+'</span>';
+    const q=el('div','qtext','“'+WARM[wi]+'”');
+    const yn=el('div','yn');
+    const a=el('button','me','That’s me');const b=el('button','notme','Not me');
+    a.type=b.type='button';
+    a.onclick=()=>{wMe.push(WARM[wi]);wi++;warmRender()};
+    b.onclick=()=>{wNot.push(WARM[wi]);wi++;warmRender()};
+    yn.append(a,b);p.append(top,q,yn);
+  }else{
+    const pct=wMe.length*10;
+    const verdict=pct>=70?'A textbook Gen Z-er.':pct>=40?'Gen Z, but on your own terms.':'Hardly Gen Z at all.';
+    const end=el('div','end');
+    const left=el('div','col','<h3>You are</h3><div class="big">'+pct+'% Gen Z</div><div style="font-size:clamp(19px,3vh,23px);font-weight:700">'+verdict+'</div><div style="font-size:clamp(17px,2.7vh,20px);line-height:1.4">Now talk: choose two statements. Is it your generation, or is it just you?<br><b>Most people my age tend to … · I’m more likely to … than my parents · That depends on the individual.</b></div>');
+    const again=el('button','btn','Play again ↺');again.type='button';again.style.alignSelf='flex-start';again.onclick=warmReset;left.appendChild(again);
+    const right=el('div','col');right.appendChild(el('h3','', 'That’s me'));
+    const list=el('div','list');(wMe.length?wMe:['Nothing! Tell your teacher why.']).forEach(t=>list.appendChild(el('div','',t)));right.appendChild(list);
+    end.append(left,right);p.appendChild(end);
+  }
+}
+function warmReset(){wi=0;wMe=[];wNot=[];warmRender()}
+
+/* ---------- quiz engine ---------- */
+function makeQuiz(rootId,items,talk){
+  const root=$(rootId);let order,i,score,streak,best,miss;
+  function start(){order=shuffle(items);i=0;score=0;streak=0;best=0;miss=[];render()}
+  function render(){
+    root.innerHTML='';
+    if(i>=order.length)return finish();
+    const it=order[i];
+    const top=el('div','row','<span class="tag">'+(i+1)+' / '+order.length+'</span><div class="bar"><i style="width:'+(i/order.length*100)+'%"></i></div><span class="tag">SCORE '+score+'</span><span class="tag">STREAK '+streak+'</span>');
+    const q=el('div','qtext',it.q);
+    const opts=el('div','opts');
+    const fb=el('div','fb','<span></span>');
+    const next=el('button','btn',i===order.length-1?'See result →':'Next question →');next.type='button';next.hidden=true;
+    next.onclick=()=>{i++;render()};fb.appendChild(next);
+    shuffle(it.o).forEach(t=>{
+      const b=el('button','opt',t);b.type='button';
+      b.onclick=()=>{
+        const ok=t===it.o[0];
+        [...opts.children].forEach(x=>{x.disabled=true;if(x.textContent===it.o[0])x.classList.add('right')});
+        if(ok){streak++;best=Math.max(best,streak);score+=streak>=3?2:1}else{b.classList.add('wrong');streak=0;miss.push(it)}
+        fb.firstChild.innerHTML=(ok?'<b>Correct'+(streak>=3?' · streak bonus +2':'')+'.</b> ':'<b>Not this time.</b> ')+it.e;
+        top.children[2].textContent='SCORE '+score;top.children[3].textContent='STREAK '+streak;
+        next.hidden=false;next.focus();
+      };
+      opts.appendChild(b);
+    });
+    root.append(top,q,opts,fb);
+  }
+  function finish(){
+    const right=order.length-miss.length;
+    const end=el('div','end');
+    const left=el('div','col','<h3>Result</h3><div class="big">'+right+' / '+order.length+'</div><div style="font-size:clamp(18px,2.8vh,21px)">Points: '+score+' · best streak: '+best+'</div><h3 style="margin-top:6px">Now use them</h3>');
+    const tl=el('div','list');talk.forEach(t=>tl.appendChild(el('div','',t)));left.appendChild(tl);
+    const again=el('button','btn','Play again ↺');again.type='button';again.style.alignSelf='flex-start';again.onclick=start;left.appendChild(again);
+    const rightCol=el('div','col');rightCol.appendChild(el('h3','',miss.length?'Look again at these':'No mistakes'));
+    const ml=el('div','list');
+    if(miss.length)miss.forEach(m=>ml.appendChild(el('div','',m.q.replace('___','<b style="color:#f3c14b">'+m.o[0]+'</b>')+(m.q.includes('___')?'':' <b style="color:#f3c14b">'+m.o[0]+'</b>'))));
+    else ml.appendChild(el('div','','Every answer was right. Ask your teacher for a harder round.'));
+    rightCol.appendChild(ml);end.append(left,rightCol);root.appendChild(end);
+  }
+  start();return start;
+}
+const HW=[
+ {q:'After three months without work, she had ___ more than £4,000 of debt on her cards.',o:['racked up','paid off','saved up','cut back'],e:'<i>rack up debt</i> = let debt build up bit by bit.'},
+ {q:'A weekend in London? You will have to ___ at least £200 for a hotel.',o:['shell out','shop around','sell out','pay back'],e:'<i>shell out</i> = pay a lot, usually unwillingly.'},
+ {q:'He isn’t mean, he is just ___: he repairs things instead of replacing them.',o:['frugal','hard-hit','wary','sold out'],e:'<i>frugal</i> = careful with money, avoiding waste.'},
+ {q:'Designing logos in the evenings is his ___; by day he is a teacher.',o:['side hustle','rip-off','splurge','debt'],e:'<i>side hustle</i> = extra work on top of your main job.'},
+ {q:'On one salary and with two children, they could barely ___.',o:['make ends meet','run up','shop around','give away'],e:'<i>make ends meet</i> = have just enough for basic costs.'},
+ {q:'Students were especially ___ by the rise in rents.',o:['hard-hit','frugal','wary','ripped off'],e:'<i>hard-hit</i> = badly affected by a problem.'},
+ {q:'After being cheated once, she is ___ online sellers she doesn’t know.',o:['wary of','frugal with','hard-hit by','saving up for'],e:'<i>wary of</i> = cautious, not fully trusting.'},
+ {q:'I got my bonus, so I ___ a pair of really good headphones.',o:['splurged on','cut back on','shopped around','paid back'],e:'<i>splurge on</i> = spend a lot on a treat.'},
+ {q:'Don’t buy the first laptop you see. ___ first.',o:['Shop around','Sell out','Run up','Give away'],e:'<i>shop around</i> = compare prices in different places. No object.'},
+ {q:'The jacket doesn’t fit. I’m going to ___ tomorrow and get a refund.',o:['take it back','give it away','pay it back','rip it off'],e:'<i>take back</i> = return something to the shop. Separable: take <u>it</u> back.'},
+ {q:'Seven euros for a coffee at the airport? What a ___!',o:['rip-off','side hustle','splurge','debt'],e:'<i>a rip-off</i> = something far too expensive (informal).'},
+ {q:'I’m ___ a trip to Japan, so no more takeaways for me.',o:['saving up for','splurging on','running up','selling out of'],e:'<i>save up for</i> + noun = keep money for something later.'}
+];
+const GEN=[
+ {q:'Which is the careful way to say “Gen Z are lazy”?',o:['Some people argue that Gen Z has a different attitude towards work.','All Gen Z tend to be lazy.','Gen Z are more likely lazy.','Gen Z are lazy, from my experience.'],e:'Hedge it: <i>some people argue</i>, <i>a different attitude</i>.'},
+ {q:'My dad refuses to try online banking. He is ___.',o:['stuck in his ways','keeping up with the times','seeing eye to eye','a digital native'],e:'<i>be stuck in your ways</i> = unwilling to change habits.'},
+ {q:'My grandmother uses three messengers and pays by phone. She really ___.',o:['keeps up with the times','is stuck in her ways','sees eye to eye','has something in common'],e:'<i>keep up with the times</i> = change as society changes.'},
+ {q:'My mum and I never ___ on how much to spend on clothes.',o:['see eye to eye','keep up with the times','have in common','stick in our ways'],e:'<i>see eye to eye (on)</i> = agree.'},
+ {q:'Younger people ___ change jobs more often.',o:['tend to','tend','are tending','tend to changing'],e:'<i>tend to</i> + infinitive, present simple.'},
+ {q:'Gen Z ___ pay by phone than in cash.',o:['are more likely to','are more likely','more likely to','are likely more to'],e:'<i>be more likely to</i> + verb … <i>than</i>.'},
+ {q:'___ Baby Boomers often stayed in one job for decades, Gen Z tends to move on quickly.',o:['Whereas','Unlike','Compared with','Neither'],e:'<i>Whereas</i> + clause (subject + verb) shows contrast.'},
+ {q:'___ older generations, younger people grew up with smartphones.',o:['Unlike','Whereas','Although','However'],e:'<i>Unlike</i> + noun. <i>Whereas</i> needs a full clause.'},
+ {q:'Someone who has grown up using digital technology is a ___.',o:['digital native','tech-savvy','career-driven','generation gap'],e:'<i>digital native</i> is the noun; <i>tech-savvy</i> is an adjective.'},
+ {q:'Which years are usually given for Generation Z?',o:['1997–2012','1981–1996','1965–1980','2013 onwards'],e:'Gen Z: about 1997–2012. Boundaries vary by source.'},
+ {q:'Many people ___ expect to have one job for life.',o:['no longer','not longer','any longer','no more long'],e:'<i>no longer</i> goes before the main verb.'},
+ {q:'Both generations have a lot ___ when it comes to saving.',o:['in common','in the same','together','of common'],e:'<i>have a lot in common</i> = share many things.'}
+];
+const startHw=makeQuiz('quizHw',HW,['When did you last <b>splurge on</b> something? Was it worth it?','Is anything a <b>rip-off</b> in your town?','What are you <b>saving up for</b> right now?']);
+const startGen=makeQuiz('quizGen',GEN,['What do you and your parents not <b>see eye to eye</b> on?','Who in your family is <b>stuck in their ways</b>? Who <b>keeps up with the times</b>?','Compare yourself with a Millennial: <b>whereas … / unlike …</b>']);
+
+/* ---------- 4 shorts lab ---------- */
+const DEF_SHORTS=[
+ {id:'5wr48BS7f2w',title:'Found a wallet',note:'Money and generations'},
+ {id:'PcoDyLBP4y4',title:'How generations react to pain',note:'Stand-up style sketch'},
+ {id:'',title:'Your pick',note:'Paste any YouTube link'}
+];
+const SKEY='kate_l4_shorts_v1';
+let shorts,si=0,sState;
+function loadShorts(){shorts=DEF_SHORTS.map(x=>({...x}));try{const s=JSON.parse(localStorage.getItem(SKEY)||'null');if(Array.isArray(s))s.forEach((id,k)=>{if(shorts[k]&&typeof id==='string'&&id!==shorts[k].id&&/^[\w-]{11}$/.test(id)){shorts[k].id=id;shorts[k].title='Video '+(k+1);shorts[k].note='Chosen by the teacher'}})}catch(e){}}
+function saveShorts(){try{localStorage.setItem(SKEY,JSON.stringify(shorts.map(s=>s.id)))}catch(e){}}
+function ytId(u){u=(u||'').trim();const m=u.match(/(?:shorts\/|v=|youtu\.be\/|embed\/)([\w-]{11})/);return m?m[1]:(/^[\w-]{11}$/.test(u)?u:'')}
+function shortsReset(){sState=shorts.map(()=>({p:false,w:false,r:false,h:false}));si=0;shortTabs();shortShow()}
+function shortTabs(){const t=$('stabs');t.innerHTML='';shorts.forEach((s,k)=>{const b=el('button','stab'+(k===si?' on':''),(k+1)+' · '+s.title+'<small>'+s.note+'</small>');b.type='button';b.onclick=()=>{si=k;shortTabs();shortShow()};t.appendChild(b)})}
+function stopVideo(){const m=$('media');if(m&&m.querySelector('iframe'))shortShow()}
+function shortShow(paste){
+  const s=shorts[si],m=$('media');m.innerHTML='';
+  document.querySelectorAll('#pPredict button,#pRate button,#pHedge button').forEach(b=>b.classList.remove('sel'));
+  $('starter').textContent='Choose a starter and finish the sentence out loud.';
+  if(!s.id||paste){
+    const box=el('div','paste','<div>Paste a YouTube or Shorts link here.</div>');
+    const inp=el('input');inp.type='text';inp.placeholder='https://youtube.com/shorts/…';
+    const ok=el('button','btn','Use this video');ok.type='button';
+    const msg=el('div','','');
+    ok.onclick=()=>{const id=ytId(inp.value);if(!id){msg.textContent='This does not look like a YouTube link. Try again.';return}s.id=id;if(s.title==='Your pick'){s.note='Chosen by the teacher'}saveShorts();shortTabs();shortShow()};
+    box.append(inp,ok,msg);
+    if(s.id){const c=el('button','btn ghost','Cancel');c.type='button';c.onclick=()=>shortShow();box.appendChild(c)}
+    m.appendChild(box);
+  }else{
+    const img=el('img');img.src='https://i.ytimg.com/vi/'+s.id+'/hqdefault.jpg';img.alt='';
+    const pb=el('button','btn play','Watch ▶');pb.type='button';
+    pb.onclick=()=>{sState[si].w=true;shortScore();m.innerHTML='<iframe src="https://www.youtube.com/embed/'+s.id+'?rel=0&playsinline=1&autoplay=1" title="'+s.title+'" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'};
+    m.append(img,pb);
+  }
+}
+function shortScore(){let n=0;sState.forEach(s=>Object.values(s).forEach(v=>{if(v)n++}));$('shortScore').textContent=n+' / 12'}
+function pickGroup(id,key){document.querySelectorAll('#'+id+' button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#'+id+' button').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');if(key){sState[si][key]=true;shortScore()}if(b.dataset.s)$('starter').textContent=b.dataset.s})}
+pickGroup('pPredict','p');pickGroup('pRate','r');pickGroup('pHedge');
+$('pDone').onclick=()=>{if(document.querySelector('#pHedge .sel')){sState[si].h=true;shortScore();$('starter').textContent='Done. Choose the next video.'}else $('starter').textContent='First choose a starter above.'};
+$('pChange').onclick=()=>shortShow(true);
+$('pReset').onclick=()=>{try{localStorage.removeItem(SKEY)}catch(e){}loadShorts();shortsReset();shortScore()};
+
+/* ---------- 5-6 reading ---------- */
+function reading(rootId,d){
+  const r=$(rootId);r.innerHTML='';
+  const left=el('div','col');
+  left.appendChild(el('h3','','Before you read'));
+  const q1=el('ol','qs');d.before.forEach(t=>q1.appendChild(el('li','',t)));left.appendChild(q1);
+  left.appendChild(el('h3','','Language you will need'));
+  const ws=el('div','words');const def=el('div','def','Tap a phrase to see what it means.');
+  d.words.forEach(([w,m])=>{const b=el('button','word',w);b.type='button';b.onclick=()=>{ws.querySelectorAll('.word').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');def.innerHTML='<b>'+w+'</b> = '+m};ws.appendChild(b)});
+  left.append(ws,def);
+  const right=el('div','col');
+  const a=el('a','open','Open the text and the test ↗<small>test-english.com · opens in a new tab</small>');a.href=d.url;a.target='_blank';a.rel='noopener';
+  right.appendChild(a);
+  right.appendChild(el('h3','','After reading'));
+  const show=el('button','btn teal','Show the questions');show.type='button';show.style.alignSelf='flex-start';
+  const q2=el('ol','qs');q2.hidden=true;d.after.forEach(t=>q2.appendChild(el('li','',t)));
+  show.onclick=()=>{q2.hidden=false;show.hidden=true};
+  right.append(show,q2);
+  r.append(left,right);
+}
+const READ_A={url:'https://test-english.com/reading/c1/being-30-then-now-and-tomorrow-c1-english-reading-test/',
+ before:['What had your parents already done by the age of 30?','What do you expect your own life to look like at 30?','Is there a “right age” for a house, a career, a family?'],
+ words:[['settle down','start living a stable life: a home, a steady job, often a family'],['an unwritten script','a set of expectations nobody says out loud but everybody follows'],['treat life as a checklist','see life as a list of stages to tick off one by one'],['fly solo','do something on your own, without a partner'],['get on the property ladder','buy your first home'],['job insecurity','not knowing whether you will keep your job'],['a milestone','an important stage or event in life']],
+ after:['Which “30” would you choose: your grandparents’, today’s, or the future one? Why?','More freedom, more uncertainty: is that a fair price?','Who puts pressure on people your age to settle down?','If you had a different income, would your plans for 30 change? (second conditional)']};
+const READ_B={url:'https://test-english.com/reading/c1/are-we-becoming-dumber-c1-english-reading-test/',
+ before:['Do older people in your family say your generation is less intelligent? What exactly do they say?','How long can you read without checking your phone?','Is using AI for homework thinking, or avoiding thinking?'],
+ words:[['dumbing down','making something simpler and less intelligent than it should be'],['attention span','how long you can concentrate on one thing'],['skim','read quickly, getting only the general idea'],['superficial','shallow; not going deep into a subject'],['fragmented','broken into many small, unconnected pieces'],['the Flynn effect','the steady rise in average IQ scores during the 20th century'],['react vs reflect','answer immediately vs think carefully first'],['regress','go back to a worse or less developed state']],
+ after:['Was the writer’s grandfather right? How far do you agree?','Faster thinking or weaker thinking: which describes you?','What do you do to protect your attention?','Every generation says this about the next one. What will Gen Z say about Gen Alpha?']};
+
+/* ---------- 7 hot seat ---------- */
+const HOT=[
+ 'Gen Z is better with money than Millennials were at the same age.',
+ 'Turning 30 without a house or a family is nothing to worry about.',
+ 'Short videos are destroying our ability to concentrate.',
+ 'Every generation thinks the next one is lazier and less intelligent.',
+ 'A side hustle is a necessity now, not a choice.',
+ 'Parents should stop giving advice that worked thirty years ago.',
+ 'AI will make my generation smarter, not dumber.',
+ 'Generation labels are just marketing.'
+];
+const MUST=['rack up debt','make ends meet','shell out','side hustle','frugal','wary of','tend to','more likely to','whereas','stuck in their ways','keep up with the times','see eye to eye','It would be an oversimplification to say …','That depends on the individual.','no longer','settle down'];
+let hi=0,hScore=0,hMust='',hT=40,hTimer=null,hPts=[false,false,false],hOrder=[];
+const CIRC=2*Math.PI*45;
+function hotStop(){if(hTimer){clearInterval(hTimer);hTimer=null}}
+function hotReset(){hotStop();hOrder=shuffle(HOT);hi=0;hScore=0;hotCard()}
+function hotCard(){hotStop();hT=40;hPts=[false,false,false];hMust=MUST[Math.floor(Math.random()*MUST.length)];hotRender()}
+function hotRender(){
+  const p=$('hot');p.innerHTML='';
+  if(hi>=hOrder.length){
+    const end=el('div','end');
+    const l=el('div','col','<h3>Hot seat finished</h3><div class="big">'+hScore+' / '+(hOrder.length*3)+'</div><div style="font-size:clamp(18px,2.9vh,21px);line-height:1.4">Points for a clear argument, the target phrase and careful language.</div>');
+    const again=el('button','btn','Play again ↺');again.type='button';again.style.alignSelf='flex-start';again.onclick=hotReset;l.appendChild(again);
+    const r=el('div','col','<h3>Take away</h3>');const li=el('div','list');['Which statement was the hardest to argue?','Which phrase from today will you actually use?','One thing you changed your mind about.'].forEach(t=>li.appendChild(el('div','',t)));r.appendChild(li);
+    end.append(l,r);p.appendChild(end);return;
+  }
+  const top=el('div','row','<span class="tag">'+(hi+1)+' / '+hOrder.length+'</span><div class="bar"><i style="width:'+(hi/hOrder.length*100)+'%"></i></div><span class="tag" id="hScore">SCORE '+hScore+'</span>');
+  const grid=el('div','hot');
+  const left=el('div','col');
+  left.appendChild(el('div','qtext','“'+hOrder[hi]+'”'));
+  left.appendChild(el('div','must','You must use:<b>'+hMust+'</b>'));
+  const nav=el('div','row');
+  const swap=el('button','btn ghost','Another phrase');swap.type='button';swap.onclick=()=>{hMust=MUST[(MUST.indexOf(hMust)+1+Math.floor(Math.random()*(MUST.length-1)))%MUST.length];hotRender()};
+  const nx=el('button','btn',hi===hOrder.length-1?'See result →':'Next statement →');nx.type='button';nx.onclick=()=>{hScore+=hPts.filter(Boolean).length;hi++;hotCard()};
+  nav.append(swap,el('span','spacer'),nx);left.appendChild(nav);
+  const right=el('div','ringwrap');
+  const ring=el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="hRing" cx="50" cy="50" r="45" stroke-dasharray="'+CIRC+'" stroke-dashoffset="'+(CIRC*(1-hT/40))+'"/></svg><span id="hNum">'+hT+'</span>');
+  const ctl=el('div','row');
+  const st=el('button','btn',hTimer?'Stop':(hT===40?'Start':(hT===0?'Time!':'Resume')));st.type='button';st.disabled=hT===0;
+  st.onclick=()=>{if(hTimer){hotStop();hotRender();return}hTimer=setInterval(()=>{hT--;const n=$('hNum'),r=$('hRing');if(n)n.textContent=hT;if(r)r.setAttribute('stroke-dashoffset',CIRC*(1-hT/40));if(hT<=0){hotStop();hotRender()}},1000);hotRender()};
+  const rs=el('button','btn ghost','Reset');rs.type='button';rs.onclick=()=>{hotStop();hT=40;hotRender()};
+  ctl.append(st,rs);
+  const pts=el('div','pts');['Clear argument','Used the phrase','Careful language'].forEach((t,k)=>{const b=el('button',hPts[k]?'sel':'',(hPts[k]?'✓ ':'+1 ')+t);b.type='button';b.onclick=()=>{hPts[k]=!hPts[k];hotRender()};pts.appendChild(b)});
+  right.append(ring,ctl,pts);
+  grid.append(left,right);p.append(top,grid);
+}
+
+/* ---------- start ---------- */
+function resetAll(){warmReset();startHw();startGen();loadShorts();shortsReset();shortScore();reading('readA',READ_A);reading('readB',READ_B);hotReset()}
+loadShorts();resetAll();
+const stepParam=parseInt(new URLSearchParams(location.search).get('step')||'1',10);
+go(isNaN(stepParam)?0:stepParam-1);
+</script>
+</body>
+</html>
