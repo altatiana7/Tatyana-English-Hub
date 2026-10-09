@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>Nikita · Phrasal verbs people actually use</title>
+<style>
+:root{--navy:#0c2235;--navy2:#173a55;--paper:#f4f0e8;--cream:#fffaf2;--ink:#17212b;--muted:#5d6975;--gold:#a8763f;--red:#a3362f;--redbg:#fbe9e7;--green:#23705c;--greenbg:#e4f3ee;--line:rgba(12,34,53,.16)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Inter,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink);font-size:18px}
+body{overflow:hidden}
+button{font:inherit;cursor:pointer}
+.bar{height:52px;background:linear-gradient(90deg,#091c2d,#14354f);color:#fff;display:flex;align-items:center;gap:10px;padding:0 14px}
+.brand{font-family:Georgia,serif;font-weight:700;font-size:19px;white-space:nowrap;margin-right:6px}
+.tabs{display:flex;gap:4px;flex:1;min-width:0;overflow:hidden}
+.tabs button{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff;border-radius:9px;padding:7px 9px;font-size:15px;font-weight:700;white-space:nowrap}
+.tabs button:hover{background:rgba(255,255,255,.18)}
+.tabs button.on{background:#fff;color:var(--navy)}
+.bar .util{border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;border-radius:9px;padding:7px 10px;font-size:15px;font-weight:700;white-space:nowrap;text-decoration:none}
+.bar .util:hover{background:rgba(255,255,255,.16)}
+.stage{height:calc(100vh - 52px);overflow:hidden;position:relative}
+.scr{display:none;height:100%;padding:14px 26px 12px;flex-direction:column;max-width:1280px;margin:0 auto}
+.scr.on{display:flex}
+h2{font-family:Georgia,serif;font-size:26px;color:var(--navy);margin:0;line-height:1.15}
+.sub{color:var(--muted);font-size:17px;margin:3px 0 0}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;margin-bottom:10px}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;min-height:44px}
+.count{font-weight:800;color:var(--navy);font-size:17px}
+.btn{border:0;border-radius:11px;background:var(--navy);color:#fff;padding:10px 18px;font-weight:800;font-size:17px}
+.btn:hover{background:var(--navy2)}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.btn.ghost:hover{background:#f1ede4}
+.btn.gold{background:var(--gold)}
+.btn:disabled{opacity:.4;cursor:default}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 22px;box-shadow:0 8px 22px rgba(12,34,53,.06)}
+.big{font-family:Georgia,serif;font-size:28px;line-height:1.3;color:var(--navy)}
+.q{font-size:24px;line-height:1.35;font-weight:600;color:var(--navy)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;min-height:0}
+.opts{display:grid;gap:9px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{border:2px solid var(--line);background:#fff;border-radius:12px;padding:11px 14px;font-size:19px;text-align:left;color:var(--ink);font-weight:600}
+.opt:hover:not(:disabled){border-color:var(--navy)}
+.opt:disabled{cursor:default;color:var(--ink);opacity:1}
+.opt.ok{border-color:var(--green);background:var(--greenbg)}
+.opt.bad{border-color:var(--red);background:var(--redbg)}
+.exp{margin-top:10px;padding:10px 14px;border-radius:12px;font-size:18px;line-height:1.4;background:#fff;border:1px solid var(--line)}
+.exp b.v{color:var(--green)} .exp b.x{color:var(--red)}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:16px;font-weight:600;color:var(--navy)}
+button.chip:hover{border-color:var(--navy)}
+.chip.sel{background:var(--navy);color:#fff;border-color:var(--navy)}
+.label{font-size:15px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.hero{display:grid;grid-template-columns:1.5fr 1fr;gap:0;border-radius:22px;overflow:hidden;background:linear-gradient(120deg,#0a2033,#173a55);color:#fff;flex:1;min-height:0}
+.hero .txt{padding:26px 32px;display:flex;flex-direction:column;justify-content:center}
+.hero h1{font-family:Georgia,serif;font-size:clamp(30px,4.6vh + 10px,46px);line-height:1.08;margin:8px 0 12px}
+.hero p{font-size:19px;line-height:1.45;color:#e6eef3;margin:0 0 16px}
+.hero .ph{background:none center 22%/cover;min-height:0}
+.hero .label{color:#e3bc90}
+.route{display:flex;flex-wrap:wrap;gap:6px}
+.route span{border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 11px;font-size:16px}
+/* flip card */
+.flip{height:min(300px,46vh);perspective:1400px;cursor:pointer;width:min(820px,100%);margin:0 auto}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.f .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px 30px;box-shadow:0 10px 26px rgba(12,34,53,.08)}
+.face.a{background:linear-gradient(135deg,#fff,#eef5f7)}
+.face.b{background:linear-gradient(135deg,#fff8ee,#fff);transform:rotateY(180deg)}
+.term{font-family:Georgia,serif;font-size:34px;font-weight:700;color:var(--navy);line-height:1.2}
+.ex{font-size:19px;line-height:1.45;color:var(--ink);margin-top:12px;max-width:680px}
+.ru{font-size:25px;font-weight:800;color:#6f431f}
+.ask{font-size:20px;margin-top:12px;color:var(--navy);max-width:680px;line-height:1.4}
+.stake{display:flex;gap:8px;align-items:center}
+.stake button{border:2px solid var(--line);background:#fff;border-radius:10px;padding:6px 12px;font-size:16px;font-weight:700;color:var(--navy)}
+.stake button.on{border-color:var(--navy);background:var(--navy);color:#fff}
+.score{font-weight:800;font-size:18px;color:var(--navy)}
+.review{overflow:auto;max-height:100%;display:grid;gap:7px}
+.review div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:17px;line-height:1.35}
+.review s{color:var(--red)} .review b{color:var(--green)}
+.photo{border-radius:16px;background:center 20%/cover;min-height:0}
+.frame{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.frame div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 11px;font-size:16px;line-height:1.3}
+.frame b{display:block;color:var(--gold);font-size:15px;text-transform:uppercase;letter-spacing:.05em}
+.inp{font:inherit;font-size:22px;padding:9px 14px;border:2px solid var(--navy);border-radius:11px;width:min(460px,100%);background:#fff}
+.inp.ok{border-color:var(--green);background:var(--greenbg)} .inp.bad{border-color:var(--red);background:var(--redbg)}
+.pills{display:flex;gap:6px}
+.pills button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 14px;font-size:16px;font-weight:700;color:var(--navy)}
+.pills button.on{background:var(--navy);color:#fff}
+.timer{font-family:Georgia,serif;font-size:50px;font-weight:700;color:var(--navy);line-height:1}
+.timer.end{color:var(--red)}
+.plan{min-height:46px;max-height:88px;overflow:auto;border:2px dashed var(--line);border-radius:12px;padding:8px 12px;font-size:18px;line-height:1.4;background:#fffdf8}
+/* drawers */
+.drawer{position:absolute;top:0;right:0;bottom:0;width:min(430px,92vw);background:#fff;border-left:1px solid var(--line);box-shadow:-14px 0 40px rgba(12,34,53,.18);padding:16px 18px;overflow:auto;transform:translateX(105%);transition:transform .25s;z-index:20}
+.drawer.on{transform:none}
+.drawer h3{margin:0 0 8px;font-family:Georgia,serif;color:var(--navy);font-size:22px}
+.drawer p,.drawer li{font-size:17px;line-height:1.45;margin:0 0 9px}
+.drawer ul{padding-left:20px;margin:0 0 9px}
+.drawer .rus{background:#fff4e8;border-radius:10px;padding:9px 11px;color:#56391f}
+.drawer .x{position:absolute;top:10px;right:12px;border:0;background:none;font-size:24px;color:var(--muted)}
+table.g{border-collapse:collapse;width:100%;font-size:16px}
+table.g td{border-bottom:1px solid var(--line);padding:6px 4px;vertical-align:top;line-height:1.35}
+table.g td:first-child{font-weight:800;color:var(--red);white-space:nowrap;padding-right:10px}
+@media(max-height:620px){.scr{padding:9px 24px 8px}h2{font-size:23px}.head{margin-bottom:7px}.q{font-size:22px}.big{font-size:25px}.opt{padding:8px 13px;font-size:18px}.card{padding:13px 18px}.term{font-size:30px}.foot{margin-top:7px}.exp{font-size:17px;padding:8px 12px;margin-top:7px}.timer{font-size:42px}}
+@media(max-width:900px){body{overflow:auto}.bar{height:auto;flex-wrap:wrap;padding:8px}.tabs{flex-wrap:wrap}.stage{height:auto;overflow:visible}.scr{height:auto}.cols,.hero,.frame{grid-template-columns:1fr}.hero .ph{height:220px}}
+
+.sets{display:flex;gap:5px;flex-wrap:nowrap}
+.sets button{white-space:nowrap}
+@media(max-width:900px){.sets{flex-wrap:wrap}}
+.sets button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 13px;font-size:16px;font-weight:700;color:var(--navy)}
+.sets button.on{background:var(--navy);color:#fff}
+.q b.pv,.ex b.pv,.review b.pv{color:var(--gold)}
+.gap{display:inline-block;min-width:74px;border-bottom:3px solid var(--navy);text-align:center;color:var(--green)}
+.def{font-size:20px;color:var(--ink);margin-top:8px;max-width:680px;line-height:1.4}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="brand">Phrasal verbs</div>
+  <div class="tabs" id="tabs"></div>
+  <a class="util" href="./">Homework</a>
+</div>
+<div class="stage"><section class="scr on" id="scr"></section></div>
+<script>
+'use strict';
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+/* [verb, meaning, Russian, sentence: {verb form} [particle], speaking question] */
+const SETS=[
+ ['Thinking',[
+  ['figure out','understand after thinking about it','разобраться, понять','It took me a week to {figure} [out] how the tax system works.','What is something you still haven’t figured out about adult life?'],
+  ['find out','discover a fact','узнать, выяснить','I only {found} [out] about the deadline yesterday.','How did you find out about your current job or course?'],
+  ['work out','calculate or solve; also end successfully','вычислить; сложиться удачно','We still haven’t {worked} [out] how much it will cost.','Tell me about a plan that didn’t work out.'],
+  ['come up with','think of an idea or a solution','придумать','She {came} [up with] a brilliant excuse.','What is the best idea you have come up with this year?'],
+  ['look into','investigate','изучить вопрос, разобраться','The bank promised to {look} [into] the missing payment.','What would you like the government to look into?'],
+  ['point out','draw attention to a fact','указать, обратить внимание','He {pointed} [out] that the data was ten years old.','When did someone last point out a mistake you had made?'],
+  ['turn out','prove to be so in the end','оказаться','The rumour {turned} [out] to be false.','Tell me about something that turned out better than expected.'],
+  ['make out','manage to see, hear or understand','разобрать, различить','I couldn’t {make} [out] what he was saying.','Whose handwriting can you never make out?'],
+  ['rule out','decide that something is impossible','исключить','The police have {ruled} [out] murder.','Which careers did you rule out early, and why?'],
+  ['sum up','give the main points briefly','подытожить','Can you {sum} [up] the article in two sentences?','Sum up your last week in three words.']]],
+ ['Work',[
+  ['set up','start or establish something','основать, наладить','They {set} [up] the company in a garage.','If you set up a business, what would it be?'],
+  ['take on','accept work or responsibility','взять на себя','I can’t {take} [on] any more projects this month.','When did you take on too much?'],
+  ['carry out','do a task, a plan or research','провести, выполнить','The team {carried} [out] a survey of 2,000 students.','What research would you like to carry out?'],
+  ['take over','get control of something','взять под контроль, возглавить','A larger firm {took} [over] the business last year.','Which jobs will AI take over first?'],
+  ['put off','delay until later','отложить','We had to {put} the meeting [off] until Monday.','What are you putting off right now?'],
+  ['deal with','handle a problem or a person','иметь дело, справляться','I’ll {deal} [with] the complaints tomorrow.','How do you deal with rude people?'],
+  ['follow up','take further action after something','вернуться к вопросу, довести до конца','Did anyone {follow} [up] on that email?','Do you follow up when people don’t reply?'],
+  ['end up','finally be somewhere you didn’t plan','в итоге оказаться','He studied law but {ended} [up] working as a chef.','How did you end up studying English?'],
+  ['sort out','organise something or solve a problem','уладить, разобраться','I need to {sort} [out] my visa before June.','What do you need to sort out this month?'],
+  ['bring up','mention a topic; also raise a child','поднять тему; воспитать','Why did you {bring} [up] money at dinner?','Which topics should never be brought up at a family dinner?']]],
+ ['People',[
+  ['get along with','have a good relationship with','ладить','I {get} [along with] most of my colleagues.','What kind of people do you get along with easily?'],
+  ['put up with','tolerate','терпеть, мириться','I can’t {put} [up with] this noise any longer.','What do you refuse to put up with?'],
+  ['look up to','admire and respect','уважать, равняться на','Many young players {look} [up to] him.','Who did you look up to as a teenager?'],
+  ['let down','disappoint someone who trusted you','подвести','She promised to help and then {let} me [down].','Has a friend ever let you down?'],
+  ['show up','arrive or appear','появиться, прийти','Only six people {showed} [up] for the lecture.','What do you do when someone doesn’t show up?'],
+  ['turn down','refuse an offer or a request','отказать, отклонить','He {turned} [down] a job at a top law firm.','Have you ever turned down a good offer?'],
+  ['fall out','stop being friends after an argument','поссориться','They {fell} [out] over money.','What do friends usually fall out over?'],
+  ['make up','become friends again; also invent','помириться; выдумать','They argued, but they {made} [up] the next day.','Do you make up quickly after an argument?'],
+  ['run into','meet someone by chance','случайно встретить','I {ran} [into] my old teacher at the airport.','Who did you last run into unexpectedly?'],
+  ['count on','rely on','рассчитывать на','You can always {count} [on] her in a crisis.','Who can you count on, no matter what?']]],
+ ['Problems',[
+  ['break down','stop working; also fail or collapse','сломаться; сорваться','The negotiations {broke} [down] after two days.','What do you do when your laptop breaks down?'],
+  ['give up','stop trying; also stop a habit','сдаться; бросить','Don’t {give} [up] now, you are nearly there.','What have you given up and never regretted?'],
+  ['run out of','have none left','закончиться (у кого-то)','We have {run} [out of] time.','What do you always run out of?'],
+  ['cut down on','reduce the amount of','сократить','I’m trying to {cut} [down on] sugar.','What should people cut down on?'],
+  ['go through','experience something difficult; also examine','пережить; просмотреть','She {went} [through] a difficult year.','What is the hardest exam you have gone through?'],
+  ['get over','recover from','оправиться, пережить','It took him years to {get} [over] the failure.','How long does it take you to get over a defeat?'],
+  ['come across','find by chance; also give an impression','наткнуться; производить впечатление','I {came} [across] an old photo of us.','How do you think you come across to strangers?'],
+  ['keep up with','stay at the same level or speed as','успевать, не отставать','I can’t {keep} [up with] all the changes.','How do you keep up with the news?'],
+  ['catch up','reach the same level; also exchange news','догнать; обменяться новостями','Let’s have coffee and {catch} [up].','Who do you need to catch up with?'],
+  ['turn into','become something different','превратиться','The discussion {turned} [into] an argument.','Which hobby could you turn into a job?']]],
+ ['Talking',[
+  ['go on','continue; also happen','продолжать; происходить','What is {going} [on] here?','What is going on in your city at the moment?'],
+  ['come out','be published; also become known','выйти; стать известным','The truth finally {came} [out].','Which recent film or book that came out is worth the time?'],
+  ['back up','support with evidence; also copy data','подкрепить; сделать копию','Can you {back} [up] that claim with numbers?','When did you last back up your files?'],
+  ['call off','cancel','отменить','They {called} [off] the strike.','Which event were you glad was called off?'],
+  ['fill in','give someone missing information; also complete a form','ввести в курс дела; заполнить','Can you {fill} me [in] on what I missed?','Which form was the worst you ever had to fill in?'],
+  ['go over','review or check carefully','пройтись ещё раз, проверить','Let’s {go} [over] the contract once more.','What do you go over before an important meeting?'],
+  ['speak up','say your opinion openly; also talk louder','высказаться; говорить громче','Nobody {spoke} [up] when the manager was wrong.','When is it hard to speak up?'],
+  ['leave out','not include','пропустить, не включить','You have {left} [out] the most important detail.','What do people leave out of their CVs?'],
+  ['get across','make an idea understood','донести мысль','He struggled to {get} his point [across].','How do you get a complex idea across?'],
+  ['pass on','give or tell to someone else','передать','Please {pass} [on] my thanks to the team.','What advice would you pass on to a younger you?']]],
+ ['Everyday',[
+  ['pick up','collect; also learn without lessons','забрать; нахвататься','I’ll {pick} you [up] at seven.','Which skill did you pick up without lessons?'],
+  ['drop off','take someone somewhere and leave them there','завезти, подбросить','Can you {drop} me [off] at the station?','Who do you drop off or pick up regularly?'],
+  ['check out','look at something interesting; also leave a hotel','заценить; выехать из отеля','You should {check} [out] that new podcast.','What should I check out this weekend?'],
+  ['hang out','spend time relaxing with people','проводить время вместе','We used to {hang} [out] at the skate park.','Where did you hang out as a teenager?'],
+  ['take off','leave the ground; also become successful fast','взлететь; резко пойти в гору','Her career {took} [off] after that interview.','Why do some startups take off and others don’t?'],
+  ['go off','ring or explode; also go bad','сработать; испортиться','My alarm didn’t {go} [off] this morning.','What happens when your alarm doesn’t go off?'],
+  ['turn up','arrive, often late or unexpectedly','появиться','He {turned} [up] an hour late, as usual.','What is the latest you have turned up to something important?'],
+  ['look forward to','feel excited about a future event','ждать с нетерпением','I’m {looking} [forward to] the weekend.','What are you looking forward to?'],
+  ['get away with','do something wrong and not be punished','сойти с рук','He cheated and {got} [away with] it.','What did you get away with at school?'],
+  ['pay off','bring good results; also repay fully','окупиться; выплатить','All that practice finally {paid} [off].','Which effort of yours paid off most?']]]
+];
+const ALL=SETS.flatMap(s=>s[1]);
+const MODES=['Cards','Meaning','Particle','Speak'];
+const full=s=>esc(s).replace(/\{(.+?)\}/g,'<b class="pv">$1</b>').replace(/\[(.+?)\]/g,'<b class="pv">$1</b>');
+const gapped=(s,fill)=>esc(s).replace(/\{(.+?)\}/g,'<b class="pv">$1</b>').replace(/\[(.+?)\]/g,(m,p)=>`<span class="gap">${fill?esc(p):'&nbsp;'}</span>`);
+const particle=s=>s.match(/\[(.+?)\]/)[1];
+let set=0,mode=0;
+const pool=()=>set===SETS.length?shuffle(ALL).slice(0,15):SETS[set][1];
+const tabs=$('#tabs');MODES.forEach((m,i)=>{const b=document.createElement('button');b.textContent=m;b.onclick=()=>{mode=i;render()};tabs.append(b)});
+const r=$('#scr');
+const setsBar=()=>`<div class="sets">${SETS.map((s,i)=>`<button class="${i===set?'on':''}" data-set="${i}">${i+1}. ${s[0]}</button>`).join('')}<button class="${set===SETS.length?'on':''}" data-set="${SETS.length}">Mix 15</button></div>`;
+function wireSets(){r.querySelectorAll('[data-set]').forEach(b=>b.onclick=()=>{set=+b.dataset.set;render()})}
+function head(title,sub,right){return `<div class="head"><div><h2>${title}</h2><p class="sub">${sub}</p></div><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:flex-end">${setsBar()}${right||''}</div></div>`}
+function nextMode(){return mode<MODES.length-1?`<button class="btn gold" id="nm">${MODES[mode+1]} →</button>`:(set<SETS.length-1?`<button class="btn gold" id="ns">Next set: ${SETS[set+1][0]} →</button>`:'')}
+function wireNext(){const a=$('#nm',r);if(a)a.onclick=()=>{mode++;render()};const b=$('#ns',r);if(b)b.onclick=()=>{set++;mode=0;render()}}
+
+function cards(){const items=pool();let i=0;
+  (function draw(){const w=items[i];
+    r.innerHTML=head('Cards','Read the example and say what the verb means. Then flip.')+
+    `<div class="body"><div class="flip" id="fc"><div class="in"><div class="face a"><div class="term">${w[0]}</div><div class="ex">${full(w[3])}</div></div>
+     <div class="face b"><div class="ru">${w[2]}</div><div class="def">${w[1]}</div></div></div></div></div>
+     <div class="foot"><button class="btn ghost" id="p" ${i?'':'disabled'}>← Back</button><span><button class="btn" id="f">Flip card</button> <span class="count" style="margin-left:10px">${i+1} / ${items.length}</span></span>
+     ${i<items.length-1?'<button class="btn ghost" id="n">Next →</button>':'<span><button class="btn ghost" id="re">Start again</button> '+nextMode()+'</span>'}</div>`;
+    wireSets();wireNext();const fc=$('#fc',r);fc.onclick=$('#f',r).onclick=()=>fc.classList.toggle('f');
+    $('#p',r).onclick=()=>{i--;draw()};const n=$('#n',r);if(n)n.onclick=()=>{i++;draw()};const re=$('#re',r);if(re)re.onclick=()=>{i=0;draw()};})()}
+
+function result(title,score,total,wrong,again){
+  r.innerHTML=head(title+': result',`${score} / ${total}. ${wrong.length?'Say each corrected sentence aloud.':'No mistakes.'}`)+
+  `<div class="body" style="justify-content:flex-start"><div class="review">${wrong.length?wrong.map(w=>`<div>${w.s}<br><s>${esc(w.y)}</s> → <b>${esc(w.a)}</b></div>`).join(''):'<div>Everything correct. Move on, or try Mix 15.</div>'}</div></div>
+  <div class="foot"><button class="btn ghost" id="again">Play again</button>${nextMode()}</div>`;
+  wireSets();wireNext();$('#again',r).onclick=again}
+
+function meaning(){const items=shuffle(pool());let i=0,score=0,wrong=[];
+  (function draw(){const w=items[i];const opts=shuffle([w[1],...shuffle(ALL.filter(x=>x[0]!==w[0])).slice(0,3).map(x=>x[1])]);
+    r.innerHTML=head('Meaning','What does the phrasal verb mean in this sentence?',`<span class="score">Score ${score}</span>`)+
+    `<div class="body"><div class="q" style="margin-bottom:12px">${full(w[3])}</div><div class="opts two">${opts.map(o=>`<button class="opt">${esc(o)}</button>`).join('')}</div><div id="x"></div></div>
+     <div class="foot"><span class="count">${i+1} / ${items.length}</span><span id="nx"></span></div>`;
+    wireSets();
+    r.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{const ok=b.textContent===w[1];
+      r.querySelectorAll('.opt').forEach(o=>{o.disabled=true;if(o.textContent===w[1])o.classList.add('ok')});
+      if(ok)score++;else{b.classList.add('bad');wrong.push({s:full(w[3]),y:b.textContent,a:w[1]})}
+      r.querySelector('.score').textContent='Score '+score;
+      $('#x',r).innerHTML=`<div class="exp"><b class="${ok?'v':'x'}">${ok?'Correct.':'Not quite.'}</b> <b>${w[0]}</b> = ${w[1]}. ${w[2]}.</div>`;
+      $('#nx',r).innerHTML=`<button class="btn">${i<items.length-1?'Next question →':'See result →'}</button>`;
+      $('#nx button',r).onclick=()=>{i++;i<items.length?draw():result('Meaning',score,items.length,wrong,meaning)}})})()}
+
+const norm=s=>s.toLowerCase().replace(/\s+/g,' ').trim();
+function particleMode(){const items=shuffle(pool());let i=0,score=0,wrong=[];
+  (function draw(){const w=items[i],ans=particle(w[3]);let done=false;
+    r.innerHTML=head('Particle','Type the missing particle: one or two words.',`<span class="score">Score ${score} / ${items.length}</span>`)+
+    `<div class="body"><div class="q" style="margin-bottom:6px" id="sent">${gapped(w[3])}</div><p class="sub" style="margin:0 0 12px">${w[1]}</p>
+     <form id="f" style="display:flex;gap:10px;flex-wrap:wrap"><input class="inp" id="in" style="width:260px" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Missing particle"><button class="btn" id="ck">Check</button></form><div id="x"></div></div>
+     <div class="foot"><span class="count">${i+1} / ${items.length}</span><span id="nx"></span></div>`;
+    wireSets();const inp=$('#in',r);inp.focus();
+    $('#f',r).onsubmit=e=>{e.preventDefault();if(done||!inp.value.trim())return;done=true;const ok=norm(inp.value)===ans;
+      inp.readOnly=true;inp.classList.add(ok?'ok':'bad');$('#ck',r).disabled=true;$('#sent',r).innerHTML=gapped(w[3],true);
+      if(ok)score++;else wrong.push({s:gapped(w[3]),y:inp.value.trim(),a:ans});
+      r.querySelector('.score').textContent=`Score ${score} / ${items.length}`;
+      $('#x',r).innerHTML=`<div class="exp"><b class="${ok?'v':'x'}">${ok?'Correct.':'Not quite.'}</b> <b>${w[0]}</b>: ${w[2]}.</div>`;
+      $('#nx',r).innerHTML=`<button class="btn">${i<items.length-1?'Next sentence →':'See result →'}</button>`;
+      const nb=$('#nx button',r);nb.focus();nb.onclick=()=>{i++;i<items.length?draw():result('Particle',score,items.length,wrong,particleMode)}}})()}
+
+function speak(){const items=shuffle(pool());let i=0;
+  (function draw(){const w=items[i];
+    r.innerHTML=head('Speak','Answer in three or four sentences. Use the phrasal verb at least once.')+
+    `<div class="body"><div class="card big" style="margin-bottom:12px">${esc(w[4])}</div><div class="chips"><span class="chip sel">${w[0]}</span><span class="chip">${w[2]}</span></div></div>
+     <div class="foot"><button class="btn ghost" id="p" ${i?'':'disabled'}>← Back</button><span class="count">${i+1} / ${items.length}</span>${i<items.length-1?'<button class="btn" id="n">Next question →</button>':'<span><button class="btn ghost" id="re">Start again</button> '+nextMode()+'</span>'}</div>`;
+    wireSets();wireNext();$('#p',r).onclick=()=>{i--;draw()};const n=$('#n',r);if(n)n.onclick=()=>{i++;draw()};const re=$('#re',r);if(re)re.onclick=speak;})()}
+
+function render(){[...tabs.children].forEach((b,j)=>b.classList.toggle('on',j===mode));[cards,meaning,particleMode,speak][mode]()}
+render();
+</script>
+</body>
+</html>
