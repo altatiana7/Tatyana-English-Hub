@@ -1,6 +1,6 @@
 /* Lesson engine for Gabi's skills lessons (Unit 1, lessons 4–5 and Test yourself).
    One screen per step, navy bar on top, nothing saved between visits.
-   Activity types: quiz · gaps · pick · order · talk · map · write.
+   Activity types: quiz · gaps · pick · order · talk · map · write · explain.
    A step may have a side panel: audio (with a read-aloud fallback), a text that hides, or a card. */
 (function(){
 'use strict';
@@ -83,7 +83,8 @@ function initAct(a,s){if(!a)return;
  if(a.type==='order'){s.pool=shuffle(a.items.map((t,i)=>i));s.seq=[];s.checked=false}
  if(a.type==='talk'){s.i=0;s.flip=false;s.used={};s.left=null;s.run=false}
  if(a.type==='map'){s.val=SHARED.map||{}}
- if(a.type==='write'){s.text=s.text||''}}
+ if(a.type==='write'){s.text=s.text||''}
+ if(a.type==='explain'){s.i=0;s.shown={}}}
 const fb=(ok,head,body)=>`<div class="fb ${ok?'ok':'no'}"><b>${head}</b>${body?`<span>${body}</span>`:''}</div>`;
 function actHTML(a,s){if(!a)return'';return ACT[a.type].view(a,s)}
 const ACT={
@@ -182,6 +183,15 @@ ACT.report={view(a,s){const todo=reportTodo();
    ${s.code?`<span class="muted" id="sentMsg">${s.shared?'Choose your teacher in the list.':'Your homework code is copied. Open your chat with your teacher, paste it (Ctrl + V) and send.'}</span><input readonly class="codeBox" data-code value="${esc(s.code)}" aria-label="Homework code">`:`<span class="muted">This makes a homework code for your teacher.</span>`}</div></div>`},
  click(a,s,d){if(d.send!==undefined)sendCode(a,s,redrawAct)}};
 
+ACT.explain={view(a,s){const n=a.items.length;
+  if(s.i>=n)return `<div class="exEnd"><span class="tag">${esc(a.endLabel||'All the rules')}</span><ol>${a.items.map(it=>`<li><b>${esc(it.name)}</b><span>${esc(it.sum||'')||it.rule}</span></li>`).join('')}</ol><div class="row"><button class="ghost" data-again>Start again</button></div></div>`;
+  const it=a.items[s.i],open=!!s.shown[s.i];
+  return `<div class="qhead"><span class="tag">${esc(a.label||'Rule')} ${s.i+1} of ${n}</span><b>${esc(it.name)}</b></div>
+   <p class="q small">${it.ask}</p>
+   ${open?`<div class="fb ok rule"><b>${esc(it.head||'The rule')}</b><span>${it.rule}</span>${it.eg?`<em>${it.eg}</em>`:''}</div>`:`<p class="muted">${esc(a.wait||'Gabi answers first. Then open the rule.')}</p>`}
+   <div class="row nav3"><button class="ghost" data-back ${s.i===0?'disabled':''}>Back</button>${open?`<button class="main" data-fwd data-auto>${s.i===n-1?'See all the rules':'Next rule'}</button>`:`<button class="main" data-reveal data-auto>Show the rule</button>`}</div>`},
+ after(a,s){const it=a.items[s.i],on=it&&s.shown[s.i]?it.k:null;document.querySelectorAll('#sheet .text mark[data-k]').forEach(m=>m.classList.toggle('lit',!!on&&m.dataset.k.split(' ').includes(on)));const f=document.querySelector('#sheet .text mark.lit');if(f&&f.scrollIntoView)f.scrollIntoView({block:'nearest'})},
+ click(a,s,d){if(d.reveal!==undefined)s.shown[s.i]=true;else if(d.fwd!==undefined)s.i++;else if(d.back!==undefined)s.i=Math.max(0,s.i-1);else if(d.again!==undefined){s.i=0;s.shown={}}else return;redrawAct();this.after(a,s)}};
 function judge(it,v){const raw=String(v||'').trim().toLowerCase();if(raw&&(it.ans||[]).some(x=>String(x).toLowerCase()===raw))return true;const n=nz(v);if(!n)return false;if((it.ans||[]).some(x=>nz(x)===n))return true;if(it.kw){return it.kw.some(g=>g.every(k=>n.includes(k)))?true:'near'}return false}
 function review(rows){return rows.length?`<div class="review"><b>Look again</b><ol>${rows.map(r=>`<li><span>${esc(r[0])}</span><em>${esc(r[1])}</em>${r[2]?`<small>${esc(r[2])}</small>`:''}</li>`).join('')}</ol></div>`:'<p class="clean">Nothing to review.</p>'}
 
@@ -198,6 +208,6 @@ function onClick(e){const b=e.target.closest('button');if(!b||b.disabled)return;
  const A=step.act&&ACT[step.act.type];if(A&&A.click&&b.closest('#act'))A.click(step.act,s,d,b);
  if(step.act&&step.act.type==='write')ACT.write.after(step.act,s)}
 function onInput(e){const step=CFG.steps[cur],s=ST[cur],A=step.act&&ACT[step.act.type];if(A&&A.input)A.input(step.act,s,e.target)}
-const _draw=draw;draw=function(){_draw();const step=CFG.steps[cur];if(step.act&&step.act.type==='write'&&$('#act'))ACT.write.after(step.act,ST[cur])};
+const _draw=draw;draw=function(){_draw();const step=CFG.steps[cur],A=step.act&&ACT[step.act.type];if(A&&A.after&&$('#act'))A.after(step.act,ST[cur])};
 window.Lesson={boot,words,nz};
 })();

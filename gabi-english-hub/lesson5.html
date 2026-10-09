@@ -4,20 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache">
-<title>Gabi · Lesson 5 · Online and writing</title>
+<title>Gabi · Lesson 5 · Online safety</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="skills.css?v=20261007e">
+<link rel="stylesheet" href="skills.css?v=20261009a">
 </head>
 <body>
-<script src="skills.js?v=20261007e"></script>
+<script src="skills.js?v=20261009a"></script>
 <script>
 /* Oxford Discover Futures 2: Unit 4 p42–43 (track 1.13), Unit 1 p10–11 (track 1.02), Unit 3 p34–35, Project p90–91.
-   Gateway to the World B1, Unit 1: Developing writing p15. */
+   The email to Maya (Gateway p15) now lives in writing-email.html. */
 const S113=[['One','Hi there and welcome to Connect, our weekly look at the weird and wonderful world of social media.'],['Two','The big topic this week is online picture sharing. So let’s start with this picture, which I found on a friend’s gaming blog.'],['One','That’s such a cool image. It’s perfect for a blog about video games.'],['Two','Yeah, it’s nice, but it’s stolen.'],['One','Stolen? What do you mean?'],['Two','Well, my friend found it on Google Images and he simply pasted it into his blog, but it isn’t his picture.'],['One','Yeah, but in the blog it says it’s from Google Images.'],['Two','Yes, but that’s not enough. If you take a picture, it belongs to you. You own the picture and the copyright, the legal right to use it. If someone wants to use a picture, they have to find out who it belongs to and ask for permission to use it.'],['One','People don’t mind if you use their pictures.'],['Two','Um, yes they do! Some photographers make money from pictures. You can’t just steal them.'],['One','Sometimes it says online that everyone has permission to use the picture.'],['Two','Sure, in that case it’s fine to use it. Let’s look at another picture. This is a picture of a girl called Emma. Now, you tell me what’s wrong with it.'],['One','It looks okay to me. That’s so funny. Emma having a bad morning. Yes, it’s not her best look.'],['Two','And who shared the picture?'],['One','Oh, it was someone called Nick.'],['Two','Yeah, and look at the comments.'],['One','Ah, how embarrassing!'],['Two','Yes, I don’t think Nick thought carefully about this. He needed to consider how this would affect Emma. You don’t share a picture if it will embarrass someone. It’s good netiquette to ask for permission before you share, too.'],['One','Netiquette. I like that word. Netiquette is correct internet behavior, isn’t it?'],['Two','Right. So let’s look at a third picture with a netiquette problem.'],['One','What a nice invitation. What’s wrong with it?'],['Two','The problem isn’t in the picture. The problem is who is looking at it. The person posting this picture didn’t change their settings from public to private and hundreds of people can access the image, not just their family and friends. Sometimes people see the word party and they invite themselves.'],['One','Yeah, I guess you always need to think before you share.'],['Two','Yes, just think of PIC. P, I, C. Think of P for Permission. You need the owner’s permission to share an image that isn’t yours. I is for Information. Ask yourself if you’re giving too much information to strangers. Finally, C is for Comments. Before you share a picture, think of the comments it might receive.'],['One','PIC. Great, got it.']];
-const MAYA=`<p>Hi,</p><p>I’m Maya. I’m from Brighton in the UK. Let me tell you about myself.</p><p>I’ve got one brother and one sister. My sister and I are almost the same age and we go everywhere together. My father’s a teacher and my mother works in an office. What about you? Have you got a big or a small family?</p><p>I love listening to music. My favourite group is Wolf Alice. Right now, I’m listening to one of their new songs. I also enjoy doing all types of sports, but especially team sports like football and basketball. What about you? What do you like doing in your free time?</p><p>What are your favourite subjects at school? Mine are art and English. This year I have special art classes on Saturdays. I have a lot of homework during the week but I love reading when I can. At the moment I’m reading a great book about the Mexican artist Frida Kahlo.</p><p>Anyway, that’s all for now. Is there anything special you’d like to know about me?</p><p>Write back soon.<br>Best wishes,<br>Maya</p>`;
-const TASK=`<h4>Your task</h4><p>Your school is going to be part of the exchange. Write an email introducing yourself to Maya. Include:</p><ul><li>basic personal information</li><li>your family</li><li>your main hobby</li><li>your favourite subjects at school</li></ul><p>Reply to her questions and ask her about herself.</p>`;
-const contractions=t=>(t.match(/\b[A-Za-z]+['’](m|ve|s|re|d|ll|t)\b/g)||[]).length;
 Lesson.boot({kicker:'Lesson 5 · Unit 1',steps:[
 {stage:'Sharing',title:'Fair share?',photo:{src:'age-scenes/10.jpg',alt:'A teenager shows his phone to his grandmother',cap:'Before you post it: is it OK?'},hint:'Think of the Sharenting text. Is it OK to share a picture when …',
  act:{type:'quiz',label:'Situation',opts:['OK to share','Not OK'],items:[
@@ -76,50 +73,13 @@ Lesson.boot({kicker:'Lesson 5 · Unit 1',steps:[
   {q:'Now speak against the statement. Two points, each with an example.'},
   {q:'Your teacher gives the opposite opinion. Respond to it politely.',secs:40},
   {q:'Sum up: what do you really think?',secs:40}]}},
-{stage:'Writing',title:'Formal, neutral or informal?',photo:{src:'assets/l5/phone.jpg',alt:'A teenager typing a message',cap:'Who are you writing to?'},hint:'A text to a friend, a letter from a school, an email to an exchange partner. Which is which?',
+{stage:'Style',title:'Formal, neutral or informal?',photo:{src:'assets/l5/phone.jpg',alt:'A teenager typing a message',cap:'Who are you writing to?'},hint:'A text to a friend, a letter from a school, an email to an exchange partner. Which is which?',
  act:{type:'quiz',label:'Phrase',opts:['Formal','Neutral','Informal'],items:[
   {q:'Hey, Sam',a:'Informal',why:'A text to a friend.'},{q:'Dear Mr. Hooper,',a:'Formal',why:'Title and surname.'},{q:'Dear Daniel,',a:'Neutral',why:'First name, but still polite.'},
   {q:'How cool is that?',a:'Informal',why:'Formal: We are pleased. Neutral: I’m very excited.'},{q:'We are pleased to inform you that …',a:'Formal',why:'No contractions, official verbs.'},{q:'I’m very excited.',a:'Neutral',why:'Friendly but not slang.'},
   {q:'Text me if you hear anything.',a:'Informal',why:'Formal: Please do not hesitate to contact us.'},{q:'Please do not hesitate to contact us.',a:'Formal',why:'A fixed formal phrase.'},{q:'Let me know if you need any information.',a:'Neutral',why:'Polite and simple.'},
   {q:'Talk soon',a:'Informal',why:'Formal: Yours sincerely. Neutral: Best wishes.'},{q:'Yours sincerely,',a:'Formal',why:'Ends a letter to a named person.'},{q:'Best wishes,',a:'Neutral',why:'Works with people you don’t know well.'},
-  {q:'We are writing to you regarding …',a:'Formal',why:'Neutral: I’m just writing to …'},{q:'I’m just writing to say hello.',a:'Neutral',why:'A contraction and a friendly aim.'},{q:'Any news????',a:'Informal',why:'Repeated question marks and an incomplete sentence.'}]}},
-{stage:'Writing',title:'Maya’s email',hint:'Put the five paragraphs in the right order.',wide:true,
- side:{look:'mail',mail:{from:'Maya',sub:'Hello from Brighton',img:'assets/l5/maya.jpg'},title:'Student’s Book p15 · Maya, from Brighton, is your exchange partner',text:{html:MAYA,seconds:90},gate:true,gateText:'Read the email. The task appears when the text is hidden.'},
- act:{type:'order',compact:true,from:'Tap the topics in the order of the paragraphs',items:['basic personal information','family','hobbies','favourite subjects at school','asking for a reply']}},
-{stage:'Writing',title:'What did Maya say?',photo:{src:'assets/l5/maya.jpg',alt:'Maya',cap:'Maya, Brighton'},hint:'The email is closed. Answer from memory.',
- act:{type:'gaps',open:true,dense:true,items:[
-  {pre:'How many people are there in Maya’s immediate family?',long:1,kw:[['five'],['5']],model:'Five: Maya, her brother, her sister and their parents.'},
-  {pre:'What do her parents do?',long:1,kw:[['teacher'],['office']],model:'Her father is a teacher and her mother works in an office.'},
-  {pre:'What is she doing while she is writing the email?',long:1,kw:[['listening'],['music'],['song']],model:'She is listening to a new song by Wolf Alice.'},
-  {pre:'Would she prefer running or volleyball? Why?',long:1,kw:[['team']],model:'Volleyball, because she especially likes team sports.'},
-  {pre:'Which subject does she enjoy most? How do you know?',long:1,kw:[['art']],model:'Art: she has special art classes on Saturdays and is reading about Frida Kahlo.'},
-  {pre:'“I love listening to music. Right now, I’m listening …” Why two tenses?',long:1,kw:[['simple'],['continuous'],['now'],['general']],model:'Present simple for what she likes in general, present continuous for what is happening now.'}]}},
-{stage:'Writing',title:'Writing bank',photo:{src:'assets/l5/brighton.jpg',alt:'Brighton seafront',cap:'Brighton, UK'},hint:'Useful words in informal emails. One word in each gap.',
- act:{type:'gaps',cols:2,items:[
-  {pre:'Begin with Dear Maya, or just',post:',',ans:['hi','hello','hey']},
-  {pre:'Thanks',post:'your email.',ans:['for']},
-  {pre:'It was great to',post:'from you.',ans:['hear']},
-  {pre:'How are',post:'?',ans:['things','you']},
-  {pre:'I hope you’re',post:'.',ans:['well','ok','fine']},
-  {pre:'Change the subject with',post:', …',ans:['anyway']},
-  {pre:'That’s',post:'for now.',ans:['all']},
-  {pre:'Write',post:'soon.',ans:['back']},
-  {pre:'All the',post:'!',ans:['best']},
-  {pre:'Best',post:',',ans:['wishes','regards']}]}},
-{stage:'Writing',title:'Plan your reply',hint:'Make a mind map before you write.',
- side:{card:TASK},
- act:{type:'map',centre:'My reply',branches:[{label:'1 · Basic information',ph:['name, age','town, country']},{label:'2 · My family',ph:['who','what they do']},{label:'3 · My main hobby',ph:['what','right now I’m …']},{label:'4 · School subjects',ph:['favourite','why']},{label:'Answers to Maya',ph:['big or small family?','free time?']},{label:'5 · Questions for Maya',ph:['question 1','question 2']}]}},
-{stage:'Writing',title:'Write to Maya',hint:'Write your email. The checklist turns green as you go.',
- side:{card:sh=>{const d=sh.mapDef,v=sh.map||{};const plan=d?d.branches.map((b,i)=>{const w=[v[i+'_0'],v[i+'_1']].filter(Boolean).join(', ');return '<li><b>'+b.label+'</b>'+(w?': '+w.replace(/[<>&]/g,''):'')+'</li>'}).join(''):'';return TASK+(plan?'<h4>Your plan</h4><ul>'+plan+'</ul>':'')}},
- act:{type:'write',to:'Maya',subject:'Re: Hello from Brighton',min:90,max:140,ph:'Hi Maya,',checks:[
-  {label:'Starts with Hi or Dear Maya',test:t=>/^\s*(hi|hello|dear maya)\b/i.test(t)},
-  {label:'Replies to her email: Thanks for your email / It was great to hear from you',test:t=>/(thanks for your (e-?mail|message)|great to hear from you|hope you['’]?re well|how are things)/i.test(t)},
-  {label:'At least three contractions (I’m, I’ve, that’s)',test:t=>contractions(t)>=3},
-  {label:'Present continuous for now (I’m reading …)',test:t=>/\b(am|is|are)\s+\w+ing\b|['’](m|s|re)\s+\w+ing\b/i.test(t)},
-  {label:'Anyway, to change the subject',test:t=>/\banyway\b/i.test(t)},
-  {label:'At least two questions for Maya',test:t=>(t.match(/\?/g)||[]).length>=2},
-  {label:'Five short paragraphs',test:t=>t.split(/\n+/).filter(x=>x.trim().length>20).length>=4},
-  {label:'Ends with Write back soon / Best wishes / All the best',test:t=>/(write (back )?soon|best wishes|all the best|bye for now)/i.test(t)}]}}
+  {q:'We are writing to you regarding …',a:'Formal',why:'Neutral: I’m just writing to …'},{q:'I’m just writing to say hello.',a:'Neutral',why:'A contraction and a friendly aim.'},{q:'Any news????',a:'Informal',why:'Repeated question marks and an incomplete sentence.'}]}}
 ]});
 </script>
 </body>

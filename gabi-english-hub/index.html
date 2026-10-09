@@ -168,7 +168,7 @@ button{font:inherit}
       <span class="hi" id="hi">WELCOME BACK, GABI</span>
       <h1>Your English <em>Hub</em></h1>
       <p>Gateway to the World B1 · Unit 1 of 10 · Happy families</p>
-      <button class="go" id="continueBtn"><i></i><div><small>CONTINUE</small><b>Lesson 4 · Listening and speaking</b><div class="prog"><span><u id="progFill" style="width:0"></u></span><em id="progText" style="font-style:normal"></em></div></div></button>
+      <button class="go" id="continueBtn"><i></i><div><small>CONTINUE</small><b>Lesson 6 · Writing: an informal email</b><div class="prog"><span><u id="progFill" style="width:0"></u></span><em id="progText" style="font-style:normal"></em></div></div></button>
     </div>
     <div class="dock">
       <a class="tile" href="what-happens-next.html?v=20261007-b"><div class="th" style="background-image:url(assets/whn/lamp.jpg)"></div><div><small>WARM-UP</small><b>What Happens Next?</b><span>Watch, stop, predict with will</span></div></a>
@@ -201,7 +201,8 @@ const modules=[
    {title:'Reading & Grammar',note:'Sharenting · state/action verbs · articles'},
    {title:'People & Perspectives',note:'Famous People Quiz · Word Formation · Family · Video · Articles'},
    {title:'Listening & Speaking',note:'Teen Talk Time · good conversation · showing interest · asking for personal information'},
-   {title:'Online & Writing',note:'Fair Share · identity online · mini-debate · formal or informal · email to Maya'},
+   {title:'Online safety',note:'Fair Share · identity online · mini-debate · formal or informal'},
+   {title:'Writing · An informal email',note:'Homework check · Maya’s email · seven rules · Writing bank · plan · write'},
    {title:'Revision',note:'Unit 1 step by step · warm-up · Word Walls · accuracy · Ten Faces · Reach Higher · Test yourself'}]},
  {title:'Law and order',lessons:[
    {title:'Vocabulary & Grammar',note:'Crimes · detective work · Past Simple'},
@@ -287,8 +288,9 @@ document.getElementById('homeBtn').onclick=()=>{
 function openLesson(n,i){
   if(n===1 && i===2){ location.href='lesson3.html?v=20261007-c'; return; }
   if(n===1 && i===3){ location.href='lesson4.html?v=20261007-d'; return; }
-  if(n===1 && i===4){ location.href='lesson5.html?v=20261007-d'; return; }
-  if(n===1 && i===5){ location.href='revision-unit1.html?v=20261007-d'; return; }
+  if(n===1 && i===4){ location.href='lesson5.html?v=20261009-a'; return; }
+  if(n===1 && i===5){ location.href='writing-email.html?v=20261009-a'; return; }
+  if(n===1 && i===6){ location.href='revision-unit1.html?v=20261007-d'; return; }
   if(n===1){
     location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20261001-clean-layout-v9';
     return;
@@ -325,8 +327,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
   const tile=document.getElementById('wordTile');tile.onclick=()=>{tile.classList.toggle('flip');
     try{if(tile.classList.contains('flip')){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w[0]);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}catch(e){}};
   const h=d.getHours();document.getElementById('hi').textContent=(h<12?'GOOD MORNING':h<18?'GOOD AFTERNOON':'GOOD EVENING')+', GABI';
-  document.getElementById('progText').textContent='13 steps · 60 minutes';
-  document.getElementById('continueBtn').onclick=()=>openLesson(1,3);
+  document.getElementById('progText').textContent='10 steps · 30 minutes';
+  document.getElementById('continueBtn').onclick=()=>openLesson(1,5);
 })();
 
 (async function loadNewCover(){

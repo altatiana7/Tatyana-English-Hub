@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Lesson 6 · Writing: an informal email</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="skills.css?v=20261009a">
+</head>
+<body>
+<script src="skills.js?v=20261009a"></script>
+<script>
+/* Gateway to the World B1, Unit 1: Developing writing p15 (An informal email 1).
+   Starts with a live check of Homework 6 (Listening p12, track 06): the facts repeat the keys in lesson4.html.
+   Maya is the girl in the Student's Book email, not a student. */
+const CALLERS=[{n:'Oliver',img:'assets/l4/oliver.jpg'},{n:'Emma',img:'assets/l4/emma.jpg'},{n:'Harry',img:'assets/l4/harry.jpg'},{n:'Charlotte',img:'assets/l4/charlotte.jpg'},{n:'Poppy',img:'assets/l4/poppy.jpg'}];
+const NAMES=['Oliver','Emma','Harry','Charlotte','Poppy'];
+const MAYA=`<p>Hi,</p><p>I’m Maya. I’m from Brighton in the UK. Let me tell you about myself.</p><p>I’ve got one brother and one sister. My sister and I are almost the same age and we go everywhere together. My father’s a teacher and my mother works in an office. What about you? Have you got a big or a small family?</p><p>I love listening to music. My favourite group is Wolf Alice. Right now, I’m listening to one of their new songs. I also enjoy doing all types of sports, but especially team sports like football and basketball. What about you? What do you like doing in your free time?</p><p>What are your favourite subjects at school? Mine are art and English. This year I have special art classes on Saturdays. I have a lot of homework during the week but I love reading when I can. At the moment I’m reading a great book about the Mexican artist Frida Kahlo.</p><p>Anyway, that’s all for now. Is there anything special you’d like to know about me?</p><p>Write back soon.<br>Best wishes,<br>Maya</p>`;
+/* the same email with paragraph numbers; data-k marks light up with the matching rule */
+const m=(k,t)=>`<mark data-k="${k}">${t}</mark>`;
+const BUILT=`<p>${m('hi','Hi,')}</p>
+<p><mark data-k="para" class="pn">1</mark>${m('short','I’m')} Maya. ${m('short','I’m')} from Brighton in the UK. Let me tell you about myself.</p>
+<p><mark data-k="para" class="pn">2</mark>${m('short','I’ve')} got one brother and one sister. My sister and I are almost the same age and we go everywhere together. My ${m('short','father’s')} a teacher and my mother works in an office. ${m('ask','What about you? Have you got a big or a small family?')}</p>
+<p><mark data-k="para" class="pn">3</mark>${m('tense','I love listening')} to music. My favourite group is Wolf Alice. ${m('tense','Right now, I’m listening')} to one of their new songs. I also enjoy doing all types of sports, but especially team sports like football and basketball. ${m('ask','What about you? What do you like doing in your free time?')}</p>
+<p><mark data-k="para" class="pn">4</mark>${m('ask','What are your favourite subjects at school?')} Mine are art and English. This year I have special art classes on Saturdays. I have a lot of homework during the week but I love reading when I can. ${m('tense','At the moment I’m reading')} a great book about the Mexican artist Frida Kahlo.</p>
+<p><mark data-k="para" class="pn">5</mark>${m('anyway','Anyway,')} ${m('short bye','that’s all for now.')} ${m('ask','Is there anything special you’d like to know about me?')}</p>
+<p>${m('bye','Write back soon.')}<br>${m('bye','Best wishes,')}<br>Maya</p>`;
+const lit=t=>`<mark class="lit">${t}</mark>`;
+const NOTES=`<p><b class="pn">2</b>… ${lit('Have you got a big or a small family?')}</p><p><b class="pn">3</b>… ${lit('What do you like doing in your free time?')}</p><p><b class="pn">4</b>${lit('What are your favourite subjects at school?')} Mine are art and English …</p><p><b class="pn">5</b>Anyway, that’s all for now. ${lit('Is there anything special you’d like to know about me?')}</p>`;
+const WEAK=`<h4>Leo’s reply to Maya</h4><div class="weak">Dear Madam, I am Leo. I am from Madrid in Spain. I have got one sister. I like football. I like maths. Goodbye. Leo</div>`;
+const TASK=`<h4>Your task</h4><p>Your school is going to be part of the exchange. Write an email introducing yourself to Maya. Include:</p><ul><li>basic personal information</li><li>your family</li><li>your main hobby</li><li>your favourite subjects at school</li></ul><p>Reply to her questions and ask her about herself.</p>`;
+const contractions=t=>(t.match(/\b[A-Za-z]+['’](m|ve|s|re|d|ll|t)\b/g)||[]).length;
+Lesson.boot({kicker:'Lesson 6 · Unit 1',steps:[
+{stage:'Homework',title:'Who is it?',hint:'Homework check. No text: who are we talking about?',
+ side:{look:'radio',people:CALLERS,title:'Teen Talk Time · Student’s Book p12',audio:[{src:'assets/audio/gw-06.mp3',label:'Teen Talk Time'}]},
+ act:{type:'quiz',label:'Caller',cols:3,opts:NAMES,items:[
+  {q:'This person’s dad hates it when he plays video games.',a:'Oliver',why:'But he only plays when he finishes all his homework.'},
+  {q:'This person often argues with a little sister who is only ten.',a:'Emma',why:'The sister is noisy and their mum protects her.'},
+  {q:'This person’s dad is the headmaster at his school.',a:'Harry',why:'They argue about studying.'},
+  {q:'This person’s mum wants her to study medicine.',a:'Charlotte',why:'She needs to decide for herself.'},
+  {q:'This person’s bedroom is a mess, but she doesn’t care.',a:'Poppy',why:'She knows it is a mess.'},
+  {q:'This person’s dad is never happy with what he does after school.',a:'Harry',why:'His dad is a headmaster.'},
+  {q:'This person only plays when all the homework is finished.',a:'Oliver',why:'So is his dad fair?'},
+  {q:'This person has to choose what to study, and her mum has a plan.',a:'Charlotte',why:'Medicine is her mum’s idea, not hers.'}]}},
+{stage:'Homework',title:'Say it aloud',hint:'You only hear the question. Speak for 40 seconds.',
+ side:{card:`<h4>Gabi’s written homework</h4><p>Lesson 6 on the homework site: fix the facts, advice for the five teenagers, his call to Teen Talk Time.</p><a class="link" href="../gabriel-homework/lesson-6-homework.html" target="_blank" rel="noopener">Open Homework 6</a><h4 style="margin-top:14px">Listen for</h4><ul><li>argue <b>with</b> … <b>about</b> …</li><li>My mum / dad always says …</li><li>It’s fair / It isn’t fair because …</li></ul>`},
+ act:{type:'talk',label:'Question',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['I think …','because …','For example, …','My mum / dad always says …','It’s fair / It isn’t fair','In my family …'],cards:[
+  {say:'What do you and your parents argue about?',audio:'../gabriel-homework/media/l6/q1.mp3',q:'What do you and your parents argue about?'},
+  {say:'Which of the five teenagers is most like you? Why?',audio:'../gabriel-homework/media/l6/q3.mp3',q:'Which of the five teenagers is most like you? Why?'},
+  {say:'Is it fair when parents choose what their children study? Why?',audio:'../gabriel-homework/media/l6/q4.mp3',q:'Is it fair when parents choose what their children study? Why?'},
+  {say:'Are arguments between parents and teenagers inevitable? Why?',audio:'../gabriel-homework/media/l6/q6.mp3',q:'Are arguments between parents and teenagers inevitable? Why?',sub:'inevitable = you cannot avoid it'}]}},
+{stage:'Read',title:'Maya’s email',hint:'Put the five paragraphs in the right order.',wide:true,
+ side:{look:'mail',mail:{from:'Maya',sub:'Hello from Brighton',img:'assets/l5/maya.jpg'},title:'Student’s Book p15 · Maya, from Brighton, is your exchange partner',text:{html:MAYA,seconds:90},gate:true,gateText:'Read the email. Have you got anything in common with Maya? The task appears when the text is hidden.'},
+ act:{type:'order',compact:true,from:'Tap the topics in the order of the paragraphs',items:['basic personal information','family','hobbies','favourite subjects at school','asking for a reply']}},
+{stage:'Read',title:'What did Maya say?',photo:{src:'assets/l5/maya.jpg',alt:'Maya',cap:'Maya, Brighton'},hint:'The email is closed. Answer from memory.',
+ act:{type:'gaps',open:true,dense:true,items:[
+  {pre:'How many people are there in Maya’s immediate family?',long:1,kw:[['five'],['5']],model:'Five: Maya, her brother, her sister and their parents.'},
+  {pre:'What do her parents do?',long:1,kw:[['teacher'],['office']],model:'Her father is a teacher and her mother works in an office.'},
+  {pre:'What is she doing while she is writing the email?',long:1,kw:[['listening'],['music'],['song']],model:'She is listening to a new song by Wolf Alice.'},
+  {pre:'Would she prefer running or volleyball? Why?',long:1,kw:[['team']],model:'Volleyball, because she especially likes team sports.'},
+  {pre:'Which subject does she enjoy most? How do you know?',long:1,kw:[['art']],model:'Art: she has special art classes on Saturdays and is reading about Frida Kahlo.'}]}},
+{stage:'Rules',title:'How the email is built',hint:'Look at the email and find the answer yourself. Then check the rule.',wide:true,
+ side:{look:'mail',mail:{from:'Maya',sub:'Hello from Brighton',img:'assets/l5/maya.jpg'},text:{html:BUILT}},
+ act:{type:'explain',label:'Rule',items:[
+  {k:'hi',sum:'Hi, or Dear Maya,',name:'Greeting',ask:'How does Maya begin? Would she write this to a head teacher?',rule:'An informal email begins with <b>Hi,</b> or <b>Dear Maya,</b> and a first name. Never Dear Sir or Madam.'},
+  {k:'para',sum:'One topic, one paragraph',name:'Paragraphs',ask:'Why are there five paragraphs and not one long text?',rule:'One paragraph is one topic: 1 who I am, 2 family, 3 hobbies, 4 school, 5 goodbye. Her plan is your plan.'},
+  {k:'short',sum:'I’m, I’ve, that’s',name:'Short forms',ask:'Find four short forms. What are the full forms?',rule:'Friends write the way they speak: <b>I’m, I’ve, father’s, that’s</b>. Full forms (I am, I have) sound too formal.'},
+  {k:'ask',sum:'Answer her questions, ask your own',name:'Questions',ask:'Maya writes about herself. How does she bring you into the conversation?',rule:'She ends a topic with a question: <b>What about you?</b> In your reply you answer every question and ask your own.'},
+  {k:'tense',sum:'I love … / Right now I’m …',name:'Two tenses',ask:'“I love listening to music. Right now, I’m listening …” Why two tenses?',rule:'Present simple for what is always true, present continuous for this moment.',eg:'I play the guitar. At the moment I’m learning a new song.'},
+  {k:'anyway',sum:'Anyway, changes the subject',name:'Changing the subject',ask:'Which one word tells you that Maya is finishing?',rule:'<b>Anyway,</b> changes the subject. Here it moves from school to goodbye.'},
+  {k:'bye',sum:'That’s all for now. Write back soon. Best wishes,',name:'Ending',ask:'How many lines does Maya need to say goodbye? What are they?',rule:'<b>That’s all for now. Write back soon. Best wishes,</b> and then only the first name on a new line.'}]}},
+{stage:'Rules',title:'Answer Maya',hint:'Maya asks four questions. Answer each one in a full sentence, like in a real reply.',
+ side:{look:'mail',mail:{from:'Maya',sub:'Hello from Brighton',img:'assets/l5/maya.jpg'},title:'The notes in the book: Explain · Say two things you really like · I like … · Ask about …',text:{html:NOTES}},
+ act:{type:'gaps',free:true,after:'Read your four sentences aloud. This is already half of your email.',items:[
+  {pre:'Explain: big or small family?',ph:'I’ve got …'},
+  {pre:'Say two things you really like',ph:'I love … I also enjoy …'},
+  {pre:'I like … (school subjects)',ph:'My favourite subjects are … because …'},
+  {pre:'Ask about … (your question for Maya)',ph:'What … ? / Have you … ?'}]}},
+{stage:'Rules',title:'Writing bank',hint:'Useful words in informal emails. One word in each gap.',
+ act:{type:'gaps',cols:2,items:[
+  {pre:'Begin with Dear Maya, or just',post:',',ans:['hi','hello','hey']},
+  {pre:'Thanks',post:'your email.',ans:['for']},
+  {pre:'It was great to',post:'from you.',ans:['hear']},
+  {pre:'How are',post:'?',ans:['things','you']},
+  {pre:'I hope you’re',post:'.',ans:['well','ok','fine']},
+  {pre:'Change the subject with',post:', …',ans:['anyway']},
+  {pre:'That’s',post:'for now.',ans:['all']},
+  {pre:'Write',post:'soon.',ans:['back']},
+  {pre:'All the',post:'!',ans:['best']},
+  {pre:'Best',post:',',ans:['wishes','regards']}]}},
+{stage:'Rules',title:'What is wrong with Leo’s reply?',hint:'Another student wrote this. Find the real problems. <small>Then say how you would fix each one.</small>',
+ side:{card:WEAK},
+ act:{type:'pick',notes:true,items:[
+  {t:'The greeting is too formal.',ok:1,note:'Hi Maya, or Dear Maya,'},
+  {t:'There are no short forms.',ok:1,note:'I’m, I’ve got'},
+  {t:'It is too long.',note:'Too short.'},
+  {t:'He gives no details.',ok:1,note:'Which team? Why maths?'},
+  {t:'He asks Maya no questions.',ok:1,note:'What about you?'},
+  {t:'He forgot to say where he is from.',note:'Madrid, Spain.'},
+  {t:'It is one block, with no paragraphs.',ok:1,note:'One topic, one paragraph.'},
+  {t:'The ending is not friendly.',ok:1,note:'Write back soon.'},
+  {t:'The present simple is wrong here.',note:'Right for facts.'}]}},
+{stage:'Write',title:'Plan your reply',hint:'Make a mind map before you write.',
+ side:{card:TASK},
+ act:{type:'map',centre:'My reply',branches:[{label:'1 · Basic information',ph:['name, age','town, country']},{label:'2 · My family',ph:['who','what they do']},{label:'3 · My main hobby',ph:['what','right now I’m …']},{label:'4 · School subjects',ph:['favourite','why']},{label:'Answers to Maya',ph:['big or small family?','free time?']},{label:'5 · Questions for Maya',ph:['question 1','question 2']}]}},
+{stage:'Write',title:'Write to Maya',hint:'Write your email. The checklist turns green as you go.',
+ side:{card:sh=>{const d=sh.mapDef,v=sh.map||{};const plan=d?d.branches.map((b,i)=>{const w=[v[i+'_0'],v[i+'_1']].filter(Boolean).join(', ');return '<li><b>'+b.label+'</b>'+(w?': '+w.replace(/[<>&]/g,''):'')+'</li>'}).join(''):'';return TASK+(plan?'<h4>Your plan</h4><ul>'+plan+'</ul>':'')}},
+ act:{type:'write',to:'Maya',subject:'Re: Hello from Brighton',min:90,max:140,ph:'Hi Maya,',checks:[
+  {label:'Starts with Hi or Dear Maya',test:t=>/^\s*(hi|hello|dear maya)\b/i.test(t)},
+  {label:'Replies to her email: Thanks for your email / It was great to hear from you',test:t=>/(thanks for your (e-?mail|message)|great to hear from you|hope you['’]?re well|how are things)/i.test(t)},
+  {label:'At least three contractions (I’m, I’ve, that’s)',test:t=>contractions(t)>=3},
+  {label:'Present continuous for now (I’m reading …)',test:t=>/\b(am|is|are)\s+\w+ing\b|['’](m|s|re)\s+\w+ing\b/i.test(t)},
+  {label:'Anyway, to change the subject',test:t=>/\banyway\b/i.test(t)},
+  {label:'At least two questions for Maya',test:t=>(t.match(/\?/g)||[]).length>=2},
+  {label:'Five short paragraphs',test:t=>t.split(/\n+/).filter(x=>x.trim().length>20).length>=4},
+  {label:'Ends with Write back soon / Best wishes / All the best',test:t=>/(write (back )?soon|best wishes|all the best|bye for now)/i.test(t)}]}}
+]});
+</script>
+</body>
+</html>
