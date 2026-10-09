@@ -147,19 +147,44 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
 /* ---------- content ---------- */
-const TABS=['Start','Warm-up','No “if”','Words','Use it','Phrasals','Bias','Modals','Grammar','Debate','Wrap-up'];
+const TABS=['Start','Warm-up','Words','Use it','Phrasals','Bias','Modals','No “if”','Grammar','Debate','Wrap-up'];
 const NOTES=[
- {en:'“For a few weeks we have talked about prisons, religion and voting. Today: the institution all of us have been through. Did it do its job?”',ru:'Тема урока: готовит ли образование к реальной жизни. Фильм Room 8 в этот урок не входит. Порядок: позиция, условные без if (инверсия, but for, supposing), сочетания, фразовые глаголы, ошибка выжившего, past modals (продолжение had to / could из Unit 8), все времена вперемешку, 16 предложений Grammar + Word Formation, дебаты, итог.'},
+ {en:'“For a few weeks we have talked about prisons, religion and voting. Today: the institution all of us have been through. Did it do its job?”',ru:'Тема урока: готовит ли образование к реальной жизни. Логика: мнение → точные слова → разговорный регистр → содержание и критическое мышление → грамматика для оценки прошлого → грамматика для альтернатив → закрепление точности → свободная речь → рефлексия. Между шагами есть экран-переход с фразой, которую можно произнести. Полный план с целями и временем ниже.'},
  {en:'Let him choose first, then make him defend it for about a minute. Use the challenge line to push back whatever he chooses.',ru:'Три утверждения, по одному на экран. После выбора появляется схема ответа и возражение, которое вы озвучиваете. Цель: развернутый ответ с примером и уступкой.'},
- {en:'“You know every conditional, mixed ones included. Now say them without the word if.”',ru:'Привязка к учебнику: Outcomes Unit 8, First Conditional. Никита условные уже знает, поэтому здесь уровень C1: инверсия (Had I known, Were it not for, Were … to, Should you), but for, on condition that, supposing, otherwise. После каждого ответа попросите перефразировать предложение обратно через if.'},
  {en:'“Read the example, guess the meaning, then flip. Answer the question on the back using the collocation.”',ru:'12 сочетаний. На лицевой стороне пример, на обороте перевод и личный вопрос. Следите, чтобы в ответе прозвучало само сочетание.'},
  {en:'“Before you answer, decide how sure you are. Confident answers win three points and lose two.”',ru:'10 предложений. Ставка на уверенность: Safe +1 / 0, Confident +3 / −2. В конце разбор ошибок.'},
  {en:'“Ten phrasal verbs every student needs. Same rule: bet on how sure you are.”',ru:'10 фразовых глаголов по теме учёбы (drop out, fall behind, catch up, keep up with, hand in, go over, brush up on, scrape through, pick up, put off). После ответа показывается перевод. Попросите Никиту сказать о себе одно предложение с каждым, где он ошибся.'},
  {en:'“Here is a famous kind of story. What exactly does it prove?”',ru:'Пять экранов: история успеха, самолёты Абрахама Вальда, определение, три утверждения «кого не хватает в данных», вопросы про образование. Сначала ответ Никиты, потом раскрытие.'},
  {en:'“Now we judge the past: what must have happened, what should have been done differently.”',ru:'Две части: Choose (6 ситуаций с ловушками) и Judge it (4 карточки для говорения: критика + альтернатива). Справка открывается кнопкой Reference.'},
+ {en:'“You know every conditional, mixed ones included. Now say them without the word if.”',ru:'Грамматика Unit 8 (First Conditional) на уровень выше. Никита условные уже знает, поэтому здесь уровень C1: инверсия (Had I known, Were it not for, Were … to, Should you), but for, on condition that, supposing, otherwise. После каждого ответа попросите перефразировать предложение обратно через if.'},
  {en:'“First one story with every tense in it. Then sixteen sentences: eight grammar, eight word formation.”',ru:'Две части, переключаются сверху. All tenses: история учительницы, 14 предложений, все времена вперемешку (включая Future Perfect Continuous, пассив и used to); после ответа показано название времени. Grammar + WF: 16 предложений. Свободный ввод, проверка сразу, в конце счёт и разбор ошибок. Принимаются варианты написания (memorised / memorized, needn’t / need not).'},
  {en:'“You don’t choose your side. The page does.”',ru:'Кнопка Assign side случайно назначает сторону. Три раунда: Opening 2:00, Rebuttal 1:30, Switch sides 1:00. Фразы справа нажимаются и попадают в план речи. Аргументы обеих сторон ниже.',extra:'<p><b>For:</b> literacy and numeracy are real-life skills; school teaches deadlines, cooperation and how to learn; graduates earn more and are unemployed less often on average; nobody can predict which practical skills will matter in 20 years.</p><p><b>Against:</b> teaching to the test rewards memory, not judgement; almost no financial, legal or media literacy; employers retrain graduates anyway; curricula change far more slowly than the job market.</p>'},
  {en:'“Give me your final position in three sentences, with the language from today.”',ru:'Финальная позиция: три предложения, минимум два сочетания, один фразовый глагол и один past modal. Кнопка Shuffle меняет набор сочетаний. Справа домашнее задание.'}
+];
+
+const STAGE=[
+ ['Lead-in','Set the question of the lesson.',2],
+ ['Lead-in: take a position','Get him talking and commit him to an opinion he will have to defend later.',8],
+ ['Vocabulary: meet','He noticed he needed sharper words. Present 12 collocations in context and personalise each one.',10],
+ ['Vocabulary: controlled practice','Check he can choose the right collocation without the card in front of him.',6],
+ ['Vocabulary: register shift','Phrasal verbs for telling his own study story, as opposed to arguing in the abstract.',8],
+ ['Input and critical thinking','Give the debate real content: why success stories prove so little. Recycles the collocations.',12],
+ ['Grammar 1: judging the past','Past modals for deduction and criticism. Builds on had to / could from Outcomes Unit 8.',12],
+ ['Grammar 2: imagining a different past','Conditionals without “if”. He knows the forms, so the challenge is register and inversion.',8],
+ ['Accuracy: consolidation','Hold the grammar together across a connected story (all tenses), then Grammar + Word Formation.',15],
+ ['Fluency: free production','Everything from the lesson, used against an opponent, on a side he did not choose.',15],
+ ['Reflection and homework','His real position, in the new language. Homework extends each strand.',5]
+];
+const BRIDGE=[null,null,
+ ['You had strong opinions, but you kept reaching for the same few words: good, bad, useful. Let’s get you sharper tools for this argument.','От мнения к языку: в разминке не хватало точных слов, поэтому теперь сочетания.'],
+ ['You’ve met them. Now let’s see whether you can pick the right one when the card isn’t in front of you.','От знакомства к контролируемой практике.'],
+ ['Those were words for arguing about education in general. When people tell their own story, they change register and reach for phrasal verbs.','Смена регистра: от формальных сочетаний к разговорным фразовым глаголам, чтобы говорить о личном опыте.'],
+ ['One of those verbs has a legend attached to it: he dropped out and became a billionaire. Let’s test how much that story actually proves.','Глагол drop out выводит на историю успеха, от языка переходим к содержанию и критическому мышлению.'],
+ ['We’ve seen how easily people misread the past. Now the grammar for reading it carefully: what must have happened, and what should have been done.','От анализа к грамматике: выводы о прошлом и критика решений требуют past modals.'],
+ ['You’ve judged what people should have done. One step further: imagine the past had been different. Had schools taught us this…','От критики прошлого к альтернативному прошлому: условные без if.'],
+ ['So far, one structure at a time. Now hold it all together across a whole story, with every tense in play.','От отдельных структур к связному тексту: закрепляем точность.'],
+ ['You have the words, the evidence and the grammar. Time to use them against an opponent. And you don’t get to choose your side.','От точности к беглости: свободная речь с опорой на всё пройденное.'],
+ ['You’ve argued for a side you were given. Now tell me what you actually think.','От роли к собственной позиции: рефлексия и домашнее задание.']
 ];
 
 const WARM=[
@@ -285,10 +310,19 @@ function go(i){cur=i;closeDrawers();stopTimer();
   [...tabs.children].forEach((b,j)=>b.classList.toggle('on',j===i));
   document.querySelectorAll('.scr').forEach((s,j)=>s.classList.toggle('on',j===i));
   RENDER[i]();
-  const n=NOTES[i];$('#notesBody').innerHTML=`<h3>${TABS[i]}: teacher notes</h3><p><b>Say:</b> ${n.en}</p><p class="rus">${n.ru}</p>${n.extra||''}`;}
+  const n=NOTES[i],g=STAGE[i];$('#notesBody').innerHTML=`<h3>${TABS[i]}: teacher notes</h3><p><b>Stage:</b> ${g[0]} · about ${g[2]} min</p><p><b>Aim:</b> ${g[1]}</p>${BRIDGE[i]?`<p><b>Bridge in:</b> ${BRIDGE[i][0]}</p>`:''}<p><b>Say:</b> ${n.en}</p><p class="rus">${n.ru}</p>${n.extra||''}${i===0?planTable():''}`;}
+function planTable(){return `<h3 style="margin-top:12px">Lesson plan</h3><table class="g">${STAGE.slice(1).map((g,j)=>`<tr><td style="color:var(--navy)">${TABS[j+1]}</td><td>${g[0]}<br><span style="color:var(--muted)">${g[1]}</span></td><td style="white-space:nowrap;font-weight:800">${g[2]}′</td></tr>`).join('')}</table><p style="margin-top:10px"><b>Two lessons:</b> Warm-up to Bias (about 45 min) and Modals to Wrap-up (about 55 min). Start the second with the homework check.</p>`}
+function bridge(i){const b=BRIDGE[i];if(!b){go(i);return}closeDrawers();stopTimer();
+  const scr=document.querySelector('.scr.on');
+  scr.innerHTML=`<div class="body" style="align-items:center"><div class="card" style="max-width:920px;text-align:center;padding:26px 34px">
+    <div class="label">Next: ${TABS[i]} · ${STAGE[i][0]}</div>
+    <div class="big">“${b[0]}”</div>
+    <p class="sub" style="margin-top:14px">${b[1]}</p></div></div>
+  <div class="foot"><button class="btn ghost" onclick="go(${cur})">← Back to ${TABS[cur]}</button><button class="btn gold" id="cont" onclick="go(${i})">Continue →</button></div>`;
+  $('#cont',scr).focus();}
 $('#tBtn').onclick=()=>{const d=$('#notes'),on=d.classList.contains('on');closeDrawers();if(!on)d.classList.add('on')};
 function openRef(){closeDrawers();$('#ref').classList.add('on')}
-const nextStep=(label)=>`<button class="btn gold" onclick="go(${cur+1})">${label||'Next step'} →</button>`;
+const nextStep=()=>`<button class="btn gold" onclick="bridge(${cur+1})">${TABS[cur+1]} →</button>`;
 
 /* generic multiple-choice quiz */
 function quiz(root,title,sub,items,opt={}){
@@ -319,7 +353,7 @@ function quiz(root,title,sub,items,opt={}){
   }
   function end(){
     root.innerHTML=`<div class="head"><div><h2>${title}: result</h2><p class="sub">Score ${score}${opt.stake?'':' / '+order.length}. ${wrong.length?'Go through the mistakes aloud.':'No mistakes.'}</p></div></div>
-      <div class="body" style="justify-content:flex-start"><div class="review">${wrong.length?wrong.map(w=>`<div>${w.q.replace('<br>',' ')}<br><s>${esc(w.y)}</s> → <b>${esc(w.a)}</b></div>`).join(''):'<div>Every answer was correct. Ask Nikita to explain two of them in his own words.</div>'}</div></div>
+      <div class="body" style="justify-content:flex-start">${opt.task?`<div class="exp" style="margin:0 0 8px"><b>Now speak:</b> ${opt.task}</div>`:''}<div class="review">${wrong.length?wrong.map(w=>`<div>${w.q.replace('<br>',' ')}<br><s>${esc(w.y)}</s> → <b>${esc(w.a)}</b></div>`).join(''):'<div>Every answer was correct. Ask Nikita to explain two of them in his own words.</div>'}</div></div>
       <div class="foot"><button class="btn ghost" id="again">Play again</button>${opt.after||nextStep()}</div>`;
     $('#again',root).onclick=()=>quiz(root,title,sub,items,opt);
     if(opt.onEnd)opt.onEnd(root);
@@ -334,7 +368,7 @@ RENDER[0]=()=>{$('#s0').innerHTML=`<div class="hero"><div class="txt">
   <div class="label">Discussion lesson · B2–C1</div>
   <h1>Is modern education preparing us for real life?</h1>
   <p>Take a position, test it against evidence, and defend the opposite side.</p>
-  <div class="route"><span>Outcomes Unit 8</span><span>Conditionals without “if”</span><span>12 collocations</span><span>10 phrasal verbs</span><span>Survivorship bias</span><span>Past modals</span><span>All tenses</span><span>Debate</span></div>
+  <div class="route"><span>Position</span><span>12 collocations</span><span>10 phrasal verbs</span><span>Survivorship bias</span><span>Past modals</span><span>Conditionals without “if”</span><span>All tenses</span><span>Debate</span></div>
   <div style="margin-top:18px"><button class="btn gold" onclick="go(1)">Start →</button></div>
   </div><div class="ph" role="img" aria-label="A university graduate in cap and gown"></div></div>`};
 
@@ -350,9 +384,9 @@ RENDER[1]=()=>{let i=0;const r=$('#s1');
     $('#p',r).onclick=()=>{i--;draw()};const n=$('#n',r);if(n)n.onclick=()=>{i++;draw()};}
   draw()};
 
-RENDER[2]=()=>quiz($('#s2'),'Conditionals without “if”','Choose, then say the same sentence with “if”.',COND,{});
+RENDER[7]=()=>quiz($('#s7'),'Conditionals without “if”','Choose, then say the same sentence with “if”.',COND,{task:'Finish about yourself: “Had my school…, I…” and “But for…, I would never have…”'});
 
-RENDER[3]=()=>{let i=0;const r=$('#s3');
+RENDER[2]=()=>{let i=0;const r=$('#s2');
   function draw(){const w=WORDS[i];
     r.innerHTML=`<div class="head"><div><h2>Collocations</h2><p class="sub">Guess the meaning from the example, then flip and answer the question.</p></div></div>
     <div class="body"><div class="flip" id="fc"><div class="in">
@@ -364,16 +398,16 @@ RENDER[3]=()=>{let i=0;const r=$('#s3');
     $('#p',r).onclick=()=>{i--;draw()};const n=$('#n',r);if(n)n.onclick=()=>{i++;draw()};const re=$('#re',r);if(re)re.onclick=()=>{i=0;draw()};}
   draw()};
 
-RENDER[4]=()=>quiz($('#s4'),'Use it','Choose the collocation. Bet on how sure you are.',USE,{stake:true});
+RENDER[3]=()=>quiz($('#s3'),'Use it','Choose the collocation. Bet on how sure you are.',USE,{stake:true,task:'Choose two collocations and make each one true about your own education.'});
 
-RENDER[5]=()=>quiz($('#s5'),'Phrasal verbs for study','Choose the phrasal verb. Bet on how sure you are.',PHR,{stake:true});
+RENDER[4]=()=>quiz($('#s4'),'Phrasal verbs for study','Choose the phrasal verb. Bet on how sure you are.',PHR,{stake:true,task:'Tell the story of your own studies in one minute. Use at least three of these verbs.'});
 
 const PLANE=`<svg viewBox="0 0 320 220" style="width:100%;height:100%;max-height:230px" role="img" aria-label="Diagram of a bomber seen from above with bullet holes marked on the wings, fuselage and tail">
 <g fill="#dfe6ea" stroke="#0c2235" stroke-width="2"><path d="M150 12 Q160 2 170 12 L174 80 L300 112 L300 128 L174 122 L170 178 L204 194 L204 204 L160 198 L116 204 L116 194 L150 178 L146 122 L20 128 L20 112 L146 80 Z"/>
 <rect x="92" y="88" width="16" height="30" rx="5"/><rect x="212" y="88" width="16" height="30" rx="5"/></g>
 <g fill="#a3362f">${[[40,118],[58,112],[66,122],[262,116],[280,120],[250,111],[272,112],[160,140],[154,152],[166,158],[160,128],[134,196],[186,197],[160,190],[150,168],[170,146]].map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="4"/>`).join('')}</g></svg>`;
 
-RENDER[6]=()=>{let i=0,st={};const r=$('#s6');const N=5;
+RENDER[5]=()=>{let i=0,st={};const r=$('#s5');const N=5;
   const mc=(key,q,opts,ans,exp)=>{const p=st[key];
     return `<div class="q" style="margin-bottom:10px">${q}</div><div class="opts">${opts.map((o,j)=>`<button class="opt ${p!=null&&j===ans?'ok':''} ${p===j&&j!==ans?'bad':''}" data-j="${j}" data-key="${key}" ${p!=null?'disabled':''}>${o}</button>`).join('')}</div>${p!=null?`<div class="exp"><b class="${p===ans?'v':'x'}">${p===ans?'Exactly.':'Look again.'}</b> ${exp}</div>`:''}`};
   function body(){
@@ -397,7 +431,7 @@ RENDER[6]=()=>{let i=0,st={};const r=$('#s6');const N=5;
     $('#p',r).onclick=()=>{i--;draw()};const n=$('#n',r);if(n)n.onclick=()=>{i++;draw()};}
   draw()};
 
-RENDER[7]=()=>{const r=$('#s7');
+RENDER[6]=()=>{const r=$('#s6');
   const pills=(m)=>`<div class="pills"><button class="${m==='c'?'on':''}" data-m="c">Choose</button><button class="${m==='j'?'on':''}" data-m="j">Judge it</button></div><button class="btn ghost" onclick="openRef()" style="padding:6px 14px;font-size:16px">Reference</button>`;
   const wire=()=>r.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>b.dataset.m==='c'?choose():judge());
   function choose(){quiz(r,'Past modals','Which one fits? Explain why the others don’t.',MODALS,{extraHead:pills('c'),onDraw:wire,onEnd:(root)=>{$('#go',root).onclick=judge},after:'<button class="btn gold" id="go">Judge it →</button>'})}
