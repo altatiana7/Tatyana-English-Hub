@@ -79,8 +79,8 @@ textarea{width:100%;height:120px;border:1px solid #d7d0e8;border-radius:10px;pad
 </div>
 <script>
 function openPanel(id){document.querySelectorAll('.tab[data-p]').forEach(x=>x.classList.toggle('active',x.dataset.p===id));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===id));}
-const savedPanel=sessionStorage.getItem('mayaExtraPanel')||'gothic';openPanel(savedPanel);
-document.querySelectorAll('.tab[data-p]').forEach(b=>b.onclick=()=>{openPanel(b.dataset.p);sessionStorage.setItem('mayaExtraPanel',b.dataset.p);scrollTo(0,0)});
+openPanel('gothic');
+document.querySelectorAll('.tab[data-p]').forEach(b=>b.onclick=()=>{openPanel(b.dataset.p);scrollTo(0,0)});
 document.getElementById('showHockneyScript').onclick=()=>document.getElementById('hockneyScript').classList.toggle('show');
 document.querySelectorAll('.testOpts button').forEach(b=>b.onclick=()=>{const box=b.parentElement;box.querySelectorAll('button').forEach(x=>x.classList.remove('ok','bad'));if(b.dataset.correct==='1'){b.classList.add('ok')}else{b.classList.add('bad');const right=[...box.querySelectorAll('button')].find(x=>x.dataset.correct==='1');if(right)right.classList.add('ok')}});
 const sets={gothic:[['remake','ремейк'],['garden fork','садовые вилы'],['hold hands','держаться за руки'],['rooftop garden','сад на крыше'],['city skyline','городской пейзаж'],['background','задний план'],['pose','поза'],['serious','серьёзный'],['relaxed','расслабленный'],['modern clothes','современная одежда'],['hoodie','толстовка с капюшоном'],['similar','похожий'],['different','отличающийся']],hockney:[['portrait','портрет'],['fashion designer','модельер'],['flat','квартира'],['bedroom','спальня'],['carpet','ковёр'],['relationship','отношения'],['symbolize','символизировать'],['distance','дистанция / отчуждение'],['infidelity','неверность'],['pregnant','беременная'],['get divorced','развестись'],['lover','любовник / возлюбленный'],['murder','убийство'],['be murdered','быть убитым']]};

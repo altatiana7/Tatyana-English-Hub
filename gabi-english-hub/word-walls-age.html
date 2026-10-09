@@ -137,7 +137,6 @@ const LIVES={practice:Infinity,standard:5,challenge:3};
 const DEF=Object.fromEntries(WORDS),GOOD=new Set(Object.keys(DEF)),N=WORDS.length;
 const A=document.getElementById('app'),$=s=>A.querySelector(s);
 let level='standard';
-try{level=localStorage.getItem('gabi-wordwalls-level')||level}catch(e){}
 if(!LEVELS[level])level='standard';
 
 function say(w){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}catch(e){}}

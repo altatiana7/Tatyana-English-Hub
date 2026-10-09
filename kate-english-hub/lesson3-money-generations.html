@@ -574,7 +574,6 @@ function show(i,options={}){
  document.getElementById('checkBtn').hidden=!screens[current].dataset.k;
  progress.textContent=String(gi+1).padStart(2,'0')+' / '+String(GROUPS.length).padStart(2,'0')+' · '+g.n+(g.s.length>1?' · '+activityNames[current]:'');
  if(typeof fitScreen==='function'&&typeof FIT_H!=='undefined')fitScreen();
- try{localStorage.setItem(ACTIVITY_STORAGE_KEY,String(current))}catch(e){}
  const hash='#activity-'+current;
  if(location.hash!==hash){
    try{history.replaceState(null,'',hash)}catch(e){}
@@ -1005,7 +1004,8 @@ function checkCurrent(){
   document.querySelectorAll('.claim').forEach((c,i)=>{const s=c.querySelector('button.sel');c.querySelectorAll('button').forEach(b=>b.classList.remove('ok','wrong'));if(s)s.classList.add(s.textContent===expected[i]?'ok':'wrong')})
  }
 }
-show(getSavedActivity());
+try{localStorage.removeItem(ACTIVITY_STORAGE_KEY);if(location.hash)history.replaceState(null,'',location.pathname+location.search)}catch(e){}
+show(0);
 /* click-to-enlarge pictures */
 function closeZoom(){const l=document.querySelector('.lightbox');if(l)l.remove()}
 document.querySelectorAll('img.zoomable').forEach(img=>{img.tabIndex=0;img.setAttribute('role','button');const open=()=>{closeZoom();const l=document.createElement('div');l.className='lightbox';l.innerHTML='<button type="button">CLOSE ✕</button>';const big=new Image();big.src=img.src;big.alt=img.alt;l.prepend(big);l.onclick=closeZoom;document.body.appendChild(l);l.querySelector('button').focus()};img.onclick=open;img.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}}});
