@@ -147,9 +147,9 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
 /* ---------- content ---------- */
-const TABS=['Start','Warm-up','No “if”','Words','Use it','Phrasals','Bias','Modals','Grammar + WF','Debate','Wrap-up'];
+const TABS=['Start','Warm-up','No “if”','Words','Use it','Phrasals','Bias','Modals','Grammar','Debate','Wrap-up'];
 const NOTES=[
- {en:'“For a few weeks we have talked about prisons, religion and voting. Today: the institution all of us have been through. Did it do its job?”',ru:'Тема урока: готовит ли образование к реальной жизни. Фильм Room 8 в этот урок не входит. Порядок: позиция, условные без if (инверсия, but for, supposing), сочетания, фразовые глаголы, ошибка выжившего, past modals (продолжение had to / could из Unit 8), 16 предложений Grammar + Word Formation, дебаты, итог.'},
+ {en:'“For a few weeks we have talked about prisons, religion and voting. Today: the institution all of us have been through. Did it do its job?”',ru:'Тема урока: готовит ли образование к реальной жизни. Фильм Room 8 в этот урок не входит. Порядок: позиция, условные без if (инверсия, but for, supposing), сочетания, фразовые глаголы, ошибка выжившего, past modals (продолжение had to / could из Unit 8), все времена вперемешку, 16 предложений Grammar + Word Formation, дебаты, итог.'},
  {en:'Let him choose first, then make him defend it for about a minute. Use the challenge line to push back whatever he chooses.',ru:'Три утверждения, по одному на экран. После выбора появляется схема ответа и возражение, которое вы озвучиваете. Цель: развернутый ответ с примером и уступкой.'},
  {en:'“You know every conditional, mixed ones included. Now say them without the word if.”',ru:'Привязка к учебнику: Outcomes Unit 8, First Conditional. Никита условные уже знает, поэтому здесь уровень C1: инверсия (Had I known, Were it not for, Were … to, Should you), but for, on condition that, supposing, otherwise. После каждого ответа попросите перефразировать предложение обратно через if.'},
  {en:'“Read the example, guess the meaning, then flip. Answer the question on the back using the collocation.”',ru:'12 сочетаний. На лицевой стороне пример, на обороте перевод и личный вопрос. Следите, чтобы в ответе прозвучало само сочетание.'},
@@ -157,7 +157,7 @@ const NOTES=[
  {en:'“Ten phrasal verbs every student needs. Same rule: bet on how sure you are.”',ru:'10 фразовых глаголов по теме учёбы (drop out, fall behind, catch up, keep up with, hand in, go over, brush up on, scrape through, pick up, put off). После ответа показывается перевод. Попросите Никиту сказать о себе одно предложение с каждым, где он ошибся.'},
  {en:'“Here is a famous kind of story. What exactly does it prove?”',ru:'Пять экранов: история успеха, самолёты Абрахама Вальда, определение, три утверждения «кого не хватает в данных», вопросы про образование. Сначала ответ Никиты, потом раскрытие.'},
  {en:'“Now we judge the past: what must have happened, what should have been done differently.”',ru:'Две части: Choose (6 ситуаций с ловушками) и Judge it (4 карточки для говорения: критика + альтернатива). Справка открывается кнопкой Reference.'},
- {en:'“Sixteen sentences. Type the answer and check it. Eight grammar, eight word formation.”',ru:'Свободный ввод, проверка сразу, в конце счёт и разбор ошибок. Принимаются варианты написания (memorised / memorized, needn’t / need not).'},
+ {en:'“First one story with every tense in it. Then sixteen sentences: eight grammar, eight word formation.”',ru:'Две части, переключаются сверху. All tenses: история учительницы, 14 предложений, все времена вперемешку (включая Future Perfect Continuous, пассив и used to); после ответа показано название времени. Grammar + WF: 16 предложений. Свободный ввод, проверка сразу, в конце счёт и разбор ошибок. Принимаются варианты написания (memorised / memorized, needn’t / need not).'},
  {en:'“You don’t choose your side. The page does.”',ru:'Кнопка Assign side случайно назначает сторону. Три раунда: Opening 2:00, Rebuttal 1:30, Switch sides 1:00. Фразы справа нажимаются и попадают в план речи. Аргументы обеих сторон ниже.',extra:'<p><b>For:</b> literacy and numeracy are real-life skills; school teaches deadlines, cooperation and how to learn; graduates earn more and are unemployed less often on average; nobody can predict which practical skills will matter in 20 years.</p><p><b>Against:</b> teaching to the test rewards memory, not judgement; almost no financial, legal or media literacy; employers retrain graduates anyway; curricula change far more slowly than the job market.</p>'},
  {en:'“Give me your final position in three sentences, with the language from today.”',ru:'Финальная позиция: три предложения, минимум два сочетания, один фразовый глагол и один past modal. Кнопка Shuffle меняет набор сочетаний. Справа домашнее задание.'}
 ];
@@ -334,7 +334,7 @@ RENDER[0]=()=>{$('#s0').innerHTML=`<div class="hero"><div class="txt">
   <div class="label">Discussion lesson · B2–C1</div>
   <h1>Is modern education preparing us for real life?</h1>
   <p>Take a position, test it against evidence, and defend the opposite side.</p>
-  <div class="route"><span>Outcomes Unit 8</span><span>Conditionals without “if”</span><span>12 collocations</span><span>10 phrasal verbs</span><span>Survivorship bias</span><span>Past modals</span><span>Debate</span></div>
+  <div class="route"><span>Outcomes Unit 8</span><span>Conditionals without “if”</span><span>12 collocations</span><span>10 phrasal verbs</span><span>Survivorship bias</span><span>Past modals</span><span>All tenses</span><span>Debate</span></div>
   <div style="margin-top:18px"><button class="btn gold" onclick="go(1)">Start →</button></div>
   </div><div class="ph" role="img" aria-label="A university graduate in cap and gown"></div></div>`};
 
@@ -407,30 +407,50 @@ RENDER[7]=()=>{const r=$('#s7');
       <div class="body"><div class="card big" style="font-size:25px;margin-bottom:10px">${j.s}</div>
       <div class="chips"><span class="chip">They should have…</span><span class="chip">They shouldn’t have…</span><span class="chip">They could have…</span><span class="chip">They must have…</span><span class="chip">They might have…</span><span class="chip">They can’t have…</span></div>
       ${show?`<div class="exp"><b>One possible answer:</b> ${j.m}</div>`:''}</div>
-      <div class="foot"><button class="btn ghost" id="p" ${i?'':'disabled'}>← Back</button><span><button class="btn ghost" id="sm">${show?'Hide sample':'Show sample'}</button> <span class="count" style="margin-left:10px">${i+1} / ${JUDGE.length}</span></span>${i<JUDGE.length-1?'<button class="btn" id="n">Next →</button>':nextStep('Grammar + WF')}</div>`;
+      <div class="foot"><button class="btn ghost" id="p" ${i?'':'disabled'}>← Back</button><span><button class="btn ghost" id="sm">${show?'Hide sample':'Show sample'}</button> <span class="count" style="margin-left:10px">${i+1} / ${JUDGE.length}</span></span>${i<JUDGE.length-1?'<button class="btn" id="n">Next →</button>':nextStep('Grammar')}</div>`;
       wire();$('#sm',r).onclick=()=>{show=!show;draw()};$('#p',r).onclick=()=>{i--;show=false;draw()};const n=$('#n',r);if(n)n.onclick=()=>{i++;show=false;draw()};})();}
   choose()};
 
 const norm=s=>s.toLowerCase().replace(/[’‘`]/g,"'").replace(/memoriz/g,'memoris').replace(/\s+/g,' ').replace(/[.!]+$/,'').trim();
-RENDER[8]=()=>{const r=$('#s8');let i=0,score=0,wrong=[];
-  function draw(){const it=GWF[i];let done=false;
-    r.innerHTML=`<div class="head"><div><h2>Grammar + Word Formation</h2><p class="sub">${it.k==='Grammar'?'Put the verb in brackets into the correct form.':'Form a word from the one in brackets.'}</p></div><div style="display:flex;gap:14px;align-items:center"><span class="chip">${it.k}</span><span class="score">Score ${score} / ${GWF.length}</span></div></div>
-    <div class="body"><div class="q" style="margin-bottom:14px">${it.q}</div>
-    <form id="f" style="display:flex;gap:10px;flex-wrap:wrap"><input class="inp" id="in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your answer"><button class="btn" id="ck">Check</button></form><div id="x"></div></div>
-    <div class="foot"><span class="count">${i+1} / ${GWF.length}</span><span id="nx"></span></div>`;
-    const inp=$('#in',r);inp.focus();
-    $('#f',r).onsubmit=e=>{e.preventDefault();if(done||!inp.value.trim())return;done=true;
-      const ok=it.a.map(norm).includes(norm(inp.value));inp.readOnly=true;inp.classList.add(ok?'ok':'bad');$('#ck',r).disabled=true;
-      if(ok)score++;else wrong.push({q:it.q,y:inp.value.trim(),a:it.a[0]});
-      r.querySelector('.score').textContent=`Score ${score} / ${GWF.length}`;
-      $('#x',r).innerHTML=`<div class="exp"><b class="${ok?'v':'x'}">${ok?'Correct.':'Not quite.'}</b> ${esc(it.q).replace('____','<b class="v">'+esc(it.a[0])+'</b>').replace(/\s*\([A-Z /]+\)/,'')}</div>`;
-      $('#nx',r).innerHTML=`<button class="btn">${i<GWF.length-1?'Next sentence →':'See result →'}</button>`;
-      const nb=$('#nx button',r);nb.focus();nb.onclick=()=>{i++;i<GWF.length?draw():end()};};}
-  function end(){r.innerHTML=`<div class="head"><div><h2>Grammar + Word Formation: result</h2><p class="sub">${score} / ${GWF.length}. ${wrong.length?'Read the corrected sentences aloud.':'No mistakes.'}</p></div></div>
-    <div class="body" style="justify-content:flex-start"><div class="review">${wrong.length?wrong.map(w=>`<div>${esc(w.q)}<br><s>${esc(w.y)}</s> → <b>${esc(w.a)}</b></div>`).join(''):'<div>All sixteen correct. Ask Nikita to turn two of the sentences into opinions of his own.</div>'}</div></div>
-    <div class="foot"><button class="btn ghost" id="again">Start again</button>${nextStep('Debate')}</div>`;
-    $('#again',r).onclick=()=>RENDER[8]();}
-  draw()};
+const TENSES=[
+ {k:'Present perfect continuous',q:'Maria ____ (TEACH) history for twelve years, and she still loves it.',a:['has been teaching','has taught','\'s been teaching']},
+ {k:'Past perfect',q:'When she started, most of her colleagues ____ (ALREADY / GIVE UP) on the idea that school could be interesting.',a:['had already given up','\'d already given up']},
+ {k:'Past continuous',q:'One morning, while she ____ (EXPLAIN) the causes of the First World War, a student asked: “Why do we need this?”',a:['was explaining']},
+ {k:'Past perfect',q:'Nobody ____ (EVER / ASK) her that before.',a:['had ever asked']},
+ {k:'Present perfect continuous',q:'She ____ (THINK) about that question ever since.',a:['has been thinking','has thought','\'s been thinking']},
+ {k:'Present simple',q:'These days she ____ (BEGIN) every course with it.',a:['begins']},
+ {k:'Present continuous',q:'This term her students ____ (RUN) a mock election instead of writing a test.',a:['are running']},
+ {k:'Present simple after a time conjunction',q:'By the time they ____ (FINISH) school, they will have organised three of them.',a:['finish','have finished']},
+ {k:'Future perfect continuous',q:'By next June she ____ (WORK) at the same school for thirteen years.',a:['will have been working','will have worked','\'ll have been working','\'ll have worked']},
+ {k:'Future continuous',q:'This time next week she ____ (SPEAK) at a national teachers’ conference.',a:['will be speaking','\'ll be speaking']},
+ {k:'Past simple passive',q:'She ____ (INVITE) after a video of her lesson went viral.',a:['was invited']},
+ {k:'Past perfect continuous',q:'Before that, she ____ (TRY) for years to get anyone outside her school to listen.',a:['had been trying','had tried','\'d been trying']},
+ {k:'Used to',q:'She ____ (USED / BELIEVE) that results were all that mattered.',a:['used to believe']},
+ {k:'Present perfect',q:'“I ____ (NOT / CHANGE) my mind since that morning,” she says.',a:['haven\'t changed','have not changed','havent changed']}
+];
+RENDER[8]=()=>{const r=$('#s8');
+  const pills=m=>`<div class="pills"><button class="${m==='t'?'on':''}" data-m="t">All tenses</button><button class="${m==='g'?'on':''}" data-m="g">Grammar + WF</button></div>`;
+  function run(m){const T=m==='t',items=T?TENSES:GWF,title=T?'All tenses: one teacher’s story':'Grammar + Word Formation';let i=0,score=0,wrong=[];
+    const wire=()=>r.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>run(b.dataset.m));
+    function draw(){const it=items[i];let done=false;
+      r.innerHTML=`<div class="head"><div><h2>${title}</h2><p class="sub">${T?'Put the verb into the right tense. Then say why.':(it.k==='Grammar'?'Put the verb in brackets into the correct form.':'Form a word from the one in brackets.')}</p></div><div style="display:flex;gap:14px;align-items:center">${pills(m)}<span class="score">Score ${score} / ${items.length}</span></div></div>
+      <div class="body"><div class="q" style="margin-bottom:14px">${it.q}</div>
+      <form id="f" style="display:flex;gap:10px;flex-wrap:wrap"><input class="inp" id="in" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Your answer"><button class="btn" id="ck">Check</button></form><div id="x"></div></div>
+      <div class="foot"><span class="count">${i+1} / ${items.length}</span><span id="nx"></span></div>`;
+      wire();const inp=$('#in',r);inp.focus();
+      $('#f',r).onsubmit=e=>{e.preventDefault();if(done||!inp.value.trim())return;done=true;
+        const ok=it.a.map(norm).includes(norm(inp.value));inp.readOnly=true;inp.classList.add(ok?'ok':'bad');$('#ck',r).disabled=true;
+        if(ok)score++;else wrong.push({q:it.q,y:inp.value.trim(),a:it.a[0]});
+        r.querySelector('.score').textContent=`Score ${score} / ${items.length}`;
+        $('#x',r).innerHTML=`<div class="exp"><b class="${ok?'v':'x'}">${ok?'Correct.':'Not quite.'}</b> ${esc(it.q).replace('____','<b class="v">'+esc(it.a[0])+'</b>').replace(/\s*\([A-Z /]+\)/,'')}${T?' <span style="color:var(--muted)">('+it.k+(it.a[1]&&!it.a[1].startsWith("'")?'; also: '+esc(it.a[1]):'')+')</span>':''}</div>`;
+        $('#nx',r).innerHTML=`<button class="btn">${i<items.length-1?'Next sentence →':'See result →'}</button>`;
+        const nb=$('#nx button',r);nb.focus();nb.onclick=()=>{i++;i<items.length?draw():end()};};}
+    function end(){r.innerHTML=`<div class="head"><div><h2>${title}: result</h2><p class="sub">${score} / ${items.length}. ${wrong.length?'Read the corrected sentences aloud.':'No mistakes.'}</p></div><div>${pills(m)}</div></div>
+      <div class="body" style="justify-content:flex-start"><div class="review">${wrong.length?wrong.map(w=>`<div>${esc(w.q)}<br><s>${esc(w.y)}</s> → <b>${esc(w.a)}</b></div>`).join(''):`<div>All correct. ${T?'Ask Nikita to retell Maria’s story in one minute, keeping the tenses.':'Ask Nikita to turn two of the sentences into opinions of his own.'}</div>`}</div></div>
+      <div class="foot"><button class="btn ghost" id="again">Start again</button>${T?'<button class="btn gold" id="tog">Grammar + WF →</button>':nextStep('Debate')}</div>`;
+      wire();$('#again',r).onclick=()=>run(m);const tg=$('#tog',r);if(tg)tg.onclick=()=>run('g');}
+    draw()}
+  run('t')};
 
 let tick=null;function stopTimer(){if(tick){clearInterval(tick);tick=null}}
 RENDER[9]=()=>{const r=$('#s9');let side=null,rd=0,left=ROUNDS[0][1],plan=[];
