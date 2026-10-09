@@ -147,11 +147,11 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
 /* ---------- content ---------- */
-const TABS=['Start','Warm-up','If…','Words','Use it','Phrasals','Bias','Modals','Grammar + WF','Debate','Wrap-up'];
+const TABS=['Start','Warm-up','No “if”','Words','Use it','Phrasals','Bias','Modals','Grammar + WF','Debate','Wrap-up'];
 const NOTES=[
- {en:'“For a few weeks we have talked about prisons, religion and voting. Today: the institution all of us have been through. Did it do its job?”',ru:'Тема урока: готовит ли образование к реальной жизни. Фильм Room 8 в этот урок не входит. Порядок: позиция, грамматика из Unit 8 (условные, уровень выше), сочетания, фразовые глаголы, ошибка выжившего, past modals (продолжение had to / could из Unit 8), 16 предложений Grammar + Word Formation, дебаты, итог.'},
+ {en:'“For a few weeks we have talked about prisons, religion and voting. Today: the institution all of us have been through. Did it do its job?”',ru:'Тема урока: готовит ли образование к реальной жизни. Фильм Room 8 в этот урок не входит. Порядок: позиция, условные без if (инверсия, but for, supposing), сочетания, фразовые глаголы, ошибка выжившего, past modals (продолжение had to / could из Unit 8), 16 предложений Grammar + Word Formation, дебаты, итог.'},
  {en:'Let him choose first, then make him defend it for about a minute. Use the challenge line to push back whatever he chooses.',ru:'Три утверждения, по одному на экран. После выбора появляется схема ответа и возражение, которое вы озвучиваете. Цель: развернутый ответ с примером и уступкой.'},
- {en:'“Your book gives you the first conditional with if. Here is the same grammar one level up.”',ru:'Привязка к учебнику: Outcomes Unit 8, First Conditional. В книге только if; здесь unless, provided (that), in case, even if и формальное Should you… Упражнения из самого учебника можно задать на дом и проверить за пять минут.'},
+ {en:'“You know every conditional, mixed ones included. Now say them without the word if.”',ru:'Привязка к учебнику: Outcomes Unit 8, First Conditional. Никита условные уже знает, поэтому здесь уровень C1: инверсия (Had I known, Were it not for, Were … to, Should you), but for, on condition that, supposing, otherwise. После каждого ответа попросите перефразировать предложение обратно через if.'},
  {en:'“Read the example, guess the meaning, then flip. Answer the question on the back using the collocation.”',ru:'12 сочетаний. На лицевой стороне пример, на обороте перевод и личный вопрос. Следите, чтобы в ответе прозвучало само сочетание.'},
  {en:'“Before you answer, decide how sure you are. Confident answers win three points and lose two.”',ru:'10 предложений. Ставка на уверенность: Safe +1 / 0, Confident +3 / −2. В конце разбор ошибок.'},
  {en:'“Ten phrasal verbs every student needs. Same rule: bet on how sure you are.”',ru:'10 фразовых глаголов по теме учёбы (drop out, fall behind, catch up, keep up with, hand in, go over, brush up on, scrape through, pick up, put off). После ответа показывается перевод. Попросите Никиту сказать о себе одно предложение с каждым, где он ошибся.'},
@@ -206,12 +206,14 @@ const USE=[
 ];
 
 const COND=[
- {q:'If she ____ the scholarship, she’ll study abroad.',o:['gets','will get','would get','got'],e:'The rule from the book: if + present, will + verb. No will after if.'},
- {q:'You won’t get a place ____ you pass the entrance exam.',o:['unless','provided','in case','even if'],e:'Unless = if … not. Если не сдашь.'},
- {q:'You can retake the module ____ you pay the fee.',o:['provided that','unless','in case','even if'],e:'Provided (that) = only on this condition. При условии, что.'},
- {q:'Take a copy of your certificate ____ they ask for it.',o:['in case','unless','as long as','provided'],e:'In case = as a precaution; they may or may not ask. На случай, если.'},
- {q:'____ you fail, you will still have learned something.',o:['Even if','Unless','In case','As long as'],e:'Even if = the result is the same either way. Даже если.'},
- {q:'____ you need any help with the application, contact the office.',o:['Should','Would','Unless','Will'],e:'Formal first conditional with inversion: Should you need = If you need.'}
+ {q:'____ I known how little of my degree I would use, I would have chosen differently.',o:['Had','If','Should','Were'],e:'Had I known = If I had known. Third conditional with inversion, no “if”.'},
+ {q:'____ it not for my physics teacher, I would never have gone into engineering.',o:['Were','Had','Should','But'],e:'Were it not for = If it weren’t for. With Had you need “been”: Had it not been for.'},
+ {q:'____ her scholarship, she couldn’t have afforded to study abroad.',o:['But for','Unless','Except','Provided'],e:'But for + noun = if it hadn’t been for. Если бы не.'},
+ {q:'____ the university to raise its fees again, applications would collapse.',o:['Were','Should','Had','Would'],e:'Were + subject + to-infinitive: a formal, unlikely second conditional.'},
+ {q:'____ you have any questions about the syllabus, do not hesitate to ask.',o:['Should','Would','Had','Were'],e:'Should you have = If you have. Formal first conditional.'},
+ {q:'You may resit the exam ____ you register by Friday.',o:['on condition that','unless','in case','supposing'],e:'On condition that = only if. Stricter and more formal than “if”.'},
+ {q:'____ you could redesign school from scratch, what would you drop first?',o:['Supposing','Provided','Unless','But for'],e:'Supposing = imagine that. It opens a hypothetical question.'},
+ {q:'Hand the essay in today; ____ you will lose ten per cent.',o:['otherwise','unless','provided','in case'],e:'Otherwise = if you don’t. It replaces the whole if-clause.'}
 ];
 const PHR=[
  {q:'He ____ university in his second year to start a company.',o:['dropped out of','fell out of','broke out of','got through'],e:'Drop out (of) = бросить учёбу.'},
@@ -332,7 +334,7 @@ RENDER[0]=()=>{$('#s0').innerHTML=`<div class="hero"><div class="txt">
   <div class="label">Discussion lesson · B2–C1</div>
   <h1>Is modern education preparing us for real life?</h1>
   <p>Take a position, test it against evidence, and defend the opposite side.</p>
-  <div class="route"><span>Outcomes Unit 8</span><span>Conditionals</span><span>12 collocations</span><span>10 phrasal verbs</span><span>Survivorship bias</span><span>Past modals</span><span>Debate</span></div>
+  <div class="route"><span>Outcomes Unit 8</span><span>Conditionals without “if”</span><span>12 collocations</span><span>10 phrasal verbs</span><span>Survivorship bias</span><span>Past modals</span><span>Debate</span></div>
   <div style="margin-top:18px"><button class="btn gold" onclick="go(1)">Start →</button></div>
   </div><div class="ph" role="img" aria-label="A university graduate in cap and gown"></div></div>`};
 
@@ -343,12 +345,12 @@ RENDER[1]=()=>{let i=0;const r=$('#s1');
     <div class="opts" style="grid-template-columns:repeat(3,1fr)">${[['agree','Agree'],['dis','Disagree'],['dep','It depends']].map(([k,l])=>`<button class="opt ${pick===k?'ok':''}" data-k="${k}" style="text-align:center">${l}</button>`).join('')}</div>
     ${pick?`<div class="frame" style="margin-top:12px"><div><b>Claim</b>I’d argue that…</div><div><b>Reason</b>The main reason is…</div><div><b>Example</b>Take … for instance.</div><div><b>Concession</b>Admittedly, … but…</div></div>
     <div class="exp"><b>Challenge:</b> ${w[pick]}</div>`:''}</div>
-    <div class="foot"><button class="btn ghost" ${i?'':'disabled'} id="p">← Back</button><span class="count">${i+1} / ${WARM.length}</span>${i<WARM.length-1?'<button class="btn" id="n">Next statement →</button>':nextStep('Unit 8 grammar')}</div>`;
+    <div class="foot"><button class="btn ghost" ${i?'':'disabled'} id="p">← Back</button><span class="count">${i+1} / ${WARM.length}</span>${i<WARM.length-1?'<button class="btn" id="n">Next statement →</button>':nextStep('Conditionals')}</div>`;
     r.querySelectorAll('.opt').forEach(b=>b.onclick=()=>draw(b.dataset.k));
     $('#p',r).onclick=()=>{i--;draw()};const n=$('#n',r);if(n)n.onclick=()=>{i++;draw()};}
   draw()};
 
-RENDER[2]=()=>quiz($('#s2'),'Unit 8 grammar, one level up','The first conditional from your book, with more than just “if”.',COND,{});
+RENDER[2]=()=>quiz($('#s2'),'Conditionals without “if”','Choose, then say the same sentence with “if”.',COND,{});
 
 RENDER[3]=()=>{let i=0;const r=$('#s3');
   function draw(){const w=WORDS[i];
