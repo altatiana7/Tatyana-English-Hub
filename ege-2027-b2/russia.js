@@ -24,7 +24,7 @@ function interview(){
   const stopT=()=>{clearInterval(t);t=null;};
   const recBox=el('div','rec');
   const runT=()=>{stopT();left=40;paint();label.textContent='Answer';beep(880,200);Rec.start();const end=Date.now()+40000;t=setInterval(()=>{left=Math.max(0,Math.ceil((end-Date.now())/1000));paint();if(left===0){stopT();label.textContent='Time is up';beep(520,500);Rec.stop(recBox,v.id+'-q'+(st.q+1));}},200);};
-  function play(what){stopT();Rec.cancel();left=40;paint();au.pause();au.src='audio/'+v.id+'-'+what+'.mp3?v=17';label.textContent=what==='intro'?'Introduction is playing':'Question is playing';
+  function play(what){stopT();Rec.cancel();left=40;paint();au.pause();au.src='audio/'+v.id+'-'+what+'.mp3?v=18';label.textContent=what==='intro'?'Introduction is playing':'Question is playing';
     au.onended=()=>{if(what==='intro'){label.textContent='Now press Play';}else runT();};au.onerror=()=>{label.textContent='Audio did not load';};au.play().catch(()=>{label.textContent='Audio did not load';});}
   function face(){card.className='ivcard'+(st.flip?' back':'');card.innerHTML='';
     if(st.flip){card.append(el('div','ey','Question '+(st.q+1)+' · '+esc(v.theme)),el('div','qq',esc(v.q[st.q])));
