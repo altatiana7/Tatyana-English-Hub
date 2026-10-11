@@ -167,8 +167,8 @@ button{font:inherit}
     <div class="heroTop">
       <span class="hi" id="hi">WELCOME BACK, GABI</span>
       <h1>Your English <em>Hub</em></h1>
-      <p>Gateway to the World B1 · Unit 1 of 10 · Happy families</p>
-      <button class="go" id="continueBtn"><i></i><div><small>CONTINUE</small><b>Lesson 6 · Writing: an informal email</b><div class="prog"><span><u id="progFill" style="width:0"></u></span><em id="progText" style="font-style:normal"></em></div></div></button>
+      <p>Gateway to the World B1 · Unit 2 of 10 · Law and order</p>
+      <button class="go" id="continueBtn"><i></i><div><small>CONTINUE</small><b>Unit 2 · Lesson 1 · Law and order</b><div class="prog"><span><u id="progFill" style="width:0"></u></span><em id="progText" style="font-style:normal"></em></div></div></button>
     </div>
     <div class="dock">
       <a class="tile" href="what-happens-next.html?v=20261007-b"><div class="th" style="background-image:url(assets/whn/lamp.jpg)"></div><div><small>WARM-UP</small><b>What Happens Next?</b><span>Watch, stop, predict with will</span></div></a>
@@ -205,7 +205,7 @@ const modules=[
    {title:'Writing · An informal email',note:'Homework check · Maya’s email · seven rules · Writing bank · plan · write'},
    {title:'Revision',note:'Unit 1 step by step · warm-up · Word Walls · accuracy · Ten Faces · Reach Higher · Test yourself'}]},
  {title:'Law and order',lessons:[
-   {title:'Vocabulary & Grammar',note:'Crimes · detective work · Past Simple'},
+   {title:'Vocabulary',note:'Check-in · crimes and criminals · detective work'},
    {title:'Reading & Grammar',note:'Surprising true crimes · Past Continuous · used to'},
    {title:'Listening & Speaking',note:'Crime story · investigation · review'}]},
  {title:'Plurilingual',lessons:[
@@ -295,6 +295,7 @@ function openLesson(n,i){
     location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20261001-clean-layout-v9';
     return;
   }
+  if(n===2 && i===0){ location.href='unit2-lesson1.html?v=20261011-a'; return; }
   const m=modules[n-1];
   document.getElementById('crumb').textContent='MODULE '+n+' · '+m.title.toUpperCase();
   document.getElementById('lessonHeading').textContent=m.lessons[i].title;
@@ -327,8 +328,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
   const tile=document.getElementById('wordTile');tile.onclick=()=>{tile.classList.toggle('flip');
     try{if(tile.classList.contains('flip')){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w[0]);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}catch(e){}};
   const h=d.getHours();document.getElementById('hi').textContent=(h<12?'GOOD MORNING':h<18?'GOOD AFTERNOON':'GOOD EVENING')+', GABI';
-  document.getElementById('progText').textContent='10 steps · 30 minutes';
-  document.getElementById('continueBtn').onclick=()=>openLesson(1,5);
+  document.getElementById('progText').textContent='9 steps · 45 minutes';
+  document.getElementById('continueBtn').onclick=()=>openLesson(2,0);
 })();
 
 (async function loadNewCover(){

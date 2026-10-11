@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Unit 2 · Lesson 1 · Law and order</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="skills.css?v=20261009a">
+</head>
+<body>
+<script src="skills.js?v=20261009a"></script>
+<script>
+/* Unit 2 (Law and order), lesson 1. Opens with a check-in built from Gabi's real mistakes:
+   steps 1-2 = Homework 5 (family, life stages, word formation), steps 3-4 = Homework 6 (his own sentences, advice).
+   Steps 5-8 open the new unit: crimes, criminals, detective work. Step 9 sets Homework 7 (email to Maya). */
+const TASK=`<h4>Homework 7 · Your email to Maya</h4><p>Write your reply to Maya (90–140 words). Include:</p><ul><li>basic personal information</li><li>your family</li><li>your main hobby</li><li>your favourite subjects at school</li></ul><p>Answer her four questions and ask her two of your own.</p><a class="link" href="../gabriel-homework/lesson-7-homework.html?v=20261011-a" target="_blank" rel="noopener">Open Homework 7</a>`;
+Lesson.boot({kicker:'Unit 2 · Lesson 1',steps:[
+{stage:'Check-in',title:'Family words from memory',hint:'Homework 5: eight words to repair. <small>No options this time. Write the word yourself.</small>',
+ act:{type:'gaps',cols:2,items:[
+  {pre:'Same dad, different mums: Alex is my',post:'.',ans:['half-brother','half brother','halfbrother']},
+  {pre:'My brother’s daughter is my',post:'.',ans:['niece']},
+  {pre:'Someone in my family who lived 300 years ago is my',post:'.',ans:['ancestor']},
+  {pre:'I tell my sister everything. I’m very',post:'to her.',ans:['close']},
+  {pre:'They plan to marry next year. Last week they got',post:'.',ans:['engaged']},
+  {pre:'Their marriage ended legally. They got',post:'.',ans:['divorced']},
+  {pre:'My cousin and her boyfriend are going to',post:'married in June.',ans:['get']},
+  {pre:'I shouted at my sister. Now I',post:'it.',ans:['regret']}]}},
+{stage:'Check-in',title:'Build the noun',hint:'Change the word in capitals into a noun. <small>Careful with the spelling: one letter can disappear.</small>',
+ act:{type:'gaps',cols:2,items:[
+  {pre:'ARGUE · They had a loud',post:'about money.',ans:['argument']},
+  {pre:'ENJOY · Reading gives me real',post:'.',ans:['enjoyment']},
+  {pre:'EMBARRASS · His face went red with',post:'.',ans:['embarrassment']},
+  {pre:'ACHIEVE · Finishing the marathon was a great',post:'.',ans:['achievement']},
+  {pre:'DECIDE · Moving abroad was a hard',post:'.',ans:['decision']},
+  {pre:'PERMIT · You need',post:'to use this photo.',ans:['permission']},
+  {pre:'INDEPENDENT · At eighteen, people want',post:'.',ans:['independence']},
+  {pre:'PATIENT · Teaching a puppy takes',post:'.',ans:['patience']}]}},
+{stage:'Check-in',title:'Fix the sentence',hint:'Homework 6: four sentences, one mistake in each. Write it correctly. <small>Then say why it was wrong.</small>',
+ act:{type:'gaps',open:true,dense:true,items:[
+  {pre:'Why don’t you report your mum about it?',long:1,kw:[['tell your mum'],['talk to your mum'],['talk with your mum'],['speak to your mum']],model:'Why don’t you tell your mum about it?'},
+  {pre:'You could move out, buy a flat and don’t care about the mess.',long:1,kw:[['and not care'],['and stop caring']],model:'You could move out, buy a flat and not care about the mess.'},
+  {pre:'Action video games teaches you to think fast.',long:1,kw:[['games teach you']],model:'Action video games teach you to think fast.'},
+  {pre:'Children know better about themself than their parents.',long:1,kw:[['know themselves better']],model:'Children know themselves better than their parents do.'}]}},
+{stage:'Check-in',title:'Advice, not sympathy',hint:'Give two pieces of advice for each problem. <small>“I’m sorry” is kind, but it is not advice.</small>',
+ act:{type:'talk',label:'Problem',secs:30,chipLabel:'Tap each phrase he uses',chips:['Why don’t you … ?','You could …','You should …','If I were you, I’d …','How about + -ing?'],cards:[
+  {q:'My little brother takes my things without asking.'},
+  {q:'I forgot my best friend’s birthday.'},
+  {q:'My parents check my phone every evening.'},
+  {q:'I can’t wake up in time for school.'}]}},
+{stage:'New words',title:'What is the crime?',hint:'New unit: Law and order. Which crime is it? <small>Some are very close. Read every word.</small>',
+ act:{type:'quiz',label:'Crime',cols:4,opts:['burglary','robbery','theft','mugging','shoplifting','vandalism','fraud','kidnapping'],items:[
+  {q:'Someone breaks into a house at night and takes a laptop.',a:'burglary',why:'Burglary = entering a building to steal.'},
+  {q:'Two men in masks take money from a bank.',a:'robbery',why:'Robbery = stealing from a bank, a shop or a person, using force or threats.'},
+  {q:'A girl puts a lipstick in her pocket and leaves the shop without paying.',a:'shoplifting',why:'Shoplifting = taking things from a shop without paying.'},
+  {q:'A man attacks a tourist in the street and takes his phone.',a:'mugging',why:'Mugging = attacking someone in a public place to steal from them.'},
+  {q:'Teenagers break the glass of a bus stop for fun.',a:'vandalism',why:'Vandalism = damaging things on purpose.'},
+  {q:'A woman says she is from the bank and gets people’s card details.',a:'fraud',why:'Fraud = tricking people to get their money.'},
+  {q:'Someone takes a child and asks the family for money.',a:'kidnapping',why:'Kidnapping = taking a person away by force.'},
+  {q:'A bike disappears from outside the school. Nobody saw anything.',a:'theft',why:'Theft is the general word for stealing.'}]}},
+{stage:'New words',title:'Crime, criminal, verb',hint:'Now build the words yourself. <small><b>rob</b> a place or a person · <b>steal</b> a thing</small>',
+ act:{type:'gaps',cols:2,items:[
+  {pre:'Someone who breaks into houses is a',post:'.',ans:['burglar']},
+  {pre:'A person who steals things is a',post:'.',ans:['thief']},
+  {pre:'One thief, two',post:'.',ans:['thieves']},
+  {pre:'A person who mugs people is a',post:'.',ans:['mugger']},
+  {pre:'A person who damages bus stops is a',post:'.',ans:['vandal']},
+  {pre:'A person who steals from shops is a',post:'.',ans:['shoplifter']},
+  {pre:'ROB or STEAL, past: They',post:'the bank and escaped.',ans:['robbed']},
+  {pre:'ROB or STEAL, past: They',post:'two million euros.',ans:['stole']}]}},
+{stage:'New words',title:'Detective work',hint:'What do detectives do? Choose the verb.',
+ act:{type:'quiz',label:'Verb',cols:3,opts:['investigate','collect','question','analyse','arrest','charge'],items:[
+  {q:'_____ a case: try to find out what really happened.',a:'investigate',why:'Detectives investigate a case.'},
+  {q:'_____ evidence: find and keep fingerprints, photos and objects.',a:'collect',why:'Evidence is uncountable: collect evidence, not “evidences”.'},
+  {q:'_____ a witness: ask a person who saw the crime.',a:'question',why:'Question is a verb here: to question a witness or a suspect.'},
+  {q:'_____ the evidence: study it carefully in a laboratory.',a:'analyse',why:'Analyse the evidence.'},
+  {q:'_____ a suspect: take the person to the police station.',a:'arrest',why:'The police arrest a suspect.'},
+  {q:'_____ a suspect with a crime: say officially that this person did it.',a:'charge',why:'Charge someone with a crime.'}]}},
+{stage:'New words',title:'You are the detective',hint:'Speak for 40 seconds. Use the new words. <small>Say what you do first, next and last.</small>',
+ act:{type:'talk',label:'Case',secs:40,chipLabel:'Tap each word he uses',chips:['First, I’d …','Then …','look for','question','collect evidence','witness','suspect','arrest'],cards:[
+  {q:'Someone stole the teacher’s laptop from the classroom at lunchtime. What do you do?'},
+  {q:'A shop window was broken last night. There is a red bike in front of the shop. What happened?'},
+  {q:'Which is the most serious: shoplifting, vandalism or burglary? Why?'}]}},
+{stage:'Homework',title:'Your email to Maya',hint:'Before you write at home: what is the plan of an informal email? Tap the five paragraphs in order.',
+ side:{card:TASK},
+ act:{type:'order',compact:true,from:'Tap the topics in the order of the paragraphs',items:['basic personal information','family','hobbies','favourite subjects at school','asking for a reply']}}
+]});
+</script>
+</body>
+</html>

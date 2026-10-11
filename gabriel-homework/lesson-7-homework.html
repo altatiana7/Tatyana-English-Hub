@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Homework · Email to Maya</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../gabi-english-hub/skills.css?v=20261009a">
+</head>
+<body>
+<script src="../gabi-english-hub/skills.js?v=20261009a"></script>
+<script>
+/* Homework 7, after Lesson 6 (Gateway to the World B1, Unit 1, Developing writing p15: an informal email).
+   Everything was practised in class in writing-email.html; here Gabi answers Maya's questions and writes the full reply.
+   Maya is the girl in the Student's Book email, not a student. */
+const MAIL={from:'Maya',sub:'Hello from Brighton',img:'../gabi-english-hub/assets/l5/maya.jpg'};
+const MAYA=`<p>Hi,</p><p>I’m Maya. I’m from Brighton in the UK. Let me tell you about myself.</p><p>I’ve got one brother and one sister. My sister and I are almost the same age and we go everywhere together. My father’s a teacher and my mother works in an office. What about you? Have you got a big or a small family?</p><p>I love listening to music. My favourite group is Wolf Alice. Right now, I’m listening to one of their new songs. I also enjoy doing all types of sports, but especially team sports like football and basketball. What about you? What do you like doing in your free time?</p><p>What are your favourite subjects at school? Mine are art and English. This year I have special art classes on Saturdays. I have a lot of homework during the week but I love reading when I can. At the moment I’m reading a great book about the Mexican artist Frida Kahlo.</p><p>Anyway, that’s all for now. Is there anything special you’d like to know about me?</p><p>Write back soon.<br>Best wishes,<br>Maya</p>`;
+const TASK=`<h4>Your task</h4><p>Your school is going to be part of the exchange. Write an email introducing yourself to Maya. Include:</p><ul><li>basic personal information</li><li>your family</li><li>your main hobby</li><li>your favourite subjects at school</li></ul><p>Reply to her questions and ask her about herself.</p>`;
+const contractions=t=>(t.match(/\b[A-Za-z]+['’](m|ve|s|re|d|ll|t)\b/g)||[]).length;
+Lesson.boot({kicker:'Homework · 12 October',hub:'./',steps:[
+{stage:'Read',title:'Answer Maya’s questions',hint:'Maya asks four questions. Answer each one in a full sentence.',wide:true,
+ side:{look:'mail',mail:MAIL,title:'Student’s Book p15 · Maya, from Brighton, is your exchange partner',text:{html:MAYA}},
+ act:{type:'gaps',free:true,items:[
+  {pre:'Have you got a big or a small family?',ph:'I’ve got …'},
+  {pre:'What do you like doing in your free time?',ph:'I love … I also enjoy …'},
+  {pre:'What are your favourite subjects at school?',ph:'My favourite subjects are … because …'},
+  {pre:'Is there anything special you’d like to know about me?',ph:'Yes! What … ? / Have you … ?'}]}},
+{stage:'Language',title:'Writing bank',hint:'Useful words in informal emails. One word in each gap. <small>From memory: you did this in class.</small>',
+ act:{type:'gaps',cols:2,items:[
+  {pre:'Thanks',post:'your email.',ans:['for']},
+  {pre:'It was great to',post:'from you.',ans:['hear']},
+  {pre:'How are',post:'?',ans:['things','you']},
+  {pre:'I hope you’re',post:'.',ans:['well','ok','fine']},
+  {pre:'Change the subject with',post:', …',ans:['anyway']},
+  {pre:'That’s',post:'for now.',ans:['all']},
+  {pre:'Write',post:'soon.',ans:['back']},
+  {pre:'Best',post:',',ans:['wishes','regards']}]}},
+{stage:'Language',title:'Make it friendly',hint:'These lines are too formal for a friend. Write them the way Maya would. <small>Short forms, friendly words.</small>',
+ act:{type:'gaps',open:true,dense:true,items:[
+  {pre:'Dear Madam,',long:1,kw:[['hi'],['hello'],['dear maya']],model:'Hi Maya,'},
+  {pre:'I am twelve years old and I am from Spain.',long:1,kw:[["i'm"]],model:'I’m twelve and I’m from Spain.'},
+  {pre:'I have got one sister.',long:1,kw:[["i've got"]],model:'I’ve got one sister.'},
+  {pre:'That is all the information.',long:1,kw:[["that's all"]],model:'Anyway, that’s all for now.'},
+  {pre:'Goodbye.',long:1,kw:[['write back'],['best wishes'],['all the best'],['bye for now']],model:'Write back soon. Best wishes,'}]}},
+{stage:'Write',title:'Plan your reply',hint:'Make a mind map before you write. Key words only.',
+ side:{card:TASK},
+ act:{type:'map',centre:'My reply',branches:[{label:'1 · Basic information',ph:['name, age','town, country']},{label:'2 · My family',ph:['who','what they do']},{label:'3 · My main hobby',ph:['what','right now I’m …']},{label:'4 · School subjects',ph:['favourite','why']},{label:'Answers to Maya',ph:['big or small family?','free time?']},{label:'5 · Questions for Maya',ph:['question 1','question 2']}]}},
+{stage:'Write',title:'Write to Maya',hint:'Write your email. <small>The list on the right turns green as you write. When you finish, press Submit to teacher.</small>',
+ side:{card:sh=>{const d=sh.mapDef,v=sh.map||{};const plan=d?d.branches.map((b,i)=>{const w=[v[i+'_0'],v[i+'_1']].filter(Boolean).join(', ');return '<li><b>'+b.label+'</b>'+(w?': '+w.replace(/[<>&]/g,''):'')+'</li>'}).join(''):'';return TASK+(plan?'<h4>Your plan</h4><ul>'+plan+'</ul>':'')}},
+ act:{type:'write',submit:true,to:'Maya',subject:'Re: Hello from Brighton',min:90,max:140,ph:'Hi Maya,',checks:[
+  {label:'Hi Maya, + Thanks for your email',test:t=>/^\s*(hi|hello|dear maya)\b/i.test(t)&&/(thanks for your (e-?mail|message)|great to hear from you|hope you['’]?re well|how are things)/i.test(t)},
+  {label:'Three short forms (I’m, I’ve)',test:t=>contractions(t)>=3},
+  {label:'Right now I’m …ing',test:t=>/\b(am|is|are)\s+\w+ing\b|['’](m|s|re)\s+\w+ing\b/i.test(t)},
+  {label:'Anyway, …',test:t=>/\banyway\b/i.test(t)},
+  {label:'Two questions for Maya',test:t=>(t.match(/\?/g)||[]).length>=2},
+  {label:'Paragraphs + Write back soon',test:t=>t.split(/\n+/).filter(x=>x.trim().length>20).length>=4&&/(write (back )?soon|best wishes|all the best|bye for now)/i.test(t)}]}},
+{stage:'Send',title:'Send your homework',hint:'Check your answers on the left. Then press <b>Send to teacher</b> and paste the code in your chat with your teacher.',
+ act:{type:'report',name:'Gabi · Homework · Email to Maya',assignment:'gabi-hw-2026-10-12',prefix:'G7'}}
+]});
+</script>
+</body>
+</html>
