@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
 <title>ЕГЭ 2027 · Russia: interview and letters</title>
-<link rel="stylesheet" href="app.css?v=19">
+<link rel="stylesheet" href="app.css?v=20">
 <style>
 .rusel{font-size:18px;padding:7px 10px;border:2px solid #9fb0cb;border-radius:9px;background:#fff;max-width:300px}
 .stim mark{background:#d9efe9;color:inherit;font-weight:700;border-radius:4px;padding:0 2px}
@@ -29,6 +29,13 @@
 .slot i{font-style:normal;font-size:13px;color:var(--muted);font-weight:400}
 .pics img{max-height:150px;object-fit:cover}
 @media(max-height:640px){.rback .ey{margin-bottom:4px}.rback .bk{font-size:17px;line-height:1.36;margin-bottom:5px}.rback .bkl{font-size:18.5px;line-height:1.32;margin-bottom:4px}.rback .bkl li{margin-bottom:4px}.rback .rq b{font-size:18px}.rback .rq p{font-size:17px;line-height:1.35}.rback .rq{padding:5px 0 3px}}
+.stage{perspective:1800px}
+.flipcard{cursor:pointer;backface-visibility:hidden}
+.flipout{animation:ruFo .17s ease-in forwards}
+.flipin{animation:ruFi .26s ease-out}
+@keyframes ruFo{to{transform:rotateY(90deg)}}
+@keyframes ruFi{from{transform:rotateY(-90deg)}to{transform:none}}
+@media(prefers-reduced-motion:reduce){.flipout,.flipin{animation-duration:.01s}}
 </style>
 </head>
 <body>
@@ -37,10 +44,10 @@
   <nav class="tabs" id="tabs" aria-label="Sections"></nav>
 </header>
 <main id="main"></main>
-<script src="w37.js?v=19"></script>
-<script src="russia-data.js?v=19"></script>
-<script src="core.js?v=19"></script>
-<script src="russia.js?v=19"></script>
-<script src="nav.js?v=19"></script>
+<script src="w37.js?v=20"></script>
+<script src="russia-data.js?v=20"></script>
+<script src="core.js?v=20"></script>
+<script src="russia.js?v=20"></script>
+<script src="nav.js?v=20"></script>
 </body>
 </html>
