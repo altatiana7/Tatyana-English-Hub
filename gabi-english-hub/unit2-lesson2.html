@@ -7,15 +7,15 @@
 <title>Gabi · Unit 2 · Lesson 2 · New evidence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="skills.css?v=20261012b">
-<link rel="stylesheet" href="case.css?v=20261012b">
+<link rel="stylesheet" href="skills.css?v=20261012e">
+<link rel="stylesheet" href="case.css?v=20261012e">
 </head>
 <body>
-<script src="skills.js?v=20261012b"></script>
+<script src="skills.js?v=20261012e"></script>
 <script>
-/* Unit 2 (Law and order), lesson 2. The case from lesson 1 continues (Tatyana's Law & Order pack, block 2).
-   Recall from memory -> new evidence -> Past Simple vs Past Continuous (rules found in the police report, then free-input practice)
-   -> timeline from relative clues (no clock times given) -> prediction and reveal -> discussion. */
+/* Unit 2 (Law and order), lesson 2. Two activities per screen, different mechanics:
+   1 typed picture recall + the case from memory -> 2 new evidence + sort finished / in progress -> 3 find the rules + Past Arena (lives, from Nikita's Crime unit)
+   -> 4 error hunter + typed verbs -> 5 timeline + the truth -> 6 a real case (D. B. Cooper, dropdowns) + discussion. */
 const SUS=[['Alex','alex','I was playing basketball in the gym at 3:30.'],['Mia','mia','I was doing my homework in the library.'],['Ben','ben','I was waiting for my mum outside school.']];
 const SUSPECTS=`<div class="sus mini">${SUS.map(s=>`<div><img src="assets/u2/${s[1]}.jpg" alt=""><span><b>${s[0]}<i>SUSPECT</i></b><q>${s[2]}</q></span></div>`).join('')}</div>`;
 const TAPE=`<div class="tape"><span>CRIME SCENE · DO NOT CROSS</span></div>`;
@@ -42,53 +42,80 @@ const CLUES=FILE('TIMELINE')+`<ul class="clues">
 const NOTE=FILE('CASE OPEN')+`<div class="note">Put the trip money in a safe place before leaving!</div><p class="case">The teacher wrote this in her notebook on Friday morning. She can’t remember where she put the envelope.</p>`+SUSPECTS;
 const CLOSED=FILE('CASE CLOSED','closed')+`<p class="case">Look at the whole story again. <b>Who looked guilty? Who was guilty?</b></p>`+SUSPECTS;
 Lesson.boot({kicker:'Unit 2 · Lesson 2',steps:[
-{stage:'Remember',title:'The case so far',hint:'No notes. Answer from memory. <small>What did each suspect say? What was the problem?</small>',
- side:{look:'case',card:RECALL.replace(/<q>[^<]*<\/q>/g,'')},
- act:{type:'gaps',open:true,dense:true,items:[
+{stage:'Remember',title:'From memory',hint:'No notes. Name the crimes from last lesson, then remember the case. <small>Write everything yourself.</small>',cols:'1.15fr 1fr',
+ acts:[
+ {type:'gaps',title:'Name the crime',pics:true,cols:4,items:[{img:'assets/u2/crimes/p-theft.jpg',ph:'t…',ans:['theft']},{img:'assets/u2/crimes/p-pickpocketing.jpg',ph:'p…',ans:['pickpocketing']},{img:'assets/u2/crimes/p-burglary.jpg',ph:'b…',ans:['burglary']},{img:'assets/u2/crimes/p-robbery.jpg',ph:'r…',ans:['robbery']},{img:'assets/u2/crimes/p-fraud.jpg',ph:'f…',ans:['fraud']},{img:'assets/u2/crimes/p-cybercrime.jpg',ph:'c…',ans:['cybercrime']},{img:'assets/u2/crimes/p-assault.jpg',ph:'a…',ans:['assault']},{img:'assets/u2/crimes/p-harassment.jpg',ph:'h…',ans:['harassment']}]},
+ {type:'gaps',title:'The case so far',open:true,dense:true,items:[
   {pre:'Where did Alex say he was? What was the problem?',long:1,kw:[['gym'],['basketball']],model:'In the gym, playing basketball. But the PE teacher left before 3:30.'},
   {pre:'Where did Mia say she was? What was the problem?',long:1,kw:[['library']],model:'In the library, but the librarian saw her arrive at 3:40.'},
-  {pre:'Where did Ben say he was? What was the problem?',long:1,kw:[['outside'],['mum'],['waiting']],model:'Outside school, waiting for his mum, but nobody saw him before 3:45.'}]}},
-{stage:'Evidence',title:'New evidence',hint:'Read each clue. Does it make the person more or less suspicious? <small>Say why: This clue suggests … · It doesn’t prove …</small>',
+  {pre:'Where did Ben say he was? What was the problem?',long:1,kw:[['outside'],['mum'],['waiting']],model:'Outside school, waiting for his mum, but nobody saw him before 3:45.'}]}]},
+{stage:'Evidence',title:'New evidence',hint:'Four new clues. Does each one make the person more or less suspicious? <small>Then sort the facts: a finished action, or an action in progress?</small>',split:'minmax(0,.7fr) minmax(0,1.3fr)',
  side:{look:'case',card:EVIDENCE},
- act:{type:'quiz',label:'Clue',shuffle:false,cols:3,opts:['More suspicious','Less suspicious','It changes the whole case'],items:[
+ acts:[
+ {type:'quiz',title:'More or less suspicious?',label:'Clue',shuffle:false,cols:1,opts:['More suspicious','Less suspicious','It changes the whole case'],items:[
   {q:'CCTV: at 3:32 Mia walked past classroom 7B with a blue folder.',a:'More suspicious',why:'She said she was in the library, but she was near 7B. A blue folder is not a blue envelope, though: it doesn’t prove anything.'},
   {q:'PE teacher: Alex left the gym at 3:28 to get his water bottle.',a:'More suspicious',why:'His alibi is broken: he was not in the gym at 3:30.'},
   {q:'Phone: at 3:34 Ben texted his mum “I’m outside. Where are you?”',a:'Less suspicious',why:'The message suggests he was outside. But it was sent four minutes after 3:30.'},
-  {q:'Teacher’s notebook: “Put the trip money in a safe place before leaving.”',a:'It changes the whole case',why:'Maybe nobody stole the money. Maybe the teacher moved it.'}]}},
-{stage:'Grammar',title:'Two past tenses',hint:'Look at the police report and find the answer yourself. Then check the rule.',
+  {q:'Teacher’s notebook: “Put the trip money in a safe place before leaving.”',a:'It changes the whole case',why:'Maybe nobody stole the money. Maybe the teacher moved it.'}]},
+ {type:'sort',title:'Finished or in progress?',cols:['finished','in progress'],items:[{t:'Mia walked past 7B.',c:0},{t:'Mia was carrying a folder.',c:1},{t:'Alex left the gym at 3:28.',c:0},{t:'Ben was waiting outside.',c:1},{t:'Ben texted his mum.',c:0},{t:'The camera recorded Mia.',c:0}]}]},
+{stage:'Grammar',title:'Two past tenses',hint:'Find the rules in the police report. Then the Past Arena: three wrong answers and the floor is lava.',split:'minmax(0,.72fr) minmax(0,1.28fr)',
  side:{look:'case',card:REPORT},
- act:{type:'explain',label:'Rule',items:[
+ acts:[
+ {type:'explain',title:'Find the rule',label:'Rule',items:[
   {k:'ps',sum:'Past Simple: a finished action (left, sent, walked)',name:'Finished actions',ask:'Find three actions that started and finished. Which tense is it?',rule:'<b>Past Simple</b> for a short, finished action in the past: <b>left, sent, walked</b>. Regular verbs add -ed; irregular verbs have their own form: leave – <b>left</b>, send – <b>sent</b>.'},
   {k:'pc',sum:'Past Continuous: in progress at a moment (was waiting)',name:'In progress',ask:'At 3:30 Ben was waiting. Did the waiting start at 3:30? Did it stop at 3:30?',rule:'<b>Past Continuous</b> for an action in progress at a moment in the past. It started before 3:30 and continued after it.',eg:'At 3:30 Ben was waiting for his mum.'},
   {k:'form',sum:'was / were + -ing; wasn’t / weren’t',name:'Form',ask:'Why “Ben was waiting” but “We weren’t talking”?',rule:'<b>I / he / she / it was</b> + -ing · <b>you / we / they were</b> + -ing. Negative: <b>wasn’t / weren’t</b> + -ing.',eg:'Alex was looking for his bottle. They weren’t playing.'},
   {k:'when',sum:'long action (Past Continuous) + when + short action (Past Simple)',name:'Long and short',ask:'“She was carrying a folder when the camera recorded her.” Which action is long? Which is short?',rule:'The long background action is in the <b>Past Continuous</b>. The short action that happens in the middle of it is in the <b>Past Simple</b>, often after <b>when</b>.',eg:'I was walking home when I saw the police car.'},
   {k:'while',sum:'while + Past Continuous',name:'While',ask:'“While he was waiting, he sent a message.” Which tense comes after while?',rule:'<b>While</b> introduces the long action, so it is followed by the <b>Past Continuous</b>.',eg:'While the teacher was talking, someone opened the door.'},
-  {k:'q',sum:'What were you doing …? / Were you …?',name:'Questions',ask:'How does the detective ask about an action in progress?',rule:'<b>Was / Were</b> + person + -ing: <b>What were you doing at 3:30? Were you waiting outside?</b> Short answers: Yes, I was. / No, I wasn’t.'}]}},
-{stage:'Grammar',title:'Grammar detective',hint:'Write the verb in the Past Simple or the Past Continuous. <small>Think: finished, or in progress?</small>',
- act:{type:'gaps',cols:2,items:[
+  {k:'q',sum:'What were you doing …? / Were you …?',name:'Questions',ask:'How does the detective ask about an action in progress?',rule:'<b>Was / Were</b> + person + -ing: <b>What were you doing at 3:30? Were you waiting outside?</b> Short answers: Yes, I was. / No, I wasn’t.'}]},
+ {type:'quiz',title:'Past Arena',label:'Question',lives:3,cols:1,items:[
+  {q:'While the officers ___ the flat, they found a hidden camera.',o:['were searching', 'searched', 'search'],a:'were searching',why:'A long action, interrupted by a short one.'},
+  {q:'The witness ___ the man near the bank at about 9 p.m.',o:['saw', 'was seeing', 'sees'],a:'saw',why:'see is a state verb: no -ing here.'},
+  {q:'At 8:15 the security guard ___ through the corridor.',o:['was walking', 'walked every day', 'is walking'],a:'was walking',why:'In progress at 8:15.'},
+  {q:'The suspect finally ___ that he knew the victim.',o:['admitted', 'was admitting', 'admits'],a:'admitted',why:'A short, finished action.'},
+  {q:'What ___ at 10 o’clock last night?',o:['were you doing', 'did you doing', 'you were doing'],a:'were you doing',why:'were + you + -ing'},
+  {q:'The alarm went off while the thieves ___ the paintings.',o:['were taking', 'took', 'take'],a:'were taking',why:'while + Past Continuous'},
+  {q:'The detective ___ the fingerprints and found a match.',o:['checked', 'was checking', 'check'],a:'checked',why:'Two finished actions, one after the other.'},
+  {q:'Two men ___ in a car outside the bank when the police came.',o:['were sitting', 'sat', 'are sitting'],a:'were sitting',why:'Background action + when + short action.'}]}]},
+{stage:'Grammar',title:'Grammar detective',hint:'Hunt the mistakes in the detectives’ notes. Then write the verbs yourself.',cols:'1fr 1.1fr',
+ acts:[
+ {type:'hunt',title:'Error hunter',tip:'Click the word with the mistake.',items:[
+  {s:'At 3:30 Ben were waiting for his mum.',bad:3,fix:'was waiting',why:'Ben = he → was'},
+  {s:'While Mia was walk past 7B, the camera recorded her.',bad:3,fix:'was walking',why:'was + -ing'},
+  {s:'The detective didn’t found any fingerprints.',bad:3,fix:'didn’t find',why:'didn’t + base form'},
+  {s:'What did you doing at 3:30?',bad:1,fix:'What were you doing',why:'were + -ing'},
+  {s:'The teacher putted the envelope in a drawer.',bad:2,fix:'put',why:'put – put – put'},
+  {s:'They was playing basketball when the teacher left.',bad:1,fix:'were playing',why:'they → were'}]},
+ {type:'gaps',title:'Past Simple or Past Continuous?',dense:true,items:[
   {pre:'WAIT · While Ben',post:'for his mum, he sent her a message.',ans:['was waiting']},
   {pre:'LEAVE · Alex',post:'the gym at 3:28.',ans:['left']},
   {pre:'CARRY · Mia',post:'a blue folder when the camera recorded her.',ans:['was carrying']},
-  {pre:'RECORD · The camera',post:'Mia while she was walking past 7B.',ans:['recorded']},
   {pre:'YOU / DO · What',post:'at 3:30, Ben?',ans:['were you doing']},
   {pre:'PUT · The teacher',post:'the money in a drawer and forgot about it.',ans:['put']},
-  {pre:'PLAY · Alex and his friends',post:'basketball when the PE teacher left.',ans:['were playing']},
-  {pre:'NOT / STUDY · At 3:30 Mia',post:'in the library.',ans:['wasn’t studying',"wasn't studying",'was not studying']}]}},
-{stage:'Evidence',title:'Timeline',hint:'Only one clue gives a clock time. Work out the rest and put the events in order. <small>Then say: Who could take the envelope at 3:30?</small>',wide:true,
+  {pre:'PLAY · Alex and his friends',post:'basketball when the PE teacher left.',ans:['were playing']}]}]},
+{stage:'Evidence',title:'Timeline and the truth',hint:'One clue gives a clock time. Order the events, then decide what happened.',split:'minmax(0,.75fr) minmax(0,1.25fr)',cols:'1.15fr 1fr',
  side:{look:'case',card:CLUES},
- act:{type:'order',compact:true,from:'Tap the events from first to last',items:['Alex left the gym','The envelope disappeared','The camera recorded Mia near 7B','Ben texted his mum','The cleaner saw the door open','Mia arrived at the library']}},
-{stage:'Evidence',title:'Stolen, moved or forgotten?',hint:'Before the answer: what do you think happened to the money? Say why.',
- side:{look:'case',card:NOTE},
- act:{type:'explain',label:'The truth',endLabel:'Case closed',revealLabel:'Show the truth',doneLabel:'Close the case',wait:'Gabi decides first: stolen, moved or forgotten? Then open the answer.',items:[
-  {k:'none',sum:'The teacher put the envelope in a locked drawer and forgot about it.',name:'Case closed',head:'Case closed',ask:'Was the money <b>stolen</b>, <b>moved</b> or <b>forgotten</b>? Use: I think … because … · It might … · It can’t …',rule:'The teacher found the envelope in a <b>locked drawer</b>. She put it there before she left the classroom and then forgot about it. <b>Nobody stole the money.</b>',eg:'Being suspicious is not the same as being guilty.'}]}},
-{stage:'Speak',title:'Talk about it',hint:'Speak for 40 seconds on each question. <small>Use the two past tenses and the new words.</small>',
- side:{look:'case',card:CLOSED},
- act:{type:'talk',label:'Question',secs:40,chipLabel:'Tap each phrase he uses',chips:['At 3:30 … was …ing','when … / while …','This clue suggests …','It doesn’t prove …','suspect · evidence · guilty','If someone accused me, I’d feel …'],cards:[
+ acts:[
+ {type:'order',title:'Timeline',compact:true,from:'Tap from first to last',items:['Alex left the gym','The envelope disappeared','The camera recorded Mia near 7B','Ben texted his mum','The cleaner saw the door open','Mia arrived at the library']},
+ {type:'explain',title:'Stolen, moved or forgotten?',label:'The truth',endLabel:'Case closed',revealLabel:'Show the truth',doneLabel:'Close the case',wait:'Gabi decides first, then open the answer.',items:[
+  {k:'none',sum:'The teacher put the envelope in a locked drawer and forgot about it.',name:'Case closed',head:'Case closed',ask:'Was the money <b>stolen</b>, <b>moved</b> or <b>forgotten</b>? Use: I think … because … · It might … · It can’t …',rule:'The teacher found the envelope in a <b>locked drawer</b>. She put it there before she left the classroom and then forgot about it. <b>Nobody stole the money.</b>',eg:'Being suspicious is not the same as being guilty.'}]}]},
+{stage:'Speak',title:'A real case',hint:'A real mystery from 1971. Choose the right form, then talk about our case and this one.',cols:'1.1fr 1fr',
+ acts:[
+ {type:'gaps',title:'D. B. Cooper · a real case',inline:true,tail:' for him for 45 years, but nobody ever found him.',items:[
+  {pre:'On 24 November 1971, a man in a dark suit',opts:['bought', 'was buying'],ans:['bought'],ph:'…'},
+  {pre:' a plane ticket to Seattle. While the plane',opts:['flew', 'was flying'],ans:['was flying'],ph:'…'},
+  {pre:' over the USA, he',opts:['gave', 'was giving'],ans:['gave'],ph:'…'},
+  {pre:' a note to a flight attendant: he had a bomb! The plane landed, and the police',opts:['gave', 'were giving'],ans:['gave'],ph:'…'},
+  {pre:' him $200,000 and four parachutes. Later, at about 8 p.m., while the plane',opts:['flew', 'was flying'],ans:['was flying'],ph:'…'},
+  {pre:' over dark forests, he',opts:['jumped', 'was jumping'],ans:['jumped'],ph:'…'},
+  {pre:' out with the money. The police',opts:['searched', 'were searching'],ans:['searched'],ph:'…'}]},
+ {type:'talk',title:'Talk about it',label:'Question',secs:40,chipLabel:'Tap each phrase he uses',chips:['At … he was …ing','when … / while …','This suggests …','It doesn’t prove …'],cards:[
   {q:'Why did the three students look suspicious?'},
   {q:'Was there enough evidence to accuse anyone? Why not?'},
   {q:'How would you feel if someone accused you of stealing?'},
   {q:'Why is it important to check the facts before you blame someone?'},
-  {q:'What should the teacher do differently next time?'}]}}
+  {q:'What should the teacher do differently next time?'},
+  {q:'D. B. Cooper: what do you think happened to him?'}]}]}
 ]});
 </script>
 </body>
