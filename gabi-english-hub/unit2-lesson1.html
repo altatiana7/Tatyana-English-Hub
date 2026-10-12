@@ -7,14 +7,24 @@
 <title>Gabi · Unit 2 · Lesson 1 · Law and order</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="skills.css?v=20261009a">
+<link rel="stylesheet" href="skills.css?v=20261012a">
+<link rel="stylesheet" href="case.css?v=20261012a">
 </head>
 <body>
-<script src="skills.js?v=20261009a"></script>
+<script src="skills.js?v=20261012a"></script>
 <script>
 /* Unit 2 (Law and order), lesson 1. Opens with a check-in built from Gabi's real mistakes:
    steps 1-2 = Homework 5 (family, life stages, word formation), steps 3-4 = Homework 6 (his own sentences, advice).
-   Steps 5-8 open the new unit: crimes, criminals, detective work. Step 9 sets Homework 7 (email to Maya). */
+   Steps 5-7 open the new unit: crimes, criminals, detective work. Steps 8-10: the case 'The Missing £150' (Tatyana's Law & Order pack, block 1). Step 11 sets Homework 7 (email to Maya). */
+const CASE=`<div class="tape"><span>CRIME SCENE · DO NOT CROSS</span></div>
+<div class="filehead"><h4>The Missing £150</h4><span class="stamp">CASE OPEN</span></div>
+<p class="case">Friday afternoon. Class 7B is collecting money for a school trip. The teacher puts <b>£150 in a blue envelope</b> on her desk. At <b>3:30 p.m.</b> the envelope disappears. Three students were near the classroom.</p>
+<div class="sus">
+<div><img src="assets/u2/alex.jpg" alt=""><span><b>Alex<i>SUSPECT</i></b><q>I was playing basketball in the gym at 3:30.</q><small>The PE teacher saw him at 3:25, but left before 3:30.</small></span></div>
+<div><img src="assets/u2/mia.jpg" alt=""><span><b>Mia<i>SUSPECT</i></b><q>I was doing my homework in the library.</q><small>The librarian remembers her arriving at 3:40.</small></span></div>
+<div><img src="assets/u2/ben.jpg" alt=""><span><b>Ben<i>SUSPECT</i></b><q>I was waiting for my mum outside school.</q><small>His mum arrived at 3:45. She can’t say where he was before that.</small></span></div>
+</div><p class="words"><b>suspect</b> a person who may have done it · <b>alibi</b> proof that you were somewhere else · <b>clue</b> a small fact that helps · <b>guilty</b> did it</p>`;
+const CASE_MINI=CASE.replace(/<p class="case">[\s\S]*?<\/p>/,'').replace(/<p class="words">[\s\S]*?<\/p>/,'').replace('<div class="sus">','<div class="sus mini">');
 const TASK=`<h4>Homework 7 · Your email to Maya</h4><p>Write your reply to Maya (90–140 words). Include:</p><ul><li>basic personal information</li><li>your family</li><li>your main hobby</li><li>your favourite subjects at school</li></ul><p>Answer her four questions and ask her two of your own.</p><a class="link" href="../gabriel-homework/lesson-7-homework.html?v=20261011-a" target="_blank" rel="noopener">Open Homework 7</a>`;
 Lesson.boot({kicker:'Unit 2 · Lesson 1',steps:[
 {stage:'Check-in',title:'Family words from memory',hint:'Homework 5: eight words to repair. <small>No options this time. Write the word yourself.</small>',
@@ -77,11 +87,26 @@ Lesson.boot({kicker:'Unit 2 · Lesson 1',steps:[
   {q:'_____ the evidence: study it carefully in a laboratory.',a:'analyse',why:'Analyse the evidence.'},
   {q:'_____ a suspect: take the person to the police station.',a:'arrest',why:'The police arrest a suspect.'},
   {q:'_____ a suspect with a crime: say officially that this person did it.',a:'charge',why:'Charge someone with a crime.'}]}},
-{stage:'New words',title:'You are the detective',hint:'Speak for 40 seconds. Use the new words. <small>Say what you do first, next and last.</small>',
- act:{type:'talk',label:'Case',secs:40,chipLabel:'Tap each word he uses',chips:['First, I’d …','Then …','look for','question','collect evidence','witness','suspect','arrest'],cards:[
-  {q:'Someone stole the teacher’s laptop from the classroom at lunchtime. What do you do?'},
-  {q:'A shop window was broken last night. There is a red bike in front of the shop. What happened?'},
-  {q:'Which is the most serious: shoplifting, vandalism or burglary? Why?'}]}},
+{stage:'Case',title:'The Missing £150',hint:'Read the case. Every alibi has a hole. <small>What is the problem with each one? Write it in your own words.</small>',wide:true,
+ side:{look:'case',card:CASE},
+ act:{type:'gaps',open:true,dense:true,items:[
+  {pre:'Alex says he was in the gym at 3:30. Why can’t we be sure?',long:1,kw:[['3:25'],['left'],['before'],['nobody'],['no one']],model:'The PE teacher saw him at 3:25, but nobody saw him at 3:30.'},
+  {pre:'Mia says she was in the library. What is wrong?',long:1,kw:[['3:40'],['later'],['arrived'],['after']],model:'The librarian saw her arrive at 3:40, ten minutes after the money disappeared.'},
+  {pre:'Ben says he was outside school. Who can confirm it?',long:1,kw:[['nobody'],['no one'],['3:45'],['can t'],['cannot'],['alone']],model:'Nobody: his mum arrived at 3:45, so nobody saw him at 3:30.'}]}},
+{stage:'Case',title:'Interrogation',hint:'Write the questions for the suspects. <small>Then ask them aloud: your teacher answers as Alex, Mia and Ben. Add two follow-up questions with Why or How.</small>',
+ side:{look:'case',card:CASE_MINI},
+ act:{type:'gaps',open:true,dense:true,cols:2,items:[
+  {pre:'where / you / be / at 3:30?',long:1,kw:[['where were you']],model:'Where were you at 3:30?'},
+  {pre:'what / you / do / at 3:30?',long:1,kw:[['what were you doing']],model:'What were you doing at 3:30?'},
+  {pre:'who / be / with you?',long:1,kw:[['who was with you']],model:'Who was with you?'},
+  {pre:'you / see / the blue envelope?',long:1,kw:[['did you see']],model:'Did you see the blue envelope?'},
+  {pre:'why / you / go / there?',long:1,kw:[['why did you go']],model:'Why did you go there?'},
+  {pre:'anyone / can / confirm your story?',long:1,kw:[['can anyone confirm'],['can anybody confirm']],model:'Can anyone confirm your story?'}]}},
+{stage:'Case',title:'Your verdict',hint:'Speak for 60 seconds. There is no proven culprit yet. <small>Suspicion is not proof: say what the clues suggest and what they don’t prove.</small>',
+ side:{look:'case',card:CASE_MINI},
+ act:{type:'talk',label:'Verdict',secs:60,chipLabel:'Tap each phrase he uses',chips:['I think … might have taken it because …','However, …','This clue suggests …','It doesn’t prove …','We need more evidence.','suspect · alibi · witness · guilty'],cards:[
+  {q:'Who took the money: Alex, Mia, Ben, or do we need more evidence?'},
+  {q:'What is the difference between a suspect and a guilty person?'}]}},
 {stage:'Homework',title:'Your email to Maya',hint:'Before you write at home: what is the plan of an informal email? Tap the five paragraphs in order.',
  side:{card:TASK},
  act:{type:'order',compact:true,from:'Tap the topics in the order of the paragraphs',items:['basic personal information','family','hobbies','favourite subjects at school','asking for a reply']}}

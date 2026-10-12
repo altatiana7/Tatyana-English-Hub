@@ -205,8 +205,9 @@ const modules=[
    {title:'Writing · An informal email',note:'Homework check · Maya’s email · seven rules · Writing bank · plan · write'},
    {title:'Revision',note:'Unit 1 step by step · warm-up · Word Walls · accuracy · Ten Faces · Reach Higher · Test yourself'}]},
  {title:'Law and order',lessons:[
-   {title:'Vocabulary',note:'Check-in · crimes and criminals · detective work'},
-   {title:'Reading & Grammar',note:'Surprising true crimes · Past Continuous · used to'},
+   {title:'Vocabulary · The Missing £150',note:'Check-in · crimes and criminals · detective work · the case'},
+   {title:'Grammar · New evidence',note:'The case continues · Past Simple vs Past Continuous · timeline · case closed'},
+   {title:'Reading & Grammar',note:'Surprising true crimes · used to'},
    {title:'Listening & Speaking',note:'Crime story · investigation · review'}]},
  {title:'Plurilingual',lessons:[
    {title:'Vocabulary & Grammar',note:'Languages · nationalities · negative prefixes'},
@@ -295,7 +296,8 @@ function openLesson(n,i){
     location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20261001-clean-layout-v9';
     return;
   }
-  if(n===2 && i===0){ location.href='unit2-lesson1.html?v=20261011-a'; return; }
+  if(n===2 && i===0){ location.href='unit2-lesson1.html?v=20261012-a'; return; }
+  if(n===2 && i===1){ location.href='unit2-lesson2.html?v=20261012-a'; return; }
   const m=modules[n-1];
   document.getElementById('crumb').textContent='MODULE '+n+' · '+m.title.toUpperCase();
   document.getElementById('lessonHeading').textContent=m.lessons[i].title;
@@ -328,7 +330,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
   const tile=document.getElementById('wordTile');tile.onclick=()=>{tile.classList.toggle('flip');
     try{if(tile.classList.contains('flip')){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w[0]);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}catch(e){}};
   const h=d.getHours();document.getElementById('hi').textContent=(h<12?'GOOD MORNING':h<18?'GOOD AFTERNOON':'GOOD EVENING')+', GABI';
-  document.getElementById('progText').textContent='9 steps · 45 minutes';
+  document.getElementById('progText').textContent='11 steps · 50 minutes';
   document.getElementById('continueBtn').onclick=()=>openLesson(2,0);
 })();
 
