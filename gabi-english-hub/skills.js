@@ -84,7 +84,8 @@ function initAct(a,s){if(!a)return;
  if(a.type==='talk'){s.i=0;s.flip=false;s.used={};s.left=null;s.run=false}
  if(a.type==='map'){s.val=SHARED.map||{}}
  if(a.type==='write'){s.text=s.text||''}
- if(a.type==='explain'){s.i=0;s.shown={}}}
+ if(a.type==='explain'){s.i=0;s.shown={}}
+ if(a.type==='bomb'){s.st='start';s.i=0;s.ok=0;s.boom=0;s.miss=[];s.left=a.secs||15;s.res=null;s.pick=null}}
 const fb=(ok,head,body)=>`<div class="fb ${ok?'ok':'no'}"><b>${head}</b>${body?`<span>${body}</span>`:''}</div>`;
 function actHTML(a,s){if(!a)return'';return ACT[a.type].view(a,s)}
 const ACT={
@@ -192,6 +193,37 @@ ACT.explain={view(a,s){const n=a.items.length;
    <div class="row nav3"><button class="ghost" data-back ${s.i===0?'disabled':''}>Back</button>${open?`<button class="main" data-fwd data-auto>${s.i===n-1?esc(a.doneLabel||'See all the rules'):'Next rule'}</button>`:`<button class="main" data-reveal data-auto>${esc(a.revealLabel||'Show the rule')}</button>`}</div>`},
  after(a,s){const it=a.items[s.i],on=it&&s.shown[s.i]?it.k:null;document.querySelectorAll('#sheet .text mark[data-k]').forEach(m=>m.classList.toggle('lit',!!on&&m.dataset.k.split(' ').includes(on)));const f=document.querySelector('#sheet .text mark.lit');if(f&&f.scrollIntoView)f.scrollIntoView({block:'nearest'})},
  click(a,s,d){if(d.reveal!==undefined)s.shown[s.i]=true;else if(d.fwd!==undefined)s.i++;else if(d.back!==undefined)s.i=Math.max(0,s.i-1);else if(d.again!==undefined){s.i=0;s.shown={}}else return;redrawAct();this.after(a,s)}};
+
+/* ---------- bomb: one question at a time, 15 seconds each, the bomb explodes when time runs out ---------- */
+let AC=null;function ac(){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume()}catch(e){}return AC}
+function beep(f,d,v){const c=ac();if(!c)return;try{const o=c.createOscillator(),g=c.createGain();o.frequency.value=f;g.gain.setValueAtTime(v||.08,c.currentTime);g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+d);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+d)}catch(e){}}
+function bang(){const c=ac();if(!c)return;try{const len=c.sampleRate*.9,b=c.createBuffer(1,len,c.sampleRate),x=b.getChannelData(0);for(let i=0;i<len;i++)x[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.2);const src=c.createBufferSource(),lp=c.createBiquadFilter(),g=c.createGain();src.buffer=b;lp.type='lowpass';lp.frequency.value=900;g.gain.value=.9;src.connect(lp);lp.connect(g);g.connect(c.destination);src.start()}catch(e){}}
+function bombSVG(left,secs){return `<svg class="bombsvg" viewBox="0 0 130 130" aria-hidden="true"><path id="bfuse" d="M84 34 C 96 14, 112 24, 120 6" fill="none" stroke="#d8b27a" stroke-width="5" stroke-linecap="round" pathLength="100" stroke-dasharray="100 100" stroke-dashoffset="${100*(1-left/secs)}"/><rect x="74" y="28" width="18" height="14" rx="3" fill="#4a5466" transform="rotate(38 83 35)"/><circle cx="58" cy="80" r="46" fill="#1d2431"/><circle cx="40" cy="62" r="11" fill="#fff" opacity=".16"/><circle id="bspark" class="spark" cx="120" cy="6" r="7"/><text id="bnum" x="58" y="95" text-anchor="middle">${left}</text></svg>`}
+function bombAns(q){return q.o?q.a:q.say?(q.model||''):[].concat(q.a)[0]}
+function bombTick(a,s){const secs=a.secs||15,f=$('#bfuse'),n=$('#bnum'),sp=$('#bspark'),box=$('.bomb-box');if(!f)return;f.setAttribute('stroke-dashoffset',100*(1-s.left/secs));n.textContent=s.left;
+ try{const L=f.getTotalLength(),pt=f.getPointAtLength(L*Math.max(0,s.left)/secs);sp.setAttribute('cx',pt.x);sp.setAttribute('cy',pt.y)}catch(e){}if(box)box.classList.toggle('hot',s.left<=5)}
+function bombArm(a,s,reset){clearInterval(tick);if(reset)s.left=a.secs||15;bombTick(a,s);
+ tick=setInterval(()=>{s.left--;bombTick(a,s);if(s.left>0&&s.left<=5)beep(1100,.06);if(s.left<=0){clearInterval(tick);bombEnd(a,s,false)}},1000)}
+function bombEnd(a,s,ok){clearInterval(tick);const q=a.items[s.i];s.res=ok?'ok':'boom';if(ok){s.ok++;beep(660,.12,.1);setTimeout(()=>beep(990,.18,.1),110)}else{s.boom++;s.miss.push([q.plain||q.q,bombAns(q),q.why||'']);bang()}redrawAct()}
+ACT.bomb={view(a,s){const n=a.items.length,secs=a.secs||15;
+  if(s.st==='start')return `<div class="bomb-start"><div class="bomb-box">${bombSVG(secs,secs)}</div><div><span class="tag">${esc(a.label||'Game')}</span><h3>${esc(a.title||'Defuse the bomb')}</h3><p>${n} questions · ${secs} seconds each. Answer before the bomb explodes.</p><button class="main" data-bstart data-auto>Start</button></div></div>`;
+  if(s.st==='end')return `<div class="end"><div><span class="tag">Result</span><h3>${s.ok} of ${n} defused</h3><p>${s.boom?s.boom+' exploded. Look at them again, then play again.':'Not a single explosion.'}</p><button class="main" data-again>Play again</button></div>${review(s.miss)}</div>`;
+  const q=a.items[s.i],done=!!s.res,ans=bombAns(q);let body='';
+  if(q.o)body=`<div class="opts n${q.o.length} c${Math.min(q.o.length,3)}">${q.o.map((o,k)=>`<button data-bopt="${k}" class="${done?(o===q.a?'ok':o===s.pick?'no':'dim'):''}" ${done?'disabled':''}>${esc(o)}</button>`).join('')}</div>`;
+  else if(q.say)body=done?'':`<p class="muted">${esc(a.sayNote||'He answers aloud. Teacher: was it good advice?')}</p><div class="row"><button class="main" data-bok>Defused</button><button class="ghost" data-bno>Boom</button></div>`;
+  else body=done?'':`<form data-form="bomb" class="bomb-in"><input data-bin data-auto autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the answer" aria-label="Answer"><button class="main">Defuse</button></form>`;
+  const fbk=done?fb(s.res==='ok',s.res==='ok'?'Defused.':'Boom! '+(ans?'The answer is: '+esc(ans):''),s.res==='ok'?esc([ans,q.why].filter(Boolean).join(' · ')):esc(q.why||''))+`<button class="main" data-bnext data-auto>${s.i===n-1?'See the result':'Next bomb'}</button>`:'';
+  return `<div class="qhead"><span class="tag">${esc(q.sec||a.label||'Question')} · ${s.i+1} of ${n}</span><b>Defused ${s.ok} · Boom ${s.boom}</b></div>
+   <div class="bomb-play ${s.res||''}"><div class="bomb-box">${bombSVG(done?(s.res==='ok'?s.left:0):s.left,secs)}</div><div class="bomb-q"><p class="q">${q.html||esc(q.q)}</p>${body}${fbk}</div>${s.res==='boom'?'<div class="boomfx"><b>BOOM!</b></div>':''}</div>`},
+ after(a,s){if(s.st==='play'&&!s.res)bombArm(a,s,false)},
+ submit(a,s,f){if(s.res)return;const el=f.querySelector('[data-bin]'),v=nz(el.value);if(!v)return;const q=a.items[s.i];
+  if([].concat(q.a).some(x=>nz(x)===v))return bombEnd(a,s,true);el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');beep(180,.15,.08);el.select()},
+ click(a,s,d){if(d.bstart!==undefined){ac();s.st='play';s.i=0;s.res=null;redrawAct();return bombArm(a,s,true)}
+  if(d.again!==undefined){clearInterval(tick);s.init=false;initAct(a,s);s.init=true;return redrawAct()}
+  if(s.res&&d.bnext!==undefined){s.i++;s.res=null;s.pick=null;if(s.i>=a.items.length){s.st='end';return redrawAct()}redrawAct();return bombArm(a,s,true)}
+  if(s.res)return;const q=a.items[s.i];
+  if(d.bopt!==undefined){s.pick=q.o[+d.bopt];return bombEnd(a,s,s.pick===q.a)}
+  if(d.bok!==undefined)return bombEnd(a,s,true);if(d.bno!==undefined)return bombEnd(a,s,false)}};
 function judge(it,v){const raw=String(v||'').trim().toLowerCase();if(raw&&(it.ans||[]).some(x=>String(x).toLowerCase()===raw))return true;const n=nz(v);if(!n)return false;if((it.ans||[]).some(x=>nz(x)===n))return true;if(it.kw){return it.kw.some(g=>g.every(k=>n.includes(k)))?true:'near'}return false}
 function review(rows){return rows.length?`<div class="review"><b>Look again</b><ol>${rows.map(r=>`<li><span>${esc(r[0])}</span><em>${esc(r[1])}</em>${r[2]?`<small>${esc(r[2])}</small>`:''}</li>`).join('')}</ol></div>`:'<p class="clean">Nothing to review.</p>'}
 

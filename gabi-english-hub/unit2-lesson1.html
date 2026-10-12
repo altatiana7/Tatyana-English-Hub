@@ -7,15 +7,15 @@
 <title>Gabi · Unit 2 · Lesson 1 · Law and order</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="skills.css?v=20261012a">
-<link rel="stylesheet" href="case.css?v=20261012a">
+<link rel="stylesheet" href="skills.css?v=20261012b">
+<link rel="stylesheet" href="case.css?v=20261012b">
 </head>
 <body>
-<script src="skills.js?v=20261012a"></script>
+<script src="skills.js?v=20261012b"></script>
 <script>
 /* Unit 2 (Law and order), lesson 1. Opens with a check-in built from Gabi's real mistakes:
-   steps 1-2 = Homework 5 (family, life stages, word formation), steps 3-4 = Homework 6 (his own sentences, advice).
-   Steps 5-7 open the new unit: crimes, criminals, detective work. Steps 8-10: the case 'The Missing £150' (Tatyana's Law & Order pack, block 1). Step 11 sets Homework 7 (email to Maya). */
+   step 1 = one bomb game (15 s each) over Homework 5 and 6: family words, nouns, his own mistakes, advice aloud.
+   Steps 5-8 open the new unit: crime or accident, crimes, criminals, detective toolkit. Steps 9-11: the case 'The Missing £150' (Tatyana's Law & Order pack, block 1). Step 12 sets Homework 7 (email to Maya). */
 const CASE=`<div class="tape"><span>CRIME SCENE · DO NOT CROSS</span></div>
 <div class="filehead"><h4>The Missing £150</h4><span class="stamp">CASE OPEN</span></div>
 <p class="case">Friday afternoon. Class 7B is collecting money for a school trip. The teacher puts <b>£150 in a blue envelope</b> on her desk. At <b>3:30 p.m.</b> the envelope disappears. Three students were near the classroom.</p>
@@ -27,38 +27,40 @@ const CASE=`<div class="tape"><span>CRIME SCENE · DO NOT CROSS</span></div>
 const CASE_MINI=CASE.replace(/<p class="case">[\s\S]*?<\/p>/,'').replace(/<p class="words">[\s\S]*?<\/p>/,'').replace('<div class="sus">','<div class="sus mini">');
 const TASK=`<h4>Homework 7 · Your email to Maya</h4><p>Write your reply to Maya (90–140 words). Include:</p><ul><li>basic personal information</li><li>your family</li><li>your main hobby</li><li>your favourite subjects at school</li></ul><p>Answer her four questions and ask her two of your own.</p><a class="link" href="../gabriel-homework/lesson-7-homework.html?v=20261011-a" target="_blank" rel="noopener">Open Homework 7</a>`;
 Lesson.boot({kicker:'Unit 2 · Lesson 1',steps:[
-{stage:'Check-in',title:'Family words from memory',hint:'Homework 5: eight words to repair. <small>No options this time. Write the word yourself.</small>',
- act:{type:'gaps',cols:2,items:[
-  {pre:'Same dad, different mums: Alex is my',post:'.',ans:['half-brother','half brother','halfbrother']},
-  {pre:'My brother’s daughter is my',post:'.',ans:['niece']},
-  {pre:'Someone in my family who lived 300 years ago is my',post:'.',ans:['ancestor']},
-  {pre:'I tell my sister everything. I’m very',post:'to her.',ans:['close']},
-  {pre:'They plan to marry next year. Last week they got',post:'.',ans:['engaged']},
-  {pre:'Their marriage ended legally. They got',post:'.',ans:['divorced']},
-  {pre:'My cousin and her boyfriend are going to',post:'married in June.',ans:['get']},
-  {pre:'I shouted at my sister. Now I',post:'it.',ans:['regret']}]}},
-{stage:'Check-in',title:'Build the noun',hint:'Change the word in capitals into a noun. <small>Careful with the spelling: one letter can disappear.</small>',
- act:{type:'gaps',cols:2,items:[
-  {pre:'ARGUE · They had a loud',post:'about money.',ans:['argument']},
-  {pre:'ENJOY · Reading gives me real',post:'.',ans:['enjoyment']},
-  {pre:'EMBARRASS · His face went red with',post:'.',ans:['embarrassment']},
-  {pre:'ACHIEVE · Finishing the marathon was a great',post:'.',ans:['achievement']},
-  {pre:'DECIDE · Moving abroad was a hard',post:'.',ans:['decision']},
-  {pre:'PERMIT · You need',post:'to use this photo.',ans:['permission']},
-  {pre:'INDEPENDENT · At eighteen, people want',post:'.',ans:['independence']},
-  {pre:'PATIENT · Teaching a puppy takes',post:'.',ans:['patience']}]}},
-{stage:'Check-in',title:'Fix the sentence',hint:'Homework 6: four sentences, one mistake in each. Write it correctly. <small>Then say why it was wrong.</small>',
- act:{type:'gaps',open:true,dense:true,items:[
-  {pre:'Why don’t you report your mum about it?',long:1,kw:[['tell your mum'],['talk to your mum'],['talk with your mum'],['speak to your mum']],model:'Why don’t you tell your mum about it?'},
-  {pre:'You could move out, buy a flat and don’t care about the mess.',long:1,kw:[['and not care'],['and stop caring']],model:'You could move out, buy a flat and not care about the mess.'},
-  {pre:'Action video games teaches you to think fast.',long:1,kw:[['games teach you']],model:'Action video games teach you to think fast.'},
-  {pre:'Children know better about themself than their parents.',long:1,kw:[['know themselves better']],model:'Children know themselves better than their parents do.'}]}},
-{stage:'Check-in',title:'Advice, not sympathy',hint:'Give two pieces of advice for each problem. <small>“I’m sorry” is kind, but it is not advice.</small>',
- act:{type:'talk',label:'Problem',secs:30,chipLabel:'Tap each phrase he uses',chips:['Why don’t you … ?','You could …','You should …','If I were you, I’d …','How about + -ing?'],cards:[
-  {q:'My little brother takes my things without asking.'},
-  {q:'I forgot my best friend’s birthday.'},
-  {q:'My parents check my phone every evening.'},
-  {q:'I can’t wake up in time for school.'}]}},
+{stage:'Check-in',title:'Homework bomb',hint:'Homework 5 and 6 in one game. <small>15 seconds for each bomb. Type the answer, choose, or say it aloud.</small>',
+ act:{type:'bomb',secs:15,label:'Homework check',title:'Defuse the homework bomb',items:[
+  {sec:'Family words',q:'Same dad, different mums: Alex is my ___.',a:['half-brother', 'half brother', 'halfbrother']},
+  {sec:'Family words',q:'My brother’s daughter is my ___.',a:['niece'],why:'His son is my nephew.'},
+  {sec:'Family words',q:'Someone in my family who lived 300 years ago is my ___.',a:['ancestor'],why:'The opposite is descendant.'},
+  {sec:'Family words',q:'I tell my sister everything. I’m very ___ to her.',a:['close'],why:'be close to someone'},
+  {sec:'Family words',q:'They plan to marry next year. Last week they got ___.',a:['engaged']},
+  {sec:'Family words',q:'Their marriage ended legally. They got ___.',a:['divorced']},
+  {sec:'Family words',q:'My cousin and her boyfriend are going to ___ married in June.',a:['get'],why:'get married'},
+  {sec:'Family words',q:'I shouted at my sister. Now I ___ it.',a:['regret']},
+  {sec:'Make a noun',q:'ARGUE · They had a loud ___ about money.',a:['argument'],why:'argue loses the e: argument'},
+  {sec:'Make a noun',q:'ENJOY · Reading gives me real ___.',a:['enjoyment']},
+  {sec:'Make a noun',q:'EMBARRASS · His face went red with ___.',a:['embarrassment']},
+  {sec:'Make a noun',q:'ACHIEVE · Finishing the marathon was a great ___.',a:['achievement']},
+  {sec:'Make a noun',q:'DECIDE · Moving abroad was a hard ___.',a:['decision']},
+  {sec:'Make a noun',q:'PERMIT · You need ___ to use this photo.',a:['permission']},
+  {sec:'Make a noun',q:'INDEPENDENT · At eighteen, people want ___.',a:['independence']},
+  {sec:'Make a noun',q:'PATIENT · Teaching a puppy takes ___.',a:['patience']},
+  {sec:'Fix the mistake',q:'Why don’t you ___ your mum about it?',o:['tell', 'report', 'say'],a:'tell',why:'tell someone about something'},
+  {sec:'Fix the mistake',q:'You could buy a flat and ___ care about the mess.',o:['not', 'don’t', 'doesn’t'],a:'not',why:'could buy … and not care'},
+  {sec:'Fix the mistake',q:'Action video games ___ you to think fast.',o:['teaches', 'teach', 'teaching'],a:'teach',why:'games = they → teach'},
+  {sec:'Fix the mistake',q:'Children know ___ better than their parents do.',o:['themself', 'themselves', 'theirself'],a:'themselves',why:'they → themselves'},
+  {sec:'Fix the mistake',q:'I’ve already ___ my homework.',o:['finish', 'finished', 'finishing'],a:'finished',why:'have + past participle'},
+  {sec:'Fix the mistake',q:'That’s ___ hard question.',o:['a', 'the', '—'],a:'a',why:'a hard question'},
+  {sec:'Give advice aloud',q:'My little brother takes my things without asking.',say:1,model:'Why don’t you ask him to say first? You could lock your door.',why:'Why don’t you … ? · You could … · You should …'},
+  {sec:'Give advice aloud',q:'I forgot my best friend’s birthday.',say:1,model:'You should say sorry and give her a present tomorrow.',why:'Why don’t you … ? · You could … · You should …'},
+  {sec:'Give advice aloud',q:'My parents check my phone every evening.',say:1,model:'Why don’t you talk to them calmly and agree on rules?',why:'Why don’t you … ? · You could … · You should …'},
+  {sec:'Give advice aloud',q:'I can’t wake up in time for school.',say:1,model:'You should go to bed earlier. How about putting your alarm far from the bed?',why:'Why don’t you … ? · You could … · You should …'}]}},
+{stage:'New words',title:'Crime or accident?',hint:'Warm-up for the new unit. Is it a crime, an accident, or does it depend? <small>20 seconds each. Give a reason.</small>',
+ act:{type:'talk',label:'Situation',secs:20,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['It’s a crime because …','It’s an accident because …','It depends on …','I think …','For example, …'],cards:[
+  {q:'You find £10 on the classroom floor and put it in your pocket.'},
+  {q:'You accidentally break a classroom window while playing football.'},
+  {q:'You take your friend’s headphones without asking and refuse to give them back.'},
+  {q:'You borrow a book and forget to return it.'}]}},
 {stage:'New words',title:'What is the crime?',hint:'New unit: Law and order. Which crime is it? <small>Some are very close. Read every word.</small>',
  act:{type:'quiz',label:'Crime',cols:4,opts:['burglary','robbery','theft','mugging','shoplifting','vandalism','fraud','kidnapping'],items:[
   {q:'Someone breaks into a house at night and takes a laptop.',a:'burglary',why:'Burglary = entering a building to steal.'},
@@ -79,14 +81,16 @@ Lesson.boot({kicker:'Unit 2 · Lesson 1',steps:[
   {pre:'A person who steals from shops is a',post:'.',ans:['shoplifter']},
   {pre:'ROB or STEAL, past: They',post:'the bank and escaped.',ans:['robbed']},
   {pre:'ROB or STEAL, past: They',post:'two million euros.',ans:['stole']}]}},
-{stage:'New words',title:'Detective work',hint:'What do detectives do? Choose the verb.',
- act:{type:'quiz',label:'Verb',cols:3,opts:['investigate','collect','question','analyse','arrest','charge'],items:[
-  {q:'_____ a case: try to find out what really happened.',a:'investigate',why:'Detectives investigate a case.'},
-  {q:'_____ evidence: find and keep fingerprints, photos and objects.',a:'collect',why:'Evidence is uncountable: collect evidence, not “evidences”.'},
-  {q:'_____ a witness: ask a person who saw the crime.',a:'question',why:'Question is a verb here: to question a witness or a suspect.'},
-  {q:'_____ the evidence: study it carefully in a laboratory.',a:'analyse',why:'Analyse the evidence.'},
-  {q:'_____ a suspect: take the person to the police station.',a:'arrest',why:'The police arrest a suspect.'},
-  {q:'_____ a suspect with a crime: say officially that this person did it.',a:'charge',why:'Charge someone with a crime.'}]}},
+{stage:'New words',title:'Detective toolkit',hint:'Eight words for the case. Which word matches the meaning?',
+ act:{type:'quiz',label:'Word',cols:4,opts:['suspect','clue','witness','steal','investigate','alibi','evidence','guilty'],items:[
+  {q:'a person who might have done the crime',a:'suspect',why:'The police question the suspects.'},
+  {q:'a small fact or object that helps to solve a crime',a:'clue',why:'A footprint can be a clue.'},
+  {q:'a person who saw what happened',a:'witness',why:'The witness saw a man in a red jacket.'},
+  {q:'to take something without permission',a:'steal',why:'steal – stole – stolen.'},
+  {q:'to try to find out what really happened',a:'investigate',why:'Detectives investigate a case.'},
+  {q:'proof that you were in another place at the time of the crime',a:'alibi',why:'“I was at the cinema” is an alibi, if someone can confirm it.'},
+  {q:'information or objects that show something is true',a:'evidence',why:'Evidence is uncountable: some evidence, not “evidences”.'},
+  {q:'responsible for a crime; you did it',a:'guilty',why:'The opposite is innocent.'}]}},
 {stage:'Case',title:'The Missing £150',hint:'Read the case. Every alibi has a hole. <small>What is the problem with each one? Write it in your own words.</small>',wide:true,
  side:{look:'case',card:CASE},
  act:{type:'gaps',open:true,dense:true,items:[
