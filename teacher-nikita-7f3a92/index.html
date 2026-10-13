@@ -2,188 +2,78 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Nikita · Outcomes · Classroom View</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>Nikita · Outcomes Pre-Intermediate</title>
 <style>
-  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#18130f}
-  #courseFrame{display:block;width:100%;height:100%;border:0;background:#18130f}
+:root{--navy:#0c2235;--navy2:#173a55;--paper:#f4f0e8;--ink:#17212b;--muted:#5d6975;--gold:#a8763f;--wine:#7a2a22;--line:rgba(12,34,53,.16)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Inter,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink)}
+body{overflow:hidden}
+.app{height:100vh;display:grid;grid-template-columns:minmax(0,1fr) min(36vw,470px)}
+.main{padding:18px 26px 16px;display:flex;flex-direction:column;min-height:0}
+.top{margin-bottom:10px}
+.eyebrow{font-size:14px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--wine)}
+h1{font-family:Georgia,serif;font-size:clamp(28px,3.4vw,40px);line-height:1.05;margin:4px 0 4px;color:var(--navy)}
+.sub{font-size:17px;color:var(--muted);margin:0}
+.cont{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-decoration:none;background:var(--gold);color:#fff;border-radius:14px;padding:10px 18px;box-shadow:0 8px 20px #a8763f44;white-space:nowrap}
+.cont small{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+.cont b{font-size:19px}
+.cont:hover{background:#94652f}
+.today{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--navy);color:#fff;border-radius:18px;padding:14px 20px;margin-bottom:12px;box-shadow:0 10px 24px rgba(12,34,53,.2)}
+.tl{font-size:13.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#e3bc90}
+.tt{font-family:Georgia,serif;font-size:clamp(20px,2.2vw,26px);line-height:1.2;margin:3px 0}
+.ts{font-size:15.5px;color:#cdd8e0}
+.tb{display:flex;flex-direction:column;gap:7px;flex:none}
+.go{background:#e3bc90;color:#2b1d14;text-decoration:none;font-weight:800;font-size:19px;border-radius:12px;padding:11px 20px;text-align:center}
+.go:hover{background:#f0cfa6}
+.go2{color:#fff;text-decoration:none;font-weight:700;font-size:16px;border:1px solid rgba(255,255,255,.4);border-radius:12px;padding:7px 14px;text-align:center}
+.go2:hover{background:rgba(255,255,255,.12)}
+.all{font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 7px}
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:minmax(0,1fr);gap:9px}
+.mod{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:14px;padding:6px 14px;min-height:0;transition:transform .12s,box-shadow .12s}
+.mod:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(12,34,53,.12);border-color:var(--navy)}
+.mod .n{flex:none;width:38px;height:38px;border-radius:10px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px}
+.mod .t{font-size:18px;font-weight:700;line-height:1.15}
+.mod .u{display:block;font-size:13.5px;font-weight:600;color:var(--muted);margin-top:2px}
+.mod.now{background:var(--navy);color:#fff;border-color:var(--navy)}
+.mod.now .n{background:#e3bc90;color:#2b1d14}
+.mod.now .u{color:#e3bc90}
+.mod.extra .n{background:var(--wine)}
+.side{position:relative;background:url('./cover-lawyer.jpg') center 20%/cover;min-height:0}
+.side::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,34,53,0) 35%,rgba(12,34,53,.92) 100%)}
+.quick{position:absolute;left:18px;right:18px;bottom:18px;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.quick a{display:block;text-decoration:none;background:rgba(255,255,255,.95);color:var(--navy);border-radius:12px;padding:11px 12px;font-weight:800;font-size:17px;text-align:center}
+.quick a:hover{background:#fff;box-shadow:0 0 0 3px #e3bc90}
+.tag{position:absolute;top:16px;left:18px;z-index:2;background:rgba(12,34,53,.85);color:#fff;border-radius:999px;padding:6px 14px;font-size:14px;font-weight:700;letter-spacing:.04em}
+@media(max-height:620px){.main{padding:10px 22px 10px}.top{margin-bottom:6px}h1{font-size:26px}.today{padding:9px 16px;margin-bottom:8px}.tt{font-size:20px}.ts{font-size:14.5px}.go{padding:8px 16px;font-size:17px}.go2{padding:5px 12px}.all{margin-bottom:5px}.grid{gap:7px}.mod .t{font-size:16.5px}.mod .u{font-size:12.5px}.mod .n{width:32px;height:32px;font-size:15px}.quick a{padding:9px 10px;font-size:16px}.sub{font-size:15.5px}}
+@media(max-width:900px){body{overflow:auto}.app{grid-template-columns:1fr;height:auto}.side{height:300px;order:-1}.grid{grid-template-columns:1fr 1fr;grid-auto-rows:64px}.top{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
-<iframe id="courseFrame" src="./course.html" title="Nikita Outcomes course"></iframe>
+<div class="app">
+  <main class="main">
+    <div class="top"><div><div class="eyebrow">Nikita · English for a lawyer</div><h1>Outcomes Pre-Intermediate</h1></div></div>
+    <section class="today">
+      <div><div class="tl">Today’s lesson · Module 9</div><div class="tt">Is modern education preparing us for real life?</div><div class="ts">Two parts. Start with Block 1; Block 2 is the next lesson.</div></div>
+      <div class="tb"><a class="go" href="./education.html?b=0&v=20261013d">Start Block 1 →</a><a class="go2" href="./education.html?b=1&v=20261013d">Block 2</a></div>
+    </section>
+    <div class="all">All modules</div>
+    <nav class="grid" id="grid" aria-label="Modules"></nav>
+  </main>
+  <aside class="side" role="img" aria-label="A lawyer at his desk">
+    <span class="tag">Real English for real professional success</span>
+    <div class="quick">
+      <a href="../nikita-homework/phrasal-verbs.html?v=20261009">Phrasal verbs</a>
+      <a href="./2026-09-01-conditionals-warmup.html">Speaking</a>
+      <a href="../nikita-homework/">Homework</a>
+      <a href="./teacher-check.html">Teacher check</a>
+    </div>
+  </aside>
+</div>
 <script>
-(function(){
-  const frame=document.getElementById('courseFrame');
-  const css=`
-    :root{
-      --nikita-sidebar:320px;
-    }
-
-    html,body{
-      min-width:100% !important;
-    }
-
-    .app{
-      grid-template-columns:var(--nikita-sidebar) minmax(0,1fr) !important;
-    }
-
-    .sidebar{
-      width:var(--nikita-sidebar) !important;
-      min-width:var(--nikita-sidebar) !important;
-      padding:18px 16px 18px !important;
-      overflow-y:auto !important;
-      scrollbar-width:thin !important;
-    }
-
-    .logo{
-      margin-bottom:12px !important;
-    }
-
-    .logo b{
-      font-size:26px !important;
-      line-height:1 !important;
-    }
-
-    .logo span{
-      font-size:13px !important;
-      line-height:1.25 !important;
-      letter-spacing:.06em !important;
-    }
-
-    .homebtn{
-      min-height:48px !important;
-      font-size:17px !important;
-      font-weight:800 !important;
-      margin:7px 0 12px !important;
-    }
-
-    .modulesHeading{
-      font-size:18px !important;
-      font-weight:900 !important;
-      letter-spacing:.08em !important;
-      margin:8px 0 10px !important;
-    }
-
-    #moduleMenu{
-      display:grid !important;
-      gap:7px !important;
-    }
-
-    .moduleBtn{
-      width:100% !important;
-      min-height:50px !important;
-      height:auto !important;
-      padding:9px 12px !important;
-      border-radius:14px !important;
-      font-size:18px !important;
-      line-height:1.15 !important;
-      font-weight:800 !important;
-      text-align:left !important;
-      gap:10px !important;
-    }
-
-    .moduleBtn .moduleNum{
-      min-width:39px !important;
-      font-size:16px !important;
-      font-weight:900 !important;
-      letter-spacing:.04em !important;
-    }
-
-    .moduleBtn .chev{
-      margin-left:auto !important;
-      font-size:25px !important;
-      line-height:1 !important;
-    }
-
-    .lessonNav button,
-    .lessonNav a{
-      min-height:44px !important;
-      font-size:16px !important;
-    }
-
-    #header.header{
-      position:relative !important;
-      min-height:100vh !important;
-      height:100vh !important;
-      overflow:hidden !important;
-      background:#1c1510 !important;
-    }
-
-    #headerImage{
-      position:absolute !important;
-      inset:0 !important;
-      width:100% !important;
-      height:100% !important;
-      max-width:none !important;
-      max-height:none !important;
-      object-fit:contain !important;
-      object-position:center center !important;
-      transform:none !important;
-      background:#1c1510 !important;
-    }
-
-    .headerOverlay{
-      position:absolute !important;
-      inset:auto 0 0 0 !important;
-      padding:26px 34px 30px !important;
-      background:linear-gradient(180deg,transparent 0%,rgba(18,12,8,.80) 45%,rgba(18,12,8,.94) 100%) !important;
-    }
-
-    #headerTitle,
-    .headerTitle{
-      font-size:clamp(38px,4.5vw,68px) !important;
-      line-height:.98 !important;
-      max-width:900px !important;
-    }
-
-    #headerText,
-    .headerText{
-      font-size:clamp(18px,1.5vw,24px) !important;
-      line-height:1.35 !important;
-      max-width:850px !important;
-    }
-
-    #headerEyebrow,
-    .eyebrow{
-      font-size:15px !important;
-      letter-spacing:.13em !important;
-    }
-
-    @media (max-width:1000px){
-      :root{--nikita-sidebar:280px}
-      .moduleBtn{font-size:16px !important;min-height:46px !important}
-      .moduleBtn .moduleNum{font-size:15px !important}
-    }
-
-    @media (max-width:760px){
-      :root{--nikita-sidebar:250px}
-      .moduleBtn{font-size:15px !important}
-    }
-  `;
-
-  function enhance(){
-    try{
-      const d=frame.contentDocument || frame.contentWindow.document;
-      if(!d || !d.head) return;
-      let style=d.getElementById('nikita-classroom-view-fix');
-      if(!style){
-        style=d.createElement('style');
-        style.id='nikita-classroom-view-fix';
-        d.head.appendChild(style);
-      }
-      style.textContent=css;
-      d.documentElement.classList.add('nikitaClassroomView');
-    }catch(e){
-      console.error('Classroom view enhancement failed',e);
-    }
-  }
-
-  frame.addEventListener('load',()=>{
-    enhance();
-    setTimeout(enhance,250);
-    setTimeout(enhance,900);
-  });
-})();
+const M=[[1,'Jobs','Unit 1'],[2,'Shops','Unit 2'],[3,'Getting There','Unit 3'],[4,'Eat','Unit 4'],[5,'Relax','Unit 5'],[6,'Family & Friends','Unit 6'],[7,'Crime & Punishment','Bridge module'],[8,'Your Place','Unit 7'],[9,'Education','Unit 8 · now'],[10,'Mind & Body','Unit 9'],[11,'Places to Stay','Unit 10'],[12,'Science & Nature','Unit 11'],[13,'On the Phone','Unit 12'],[14,'Culture','Unit 13'],[15,'Stuff','Unit 14'],[16,'Money','Unit 15'],[17,'Events','Unit 16'],[0,'Speaking Lessons','Extra speaking']];
+document.getElementById('grid').innerHTML=M.map(([n,t,u])=>`<a class="mod ${n===9?'now':''} ${n===0||n===7?'extra':''}" href="${n===9?'./education.html?b=0&v=20261013d':'./course.html?m='+n}"><span class="n">${n===0?'SP':n}</span><span class="t">${t}<span class="u">${u}</span></span></a>`).join('');
 </script>
 </body>
 </html>
