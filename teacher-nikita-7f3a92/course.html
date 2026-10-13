@@ -244,6 +244,15 @@ body.courseHomeMode .moduleBtn[data-module="14"]{top:68.32094%}
 body.courseHomeMode .moduleBtn[data-module="15"]{top:73.45377%}
 body.courseHomeMode .moduleBtn[data-module="16"]{top:78.58661%}
 body.courseHomeMode .moduleBtn[data-module="17"]{top:83.71945%}
+
+.quickSide{display:grid;gap:6px;margin:0 0 12px}
+.quickSide a{display:block;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff;text-decoration:none;font-weight:800;font-size:16px}
+.quickSide a:hover{background:rgba(255,255,255,.18)}
+body.courseHomeMode .quickSide{display:none}
+.quickCover{display:none}
+body.courseHomeMode .quickCover{display:flex;position:fixed;right:14px;bottom:12px;z-index:20;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.quickCover a{padding:8px 14px;border-radius:10px;background:#2b1d14e6;color:#fff;text-decoration:none;font-weight:800;font-size:15px;font-family:Inter,Arial,sans-serif;box-shadow:0 4px 14px #0003}
+.quickCover a:hover{background:#7a4a24}
 </style>
 </head>
 <body>
@@ -251,10 +260,12 @@ body.courseHomeMode .moduleBtn[data-module="17"]{top:83.71945%}
 <aside class="sidebar">
   <div class="logo"><b>OUTCOMES</b><span>PRE-INTERMEDIATE • INTERACTIVE COURSE</span></div>
   <button class="homebtn" onclick="showCourseHome()">⌂ Course Cover</button>
+  <div class="quickSide"><a target="_top" href="./education.html?v=20261013">Education lesson</a><a target="_top" href="../nikita-homework/phrasal-verbs.html?v=20261009">Phrasal verbs</a><a target="_top" href="./2026-09-01-conditionals-warmup.html">Speaking</a><a target="_top" href="../nikita-homework/">Homework</a><a target="_top" href="./teacher-check.html">Teacher check</a></div>
   <div class="modulesHeading" style="font-size:14px;font-weight:900;color:#f0c98f;letter-spacing:.06em;margin:2px 10px 8px;">Модули</div>
   <div id="moduleMenu"></div>
 </aside>
 
+<nav class="quickCover" aria-label="Quick links"><a target="_top" href="../nikita-homework/phrasal-verbs.html?v=20261009">Phrasal verbs</a><a target="_top" href="./2026-09-01-conditionals-warmup.html">Speaking</a><a target="_top" href="../nikita-homework/">Homework</a><a target="_top" href="./teacher-check.html">Teacher check</a></nav>
 <section class="stage">
   <div class="header" id="header">
     <img id="headerImage" src="cover-4268b47e.png" alt="Outcomes course cover" onclick="zoomImage(this.src)">
@@ -391,6 +402,7 @@ function resetActive(){
  document.querySelectorAll('.lessonNav button').forEach(b=>b.classList.remove('active'));
 }
 function toggleModule(n){
+ if(n===9){window.top.location.href='./education.html?v=20261013';return}
  const same=currentModule===n && document.getElementById('lessons-'+n).classList.contains('open');
  document.querySelectorAll('.lessonNav').forEach(x=>x.classList.remove('open'));
  resetActive();

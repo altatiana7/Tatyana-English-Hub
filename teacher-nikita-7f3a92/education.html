@@ -147,6 +147,20 @@ table.g td:first-child{font-weight:800;color:var(--red);white-space:nowrap;paddi
 .btn.sm{padding:6px 14px;font-size:16px}
 @media(max-height:620px){.rq{font-size:19px}.rq.sm{font-size:17.5px}.row{padding:7px 13px}.rows,.grid2{gap:7px}.read{font-size:17px;padding:10px 16px;line-height:1.45}.degt b{font-size:23px}.degt{padding:5px 10px}}
 @media(max-width:900px){.ropts{grid-template-columns:1fr 1fr}.srow,.grid2,.rd,.deg{grid-template-columns:1fr}.tiles{height:auto;grid-template-columns:1fr!important}.tile{height:260px}}
+
+.deg{grid-auto-rows:minmax(0,1fr);height:min(100%,420px)}
+.dcard{width:auto;height:auto;min-height:0;margin:0}
+.dcard .face{padding:6px 12px;border-radius:14px;box-shadow:none}
+.dcard .face.a{background:#fff}
+.dcard .face.b{background:#fff8ee;align-items:flex-start;text-align:left;justify-content:center;gap:2px}
+.dcard .ab{font-family:Georgia,serif;font-size:30px;color:var(--navy)}
+.dtop{display:flex;align-items:center;gap:8px;width:100%}
+.dtop b{font-family:Georgia,serif;font-size:19px;color:var(--navy)}
+.ipa{font-size:16px;color:var(--muted)}
+.play{margin-left:auto;border:0;background:var(--navy);color:#fff;border-radius:999px;width:30px;height:30px;font-size:13px;flex:none}
+.dname{font-size:16px;font-weight:700;color:var(--ink);line-height:1.25}
+.dru{font-weight:600;color:#6f431f}
+.dinfo{font-size:15px;color:var(--ink);line-height:1.3}
 </style>
 </head>
 <body>
@@ -154,7 +168,7 @@ table.g td:first-child{font-weight:800;color:var(--red);white-space:nowrap;paddi
   <button class="brand" id="brand" title="Back to the start">Education</button>
   <div class="tabs" id="tabs"></div>
   <button class="util" id="tBtn">Notes</button>
-  <a class="util" href="./">Hub</a>
+  <a class="util" href="./">Course</a>
 </div>
 <div class="stage" id="stage">
   <aside class="drawer" id="notes"><button class="x" aria-label="Close" onclick="closeDrawers()">✕</button><div id="notesBody"></div></aside>
@@ -223,7 +237,19 @@ const NOTES=[
  {en:'“Give me your final position in three sentences, with the language from today.”',ru:'Финальная позиция: три предложения, минимум два сочетания, один фразовый глагол и один past modal. Кнопка Shuffle меняет набор сочетаний. Справа домашнее задание.'}
 ];
 
-const DEGREES=[['BA','Bachelor of Arts'],['BSc','Bachelor of Science'],['LLB','Bachelor of Laws'],['MA','Master of Arts'],['MSc','Master of Science'],['MBA','Master of Business Administration'],['LLM','Master of Laws'],['MD','Doctor of Medicine'],['PhD','Doctor of Philosophy, in any field']];
+const DEGREES=[
+ ['BA','/ˌbiː ˈeɪ/','Bachelor of Arts','бакалавр гуманитарных наук','First degree, 3–4 years: languages, history, social sciences.'],
+ ['BSc','/ˌbiː es ˈsiː/','Bachelor of Science','бакалавр (естественные и точные науки)','First degree, 3–4 years: sciences, maths, engineering.'],
+ ['LLB','/ˌel el ˈbiː/','Bachelor of Laws','бакалавр права','The first law degree in the UK. LL = plural “laws” in Latin.'],
+ ['MA','/ˌem ˈeɪ/','Master of Arts','магистр гуманитарных наук','1–2 years after a bachelor’s. At Oxford and Cambridge, BA graduates get it with no extra study.'],
+ ['MSc','/ˌem es ˈsiː/','Master of Science','магистр (естественные и точные науки)','1–2 years, often technical or research-based.'],
+ ['MBA','/ˌem biː ˈeɪ/','Master of Business Administration','магистр делового администрирования','Business degree, usually for people who already have work experience.'],
+ ['LLM','/ˌel el ˈem/','Master of Laws','магистр права','Usually 1 year, in a specialist area such as international or commercial law.'],
+ ['MD','/ˌem ˈdiː/','Doctor of Medicine','доктор медицины','In the US, the degree you need to practise as a doctor; in the UK, a research degree.'],
+ ['PhD','/ˌpiː eɪtʃ ˈdiː/','Doctor of Philosophy','доктор философии (≈ кандидат наук)','A research degree in any field, not only philosophy: 3–5 years and a thesis.']
+];
+function say(t){try{if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.9;const v=speechSynthesis.getVoices().find(x=>/en-GB/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}
+
 const SCALE=[
  'The best students should study for free; everyone else should pay.',
  'Oral exams are a lottery. Only written exams are fair.',
@@ -494,10 +520,14 @@ RENDER[0]=()=>{S(0).innerHTML=`<div class="hero"><div class="txt">
 
 RENDER[1]=()=>{const open={},pick={},sc={};
   deck(S(1),{title:'Warm-up',pages:()=>[
-   {title:'What do the letters stand for?',sub:'Say the full name, then tap to check. Which of these would you actually want?',
-    html:()=>`<div class="deg">${DEGREES.map((d,i)=>`<button class="degt ${open[i]?'on':''}" data-d="${i}"><b>${d[0]}</b><span>${open[i]?d[1]:'&nbsp;'}</span></button>`).join('')}</div>`,
-    mid:()=>'<button class="btn ghost" id="all">Reveal all</button>',
-    wire:(r,draw)=>{$$('[data-d]',r).forEach(b=>b.onclick=()=>{open[b.dataset.d]=!open[b.dataset.d];draw()});$('#all',r).onclick=()=>{DEGREES.forEach((_,i)=>open[i]=true);draw()}}},
+   {title:'What do the letters stand for?',sub:'Say the full name first, then flip. Which of these would you actually want?',
+    html:()=>`<div class="deg">${DEGREES.map((d,i)=>`<div class="flip dcard ${open[i]?'f':''}" data-d="${i}"><div class="in">
+      <div class="face a"><b class="ab">${d[0]}</b></div>
+      <div class="face b"><div class="dtop"><b>${d[0]}</b> <span class="ipa">${d[1]}</span><button class="play" data-say="${i}" aria-label="Listen">▶</button></div><div class="dname">${d[2]} · <span class="dru">${d[3]}</span></div><div class="dinfo">${d[4]}</div></div></div></div>`).join('')}</div>`,
+    mid:()=>`<button class="btn ghost" id="all">${DEGREES.every((_,i)=>open[i])?'Hide all':'Flip all'}</button>`,
+    wire:(r,draw)=>{$$('.dcard',r).forEach(c=>c.onclick=()=>{const i=c.dataset.d;open[i]=!open[i];c.classList.toggle('f')});
+      $$('[data-say]',r).forEach(b=>b.onclick=e=>{e.stopPropagation();const d=DEGREES[b.dataset.say];say(d[0].split('').join(' ').replace('S c','S C')+'. '+d[2])});
+      $('#all',r).onclick=()=>{const all=DEGREES.every((_,i)=>open[i]);DEGREES.forEach((_,i)=>open[i]=!all);draw()}}},
    {title:'Take a position',sub:'Choose first. Then defend it: claim, reason, example, concession.',
     html:()=>`<div class="rows">${WARM.map((w,i)=>`<div class="row"><div class="srow"><div class="rq">“${w.t}”</div><div class="seg">${[['agree','Agree'],['dis','Disagree'],['dep','It depends']].map(([k,l])=>`<button class="${pick[i]===k?'on':''}" data-w="${i}" data-k="${k}">${l}</button>`).join('')}</div></div>${pick[i]?`<div class="rx"><b>Challenge:</b> ${w[pick[i]]}</div>`:''}</div>`).join('')}</div>
       <div class="chips" style="margin-top:10px"><span class="chip">I’d argue that…</span><span class="chip">The main reason is…</span><span class="chip">Take … for instance.</span><span class="chip">Admittedly, … but…</span></div>`,
