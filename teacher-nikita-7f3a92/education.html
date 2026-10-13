@@ -223,7 +223,7 @@ const BRIDGE=[null,null,
  ['You’ve argued for a side you were given. Now tell me what you actually think.','От роли к собственной позиции: рефлексия и домашнее задание.']
 ];
 const NOTES=[
- {en:'“For a few weeks we have talked about prisons, religion and voting. Today: the institution all of us have been through. Did it do its job?”',ru:'Логика урока: мнение → точные слова → разговорный регистр → видео → текст → критическое мышление → грамматика для оценки прошлого → грамматика для альтернатив → закрепление точности → свободная речь → рефлексия. Между шагами есть экран-переход с фразой, которую можно произнести. В упражнениях на экране сразу 3–4 пункта.'},
+ {en:'“For a few weeks we have talked about prisons, religion and voting. Today: the institution all of us have been through. Did it do its job?”',ru:'Логика урока: мнение → точные слова → разговорный регистр → видео → текст → критическое мышление → грамматика для оценки прошлого → грамматика для альтернатив → закрепление точности → свободная речь → рефлексия. Фраза-переход к каждому шагу есть в Notes этого шага. В упражнениях на экране сразу 3–4 пункта.'},
  {en:'“What do these letters stand for? Which one would you actually want?” Then the statements: choose first, defend second.',ru:'Три экрана. 1) Степени: нажатие открывает расшифровку. 2) Три утверждения: после выбора появляется возражение, которое вы озвучиваете. 3) Шкала 1–5: назвать число и защитить его за 30 секунд.'},
  {en:'“Read the example, guess the meaning, then flip. Answer the question on the back using the collocation.”',ru:'12 сочетаний, по четыре карточки на экране, каждая переворачивается отдельно. Затем практика: 10 предложений по три на экране, в конце разбор ошибок и устное задание.'},
  {en:'“Ten phrasal verbs every student needs.”',ru:'10 фразовых глаголов по три на экране. После ответа показывается перевод. В конце минута о своей учёбе минимум с тремя глаголами. Для самостоятельной тренировки у Никиты есть тренажёр в домашних заданиях.'},
@@ -438,19 +438,11 @@ function go(i){cur=i;closeDrawers();stopTimer();
   $$('#tabs button').forEach(b=>b.classList.toggle('on',+b.dataset.t===i));
   $$('.scr').forEach(s=>{const on=s.id==='s'+i;s.classList.toggle('on',on);if(!on)s.innerHTML=''});
   RENDER[i]();
-  const n=NOTES[i],g=STAGE[i];$('#notesBody').innerHTML=`<h3>${TABS[i]}: teacher notes</h3><p><b>Stage:</b> ${g[0]}</p><p><b>Aim:</b> ${g[1]}</p>${BRIDGE[i]?`<p><b>Bridge in:</b> ${BRIDGE[i][0]}</p>`:''}<p><b>Say:</b> ${n.en}</p><p class="rus">${n.ru}</p>${n.extra||''}${i===0?planTable():''}`;}
+  const n=NOTES[i],g=STAGE[i];$('#notesBody').innerHTML=`<h3>${TABS[i]}: teacher notes</h3><p><b>Stage:</b> ${g[0]}</p><p><b>Aim:</b> ${g[1]}</p>${BRIDGE[i]?`<p><b>Transition (say it):</b> ${BRIDGE[i][0]}</p>`:''}<p><b>Say:</b> ${n.en}</p><p class="rus">${n.ru}</p>${n.extra||''}${i===0?planTable():''}`;}
 function planTable(){return `<h3 style="margin-top:12px">Lesson plan</h3><table class="g">${STAGE.slice(1).map((g,j)=>`<tr><td style="color:var(--navy)">${TABS[j+1]}</td><td>${g[0]}<br><span style="color:var(--muted)">${g[1]}</span></td></tr>`).join('')}</table>`}
-function bridge(i){const b=BRIDGE[i];if(!b){go(i);return}closeDrawers();stopTimer();
-  const scr=$('.scr.on');
-  scr.innerHTML=`<div class="body" style="align-items:center"><div class="card" style="max-width:920px;text-align:center;padding:26px 34px">
-    <div class="label">Next: ${TABS[i]} · ${STAGE[i][0]}</div>
-    <div class="big">“${b[0]}”</div>
-    <p class="sub" style="margin-top:14px">${b[1]}</p></div></div>
-  <div class="foot"><button class="btn ghost" onclick="go(${cur})">← Back to ${TABS[cur]}</button><button class="btn gold" id="cont" onclick="go(${i})">Continue →</button></div>`;
-  $('#cont',scr).focus();}
 $('#tBtn').onclick=()=>{const d=$('#notes'),on=d.classList.contains('on');closeDrawers();if(!on)d.classList.add('on')};
 function openRef(){closeDrawers();$('#ref').classList.add('on')}
-const nextStep=()=>`<button class="btn gold" onclick="bridge(${cur+1})">${TABS[cur+1]} →</button>`;
+const nextStep=()=>`<button class="btn gold" onclick="go(${cur+1})">${TABS[cur+1]} →</button>`;
 
 /* a deck: one activity = a few screens, several items on each */
 function deck(root,cfg){let p=cfg.start||0;
