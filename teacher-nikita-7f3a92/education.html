@@ -220,6 +220,18 @@ const VOCAB=[
  ['memorise information','заучивать информацию','Students sometimes memorise information without understanding it.'],
  ['think independently','мыслить самостоятельно','A good education should teach people to think independently.']
 ];
+const COLLO=[
+ {q:'Schools should teach practical ___ such as budgeting and negotiation.',o:['skills','talents','abilities'],k:0},
+ {q:'___ thinking helps us question unreliable information.',o:['Critical','Careful','Clever'],k:1},
+ {q:'Financial ___ can help young adults avoid debt.',o:['literacy','knowledge','reading'],k:2},
+ {q:'Emotional ___ helps people cope with setbacks.',o:['resilience','resistance','strength'],k:3},
+ {q:'Communication and teamwork are ___ skills.',o:['transferable','transportable','translated'],k:4},
+ {q:'Real-world ___ can reveal what textbooks cannot.',o:['experience','experiment','expertise'],k:5},
+ {q:'Internships help ___ the gap between theory and practice.',o:['bridge','connect','join'],k:6},
+ {q:'Education should prepare students ___ the workforce.',o:['for','to','at'],k:7},
+ {q:'Students sometimes ___ information without understanding it.',o:['memorise','remind','memorialise'],k:8},
+ {q:'A good education should teach people to think ___.',o:['independently','independent','independence'],k:9}
+];
 const MISSING=[
  {q:'Many young adults earn a salary but cannot manage their expenses. Schools should teach…',o:['financial literacy','emotional resilience','critical thinking'],e:'It includes budgeting, saving, borrowing and managing expenses.'},
  {q:'Students can repeat facts but struggle to question misleading claims. They lack…',o:['critical thinking','real-world experience','transferable skills'],e:'It involves evaluating evidence, assumptions and arguments.'},
@@ -387,6 +399,16 @@ function memory(root,pairs,cols,scoreEl){
       if(cards[x].k===cards[y].k){done.add(c.k);open.forEach(j=>$(`.mc[data-i="${j}"]`,root).classList.add('done'));open=[]}
       else{lock=true;setTimeout(()=>{open.forEach(j=>{const m=$(`.mc[data-i="${j}"]`,root);if(m)m.classList.remove('open')});open=[];lock=false},950)}
       upd()}})}
+/* collocation check: gapped sentences, several per screen */
+function gapSet(root,items,scoreEl,cols){const pick={},ord=items.map(it=>shuffle(it.o));
+  const score=()=>items.filter((it,i)=>pick[i]===it.o[0]).length;
+  function draw(){root.innerHTML=`<div class="grid" style="grid-template-columns:repeat(${cols},1fr);align-content:start;gap:7px">${items.map((it,i)=>{const p=pick[i],v=VOCAB[it.k];
+     const filled=p?`<b class="${p===it.o[0]?'v':'x'}">${esc(p===it.o[0]?p:it.o[0])}</b>`:'<span style="display:inline-block;min-width:70px;border-bottom:2px solid var(--navy)">&nbsp;</span>';
+     return `<div class="row"><div class="rq" style="font-size:16.5px"><span class="num">${i+1}</span>${esc(it.q).replace('___',filled)}</div>
+     <div class="opts">${p?`<span class="rx" style="margin:0"><b>${esc(v[0])}</b> · <span style="color:#6f431f">${esc(v[1])}</span>${p!==it.o[0]?` · <span style="color:var(--red)">not “${esc(p)}”</span>`:''}</span>`:ord[i].map(o=>`<button class="opt" data-i="${i}">${esc(o)}</button>`).join('')}</div></div>`}).join('')}</div>`;
+    scoreEl.textContent=`Score ${score()} / ${items.length}`;
+    $$('.opt[data-i]',root).forEach(b=>b.onclick=()=>{pick[b.dataset.i]=b.textContent;draw()})}
+  draw()}
 /* bomb questions: several rows on one screen */
 function bombSet(root,items,scoreEl){
   const st=items.map(it=>({opts:shuffle(it.o),pick:null,boom:false,left:15,run:false}));
@@ -462,9 +484,9 @@ const LESSON=[[
   const draw=()=>{frame('What does school actually teach us?','Agree, partly agree or disagree. Then explain why, with an example.',body());
    $$('[data-p]').forEach(b=>b.onclick=()=>{pick[b.dataset.p]=b.dataset.k;draw()});$$('[data-ru]').forEach(b=>b.onclick=()=>{ru[b.dataset.ru]=!ru[b.dataset.ru];draw()});
    $$('[data-l]').forEach(b=>b.onclick=()=>{const l=LEAD_LANG[b.dataset.l];b.textContent=b.textContent===l[0]?l[1]:l[0];b.classList.toggle('ru')})};draw()}},
-{tab:'Vocabulary',notes:N('“Find the pairs. Then: the bomb starts when you tap it.”','12 минут. Страница 1: Memory — 10 пар «выражение — перевод», открываются по две карточки. Страница 2: The Missing Skill — четыре ситуации, у каждой своя бомба на 15 секунд: нажмите на бомбу, и пошёл отсчёт. После ответа обсудите, почему не подходят другие варианты. Ответы: 1 financial literacy, 2 critical thinking, 3 theory and practice, 4 transferable skills.'),
- render(){const pg=pager(2,['Memory','The Missing Skill']);
-  if(pg.p===0){frame('Vocabulary Lab: Memory','Find the ten pairs: expression and its Russian meaning. Then use each one in a sentence about yourself.','<div id="g" class="body"></div>',{right:'<span class="score" id="sc"></span>',left:pg.prev,next:pg.next,mid:'<button class="btn ghost sm" onclick="show(blk,cur,0)">New game</button>'});memory($('#g'),VOCAB.map(v=>[v[0],v[1]]),5,$('#sc'))}
+{tab:'Vocabulary',notes:N('“Find the pairs. Then: the bomb starts when you tap it.”','12 минут. Страница 1: Collocations — 10 предложений из таблицы лексики с пропуском, выбрать слово, которое сочетается; после ответа видно выражение и перевод. Страница 2: The Missing Skill — четыре ситуации, у каждой своя бомба на 15 секунд: нажмите на бомбу, и пошёл отсчёт. После ответа обсудите, почему не подходят другие варианты. Ответы: 1 financial literacy, 2 critical thinking, 3 theory and practice, 4 transferable skills.'),
+ render(){const pg=pager(2,['Collocations','The Missing Skill']);
+  if(pg.p===0){frame('Vocabulary Lab: Collocations','Choose the word that collocates. After each answer, make the sentence true about yourself.','<div id="g"></div>',{right:'<span class="score" id="sc"></span>',left:pg.prev,next:pg.next,mid:'<button class="btn ghost sm" onclick="show(blk,cur,0)">Start again</button>'});gapSet($('#g'),COLLO,$('#sc'),2)}
   else{frame('The Missing Skill','Tap the bomb to start 15 seconds, then choose. Explain why the other options do not fit.','<div id="g"></div>',{right:'<span class="score" id="sc"></span>',left:pg.prev,next:pg.next});bombSet($('#g'),MISSING,$('#sc'))}}},
 {tab:'Listen',notes:N('“BBC podcast: which country educates its children best? Three short parts.”','Сначала Key words: 12 трудных слов из подкаста на карточках-перевёртышах (▶ озвучивает слово, на обороте перевод и фраза из подкаста). Потом три отрывка из подкаста BBC The Global Story (ведущая Lucy Hockings, журналист Sean Coughlan, профессор John Jerrim из UCL). Каждый отрывок 2,5–3,5 минуты. 1) PISA и страны-лидеры: факты на перевёртышах + сортировка стран. 2) Что общего у лучших систем: True / False + пары «маленькая страна — большой сосед». 3) Еда, деньги и «волшебной формулы нет»: Error hunter — в пересказе пять ошибок, их надо найти кликом. Отрывки я вырезала по картинке видео: перед уроком один раз просмотрите их, все ли нужные фразы попали внутрь.'),
  render(){const pg0=pager(4,['Key words','Part 1','Part 2','Part 3']);
@@ -521,15 +543,15 @@ const LESSON=[[
  render(){const pk={};const draw=()=>{frame('Challenge Your Assumptions','True or false? The reasoning matters more than the label.',`<div class="rows">${ASSUME.map((a,i)=>`<div class="row"><div class="srow"><div class="rq"><span class="num">${i+1}</span>${a.s}</div><div class="seg">${['T','F'].map(k=>`<button class="${pk[i]===k?'on':''}" data-a="${i}" data-k="${k}">${k==='T'?'True':'False'}</button>`).join('')}</div></div>
    ${pk[i]?`<div class="rx"><b class="${pk[i]===a.a?'v':'x'}">${a.ev}</b> ${a.h} <b>Follow-up:</b> ${a.f}</div>`:''}</div>`).join('')}</div>`);
   $$('[data-a]').forEach(b=>b.onclick=()=>{pk[b.dataset.a]=b.dataset.k;draw()})};draw()}},
-{tab:'Bias',notes:N('“Where would you add armour?”','8 минут. Страница 1: самолёты Второй мировой — Никита кликает, где усилить броню, потом раскрывается ответ и определение. Страница 2: Memory, 8 пар лексики. Страница 3: Spot the Bias — три карточки-перевёртыша: ситуация на лицевой стороне, разбор на обороте.'),
- render(){const pg=pager(3,['The planes','Memory','Spot the bias']);
+{tab:'Bias',notes:N('“Where would you add armour?”','8 минут. Страница 1: самолёты Второй мировой — Никита кликает, где усилить броню, потом раскрывается ответ и определение. Страница 2: matching, 8 выражений и их значения. Страница 3: Spot the Bias — три карточки-перевёртыша: ситуация на лицевой стороне, разбор на обороте.'),
+ render(){const pg=pager(3,['The planes','Vocabulary','Spot the bias']);
   if(pg.p===0){let pick=null,shown=false;
    const draw=()=>{frame('Survivorship Bias','Aircraft came back from missions with these bullet holes. Where would you add armour? Click a part.',`<div class="grid" style="grid-template-columns:1fr 1fr;align-items:center"><div class="card" style="height:100%;display:flex;align-items:center">${plane(pick)}</div>
      <div class="stack">${pick?`<div class="row"><div class="rq">You chose: ${pick}.</div>${shown?'':'<button class="btn sm gold" id="rv" style="margin-top:6px">Reveal</button>'}</div>`:'<div class="row"><div class="rq">Click the wings, the body, the tail or the engines.</div></div>'}
      ${shown?`<div class="row"><div class="rq" style="color:var(--green)">The engines.</div><div class="rx">Analysts studied only the planes that came back. Planes hit in the engines did not return, so that damage was missing from the data.</div></div>
      <div class="card" style="background:#fff8ee"><div class="label">Survivorship bias · ошибка выжившего</div><div style="font-size:16.5px;line-height:1.4">We focus on those who succeeded and overlook those who failed or stayed invisible.</div></div>`:''}</div></div>`,{left:pg.prev,next:pg.next});
     $$('.zoneP').forEach(z=>z.onclick=()=>{pick=z.dataset.n;draw()});const rv=$('#rv');if(rv)rv.onclick=()=>{shown=true;draw()}};draw()}
-  else if(pg.p===1){frame('Bias Vocabulary: Memory','Find the eight pairs. Then use three of them to describe the planes.','<div id="g" class="body"></div>',{right:'<span class="score" id="sc"></span>',left:pg.prev,next:pg.next,mid:'<button class="btn ghost sm" onclick="show(blk,cur,1)">New game</button>'});memory($('#g'),BIASV,4,$('#sc'))}
+  else if(pg.p===1){frame('Bias Vocabulary','Tap an expression, then its meaning. Then use three of them to explain the planes.','<div id="mt"></div>',{right:'<span class="score" id="sc"></span>',left:pg.prev,next:pg.next});matching($('#mt'),BIASV,$('#sc'))}
   else{frame('Spot the Bias','Read the case and say what is wrong with the conclusion. Then flip.',`<div class="fgrid" style="grid-template-columns:repeat(3,1fr)">${SPOT.map(s=>`<div class="flip"><div class="in"><div class="face a" style="justify-content:flex-start"><div class="label">${s.t}</div><div class="fa" style="font-size:16.5px">${s.s}</div><div class="fq" style="margin-top:8px;font-size:16px">${s.f}</div><div class="tap">tap to flip</div></div><div class="face b"><div class="label">Teacher notes</div><div class="fa" style="font-size:17px">${s.n}</div></div></div></div>`).join('')}</div>`,{left:pg.prev,next:pg.next});flipWire(scr)}}},
 {tab:'Modals',notes:N('“Jeopardy. Choose a category and a price. Higher price, harder question.”','12 + 8 минут. Три категории по пять вопросов: Choose (выбор формы, проверка автоматически), Fix it (найти и кликнуть ошибочное слово), What went wrong? (ситуация: объяснить её 2–3 предложениями с modal perfects; оценку ставите вы кнопками). Цена 100–500, в шапке общий счёт. Справка — кнопка Reference.',`<p><b>Model answer (What went wrong?):</b> The graduate might have focused too much on academic qualifications and not enough on practical experience. Employers may have been looking for transferable skills. Universities should have provided more opportunities for internships.</p>`),
  render(){const state={};let score=0;
