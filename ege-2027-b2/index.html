@@ -6,34 +6,107 @@
 <link rel="icon" href="data:,">
 <title>ЕГЭ 2027 · английский</title>
 <link rel="stylesheet" href="app.css?v=23">
+<style>
+.hub2{max-width:1120px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:10px;padding:10px 4px}
+.hub2 h1{font-size:30px;font-weight:900;margin:4px 0 0;text-align:center}
+.secb{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sec{appearance:none;cursor:pointer;text-align:left;background:#fff;border:1px solid var(--line);border-top:6px solid var(--c);border-radius:16px;padding:10px 14px;font:inherit;color:var(--ink);display:flex;flex-direction:column;gap:3px;box-shadow:0 6px 18px rgba(30,64,120,.06)}
+.sec b{font-size:21px;font-weight:900}
+.sec span{font-size:15.5px;color:var(--muted);line-height:1.3}
+.sec:hover{background:#f7f9fd}
+.sec.on{background:color-mix(in srgb,var(--c) 10%,#fff);border-color:var(--c)}
+.pane{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 6px 18px rgba(30,64,120,.06)}
+.pane h2{font-size:22px;margin:0}
+.pane .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.lsn{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.lc{display:flex;flex-direction:column;gap:4px;text-decoration:none;color:var(--ink);background:#f7f9fd;border:1px solid var(--line);border-left:6px solid var(--c,#2855d9);border-radius:12px;padding:12px 14px}
+a.lc:hover{background:#edf4ff}
+.lc b{font-size:19px}.lc span{font-size:15.5px;color:var(--muted);line-height:1.3}
+.lc i{font-style:normal;font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--c,#2855d9)}
+.lc.soon{opacity:.6;border-left-color:#b9c2d6}
+.blks{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.bc{display:flex;flex-direction:column;gap:3px;text-decoration:none;color:var(--ink);background:#f7f9fd;border:1px solid var(--line);border-top:4px solid #2c7f78;border-radius:12px;padding:9px 12px}
+.bc i{font-style:normal;font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+.bc b{font-size:17.5px;line-height:1.2}.bc span{font-size:15px;line-height:1.3}.bc em{font-style:normal;font-size:14px;color:#2c7f78;font-weight:700}
+a.bc.now{background:#e8f5f2;border-color:#2c7f78}a.bc.now:hover{background:#dcefea}
+@media (max-width:900px){.blks{grid-template-columns:1fr 1fr}}
+.blk{width:100%;border-collapse:collapse;font-size:16px}
+.blk th,.blk td{border-top:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.blk th{font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;border-top:0}
+.blk td b{font-size:17px}
+.blk tr.now td{background:#eef4ff}
+.blk a{color:#2855d9;font-weight:700}
+@media (max-width:900px){.secb,.lsn{grid-template-columns:1fr 1fr}.steps{grid-template-columns:repeat(3,1fr)}}
+/* full-screen task */
+.fsbox{position:fixed;inset:0;z-index:100;background:#fff}
+.fsbox iframe{width:100%;height:100%;border:0;display:block}
+</style>
 </head>
 <body>
 <header class="bar"><a class="home" href="index.html">ЕГЭ 2027 <span>· английский</span></a></header>
 <main>
-  <div class="hub">
-    <h1 class="ttl">Занятие 1 · входная диагностика <span>9 этапов · 60 минут</span></h1>
+<div class="hub2">
+  <div class="secb" id="secb">
+    <button type="button" class="sec" style="--c:#4a4f8f" data-p="lessons"><b>Занятия</b><span>Уроки по неделям: тема блока и задания ЕГЭ</span></button>
+    <button type="button" class="sec" style="--c:#2c7f78" data-p="blocks"><b>Тематические блоки</b><span>Темы по кодификатору ФИПИ, по месяцам</span></button>
+    <button type="button" class="sec" style="--c:#b0683a" data-p="diag"><b>Диагностика</b><span>Входная диагностика: 9 этапов и домашняя часть</span></button>
+    <button type="button" class="sec" style="--c:#8f4d7c" data-p="tools"><b>Тренажёры</b><span>Письмо 37, задание 38, Russia, план</span></button>
+  </div>
+
+  <section class="pane" id="p-lessons" hidden>
+    <h2>Занятия</h2>
+    <div class="lsn">
+      <a class="lc" style="--c:#2c7f78" href="lessonw1.html?v=23"><i>Неделя 1 · блок 1</i><b>Занятие 1 · Family and friends</b><span>Words, direct questions (task 2), interview (task 3), homework.</span></a>
+      <div class="lc soon"><i>Неделя 3 · блок 1</i><b>Занятие 2</b><span>Family and friends: reading aloud, monologue (tasks 1, 4).</span></div>
+      <div class="lc soon"><i>Неделя 5 · блок 2</i><b>Занятие 3</b><span>Health and lifestyle.</span></div>
+    </div>
+  </section>
+
+  <section class="pane" id="p-blocks" hidden>
+    <h2>Тематические блоки · кодификатор ФИПИ</h2>
+    <div class="blks">
+      <a class="bc now" href="lessonw1.html?v=23"><i>Октябрь</i><b>1 · Family and friends</b><span>Семья, отношения с друзьями, конфликты</span><em>устная 2, 3</em></a>
+      <div class="bc"><i>Ноябрь</i><b>2 · Health and lifestyle</b><span>Внешность, характер, здоровый образ жизни</span><em>устная 1, 4 · аудирование</em></div>
+      <div class="bc"><i>Декабрь</i><b>3 · School and careers</b><span>Образование, выбор профессии</span><em>устная 4 · пробник 1</em></div>
+      <div class="bc"><i>Январь</i><b>4 · Youth and leisure</b><span>Молодёжь, досуг, увлечения, покупки</span><em>19–24 · чтение 10</em></div>
+      <div class="bc"><i>Февраль</i><b>5 · Travel and nature</b><span>Туризм, природа и экология</span><em>25–29 · чтение 11–18</em></div>
+      <div class="bc"><i>Март</i><b>6 · Science and media</b><span>Технический прогресс, СМИ, интернет</span><em>30–36 · письмо 38 · пробник 2</em></div>
+      <div class="bc"><i>Апрель</i><b>7 · Russia and the world</b><span>Родная страна, страны языка, выдающиеся люди</span><em>письмо 38 · пробник 3</em></div>
+      <div class="bc"><i>Май – июнь</i><b>Повторение</b><span>Все темы вразнобой</span><em>полные варианты · пробник 4</em></div>
+    </div>
+  </section>
+
+  <section class="pane" id="p-diag" hidden>
+    <h2>Входная диагностика · 9 этапов · 60 минут</h2>
     <div class="steps">
       <a class="stepc" style="--c:#4a4f8f" href="lesson1.html?v=23#1"><i>1</i><b>Интервью</b><span>Пять вопросов на слух</span></a>
       <a class="stepc" style="--c:#2f6f9f" href="lesson1.html?v=23#2"><i>2</i><b>Вопросы</b><span>Четыре вопроса по объявлению</span></a>
       <a class="stepc" style="--c:#2c7f78" href="lesson1.html?v=23#3"><i>3</i><b>Чтение вслух</b><span>Текст за полторы минуты</span></a>
       <a class="stepc" style="--c:#4c7f4a" href="lesson1.html?v=23#4"><i>4</i><b>Монолог</b><span>Сообщение по двум фото</span></a>
-      <a class="stepc" style="--c:#a8802a" href="lesson1.html?v=23#5"><i>5</i><b>Аудирование</b><span>Диалог: True, False, Not stated</span></a>
+      <a class="stepc" style="--c:#a8802a" href="lesson1.html?v=23#5"><i>5</i><b>Аудирование</b><span>True, False, Not stated</span></a>
       <a class="stepc" style="--c:#b0683a" href="lesson1.html?v=23#6"><i>6</i><b>Грамматика</b><span>Задания 19–24</span></a>
-      <a class="stepc" style="--c:#a85050" href="lesson1.html?v=23#7"><i>7</i><b>Слово-образование</b><span>Задания 25–29</span></a>
+      <a class="stepc" style="--c:#a85050" href="lesson1.html?v=23#7"><i>7</i><b>Слово&shy;образование</b><span>Задания 25–29</span></a>
       <a class="stepc" style="--c:#8f4d7c" href="lesson1.html?v=23#8"><i>8</i><b>Лексика</b><span>Задания 30–36</span></a>
-      <a class="stepc" style="--c:#66549a" href="lesson1.html?v=23#9"><i>9</i><b>Чтение</b><span>Текст с пропусками, задание 11</span></a>
+      <a class="stepc" style="--c:#66549a" href="lesson1.html?v=23#9"><i>9</i><b>Чтение</b><span>Задание 11</span></a>
     </div>
-    <div class="navrow"><a class="btn main" href="lesson1.html?v=23" style="font-size:19px;padding:10px 22px;text-decoration:none">Открыть занятие →</a></div>
-    <div class="tiles five six">
-      <a class="tile" href="lesson1.html?v=23"><b>Занятие 1</b><span>Диагностика на уроке: устная часть, аудирование, грамматика, чтение.</span></a>
-      <a class="tile" href="home1.html?v=23"><b>Домашняя часть</b><span>Аудирование 1–9, чтение 10 и 12–18, письмо 37 и 38.</span></a>
-      <a class="tile" href="write37.html?v=23"><b>Письмо 37</b><span>Структура, разбор вопросов, ответы, свои вопросы, 89 писем.</span></a>
-      <a class="tile" href="write38.html?v=23"><b>Задание 38</b><span>Структура и клише, чтение данных, проблема и вывод, 27 тем.</span></a>
-      <a class="tile" href="russia.html?v=23"><b>Russia</b><span>Устная часть о России: 4 задания, интервью со звуком. 35 писем.</span></a>
-      <a class="tile" href="plan.html?v=23"><b>План</b><span>9 месяцев и недели, конспект, критерии ФИПИ – для учителя.</span></a>
+    <div class="row">
+      <a class="btn main" href="lesson1.html?v=23" style="text-decoration:none">Открыть диагностику →</a>
+      <a class="btn" href="home1.html?v=23" style="text-decoration:none">Домашняя часть диагностики</a>
     </div>
-  </div>
+  </section>
+
+  <section class="pane" id="p-tools" hidden>
+    <h2>Тренажёры</h2>
+    <div class="lsn">
+      <a class="lc" style="--c:#2c7f78" href="write37.html?v=23"><b>Письмо 37</b><span>Структура, разбор вопросов, ответы, свои вопросы, 89 писем.</span></a>
+      <a class="lc" style="--c:#b0683a" href="write38.html?v=23"><b>Задание 38</b><span>Структура и клише, чтение данных, проблема и вывод, 27 тем.</span></a>
+      <a class="lc" style="--c:#8f4d7c" href="russia.html?v=23"><b>Russia</b><span>Устная часть о России: 4 задания, интервью со звуком. 35 писем.</span></a>
+      <a class="lc" style="--c:#4a4f8f" href="plan.html?v=23"><b>План</b><span>9 месяцев и недели, конспект, критерии ФИПИ.</span></a>
+    </div>
+  </section>
+</div>
 </main>
 <script src="nav.js?v=23"></script>
+<script src="hub.js?v=23"></script>
 </body>
 </html>

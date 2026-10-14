@@ -26,7 +26,7 @@ const Rec={on:false,mr:null,chunks:[],stream:null,
   async enable(){if(this.stream)return true;try{this.stream=await navigator.mediaDevices.getUserMedia({audio:true});return true;}catch(e){return false;}},
   start(){if(!this.on||!this.stream||this.mr)return;try{this.chunks=[];this.mr=new MediaRecorder(this.stream);this.mr.ondataavailable=e=>{if(e.data.size)this.chunks.push(e.data);};this.mr.start();}catch(e){this.mr=null;}},
   stop(box,name){const mr=this.mr;if(!mr)return;this.mr=null;mr.onstop=()=>{if(!this.chunks.length||!box||!box.isConnected)return;const blob=new Blob(this.chunks,{type:mr.mimeType||'audio/webm'}),u=URL.createObjectURL(blob);
-      box.innerHTML='Запись ответа: <a download="'+name+'.webm" href="'+u+'">сохранить файл</a><audio controls src="'+u+'"></audio>';};try{mr.stop();}catch(e){}},
+      const en=document.documentElement.lang==='en';box.innerHTML=(en?'Your answer: ':'Запись ответа: ')+'<a download="'+name+'.webm" href="'+u+'">'+(en?'save the file':'сохранить файл')+'</a><audio controls src="'+u+'"></audio>';};try{mr.stop();}catch(e){}},
   cancel(){const mr=this.mr;this.mr=null;if(mr){mr.onstop=null;try{mr.stop();}catch(e){}}}
 };
 function recToggle(){const b=btn('Запись ответа: выкл',async()=>{if(!Rec.on){const ok=await Rec.enable();if(!ok){b.textContent='Микрофон недоступен';return;}Rec.on=true;}else Rec.on=false;b.textContent='Запись ответа: '+(Rec.on?'вкл':'выкл');b.classList.toggle('main',Rec.on);},'sm wide');
@@ -39,10 +39,10 @@ function phaseRunner(o){ /* o: ring, label, phases[{label,kind,sec}], onPhase(i)
   const paint=()=>{const p=o.phases[i];b.textContent=mmss(left);o.ring.classList.toggle('ans',p.kind==='answer');o.ring.classList.remove('end');
     o.ring.style.background='conic-gradient('+(p.kind==='answer'?'var(--acc)':'var(--blue)')+' '+(left/p.sec*360)+'deg,#e3e9f5 0)';};
   const tick=()=>{left=(end-Date.now())/1000;if(left<=0){next();return;}paint();};
-  function enter(){const p=o.phases[i];left=p.sec;end=Date.now()+left*1000;sp.textContent=p.kind==='answer'?'ответ':'подготовка';o.label.textContent=p.label;paint();
+  function enter(){const p=o.phases[i];left=p.sec;end=Date.now()+left*1000;sp.textContent=p.kind==='answer'?(o.en?'answer':'ответ'):(o.en?'preparation':'подготовка');o.label.textContent=p.label;paint();
     beep(p.kind==='answer'?880:660,220);if(p.kind==='answer')Rec.start();o.onPhase&&o.onPhase(i);clearInterval(t);t=setInterval(tick,200);}
   function next(){clearInterval(t);if(i>=0&&o.phases[i].kind==='answer'&&(i+1>=o.phases.length||o.phases[i+1].kind!=='answer'))Rec.stop(o.recBox,o.recName);
-    i++;if(i>=o.phases.length){i=o.phases.length;b.textContent='0:00';sp.textContent='время вышло';o.label.textContent='Задание завершено';o.ring.classList.add('end');o.ring.style.background='';beep(520,500);o.onPhase&&o.onPhase(-1);o.onDone&&o.onDone();return;}
+    i++;if(i>=o.phases.length){i=o.phases.length;b.textContent='0:00';sp.textContent=o.en?'time is up':'время вышло';o.label.textContent=o.en?'Task finished':'Задание завершено';o.ring.classList.add('end');o.ring.style.background='';beep(520,500);o.onPhase&&o.onPhase(-1);o.onDone&&o.onDone();return;}
     paused=false;enter();}
   return {start(){clearInterval(t);Rec.cancel();if(o.recBox)o.recBox.innerHTML='';i=-1;next();},
     skip(){if(i>=0&&i<o.phases.length)next();},
@@ -53,5 +53,5 @@ function phaseRunner(o){ /* o: ring, label, phases[{label,kind,sec}], onPhase(i)
 function ringEl(sec){return el('div','ring','<b>'+mmss(sec)+'</b><span>готово</span>');}
 
 /* Примерный ответ: панель справа, закрывается кнопкой или щелчком мимо */
-function showSample(title,html,note){document.querySelectorAll('.overlay.smp').forEach(x=>x.remove());const ov=el('div','overlay smp'+(html.length>900?' wide':'')),t=el('div','teach'),bd=el('div','smpb',html);t.append(el('h4',null,title),bd);if(note)t.append(el('p','note',note));t.append(btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}
+function showSample(title,html,note,closeLabel){document.querySelectorAll('.overlay.smp').forEach(x=>x.remove());const ov=el('div','overlay smp'+(html.length>900?' wide':'')),t=el('div','teach'),bd=el('div','smpb',html);t.append(el('h4',null,title),bd);if(note)t.append(el('p','note',note));t.append(btn(closeLabel||'Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}
 const sampleParas=txt=>esc(txt).split('\n\n').map(p=>'<p>'+p.replace(/\n/g,'<br>')+'</p>').join('');
