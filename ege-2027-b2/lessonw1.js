@@ -54,7 +54,14 @@ const IV=[
    'We met at a summer camp when we were eleven. We were in the same team, discovered that we had a lot in common, and we have been inseparable ever since.',
    'I prefer spending time with one close friend because we can have deep conversations. In a big group people often just chat about unimportant things.',
    'First I take some time to calm down, and then I try to talk to my friend face to face. Usually we make up quickly because neither of us likes holding a grudge.',
-   'I am sure it is possible, thanks to video calls and messengers. However, such a friendship needs more effort, because you have to find time to talk despite the time difference.']}];
+   'I am sure it is possible, thanks to video calls and messengers. However, such a friendship needs more effort, because you have to find time to talk despite the time difference.']},
+ {id:'w1c',theme:'Best friend',intro:'Hello everybody! It’s the Teenagers Talk radio programme. Today we are talking about best friends, and our guest is a teenager from Russia. We would like to know your opinion on this topic. Please answer five questions. So, let’s get started.',
+  q:['What is your best friend like?','Where did you and your friend meet for the first time?','What do you like to do together?','What career is your best friend going to follow?','What would you recommend to a teenager who wants to be a good friend?'],
+  a:['My best friend is cheerful, reliable and very honest. She always tells me the truth, even when it is not pleasant to hear, and I really appreciate that.',
+   'We met for the first time in the first grade, when our teacher put us at the same desk. We started chatting on the very first day and have been friends ever since.',
+   'We love going for long walks and discussing everything in the world. We also enjoy cooking together, and sometimes we go to concerts of our favourite bands.',
+   'She is going to become a doctor, because she has always wanted to help people. She is good at biology and chemistry, so I am sure she will succeed.',
+   'I would recommend being a good listener and keeping your friends’ secrets. It is also important to support your friend when things go wrong, not only when everything is fine.']}];
 
 /* ---------- Состояние: только на время открытой страницы ---------- */
 const S={w:{mode:'cards',i:0,order:null,shuf:false,flip:{},mt:null},h:{pg:0,flip:{}},t2:{v:0},iv:{v:0,q:0,flip:false,smp:false},sc:{t2:[null,null,null,null],t3:[null,null,null,null,null]}};
@@ -167,7 +174,7 @@ function task3(){const st=S.iv,v=IV[st.v];let left=40,t=null;
   face();
   const box=el('div','ctlbtns');box.append(btn('Timer',runT,'sm'),btn('Reset',()=>{stopT();Rec.cancel();left=40;paint();label.textContent='Press Play';},'sm'),recBtn());
   side.append(ring,label,box,recBox);stage.append(card,side);main.append(stage);
-  const last=st.q===4,bk=btn('← Back',()=>{st.q--;st.flip=false;st.smp=false;redraw();}),fw=btn(last?(st.v===0?'Next set →':'Start again'):'Next →',()=>{if(!last)st.q++;else{st.v=st.v===0?1:0;st.q=0;}st.flip=false;st.smp=false;redraw();});bk.disabled=st.q===0;
+  const last=st.q===4,lastSet=st.v===IV.length-1,bk=btn('← Back',()=>{st.q--;st.flip=false;st.smp=false;redraw();}),fw=btn(last?(lastSet?'Start again':'Next set →'):'Next →',()=>{if(!last)st.q++;else{st.v=lastSet?0:st.v+1;st.q=0;}st.flip=false;st.smp=false;redraw();});bk.disabled=st.q===0;
   navRow([bk,btn('Flip the card',()=>turn(card,()=>{st.flip=!st.flip;face();}),'main'),fw,teachBtn('<p><b>25–50 мин.</b> Сначала «Answer plan» (2 минуты), затем Set 1 с записью без остановок. Ученица слушает свою запись и ставит себе баллы, вы сверяете. Set 2 – тот же режим, цель: каждый ответ 2–3 фразы и 1–2 фразы из Words.</p><p>По 1 баллу: полный ответ из 2–3 фраз, верное время глагола, ответ на обе части вопроса.</p><p>Вопросы звучат голосом браузера. Если голоса нет, прочитайте вопрос сами, не показывая текст.</p>',v.q.map((q,k)=>scoreRow('Answer '+(k+1),1,()=>S.sc.t3[k],n=>S.sc.t3[k]=n)))]);
   cleanup=()=>{stopT();stopSay();Rec.cancel();};
 }
@@ -179,10 +186,10 @@ function homework(){
   const card=(t,body)=>{const p=el('div','panel');p.innerHTML='<b>'+t+'</b>'+body;g.append(p);};
   card('1. Words','<p>Learn the 16 phrases in Words. Play Match until you finish a round with no mistakes.</p>');
   card('2. Interview','<p>Answer Set 2 (Friendship) again at home with the timer and the recording on. Send the five recordings.</p>');
-  card('3. Letter 37','<p>Write letter 46 (Family · Harley) from the letter bank in 20 minutes, 100–140 words. Then compare it with the sample letter.</p><div class="frm"><span>Letter 37 → Letter bank → 46</span></div>');
-  card('4. Diagnostic homework','<p>Finish any part of the diagnostic homework you have not done yet: listening 1–9, reading 10 and 12–18.</p>');
+  card('3. Letter 37','<p>Write the email “Family gatherings · Ann” in 20 minutes, 100–140 words. Then compare it with the sample email.</p><div class="frm"><span>Block 1 → Letter 37 → 1</span></div>');
+  card('4. Grammar and word formation','<p>Do two grammar texts and two word formation texts. Send screenshots of your scores.</p><div class="frm"><span>Block 1 → Grammar</span><span>Block 1 → Word formation</span></div>');
   main.append(g);
-  const w=el('a','btn','Letter 37 →');w.href='write37.html?v=23';w.style.textDecoration='none';
+  const w=el('a','btn','Block 1 tasks →');w.href='block1.html?v=25';w.style.textDecoration='none';
   navRow([w,teachBtn('<p><b>55–60 мин.</b> Назовите одну сильную сторону урока и две задачи на неделю. Домашнее задание – за два дня до следующего занятия, письмо проверяете заранее и разбираете на уроке.</p><p>Следующее занятие блока 1: чтение вслух и монолог (задания 1 и 4) на тему семьи и дружбы.</p>')]);
 }
 
