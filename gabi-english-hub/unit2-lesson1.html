@@ -4,7 +4,7 @@
 <meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache">
-<title>Gabi · Unit 2 · Lesson 1 · Law and order</title>
+<title>Gabi · Module 2 · Lesson 1 · Law and order</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="skills.css?v=20261012e">
@@ -13,7 +13,7 @@
 <body>
 <script src="skills.js?v=20261012e"></script>
 <script>
-/* Unit 2 (Law and order), lesson 1. Two or three short activities per screen, different mechanics:
+/* Module 2 (Law and order), lesson 1. Two or three short activities per screen, different mechanics:
    1 homework bomb (15 s) -> 2 crime or not? (teen situations) + what would you do? -> 3 flashcards with translation + memory
    -> 4 typed picture recall (pictures from Nikita's Crime unit) + floor-is-lava situations -> 5 sort crime/criminal/verb + match detective words
    -> 6 the case: alibi holes + questions -> 7 verdict + homework plan. */
@@ -28,7 +28,7 @@ const CASE=`<div class="tape"><span>CRIME SCENE · DO NOT CROSS</span></div>
 const CASE_FILE=CASE.replace(/<p class="words">[\s\S]*?<\/p>/,'');
 const CASE_MINI=CASE.replace(/<p class="case">[\s\S]*?<\/p>/,'').replace(/<p class="words">[\s\S]*?<\/p>/,'').replace('<div class="sus">','<div class="sus mini">');
 const TASK=`<h4>Homework 7 · Your email to Maya</h4><p>Write your reply to Maya (90–140 words). Include:</p><ul><li>basic personal information</li><li>your family</li><li>your main hobby</li><li>your favourite subjects at school</li></ul><p>Answer her four questions and ask her two of your own.</p><a class="link" href="../gabriel-homework/lesson-7-homework.html?v=20261011-a" target="_blank" rel="noopener">Open Homework 7</a>`;
-Lesson.boot({kicker:'Unit 2 · Lesson 1',steps:[
+Lesson.boot({kicker:'Module 2 · Lesson 1',steps:[
 {stage:'Check-in',title:'Homework bomb',hint:'Homework 5 and 6 in one game. <small>15 seconds for each bomb. Type the answer, choose, or say it aloud.</small>',
  act:{type:'bomb',secs:15,label:'Homework check',title:'Defuse the homework bomb',items:[
   {sec:'Family words',q:'Same dad, different mums: Alex is my ___.',a:['half-brother', 'half brother', 'halfbrother']},
@@ -80,19 +80,19 @@ Lesson.boot({kicker:'Unit 2 · Lesson 1',steps:[
 {stage:'Words',title:'Crime words: learn',hint:'New words with pictures. Turn each card over to check the meaning. <small>Then play Memory with the same pictures.</small>',cols:'1fr 1.15fr',
  acts:[
  {type:'cards',title:'Flashcards · 13 crimes',items:[
-  {w:'theft',ru:'кража',d:'taking something that belongs to another person',img:'assets/u2/crimes/p-theft.jpg'},
-  {w:'pickpocketing',ru:'карманная кража',d:'stealing from someone’s pocket or bag without them noticing',img:'assets/u2/crimes/p-pickpocketing.jpg'},
-  {w:'burglary',ru:'кража со взломом',d:'breaking into a building, usually a house, to steal something',img:'assets/u2/crimes/p-burglary.jpg'},
-  {w:'robbery',ru:'ограбление',d:'stealing something using force or threats',img:'assets/u2/crimes/p-robbery.jpg'},
-  {w:'vandalism',ru:'вандализм',d:'damaging someone else’s property on purpose',img:'assets/u2/crimes/p-vandalism.jpg'},
-  {w:'fraud',ru:'мошенничество',d:'tricking someone to get their money or personal information',img:'assets/u2/crimes/p-fraud.jpg'},
-  {w:'cybercrime',ru:'киберпреступление',d:'a crime that uses computers or the internet',img:'assets/u2/crimes/p-cybercrime.jpg'},
-  {w:'assault',ru:'нападение',d:'attacking someone and hurting them',img:'assets/u2/crimes/p-assault.jpg'},
-  {w:'harassment',ru:'травля, преследование',d:'bothering or upsetting someone again and again',img:'assets/u2/crimes/p-harassment.jpg'},
-  {w:'shoplifting',ru:'кража в магазине',d:'stealing something from a shop',img:'assets/u2/crimes/p-shoplifting.jpg'},
-  {w:'arson',ru:'поджог',d:'starting a fire on purpose',img:'assets/u2/crimes/p-arson.jpg'},
-  {w:'kidnapping',ru:'похищение человека',d:'taking someone away by force and keeping them',img:'assets/u2/crimes/p-kidnapping.jpg'},
-  {w:'mugging',ru:'уличное ограбление',d:'attacking someone in the street and taking their things',img:'assets/u2/crimes/p-mugging.jpg'}]},
+  {w:'theft',ru:'кража',d:'taking something that belongs to another person',ex:'Car theft is a big problem in this city.',img:'assets/u2/crimes/p-theft.jpg'},
+  {w:'pickpocketing',ru:'карманная кража',d:'stealing from someone’s pocket or bag without them noticing',ex:'Watch your bag: there is a lot of pickpocketing on the metro.',img:'assets/u2/crimes/p-pickpocketing.jpg'},
+  {w:'burglary',ru:'кража со взломом',d:'breaking into a building, usually a house, to steal something',ex:'There was a burglary next door while they were on holiday.',img:'assets/u2/crimes/p-burglary.jpg'},
+  {w:'robbery',ru:'ограбление',d:'stealing something using force or threats',ex:'Two men were arrested for the bank robbery.',img:'assets/u2/crimes/p-robbery.jpg'},
+  {w:'vandalism',ru:'вандализм',d:'damaging someone else’s property on purpose',ex:'Breaking the bus stop window was an act of vandalism.',img:'assets/u2/crimes/p-vandalism.jpg'},
+  {w:'fraud',ru:'мошенничество',d:'tricking someone to get their money or personal information',ex:'He lost €500 in an online fraud.',img:'assets/u2/crimes/p-fraud.jpg'},
+  {w:'cybercrime',ru:'киберпреступление',d:'a crime that uses computers or the internet',ex:'Stealing passwords is a common cybercrime.',img:'assets/u2/crimes/p-cybercrime.jpg'},
+  {w:'assault',ru:'нападение',d:'attacking someone and hurting them',ex:'He was arrested for assault after the fight.',img:'assets/u2/crimes/p-assault.jpg'},
+  {w:'harassment',ru:'травля, преследование',d:'bothering or upsetting someone again and again',ex:'Sending nasty messages every day is harassment.',img:'assets/u2/crimes/p-harassment.jpg'},
+  {w:'shoplifting',ru:'кража в магазине',d:'stealing something from a shop',ex:'She was caught shoplifting a lipstick.',img:'assets/u2/crimes/p-shoplifting.jpg'},
+  {w:'arson',ru:'поджог',d:'starting a fire on purpose',ex:'The police think the fire was arson.',img:'assets/u2/crimes/p-arson.jpg'},
+  {w:'kidnapping',ru:'похищение человека',d:'taking someone away by force and keeping them',ex:'The kidnapping of the businessman was in all the news.',img:'assets/u2/crimes/p-kidnapping.jpg'},
+  {w:'mugging',ru:'уличное ограбление',d:'attacking someone in the street and taking their things',ex:'He was the victim of a mugging on his way home.',img:'assets/u2/crimes/p-mugging.jpg'}]},
  {type:'memory',title:'Memory · picture and word',cols:4,pairs:[{t:'theft',img:'assets/u2/crimes/p-theft.jpg'},{t:'pickpocketing',img:'assets/u2/crimes/p-pickpocketing.jpg'},{t:'assault',img:'assets/u2/crimes/p-assault.jpg'},{t:'harassment',img:'assets/u2/crimes/p-harassment.jpg'},{t:'cybercrime',img:'assets/u2/crimes/p-cybercrime.jpg'},{t:'arson',img:'assets/u2/crimes/p-arson.jpg'}]}]},
 {stage:'Words',title:'Crime words: use',hint:'Now without help. Write the crime under each picture, then name the crime in real situations. <small>Three wrong answers and the floor is lava.</small>',cols:'1.1fr 1fr',
  acts:[

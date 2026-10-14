@@ -13,27 +13,27 @@
 <body>
 <script src="../gabi-english-hub/skills.js?v=20261014a"></script>
 <script>
-/* Homework 8, after Unit 2 lesson 1 (Law and order). Crime vocabulary: learn (flashcards + memory) -> recall (definitions, situations)
+/* Homework 8, after Module 2 lesson 1 (Law and order). Crime vocabulary: learn (flashcards + memory) -> recall (definitions, situations)
    -> word families + mistakes -> something else: advice to a teenager (writing). Two activities per screen. */
 const LETTER=`<h4>Teen Help · your advice page</h4><div class="letter"><p>Dear Teen Help,</p><p>My best friend wants me to help him take sweets from a shop after school. I just have to watch the door. He says everybody does it and it isn’t a real crime. I don’t want to lose my friend. What should I do?</p><p>Sam, 13</p></div><h4>Useful language</h4><ul><li>It <b>is</b> / <b>isn’t</b> a crime because …</li><li>You <b>should</b> … · You <b>could</b> … · <b>Why don’t you</b> … ?</li><li><b>If I were you, I’d</b> …</li><li>A real friend wouldn’t …</li></ul>`;
 const has3=t=>{const W=['theft','thief','steal','stole','stolen','shoplift','shoplifting','shoplifter','crime','criminal','pickpocket','burglar','robbery','rob','vandalism','fraud','police','illegal','arrest','punish'];const n=t.toLowerCase();return W.filter(w=>new RegExp('\\b'+w).test(n)).length>=3};
-Lesson.boot({kicker:'Homework · 14 October',hub:'./',steps:[
+Lesson.boot({kicker:'Module 2 · Homework · 14 October',hub:'./',steps:[
 {stage:'Learn',title:'13 crimes',hint:'Learn the words. Turn each card over to see the translation. <small>Then find the pairs in Memory.</small>',cols:'1fr 1.15fr',
  acts:[
  {type:'cards',title:'Flashcards',items:[
-  {w:'theft',ru:'кража',d:'taking something that belongs to another person',img:'../gabi-english-hub/assets/u2/crimes/p-theft.jpg'},
-  {w:'pickpocketing',ru:'карманная кража',d:'stealing from someone’s pocket or bag without them noticing',img:'../gabi-english-hub/assets/u2/crimes/p-pickpocketing.jpg'},
-  {w:'burglary',ru:'кража со взломом',d:'breaking into a building, usually a house, to steal something',img:'../gabi-english-hub/assets/u2/crimes/p-burglary.jpg'},
-  {w:'robbery',ru:'ограбление',d:'stealing something using force or threats',img:'../gabi-english-hub/assets/u2/crimes/p-robbery.jpg'},
-  {w:'vandalism',ru:'вандализм',d:'damaging someone else’s property on purpose',img:'../gabi-english-hub/assets/u2/crimes/p-vandalism.jpg'},
-  {w:'fraud',ru:'мошенничество',d:'tricking someone to get their money or personal information',img:'../gabi-english-hub/assets/u2/crimes/p-fraud.jpg'},
-  {w:'cybercrime',ru:'киберпреступление',d:'a crime that uses computers or the internet',img:'../gabi-english-hub/assets/u2/crimes/p-cybercrime.jpg'},
-  {w:'assault',ru:'нападение',d:'attacking someone and hurting them',img:'../gabi-english-hub/assets/u2/crimes/p-assault.jpg'},
-  {w:'harassment',ru:'травля, преследование',d:'bothering or upsetting someone again and again',img:'../gabi-english-hub/assets/u2/crimes/p-harassment.jpg'},
-  {w:'shoplifting',ru:'кража в магазине',d:'stealing something from a shop',img:'../gabi-english-hub/assets/u2/crimes/p-shoplifting.jpg'},
-  {w:'arson',ru:'поджог',d:'starting a fire on purpose',img:'../gabi-english-hub/assets/u2/crimes/p-arson.jpg'},
-  {w:'kidnapping',ru:'похищение человека',d:'taking someone away by force and keeping them',img:'../gabi-english-hub/assets/u2/crimes/p-kidnapping.jpg'},
-  {w:'mugging',ru:'уличное ограбление',d:'attacking someone in the street and taking their things',img:'../gabi-english-hub/assets/u2/crimes/p-mugging.jpg'}]},
+  {w:'theft',ru:'кража',d:'taking something that belongs to another person',ex:'Car theft is a big problem in this city.',img:'../gabi-english-hub/assets/u2/crimes/p-theft.jpg'},
+  {w:'pickpocketing',ru:'карманная кража',d:'stealing from someone’s pocket or bag without them noticing',ex:'Watch your bag: there is a lot of pickpocketing on the metro.',img:'../gabi-english-hub/assets/u2/crimes/p-pickpocketing.jpg'},
+  {w:'burglary',ru:'кража со взломом',d:'breaking into a building, usually a house, to steal something',ex:'There was a burglary next door while they were on holiday.',img:'../gabi-english-hub/assets/u2/crimes/p-burglary.jpg'},
+  {w:'robbery',ru:'ограбление',d:'stealing something using force or threats',ex:'Two men were arrested for the bank robbery.',img:'../gabi-english-hub/assets/u2/crimes/p-robbery.jpg'},
+  {w:'vandalism',ru:'вандализм',d:'damaging someone else’s property on purpose',ex:'Breaking the bus stop window was an act of vandalism.',img:'../gabi-english-hub/assets/u2/crimes/p-vandalism.jpg'},
+  {w:'fraud',ru:'мошенничество',d:'tricking someone to get their money or personal information',ex:'He lost €500 in an online fraud.',img:'../gabi-english-hub/assets/u2/crimes/p-fraud.jpg'},
+  {w:'cybercrime',ru:'киберпреступление',d:'a crime that uses computers or the internet',ex:'Stealing passwords is a common cybercrime.',img:'../gabi-english-hub/assets/u2/crimes/p-cybercrime.jpg'},
+  {w:'assault',ru:'нападение',d:'attacking someone and hurting them',ex:'He was arrested for assault after the fight.',img:'../gabi-english-hub/assets/u2/crimes/p-assault.jpg'},
+  {w:'harassment',ru:'травля, преследование',d:'bothering or upsetting someone again and again',ex:'Sending nasty messages every day is harassment.',img:'../gabi-english-hub/assets/u2/crimes/p-harassment.jpg'},
+  {w:'shoplifting',ru:'кража в магазине',d:'stealing something from a shop',ex:'She was caught shoplifting a lipstick.',img:'../gabi-english-hub/assets/u2/crimes/p-shoplifting.jpg'},
+  {w:'arson',ru:'поджог',d:'starting a fire on purpose',ex:'The police think the fire was arson.',img:'../gabi-english-hub/assets/u2/crimes/p-arson.jpg'},
+  {w:'kidnapping',ru:'похищение человека',d:'taking someone away by force and keeping them',ex:'The kidnapping of the businessman was in all the news.',img:'../gabi-english-hub/assets/u2/crimes/p-kidnapping.jpg'},
+  {w:'mugging',ru:'уличное ограбление',d:'attacking someone in the street and taking their things',ex:'He was the victim of a mugging on his way home.',img:'../gabi-english-hub/assets/u2/crimes/p-mugging.jpg'}]},
  {type:'memory',title:'Memory',cols:4,pairs:[{t:'burglary',img:'../gabi-english-hub/assets/u2/crimes/p-burglary.jpg'},{t:'robbery',img:'../gabi-english-hub/assets/u2/crimes/p-robbery.jpg'},{t:'vandalism',img:'../gabi-english-hub/assets/u2/crimes/p-vandalism.jpg'},{t:'fraud',img:'../gabi-english-hub/assets/u2/crimes/p-fraud.jpg'},{t:'shoplifting',img:'../gabi-english-hub/assets/u2/crimes/p-shoplifting.jpg'},{t:'kidnapping',img:'../gabi-english-hub/assets/u2/crimes/p-kidnapping.jpg'}]}]},
 {stage:'Practise',title:'Remember the words',hint:'Write the crime for each meaning. Then name the crime in each story. <small>Three wrong answers and the floor is lava: start again.</small>',cols:'1fr 1.05fr',
  acts:[

@@ -4,7 +4,7 @@
 <meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache">
-<title>Gabi · Unit 2 · Lesson 3 · The Justice Challenge</title>
+<title>Gabi · Module 2 · Lesson 3 · The Justice Challenge</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="skills.css?v=20261012e">
@@ -13,15 +13,15 @@
 <body>
 <script src="skills.js?v=20261012e"></script>
 <script>
-/* Unit 2 (Law and order), lesson 3: The Justice Challenge (Tatyana's Law & Order pack, block 3). Two activities per screen:
+/* Module 2 (Law and order), lesson 3: The Justice Challenge (Tatyana's Law & Order pack, block 3). Two activities per screen:
    1 fair or unfair + match punishment words -> 2 School Court (verdict, new evidence) + judge questions (from Nikita's courtroom)
-   -> 3 school rules with dropdowns + his own three rules -> 4 defend the rules + Unit 2 Jeopardy review. */
+   -> 3 school rules with dropdowns + his own three rules -> 4 defend the rules + Module 2 Jeopardy review. */
 const COURT=(t)=>`<div class="court"><h4>${t}</h4><span class="stamp">SCHOOL COURT</span></div>`;
 const MENU=COURT('Choose a consequence')+`<div class="cons"><span>a warning</span><span>an apology</span><span>repairing the damage</span><span>community service</span><span>no punishment</span></div>
 <ul class="say"><li><b>I think</b> the fair consequence is … <b>because</b> …</li><li><b>However,</b> he / she still should …</li><li><b>Now that we know</b> …, I’d change my verdict to …</li></ul>`;
 const RULES=COURT('Rules and advice')+`<ul class="say"><li><b>must</b> = it is a rule / it is necessary</li><li><b>mustn’t</b> = it is not allowed</li><li><b>have to</b> = a rule or an obligation</li><li><b>don’t have to</b> = it is not necessary, you can choose</li><li><b>should / shouldn’t</b> = advice, it is a good idea / a bad idea</li></ul>`;
 const LAW=COURT('Headteacher for a day')+`<ul class="say"><li>At my school, students <b>must</b> …</li><li>Students <b>shouldn’t</b> … <b>because</b> …</li><li>Students <b>don’t have to</b> …</li><li><b>If</b> someone breaks this rule, they <b>should</b> …</li></ul>`;
-Lesson.boot({kicker:'Unit 2 · Lesson 3',steps:[
+Lesson.boot({kicker:'Module 2 · Lesson 3',steps:[
 {stage:'Warm-up',title:'Fair or unfair?',hint:'Agree, disagree or it depends? Give a reason and an example. <small>Then match the words you need to talk about punishment.</small>',cols:'1.1fr 1fr',
  acts:[
  {type:'talk',title:'Fair or unfair?',label:'Statement',secs:30,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['I agree because …','I disagree because …','It depends on …','For example, …'],cards:[
@@ -65,13 +65,13 @@ Lesson.boot({kicker:'Unit 2 · Lesson 3',steps:[
   {pre:'Rule 1 · something students must do',ph:'At my school, students must … because …'},
   {pre:'Rule 2 · something students shouldn’t or mustn’t do',ph:'Students mustn’t … because …'},
   {pre:'Rule 3 · what happens if someone breaks a rule',ph:'If someone …, they should …'}]}]},
-{stage:'Speak',title:'Defend your law and review',hint:'Present and defend your rules. Then the Unit 2 Jeopardy: pick a category and points.',cols:'1fr 1.1fr',
+{stage:'Speak',title:'Defend your law and review',hint:'Present and defend your rules. Then the Module 2 Jeopardy: pick a category and points.',cols:'1fr 1.1fr',
  acts:[
  {type:'talk',title:'Defend your law',label:'Task',secs:60,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['must / mustn’t','have to / don’t have to','should','because …','However, …'],cards:[
   {q:'Present your three rules and explain why your school needs them.'},
   {q:'Your teacher says: “Rule 1 is unfair.” Defend it with two arguments.'},
   {q:'Which consequence from the School Court is the fairest for your rule 3? Why?'}]},
- {type:'jeopardy',title:'Unit 2 Jeopardy',cats:[{name:'Crimes',qs:[{q:'Stealing from a shop',a:'shoplifting'},{q:'Breaking into a house to steal',a:'burglary'},{q:'Starting a fire on purpose',a:'arson'}]},{name:'Detectives',qs:[{q:'A person who saw the crime',a:'a witness'},{q:'Proof that you were somewhere else',a:'an alibi'},{q:'The noun from INVESTIGATE',a:'investigation'}]},{name:'Past tenses',qs:[{q:'The past of STEAL',a:'stole'},{q:'At 3:30 Ben ___ (wait) outside.',a:'was waiting'},{q:'Correct it: “What did you doing?”',a:'What were you doing?'}]},{name:'Rules',qs:[{q:'It is not allowed: you ___ cheat.',a:'mustn’t'},{q:'It is not necessary: you ___ wear a tie.',a:'don’t have to'},{q:'The past of MUST',a:'had to'}]}]}]}
+ {type:'jeopardy',title:'Module 2 Jeopardy',cats:[{name:'Crimes',qs:[{q:'Stealing from a shop',a:'shoplifting'},{q:'Breaking into a house to steal',a:'burglary'},{q:'Starting a fire on purpose',a:'arson'}]},{name:'Detectives',qs:[{q:'A person who saw the crime',a:'a witness'},{q:'Proof that you were somewhere else',a:'an alibi'},{q:'The noun from INVESTIGATE',a:'investigation'}]},{name:'Past tenses',qs:[{q:'The past of STEAL',a:'stole'},{q:'At 3:30 Ben ___ (wait) outside.',a:'was waiting'},{q:'Correct it: “What did you doing?”',a:'What were you doing?'}]},{name:'Rules',qs:[{q:'It is not allowed: you ___ cheat.',a:'mustn’t'},{q:'It is not necessary: you ___ wear a tie.',a:'don’t have to'},{q:'The past of MUST',a:'had to'}]}]}]}
 ]});
 </script>
 </body>
