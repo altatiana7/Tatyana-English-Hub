@@ -57,14 +57,14 @@ const IV=[
    'I am sure it is possible, thanks to video calls and messengers. However, such a friendship needs more effort, because you have to find time to talk despite the time difference.']}];
 
 /* ---------- Состояние: только на время открытой страницы ---------- */
-const S={w:{mode:'cards',pg:0,flip:{},mt:null},h:{pg:0,flip:{}},t2:{v:0},iv:{v:0,q:0,flip:false,smp:false},sc:{t2:[null,null,null,null],t3:[null,null,null,null,null]}};
+const S={w:{mode:'cards',i:0,order:null,shuf:false,flip:{},mt:null},h:{pg:0,flip:{}},t2:{v:0},iv:{v:0,q:0,flip:false,smp:false},sc:{t2:[null,null,null,null],t3:[null,null,null,null,null]}};
 const STEPS=[
  {label:'Words',color:'#2c7f78',draw:words1},
  {label:'Error hunter',color:'#a85050',draw:hunt},
  {label:'Task 2',color:'#2f6f9f',draw:task2},
  {label:'Task 3',color:'#4a4f8f',draw:task3},
  {label:'Homework',color:'#b0683a',draw:homework}];
-let cur=0,cleanup=null;
+let cur=0,cleanup=null,keyH=null;
 function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.type='button';b.title=s.label;b.style.setProperty('--c',s.color);b.onclick=()=>go(k);tabs.append(b);});}
 function go(k){if(cleanup){cleanup();cleanup=null;}stopSay();document.querySelectorAll('.overlay').forEach(x=>x.remove());cur=k;document.body.style.setProperty('--step',STEPS[k].color);paintTabs();main.innerHTML='';STEPS[k].draw();}
 function redraw(){go(cur);}
@@ -87,16 +87,28 @@ function stopSay(){try{window.speechSynthesis&&speechSynthesis.cancel();}catch(e
 
 /* ---------- 1. Words: карточки и Match ---------- */
 function words1(){const st=S.w;
-  head('Family and friends: 16 key phrases. Flip a card to see the meaning and an example, then play Match.');
+  head('Family and friends · 16 key phrases');
   const top=el('div','navrow');top.append(btn('Cards',()=>{st.mode='cards';redraw();},st.mode==='cards'?'main':''),btn('Match',()=>{st.mode='match';st.mt=null;redraw();},st.mode==='match'?'main':''));main.append(top);
-  if(st.mode==='cards'){const g=el('div','grid4');
-    WORDS.slice(st.pg*4,st.pg*4+4).forEach((w,i)=>{const k=st.pg*4+i,c=el('div','fc');
-      const paint=()=>{c.className='fc'+(st.flip[k]?' back':'');c.innerHTML=st.flip[k]?'<div class="k">Meaning</div><div class="d">'+ED.t('w1.w.'+k+'.d',w[1])+'</div><div class="x">'+ED.t('w1.w.'+k+'.x',w[2])+'</div>':'<div class="k">Phrase '+(k+1)+' of 16</div><div class="w">'+esc(w[0])+'</div>';};
-      paint();c.onclick=e=>{if(e.target.closest('[contenteditable]'))return;turn(c,()=>{st.flip[k]=!st.flip[k];paint();});};g.append(c);});
-    main.append(g);
-    const pg=el('div','pager'),bk=btn('← Back',()=>{st.pg--;redraw();}),fw=btn(st.pg<3?'Next 4 →':'Start again',()=>{st.pg=st.pg<3?st.pg+1:0;st.flip={};redraw();});bk.disabled=st.pg===0;
-    pg.append(bk,el('b',null,(st.pg+1)+' / 4'),fw,btn('Flip all',()=>{const all=[0,1,2,3].every(i=>st.flip[st.pg*4+i]);[0,1,2,3].forEach(i=>st.flip[st.pg*4+i]=!all);redraw();}));
-    navRow([pg,teachBtn('<p><b>0–7 мин.</b> Ученица читает фразу, сама объясняет значение по-английски, потом переворачивает карточку. Затем Match на время.</p><p>Попросите составить предложение о своей семье с 2–3 фразами: это заготовки для интервью.</p>')]);}
+  if(st.mode==='cards'){
+    /* Quizlet: одна большая карточка, термин – лицевая сторона, значение и пример – оборот; стрелки, счётчик, полоса прогресса, звук, перемешивание */
+    const order=st.order||(st.order=[...WORDS.keys()]),n=order.length,k=order[st.i],w=WORDS[k];
+    const wrap=el('div','qz'),bar=el('div','qzbar');bar.innerHTML='<i style="width:'+((st.i+1)/n*100)+'%"></i>';
+    const card=el('div','qzcard'+(st.flip[k]?' flipped':'')),inner=el('div','qzin');
+    const front=el('div','qzface qzfront','<span class="qzk">Term</span><div class="qzterm">'+esc(w[0])+'</div>');
+    const back=el('div','qzface qzback','<span class="qzk">Definition</span><div class="qzdef">'+ED.t('w1.w.'+k+'.d',w[1])+'</div><div class="qzex">'+ED.t('w1.w.'+k+'.x',w[2])+'</div>');
+    const snd=el('button','qzsnd','<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');snd.type='button';snd.title='Listen';
+    snd.onclick=e=>{e.stopPropagation();say(st.flip[k]?w[1]+'. '+w[2]:w[0]);};
+    inner.append(front,back);card.append(inner,snd);
+    const flip=()=>{st.flip[k]=!st.flip[k];card.classList.toggle('flipped',!!st.flip[k]);};
+    card.onclick=e=>{if(e.target.closest('[contenteditable],button'))return;flip();};
+    const move=d=>{stopSay();st.i=(st.i+d+n)%n;st.flip={};redraw();};
+    const nav=el('div','qznav'),pv=el('button','qzarr','&larr;'),nx=el('button','qzarr','&rarr;');pv.type=nx.type='button';pv.title='Previous';nx.title='Next';pv.onclick=()=>move(-1);nx.onclick=()=>move(1);pv.disabled=st.i===0;
+    const sh=btn(st.shuf?'Shuffled':'Shuffle',()=>{if(st.shuf){st.order=[...WORDS.keys()];st.shuf=false;}else{st.order=[...WORDS.keys()].sort(()=>Math.random()-.5);st.shuf=true;}st.i=0;st.flip={};redraw();},'sm'+(st.shuf?' main':''));
+    nav.append(sh,pv,el('b','qzcnt',(st.i+1)+' / '+n),nx,btn(st.i===n-1?'Start again':'Flip',()=>{if(st.i===n-1&&st.flip[k]){st.i=0;st.flip={};redraw();}else flip();},'sm'));
+    wrap.append(bar,card,nav);main.append(wrap);
+    keyH=e=>{if(e.target.closest&&e.target.closest('[contenteditable],input,select,textarea'))return;if(e.key===' '||e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();flip();}else if(e.key==='ArrowRight')move(1);else if(e.key==='ArrowLeft'&&st.i>0)move(-1);};
+    document.addEventListener('keydown',keyH);cleanup=()=>{document.removeEventListener('keydown',keyH);keyH=null;};
+    navRow([teachBtn('<p><b>0–7 мин.</b> Ученица читает фразу, сама объясняет значение по-английски, потом переворачивает карточку (щелчок по карточке или пробел; стрелки – следующая/предыдущая). Затем Match на время.</p><p>Попросите составить предложение о своей семье с 2–3 фразами: это заготовки для интервью.</p>')]);}
   else{ if(!st.mt){const set=[...WORDS.keys()].sort(()=>Math.random()-.5).slice(0,4);st.mt={set,right:[...set].sort(()=>Math.random()-.5),sel:null,done:{},err:st.next?st.next.err:0,round:st.next?st.next.round:1};st.next=null;}
     const m=st.mt,box=el('div','mt'),L=el('div','col'),R=el('div','col');
     m.set.forEach(k=>{const b=el('button',m.done[k]?'ok':(m.sel===k?'sel':''),esc(WORDS[k][0]));b.type='button';b.onclick=()=>{if(m.done[k])return;m.sel=k;redraw();};L.append(b);});
