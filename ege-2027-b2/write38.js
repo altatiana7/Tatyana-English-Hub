@@ -101,7 +101,7 @@ function writeStep(){
   const nav=el('div','navrow'),msg=el('span','note');
   nav.append(btn('Скопировать для учителя',()=>{const t='Задание 38.'+ST.kind+' · '+NAMES[who]+' · №'+x.id+' '+x.topic+' · '+words(ta.value)+' слов\n\n'+ta.value;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{msg.textContent='Скопировано.';}).catch(()=>{msg.textContent='Не получилось скопировать.';});},'main'),
     btn('Карта самопроверки',()=>{const d=el('div');CARD.forEach(k=>{const l=el('label','ck'),i=el('input');i.type='checkbox';l.append(i,el('div',null,k));d.append(l);});overlay('Карта самопроверки · то, что не видит автоматическая проверка',d);}),
-    btn('Образец',()=>{const s=sample(x);overlay('Образец · составлен для сайта · '+words(s)+' слов',el('pre','model',esc(s)));}),
+    btn('Образец',()=>{const s=sample(x);overlay('Образец · составлен для сайта · '+words(s)+' слов',el('pre','model',ED.t('w38.'+ST.kind+'.'+x.topic,s)));}),
     btn('Очистить черновик',()=>{ta.value='';try{localStorage.removeItem(dk);}catch(e){}paint();},'sm'),msg);main.append(nav);
 }
 Clock.mount();paintWho();go(Math.min(STEPS.length-1,Math.max(0,(+location.hash.slice(1)||1)-1)));

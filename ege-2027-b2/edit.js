@@ -4,7 +4,7 @@
    Режим правки при каждом открытии страницы выключен. */
 const ED=(function(){
   const KEY='ege27-answer-edits',ORIG={};let on=false,last=null,btnTop=null,fileM=null,tools=null,onB=null,cntL=null;
-  const load=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){return {};}};
+  const load=()=>{try{const o=JSON.parse(localStorage.getItem(KEY)||'{}')||{};Object.keys(o).forEach(k=>{if(k.indexOf('ru.lt.')===0){o[k.slice(3)]=o[k];delete o[k];}});return o;}catch(e){return {};}};
   const save=o=>{try{localStorage.setItem(KEY,JSON.stringify(o));return true;}catch(e){return false;}};
   const html=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])).replace(/\n/g,'<br>');
   const clean=s=>String(s).replace(/ /g,' ').replace(/[ \t]+\n/g,'\n').replace(/\n{3,}/g,'\n\n').trim();

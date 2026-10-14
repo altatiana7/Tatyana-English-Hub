@@ -12,7 +12,7 @@ const TYPES={
  future:{n:'Планы и будущее',c:'#b0683a',how:'Планы – going to, прогноз – will.',fr:'I’m going to … · I’m planning to … · I think … will …'}
 };
 const TK=Object.keys(TYPES);
-const ALLQ=[];L.forEach(x=>x.q.forEach((q,i)=>ALLQ.push({t:q.t,k:q.k,d:q.d,lead:i===0?x.lead:'',ans:x.ans[i],name:x.name,own:x.src==='own'})));
+const ALLQ=[];L.forEach(x=>x.q.forEach((q,i)=>ALLQ.push({t:q.t,k:q.k,d:q.d,lead:i===0?x.lead:'',ans:x.ans[i],ek:'lt.'+x.id+'-'+x.name+'.'+i+'.a',name:x.name,own:x.src==='own'})));
 const BANKQ=ALLQ.filter(q=>!q.own),NB=L.filter(x=>x.src!=='own').length;
 const CNT={};TK.forEach(k=>CNT[k]=BANKQ.filter(q=>q.k===k).length);const DBL=BANKQ.filter(q=>q.d).length;
 const TENSE={past:['Уже случилось','Past Simple: Where did you …? What was …? Who gave you …?'],present:['Происходит сейчас','Present Simple или Continuous: What is … like? How often do you …? What are you …ing?'],future:['Ещё впереди','Future: When are you going to …? What will you …? Who is coming …?']};
@@ -56,7 +56,7 @@ function analysis(){
   a.append(g,el('div','panel dbl','<b>Двойные вопросы: '+DBL+' из '+BANKQ.length+'.</b> Две части – «…, and why?», «why or why not?». Ответ только на первую часть неполный. <b>В типовых вариантах 2026 года</b> заметно чаще, чем в банке, встречается «If you could …, what would … and why?» – примерно каждый седьмой вопрос.'));
   const T=TYPES[ST.typ],ex=BANKQ.filter(q=>q.k===ST.typ);
   b.append(el('h3',null,T.n),el('p',null,'<b>Как отвечать.</b> '+T.how),el('p','frame',esc(T.fr)),el('h3',null,'Примеры из банка'));
-  ex.slice(0,2).forEach(q=>b.append(el('p','exq','<b>'+esc(q.t)+'</b><br><span>'+esc(q.ans)+'</span>')));
+  ex.slice(0,2).forEach(q=>b.append(el('p','exq','<b>'+esc(q.t)+'</b><br><span>'+ED.t(q.ek,q.ans)+'</span>')));
   b.querySelector('h3').style.color=T.c;
   stage.append(a,b);main.append(stage);const nav=el('div','navrow');nav.append(el('span','note','Нажми на тип, чтобы увидеть, как на него отвечать. Образцы ответов составлены для сайта.'),nextBtn());main.append(nav);
 }
@@ -77,7 +77,7 @@ function answer(){
     if(ST.stage===1){const o=el('div','opts');o.style.gridTemplateColumns='1fr 1fr';[['Одна часть',false],['Две части – ответить на обе',true]].forEach(([n,v])=>{const bt=el('button','opt',n);bt.type='button';bt.onclick=()=>{ST.dpick=v;const k=v===q.d;ST.score+=k?1:0;ST.streak=k?ST.streak+1:0;ST.stage=2;redraw();};o.append(bt);});card.append(el('div','note','Сколько частей в вопросе?'),o);}
     else{const k2=ST.dpick===q.d;card.append(el('div','verdict '+(k2?'ok':'bad'),'<b>'+(k2?'Верно.':'Не совсем.')+'</b> '+(q.d?'Вопрос двойной: нужен ответ на обе части.':'Здесь одна часть: хватит одной-двух фраз.')));
       const ta=el('textarea','mini');ta.placeholder='Напиши свой ответ: одна-две фразы.';ta.setAttribute('aria-label','Мой ответ');card.append(ta);
-      if(ST.show)card.append(el('div','verdict','<b>Образец:</b> '+esc(q.ans)));}}
+      if(ST.show)card.append(el('div','verdict','<b>Образец:</b> '+ED.t(q.ek,q.ans)));}}
   stage.append(card);main.append(stage);const nav=el('div','navrow');
   if(ST.stage===2){if(!ST.show)nav.append(btn('Показать образец',()=>{const v=main.querySelector('textarea').value;ST.show=true;redraw();main.querySelector('textarea').value=v;}));
     nav.append(btn(ST.pi<ST.pool.length-1?'Следующий вопрос →':'Начать заново',()=>{if(ST.pi<ST.pool.length-1)ST.pi++;else{ST.pool=null;}ST.stage=0;ST.pick=ST.dpick=null;ST.show=false;redraw();},'acc'));}
@@ -134,7 +134,7 @@ function letter(){
   b.append(ta);stage.append(a,b,c);main.append(stage);
   const nav=el('div','navrow'),msg=el('span','note');
   nav.append(btn('Скопировать для учителя',()=>{const t='Письмо 37 · '+NAMES[who]+' · №'+(ST.cur+1)+' '+x.topic+' ('+x.name+') · '+words(ta.value)+' слов\n\n'+ta.value;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{msg.textContent='Скопировано – вставь в сообщение учителю.';}).catch(()=>{msg.textContent='Не получилось скопировать: выдели текст и скопируй вручную.';});},'main'),
-    btn('Образец письма',()=>{const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,'Образец · составлен для сайта'),el('pre','model',esc(x.model)),btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}),
+    btn('Образец письма',()=>{const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,'Образец · составлен для сайта'),el('pre','model',ED.t('lt.'+x.id+'-'+x.name+'.model',x.model)),btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}),
     btn('Карта самопроверки',()=>{const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,'Карта самопроверки · то, что не видит автоматическая проверка'));CARD.forEach(c=>{const l=el('label','ck'),i=el('input');i.type='checkbox';l.append(i,el('div',null,c));t.append(l);});t.append(btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}),
     btn('Очистить черновик',()=>{ta.value='';try{localStorage.removeItem(dkey());}catch(e){}paint();},'sm'),msg);main.append(nav);
 }
@@ -151,10 +151,10 @@ function bank(){
   const fill=()=>{list.innerHTML='';const q=BK.q.toLowerCase();let n=0;L.forEach((y,i)=>{if(q&&!(y.topic+' '+y.subject+' '+y.name+' '+y.about+' '+y.q.map(z=>z.t).join(' ')).toLowerCase().includes(q))return;n++;const b=el('button','bitem'+(i===ST.cur?' on':''),(i+1)+'. '+esc(y.topic)+' · '+esc(y.name)+'<small>вопросы о: '+esc(y.about)+(y.src==='pdf'?'':y.src==='own'?' · по темам кодификатора':' · дополнительное')+'</small>');b.type='button';b.onclick=()=>{ST.cur=i;BK.open={};redraw();};list.append(b);});cnt.textContent='показано: '+n;};
   inp.oninput=()=>{BK.q=inp.value;fill();};fill();a.append(inp,cnt,list);
   const msg=el('span','note'),acts=el('div','navrow');
-  acts.append(btn('Написать это письмо',()=>go(4),'acc'),btn('Открыть готовое письмо',()=>{const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,'Готовое письмо · '+words(x.model)+' слов'),el('pre','model',esc(x.model)),btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}),btn('Скопировать задание',()=>copy(promptText(x),msg),'sm'),btn('Скопировать ответ',()=>copy(x.model,msg),'sm'),msg);
+  acts.append(btn('Написать это письмо',()=>go(4),'acc'),btn('Открыть готовое письмо',()=>{const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,'Готовое письмо · '+words(x.model)+' слов'),el('pre','model',ED.t('lt.'+x.id+'-'+x.name+'.model',x.model)),btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}),btn('Скопировать задание',()=>copy(promptText(x),msg),'sm'),btn('Скопировать ответ',()=>copy(x.model,msg),'sm'),msg);
   m.append(el('h2',null,(ST.cur+1)+'. '+esc(x.topic)),el('div','note','friend: '+esc(x.name)+' · вопросы о: '+esc(x.about)),acts,el('div','bprompt',esc(promptText(x))));
-  r.append(el('h3',null,'Вопросы из письма'));x.q.forEach((q,i)=>{const d=el('div','bq','<b>Q'+(i+1)+'. '+esc(q.t)+'</b>');if(BK.open[i])d.append(el('div','a',esc(x.ans[i])));else d.append(btn('Показать примерный ответ',()=>{BK.open[i]=1;redraw();},'sm'));r.append(d);});
-  r.append(el('h3',null,'Встречные вопросы'));const d=el('div','bq','<b>3 вопроса другу: '+esc(x.about)+'</b>');if(BK.open.ask)d.append(el('div','a',x.ask.map(esc).join('<br>')));else d.append(btn('Показать примерные вопросы',()=>{BK.open.ask=1;redraw();},'sm'));r.append(d);
+  r.append(el('h3',null,'Вопросы из письма'));x.q.forEach((q,i)=>{const d=el('div','bq','<b>Q'+(i+1)+'. '+esc(q.t)+'</b>');if(BK.open[i])d.append(el('div','a',ED.t('lt.'+x.id+'-'+x.name+'.'+i+'.a',x.ans[i])));else d.append(btn('Показать примерный ответ',()=>{BK.open[i]=1;redraw();},'sm'));r.append(d);});
+  r.append(el('h3',null,'Встречные вопросы'));const d=el('div','bq','<b>3 вопроса другу: '+esc(x.about)+'</b>');if(BK.open.ask)d.append(el('div','a',x.ask.map((z,j)=>ED.t('lt.'+x.id+'-'+x.name+'.ask'+j,z)).join('<br>')));else d.append(btn('Показать примерные вопросы',()=>{BK.open.ask=1;redraw();},'sm'));r.append(d);
   wrap.append(a,m,r);main.append(wrap);const on=list.querySelector('.on');if(on)on.scrollIntoView({block:'nearest'});
 }
 Clock.mount();paintWho();go(Math.min(STEPS.length-1,Math.max(0,(+location.hash.slice(1)||1)-1)));

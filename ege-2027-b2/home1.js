@@ -117,7 +117,7 @@ function writing(n){
     msg.textContent='слов · нужно '+L.min+'–'+L.max+(w&&w<L.lo?' · меньше '+L.lo+' слов – 0 баллов за задание':w>L.hi?' · проверяются только первые '+L.max+' слов':(w&&!ok?' · в пределах допустимых 10%':''));};
   ta.oninput=()=>{S[key]=ta.value;save();upd();const t=tabs.children[cur];t&&t.classList.toggle('done',isDone(key));};upd();
   b.append(ta,wc);stage.append(a,b);main.append(stage);
-  const nav=el('div','navrow');if(S.checked)nav.append(btn('Примерный ответ',()=>showSample('Задание '+n+' · примерный ответ',sampleParas(SAMPLES['w'+n]),words(SAMPLES['w'+n])+' слов. Это образец, а не единственно верный ответ. Текст составлен для сайта.'),'main'));
+  const nav=el('div','navrow');if(S.checked)nav.append(btn('Примерный ответ',()=>showSample('Задание '+n+' · примерный ответ','<p>'+ED.t('h1.w'+n,SAMPLES['w'+n])+'</p>',words(SAMPLES['w'+n])+' слов. Это образец, а не единственно верный ответ. Текст составлен для сайта.'),'main'));
   nav.append(el('span','note',S.checked?'Работа проверена. Сравните свой текст с примерным ответом; баллы поставит учитель.':'Пишите без словаря и переводчика: это диагностика, а не оценка. Примерный ответ откроется после проверки.'),nextBtn());main.append(nav);
 }
 
