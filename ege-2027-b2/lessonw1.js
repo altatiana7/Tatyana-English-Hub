@@ -181,7 +181,7 @@ function task3(){const st=S.iv,v=IV[st.v];let left=40,t=null;
 
 /* ---------- 5. Homework ---------- */
 function homework(){
-  head('Homework · send it two days before the next lesson.');
+  head('Homework · before the next lesson.');
   const g=el('div','hw');
   const card=(t,body)=>{const p=el('div','panel');p.innerHTML='<b>'+t+'</b>'+body;g.append(p);};
   card('1. Words','<p>Learn the 16 phrases in Words. Play Match until you finish a round with no mistakes.</p>');
@@ -190,7 +190,7 @@ function homework(){
   card('4. Grammar and word formation','<p>Do two grammar texts and two word formation texts. Send screenshots of your scores.</p><div class="frm"><span>Block 1 → Grammar</span><span>Block 1 → Word formation</span></div>');
   main.append(g);
   const w=el('a','btn','Block 1 tasks →');w.href='block1.html?v=25';w.style.textDecoration='none';
-  navRow([w,teachBtn('<p><b>55–60 мин.</b> Назовите одну сильную сторону урока и две задачи на неделю. Домашнее задание – за два дня до следующего занятия, письмо проверяете заранее и разбираете на уроке.</p><p>Следующее занятие блока 1: чтение вслух и монолог (задания 1 и 4) на тему семьи и дружбы.</p>')]);
+  navRow([w,teachBtn('<p><b>55–60 мин.</b> Назовите одну сильную сторону урока и две задачи на неделю. Занятия два раза в неделю: домашнее задание – к следующему занятию; письмо проверяете накануне и разбираете на уроке.</p><p>Следующее занятие блока 1: чтение вслух и монолог (задания 1 и 4) на тему семьи и дружбы.</p>')]);
 }
 
 go(Math.min(STEPS.length-1,Math.max(0,(+location.hash.slice(1)||1)-1)));
