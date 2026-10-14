@@ -14,7 +14,7 @@
 <script src="skills.js?v=20261012e"></script>
 <script>
 /* Unit 2 (Law and order), lesson 1. Two or three short activities per screen, different mechanics:
-   1 homework bomb (15 s) -> 2 opinion: crime or accident + dilemma -> 3 flashcards with translation + memory
+   1 homework bomb (15 s) -> 2 crime or not? (teen situations) + what would you do? -> 3 flashcards with translation + memory
    -> 4 typed picture recall (pictures from Nikita's Crime unit) + floor-is-lava situations -> 5 sort crime/criminal/verb + match detective words
    -> 6 the case: alibi holes + questions -> 7 verdict + homework plan. */
 const CASE=`<div class="tape"><span>CRIME SCENE · DO NOT CROSS</span></div>
@@ -57,15 +57,26 @@ Lesson.boot({kicker:'Unit 2 · Lesson 1',steps:[
   {sec:'Give advice aloud',q:'I forgot my best friend’s birthday.',say:1,model:'You should say sorry and give her a present tomorrow.',why:'Why don’t you … ? · You could … · You should …'},
   {sec:'Give advice aloud',q:'My parents check my phone every evening.',say:1,model:'Why don’t you talk to them calmly and agree on rules?',why:'Why don’t you … ? · You could … · You should …'},
   {sec:'Give advice aloud',q:'I can’t wake up in time for school.',say:1,model:'You should go to bed earlier. How about putting your alarm far from the bed?',why:'Why don’t you … ? · You could … · You should …'}]}},
-{stage:'Warm-up',title:'Crime or not?',hint:'The new unit is Law and order. Start with your opinion. <small>First the four situations, then the dilemma.</small>',cols:'1.2fr 1fr',
+{stage:'Warm-up',title:'Crime or not?',hint:'Is it a crime? Choose, then say why. <small>Then real situations: what would you do?</small>',cols:'1.1fr 1fr',
  acts:[
- {type:'talk',title:'Crime or accident?',secs:20,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['It’s a crime because …','It’s an accident because …','It depends on …'],cards:[
-  {q:'You find £10 on the classroom floor and put it in your pocket.'},
-  {q:'You accidentally break a classroom window while playing football.'},
-  {q:'You take your friend’s headphones without asking and refuse to give them back.'},
-  {q:'You borrow a book and forget to return it.'}]},
- {type:'explain',title:'Who is worse?',label:'Dilemma',endLabel:'Dilemma',revealLabel:'What most people say',doneLabel:'Done',wait:'Gabi chooses first and explains why.',items:[
-  {k:'none',name:'A or B?',sum:'Bigger harm, bigger punishment? It depends.',ask:'<b>A:</b> A 20-year-old steals €50 from a shop.<br><b>B:</b> A rich businessman doesn’t pay €500,000 in taxes.<br>Who deserves the harsher punishment?',head:'There is no single right answer',rule:'Many people choose <b>B</b>: he did it on purpose, and the harm to everyone is much bigger. Others say a crime is a crime, the amount is not important.',eg:'I think … deserves a harsher punishment because …'}]}]},
+ {type:'quiz',title:'Crime or not?',label:'Situation',cols:3,opts:['A crime','Not a crime','It depends'],items:[
+  {q:'You download a new film from a pirate website for free.',a:'A crime',why:'Pirate copies break copyright law. Most people never get caught, but it is still illegal.'},
+  {q:'You find a phone on the bus and keep it.',a:'A crime',why:'If you don’t try to give it back, it is theft.'},
+  {q:'You accidentally kick a ball through a neighbour’s window.',a:'Not a crime',why:'It is an accident. But you should say sorry and help to pay for it.'},
+  {q:'You write your name on the wall of the school toilets.',a:'A crime',why:'Damaging property on purpose is vandalism.'},
+  {q:'You log in to your friend’s Instagram and read his messages.',a:'A crime',why:'Using someone’s account without permission is a cybercrime.'},
+  {q:'You copy your friend’s homework.',a:'Not a crime',why:'It breaks school rules, not the law. But it is still cheating.'},
+  {q:'You post an embarrassing photo of a classmate without asking.',a:'It depends',why:'Once can be unkind. Again and again, or to hurt someone, it becomes harassment.'},
+  {q:'You keep sending angry messages to someone who asked you to stop.',a:'A crime',why:'Bothering someone again and again is harassment.'},
+  {q:'You use your older brother’s ID to see a 16+ film.',a:'A crime',why:'Using another person’s ID to trick someone is a kind of fraud.'},
+  {q:'You buy a cheap “designer” bag that you know is fake.',a:'It depends',why:'In many countries buying it for yourself is legal, but selling fakes is a crime.'}]},
+ {type:'talk',title:'What would you do?',label:'Situation',secs:30,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['I would … because …','I wouldn’t …','First, I’d …','I’d tell …'],cards:[
+  {q:'Your friend wants you to watch the door while he takes sweets from a shop.'},
+  {q:'You find a wallet in the park with €100 and an ID card in it.'},
+  {q:'Someone in your class shares a fake photo of your friend online.'},
+  {q:'Your friend asks for your password “just for five minutes”.'},
+  {q:'An older boy offers you a new iPhone for only €20.'},
+  {q:'You see two classmates writing graffiti on the school wall.'}]}]},
 {stage:'Words',title:'Crime words: learn',hint:'New words with pictures. Turn each card over to check the meaning. <small>Then play Memory with the same pictures.</small>',cols:'1fr 1.15fr',
  acts:[
  {type:'cards',title:'Flashcards · 13 crimes',items:[
