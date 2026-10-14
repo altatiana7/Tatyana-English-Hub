@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
 <title>ЕГЭ 2027 · Занятие 1 · Family and friends</title>
-<link rel="stylesheet" href="app.css?v=28">
+<link rel="stylesheet" href="app.css?v=29">
 <style>
 .grid4{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;flex:1;min-height:0}
 .fc{position:relative;cursor:pointer;border-radius:16px;border:1px solid var(--line);background:#fff;box-shadow:0 6px 18px rgba(30,64,120,.08);display:flex;flex-direction:column;justify-content:center;gap:8px;padding:14px 18px;min-height:0;overflow:auto;transition:transform .17s ease-in}
@@ -34,24 +34,25 @@
 .frm{display:flex;flex-wrap:wrap;gap:8px}
 .frm span{background:#edf4ff;border:1px solid #c9d3e6;border-radius:999px;padding:4px 12px;font-size:17px}
 @media (max-height:640px){.fc .w{font-size:23px}.fc .d{font-size:18px}.fc .x{font-size:16px}.mt button{font-size:18px;padding:8px 12px}.mt{gap:7px 14px}.mt .col{gap:7px}.grid4{gap:8px}}
-.qz{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:980px;margin:0 auto}
+.qz{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:100%;max-width:760px;margin:0 auto}
 .qzbar{width:100%;height:6px;border-radius:99px;background:#e3e8f2;overflow:hidden;flex:0 0 auto}.qzbar i{display:block;height:100%;background:#4255ff;border-radius:99px;transition:width .25s}
-.qzcard{position:relative;width:100%;flex:1;min-height:220px;perspective:1600px;cursor:pointer}
+.qzcard{position:relative;width:100%;height:min(330px,52vh);min-height:200px;perspective:1600px;cursor:pointer;flex:0 0 auto}
 .qzin{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.4,.2,.2,1)}
 .qzcard.flipped .qzin{transform:rotateY(180deg)}
-.qzface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fff;border-radius:18px;box-shadow:0 4px 18px rgba(46,56,86,.16);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:30px 60px;text-align:center;overflow:auto}
+.qzface{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fff;border-radius:16px;box-shadow:0 4px 16px rgba(46,56,86,.14);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:26px 48px;text-align:center;overflow:auto}
 .qzback{transform:rotateY(180deg)}
-.qzk{position:absolute;top:16px;left:22px;font-size:14px;font-weight:700;color:#939bb4;letter-spacing:.3px}
-.qzterm{font-size:44px;font-weight:600;line-height:1.2;color:#2e3856}
-.qzdef{font-size:31px;line-height:1.3;color:#2e3856}
-.qzex{font-size:23px;line-height:1.4;color:#586380;font-style:italic}
-.qzsnd{position:absolute;top:10px;right:12px;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:transparent;color:#586380;cursor:pointer;display:grid;place-items:center}
+.qzk{position:absolute;top:12px;left:18px;font-size:13px;font-weight:700;color:#939bb4;letter-spacing:.3px}
+.qzterm{font-size:30px;font-weight:600;line-height:1.25;color:#2e3856}
+.qzbad{color:#2e3856}.qzwrong{font-size:17px;color:#b4413a;text-decoration:line-through}.qzok{color:#1e6b4a;font-weight:600}
+.qzdef{font-size:23px;line-height:1.35;color:#2e3856}
+.qzex{font-size:18px;line-height:1.4;color:#586380;font-style:italic}
+.qzsnd{position:absolute;top:6px;right:8px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:transparent;color:#586380;cursor:pointer;display:grid;place-items:center}
 .qzsnd:hover{background:#edeff4}
 .qznav{display:flex;align-items:center;justify-content:center;gap:14px;flex:0 0 auto}
-.qzarr{width:64px;height:46px;border-radius:999px;border:2px solid #d9dde8;background:#fff;color:#2e3856;font-size:24px;font-weight:700;cursor:pointer}
+.qzarr{width:56px;height:40px;border-radius:999px;border:2px solid #d9dde8;background:#fff;color:#2e3856;font-size:21px;font-weight:700;cursor:pointer}
 .qzarr:hover{background:#edeff4}.qzarr:disabled{opacity:.35;cursor:default}
-.qzcnt{font-size:20px;min-width:74px;text-align:center;color:#2e3856}
-@media (max-height:640px){.qzterm{font-size:38px}.qzdef{font-size:26px}.qzex{font-size:20px}.qzface{padding:24px 50px;gap:10px}.qzarr{height:40px}}
+.qzcnt{font-size:17px;min-width:74px;text-align:center;color:#2e3856}
+@media (max-height:640px){.qzterm{font-size:27px}.qzdef{font-size:21px}.qzex{font-size:17px}.qzface{padding:22px 40px}.qzarr{height:36px}}
 </style>
 </head>
 <body>
@@ -60,9 +61,9 @@
   <nav class="tabs" id="tabs" aria-label="Steps"></nav>
 </header>
 <main id="main"></main>
-<script src="core.js?v=28"></script>
-<script src="edit.js?v=28"></script>
-<script src="lessonw1.js?v=28"></script>
-<script src="nav.js?v=28"></script>
+<script src="core.js?v=29"></script>
+<script src="edit.js?v=29"></script>
+<script src="lessonw1.js?v=29"></script>
+<script src="nav.js?v=29"></script>
 </body>
 </html>

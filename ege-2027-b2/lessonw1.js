@@ -64,7 +64,7 @@ const IV=[
    'I would recommend being a good listener and keeping your friends’ secrets. It is also important to support your friend when things go wrong, not only when everything is fine.']}];
 
 /* ---------- Состояние: только на время открытой страницы ---------- */
-const S={w:{mode:'cards',i:0,order:null,shuf:false,flip:{},mt:null},h:{pg:0,flip:{}},t2:{v:0},iv:{v:0,q:0,flip:false,smp:false},sc:{t2:[null,null,null,null],t3:[null,null,null,null,null]}};
+const S={w:{mode:'cards',i:0,order:null,shuf:false,flip:{},mt:null},h:{i:0,order:null,shuf:false,flip:{}},t2:{v:0},iv:{v:0,q:0,flip:false,smp:false},sc:{t2:[null,null,null,null],t3:[null,null,null,null,null]}};
 const STEPS=[
  {label:'Words',color:'#2c7f78',draw:words1},
  {label:'Error hunter',color:'#a85050',draw:hunt},
@@ -92,29 +92,31 @@ if(window.speechSynthesis){pickVoice();speechSynthesis.onvoiceschanged=pickVoice
 function say(text,done,fail){if(!window.speechSynthesis){fail&&fail();return;}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);if(voice)u.voice=voice;u.lang=voice?voice.lang:'en-GB';u.rate=.95;u.onend=()=>done&&done();u.onerror=e=>{if(e.error!=='interrupted'&&e.error!=='canceled')fail&&fail();};speechSynthesis.speak(u);}
 function stopSay(){try{window.speechSynthesis&&speechSynthesis.cancel();}catch(e){}}
 
+/* ---------- Карточки Quizlet: одна карточка, переворот, стрелки, счётчик, прогресс, звук, перемешивание ---------- */
+function quizlet(st,n,face,back,sayTxt){
+  if(!st.order||st.order.length!==n)st.order=[...Array(n).keys()];if(st.i==null)st.i=0;if(!st.flip)st.flip={};
+  const k=st.order[st.i],f=face(k),b=back(k);
+  const wrap=el('div','qz'),bar=el('div','qzbar');bar.innerHTML='<i style="width:'+((st.i+1)/n*100)+'%"></i>';
+  const card=el('div','qzcard'+(st.flip[k]?' flipped':'')),inner=el('div','qzin');
+  inner.append(el('div','qzface qzfront','<span class="qzk">'+f[0]+'</span>'+f[1]),el('div','qzface qzback','<span class="qzk">'+b[0]+'</span>'+b[1]));card.append(inner);
+  if(sayTxt){const snd=el('button','qzsnd','<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');snd.type='button';snd.title='Listen';snd.onclick=e=>{e.stopPropagation();const t=sayTxt(k,!!st.flip[k]);if(t)say(t);};card.append(snd);}
+  const flip=()=>{st.flip[k]=!st.flip[k];card.classList.toggle('flipped',!!st.flip[k]);};
+  card.onclick=e=>{if(e.target.closest('[contenteditable],button'))return;flip();};
+  const move=d=>{stopSay();st.i=(st.i+d+n)%n;st.flip={};redraw();};
+  const nav=el('div','qznav'),pv=el('button','qzarr','&larr;'),nx=el('button','qzarr','&rarr;');pv.type=nx.type='button';pv.title='Previous';nx.title='Next';pv.onclick=()=>move(-1);nx.onclick=()=>move(1);pv.disabled=st.i===0;
+  const sh=btn(st.shuf?'Shuffled':'Shuffle',()=>{st.order=st.shuf?[...Array(n).keys()]:[...Array(n).keys()].sort(()=>Math.random()-.5);st.shuf=!st.shuf;st.i=0;st.flip={};redraw();},'sm'+(st.shuf?' main':''));
+  nav.append(sh,pv,el('b','qzcnt',(st.i+1)+' / '+n),nx,btn(st.i===n-1?'Start again':'Flip',()=>{if(st.i===n-1&&st.flip[k]){st.i=0;st.flip={};redraw();}else flip();},'sm'));
+  wrap.append(bar,card,nav);main.append(wrap);
+  keyH=e=>{if(e.target.closest&&e.target.closest('[contenteditable],input,select,textarea'))return;if(e.key===' '||e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();flip();}else if(e.key==='ArrowRight')move(1);else if(e.key==='ArrowLeft'&&st.i>0)move(-1);};
+  document.addEventListener('keydown',keyH);cleanup=()=>{document.removeEventListener('keydown',keyH);keyH=null;};
+}
+
 /* ---------- 1. Words: карточки и Match ---------- */
 function words1(){const st=S.w;
   head('Family and friends · 16 key phrases');
   const top=el('div','navrow');top.append(btn('Cards',()=>{st.mode='cards';redraw();},st.mode==='cards'?'main':''),btn('Match',()=>{st.mode='match';st.mt=null;redraw();},st.mode==='match'?'main':''));main.append(top);
   if(st.mode==='cards'){
-    /* Quizlet: одна большая карточка, термин – лицевая сторона, значение и пример – оборот; стрелки, счётчик, полоса прогресса, звук, перемешивание */
-    const order=st.order||(st.order=[...WORDS.keys()]),n=order.length,k=order[st.i],w=WORDS[k];
-    const wrap=el('div','qz'),bar=el('div','qzbar');bar.innerHTML='<i style="width:'+((st.i+1)/n*100)+'%"></i>';
-    const card=el('div','qzcard'+(st.flip[k]?' flipped':'')),inner=el('div','qzin');
-    const front=el('div','qzface qzfront','<span class="qzk">Term</span><div class="qzterm">'+esc(w[0])+'</div>');
-    const back=el('div','qzface qzback','<span class="qzk">Definition</span><div class="qzdef">'+ED.t('w1.w.'+k+'.d',w[1])+'</div><div class="qzex">'+ED.t('w1.w.'+k+'.x',w[2])+'</div>');
-    const snd=el('button','qzsnd','<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');snd.type='button';snd.title='Listen';
-    snd.onclick=e=>{e.stopPropagation();say(st.flip[k]?w[1]+'. '+w[2]:w[0]);};
-    inner.append(front,back);card.append(inner,snd);
-    const flip=()=>{st.flip[k]=!st.flip[k];card.classList.toggle('flipped',!!st.flip[k]);};
-    card.onclick=e=>{if(e.target.closest('[contenteditable],button'))return;flip();};
-    const move=d=>{stopSay();st.i=(st.i+d+n)%n;st.flip={};redraw();};
-    const nav=el('div','qznav'),pv=el('button','qzarr','&larr;'),nx=el('button','qzarr','&rarr;');pv.type=nx.type='button';pv.title='Previous';nx.title='Next';pv.onclick=()=>move(-1);nx.onclick=()=>move(1);pv.disabled=st.i===0;
-    const sh=btn(st.shuf?'Shuffled':'Shuffle',()=>{if(st.shuf){st.order=[...WORDS.keys()];st.shuf=false;}else{st.order=[...WORDS.keys()].sort(()=>Math.random()-.5);st.shuf=true;}st.i=0;st.flip={};redraw();},'sm'+(st.shuf?' main':''));
-    nav.append(sh,pv,el('b','qzcnt',(st.i+1)+' / '+n),nx,btn(st.i===n-1?'Start again':'Flip',()=>{if(st.i===n-1&&st.flip[k]){st.i=0;st.flip={};redraw();}else flip();},'sm'));
-    wrap.append(bar,card,nav);main.append(wrap);
-    keyH=e=>{if(e.target.closest&&e.target.closest('[contenteditable],input,select,textarea'))return;if(e.key===' '||e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();flip();}else if(e.key==='ArrowRight')move(1);else if(e.key==='ArrowLeft'&&st.i>0)move(-1);};
-    document.addEventListener('keydown',keyH);cleanup=()=>{document.removeEventListener('keydown',keyH);keyH=null;};
+    quizlet(st,WORDS.length,k=>['Term','<div class="qzterm">'+esc(WORDS[k][0])+'</div>'],k=>['Definition','<div class="qzdef">'+ED.t('w1.w.'+k+'.d',WORDS[k][1])+'</div><div class="qzex">'+ED.t('w1.w.'+k+'.x',WORDS[k][2])+'</div>'],(k,f)=>f?WORDS[k][1]+'. '+WORDS[k][2]:WORDS[k][0]);
     navRow([teachBtn('<p><b>0–7 мин.</b> Ученица читает фразу, сама объясняет значение по-английски, потом переворачивает карточку (щелчок по карточке или пробел; стрелки – следующая/предыдущая). Затем Match на время.</p><p>Попросите составить предложение о своей семье с 2–3 фразами: это заготовки для интервью.</p>')]);}
   else{ if(!st.mt){const set=[...WORDS.keys()].sort(()=>Math.random()-.5).slice(0,4);st.mt={set,right:[...set].sort(()=>Math.random()-.5),sel:null,done:{},err:st.next?st.next.err:0,round:st.next?st.next.round:1};st.next=null;}
     const m=st.mt,box=el('div','mt'),L=el('div','col'),R=el('div','col');
@@ -127,14 +129,8 @@ function words1(){const st=S.w;
 /* ---------- 2. Error hunter: прямые вопросы ---------- */
 function hunt(){const st=S.h;
   head('Error hunter. Each question has one mistake. Say the correct question aloud, then flip the card to check.');
-  const g=el('div','grid4');
-  HUNT.slice(st.pg*4,st.pg*4+4).forEach((h,i)=>{const k=st.pg*4+i,c=el('div','fc');
-    const paint=()=>{c.className='fc'+(st.flip[k]?' back':'');c.innerHTML=st.flip[k]?'<div class="bad">'+esc(h[0])+'</div><div class="w">'+ED.t('w1.h.'+k,h[1])+'</div><div class="rule">'+esc(h[2])+'</div>':'<div class="k">Question '+(k+1)+' of 8</div><div class="bad">'+esc(h[0])+'</div>';};
-    paint();c.onclick=e=>{if(e.target.closest('[contenteditable]'))return;turn(c,()=>{st.flip[k]=!st.flip[k];paint();});};g.append(c);});
-  main.append(g);
-  const pg=el('div','pager'),bk=btn('← Back',()=>{st.pg=0;redraw();}),fw=btn(st.pg===0?'Next 4 →':'Start again',()=>{st.pg=st.pg===0?1:0;st.flip={};redraw();});bk.disabled=st.pg===0;
-  pg.append(bk,el('b',null,(st.pg+1)+' / 2'),fw);
-  navRow([pg,teachBtn('<p><b>7–15 мин.</b> Самые частые потери в задании 2: нет вспомогательного глагола, порядок слов, косвенный вопрос («Can you tell me…»), are/is there.</p><p>Ученица исправляет вслух, вы переворачиваете карточку. Если ошиблась – попросите придумать свой вопрос с той же ловушкой.</p>')]);
+  quizlet(st,HUNT.length,k=>['Find the mistake','<div class="qzterm qzbad">'+esc(HUNT[k][0])+'</div>'],k=>['Correct question','<div class="qzwrong">'+esc(HUNT[k][0])+'</div><div class="qzdef qzok">'+ED.t('w1.h.'+k,HUNT[k][1])+'</div><div class="qzex">'+esc(HUNT[k][2])+'</div>'],(k,f)=>f?HUNT[k][1]:'');
+  navRow([teachBtn('<p><b>7–15 мин.</b> Самые частые потери в задании 2: нет вспомогательного глагола, порядок слов, косвенный вопрос («Can you tell me…»), are/is there.</p><p>Ученица исправляет вслух, потом переворачивает карточку. Если ошиблась – попросите придумать свой вопрос с той же ловушкой.</p>')]);
 }
 
 /* ---------- 3. Task 2 в формате экзамена ---------- */
