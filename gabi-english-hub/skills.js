@@ -165,27 +165,40 @@ ACT.total={view(a,s){let sum=0,max=0,all=true;const rows=a.parts.map(p=>{const s
    if(ac.type==='quiz'){done=!!st.done;got=st.ok||0}
    if(!done)all=false;sum+=got;max+=p.max;return `<li class="${done?'':'wait'}"><span>${esc(p.label)}</span><b>${done?got+' / '+p.max:'not finished'}</b></li>`}).join('');
   const pct=sum/max;return `<div class="total"><ul>${rows}</ul><div class="sum"><b>${sum} / ${max}</b><span>${!all?'Finish and check every part to see the real total.':pct>=.9?'Excellent. Unit 1 is secure.':pct>=.75?'Good. Look again at the parts with lost points.':'Go back to the weakest part before Unit 2.'}</span></div></div>`}};
-function reportText(a){const L=[a.name||CFG.kicker,''];CFG.steps.forEach((st,i)=>{const ac=st.act,s=ST[i]||{};if(!ac||ac.type==='report')return;L.push((i+1)+'. '+st.title);
-  if(ac.type==='gaps'){const v=s.val||{};ac.items.forEach((it,k)=>L.push('   '+[it.pre,'['+(v[k]||'—')+']',it.post].filter(Boolean).join(' ')));if(!ac.free)L.push('   '+(s.checked?ac.items.filter((it,k)=>judge(it,v[k])===true).length+' of '+ac.items.length+(ac.open?' match the key':' correct'):'not checked'))}
-  else if(ac.type==='quiz')L.push('   '+(s.done?s.ok+' of '+s.items.length+' correct':s.items&&(s.i||s.pick!=null)?'not finished: '+s.ok+' correct so far':'not done'));
+function flatActs(){const L=[];CFG.steps.forEach((st,i)=>{if(st.acts)st.acts.forEach((ac,k)=>L.push({ac,s:((ST[i]||{}).sub||[])[k]||{},no:i+1,title:ac.title||st.title}));else L.push({ac:st.act,s:ST[i]||{},no:i+1,title:st.title})});return L}
+function reportText(a){const L=[a.name||CFG.kicker,''];flatActs().forEach(({ac,s,no,title})=>{if(!ac||ac.type==='report')return;L.push(no+'. '+title);
+  if(ac.type==='gaps'){const v=s.val||{};ac.items.forEach((it,k)=>L.push('   '+[it.pre&&!it.img?String(it.pre).replace(/<[^>]+>/g,''):(it.img?'picture '+(k+1):''),'['+(v[k]||'—')+']',it.post].filter(Boolean).join(' ')));if(!ac.free)L.push('   '+(s.checked?ac.items.filter((it,k)=>judge(it,v[k])===true).length+' of '+ac.items.length+(ac.open?' match the key':' correct'):'not checked'))}
+  else if(ac.type==='quiz')L.push('   '+(s.done?(s.over?'lost all lives: ':'')+s.ok+' of '+(s.items||ac.items).length+' correct':s.items&&(s.i||s.pick!=null)?'not finished: '+s.ok+' correct so far':'not done'));
   else if(ac.type==='pick')L.push('   '+(ac.items.filter((it,k)=>s.sel&&s.sel[k]).map(it=>it.t).join(', ')||'not done'));
   else if(ac.type==='map'){const v=s.val||SHARED.map||{};ac.branches.forEach((b,k)=>L.push('   '+b.label+': '+(Array.from({length:b.n||2},(_,j)=>v[k+'_'+j]).filter(Boolean).join(', ')||'—')))}
   else if(ac.type==='write')L.push('   '+(s.text?words(s.text)+' words':'not written'),s.text||'');
-  else if(ac.type==='talk')L.push('   answered aloud: '+Object.keys(s.spoke||{}).length+' of '+ac.cards.length+' questions');L.push('')});return L.join('\n')}
-function reportData(a){return {assignment:a.assignment,submitted:new Date().toISOString(),steps:CFG.steps.map((st,i)=>{const ac=st.act,s=ST[i]||{};if(!ac||ac.type==='report')return null;
+  else if(ac.type==='talk')L.push('   answered aloud: '+Object.keys(s.spoke||{}).length+' of '+ac.cards.length+' questions');
+  else if(ac.type==='sort')L.push('   '+(s.checked?ac.items.filter((it,i)=>s.place[i]===it.c).length+' of '+ac.items.length+' in the right column':'not checked'));
+  else if(ac.type==='hunt')L.push('   '+Object.keys(s.hit||{}).length+' of '+ac.items.length+' mistakes found, '+Object.keys(s.first||{}).length+' first time');
+  else if(ac.type==='memory')L.push('   '+(Object.keys(s.done||{}).length===ac.pairs.length?'all pairs in '+s.moves+' moves':'not finished'));
+  else if(ac.type==='match')L.push('   '+(s.pairs&&Object.keys(s.pairs).length===ac.items.length?'all pairs, '+s.err+' mistakes':'not finished'));
+  else if(ac.type==='cards')L.push('   cards seen: '+Object.keys(s.seen||{}).length+' of '+ac.items.length);
+  L.push('')});return L.join('\n')}
+function reportData(a){return {assignment:a.assignment,submitted:new Date().toISOString(),steps:flatActs().map(({ac,s})=>{if(!ac||ac.type==='report')return null;
   if(ac.type==='gaps'){const v=s.val||{};return {v:ac.items.map((_,k)=>v[k]||''),c:s.checked?1:0}}
-  if(ac.type==='quiz')return {ok:s.ok||0,n:ac.items.length,d:s.done?1:0};
+  if(ac.type==='quiz')return {ok:s.ok||0,n:ac.items.length,d:s.done?1:0,x:s.over?1:0};
   if(ac.type==='pick')return {v:ac.items.map((_,k)=>s.sel&&s.sel[k]?1:0)};
   if(ac.type==='map'){const v=s.val||SHARED.map||{};return {v:ac.branches.map((b,k)=>Array.from({length:b.n||2},(_,j)=>v[k+'_'+j]||''))}}
   if(ac.type==='write')return {t:s.text||''};
-  if(ac.type==='talk')return {n:Object.keys(s.spoke||{}).length,of:ac.cards.length};return null})}}
+  if(ac.type==='talk')return {n:Object.keys(s.spoke||{}).length,of:ac.cards.length};
+  if(ac.type==='sort')return {ok:s.checked?ac.items.filter((it,i)=>s.place[i]===it.c).length:0,n:ac.items.length,c:s.checked?1:0};
+  if(ac.type==='hunt')return {f:Object.keys(s.first||{}).length,h:Object.keys(s.hit||{}).length,n:ac.items.length};
+  if(ac.type==='memory')return {m:s.moves||0,d:Object.keys(s.done||{}).length===ac.pairs.length?1:0};
+  if(ac.type==='match')return {e:s.err||0,d:s.pairs&&Object.keys(s.pairs).length===ac.items.length?1:0};
+  if(ac.type==='cards')return {s:Object.keys(s.seen||{}).length,n:ac.items.length};return null})}}
 const b64u=bytes=>{let t='';bytes.forEach(b=>t+=String.fromCharCode(b));return btoa(t).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')};
 async function reportCode(a){const raw=new TextEncoder().encode(JSON.stringify(reportData(a)));const pre=a.prefix||'HW';
   try{if(typeof CompressionStream==='function'){const cs=new CompressionStream('deflate-raw');const w=cs.writable.getWriter();w.write(raw);w.close();const buf=new Uint8Array(await new Response(cs.readable).arrayBuffer());return pre+'.'+b64u(buf)}}catch(e){}
   return pre+'r.'+b64u(raw)}
-function reportTodo(){const L=[];CFG.steps.forEach((st,i)=>{const ac=st.act,s=ST[i]||{};if(!ac)return;let ok=true;
+function reportTodo(){const L=[];flatActs().forEach(({ac,s,no})=>{if(!ac)return;let ok=true;
   if(ac.type==='gaps')ok=ac.items.every((_,k)=>(s.val||{})[k])&&(ac.free||!!s.checked);else if(ac.type==='quiz')ok=!!s.done;else if(ac.type==='write')ok=!!s.text&&(!ac.min||words(s.text)>=ac.min);else if(ac.type==='map')ok=Object.values(s.val||SHARED.map||{}).filter(Boolean).length>=ac.branches.length;else if(ac.type==='talk')ok=Object.keys(s.spoke||{}).length>=ac.cards.length;
-  if(!ok)L.push(i+1)});return L}
+  else if(ac.type==='sort')ok=!!s.checked;else if(ac.type==='hunt')ok=Object.keys(s.hit||{}).length===ac.items.length;else if(ac.type==='memory')ok=Object.keys(s.done||{}).length===ac.pairs.length;else if(ac.type==='match')ok=!!s.pairs&&Object.keys(s.pairs).length===ac.items.length;
+  if(!ok&&!L.includes(no))L.push(no)});return L}
 function sendCode(a,s,fin){reportCode(a).then(code=>{s.code=code;s.shared=false;
   const copy=()=>{if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(code).catch(()=>{});return Promise.resolve()};
   copy().then(()=>{let touch=false;try{touch=matchMedia('(pointer:coarse)').matches}catch(e){}if(touch&&navigator.share){s.shared=true;navigator.share({text:code}).catch(()=>{s.shared=false;fin()})}fin()})})}
