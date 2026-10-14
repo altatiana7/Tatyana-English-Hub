@@ -155,6 +155,7 @@ button{font:inherit}
 @media(max-height:560px){.tile span{display:none}.tile.word span{display:block}}
 @supports(height:100svh){.board{height:100svh}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.dock.mod .tile{flex-direction:column;align-items:stretch;gap:6px;padding:6px 6px 8px}.dock.mod .th{width:100%;height:clamp(52px,9vh,90px);align-self:auto}.dock.mod .tile b{font-size:clamp(12px,1vw,15px)}.dock.mod .tile small{font-size:clamp(8.5px,.65vw,10.5px)}
 </style>
 </head>
 <body>
@@ -244,6 +245,15 @@ const modules=[
    {title:'Listening & Culture',note:'Museum of Failure · have something done · Science Museum'}]}
 ];
 
+const LESSON_PICS={1:['age-scenes/10.jpg','assets/book-selfie.jpg','assets/graduation.jpg','assets/l4/teens.jpg','assets/teen.jpg','assets/l5/maya.jpg','age-scenes/09.jpg'],
+ 2:['assets/u2/crimes/p-burglary.jpg','assets/u2/mia.jpg','assets/u2/crimes/p-vandalism.jpg']};
+const dock=document.querySelector('.dock');const DOCK0=dock.innerHTML;
+function showDock(mi){const pics=LESSON_PICS[mi+1];
+  if(mi<0||!pics){dock.innerHTML=DOCK0;dock.classList.remove('mod');dock.style.gridTemplateColumns='';bindWord();return}
+  const m=modules[mi],n=pics.length;
+  dock.innerHTML=pics.map((src,i)=>`<button class="tile lt" data-lm="${mi}" data-li="${i}"><div class="th" style="background-image:url(${src})"></div><div><small>LESSON ${i+1}</small><b>${m.lessons[i].title}</b></div></button>`).join('');
+  dock.classList.add('mod');dock.style.gridTemplateColumns='repeat('+n+',minmax(0,1fr))';
+  dock.querySelectorAll('.lt').forEach(b=>b.onclick=()=>openLesson(+b.dataset.lm+1,+b.dataset.li))}
 const nav=document.getElementById('moduleNav');
 let openModule=-1;
 
@@ -267,6 +277,7 @@ function renderNav(){
       nav.querySelectorAll('.moduleBtn').forEach(b=>b.classList.remove('open'));
       nav.querySelectorAll('.lessons').forEach(x=>x.classList.remove('open'));
       openModule=same?-1:mi;
+      showDock(same?-1:mi);
       if(!same){
         btn.classList.add('open');
         document.getElementById('lessons-'+mi).classList.add('open');
@@ -281,7 +292,7 @@ function renderNav(){
 renderNav();
 
 document.getElementById('homeBtn').onclick=()=>{
-  openModule=-1;
+  openModule=-1;showDock(-1);
   nav.querySelectorAll('.moduleBtn').forEach(b=>b.classList.remove('open'));
   nav.querySelectorAll('.lessons').forEach(x=>x.classList.remove('open'));
   closeLesson();
@@ -329,8 +340,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
   const WOD=[['elderly','old (a polite word for people)'],['middle-aged','between about 40 and 60 years old'],['retired','no longer working because of your age'],['lonely','sad because you are alone'],['independent','able to live without help'],['confident','sure of yourself and your abilities'],['open-minded','ready to accept new, different ideas'],['unfair','not treating people equally'],['respectful','polite; showing that you value others'],['patient','able to wait without getting angry'],['stereotypical','based on a fixed idea about a group'],['argument','an angry discussion between people'],['independence','the freedom to do things without help'],['adolescence','the time when a child becomes an adult']];
   const d=new Date(),w=WOD[(d.getFullYear()*366+d.getMonth()*31+d.getDate())%WOD.length];
   document.getElementById('wodWord').textContent=w[0];document.getElementById('wodWord2').textContent=w[0].toUpperCase();document.getElementById('wodDef').textContent=w[1];
-  const tile=document.getElementById('wordTile');tile.onclick=()=>{tile.classList.toggle('flip');
-    try{if(tile.classList.contains('flip')){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w[0]);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}catch(e){}};
+  window.bindWord=()=>{document.getElementById('wodWord').textContent=w[0];document.getElementById('wodWord2').textContent=w[0].toUpperCase();document.getElementById('wodDef').textContent=w[1];const tile=document.getElementById('wordTile');tile.onclick=()=>{tile.classList.toggle('flip');
+    try{if(tile.classList.contains('flip')){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w[0]);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}catch(e){}}};bindWord();
   const h=d.getHours();document.getElementById('hi').textContent=(h<12?'GOOD MORNING':h<18?'GOOD AFTERNOON':'GOOD EVENING')+', GABI';
   document.getElementById('progText').textContent='7 screens · 50 minutes';
   document.getElementById('continueBtn').onclick=()=>openLesson(2,0);
