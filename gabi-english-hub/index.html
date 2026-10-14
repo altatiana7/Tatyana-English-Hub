@@ -171,10 +171,10 @@ button{font:inherit}
       <button class="go" id="continueBtn"><i></i><div><small>CONTINUE</small><b>Module 2 · Lesson 1 · Law and order</b><div class="prog"><span><u id="progFill" style="width:0"></u></span><em id="progText" style="font-style:normal"></em></div></div></button>
     </div>
     <div class="dock">
-      <a class="tile" href="unit2-lesson1.html?v=20261014-b"><div class="th" style="background-image:url(assets/u2/crimes/p-burglary.jpg)"></div><div><small>MODULE 2 · LESSON 1</small><b>The Missing £150</b><span>Crime words, a real case</span></div></a>
-      <a class="tile" href="unit2-lesson2.html?v=20261014-b"><div class="th" style="background-image:url(assets/u2/mia.jpg)"></div><div><small>MODULE 2 · LESSON 2</small><b>New Evidence</b><span>Past Simple vs Continuous</span></div></a>
-      <a class="tile" href="unit2-lesson3.html?v=20261014-b"><div class="th" style="background-image:url(assets/u2/crimes/p-vandalism.jpg)"></div><div><small>MODULE 2 · LESSON 3</small><b>Justice Challenge</b><span>School Court · Jeopardy</span></div></a>
-      <a class="tile" href="../gabriel-homework/"><div class="th" style="background-image:url(assets/u2/crimes/p-shoplifting.jpg)"></div><div><small>MODULE 2 · HOMEWORK</small><b>Crime Words</b><span>Flashcards, games, advice</span></div></a>
+      <a class="tile" href="what-happens-next.html?v=20261007-b"><div class="th" style="background-image:url(assets/whn/lamp.jpg)"></div><div><small>WARM-UP</small><b>What Happens Next?</b><span>Watch, stop, predict with will</span></div></a>
+      <a class="tile" href="word-walls-age.html?v=2"><div class="th bricks"><u></u><u></u><u></u><u></u><u></u><u></u></div><div><small>VOCABULARY GAME</small><b>Word Walls</b><span>15 adjectives, nouns are traps</span></div></a>
+      <a class="tile" href="ten-faces.html"><div class="th faces"><u style="background-image:url(ten-faces/emma.jpg)"></u><u style="background-image:url(ten-faces/daniel.jpg)"></u><u style="background-image:url(ten-faces/chloe.jpg)"></u><u style="background-image:url(ten-faces/ethan.jpg)"></u></div><div><small>LISTEN AND SPEAK</small><b>Ten Faces</b><span>Ten people ask you questions</span></div></a>
+      <a class="tile" href="rebel-files.html?v=20261007-rf"><div class="th rebel"><u>R</u></div><div><small>QUIZ GAME</small><b>Rebel Files</b><span>Six heroes, answer from memory</span></div></a>
       <button class="tile word" id="wordTile" aria-label="Word of the day, tap to flip"><div class="fl"><div class="fa"><small>WORD OF THE DAY · TAP</small><b id="wodWord"></b><span>What does it mean?</span></div><div class="fb"><small id="wodWord2"></small><span id="wodDef"></span></div></div></button>
     </div>
   </section>
@@ -326,7 +326,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
 
 /* Interactive home */
 (function(){
-  const WOD=[['witness','a person who saw a crime'],['suspect','a person who might have done it'],['alibi','proof that you were somewhere else'],['evidence','facts or objects that show something is true'],['guilty','responsible for a crime'],['innocent','not guilty'],['burglar','a person who breaks into houses to steal'],['shoplifting','stealing from a shop'],['vandalism','damaging property on purpose'],['fraud','tricking people to get their money'],['arson','starting a fire on purpose'],['a fine','money you pay as a punishment'],['investigate','try to find out what really happened'],['accuse','say someone did something wrong']];
+  const WOD=[['elderly','old (a polite word for people)'],['middle-aged','between about 40 and 60 years old'],['retired','no longer working because of your age'],['lonely','sad because you are alone'],['independent','able to live without help'],['confident','sure of yourself and your abilities'],['open-minded','ready to accept new, different ideas'],['unfair','not treating people equally'],['respectful','polite; showing that you value others'],['patient','able to wait without getting angry'],['stereotypical','based on a fixed idea about a group'],['argument','an angry discussion between people'],['independence','the freedom to do things without help'],['adolescence','the time when a child becomes an adult']];
   const d=new Date(),w=WOD[(d.getFullYear()*366+d.getMonth()*31+d.getDate())%WOD.length];
   document.getElementById('wodWord').textContent=w[0];document.getElementById('wodWord2').textContent=w[0].toUpperCase();document.getElementById('wodDef').textContent=w[1];
   const tile=document.getElementById('wordTile');tile.onclick=()=>{tile.classList.toggle('flip');
