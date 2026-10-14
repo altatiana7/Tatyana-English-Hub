@@ -18,7 +18,7 @@ function recBtn(){const b=btn('',async()=>{if(!Rec.on){if(!(await Rec.enable()))
 function varNav(st,list,name,extra){const n=list.length,nav=el('div','navrow'),sel=el('select','rusel');sel.setAttribute('aria-label',name);list.forEach((x,k)=>sel.append(new Option((k+1)+'. '+x,k)));sel.value=st.v;
   const set=v=>{st.v=v;st.flip=false;if(st.q!=null)st.q=0;redraw();};sel.onchange=()=>set(+sel.value);
   const bk=btn('← Back',()=>set(st.v-1)),fw=btn(st.v<n-1?'Next →':'Start again',()=>set(st.v<n-1?st.v+1:0));bk.disabled=st.v===0;
-  nav.append(bk,sel,fw,btn('Flip the card',()=>flipNow&&flipNow(),'main'));if(extra)extra.forEach(x=>nav.append(x));nav.append(el('span','note',name+' '+(st.v+1)+' of '+n+' · answers on the back: click the card'));main.append(nav);}
+  nav.append(bk,sel,fw,btn('Flip the card',()=>flipNow&&flipNow(),'main'));if(extra)extra.forEach(x=>nav.append(x));nav.append(el('span','note hint',name+' '+(st.v+1)+' of '+n+' · answers on the back: click the card'));main.append(nav);}
 /* timer with phases (preparation / answer) */
 function runner(o){let i=-1,end=0,left=0,t=null,paused=false;const b=o.ring.querySelector('b'),sp=o.ring.querySelector('span');
   const paint=()=>{const p=o.phases[i];b.textContent=mmss(left);o.ring.classList.toggle('ans',p.kind==='answer');o.ring.classList.remove('end');o.ring.style.background='conic-gradient('+(p.kind==='answer'?'var(--acc)':'var(--blue)')+' '+(left/p.sec*360)+'deg,#e3e9f5 0)';};
@@ -56,14 +56,14 @@ function interview(){
     au.onended=()=>{if(what==='intro'){label.textContent='Now press Play';}else runT();};au.onerror=()=>{label.textContent='Audio did not load';};au.play().catch(()=>{label.textContent='Audio did not load';});}
   function face(){card.className='ivcard flipcard'+(st.flip?' back':'');card.innerHTML='';
     if(st.flip)card.append(el('div','ey','Question '+(st.q+1)+' · '+esc(v.theme)),el('div','qq',esc(v.q[st.q])),el('div','ey','Sample answer'),el('div','smpa',ED.t('ru.iv.'+v.id+'.'+st.q,v.a[st.q])));
-    else{card.append(el('div','ey',esc(v.theme)+' · question '+(st.q+1)+' of 5'),el('div','big','Listen and answer'),el('div','note','The question is only heard. Click the card to flip it: the text and a sample answer are on the back.'));
+    else{card.append(el('div','ey',esc(v.theme)+' · question '+(st.q+1)+' of 5'),el('div','big','Listen and answer'),el('div','note hint','The question is only heard. Click the card to flip it: the text and a sample answer are on the back.'));
       const pb=el('div','navrow');pb.append(btn('Play',()=>play('q'+(st.q+1)),'main'),btn('Replay',()=>play('q'+(st.q+1))),btn('Stop',()=>{au.pause();stopT();Rec.cancel();label.textContent='Stopped';}));card.append(pb);}}
   face();const flip=makeFlip(st,card,face);
   const box=el('div','ctlbtns');box.append(btn('Timer',runT,'sm'),btn('Reset',()=>{stopT();Rec.cancel();left=40;paint();label.textContent='Press Play';},'sm'),recBtn());
   side.append(ring,label,box,recBox);stage.append(card,side);main.append(stage);
   const last=st.q===4&&st.v===IV.length-1,nav=el('div','navrow');
   const bk=btn('← Back',()=>{st.q--;st.flip=false;redraw();}),fw=btn(st.q<4?'Next →':(last?'Start again':'Next topic →'),()=>{if(st.q<4)st.q++;else{st.v=last?0:st.v+1;st.q=0;}st.flip=false;redraw();});bk.disabled=st.q===0;
-  nav.append(bk,btn('Flip the card',flip,'main'),fw,el('span','note','Topic '+(st.v+1)+' of '+IV.length+' · 5 points · questions and audio are made for this site in the exam format.'));main.append(nav);
+  nav.append(bk,btn('Flip the card',flip,'main'),fw,el('span','note hint','Topic '+(st.v+1)+' of '+IV.length+' · 5 points · questions and audio are made for this site in the exam format.'));main.append(nav);
   cleanup=()=>{stopT();au.pause();Rec.cancel();};
 }
 
@@ -73,7 +73,7 @@ function reading(){
   const front='<p class="task">Task 1. Imagine that you are preparing a project with your friend. You have found some interesting material for the presentation and you want to read this text to your friend. You have 1.5 minutes to read the text silently, then be ready to read it out aloud. You will not have more than 1.5 minutes to read it.</p><div class="textbox">'+esc(r.x)+'</div>';
   const back='<div class="ey">'+esc(r.t)+' · what to check</div><p class="bk"><b>Words to pronounce carefully:</b> '+esc(r.note)+'.</p><p class="bk"><b>1 point:</b> the speech is easy to follow, with no unnatural pauses; phrasal stress and intonation are correct; no more than five phonetic mistakes, of which no more than two change the meaning.</p><p class="bk"><b>0 points:</b> the text is not finished in 1.5 minutes, or there are more mistakes.</p><p class="bk"><b>Remember:</b> pause at commas and full stops, let your voice fall at the end of a statement, read numbers and dates in full, pronounce the endings -ed and -s.</p>';
   shell(st,()=>front,()=>back,[{label:'Preparation · read silently',kind:'prep',sec:90},{label:'Answer · read aloud',kind:'answer',sec:90}],'task1-'+(st.v+1));
-  varNav(st,RD.map(x=>x.t),'Text',[el('span','note',words(r.x)+' words · 1 point.')]);
+  varNav(st,RD.map(x=>x.t),'Text',[el('span','note hint',words(r.x)+' words · 1 point.')]);
 }
 
 /* ---------- Task 2. Questions about an advertisement ---------- */
@@ -83,7 +83,7 @@ function questions(){
   const back='<div class="ey">'+esc(a.title)+' · sample questions</div><ol class="bkl">'+a.key.map((x,k)=>'<li><i>'+esc(a.points[k])+'</i><br>'+ED.t('ru.t2.'+st.v+'.'+k,x.replace(/ \/ /g,'\n'))+'</li>').join('')+'</ol><p class="bk sm">1 point for each direct, grammatically correct question on the point. No points for an indirect question, wrong word order or a missing auxiliary verb.</p>';
   shell(st,()=>front,()=>back,[{label:'Preparation',kind:'prep',sec:90}].concat(a.points.map((p,k)=>({label:'Question '+(k+1),kind:'answer',sec:20}))),'task2-'+(st.v+1),
     i=>{[...document.querySelectorAll('#pts li')].forEach((x,k)=>{x.className=i<1?'':(k===i-1?'now':(k<i-1?'past':''));});});
-  varNav(st,ADS.map(x=>x.title.replace(/[!:].*$/,'')),'Advertisement',[el('span','note','4 points.')]);
+  varNav(st,ADS.map(x=>x.title.replace(/[!:].*$/,'')),'Advertisement',[el('span','note hint','4 points.')]);
 }
 
 /* ---------- Task 4. Monologue: two photos for a project ---------- */
@@ -94,7 +94,7 @@ function monologue(){
   const back='<div class="ey">'+esc(p.project)+' · sample answer</div>'+p.s.map((x,k)=>'<p class="bk"><i>'+window.RUP4LAB[k]+'.</i> '+ED.t('ru.t4.'+st.v+'.'+k,x)+'</p>').join('');
   shell(st,front,()=>back,[{label:'Preparation',kind:'prep',sec:150},{label:'Answer · voice message',kind:'answer',sec:180}],'task4-'+(st.v+1),null,
     card=>card.querySelectorAll('input[type=file]').forEach(inp=>{inp.onchange=()=>{const f=inp.files[0];if(f){S.pics[st.v+'-'+inp.dataset.k]=URL.createObjectURL(f);card.innerHTML=front();card.querySelectorAll('input[type=file]').forEach(i2=>i2.onchange=inp.onchange);}};}));
-  varNav(st,P4.map(x=>x.project),'Project',[el('span','note','10 points.')]);
+  varNav(st,P4.map(x=>x.project),'Project',[el('span','note hint','10 points.')]);
 }
 
 /* ---------- Task 37. Letters with questions about Russia ---------- */
@@ -105,7 +105,7 @@ function letters(){
   const paintCard=()=>{card.classList.toggle('rback',st.flip);card.scrollTop=0;
   if(!st.flip){card.innerHTML='<p class="task">You have received '+(x.email?'an email message':'a letter')+' from your English-speaking pen-friend '+esc(x.name)+':</p><div class="stim" style="font-size:21px;line-height:1.5">'+
       (x.email?'<div class="hd">From: '+esc(x.name)+'@mail.uk<br>To: Russian_friend@ege.ru<br>Subject: '+esc(x.subject)+'</div>':'')+'…'+esc(x.lead)+' '+x.q.map(q=>isRu(q)?'<mark>'+esc(q.t)+'</mark>':esc(q.t)).join(' ')+'<br>…'+esc(x.trig)+'…</div>'+
-      '<p class="task" style="margin:8px 0 0">Write '+(x.email?'an email':'a letter')+' to '+esc(x.name)+': answer '+(her?'her':'his')+' questions and ask 3 questions about '+esc(x.about)+'. Write 100–140 words.</p><p class="note" style="margin:6px 0 0">Questions about Russia are marked. Do not write about yourself there: speak about Russian teenagers, the country or your region.</p>';}
+      '<p class="task" style="margin:8px 0 0">Write '+(x.email?'an email':'a letter')+' to '+esc(x.name)+': answer '+(her?'her':'his')+' questions and ask 3 questions about '+esc(x.about)+'. Write 100–140 words.</p><p class="note hint" style="margin:6px 0 0">Questions about Russia are marked. Do not write about yourself there: speak about Russian teenagers, the country or your region.</p>';}
   else{let n=0;card.innerHTML='<div class="ey">'+esc(x.topic)+' · '+esc(x.name)+' · answers</div>'+x.q.map((q,k)=>{const e=isRu(q)?ext[n++]:null;return '<div class="rq"><b>'+(isRu(q)?'<span class="tg">Russia</span>':'')+esc(q.t)+'</b><p><i>In the letter:</i> '+ED.t('lt.'+x.id+'-'+x.name+'.'+k+'.a',x.ans[k])+'</p>'+(e?'<p><i>Speaking, 2–3 sentences:</i> '+ED.t('lt.'+x.id+'-'+x.name+'.'+k+'.s',e)+'</p>':'')+'</div>';}).join('');}};paintCard();makeFlip(st,card,paintCard);
   stage.append(card);main.append(stage);
   varNav(st,LET.map(l=>l.topic+' · '+l.name),'Letter',[btn('Whole sample letter',()=>showSample('Task 37 · sample letter','<p>'+ED.t('lt.'+x.id+'-'+x.name+'.model',x.model)+'</p>',words(x.model)+' words. This is a sample, not the only correct answer.'),'sm')]);

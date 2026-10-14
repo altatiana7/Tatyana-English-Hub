@@ -17,7 +17,7 @@ const ED=(function(){
   function paintCount(){if(btnTop)btnTop.textContent=on?'Правка: вкл':'Правка';if(cntL)cntL.textContent='Исправлено ответов: '+count();}
   function msg(t){const m=document.createElement('div');m.className='edtoast';m.textContent=t;document.body.append(m);setTimeout(()=>m.remove(),2600);}
   function mark(root){(root||document).querySelectorAll('[data-ed]').forEach(x=>{if(on){x.contentEditable='true';x.spellcheck=true;}else x.removeAttribute('contenteditable');});}
-  function toggle(){on=!on;btnTop.hidden=!on;document.body.classList.toggle('editing',on);mark();fileM.hidden=true;btnTop.classList.toggle('main',on);paintCount();if(!on){const a=document.activeElement;if(a&&a.dataset&&a.dataset.ed)a.blur();tools.hidden=true;}else msg('Нажмите на текст примерного ответа и исправьте его. Сохраняется само.');}
+  function toggle(){on=!on;btnTop.hidden=!on;document.body.classList.toggle('editing',on);mark();fileM.hidden=true;btnTop.classList.toggle('main',on);paintCount();if(!on){const a=document.activeElement;if(a&&a.dataset&&a.dataset.ed)a.blur();tools.hidden=true;}}
   /* маленькая панель над ответом, который сейчас правят */
   function placeTools(n){const r=n.getBoundingClientRect();tools.hidden=false;const w=tools.offsetWidth,h=tools.offsetHeight;let y=r.bottom+6;if(y+h>innerHeight-6)y=r.top-h-6;tools.style.top=Math.max(56,y)+'px';tools.style.left=Math.max(6,Math.min(r.right-w,innerWidth-w-6))+'px';}
   function revert(){if(!last||!last.isConnected){msg('Сначала нажмите на ответ, который нужно вернуть');return;}const key=last.dataset.ed,o=load();delete o[key];save(o);last.innerHTML=html(ORIG[key]);sync(key);last.blur();msg('Возвращён исходный текст');}
