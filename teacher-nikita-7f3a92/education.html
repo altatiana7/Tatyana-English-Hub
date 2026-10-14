@@ -166,6 +166,31 @@ b.v{color:var(--green)} b.x{color:var(--red)}
 .plane .zoneP{cursor:pointer;fill:transparent;stroke:transparent}
 .plane .zoneP:hover{fill:#e3bc9055}
 .plane .zoneP.pick{fill:#e3bc9088;stroke:var(--gold);stroke-width:2}
+/* quizlet-style flashcards */
+.qz{display:flex;flex-direction:column;gap:6px;min-height:0;flex:1}
+.qz .qcard{flex:1;min-height:150px}
+.qz .face{align-items:center;text-align:center;padding:12px 52px;border-radius:16px;box-shadow:0 6px 18px rgba(12,34,53,.07)}
+.qterm{font-family:Georgia,serif;font-size:30px;font-weight:700;color:var(--navy);line-height:1.2}
+.qterm.xl{font-size:46px;letter-spacing:.02em}
+.qipa{font-size:16px;color:var(--muted);margin-top:4px}
+.qru{font-size:24px;font-weight:800;color:#6f431f;line-height:1.25}
+.qname{font-family:Georgia,serif;font-size:26px;font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:3px}
+.qdef{font-size:18px;line-height:1.4;margin-top:6px;color:var(--ink);max-width:620px}
+.qex{font-size:17px;line-height:1.35;margin-top:6px;color:var(--muted);font-style:italic;max-width:620px}
+.qhint{position:absolute;bottom:6px;left:0;right:0;font-size:12.5px;color:var(--muted)}
+.qbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.qnav{display:flex;align-items:center;gap:6px}
+.qnav .cnt{font-weight:800;color:var(--navy);min-width:64px;text-align:center;font-size:16px}
+.qk{display:flex;gap:6px}
+.qk .know{border-color:var(--green);color:var(--green)}
+.qk .learn{border-color:var(--red);color:var(--red)}
+.qprog{height:5px;background:#e6e1d6;border-radius:9px;overflow:hidden;flex:none}
+.qprog i{display:block;height:100%;background:var(--gold);transition:width .25s}
+.qz .play.big{width:38px;height:38px;font-size:15px;position:absolute;top:10px;right:10px}
+.listen{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px}
+.listen audio{width:min(520px,100%)}
+.inl .row{display:flex;flex-wrap:wrap;align-items:center;gap:3px 10px}.inl .opts{margin-top:0!important}
+.tbtn{border:1px dashed var(--gold);background:#fffaf2;color:#6f431f;border-radius:9px;padding:6px 11px;font-size:15px;font-weight:700;margin:4px 0 8px}
 /* drawers */
 .drawer{position:absolute;top:0;right:0;bottom:0;width:min(440px,92vw);background:#fff;border-left:1px solid var(--line);box-shadow:-14px 0 40px rgba(12,34,53,.18);padding:16px 18px;overflow:auto;transform:translateX(105%);transition:transform .25s;z-index:20}
 .drawer.on{transform:none}
@@ -178,6 +203,8 @@ table.g{border-collapse:collapse;width:100%;font-size:16px}
 table.g td{border-bottom:1px solid var(--line);padding:6px 4px;vertical-align:top;line-height:1.35}
 table.g td:first-child{font-weight:800;color:var(--red);white-space:nowrap;padding-right:10px}
 @media(max-height:620px){.sidewrap .tok{font-size:14px;padding:3px 8px}.sidewrap .tok small{font-size:12px;line-height:1.18}.sidewrap>.pool{gap:5px}.tok{font-size:14.5px;padding:3px 8px}.scr{padding:7px 20px 6px}h2{font-size:22px}.sub{font-size:15px}.head{margin-bottom:6px}.rq{font-size:17px}.row{padding:5px 11px}.rows{gap:5px}.foot{margin-top:6px;min-height:38px}.btn{padding:7px 14px;font-size:16px}.read{font-size:14.4px;line-height:1.38;padding:7px 13px}.read p{margin:0 0 4px}.timer{font-size:36px}.fq{font-size:16px}.fa{font-size:14.5px}.mc{font-size:15.5px}.tok{font-size:15px;padding:4px 9px}.mt{font-size:15px;padding:4px 10px}.hunt{font-size:16px;line-height:1.65}.chip{font-size:14.5px;padding:3px 10px}.opt{font-size:15.5px;padding:3px 10px}.tick{font-size:15px;padding:4px 9px}}
+@media(max-width:1280px){.tabs button{padding:6px 8px}.blocks button{padding:5px 8px}.bar{gap:6px}}
+@media(max-height:620px){.pb .row{padding:3px 9px!important}.pb .rq{font-size:15px!important}.pb .opt{padding:1px 9px}.pb .rows{gap:4px}.pb .rows>.row .opts{margin-top:2px}.match{gap:4px 10px}.qz .qname{font-size:21px}}
 @media(max-width:900px){body{overflow:auto}.bar{height:auto;flex-wrap:wrap;padding:8px}.tabs{flex-wrap:wrap}.stage{height:auto;overflow:visible}.scr{height:auto}.grid,.jboard,.match,.fgrid{grid-template-columns:1fr!important}}
 </style>
 </head>
@@ -233,6 +260,18 @@ const VOCAB=[
  ['memorise information','заучивать информацию','Students sometimes memorise information without understanding it.'],
  ['think independently','мыслить самостоятельно','A good education should teach people to think independently.']
 ];
+const DEGREES=[
+ ['BA','/ˌbiː ˈeɪ/','Bachelor of Arts','бакалавр гуманитарных наук','First degree, 3–4 years: languages, history, social sciences.'],
+ ['BSc','/ˌbiː es ˈsiː/','Bachelor of Science','бакалавр (естественные и точные науки)','First degree, 3–4 years: sciences, maths, engineering.'],
+ ['LLB','/ˌel el ˈbiː/','Bachelor of Laws','бакалавр права','The first law degree in the UK. LL = plural “laws” in Latin.'],
+ ['MA','/ˌem ˈeɪ/','Master of Arts','магистр гуманитарных наук','1–2 years after a bachelor’s. At Oxford and Cambridge, BA graduates get it with no extra study.'],
+ ['MSc','/ˌem es ˈsiː/','Master of Science','магистр (естественные и точные науки)','1–2 years, often technical or research-based.'],
+ ['MBA','/ˌem biː ˈeɪ/','Master of Business Administration','магистр делового администрирования','Business degree, usually for people who already have work experience.'],
+ ['LLM','/ˌel el ˈem/','Master of Laws','магистр права','Usually 1 year, in a specialist area such as international or commercial law.'],
+ ['MD','/ˌem ˈdiː/','Doctor of Medicine','доктор медицины','In the US, the degree you need to practise as a doctor; in the UK, a research degree.'],
+ ['PhD','/ˌpiː eɪtʃ ˈdiː/','Doctor of Philosophy','доктор философии (≈ кандидат наук)','A research degree in any field, not only philosophy: 3–5 years and a thesis.']
+];
+const DEG_SAY=['Which of these degrees would you actually want? Why?','Is an MBA worth it without work experience?','Should a PhD be required to teach at university?'];
 const COLLO=[
  {q:'Schools should teach practical ___ such as budgeting and negotiation.',o:['skills','talents','abilities'],k:0},
  {q:'___ thinking helps us question unreliable information.',o:['Critical','Careful','Clever'],k:1},
@@ -350,6 +389,13 @@ const VWORDS=[
  ['bluntly','/ˈblʌntli/','прямо, без обиняков','“No. That’s the short answer, to say it bluntly.”']
 ];
 const INV_WHY=[['Emphasis','It makes a point sound stronger and more dramatic.'],['Formal style','Typical of essays, speeches, reports and debates: C1 writing.'],['Conditionals without “if”','Had I known… · Should you need… · Were schools to…']];
+const INV_RU=`<p><b>Зачем нужна инверсия</b></p>
+<p><b>1. Усиление (эмфаза).</b> Отрицательное или ограничительное слово выносится в начало, и мысль звучит сильнее и драматичнее: <i>Never have I seen…</i> = «Никогда ещё я не видел…». Это как интонационное ударение, только на письме.</p>
+<p><b>2. Формальный, «книжный» стиль.</b> Эссе, доклады, речи, дебаты, официальные письма. Это маркер уровня C1: на экзаменах (эссе, IELTS, CAE) инверсия даёт баллы за грамматический диапазон.</p>
+<p><b>3. Условные предложения без if.</b> <i>Had I known…</i> = <i>If I had known…</i>; <i>Should you need help…</i> = <i>If you need help…</i>; <i>Were I you…</i> = <i>If I were you…</i> Звучит официально, особенно в письмах.</p>
+<p><b>4. Связность текста.</b> Удобно начинать абзац или вывод с акцента: <i>Not only…, but also…</i>; <i>Only then did we realise…</i>; <i>Little did they know…</i></p>
+<p><b>5. В разговорной речи</b> встречается редко, кроме устойчивых фраз: <i>So do I. / Neither do I.</i>, <i>Little did I know…</i>, <i>Here comes the bus.</i></p>
+<p><b>Главное правило:</b> после выдвинутого вперёд слова порядок как в вопросе — вспомогательный глагол перед подлежащим; если вспомогательного нет, добавляем <i>do / does / did</i>.</p>`;
 const INV_RULES=[
  ['Never / Rarely / Seldom + aux + S','Rarely do schools teach financial literacy.'],
  ['Not only + aux + S …, but … also','Not only do exams cause stress, but they also reward memory.'],
@@ -384,10 +430,11 @@ function closeDrawers(){$$('.drawer').forEach(d=>d.classList.remove('on'))}
 function openInv(){closeDrawers();$('#inv').classList.add('on')}
 function openRef(){closeDrawers();$('#ref').classList.add('on')}
 $('#tBtn').onclick=()=>{const d=$('#notes'),on=d.classList.contains('on');closeDrawers();if(!on)d.classList.add('on')};
-$('#invBody').innerHTML=`<h3>Inversion</h3><p><b>The rule.</b> Put a negative or limiting word first, and the auxiliary comes before the subject, as in a question: <b>Rarely</b> <u>do</u> schools teach… No auxiliary? Add <b>do / does / did</b>.</p><p><b>Why we use it</b></p><ul>${INV_WHY.map(w=>`<li><b>${w[0]}:</b> ${w[1]}</li>`).join('')}</ul><table class="g">${INV_RULES.map(r=>`<tr><td style="white-space:normal">${r[0]}</td><td><i>${r[1]}</i></td></tr>`).join('')}</table>`;
+$('#invBody').innerHTML=`<h3>Inversion</h3><p><b>The rule.</b> Put a negative or limiting word first, and the auxiliary comes before the subject, as in a question: <b>Rarely</b> <u>do</u> schools teach… No auxiliary? Add <b>do / does / did</b>.</p><p><b>Why we use it</b></p><ul>${INV_WHY.map(w=>`<li><b>${w[0]}:</b> ${w[1]}</li>`).join('')}</ul><table class="g">${INV_RULES.map(r=>`<tr><td style="white-space:normal">${r[0]}</td><td><i>${r[1]}</i></td></tr>`).join('')}</table><button class="tbtn" id="invRuBtn">Для учителя: зачем нужна инверсия (по-русски)</button><div class="rus" id="invRu" hidden>${INV_RU}</div>`;
+$('#invRuBtn').onclick=()=>{const d=$('#invRu');d.hidden=!d.hidden;if(!d.hidden)d.scrollIntoView({behavior:'smooth',block:'start'})};
 $('#brand').onclick=()=>show(0,0);
 $$('#blocks button').forEach(b=>b.onclick=()=>show(+b.dataset.b,0));
-function show(b,i,p){blk=b;cur=i;clearTimers();closeDrawers();page[b+'-'+i]=p||0;
+function show(b,i,p){blk=b;cur=i;clearTimers();closeDrawers();deckKey=null;try{speechSynthesis.cancel()}catch(e){}page[b+'-'+i]=p||0;
   const L=LESSON[b];
   $$('#blocks button').forEach(x=>x.classList.toggle('on',+x.dataset.b===b));
   $('#tabs').innerHTML=L.map((s,j)=>`<button class="${j===i?'on':''}" data-i="${j}">${s.tab}</button>`).join('');
@@ -411,6 +458,42 @@ function frame(title,sub,body,o={}){
 /* ================= widgets ================= */
 function say(t){try{if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.9;const v=speechSynthesis.getVoices().find(x=>/en-GB/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}
 function flipWire(root){$$('.flip',root).forEach(f=>f.onclick=e=>{if(e.target.closest('button'))return;f.classList.toggle('f')})}
+/* Quizlet-style deck: one big card, flip, arrows, Know / Still learning, shuffle. Keys: Space flips, arrows move. */
+let deckKey=null;
+function qdeck(root,n,o){let order=[...Array(n).keys()],pos=0,fl=false,know=new Set(),learn=new Set(),fin=false;
+  root.style.display='flex';root.style.flexDirection='column';
+  const go=d=>{fl=false;pos+=d;if(pos<0)pos=0;if(pos>=order.length){fin=true}draw()};
+  const mark=k=>{const i=order[pos];(k?know:learn).add(i);(k?learn:know).delete(i);go(1)};
+  function draw(){
+    if(fin){root.innerHTML=`<div class="qz"><div class="listen"><div class="qname">Round complete</div><div class="rq"><b class="v">Know it: ${know.size}</b> &nbsp;·&nbsp; <b class="x">Still learning: ${learn.size}</b></div>${learn.size?`<div class="chips" style="justify-content:center">${[...learn].map(i=>`<span class="chip">${esc(o.name(i))}</span>`).join('')}</div>`:''}<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">${learn.size?`<button class="btn gold sm" data-q="again">Study these ${learn.size} again</button>`:''}<button class="btn ghost sm" data-q="restart">Start again</button></div></div></div>`;
+      const a=$('[data-q=again]',root);if(a)a.onclick=()=>{order=[...learn];learn=new Set();pos=0;fin=false;draw()};
+      $('[data-q=restart]',root).onclick=()=>{order=[...Array(n).keys()];know=new Set();learn=new Set();pos=0;fin=false;draw()};deckKey=null;return}
+    const i=order[pos],sp=o.speak?`<button class="play big" data-q="say" aria-label="Listen">▶</button>`:'';
+    root.innerHTML=`<div class="qz"><div class="flip qcard ${fl?'f':''}"><div class="in"><div class="face a">${o.front(i)}${sp}<div class="qhint">click the card to flip</div></div><div class="face b">${o.back(i)}${sp}</div></div></div>
+      <div class="qprog"><i style="width:${pos/order.length*100}%"></i></div>
+      <div class="qbar"><div class="qnav"><button class="btn ghost sm" data-q="prev" ${pos?'':'disabled'} aria-label="Previous">←</button><span class="cnt">${pos+1} / ${order.length}</span><button class="btn ghost sm" data-q="next" aria-label="Next">→</button></div>
+      <div class="qk"><button class="btn ghost sm learn" data-q="learn">Still learning</button><button class="btn ghost sm know" data-q="know">Know it</button></div><button class="btn ghost sm" data-q="shuf">Shuffle</button></div></div>`;
+    const card=$('.qcard',root);card.onclick=e=>{if(e.target.closest('button'))return;fl=!fl;card.classList.toggle('f',fl)};
+    $$('[data-q=say]',root).forEach(b=>b.onclick=e=>{e.stopPropagation();say(o.speak(i))});
+    $('[data-q=prev]',root).onclick=()=>go(-1);$('[data-q=next]',root).onclick=()=>go(1);
+    $('[data-q=know]',root).onclick=()=>mark(1);$('[data-q=learn]',root).onclick=()=>mark(0);
+    $('[data-q=shuf]',root).onclick=()=>{order=shuffle(order);pos=0;fl=false;draw()};
+    deckKey=e=>{if(e.key===' '){e.preventDefault();card.click()}else if(e.key==='ArrowRight')go(1);else if(e.key==='ArrowLeft'&&pos)go(-1)}}
+  draw()}
+const DK={
+ deg:{name:i=>DEGREES[i][0],speak:i=>DEGREES[i][0].toUpperCase().split('').join(' ')+'. '+DEGREES[i][2],
+   front:i=>`<div class="qterm xl">${DEGREES[i][0]}</div><div class="qipa">${DEGREES[i][1]}</div><div class="qex" style="font-style:normal">What do the letters stand for?</div>`,
+   back:i=>`<div class="qname">${DEGREES[i][2]}</div><div class="qru">${DEGREES[i][3]}</div><div class="qdef">${DEGREES[i][4]}</div>`},
+ voc:{name:i=>VOCAB[i][0],speak:i=>VOCAB[i][0],
+   front:i=>`<div class="qterm">${VOCAB[i][0]}</div>`,
+   back:i=>`<div class="qru">${VOCAB[i][1]}</div><div class="qex">${VOCAB[i][2]}</div>`},
+ kw:{name:i=>VWORDS[i][0],speak:i=>VWORDS[i][0],
+   front:i=>`<div class="qterm">${VWORDS[i][0]}</div><div class="qipa">${VWORDS[i][1]}</div>`,
+   back:i=>`<div class="qru">${VWORDS[i][2]}</div><div class="qex">${VWORDS[i][3]}</div>`},
+ bias:{name:i=>BIASV[i][0],speak:i=>BIASV[i][0],
+   front:i=>`<div class="qterm">${BIASV[i][0]}</div>`,
+   back:i=>`<div class="qru">${BIASV[i][1]}</div>`}
+};
 function memory(root,pairs,cols,scoreEl){
   const cards=shuffle(pairs.flatMap((p,i)=>[{t:p[0],k:i,s:'e'},{t:p[1],k:i,s:'r'}]));
   let open=[],done=new Set(),moves=0,lock=false;const rows=Math.ceil(cards.length/cols);
@@ -444,7 +527,7 @@ function bombSet(root,items,scoreEl){
     scoreEl.textContent=`Score ${score()} / ${items.length}`;
     $$('[data-b]',root).forEach(b=>b.onclick=()=>{const s=st[+b.dataset.b];if(s.run)return;s.run=true;draw()});
     $$('.opt[data-i]',root).forEach(b=>b.onclick=()=>{const s=st[+b.dataset.i];s.pick=b.textContent;s.run=false;draw()});}
-  every(1000,()=>{let ch=false;st.forEach(s=>{if(s.run&&s.pick==null&&!s.boom){s.left--;ch=true;if(s.left<=0){s.boom=true;s.run=false}}});if(ch)draw()});
+  every(1000,()=>{let boom=false;st.forEach((s,i)=>{if(s.run&&s.pick==null&&!s.boom){s.left--;if(s.left<=0){s.boom=true;s.run=false;boom=true}else{const b=$(`.bomb[data-b="${i}"]`,root);if(b)b.textContent=s.left}}});if(boom)draw()});
   draw()}
 /* matching: tap left, tap right */
 function matching(root,pairs,scoreEl){let sel=null,done=new Set(),miss=0,t=0;
@@ -508,14 +591,20 @@ const LESSON=[[
   const draw=()=>{frame('What does school actually teach us?','Agree, partly agree or disagree. Then explain why, with an example.',body());
    $$('[data-p]').forEach(b=>b.onclick=()=>{pick[b.dataset.p]=b.dataset.k;draw()});$$('[data-ru]').forEach(b=>b.onclick=()=>{ru[b.dataset.ru]=!ru[b.dataset.ru];draw()});
    $$('[data-l]').forEach(b=>b.onclick=()=>{const l=LEAD_LANG[b.dataset.l];b.textContent=b.textContent===l[0]?l[1]:l[0];b.classList.toggle('ru')})};draw()}},
-{tab:'Vocabulary',notes:N('“Two activities: first the collocations, then the bombs.”','12 минут. Один экран, две активности. 1) Collocations: 4 предложения из таблицы, выбрать слово, которое сочетается; после ответа видно выражение и перевод. 2) The Missing Skill: четыре ситуации, у каждой бомба на 15 секунд, нажмите на бомбу, и пошёл отсчёт. Ответы: financial literacy, critical thinking, theory and practice, transferable skills. Остальные выражения из таблицы встречаются во второй активности и в Redesign.'),
- render(){frame('Vocabulary Lab','Activity 1: choose the word that collocates. Activity 2: tap a bomb, then answer before it explodes.',`<div class="grid" style="grid-template-columns:.8fr 1.3fr">${pane(1,'Collocations','g1','s1')}${pane(2,'The Missing Skill','g2','s2')}</div>`);
-  gapSet($('#g1'),[0,3,5,9].map(i=>COLLO[i]),$('#s1'),1);bombSet($('#g2'),MISSING,$('#s2'))}},
-{tab:'Listen',notes:N('“BBC podcast: which country educates its children best? Three short parts.”','Сначала Key words: 12 трудных слов из подкаста на карточках-перевёртышах (▶ озвучивает слово, на обороте перевод и фраза из подкаста). Потом три отрывка из подкаста BBC The Global Story (ведущая Lucy Hockings, журналист Sean Coughlan, профессор John Jerrim из UCL). Каждый отрывок 2,5–3,5 минуты. 1) PISA и страны-лидеры: факты на перевёртышах + сортировка стран. 2) Что общего у лучших систем: True / False + пары «маленькая страна — большой сосед». 3) Еда, деньги и «волшебной формулы нет»: Error hunter — в пересказе пять ошибок, их надо найти кликом. Отрывки я вырезала по картинке видео: перед уроком один раз просмотрите их, все ли нужные фразы попали внутрь.'),
+{tab:'Vocabulary',notes:N('“Degrees first: what do the letters stand for? Then the collocations.”','13.10 прошли только Lead-in, продолжаем отсюда. Три экрана, на каждом две активности. 1) Degrees: карточки (▶ озвучивает сокращение и полное название, на обороте перевод и пояснение) + Matching: сокращение ↔ полное название; в конце вопросы для обсуждения. 2) Collocations: карточки с 10 выражениями (на обороте перевод и пример) + 5 предложений с выбором слова. 3) Use them: ещё 5 предложений + The Missing Skill с бомбами по 15 секунд. Ответы бомб: financial literacy, critical thinking, theory and practice, transferable skills. В карточках: пробел переворачивает, стрелки листают.'),
+ render(){const pg=pager(3,['Degrees','Collocations','Use them']);
+  if(pg.p===0){frame('Vocabulary · University degrees','Activity 1: say the full name, then flip the card. Activity 2: match the letters with the degree.',`<div class="grid" style="grid-template-columns:1.15fr 1fr"><div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">1</span>Flashcards</span></div><div id="dk" class="pb"></div><div class="row" style="padding:4px 11px"><div class="label" style="margin-bottom:1px">Discuss</div>${DEG_SAY.map((q,i)=>`<div class="rq" style="font-size:15.5px"><span class="num">${i+1}</span>${q}</div>`).join('')}</div></div>
+    <div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">2</span>Match</span><span class="score" id="sc"></span></div><div class="pb"><div id="mt"></div></div></div></div>`,{left:pg.prev,next:pg.next});
+   qdeck($('#dk'),DEGREES.length,DK.deg);matching($('#mt'),DEGREES.map(d=>[d[0],d[2]]),$('#sc'))}
+  else if(pg.p===1){frame('Vocabulary · Collocations','Activity 1: flashcards, say the Russian before you flip. Activity 2: choose the word that collocates.',`<div class="grid" style="grid-template-columns:1fr 1.15fr">${pane(1,'Flashcards','dk')}${pane(2,'Collocations','g1','s1')}</div>`,{left:pg.prev,next:pg.next});
+   qdeck($('#dk'),VOCAB.length,DK.voc);$('#g1').classList.add('inl');gapSet($('#g1'),[0,3,5,7,9].map(i=>COLLO[i]),$('#s1'),1)}
+  else{frame('Vocabulary · Use them','Activity 1: five more collocations. Activity 2: tap a bomb, then answer before it explodes.',`<div class="grid" style="grid-template-columns:1fr 1.2fr">${pane(1,'Collocations','g1','s1')}${pane(2,'The Missing Skill','g2','s2')}</div>`,{left:pg.prev,next:pg.next});
+   $('#g1').classList.add('inl');gapSet($('#g1'),[1,2,4,6,8].map(i=>COLLO[i]),$('#s1'),1);bombSet($('#g2'),MISSING,$('#s2'))}}},
+{tab:'Listen',notes:N('“BBC podcast: which country educates its children best? Three short parts.”','Сначала Key words: 12 трудных слов из подкаста, карточки как в Quizlet (▶ озвучивает слово, на обороте перевод и фраза из подкаста; Know it / Still learning, в конце можно повторить невыученные). Predict: Никита выбирает регион, ответ не показывается — проверяем в Part 1 (правильно: East Asia). Потом три отрывка из подкаста BBC The Global Story (ведущая Lucy Hockings, журналист Sean Coughlan, профессор John Jerrim из UCL). Каждый отрывок 2,5–3,5 минуты. 1) PISA и страны-лидеры: факты на перевёртышах + сортировка стран. 2) Что общего у лучших систем: True / False + пары «маленькая страна — большой сосед». 3) Еда, деньги и «волшебной формулы нет»: Error hunter — в пересказе пять ошибок, их надо найти кликом. Отрывки я вырезала по картинке видео: перед уроком один раз просмотрите их, все ли нужные фразы попали внутрь.'),
  render(){const pg0=pager(4,['Key words','Part 1','Part 2','Part 3']);
-  if(pg0.p===0){let g=null;const R=['Europe','North America','East Asia'];const kw=()=>{frame('Listen · Before you watch','Activity 1: key words from the podcast (flip for Russian, ▶ to hear). Activity 2: predict.',`<div class="grid" style="grid-template-columns:2.3fr 1fr"><div class="fgrid" style="grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,minmax(0,1fr))">${VWORDS.map((w,i)=>`<div class="flip"><div class="in"><div class="face a"><div style="display:flex;align-items:center;gap:6px"><div class="fq">${w[0]}</div><button class="play" data-say="${i}" aria-label="Listen">▶</button></div><div class="fa" style="font-size:13.5px;margin-top:2px;color:var(--muted)">${w[3]}</div></div><div class="face b"><div class="fq" style="color:#6f431f">${w[2]}</div><div class="tap">${w[1]}</div></div></div></div>`).join('')}</div>
-   <div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">2</span>Predict</span></div><div class="pb stack"><div class="row"><div class="rq" style="font-size:16px">Which region tops the PISA rankings?</div><div class="seg" style="flex-wrap:wrap;margin-top:5px">${R.map(r=>`<button class="${g===r?(r==='East Asia'?'ok':'bad'):''}" data-g="${r}">${r}</button>`).join('')}</div>${g?'<div class="rx">Listen and check in Part 1.</div>':''}</div>
-   <div class="row"><div class="rq" style="font-size:16px">What makes a school system “the best”? Name three things.</div></div><div class="row"><div class="rq" style="font-size:16px">Would you rather study in Finland or in South Korea? Why?</div></div></div></div></div>`,{left:pg0.prev,next:pg0.next});flipWire(scr);$$('[data-say]').forEach(b=>b.onclick=e=>{e.stopPropagation();say(VWORDS[b.dataset.say][0])});$$('[data-g]').forEach(b=>b.onclick=()=>{g=b.dataset.g;kw()})};kw();return}
+  if(pg0.p===0){const R=['Europe','North America','East Asia'];const kw=()=>{frame('Listen · Before you watch','Activity 1: key words from the podcast: ▶ to hear, flip for Russian. Activity 2: predict.',`<div class="grid" style="grid-template-columns:1.35fr 1fr">${pane(1,'Key words','dk')}
+   <div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">2</span>Predict</span></div><div class="pb stack"><div class="row"><div class="rq" style="font-size:16px">Which region tops the PISA rankings?</div><div class="seg" style="flex-wrap:wrap;margin-top:5px">${R.map(r=>`<button data-g="${r}">${r}</button>`).join('')}</div><div class="rx" id="gx" hidden>Listen and check in Part 1.</div></div>
+   <div class="row"><div class="rq" style="font-size:16px">What makes a school system “the best”? Name three things.</div></div><div class="row"><div class="rq" style="font-size:16px">Would you rather study in Finland or in South Korea? Why?</div></div></div></div></div>`,{left:pg0.prev,next:pg0.next});qdeck($('#dk'),VWORDS.length,DK.kw);$$('[data-g]').forEach(b=>b.onclick=()=>{$$('[data-g]').forEach(x=>x.classList.toggle('on',x===b));$('#gx').hidden=false})};kw();return}
   const pg={p:pg0.p-1,prev:pg0.prev,next:pg0.next};const c=CLIPS[pg.p];
   const vid=`<div class="vwrap"><video class="vid" controls preload="metadata" src="${c.src}"></video><div class="sub">${c.title} · ${c.dur}</div></div>`;
   if(pg.p===0){frame('Listen · Part 1: How do we compare countries?','Before you watch: guess the answers. Then watch and flip the cards.',`<div class="grid" style="grid-template-columns:1fr 1.1fr">${vid}<div class="stack" style="min-height:0">
@@ -532,9 +621,13 @@ const LESSON=[[
    matching($('#mt'),P2_PAIRS,$('#msc'))}
   else{frame('Listen · Part 3: Food, money and no magic formula','Watch. The summary below contains five mistakes: click the wrong word to correct it.',`<div class="grid" style="grid-template-columns:1fr 1.1fr">${vid}<div class="stack"><div id="ht"></div>
      <div class="card"><div class="label">Discuss</div><div class="rq" style="font-size:16.5px">“It does come down to money and resourcing.” Do you agree? What would you spend the money on first?</div></div></div></div>`,{left:pg.prev,next:pg.next,right:'<span class="score" id="sc"></span>'});hunter($('#ht'),P3_HUNT,$('#sc'))}}},
-{tab:'Read',notes:N('“Read the text. Then answer each question before you flip the card.”','12 минут. Над текстом аудио (ваш файл, 1:29): сначала прослушать с текстом. Текст The Education Paradox слева, пять вопросов справа: Никита отвечает устно, потом переворачивает карточку и сравнивает с ответом. Пятый вопрос открытый.'),
- render(){frame('The Education Paradox','Activity 1: listen and read along. Activity 2: answer aloud, then flip the card to compare.',`<div class="grid" style="grid-template-columns:1.3fr 1fr"><div class="read"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px"><h3 style="margin:0">The Education Paradox</h3><audio controls preload="metadata" src="./media/education-paradox.mp3" style="height:34px;flex:1;min-width:220px"></audio></div>${READ.map(p=>`<p>${p}</p>`).join('')}</div>
-   <div class="fgrid" style="grid-template-rows:repeat(5,minmax(0,1fr))">${READ_Q.map((q,i)=>`<div class="flip"><div class="in"><div class="face a"><div class="fq"><span class="num">${i+1}</span>${q[0]}</div></div><div class="face b"><div class="fa">${q[1]}</div></div></div></div>`).join('')}</div></div>`);flipWire(scr)}},
+{tab:'Read',notes:N('“First just listen: no text. What is the paradox?” Then: “Now read along and answer.”','12 минут. Сначала только аудио (ваш файл, 1:29), текста на экране нет: Никита слушает и отвечает на общий вопрос справа. Потом кнопка Show the text открывает текст (аудио можно включить ещё раз и читать вместе с ним). Пять вопросов на карточках: Никита отвечает устно, потом переворачивает карточку и сравнивает. Пятый вопрос открытый.'),
+ render(){let shown=false;
+  const draw=()=>{frame('The Education Paradox',shown?'Activity 2: read along. Answer each question aloud, then flip the card to compare.':'Activity 1: listen first, without the text. What is the “education paradox”?',`<div class="grid" style="grid-template-columns:1.3fr 1fr">${shown?`<div class="read"><div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px"><h3 style="margin:0">The Education Paradox</h3><audio controls preload="metadata" src="./media/education-paradox.mp3" style="height:34px;flex:1;min-width:220px"></audio></div>${READ.map(p=>`<p>${p}</p>`).join('')}</div>`
+   :`<div class="listen"><div class="label" style="margin:0">Listen first · no text</div><div class="qname">The Education Paradox</div><audio controls preload="metadata" src="./media/education-paradox.mp3"></audio><div class="rq" style="font-size:17px;max-width:520px">While you listen: what do students get from school, and what do they often not get?</div><button class="btn gold" id="showT">Show the text</button></div>`}
+   ${shown?`<div class="fgrid" style="grid-template-rows:repeat(5,minmax(0,1fr))">${READ_Q.map((q,i)=>`<div class="flip"><div class="in"><div class="face a"><div class="fq"><span class="num">${i+1}</span>${q[0]}</div></div><div class="face b"><div class="fa">${q[1]}</div></div></div></div>`).join('')}</div>`
+   :`<div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">1</span>Gist</span></div><div class="pb rows">${['What is the paradox in one sentence?','Why do schools focus on grades and exams?','What does the speaker suggest instead?'].map((q,i)=>`<div class="row"><div class="rq" style="font-size:17px"><span class="num">${i+1}</span>${q}</div></div>`).join('')}</div></div>`}</div>`);
+   flipWire(scr);const b=$('#showT');if(b)b.onclick=()=>{const a=$('audio');if(a)a.pause();shown=true;draw()}};draw()}},
 {tab:'Redesign',notes:N('“The government can add only five modules. Choose, reject, defend.”','15 минут. Никита перетаскивает модули в «Our five» (не больше пяти) и в «Rejected». Справа его чек-лист требований: отмечайте пункты по мере ответа. Кнопка Counterargument вытягивает случайное возражение учителя. Цель — не правильный ответ, а связная аргументация и защита от возражений.'),
  render(){frame('Redesign the Education System','Only five new modules can be introduced. Read what each one is, drag it into place, then defend your choice.',`<div class="grid" style="grid-template-columns:2.7fr 1fr"><div id="srt" style="min-height:0;display:flex"></div>
    <div class="stack"><div class="card"><div class="label">Teacher’s counterargument</div><div class="rq" id="ca" style="font-size:16px;min-height:40px">Tap the button to draw one.</div><button class="btn sm gold" id="draw" style="margin-top:5px">Counterargument</button></div>
@@ -551,6 +644,8 @@ const LESSON=[[
   if(pg.p===0){frame('Inversion','Open the rule first. Activity 1: build the sentences. Activity 2: tap a bomb and choose the inverted version.',`<div class="grid" style="grid-template-columns:1.1fr 1fr">${pane(1,'Build it','bd','sc')}${pane(2,'Rewrite it','g','s2')}</div>`,{left:pg.prev,next:pg.next,right:rb});builder($('#bd'),INV_BUILD.slice(0,4),$('#sc'));bombSet($('#g'),INV_REWRITE,$('#s2'))}
   else{frame('Inversion: practice','Activity 1: build four more sentences. Activity 2: finish each sentence about yourself, aloud.',`<div class="grid" style="grid-template-columns:1.1fr 1fr">${pane(1,'Build it','bd','sc')}
     <div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">2</span>Your turn</span></div><div class="pb rows">${['Never have I…','Only when I started working did I…','Not only did my school…, but it also…','Had I known at eighteen that…, I would…'].map((t,i)=>`<div class="row"><div class="rq" style="font-size:16.5px"><span class="num">${i+1}</span>${t}</div></div>`).join('')}</div></div></div>`,{left:pg.prev,next:pg.next,right:rb});builder($('#bd'),INV_BUILD.slice(4),$('#sc'))}}},
+{tab:'Phrasal',notes:N('“Phrasal verbs: one from every topic of the course.”','Тренажёр фразовых глаголов: 17 тем курса × 5 самых употребимых = 85 глаголов. Mix 1–5: в каждом миксе по одному глаголу из каждой темы (17 штук); в списке тем можно выбрать одну тему. Режимы: Cards (как Quizlet), Particle (бомбы 15 секунд), Match, Speak (вопрос, на обороте глагол, перевод и пример). На урок достаточно одного микса в режимах Particle + Speak, 8–10 минут.'),
+ render(){scr.innerHTML=`<iframe src="../nikita-homework/phrasal-mix.html?embed=1&v=20261014a" title="Phrasal verbs trainer" style="flex:1;border:1px solid var(--line);border-radius:14px;width:100%;min-height:0;background:#fff;margin:-4px 0 0"></iframe><div class="foot" style="margin-top:6px;min-height:0">${'<span></span>'}${nextBtn()}</div>`}},
 {tab:'Debate',notes:N('“Motion: the main purpose of education is to prepare people for life, not for exams.”','5 минут. Раунд 1: вступление Никиты, 60 секунд. Раунд 2: вы оспариваете одно его допущение. Раунд 3: ответ и вывод. Справа — домашнее эссе Block 1 с чек-листом оценки.',`<p><b>Assessment checklist:</b> argument development, vocabulary range, coherence, grammatical accuracy, supporting claims with examples.</p>`),
  render(){const R=[['1. Opening statement',60],['2. Teacher challenges one assumption',45],['3. Response and conclusion',60]];let r=0,tw;
   frame('Final Debate','Motion: “The main purpose of education is to prepare people for life, not for exams.”',`<div class="grid" style="grid-template-columns:1fr 1fr 1fr"><div class="card stack"><div class="label">Rounds</div><div class="seg" id="rd" style="flex-direction:column"></div><div id="tm" style="margin-top:6px"></div></div>
@@ -567,10 +662,13 @@ const LESSON=[[
    <div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">2</span>The planes</span></div><div class="pb stack"><div class="row" style="padding:4px;max-height:175px">${plane(pick)}</div>
    <div class="row"><div class="rq" style="font-size:15.5px">${shown?'<b style="color:var(--green)">The engines.</b> Planes hit there never came back, so that damage was missing from the data. This is <b>survivorship bias</b>.':(pick?`You chose ${pick}. <button class="btn sm gold" id="rv">Reveal</button>`:'Bullet holes on returning bombers. Click where you would add armour.')}</div></div></div></div></div>`);
    $$('[data-a]').forEach(b=>b.onclick=()=>{pk[b.dataset.a]=b.dataset.k;draw()});$$('.zoneP').forEach(z=>z.onclick=()=>{pick=z.dataset.n;draw()});const rv=$('#rv');if(rv)rv.onclick=()=>{shown=true;draw()}};draw()}},
-{tab:'Bias',notes:N('“Match the vocabulary, then use it on three real cases.”','8 минут. Один экран, две активности. 1) Matching: 8 выражений и их значения. 2) Spot the Bias: три случая на перевёртышах, на обороте разбор.'),
- render(){frame('Survivorship Bias','Activity 1: match the expressions. Activity 2: say what is wrong with each conclusion, then flip.',`<div class="grid" style="grid-template-columns:1fr 1.15fr">${pane(1,'Vocabulary','mt','sc')}
-   <div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">2</span>Spot the bias</span></div><div class="pb fgrid" style="grid-template-rows:repeat(3,minmax(0,1fr))">${SPOT.map(s=>`<div class="flip"><div class="in"><div class="face a"><div class="fa" style="font-size:15px"><b>${s.t}.</b> ${s.s}</div><div class="fq" style="font-size:15px;margin-top:3px">${s.f}</div></div><div class="face b"><div class="fa" style="font-size:15.5px">${s.n}</div></div></div></div>`).join('')}</div></div></div>`);
-  matching($('#mt'),BIASV,$('#sc'));flipWire(scr)}},
+{tab:'Bias',notes:N('“Learn the words on the cards, match them, then use them on three real cases.”','8 минут. Экран 1: карточки (8 выражений, на обороте перевод) + Matching. Экран 2: Spot the Bias — три случая на перевёртышах, на обороте разбор; справа Никита разбирает каждый случай, используя выражения (отмечайте, какие прозвучали).'),
+ render(){const pg=pager(2,['Words','Spot the bias']);
+  if(pg.p===0){frame('Survivorship Bias · Words','Activity 1: flashcards. Activity 2: match each expression with its meaning.',`<div class="grid" style="grid-template-columns:1fr 1.1fr">${pane(1,'Flashcards','dk')}${pane(2,'Match','mt','sc')}</div>`,{left:pg.prev,next:pg.next});
+   qdeck($('#dk'),BIASV.length,DK.bias);matching($('#mt'),BIASV,$('#sc'))}
+  else{frame('Survivorship Bias · Spot it','Activity 1: say what is wrong with each conclusion, then flip. Activity 2: use the expressions.',`<div class="grid" style="grid-template-columns:1.15fr 1fr"><div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">1</span>Spot the bias</span></div><div class="pb fgrid" style="grid-template-rows:repeat(3,minmax(0,1fr))">${SPOT.map(s=>`<div class="flip"><div class="in"><div class="face a"><div class="fa" style="font-size:15px"><b>${s.t}.</b> ${s.s}</div><div class="fq" style="font-size:15px;margin-top:3px">${s.f}</div></div><div class="face b"><div class="fa" style="font-size:15.5px">${s.n}</div></div></div></div>`).join('')}</div></div>
+    <div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">2</span>Use the words</span></div><div class="pb stack"><div class="rq" style="font-size:16px">Explain each case with at least two of these. Tick the ones you used.</div><div id="bw" class="stack" style="gap:4px"></div></div></div></div>`,{left:pg.prev,next:pg.next});
+   flipWire(scr);ticks($('#bw'),BIASV.map(b=>b[0]))}}},
 {tab:'Modals',notes:N('“Jeopardy. Choose a category and a price. Higher price, harder question.”','12 + 8 минут. Три категории по пять вопросов: Choose (выбор формы, проверка автоматически), Fix it (найти и кликнуть ошибочное слово), What went wrong? (ситуация: объяснить её 2–3 предложениями с modal perfects; оценку ставите вы кнопками). Цена 100–500, в шапке общий счёт. Справка — кнопка Reference.',`<p><b>Model answer (What went wrong?):</b> The graduate might have focused too much on academic qualifications and not enough on practical experience. Employers may have been looking for transferable skills. Universities should have provided more opportunities for internships.</p>`),
  render(){const state={};let score=0;
   const cats=[['Choose',J_CHOOSE],['Fix it',J_FIX],['What went wrong?',J_SAY]];
@@ -608,7 +706,7 @@ function plane(pick){const P=(n,d)=>`<path class="zoneP ${pick===n?'pick':''}" d
  ${P('the wings','M20 108 L146 78 L146 126 L20 132 Z M174 78 L300 108 L300 132 L174 126 Z')}${P('the body','M146 30 L174 30 L174 176 L146 176 Z')}${P('the tail','M110 176 L210 176 L210 210 L110 210 Z')}${P('the engines','M86 82 L114 82 L114 124 L86 124 Z M206 82 L234 82 L234 124 L206 124 Z')}
  </svg>`}
 
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDrawers();const o=$('.overlay');if(o)o.remove()}});
+document.addEventListener('keydown',e=>{if(deckKey&&!$('.overlay')&&!e.target.closest('input,textarea,audio,video'))deckKey(e);if(e.key==='Escape'){closeDrawers();const o=$('.overlay');if(o)o.remove()}});
 show(new URLSearchParams(location.search).get('b')==='1'?1:0,0);
 </script>
 </body>

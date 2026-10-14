@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>Nikita · Phrasal verbs mix</title>
+<style>
+:root{--navy:#0c2235;--navy2:#173a55;--paper:#f4f0e8;--ink:#17212b;--muted:#5d6975;--gold:#a8763f;--red:#a3362f;--redbg:#fbe9e7;--green:#23705c;--greenbg:#e4f3ee;--line:rgba(12,34,53,.16)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;font-family:Inter,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink);font-size:18px}
+body{overflow:hidden}
+button,select{font:inherit;cursor:pointer}
+.bar{height:50px;background:linear-gradient(90deg,#091c2d,#14354f);color:#fff;display:flex;align-items:center;gap:8px;padding:0 12px}
+.brand{background:none;border:0;color:#fff;font-family:Georgia,serif;font-weight:700;font-size:19px;padding:0 4px;white-space:nowrap}
+.seg2{display:flex;background:rgba(255,255,255,.1);border-radius:10px;padding:3px;gap:3px}
+.seg2 button{border:0;background:transparent;color:#d9e3ea;border-radius:8px;padding:5px 10px;font-weight:800;font-size:15px;white-space:nowrap}
+.seg2 button.on{background:#e3bc90;color:#2b1d14}
+.tabs{display:flex;gap:4px;flex:1;min-width:0;overflow:hidden;justify-content:flex-end}
+.tabs button{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff;border-radius:9px;padding:6px 11px;font-size:15px;font-weight:700;white-space:nowrap}
+.tabs button.on{background:#fff;color:var(--navy)}
+.bar select{border:1px solid rgba(255,255,255,.3);background:#14354f;color:#fff;border-radius:9px;padding:5px 8px;font-size:15px;font-weight:700;max-width:190px}
+.util{border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;border-radius:9px;padding:6px 10px;font-size:15px;font-weight:700;white-space:nowrap;text-decoration:none}
+.stage{height:calc(100vh - 50px);overflow:hidden;position:relative}
+.scr{height:100%;padding:11px 22px 9px;display:flex;flex-direction:column;max-width:1320px;margin:0 auto}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:8px}
+h2{font-family:Georgia,serif;font-size:25px;color:var(--navy);margin:0;line-height:1.15}
+.sub{color:var(--muted);font-size:16.5px;margin:3px 0 0}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;overflow:auto}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px;min-height:42px}
+.score{font-weight:800;font-size:17px;color:var(--navy);white-space:nowrap}
+.btn{border:0;border-radius:11px;background:var(--navy);color:#fff;padding:9px 16px;font-weight:800;font-size:16.5px}
+.btn:hover{background:var(--navy2)}
+.btn.ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.btn.gold{background:var(--gold)}
+.btn.sm{padding:6px 12px;font-size:15px}
+.btn:disabled{opacity:.4;cursor:default}
+.label{font-size:14px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 11px;font-size:15.5px;font-weight:600;color:var(--navy)}
+.rows{display:grid;gap:8px;align-content:start}
+.row{background:#fff;border:1px solid var(--line);border-radius:13px;padding:8px 13px}
+.rq{font-size:20px;line-height:1.35;font-weight:600;color:var(--navy)}
+.num{display:inline-block;min-width:24px;color:var(--gold);font-weight:800}
+.tp{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);margin-left:8px;vertical-align:middle}
+b.pv{color:var(--navy)}
+.gap{display:inline-block;min-width:64px;border-bottom:2px solid var(--navy);text-align:center}
+.gap.v{color:var(--green);border-color:var(--green);font-weight:800}
+.gap.x{color:var(--red);border-color:var(--red);font-weight:800}
+.rx{font-size:16px;margin-top:4px;line-height:1.35}
+b.v{color:var(--green)} b.x{color:var(--red)}
+.opts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.opt{border:2px solid var(--line);background:#fff;border-radius:10px;padding:4px 14px;font-size:17.5px;font-weight:700;color:var(--ink)}
+.opt:hover{border-color:var(--navy)}
+.brow{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+.bomb{width:44px;height:44px;border-radius:50%;border:3px solid var(--red);background:#fff;color:var(--red);font-weight:900;font-size:16px;flex:none}
+.bomb.run{background:var(--red);color:#fff;animation:pulse 1s infinite}
+.bomb.boom{background:#2b1d14;border-color:#2b1d14;color:#ffb199;font-size:11px}
+.bomb.safe{border-color:var(--green);color:var(--green);font-size:20px}
+@keyframes pulse{50%{transform:scale(1.1)}}
+/* flip */
+.flip{perspective:1200px;cursor:pointer;min-height:0;position:relative}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.f .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:12px 52px;overflow:hidden;box-shadow:0 6px 18px rgba(12,34,53,.07)}
+.face.a{background:#fff}
+.face.b{background:#fff8ee;transform:rotateY(180deg)}
+.qterm{font-family:Georgia,serif;font-size:40px;font-weight:700;color:var(--navy);line-height:1.15}
+.qru{font-size:25px;font-weight:800;color:#6f431f;line-height:1.25}
+.qex{font-size:19px;line-height:1.4;margin-top:8px;color:var(--ink);max-width:720px}
+.qhint{position:absolute;bottom:7px;left:0;right:0;font-size:12.5px;color:var(--muted)}
+.qtop{position:absolute;top:10px;left:14px}
+.play{border:0;background:var(--navy);color:#fff;border-radius:999px;width:40px;height:40px;font-size:15px;position:absolute;top:10px;right:10px}
+.qz{display:flex;flex-direction:column;gap:7px;min-height:0;flex:1}
+.qz .qcard{flex:1;min-height:180px}
+.qbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.qnav{display:flex;align-items:center;gap:6px}
+.cnt{font-weight:800;color:var(--navy);min-width:64px;text-align:center;font-size:16px}
+.qk{display:flex;gap:6px}
+.qk .know{border-color:var(--green);color:var(--green)}
+.qk .learn{border-color:var(--red);color:var(--red)}
+.qprog{height:5px;background:#e6e1d6;border-radius:9px;overflow:hidden;flex:none}
+.qprog i{display:block;height:100%;background:var(--gold);transition:width .25s}
+.done{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:12px;text-align:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;overflow:auto}
+.dt{font-family:Georgia,serif;font-size:28px;font-weight:700;color:var(--navy)}
+/* speak cards */
+.sgrid{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:minmax(0,1fr);gap:10px;flex:1;min-height:0}
+.sgrid .face{padding:10px 16px}
+.sgrid .sq{font-size:20px;font-weight:600;color:var(--navy);line-height:1.35}
+.sgrid .qru{font-size:20px}.sgrid .qex{font-size:17px}
+/* matching */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;align-content:start}
+.mt{border:2px solid var(--line);background:#fff;border-radius:11px;padding:8px 13px;font-size:18px;font-weight:600;text-align:left;color:var(--ink)}
+.mt.l{font-weight:800;color:var(--navy)}
+.mt.sel{border-color:var(--gold);box-shadow:0 0 0 3px #e3bc9066}
+.mt.ok{border-color:var(--green);background:var(--greenbg);cursor:default}
+.mt.shake{animation:shake .35s;border-color:var(--red)}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+table.mis{border-collapse:collapse;font-size:16px;text-align:left;max-width:760px}
+table.mis td{border-bottom:1px solid var(--line);padding:5px 8px;vertical-align:top}
+@media(max-height:620px){.rq{font-size:18px}.row{padding:6px 12px}.rows{gap:6px}.qterm{font-size:34px}.qex{font-size:17px}.sgrid .sq{font-size:18px}.mt{padding:6px 12px;font-size:17px}h2{font-size:22px}.sub{font-size:15px}.scr{padding:8px 20px 6px}}
+@media(max-width:900px){body{overflow:auto}.bar{height:auto;flex-wrap:wrap;padding:8px}.stage{height:auto;overflow:visible}.scr{height:auto}.sgrid,.match{grid-template-columns:1fr}.sgrid{grid-auto-rows:150px}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <button class="brand" id="brand" title="Back to the start">Phrasal verbs</button>
+  <div class="seg2" id="rounds"></div>
+  <select id="topic" aria-label="Topic"></select>
+  <div class="tabs" id="tabs"></div>
+  <a class="util" id="back" href="../teacher-nikita-7f3a92/course.html" target="_top">Course</a>
+</div>
+<div class="stage"><section class="scr" id="scr"></section></div>
+<script>
+'use strict';
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* 17 course topics × the 5 most useful phrasal verbs for each.
+   s: {verb} is bold, [particle] is the gap. x: particles that would also be correct, never offered as wrong options. */
+const T=[
+ ['Jobs',[
+  {v:'take on',ru:'брать на работу; брать на себя (обязанности)',s:'The company is going to {take} [on] ten new people this year.',q:'Would you take on extra work for more money?'},
+  {v:'set up',ru:'основать, открыть (бизнес)',s:'She {set} [up] her own business when she was 25.',q:'What kind of business would you set up?'},
+  {v:'turn down',ru:'отказаться (от предложения)',s:'He {turned} [down] the job because the pay was too low.',q:'Have you ever turned down an offer and regretted it?'},
+  {v:'carry on',ru:'продолжать',s:'We can’t {carry} [on] working like this: we need a break.',q:'What would make you carry on in a job you don’t love?'},
+  {v:'fill in',ru:'заполнить (форму); подменить',s:'Please {fill} [in] the application form and sign it.',q:'What is the most annoying form you’ve had to fill in?',x:['out']}]],
+ ['Shops',[
+  {v:'try on',ru:'примерить',s:'Can I {try} this jacket [on], please?',q:'Do you always try clothes on before you buy them?'},
+  {v:'pick up',ru:'купить (по случаю); забрать',s:'I {picked} [up] a cheap phone case at the market.',q:'What is the best bargain you’ve picked up recently?',x:['out']},
+  {v:'shop around',ru:'сравнивать цены в разных магазинах',s:'It’s worth {shopping} [around] before you buy a laptop.',q:'Do you shop around or buy the first thing you like?'},
+  {v:'take back',ru:'вернуть (товар в магазин)',s:'The shoes were too small, so I {took} them [back] to the shop.',q:'Have you ever taken something back to a shop? Why?'},
+  {v:'go for',ru:'выбрать, остановиться на',s:'They both look nice, but I think I’ll {go} [for] the blue one.',q:'When you buy clothes, do you go for comfort or style?'}]],
+ ['Getting There',[
+  {v:'set off',ru:'отправиться в путь',s:'We {set} [off] at 6 a.m. to avoid the traffic.',q:'What time do you usually set off in the morning?',x:['out']},
+  {v:'get on',ru:'сесть (в автобус, поезд, самолёт)',s:'Hurry up and {get} [on]: the bus is leaving!',q:'What do you do as soon as you get on a plane?',x:['in']},
+  {v:'get off',ru:'выйти (из транспорта)',s:'{Get} [off] at the third stop and walk to the left.',q:'Have you ever got off at the wrong stop?'},
+  {v:'drop off',ru:'подвезти, высадить',s:'Could you {drop} me [off] at the station?',q:'Who used to drop you off at school?'},
+  {v:'hold up',ru:'задерживать',s:'Sorry I’m late: I was {held} [up] in traffic.',q:'What usually holds you up in the morning?'}]],
+ ['Eat',[
+  {v:'eat out',ru:'есть вне дома (в кафе, ресторане)',s:'We usually {eat} [out] about once a week.',q:'How often do you eat out, and where?'},
+  {v:'cut down on',ru:'сократить (потребление)',s:'I’m trying to {cut} [down on] sugar.',q:'What would you like to cut down on?'},
+  {v:'go off',ru:'испортиться (о еде)',s:'The milk has {gone} [off]: it smells awful.',q:'What do you do with food that is about to go off?'},
+  {v:'heat up',ru:'разогреть',s:'Just {heat} the soup [up] in the microwave.',q:'What do you often heat up for lunch?'},
+  {v:'run out of',ru:'закончиться (о запасах)',s:'We’ve {run} [out of] bread again.',q:'What do you always run out of at home?'}]],
+ ['Relax',[
+  {v:'chill out',ru:'расслабиться',s:'I don’t want to do anything this weekend; I just want to {chill} [out].',q:'How do you chill out after a hard day?'},
+  {v:'hang out',ru:'проводить время, тусоваться',s:'We used to {hang} [out] at the park after school.',q:'Where do you like to hang out with friends?',x:['around']},
+  {v:'take up',ru:'начать заниматься (хобби)',s:'Last year I {took} [up] yoga, and I love it.',q:'What hobby would you like to take up?'},
+  {v:'sleep in',ru:'поспать подольше',s:'On Sundays I {sleep} [in] until ten.',q:'Do you sleep in at the weekend?'},
+  {v:'get away',ru:'уехать отдохнуть',s:'We really need to {get} [away] for a few days.',q:'Where would you go to get away from it all?',x:['out']}]],
+ ['Family & Friends',[
+  {v:'get on with',ru:'ладить (с кем-то)',s:'I {get} [on with] my brother much better now.',q:'Who in your family do you get on with best?'},
+  {v:'look after',ru:'заботиться, присматривать',s:'My grandma {looked} [after] me when I was small.',q:'Have you ever looked after a child or a pet?'},
+  {v:'bring up',ru:'воспитывать',s:'She was {brought} [up] by her aunt in a small town.',q:'Where were you brought up?'},
+  {v:'fall out',ru:'поссориться',s:'The two brothers {fell} [out] over money.',q:'What do friends usually fall out about?'},
+  {v:'take after',ru:'быть похожим (на родственника)',s:'He {takes} [after] his father: same smile, same jokes.',q:'Who do you take after in your family?'}]],
+ ['Crime & Punishment',[
+  {v:'break into',ru:'вломиться, проникнуть',s:'Someone {broke} [into] our car last night.',q:'What would you do if someone broke into your home?'},
+  {v:'get away with',ru:'избежать наказания',s:'He cheated in the exam and {got} [away with] it.',q:'Did you ever get away with something at school?'},
+  {v:'lock up',ru:'посадить (в тюрьму); запереть',s:'People like that should be {locked} [up] for years.',q:'Should we lock people up for minor crimes?',x:['away']},
+  {v:'let off',ru:'отпустить без наказания',s:'The police {let} him [off] with a warning.',q:'Should first-time offenders be let off?'},
+  {v:'turn yourself in',ru:'явиться с повинной',s:'The suspect {turned} himself [in] to the police.',q:'Why might a criminal turn themselves in?'}]],
+ ['Your Place',[
+  {v:'move in',ru:'въехать',s:'We {moved} [in] last spring, when the flat was finally ready.',q:'When did you move into your current home?'},
+  {v:'move out',ru:'съехать',s:'I {moved} [out] of my parents’ place when I was twenty.',q:'At what age should young people move out?'},
+  {v:'do up',ru:'ремонтировать, отделывать',s:'They’re {doing} [up] an old flat in the city centre.',q:'What would you do up in your home first?'},
+  {v:'settle in',ru:'освоиться, обжиться',s:'It took me about a month to {settle} [in] in the new city.',q:'How long does it take you to settle in somewhere new?',x:['down']},
+  {v:'tidy up',ru:'прибраться',s:'{Tidy} [up] your room before the guests arrive.',q:'How often do you tidy up?'}]],
+ ['Education',[
+  {v:'drop out',ru:'бросить учёбу',s:'He {dropped} [out] of university in his second year.',q:'Why do students drop out of university?'},
+  {v:'catch up',ru:'догнать (по программе)',s:'I was ill, so I need to {catch} [up] on my lessons.',q:'How do you catch up when you miss classes?'},
+  {v:'look up',ru:'искать (в словаре, интернете)',s:'If you don’t know a word, {look} it [up].',q:'How do you look up new words?'},
+  {v:'hand in',ru:'сдать (работу)',s:'You must {hand} [in] your essay by Friday.',q:'Did you always hand in your homework on time?'},
+  {v:'fall behind',ru:'отстать',s:'If you miss too many classes, you’ll {fall} [behind].',q:'Which subject did you fall behind in at school?'}]],
+ ['Mind & Body',[
+  {v:'work out',ru:'тренироваться',s:'I {work} [out] at the gym three times a week.',q:'How often do you work out?'},
+  {v:'give up',ru:'бросить (привычку)',s:'She {gave} [up] smoking last year.',q:'What bad habit would you like to give up?'},
+  {v:'get over',ru:'оправиться (от болезни)',s:'It took me two weeks to {get} [over] the flu.',q:'What helps you get over a cold?'},
+  {v:'pass out',ru:'потерять сознание',s:'It was so hot in the hall that a man {passed} [out].',q:'Have you ever seen someone pass out?'},
+  {v:'warm up',ru:'размяться',s:'Always {warm} [up] before you go for a run.',q:'How do you warm up before exercise?',x:['down']}]],
+ ['Places to Stay',[
+  {v:'check in',ru:'заселиться, зарегистрироваться',s:'We {checked} [in] at the hotel at three o’clock.',q:'Do you prefer to check in online or at the desk?'},
+  {v:'check out',ru:'выехать (из отеля)',s:'Guests must {check} [out] by 11 a.m.',q:'What do you check in the room before you check out?'},
+  {v:'put up',ru:'приютить, разместить у себя',s:'Some friends {put} us [up] for the night.',q:'Would you put up a stranger for a night?'},
+  {v:'stop over',ru:'сделать остановку в пути',s:'We {stopped} [over] in Dubai on the way to Bali.',q:'Where would you like to stop over on a long trip?',x:['off']},
+  {v:'look around',ru:'осмотреть(ся)',s:'Let’s leave our bags and {look} [around] the old town.',q:'When you arrive in a new city, do you look around or rest first?',x:['over']}]],
+ ['Science & Nature',[
+  {v:'find out',ru:'выяснить',s:'Scientists want to {find} [out] how the virus spreads.',q:'What would you like scientists to find out?'},
+  {v:'carry out',ru:'проводить (исследование, опыт)',s:'They {carried} [out] experiments on mice.',q:'Should scientists carry out tests on animals?'},
+  {v:'come up with',ru:'придумать',s:'She {came} [up with] a brilliant idea.',q:'What is the best idea you’ve ever come up with?'},
+  {v:'die out',ru:'вымереть',s:'Many species could {die} [out] this century.',q:'Which animals might die out soon?',x:['off']},
+  {v:'figure out',ru:'разобраться, понять',s:'I can’t {figure} [out] how this machine works.',q:'What is something you could never figure out?'}]],
+ ['On the Phone',[
+  {v:'hang up',ru:'повесить трубку',s:'She got angry and {hung} [up] on me.',q:'Have you ever hung up on someone?'},
+  {v:'call back',ru:'перезвонить',s:'I’m busy now. Can I {call} you [back] in ten minutes?',q:'Do you always call people back?'},
+  {v:'hold on',ru:'подождать (не вешать трубку)',s:'{Hold} [on], I’ll get a pen.',q:'How long would you hold on for customer service?',x:['up']},
+  {v:'get through',ru:'дозвониться',s:'I tried all day, but I couldn’t {get} [through].',q:'Who is the hardest person to get through to?'},
+  {v:'cut off',ru:'прервать (связь)',s:'We got {cut} [off] in the middle of the call.',q:'What do you do when you get cut off?'}]],
+ ['Culture',[
+  {v:'come out',ru:'выйти (о фильме, книге, альбоме)',s:'Her new album {comes} [out] next month.',q:'Which film or book are you waiting to come out?'},
+  {v:'put on',ru:'поставить (спектакль), устроить',s:'Our school {put} [on] a play every December.',q:'Have you ever been in a show someone put on?'},
+  {v:'sell out',ru:'быть распроданным',s:'The concert {sold} [out] in ten minutes.',q:'What event sold out before you could get a ticket?'},
+  {v:'go out',ru:'выходить (развлечься)',s:'We {go} [out] most Friday nights.',q:'Where do you go out in your town?'},
+  {v:'make up',ru:'выдумать',s:'He {made} [up] a story about a ghost in the theatre.',q:'Do you prefer stories that are made up or based on real events?'}]],
+ ['Stuff',[
+  {v:'throw away',ru:'выбросить',s:'Don’t {throw} [away] those boxes: I need them.',q:'What is hard for you to throw away?',x:['out']},
+  {v:'give away',ru:'отдать (бесплатно)',s:'I {gave} [away] all my old books to a library.',q:'What have you given away recently?',x:['out']},
+  {v:'sort out',ru:'разобрать, навести порядок; уладить',s:'I really need to {sort} [out] my wardrobe.',q:'What do you need to sort out at home?'},
+  {v:'put away',ru:'убрать на место',s:'{Put} your things [away] before dinner.',q:'Are you good at putting things away?',x:['back']},
+  {v:'clear out',ru:'освободить, расчистить',s:'We {cleared} [out] the garage at the weekend.',q:'When did you last clear out your cupboards?',x:['up']}]],
+ ['Money',[
+  {v:'pay back',ru:'вернуть (долг)',s:'Don’t worry, I’ll {pay} you [back] on Friday.',q:'Would you lend money again to a friend who never paid you back?'},
+  {v:'save up',ru:'копить',s:'I’m {saving} [up] for a new car.',q:'What are you saving up for?'},
+  {v:'splash out',ru:'раскошелиться, потратиться на дорогое',s:'For our anniversary we {splashed} [out] on a luxury hotel.',q:'What would you splash out on?'},
+  {v:'take out',ru:'взять (кредит)',s:'They {took} [out] a loan to buy a flat.',q:'Would you take out a loan to pay for education?'},
+  {v:'live on',ru:'жить на (сумму)',s:'It’s hard to {live} [on] a student grant.',q:'Could you live on half your income?'}]],
+ ['Events',[
+  {v:'put off',ru:'отложить',s:'The meeting has been {put} [off] until Monday.',q:'What do you always put off?',x:['back']},
+  {v:'call off',ru:'отменить',s:'They {called} [off] the match because of the rain.',q:'Have you ever called off a party or a trip?'},
+  {v:'turn up',ru:'прийти, появиться',s:'We invited fifty people, but only five {turned} [up].',q:'What do you do when guests turn up late?',x:['out']},
+  {v:'go ahead',ru:'состояться (по плану)',s:'The festival will {go} [ahead] despite the weather.',q:'Should outdoor events go ahead in bad weather?'},
+  {v:'dress up',ru:'нарядиться',s:'Everyone {dressed} [up] for the wedding.',q:'Do you like dressing up for events?'}]]
+];
+const ALL=T.flatMap((t,ti)=>t[1].map((it,k)=>({...it,t:t[0],ti,k})));
+const P1=['up','out','off','on','in','away','back','down','over','after','around','into','for','ahead','behind','through'];
+const P2=['on with','away with','out of','down on','up with','up to','in for','out with'];
+const part=it=>it.s.match(/\[(.+?)\]/)[1];
+const verbHTML=(s,fill,cls)=>esc(s).replace(/\{(.+?)\}/g,'<b class="pv">$1</b>').replace(/\[(.+?)\]/g,(m,p)=>`<span class="gap ${cls||''}">${fill?esc(fill):'&nbsp;'}</span>`);
+const full=s=>esc(s).replace(/\{(.+?)\}/g,'<b class="pv">$1</b>').replace(/\[(.+?)\]/g,'<b class="pv">$1</b>');
+function optsFor(it){const c=part(it),pool=(c.includes(' ')?P2:P1).filter(p=>p!==c&&!(it.x||[]).includes(p));return shuffle([c,...shuffle(pool).slice(0,3)])}
+function say(t){try{if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.9;const v=speechSynthesis.getVoices().find(x=>/en-GB/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}
+/* split items into even pages of at most `size` */
+function chunks(a,size){const n=Math.ceil(a.length/size),out=[];let i=0;for(let k=0;k<n;k++){const len=Math.ceil((a.length-i)/(n-k));out.push(a.slice(i,i+len));i+=len}return out}
+
+/* ---------- state ---------- */
+const MODES=['Cards','Particle','Match','Speak'];
+let round=0,topic=-1,mode=0,timers=[],keyFn=null;
+const items=()=>topic>=0?ALL.filter(x=>x.ti===topic):ALL.filter(x=>x.k===round);
+const srcName=()=>topic>=0?`Topic: ${T[topic][0]}`:`Mix ${round+1}: one verb from each of the 17 topics`;
+function clear(){timers.forEach(clearInterval);timers=[];keyFn=null;try{speechSynthesis.cancel()}catch(e){}}
+const every=(ms,f)=>{const t=setInterval(f,ms);timers.push(t);return t};
+const scr=$('#scr');
+function frame(title,sub,body,o={}){scr.innerHTML=`<div class="head"><div><h2>${title}</h2><p class="sub">${sub}</p></div><div>${o.right||''}</div></div><div class="body">${body}</div><div class="foot">${o.left||'<span></span>'}<span>${o.mid||''}</span>${o.next||'<span></span>'}</div>`}
+
+$('#rounds').innerHTML=[0,1,2,3,4].map(i=>`<button data-r="${i}">Mix ${i+1}</button>`).join('');
+$('#topic').innerHTML=`<option value="-1">All topics (mix)</option>`+T.map((t,i)=>`<option value="${i}">${t[0]}</option>`).join('');
+$('#tabs').innerHTML=MODES.map((m,i)=>`<button data-m="${i}">${m}</button>`).join('');
+$$('[data-r]').forEach(b=>b.onclick=()=>{round=+b.dataset.r;topic=-1;$('#topic').value='-1';render()});
+$('#topic').onchange=e=>{topic=+e.target.value;render()};
+$$('[data-m]').forEach(b=>b.onclick=()=>{mode=+b.dataset.m;render()});
+$('#brand').onclick=()=>{round=0;topic=-1;mode=0;$('#topic').value='-1';render()};
+if(new URLSearchParams(location.search).has('embed'))$('#back').style.display='none';
+document.addEventListener('keydown',e=>{if(keyFn&&!e.target.closest('select'))keyFn(e)});
+
+function render(){clear();
+  $$('[data-r]').forEach(b=>b.classList.toggle('on',topic<0&&+b.dataset.r===round));
+  $$('[data-m]').forEach(b=>b.classList.toggle('on',+b.dataset.m===mode));
+  [cards,particle,match,speak][mode]()}
+
+/* ---------- 1. Cards (Quizlet style) ---------- */
+function cards(){const list=items();let order=list.map((_,i)=>i),pos=0,fl=false,know=new Set(),learn=new Set(),fin=false;
+  const go=d=>{fl=false;pos=Math.max(0,pos+d);if(pos>=order.length)fin=true;draw()};
+  const mark=k=>{const i=order[pos];(k?know:learn).add(i);(k?learn:know).delete(i);go(1)};
+  function draw(){
+    if(fin){keyFn=null;frame('Flashcards',srcName(),`<div class="done"><div class="dt">Round complete</div><div class="rq"><b class="v">Know it: ${know.size}</b> &nbsp;·&nbsp; <b class="x">Still learning: ${learn.size}</b></div>${learn.size?`<div class="chips" style="justify-content:center">${[...learn].map(i=>`<span class="chip">${esc(list[i].v)}</span>`).join('')}</div>`:''}<div style="display:flex;gap:8px">${learn.size?`<button class="btn gold" id="ag">Study these ${learn.size} again</button>`:''}<button class="btn ghost" id="rs">Start again</button></div></div>`,{next:`<button class="btn" onclick="mode=1;render()">Particle game →</button>`});
+      const a=$('#ag');if(a)a.onclick=()=>{order=[...learn];learn=new Set();pos=0;fin=false;draw()};$('#rs').onclick=()=>cards();return}
+    const it=list[order[pos]];
+    frame('Flashcards',srcName()+'. Say the meaning in Russian, then flip. Space flips, arrows move.',`<div class="qz"><div class="flip qcard ${fl?'f':''}"><div class="in">
+      <div class="face a"><span class="qtop label">${esc(it.t)}</span><div class="qterm">${esc(it.v)}</div><button class="play" data-say aria-label="Listen">▶</button><div class="qhint">click the card to flip</div></div>
+      <div class="face b"><span class="qtop label">${esc(it.t)}</span><div class="qru">${esc(it.ru)}</div><div class="qex">${full(it.s)}</div><button class="play" data-say aria-label="Listen">▶</button></div></div></div>
+      <div class="qprog"><i style="width:${pos/order.length*100}%"></i></div>
+      <div class="qbar"><div class="qnav"><button class="btn ghost sm" id="pv" ${pos?'':'disabled'} aria-label="Previous">←</button><span class="cnt">${pos+1} / ${order.length}</span><button class="btn ghost sm" id="nx" aria-label="Next">→</button></div>
+      <div class="qk"><button class="btn ghost sm learn" id="ln">Still learning</button><button class="btn ghost sm know" id="kn">Know it</button></div><button class="btn ghost sm" id="sh">Shuffle</button></div></div>`);
+    const card=$('.qcard');card.onclick=e=>{if(e.target.closest('button'))return;fl=!fl;card.classList.toggle('f',fl)};
+    $$('[data-say]').forEach(b=>b.onclick=e=>{e.stopPropagation();say(fl?it.s.replace(/[{}\[\]]/g,''):it.v)});
+    $('#pv').onclick=()=>go(-1);$('#nx').onclick=()=>go(1);$('#kn').onclick=()=>mark(1);$('#ln').onclick=()=>mark(0);
+    $('#sh').onclick=()=>{order=shuffle(order);pos=0;fl=false;draw()};
+    keyFn=e=>{if(e.key===' '){e.preventDefault();card.click()}else if(e.key==='ArrowRight')go(1);else if(e.key==='ArrowLeft'&&pos)go(-1)}}
+  draw()}
+
+/* ---------- 2. Particle: bombs, 15 seconds each ---------- */
+function particle(){const list=shuffle(items()),pages=chunks(list,4);let pg=0;
+  const st=list.map(it=>({it,opts:optsFor(it),pick:null,boom:false,left:15,run:false}));
+  const score=()=>st.filter(s=>s.pick===part(s.it)).length;
+  every(1000,()=>{let boom=false;st.forEach((s,i)=>{if(s.run&&s.pick==null&&!s.boom){s.left--;if(s.left<=0){s.boom=true;s.run=false;boom=true}else{const b=$(`.bomb[data-b="${i}"]`);if(b)b.textContent=s.left}}});if(boom&&pg<pages.length)draw()});
+  function draw(){
+    if(pg>=pages.length){const wrong=st.filter(s=>s.pick!==part(s.it));
+      frame('Particle game: result',srcName(),`<div class="done"><div class="dt">Score ${score()} / ${st.length}</div>${wrong.length?`<table class="mis">${wrong.map(s=>`<tr><td>${s.boom?'<b class="x">Too late</b>':`<b class="x">${esc(s.pick)}</b>`}</td><td>${full(s.it.s)}</td></tr>`).join('')}</table>`:'<div class="rq"><b class="v">No mistakes.</b></div>'}<button class="btn gold" id="pa">Play again</button></div>`,{left:`<button class="btn ghost" id="bk">← Back</button>`,next:`<button class="btn" onclick="mode=2;render()">Match →</button>`});
+      $('#pa').onclick=()=>particle();$('#bk').onclick=()=>{pg--;draw()};return}
+    const base=pages.slice(0,pg).reduce((n,p)=>n+p.length,0);
+    frame('Particle game',srcName()+'. Tap a bomb, then choose the particle before it explodes.',`<div class="rows">${pages[pg].map((it,j)=>{const i=base+j,s=st[i],fin=s.pick!=null||s.boom,ok=s.pick===part(it);
+      const bc=s.boom?'boom':(s.pick!=null?'safe':(s.run?'run':''));
+      return `<div class="row brow"><button class="bomb ${bc}" data-b="${i}" ${fin?'disabled':''}>${s.boom?'BOOM':(s.pick!=null?(ok?'✓':'✕'):s.left)}</button><div><div class="rq"><span class="num">${i+1}</span>${fin?verbHTML(it.s,part(it),ok?'v':'x'):verbHTML(it.s)}<span class="tp">${esc(it.t)}</span></div>
+      ${fin?`<div class="rx"><b class="${ok?'v':'x'}">${s.boom?'Too late.':(ok?'Correct.':`Not “${esc(s.pick)}”.`)}</b> <b>${esc(it.v)}</b> · ${esc(it.ru)}</div>`:(s.run?`<div class="opts">${s.opts.map(o=>`<button class="opt" data-i="${i}">${esc(o)}</button>`).join('')}</div>`:'<div class="rx" style="color:var(--muted)">Tap the bomb to see the options.</div>')}</div></div>`}).join('')}</div>`,
+      {right:`<span class="score">Score ${score()} / ${st.length}</span>`,left:pg?`<button class="btn ghost" id="bk">← Back</button>`:'<span></span>',mid:`<span class="cnt">Screen ${pg+1} / ${pages.length}</span>`,next:`<button class="btn" id="nx">${pg===pages.length-1?'See result':'Next screen →'}</button>`});
+    $$('[data-b]').forEach(b=>b.onclick=()=>{const s=st[+b.dataset.b];if(s.run)return;s.run=true;draw()});
+    $$('.opt[data-i]').forEach(b=>b.onclick=()=>{const s=st[+b.dataset.i];s.pick=b.textContent;s.run=false;draw()});
+    $('#nx').onclick=()=>{pg++;draw()};const bk=$('#bk');if(bk)bk.onclick=()=>{pg--;draw()}}
+  draw()}
+
+/* ---------- 3. Match: verb ↔ Russian ---------- */
+function match(){const list=shuffle(items()),pages=chunks(list,6);let pg=0,miss=0,t=0;const done=new Set();
+  every(1000,()=>{if(done.size<list.length&&pg<pages.length){t++;const s=$('#ms');if(s)s.textContent=stat()}});
+  const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+  const stat=()=>`${done.size} / ${list.length} · ${fmt(t)} · mistakes ${miss}`;
+  function draw(){
+    if(pg>=pages.length){frame('Match: result',srcName(),`<div class="done"><div class="dt">All ${list.length} pairs in ${fmt(t)}</div><div class="rq">Mistakes: ${miss}</div><button class="btn gold" id="pa">Play again</button></div>`,{next:`<button class="btn" onclick="mode=3;render()">Speak →</button>`});$('#pa').onclick=()=>match();return}
+    const P=pages[pg],R=shuffle(P.map((_,i)=>i));let sel=null;
+    frame('Match',srcName()+'. Tap a phrasal verb, then its meaning.',`<div class="match">${P.map((it,i)=>`<button class="mt l ${done.has(it)?'ok':''}" data-l="${i}">${esc(it.v)}</button><button class="mt ${done.has(P[R[i]])?'ok':''}" data-r="${R[i]}">${esc(P[R[i]].ru)}</button>`).join('')}</div>`,
+      {right:`<span class="score" id="ms">${stat()}</span>`,mid:`<span class="cnt">Screen ${pg+1} / ${pages.length}</span>`,next:P.every(it=>done.has(it))?`<button class="btn" id="nx">${pg===pages.length-1?'See result':'Next screen →'}</button>`:'<span></span>'});
+    $$('[data-l]').forEach(b=>b.onclick=()=>{if(done.has(P[+b.dataset.l]))return;$$('[data-l]').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=+b.dataset.l});
+    $$('[data-r]').forEach(b=>b.onclick=()=>{const r=+b.dataset.r;if(sel==null||done.has(P[r]))return;
+      if(r===sel){done.add(P[r]);sel=null;draw()}else{miss++;b.classList.add('shake');setTimeout(()=>b.classList.remove('shake'),400);$('#ms').textContent=stat()}});
+    const nx=$('#nx');if(nx)nx.onclick=()=>{pg++;draw()}}
+  draw()}
+
+/* ---------- 4. Speak: question cards, answer on the back ---------- */
+function speak(){const list=shuffle(items()),pages=chunks(list,4);let pg=0;
+  function draw(){const P=pages[pg];
+    frame('Speak',srcName()+'. Answer with the phrasal verb in a full sentence, then flip to check its meaning.',`<div class="sgrid">${P.map(it=>`<div class="flip"><div class="in"><div class="face a"><span class="qtop label">${esc(it.t)}</span><div class="sq">${esc(it.q)}</div><div class="qhint">click to flip</div></div>
+      <div class="face b"><div class="qterm" style="font-size:26px">${esc(it.v)}</div><div class="qru">${esc(it.ru)}</div><div class="qex">${full(it.s)}</div></div></div></div>`).join('')}</div>`,
+      {left:pg?`<button class="btn ghost" id="bk">← Back</button>`:'<span></span>',mid:`<span class="cnt">Screen ${pg+1} / ${pages.length}</span>`,next:pg<pages.length-1?`<button class="btn" id="nx">Next screen →</button>`:`<button class="btn ghost" id="ag">Start again</button>`});
+    $$('.flip').forEach(f=>f.onclick=()=>f.classList.toggle('f'));
+    const nx=$('#nx');if(nx)nx.onclick=()=>{pg++;draw()};const bk=$('#bk');if(bk)bk.onclick=()=>{pg--;draw()};const ag=$('#ag');if(ag)ag.onclick=()=>speak()}
+  draw()}
+
+render();
+</script>
+</body>
+</html>
