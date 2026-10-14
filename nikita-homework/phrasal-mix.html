@@ -96,6 +96,8 @@ b.v{color:var(--green)} b.x{color:var(--red)}
 .mt.ok{border-color:var(--green);background:var(--greenbg);cursor:default}
 .mt.shake{animation:shake .35s;border-color:var(--red)}
 @keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.seg3{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.seg3 button{border:2px solid var(--line);background:#fff;border-radius:10px;padding:5px 11px;font-size:15px;font-weight:800;color:var(--navy);white-space:nowrap}.seg3 button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.mt .gap{min-width:46px}
 table.mis{border-collapse:collapse;font-size:16px;text-align:left;max-width:760px}
 table.mis td{border-bottom:1px solid var(--line);padding:5px 8px;vertical-align:top}
 @media(max-height:620px){.rq{font-size:18px}.row{padding:6px 12px}.rows{gap:6px}.qterm{font-size:34px}.qex{font-size:17px}.sgrid .sq{font-size:18px}.mt{padding:6px 12px;font-size:17px}h2{font-size:22px}.sub{font-size:15px}.scr{padding:8px 20px 6px}}
@@ -224,7 +226,10 @@ const T=[
   {v:'go ahead',ru:'состояться (по плану)',s:'The festival will {go} [ahead] despite the weather.',q:'Should outdoor events go ahead in bad weather?'},
   {v:'dress up',ru:'нарядиться',s:'Everyone {dressed} [up] for the wedding.',q:'Do you like dressing up for events?'}]]
 ];
-const ALL=T.flatMap((t,ti)=>t[1].map((it,k)=>({...it,t:t[0],ti,k})));
+/* plain English meaning for the second Match set */
+const EN={"take on": "hire; accept (work)", "set up": "establish (a business)", "turn down": "reject (an offer)", "carry on": "continue", "fill in": "complete (a form)", "try on": "put on to check the size", "pick up": "buy (often cheaply)", "shop around": "compare prices in different shops", "take back": "return (to a shop)", "go for": "choose", "set off": "start a journey", "get on": "board (a bus, train, plane)", "get off": "leave (a bus, train, plane)", "drop off": "drive someone somewhere and leave them", "hold up": "delay", "eat out": "eat in a restaurant", "cut down on": "reduce", "go off": "go bad", "heat up": "make (food) hot again", "run out of": "have none left", "chill out": "relax", "hang out": "spend free time with friends", "take up": "start (a hobby)", "sleep in": "sleep later than usual", "get away": "go on holiday", "get on with": "have a good relationship with", "look after": "take care of", "bring up": "raise (a child)", "fall out": "quarrel", "take after": "resemble (a relative)", "break into": "enter illegally", "get away with": "escape punishment for", "lock up": "imprison", "let off": "not punish", "turn yourself in": "surrender to the police", "move in": "start living in a new home", "move out": "leave your home for good", "do up": "renovate", "settle in": "get used to a new place", "tidy up": "make neat", "drop out": "leave a course without finishing", "catch up": "reach the same level as others", "look up": "search for (information)", "hand in": "submit", "fall behind": "fail to keep up", "work out": "exercise", "give up": "quit (a habit)", "get over": "recover from", "pass out": "faint", "warm up": "prepare your body for exercise", "check in": "register on arrival", "check out": "pay and leave (a hotel)", "put up": "give someone a bed for the night", "stop over": "break a long journey", "look around": "explore (a place)", "find out": "discover", "carry out": "conduct (research)", "come up with": "think of, invent", "die out": "become extinct", "figure out": "understand, solve", "hang up": "end a phone call", "call back": "return a phone call", "hold on": "wait (on the phone)", "get through": "manage to reach someone by phone", "cut off": "disconnect", "come out": "be released", "put on": "stage (a show)", "sell out": "have no tickets left", "go out": "go somewhere to have fun", "make up": "invent (a story)", "throw away": "discard", "give away": "give for free", "sort out": "organise; resolve", "put away": "return to its place", "clear out": "empty (a room or cupboard)", "pay back": "repay", "save up": "keep money for something", "splash out": "spend a lot of money", "take out": "get (a loan)", "live on": "have just this money to live", "put off": "postpone", "call off": "cancel", "turn up": "arrive, appear", "go ahead": "take place as planned", "dress up": "wear smart clothes"};
+const ALL=T.flatMap((t,ti)=>t[1].map((it,k)=>({...it,t:t[0],ti,k,en:EN[it.v]})));
+const blankVerb=s=>esc(s).replace(/\{(.+?)\}/g,'<span class="gap">&nbsp;</span>').replace(/\[(.+?)\]/g,'<span class="gap">&nbsp;</span>');
 const P1=['up','out','off','on','in','away','back','down','over','after','around','into','for','ahead','behind','through'];
 const P2=['on with','away with','out of','down on','up with','up to','in for','out with'];
 const part=it=>it.s.match(/\[(.+?)\]/)[1];
@@ -302,15 +307,26 @@ function particle(){const list=shuffle(items()),pages=chunks(list,4);let pg=0;
   draw()}
 
 /* ---------- 3. Match: verb ↔ Russian ---------- */
-function match(){const list=shuffle(items()),pages=chunks(list,6);let pg=0,miss=0,t=0;const done=new Set();
+/* three Match sets: Russian, English meaning, in context */
+const MSETS=[
+ {name:'1 · Russian',sub:'Tap a phrasal verb, then its Russian meaning.',L:it=>esc(it.v),R:it=>esc(it.ru),cols:'1fr 1.25fr'},
+ {name:'2 · English',sub:'Tap a phrasal verb, then its plain English meaning.',L:it=>esc(it.v),R:it=>esc(it.en),cols:'1fr 1.25fr'},
+ {name:'3 · In context',sub:'Tap a sentence, then the phrasal verb that completes it.',L:it=>blankVerb(it.s),R:it=>esc(it.v),cols:'1.9fr 1fr'}];
+let mset=0;
+function match(){const ms=MSETS[mset],list=shuffle(items()),pages=chunks(list,6);let pg=0,miss=0,t=0;const done=new Set();
   every(1000,()=>{if(done.size<list.length&&pg<pages.length){t++;const s=$('#ms');if(s)s.textContent=stat()}});
   const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
   const stat=()=>`${done.size} / ${list.length} · ${fmt(t)} · mistakes ${miss}`;
+  const setBar=`<div class="seg3">${MSETS.map((m,i)=>`<button class="${i===mset?'on':''}" data-set="${i}">${m.name}</button>`).join('')}</div>`;
+  const wireSets=()=>$$('[data-set]').forEach(b=>b.onclick=()=>{mset=+b.dataset.set;render()});
   function draw(){
-    if(pg>=pages.length){frame('Match: result',srcName(),`<div class="done"><div class="dt">All ${list.length} pairs in ${fmt(t)}</div><div class="rq">Mistakes: ${miss}</div><button class="btn gold" id="pa">Play again</button></div>`,{next:`<button class="btn" onclick="mode=3;render()">Speak →</button>`});$('#pa').onclick=()=>match();return}
+    if(pg>=pages.length){const nxt=mset<MSETS.length-1?`<button class="btn" id="ns">Next: set ${MSETS[mset+1].name} →</button>`:`<button class="btn" onclick="mode=3;render()">Speak →</button>`;
+      frame('Match: result',srcName(),`<div class="done"><div class="label">Set ${ms.name}</div><div class="dt">All ${list.length} pairs in ${fmt(t)}</div><div class="rq">Mistakes: ${miss}</div><button class="btn gold" id="pa">Play again</button></div>`,{right:setBar,next:nxt});
+      wireSets();$('#pa').onclick=()=>match();const ns=$('#ns');if(ns)ns.onclick=()=>{mset++;render()};return}
     const P=pages[pg],R=shuffle(P.map((_,i)=>i));let sel=null;
-    frame('Match',srcName()+'. Tap a phrasal verb, then its meaning.',`<div class="match">${P.map((it,i)=>`<button class="mt l ${done.has(it)?'ok':''}" data-l="${i}">${esc(it.v)}</button><button class="mt ${done.has(P[R[i]])?'ok':''}" data-r="${R[i]}">${esc(P[R[i]].ru)}</button>`).join('')}</div>`,
-      {right:`<span class="score" id="ms">${stat()}</span>`,mid:`<span class="cnt">Screen ${pg+1} / ${pages.length}</span>`,next:P.every(it=>done.has(it))?`<button class="btn" id="nx">${pg===pages.length-1?'See result':'Next screen →'}</button>`:'<span></span>'});
+    frame('Match',srcName()+'. '+ms.sub,`<div class="match" style="grid-template-columns:${ms.cols}">${P.map((it,i)=>`<button class="mt l ${done.has(it)?'ok':''}" data-l="${i}">${ms.L(it)}</button><button class="mt ${mset<2?'':'l'} ${done.has(P[R[i]])?'ok':''}" data-r="${R[i]}">${ms.R(P[R[i]])}</button>`).join('')}</div>`,
+      {right:setBar,left:`<span class="score" id="ms">${stat()}</span>`,mid:`<span class="cnt">Screen ${pg+1} / ${pages.length}</span>`,next:P.every(it=>done.has(it))?`<button class="btn" id="nx">${pg===pages.length-1?'See result':'Next screen →'}</button>`:'<span></span>'});
+    wireSets();
     $$('[data-l]').forEach(b=>b.onclick=()=>{if(done.has(P[+b.dataset.l]))return;$$('[data-l]').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=+b.dataset.l});
     $$('[data-r]').forEach(b=>b.onclick=()=>{const r=+b.dataset.r;if(sel==null||done.has(P[r]))return;
       if(r===sel){done.add(P[r]);sel=null;draw()}else{miss++;b.classList.add('shake');setTimeout(()=>b.classList.remove('shake'),400);$('#ms').textContent=stat()}});
