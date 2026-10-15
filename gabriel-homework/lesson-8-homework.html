@@ -7,18 +7,18 @@
 <title>Gabi · Homework · Crime words</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="../gabi-english-hub/skills.css?v=20261014a">
+<link rel="stylesheet" href="../gabi-english-hub/skills.css?v=20261015full">
 <style>.letter{background:#fff;border-radius:12px;padding:8px 12px;font-size:15.5px;line-height:1.4;border-left:5px solid var(--acc)}.letter p{margin:0 0 5px}</style>
 </head>
 <body>
 <script src="../gabi-english-hub/skills.js?v=20261014a"></script>
 <script>
-/* Homework 8, after Module 2 lesson 1 (Law and order). Crime vocabulary: learn (flashcards + memory) -> recall (definitions, situations)
+/* Homework 8, after Module 2 lesson 1 (Law and order). Crime vocabulary (+ 5 words and word formation from lesson 15 Oct): learn (flashcards + memory) -> recall (definitions, situations)
    -> word families + mistakes -> something else: advice to a teenager (writing). Two activities per screen. */
 const LETTER=`<h4>Teen Help · your advice page</h4><div class="letter"><p>Dear Teen Help,</p><p>My best friend wants me to help him take sweets from a shop after school. I just have to watch the door. He says everybody does it and it isn’t a real crime. I don’t want to lose my friend. What should I do?</p><p>Sam, 13</p></div><h4>Useful language</h4><ul><li>It <b>is</b> / <b>isn’t</b> a crime because …</li><li>You <b>should</b> … · You <b>could</b> … · <b>Why don’t you</b> … ?</li><li><b>If I were you, I’d</b> …</li><li>A real friend wouldn’t …</li></ul>`;
-const has3=t=>{const W=['theft','thief','steal','stole','stolen','shoplift','shoplifting','shoplifter','crime','criminal','pickpocket','burglar','robbery','rob','vandalism','fraud','police','illegal','arrest','punish'];const n=t.toLowerCase();return W.filter(w=>new RegExp('\\b'+w).test(n)).length>=3};
+const has3=t=>{const W=['theft','thief','steal','stole','stolen','shoplift','shoplifting','shoplifter','crime','criminal','pickpocket','burglar','robbery','rob','vandalism','fraud','police','illegal','arrest','punish','robber','smuggl','stalk','murder','terror'];const n=t.toLowerCase();return W.filter(w=>new RegExp('\\b'+w).test(n)).length>=3};
 Lesson.boot({kicker:'Module 2 · Homework · 14 October',hub:'./',steps:[
-{stage:'Learn',title:'13 crimes',hint:'Learn the words. Turn each card over to see the translation. <small>Then find the pairs in Memory.</small>',cols:'1fr 1.15fr',
+{stage:'Learn',title:'18 crimes',hint:'13 words from last lesson and 5 new words from today. Learn the words. Turn each card over to see the translation. <small>Then find the pairs in Memory.</small>',cols:'1fr 1.15fr',
  acts:[
  {type:'cards',title:'Flashcards',items:[
   {w:'theft',ru:'кража',d:'taking something that belongs to another person',ex:'Car theft is a big problem in this city.',img:'../gabi-english-hub/assets/u2/crimes/p-theft.jpg'},
@@ -33,18 +33,26 @@ Lesson.boot({kicker:'Module 2 · Homework · 14 October',hub:'./',steps:[
   {w:'shoplifting',ru:'кража в магазине',d:'stealing something from a shop',ex:'She was caught shoplifting a lipstick.',img:'../gabi-english-hub/assets/u2/crimes/p-shoplifting.jpg'},
   {w:'arson',ru:'поджог',d:'starting a fire on purpose',ex:'The police think the fire was arson.',img:'../gabi-english-hub/assets/u2/crimes/p-arson.jpg'},
   {w:'kidnapping',ru:'похищение человека',d:'taking someone away by force and keeping them',ex:'The kidnapping of the businessman was in all the news.',img:'../gabi-english-hub/assets/u2/crimes/p-kidnapping.jpg'},
-  {w:'mugging',ru:'уличное ограбление',d:'attacking someone in the street and taking their things',ex:'He was the victim of a mugging on his way home.',img:'../gabi-english-hub/assets/u2/crimes/p-mugging.jpg'}]},
- {type:'memory',title:'Memory',cols:4,pairs:[{t:'burglary',img:'../gabi-english-hub/assets/u2/crimes/p-burglary.jpg'},{t:'robbery',img:'../gabi-english-hub/assets/u2/crimes/p-robbery.jpg'},{t:'vandalism',img:'../gabi-english-hub/assets/u2/crimes/p-vandalism.jpg'},{t:'fraud',img:'../gabi-english-hub/assets/u2/crimes/p-fraud.jpg'},{t:'shoplifting',img:'../gabi-english-hub/assets/u2/crimes/p-shoplifting.jpg'},{t:'kidnapping',img:'../gabi-english-hub/assets/u2/crimes/p-kidnapping.jpg'}]}]},
+  {w:'mugging',ru:'уличное ограбление',d:'attacking someone in the street and taking their things',ex:'He was the victim of a mugging on his way home.',img:'../gabi-english-hub/assets/u2/crimes/p-mugging.jpg'},
+  {w:'car theft',ru:'угон машины',d:'stealing a car',ex:'Car theft is common in this part of the city.',img:'../gabi-english-hub/assets/u2/flash/car-theft.jpg'},
+  {w:'murder',ru:'убийство',d:'killing a person on purpose',ex:'The police are still looking for the man who committed the murder.',img:'../gabi-english-hub/assets/u2/flash/murder.jpg'},
+  {w:'smuggling',ru:'контрабанда',d:'taking things into or out of a country illegally',ex:'Two men were arrested for cigarette smuggling at the border.',img:'../gabi-english-hub/assets/u2/flash/smuggling.jpg'},
+  {w:'stalking',ru:'преследование, слежка',d:'following and watching someone again and again so that they feel afraid',ex:'She called the police because a man was stalking her.',img:'../gabi-english-hub/assets/u2/flash/stalking.jpg'},
+  {w:'terrorism',ru:'терроризм',d:'using violence, like bombs, to frighten people for political reasons',ex:'The city has more police at the station because of the danger of terrorism.',img:'../gabi-english-hub/assets/u2/flash/terrorism.jpg'}]},
+ {type:'memory',title:'Memory',cols:4,pairs:[{t:'burglary',img:'../gabi-english-hub/assets/u2/crimes/p-burglary.jpg'},{t:'robbery',img:'../gabi-english-hub/assets/u2/crimes/p-robbery.jpg'},{t:'smuggling',img:'../gabi-english-hub/assets/u2/flash/smuggling.jpg'},{t:'stalking',img:'../gabi-english-hub/assets/u2/flash/stalking.jpg'},{t:'shoplifting',img:'../gabi-english-hub/assets/u2/crimes/p-shoplifting.jpg'},{t:'terrorism',img:'../gabi-english-hub/assets/u2/flash/terrorism.jpg'}]}]},
 {stage:'Practise',title:'Remember the words',hint:'Write the crime for each meaning. Then name the crime in each story. <small>Three wrong answers and the floor is lava: start again.</small>',cols:'1fr 1.05fr',
  acts:[
  {type:'gaps',title:'What is the word?',dense:true,items:[
-  {pre:'stealing from someone’s pocket or bag without them noticing',post:'',ph:'p…',ans:['pickpocketing']},
+  {pre:'stealing from someone’s pocket or bag',post:'',ph:'p…',ans:['pickpocketing']},
   {pre:'starting a fire on purpose',post:'',ph:'a…',ans:['arson']},
   {pre:'a crime that uses computers or the internet',post:'',ph:'c…',ans:['cybercrime']},
-  {pre:'bothering or upsetting someone again and again',post:'',ph:'h…',ans:['harassment']},
+  {pre:'upsetting someone again and again',post:'',ph:'h…',ans:['harassment']},
   {pre:'tricking someone to get their money',post:'',ph:'f…',ans:['fraud']},
-  {pre:'taking someone away by force',post:'',ph:'k…',ans:['kidnapping']}]},
- {type:'quiz',title:'Floor is lava',label:'Story',lives:3,cols:2,opts:['arson','cybercrime','pickpocketing','harassment','assault','fraud','shoplifting','mugging'],items:[
+  {pre:'taking someone away by force',post:'',ph:'k…',ans:['kidnapping']},
+  {pre:'bringing things into a country illegally',post:'',ph:'s…',ans:['smuggling']},
+  {pre:'following someone so they feel afraid',post:'',ph:'s…',ans:['stalking']},
+  {pre:'using bombs to frighten people',post:'',ph:'t…',ans:['terrorism']}]},
+ {type:'quiz',title:'Floor is lava',label:'Story',lives:3,cols:2,opts:['arson','cybercrime','pickpocketing','harassment','assault','fraud','shoplifting','mugging','smuggling','stalking','murder','car theft'],items:[
   {q:'Someone sets fire to an empty school building at night.',a:'arson'},
   {q:'A hacker steals passwords from thousands of computers.',a:'cybercrime'},
   {q:'On the metro, a man takes a wallet from a woman’s bag. She doesn’t notice.',a:'pickpocketing'},
@@ -52,17 +60,41 @@ Lesson.boot({kicker:'Module 2 · Homework · 14 October',hub:'./',steps:[
   {q:'A man hits another man outside a café and hurts him.',a:'assault'},
   {q:'Someone phones an old lady, says he is from her bank and gets her card number.',a:'fraud'},
   {q:'A teenager puts a phone case in his pocket and leaves the shop.',a:'shoplifting'},
-  {q:'A man grabs a tourist’s bag in the street and runs away.',a:'mugging'}]}]},
-{stage:'Practise',title:'Word families and mistakes',hint:'Sort the words: the crime, the person, the verb. Then find the mistake in each sentence.',cols:'1fr 1.1fr',
+  {q:'A man grabs a tourist’s bag in the street and runs away.',a:'mugging'},
+  {q:'A lorry driver hides 2,000 phones under boxes of fruit to bring them into the country.',a:'smuggling'},
+  {q:'A man waits outside a girl’s house every evening and follows her to school.',a:'stalking'},
+  {q:'Someone breaks the window of a car and drives it away.',a:'car theft'},
+  {q:'A man kills his business partner. The police find the body in the river.',a:'murder'}]}]},
+{stage:'Practise',title:'Word building',hint:'Sort the words: the crime, the person, the verb. Then make the right word from the word in CAPITALS.',cols:'1fr 1.15fr',
  acts:[
- {type:'sort',title:'Crime · criminal · verb',cols:['crime','criminal','verb'],items:[{t:'mugging',c:0},{t:'mugger',c:1},{t:'mug',c:2},{t:'shoplifting',c:0},{t:'shoplifter',c:1},{t:'shoplift',c:2},{t:'kidnapping',c:0},{t:'kidnapper',c:1},{t:'kidnap',c:2},{t:'burglary',c:0},{t:'burglar',c:1},{t:'burgle',c:2}]},
+ {type:'sort',title:'Crime · criminal · verb',cols:['crime','criminal','verb'],items:[{t:'robbery',c:0},{t:'robber',c:1},{t:'rob',c:2},{t:'theft',c:0},{t:'thief',c:1},{t:'steal',c:2},{t:'smuggling',c:0},{t:'smuggler',c:1},{t:'smuggle',c:2},{t:'terrorism',c:0},{t:'terrorist',c:1},{t:'terrorise',c:2},{t:'stalking',c:0},{t:'stalker',c:1},{t:'stalk',c:2},{t:'vandalism',c:0},{t:'vandal',c:1},{t:'vandalise',c:2}]},
+ {type:'gaps',title:'Word formation',inline:true,tail:'in our street this year.',items:[
+  {html:1,pre:'<b class="wf">ROB</b> Two armed',ans:['robbers']},
+  {html:1,pre:' ran out of the bank.<br><b class="wf">ROB</b> The',ans:['robbery']},
+  {html:1,pre:' happened at 3 a.m.<br><b class="wf">ROB</b> Somebody',ans:['robbed']},
+  {html:1,pre:' the jeweller’s last night.<br><b class="wf">THIEF</b> Two',ans:['thieves']},
+  {html:1,pre:' were caught at the airport.<br><b class="wf">STEAL</b> They',ans:['stole']},
+  {html:1,pre:' three paintings from the museum.<br><b class="wf">MURDER</b> The police arrested the',ans:['murderer']},
+  {html:1,pre:'.<br><b class="wf">SMUGGLE</b> Cigarette',ans:['smuggling']},
+  {html:1,pre:' is a serious crime.<br><b class="wf">STALK</b> The singer was afraid of a',ans:['stalker']},
+  {html:1,pre:'.<br><b class="wf">TERROR</b> The',ans:['terrorist']},
+  {html:1,pre:' attack shocked the country.<br><b class="wf">BURGLE</b> There were five',ans:['burglaries']}]}]},
+{stage:'Practise',title:'Meanings and mistakes',hint:'Match today’s words to their meanings. Then find the mistake in each sentence.',cols:'1fr 1.1fr',
+ acts:[
+ {type:'match',title:'Today’s words',tip:'Tap a word, then its meaning.',items:[
+  {l:'murderer',r:'a person who kills someone on purpose'},
+  {l:'smuggler',r:'a person who takes things into a country illegally'},
+  {l:'stalker',r:'a person who follows and watches someone'},
+  {l:'terrorist',r:'a person who uses bombs to frighten people'},
+  {l:'robber',r:'a person who takes money from a bank or a shop using force'},
+  {l:'car thief',r:'a person who steals cars'}]},
  {type:'hunt',title:'Error hunter',tip:'Click the word with the mistake.',items:[
   {s:'Someone robbed my phone on the bus.',bad:1,fix:'stole',why:'steal a thing · rob a person or a place'},
+  {s:'The robbery ran out of the bank with the money.',bad:1,fix:'robbers',why:'robbery = the crime, robber = the person'},
   {s:'The thiefs ran away before the police came.',bad:1,fix:'thieves',why:'one thief, two thieves'},
-  {s:'A burglary broke into our neighbour’s house.',bad:1,fix:'burglar',why:'burglary = the crime, burglar = the person'},
-  {s:'He was arrested for shoplifter.',bad:4,fix:'shoplifting',why:'arrested for + the crime'},
+  {s:'He was arrested for smuggler at the border.',bad:4,fix:'smuggling',why:'arrested for + the crime'},
   {s:'Two men stole the bank last night.',bad:2,fix:'robbed',why:'rob a bank'},
-  {s:'The police is looking for the mugger.',bad:2,fix:'are',why:'the police are'}]}]},
+  {s:'The police is looking for the murderer.',bad:2,fix:'are',why:'the police are'}]}]},
 {stage:'Write',title:'Advice for Sam',hint:'Sam wrote to an advice page. Write your answer (60–90 words). <small>The list turns green as you write. Then press Submit to teacher.</small>',split:'minmax(0,.85fr) minmax(0,1.15fr)',
  side:{card:LETTER},
  act:{type:'write',submit:true,to:'Sam',subject:'Re: My friend and the sweets',min:60,max:90,ph:'Hi Sam,',checks:[

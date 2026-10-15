@@ -316,3 +316,39 @@ form[data-form]{display:flex;flex-direction:column;gap:10px;min-height:0;flex:1}
 .act.panel form.fl-in input{height:40px}
 .act.panel .cloze:has(.wf){line-height:1.5;font-size:16.5px}.act.panel .cloze:has(.wf) .ig input{width:112px;height:28px;font-size:16px;padding:0 6px;margin:2px 0}
 .act.panel .cloze:has(.wf){line-height:1.4;font-size:16px}.act.panel .cloze:has(.wf) .ig input{height:26px;margin:1px 0}
+
+/* ===== Full-screen tasks (15.10.2026): tasks use the whole screen, pictures and answers grow with it ===== */
+.sheet:not(.two) .work{max-width:none}
+.pbody>form{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.act.panel .picgrid{flex:1 1 auto;min-height:0;grid-auto-rows:minmax(0,1fr)}
+.act.panel .pic{min-height:0}
+.act.panel .pic img{flex:1;min-height:70px;height:auto;aspect-ratio:auto}
+.act.panel .pic input{font-size:17px;padding:6px 9px}
+.act.panel .memory{flex:1 1 auto;min-height:0;grid-auto-rows:minmax(0,1fr)}
+.act.panel .opts{flex:1 1 auto;min-height:0;grid-auto-rows:minmax(44px,1fr)}
+.act.panel .opts button{font-size:18px}
+.act.panel p.q{font-size:clamp(19px,1.6vw,24px)}
+/* bigger text in tasks so they fill the screen (not shrunk) */
+.act.panel .gaps,.act.panel .gaps.dense{font-size:clamp(18px,calc(.7vw + 1vh),22px);gap:clamp(6px,1.6vh,16px)}
+.act.panel .gaps input{width:clamp(150px,13vw,240px);padding:5px 10px}
+.act.panel .hunt{font-size:clamp(18px,calc(.7vw + 1vh),22px);gap:clamp(6px,1.8vh,18px)}
+.act.panel .cloze,.act.panel .cloze:has(.wf){font-size:clamp(17.5px,calc(.65vw + .95vh),21px);line-height:1.9}
+.act.panel .cloze .wf{font-size:14px}
+.act.panel .cloze input,.act.panel .cloze select{font-size:inherit}
+.act.panel .match button,.act.panel .sortpool button,.act.panel .scol button{font-size:clamp(16px,calc(.55vw + .85vh),20px);padding:7px 12px}
+.act.panel .scols{flex:1 1 auto;min-height:120px}
+.act.panel .order.compact button,.act.panel .order button{font-size:clamp(16px,calc(.55vw + .85vh),20px);padding:8px 12px}
+.act.panel .chips button{font-size:16px;padding:6px 12px}
+.act.panel .q{font-size:clamp(20px,calc(.8vw + 1vh),26px)}
+.ptitle{font-size:14px}
+.fl-blur{width:100%;max-width:none}
+.fl-start{grid-template-columns:1fr;gap:14px;align-items:stretch;flex:1;min-height:0;margin:0}
+.fl-start .fl-blur{grid-auto-rows:minmax(0,1fr);flex:1;min-height:180px;height:100%}
+.fl-start .fl-blur img{width:100%;height:100%;object-fit:cover}
+.side .letter,.side .card{font-size:clamp(16px,calc(.6vw + .9vh),20px)}
+.side .card li{margin-bottom:4px}
+.write textarea{font-size:clamp(17px,calc(.6vw + .9vh),20px)}
+.write{grid-template-columns:minmax(0,1fr) 260px}
+.write label,.write li{font-size:15.5px}
+.act.panel .gaps input{width:clamp(120px,10vw,200px)}
+.act.panel .gaps.dense{gap:clamp(4px,1vh,10px)}
