@@ -290,3 +290,29 @@ form[data-form]{display:flex;flex-direction:column;gap:10px;min-height:0;flex:1}
 .act.panel .hunt{font-size:16px;gap:3px}.act.panel .hunt li{line-height:1.75}
 .act.panel .order.compact button{font-size:15px;padding:5px 9px;gap:6px}.act.panel .order.compact>div{gap:5px}
 .act.panel .review{overflow:auto}
+
+/* flash memory: pictures show for a few seconds, then disappear */
+.fl-start{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:22px;align-items:center;margin:auto 0}
+.fl-start h3{font:800 28px/1.15 Montserrat,sans-serif;margin:8px 0}.fl-start p{font-size:18px;color:var(--m);margin:0 0 14px}
+.fl-blur{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;filter:blur(7px) grayscale(.3);opacity:.7;border-radius:10px;overflow:hidden}
+.fl-blur img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.fl-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.fl-left{font:800 30px Montserrat,sans-serif;color:#e0a100;min-width:34px}
+.fl-bar{flex:1;height:10px;border-radius:6px;background:#e6ebf2;overflow:hidden}.fl-bar u{display:block;height:100%;background:#ffd23f;transition:width 1s linear}
+.fl-score{font:800 20px Montserrat,sans-serif}
+.fl-in{display:flex;gap:8px;flex:1;min-width:220px}.fl-in input{flex:1;font-size:18px;padding:8px 12px;border:2px solid #c9d3e0;border-radius:10px}
+.fl-msg{margin:0 0 8px;font-weight:700;font-size:16px}.fl-msg.ok{color:#1d8a5a}.fl-msg.no{color:#c43c4c}
+.fl-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;flex:1;min-height:0;grid-auto-rows:minmax(0,1fr)}
+.fl-t{position:relative;border-radius:10px;overflow:hidden;min-height:64px;border:2px solid transparent;padding:0;background:#1d2431}
+.fl-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fl-t em{position:absolute;left:0;right:0;bottom:0;font:700 14px/1.2 Figtree,sans-serif;font-style:normal;color:#fff;padding:4px 6px;background:rgba(20,30,45,.82);text-align:center}
+.fl-t.ok{border-color:#2fbf7f}.fl-t.ok em{background:rgba(29,138,90,.9)}.fl-t.miss{border-color:#e05565}.fl-t.miss em{background:rgba(196,60,76,.92)}
+.fl-t.shut{cursor:pointer;background:#24304a;color:#8fa0bd;font:800 22px Montserrat,sans-serif}.fl-t.shut:hover{background:#2f3d5c}
+.fl-in button{width:auto;flex:none;margin:0}.fl-top .ghost{flex:none}
+.fl-t em{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:clip;letter-spacing:-.01em}
+.cloze .wf{font:800 13px Montserrat,sans-serif;color:#9a6a00;letter-spacing:.04em;margin-right:3px}
+.act.panel .cloze:has(.wf){line-height:1.95}.cloze:has(.wf) .ig input{width:116px}
+.act.panel form.fl-in{display:flex;flex-direction:row;align-items:center;gap:8px}.act.panel form.fl-in button.main{width:auto;flex:none;margin:0;padding:8px 18px}
+.act.panel form.fl-in input{height:40px}
+.act.panel .cloze:has(.wf){line-height:1.5;font-size:16.5px}.act.panel .cloze:has(.wf) .ig input{width:112px;height:28px;font-size:16px;padding:0 6px;margin:2px 0}
+.act.panel .cloze:has(.wf){line-height:1.4;font-size:16px}.act.panel .cloze:has(.wf) .ig input{height:26px;margin:1px 0}

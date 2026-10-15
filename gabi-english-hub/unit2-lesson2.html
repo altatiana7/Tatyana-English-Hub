@@ -7,11 +7,11 @@
 <title>Gabi · Module 2 · Lesson 2 · New evidence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="skills.css?v=20261012e">
+<link rel="stylesheet" href="skills.css?v=20261015d">
 <link rel="stylesheet" href="case.css?v=20261012e">
 </head>
 <body>
-<script src="skills.js?v=20261012e"></script>
+<script src="skills.js?v=20261015c"></script>
 <script>
 /* Module 2 (Law and order), lesson 2. Two activities per screen, different mechanics:
    1 typed picture recall + the case from memory -> 2 new evidence + sort finished / in progress -> 3 find the rules + Past Arena (lives, from Nikita's Crime unit)
@@ -80,13 +80,46 @@ Lesson.boot({kicker:'Module 2 · Lesson 2',steps:[
   {q:'Give a parent one piece of advice about posting photos of children.'},
   {q:'Which crime from last lesson is the most serious? Why?'},
   {q:'Who do you think took the £150 and why?'}]}]},
-{stage:'Remember',title:'From memory',hint:'No notes. Name the crimes from last lesson, then remember the case. <small>Write everything yourself.</small>',cols:'1.15fr 1fr',
+{stage:'Remember',title:'Flash memory and word building',hint:'15 crimes for 7 seconds, then they disappear. Name as many as you can. <small>Then build the words: crime, criminal, verb.</small>',cols:'1.15fr 1fr',
  acts:[
- {type:'gaps',title:'Name the crime',pics:true,cols:4,items:[{img:'assets/u2/crimes/p-theft.jpg',ph:'t…',ans:['theft']},{img:'assets/u2/crimes/p-pickpocketing.jpg',ph:'p…',ans:['pickpocketing']},{img:'assets/u2/crimes/p-burglary.jpg',ph:'b…',ans:['burglary']},{img:'assets/u2/crimes/p-robbery.jpg',ph:'r…',ans:['robbery']},{img:'assets/u2/crimes/p-fraud.jpg',ph:'f…',ans:['fraud']},{img:'assets/u2/crimes/p-cybercrime.jpg',ph:'c…',ans:['cybercrime']},{img:'assets/u2/crimes/p-assault.jpg',ph:'a…',ans:['assault']},{img:'assets/u2/crimes/p-harassment.jpg',ph:'h…',ans:['harassment']}]},
+ {type:'flash',secs:7,title:'Flash memory · 15 crimes',label:'7 seconds',heading:'Look and remember',items:[
+  {img:'assets/u2/flash/pickpocketing.jpg',ans:['pickpocketing','pickpocket','pick pocketing']},
+  {img:'assets/u2/flash/robbery.jpg',ans:['robbery','armed robbery','robbing']},
+  {img:'assets/u2/flash/burglary.jpg',ans:['burglary','break in','break-in','breaking in','house burglary']},
+  {img:'assets/u2/flash/shoplifting.jpg',ans:['shoplifting','shop lifting']},
+  {img:'assets/u2/flash/vandalism.jpg',ans:['vandalism','graffiti']},
+  {img:'assets/u2/flash/fraud.jpg',ans:['fraud','scam','phone fraud','phone scam']},
+  {img:'assets/u2/flash/cybercrime.jpg',ans:['cybercrime','cyber crime','hacking','cyber-crime']},
+  {img:'assets/u2/flash/arson.jpg',ans:['arson']},
+  {img:'assets/u2/flash/car-theft.jpg',ans:['car theft','theft','car stealing']},
+  {img:'assets/u2/flash/murder.jpg',ans:['murder','killing']},
+  {img:'assets/u2/flash/assault.jpg',ans:['assault','fighting','attack']},
+  {img:'assets/u2/flash/kidnapping.jpg',ans:['kidnapping','kidnap']},
+  {img:'assets/u2/flash/smuggling.jpg',ans:['smuggling','drug smuggling']},
+  {img:'assets/u2/flash/stalking.jpg',ans:['stalking','harassment','following']},
+  {img:'assets/u2/flash/terrorism.jpg',ans:['terrorism','terrorist attack','bombing','terror attack']}]},
+ {type:'gaps',title:'Word formation',inline:true,tail:'attacked the station.',items:[
+  {html:1,pre:'<b class="wf">BURGLE</b> A',ans:['burglar']},
+  {html:1,pre:' broke into our flat.<br><b class="wf">ROB</b> The bank',ans:['robbery']},
+  {html:1,pre:' shocked the city.<br><b class="wf">THIEF</b> Car',ans:['theft']},
+  {html:1,pre:' is common here.<br><b class="wf">STEAL</b> My bike was',ans:['stolen']},
+  {html:1,pre:' last night.<br><b class="wf">SHOPLIFT</b> The',ans:['shoplifter']},
+  {html:1,pre:' took a lipstick.<br><b class="wf">VANDAL</b> Kids',ans:['vandalised','vandalized']},
+  {html:1,pre:' the bus stop.<br><b class="wf">ARSON</b> An',ans:['arsonist']},
+  {html:1,pre:' burnt the factory.<br><b class="wf">MURDER</b> The',ans:['murderer']},
+  {html:1,pre:' is in prison now.<br><b class="wf">SMUGGLE</b> Two',ans:['smugglers']},
+  {html:1,pre:' were caught.<br><b class="wf">TERROR</b> The',ans:['terrorists']}]}]},
+{stage:'Remember',title:'The case so far',hint:'No notes. Write what each suspect said and what was wrong. <small>Then tell the story aloud.</small>',cols:'1.2fr 1fr',
+ acts:[
  {type:'gaps',title:'The case so far',open:true,dense:true,items:[
   {pre:'Where did Alex say he was? What was the problem?',long:1,kw:[['gym'],['basketball']],model:'In the gym, playing basketball. But the PE teacher left before 3:30.'},
   {pre:'Where did Mia say she was? What was the problem?',long:1,kw:[['library']],model:'In the library, but the librarian saw her arrive at 3:40.'},
-  {pre:'Where did Ben say he was? What was the problem?',long:1,kw:[['outside'],['mum'],['waiting']],model:'Outside school, waiting for his mum, but nobody saw him before 3:45.'}]}]},
+  {pre:'Where did Ben say he was? What was the problem?',long:1,kw:[['outside'],['mum'],['waiting']],model:'Outside school, waiting for his mum, but nobody saw him before 3:45.'}]},
+ {type:'talk',title:'Tell the story',label:'Story',secs:40,chipLabel:'Tap each phrase he uses',chips:['On Friday afternoon …','At 3:30 …','He said he was …','But …'],cards:[
+  {q:'Tell the story of the missing £150 from the beginning.'},
+  {q:'You are Alex. Tell the detective where you were.'},
+  {q:'You are Mia. Explain why you arrived at the library late.'},
+  {q:'You are Ben. Who can confirm your story?'}]}]},
 {stage:'Evidence',title:'New evidence',hint:'Four new clues. Does each one make the person more or less suspicious? <small>Then sort the facts: a finished action, or an action in progress?</small>',split:'minmax(0,.7fr) minmax(0,1.3fr)',
  side:{look:'case',card:EVIDENCE},
  acts:[

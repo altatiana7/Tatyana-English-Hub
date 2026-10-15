@@ -93,6 +93,7 @@ function initAct(a,s){if(!a)return;
  if(a.type==='map'){s.val=SHARED.map||{}}
  if(a.type==='write'){s.text=s.text||''}
  if(a.type==='explain'){s.i=0;s.shown={}}
+ if(a.type==='flash'){s.st='start';s.found={};s.left=a.secs||7;s.all=false;s.last=''}
  if(a.type==='bomb'){s.st='start';s.i=0;s.ok=0;s.boom=0;s.miss=[];s.left=a.secs||15;s.res=null;s.pick=null}}
 const fb=(ok,head,body)=>`<div class="fb ${ok?'ok':'no'}"><b>${head}</b>${body?`<span>${body}</span>`:''}</div>`;
 function actHTML(a,s){if(!a)return'';return ACT[a.type].view(a,s)}
@@ -273,6 +274,22 @@ ACT.hunt={view(a,s){const n=a.items.length,found=Object.keys(s.hit).length,clean
    <div class="row">${found===n?`<b class="score">${clean} of ${n} found first time</b><button class="ghost" data-again>Again</button>`:`<span class="muted">${esc(a.tip||'Click the word with the mistake.')}</span>`}</div>`},
  click(a,s,d){if(d.again!==undefined){initAct(a,s);return redrawAct()}if(d.hw===undefined)return;const [i,j]=d.hw.split('_').map(Number);if(s.hit[i])return;
   if(j===a.items[i].bad){s.hit[i]=1;if(!s.wrong[i])s.first[i]=1}else{(s.wrong[i]=s.wrong[i]||[]).push(j)}redrawAct()}};
+/* ---------- flash: pictures show for a few seconds, disappear, the student names them from memory ---------- */
+function flashFind(a,s,v){const n=nz(v);if(!n)return -1;return a.items.findIndex((it,i)=>!s.found[i]&&[].concat(it.ans).some(x=>nz(x)===n))}
+ACT.flash={view(a,s){const n=a.items.length,secs=a.secs||7,got=Object.keys(s.found).length;
+  if(s.st==='start')return `<div class="fl-start"><div class="fl-blur">${a.items.slice(0,10).map(it=>`<img src="${esc(it.img)}" alt="">`).join('')}</div><div><span class="tag">${esc(a.label||'Memory')}</span><h3>${esc(a.heading||'Look and remember')}</h3><p>${n} pictures · ${secs} seconds. Then they disappear. Name as many crimes as you can.</p><button class="main" data-fstart data-auto>Start</button></div></div>`;
+  if(s.st==='show')return `<div class="fl-top"><b class="fl-left" id="flN">${s.left}</b><div class="fl-bar"><u id="flBar" style="width:${s.left/secs*100}%"></u></div><span class="muted">Remember them</span></div><div class="fl-grid c${a.cols||5}">${a.items.map(it=>`<div class="fl-t open"><img src="${esc(it.img)}" alt=""></div>`).join('')}</div>`;
+  const tiles=a.items.map((it,i)=>{const f=s.found[i];if(f||s.all)return `<div class="fl-t open ${f?'ok':'miss'}"><img src="${esc(it.img)}" alt=""><em>${esc([].concat(it.ans)[0])}</em></div>`;return `<button class="fl-t shut" data-ftile="${i}" title="Teacher: tap if he said it aloud"><span>${i+1}</span></button>`}).join('');
+  const done=got===n||s.all;
+  return `<div class="fl-top"><b class="fl-score">${got} of ${n}</b>${done?`<span class="muted">${got===n?'All of them. Great memory!':(n-got)+' missed: look at the red ones.'}</span><button class="main" data-fagain>Play again</button>`:`<form data-form="flash" class="fl-in"><input data-fin data-auto autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type a crime" aria-label="Crime"><button class="main">Check</button></form><button class="ghost" data-fall>Show all</button>`}</div>${s.last?`<p class="fl-msg ${s.lastOk?'ok':'no'}">${esc(s.last)}</p>`:''}<div class="fl-grid c${a.cols||5}">${tiles}</div>`},
+ submit(a,s,form){const el=form.querySelector('[data-fin]'),v=el.value;if(!nz(v))return;const i=flashFind(a,s,v);
+  if(i>=0){s.found[i]=1;s.last='Yes: '+[].concat(a.items[i].ans)[0];s.lastOk=true;beep(660,.12,.1);setTimeout(()=>beep(990,.16,.1),110);return redrawAct()}
+  const was=a.items.findIndex(it=>[].concat(it.ans).some(x=>nz(x)===nz(v)));s.last=was>=0?'You already have “'+v.trim()+'”.':'“'+v.trim()+'” is not in the pictures. Try again.';s.lastOk=false;beep(180,.15,.08);redrawAct()},
+ click(a,s,d){const secs=a.secs||7;
+  if(d.fstart!==undefined||d.fagain!==undefined){ac();clearInterval(tick);s.st='show';s.found={};s.all=false;s.last='';s.left=secs;redrawAct();const k0=AK;
+   tick=setInterval(()=>{s.left--;const b=$('#flBar'),nn=$('#flN');if(b)b.style.width=(s.left/secs*100)+'%';if(nn)nn.textContent=s.left;if(s.left<=3&&s.left>0)beep(1000,.05);if(s.left<=0){clearInterval(tick);s.st='recall';AK=k0;redrawAct()}},1000);return}
+  if(d.ftile!==undefined){s.found[+d.ftile]=1;s.last='';return redrawAct()}
+  if(d.fall!==undefined){s.all=true;s.last='';return redrawAct()}}};
 ACT.memory={view(a,s){const n=a.pairs.length,all=Object.keys(s.done).length===n;
   const face=(c)=>{const p=a.pairs[c.p];return c.f===0?`<span>${esc(p.t)}</span>`:p.img?`<img src="${esc(p.img)}" alt="">`:`<span class="d">${esc(p.m)}</span>`};
   return `<div class="memory c${a.cols||4}">${s.deck.map((c,k)=>{const up=s.done[c.p]||s.open.includes(k);return `<button data-mc="${k}" class="mcard ${up?'up':''} ${s.done[c.p]?'ok':''}" ${s.done[c.p]?'disabled':''}>${up?face(c):'<b>?</b>'}</button>`}).join('')}</div>
