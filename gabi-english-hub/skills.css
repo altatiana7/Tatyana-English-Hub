@@ -352,3 +352,23 @@ form[data-form]{display:flex;flex-direction:column;gap:10px;min-height:0;flex:1}
 .write label,.write li{font-size:15.5px}
 .act.panel .gaps input{width:clamp(120px,10vw,200px)}
 .act.panel .gaps.dense{gap:clamp(4px,1vh,10px)}
+/* small/short screens: everything must fit; if it still doesn't, the panel scrolls (never cut off) */
+.act.panel .pbody{overflow-y:auto;overflow-x:hidden}
+.act.panel .pbody>form{min-height:auto}
+.act.panel .opts{grid-auto-rows:minmax(34px,1fr)}
+@media(max-height:760px){
+ .act.panel .gaps,.act.panel .gaps.dense,.act.panel .hunt{font-size:16.5px;gap:4px}
+ .act.panel .gaps input{padding:3px 8px}
+ .act.panel .q{font-size:19px}
+ .act.panel .opts button{font-size:16.5px;padding:4px 8px}
+ .act.panel .match button,.act.panel .sortpool button,.act.panel .scol button{font-size:15.5px;padding:5px 9px}
+}
+@media(max-height:620px){
+ .act.panel .gaps,.act.panel .gaps.dense,.act.panel .hunt{font-size:15.5px;gap:2px}
+ .act.panel .opts{grid-auto-rows:minmax(30px,1fr);gap:6px}
+ .act.panel .q{font-size:17px}
+}
+@media(max-height:620px){.act.panel .opts{grid-auto-rows:minmax(26px,1fr);gap:5px}.act.panel .opts button{font-size:15.5px;padding:2px 8px}.act.panel p.q,.act.panel .q{padding:6px 10px}}
+@media(max-height:760px){.act.panel .opts:not(.chat):has(>button:nth-child(9)){grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-height:760px){.act.panel .cloze,.act.panel .cloze:has(.wf){font-size:16px;line-height:1.55}.act.panel .order button,.act.panel .order.compact button{font-size:15px;padding:4px 10px}.act.panel .order li{min-height:30px;padding:3px 9px}}
+@media(max-height:620px){.act.panel .cloze,.act.panel .cloze:has(.wf){font-size:15.5px;line-height:1.45}.act.panel .cloze input{padding:1px 6px}}
