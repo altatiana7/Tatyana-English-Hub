@@ -5,45 +5,55 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
 <title>ЕГЭ 2027 · Блок 1 · Family and friends</title>
-<link rel="stylesheet" href="app.css?v=37">
+<link rel="stylesheet" href="app.css?v=38">
 <style>
 .ws2{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:1240px;margin:0 auto}
-.wp{background:#fff;border:1px solid var(--line);border-top:4px solid var(--pc);border-radius:16px;box-shadow:0 6px 18px rgba(30,64,120,.06);padding:10px 12px;display:flex;flex-direction:column;gap:7px;min-width:0;height:clamp(400px,calc(100vh - 150px),620px)}
+.wp{background:#fff;border:1px solid var(--line);border-top:4px solid var(--pc);border-radius:16px;box-shadow:0 6px 18px rgba(30,64,120,.06);padding:10px 12px;display:flex;flex-direction:column;gap:7px;min-width:0;height:clamp(400px,calc(100vh - 128px),760px)}
+.ws2.n1{grid-template-columns:1fr}
 .ph{display:flex;align-items:center;gap:6px;flex:0 0 auto}
 .ph .pt{font-size:17px;color:var(--pc);margin-right:auto;white-space:nowrap}
-.ph select{font:inherit;font-size:14.5px;padding:4px 6px;border:1px solid #b9cbee;border-radius:10px;background:#fff;max-width:190px;min-width:0}
+.ph .sc{font-size:15.5px;white-space:nowrap}.ph .btn{white-space:nowrap}
+.txt.one{column-count:1}
+.ph select{font:inherit;font-size:14.5px;padding:4px 6px;border:1px solid #b9cbee;border-radius:10px;background:#fff;max-width:190px;min-width:0;flex:0 1 auto}
+.wp[data-k=g] .ph select,.wp[data-k=w] .ph select{max-width:150px}
 .ph .cnt{font-size:14px;font-weight:800;color:var(--muted);white-space:nowrap}
 .ptask{font-size:14.5px;color:var(--muted);line-height:1.35;margin:0;flex:0 0 auto}
 .pf{display:flex;align-items:center;gap:6px;flex:0 0 auto;flex-wrap:wrap}
 .pf .acc{margin-left:auto}.pf .sc{font-size:16px}
 .scr{flex:1 1 0;min-height:0;overflow:auto}
-.gtext{border:1px solid var(--line);border-radius:12px;padding:6px 12px;font-size:16.5px;line-height:1.85}
-.gtext p{margin:0 0 4px}
+.gtext{border:1px solid var(--line);border-radius:12px;padding:4px 12px;font-size:16.5px;line-height:1.62}
+.gtext p{margin:0 0 2px}
 .gtext .fgap{margin:0 2px;white-space:nowrap}
-.gtext .fnum{min-width:22px;height:22px;font-size:12px;border-radius:7px;padding:0 4px}
-.gtext .base.sm{font-size:12px;padding:1px 6px;border-radius:6px;letter-spacing:.4px;font-weight:800;margin-left:2px}
-.gtext input.ans.fin{font-size:16px;height:26px;padding:1px 6px;margin-left:3px}
-.gtext .fright{font-size:15px;font-weight:800;margin-left:3px}
+.gtext .fnum{min-width:1.35em;height:1.35em;font-size:.74em;border-radius:7px;padding:0 4px}
+.gtext .base.sm{font-size:.72em;padding:1px 6px;border-radius:6px;letter-spacing:.4px;font-weight:800;margin-left:2px}
+.gtext input.ans.fin{font-size:.97em;height:1.42em;padding:1px 6px;margin-left:3px}
+.gtext .fright{font-size:.9em;font-weight:800;margin-left:3px}
 .gtext input.ans.fin.ok{border-color:var(--ok);background:var(--okbg)}
 .gtext input.ans.fin.bad{border-color:var(--bad);background:var(--badbg)}
-.txt{border:1px solid var(--line);border-radius:12px;padding:8px 12px;font-size:15.5px;line-height:1.45}
-.txt h3{margin:0 0 4px;font-size:17px}.txt p{margin:0 0 6px}
-.sts{display:flex;flex-direction:column;gap:4px;flex:0 0 auto;max-height:46%;overflow:auto}
+.rbody{flex:1 1 0;min-height:0;display:grid;grid-template-columns:2.1fr 1fr;gap:12px}
+.txt{border:1px solid var(--line);border-radius:12px;padding:8px 14px;font-size:15.5px;line-height:1.42;column-count:2;column-gap:22px;column-fill:auto}
+.txt h3{column-span:all}
+.txt h3{margin:0 0 4px;font-size:1.05em}.txt p{margin:0 0 5px}
+.sts{display:flex;flex-direction:column;gap:6px;overflow:auto;justify-content:center}
 .sti{display:grid;grid-template-columns:20px 1fr auto;gap:6px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:3px 8px}
 .sti>i{font-style:normal;font-weight:900;color:#2855d9;font-size:14px}
-.sti>span{font-size:14px;line-height:1.25}
+.sti>span{font-size:14.5px;line-height:1.28}
+.sti{padding:5px 8px}
 .tfn{display:flex;gap:3px}
 .tfn button{font:inherit;font-size:12.5px;font-weight:800;border:1px solid #c9d3e6;background:#fff;border-radius:7px;padding:3px 6px;cursor:pointer;min-width:34px}
 .tfn button.on{background:#2855d9;border-color:#2855d9;color:#fff}
 .tfn button.ok{background:var(--ok);border-color:var(--ok);color:#fff}
 .tfn button.bad{background:var(--bad);border-color:var(--bad);color:#fff}
 .tfn button.right{outline:3px solid var(--ok);outline-offset:-3px}
-.lsc{flex:0 1 auto;display:flex;flex-direction:column;gap:6px}
-.stim{background:#f7f9fd;border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-size:15.5px;line-height:1.45}
+.lbody{flex:1 1 0;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lcol{display:flex;flex-direction:column;min-height:0}
+.lsc{display:flex;flex-direction:column;gap:8px;font-size:16px}
+.lsc .ptask{font-size:1em;color:var(--ink,#1f2a44)}
+.stim{background:#f7f9fd;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:1em;line-height:1.45}
 .stim .hd{font-size:12.5px;color:var(--muted);margin-bottom:4px}
-.wp textarea{flex:1 1 0;min-height:110px;font:inherit;font-size:16px;line-height:1.45;border:1px solid #b9cbee;border-radius:10px;padding:8px 10px;resize:none}
+.wp textarea{flex:1 1 0;min-height:110px;font:inherit;font-size:16.5px;line-height:1.45;border:1px solid #b9cbee;border-radius:10px;padding:8px 10px;resize:none}
 .wc{font-size:14.5px;font-weight:800}.wc.ok{color:var(--ok)}.wc.bad{color:var(--bad)}
-@media (max-width:900px){.ws2{grid-template-columns:1fr}.wp{height:auto;min-height:420px}}
+@media (max-width:900px){.ws2{grid-template-columns:1fr}.wp{height:auto;min-height:420px}.rbody,.lbody{grid-template-columns:1fr}.txt{column-count:1}}
 </style>
 </head>
 <body>
@@ -52,10 +62,10 @@
   <nav class="tabs" id="tabs" aria-label="Sections"></nav>
 </header>
 <main id="main"></main>
-<script src="core.js?v=37"></script>
-<script src="edit.js?v=37"></script>
-<script src="block1-data.js?v=37"></script>
-<script src="block1.js?v=37"></script>
-<script src="nav.js?v=37"></script>
+<script src="core.js?v=38"></script>
+<script src="edit.js?v=38"></script>
+<script src="block1-data.js?v=38"></script>
+<script src="block1.js?v=38"></script>
+<script src="nav.js?v=38"></script>
 </body>
 </html>
