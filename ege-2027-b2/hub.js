@@ -7,7 +7,7 @@
     if(!open){b.classList.add('on');document.getElementById(id).hidden=false;}
     const d=document.getElementById('dash');if(d)d.hidden=!open;});
   /* блоки ФИПИ: карточки, карта месяцев, «Сейчас» */
-  (function(){const BL=window.BLOCKS,SC=window.SCHED;if(!BL||!SC)return;const cb=SC.curBlock,V='38';
+  (function(){const BL=window.BLOCKS,SC=window.SCHED;if(!BL||!SC)return;const cb=SC.curBlock,V='39';
     const g=document.getElementById('blks');
     if(g){BL.forEach(b=>{const short=b.ru.split(/[.:;]/)[0],has=!!b.page,x=document.createElement(has?'a':'div');x.className='br'+(b.n===cb?' cur':'')+(b.n<cb?' done':'')+(has?' has':'');if(has)x.href=b.page+'?v='+V;x.title=b.ru+'\nНа уроках: '+b.focus+(b.mock?' · '+b.mock:'');
         x.innerHTML='<i>'+b.n+'</i><b>'+b.en+'</b><span>'+short+'</span><em>'+SC.blockDates(b.n)+'</em>';g.append(x);});
