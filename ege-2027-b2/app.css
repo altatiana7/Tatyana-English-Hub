@@ -598,3 +598,13 @@ main{justify-content:safe center;padding:clamp(10px,4vh,40px) clamp(14px,3vw,44p
 main>*{flex:0 1 auto}
 main:has(> .hub2){justify-content:flex-start}
 main:has(> .hub2)>.hub2{flex:0 1 auto}
+
+/* Рамка: страница не во всю ширину окна – шапка и задания по центру, с полями вокруг */
+body{padding:clamp(6px,2vh,22px) clamp(10px,2.6vw,56px);box-sizing:border-box}
+body>.bar,body>main{width:100%;max-width:1240px;margin-left:auto;margin-right:auto}
+body>.bar{margin-top:0}
+main{padding:clamp(8px,3vh,32px) 0 clamp(4px,1.5vh,16px)}
+/* шапка внутри рамки всегда компактная (как на узком экране) */
+.tab.num+.tab.num::before{width:5px}.tab.num i{width:29px;height:29px;font-size:14px}.tab.num span{font-size:16px;padding-right:3px}
+.tab:not(.num){padding:6px 9px;font-size:15px}.bar{gap:6px}.bar a.home{font-size:17px}.bar a.home span{padding:3px 9px;font-size:14px}
+.clock b{min-width:66px;font-size:20px;padding:5px 6px}.who .tab{padding:6px 8px;font-size:14.5px}
