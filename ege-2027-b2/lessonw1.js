@@ -103,7 +103,7 @@ function stopSay(){try{window.speechSynthesis&&speechSynthesis.cancel();}catch(e
 
 /* ---------- Раскладка: слева карточки, справа устная часть, внизу домашнее задание и заметки учителя ---------- */
 function layout(){main.innerHTML='';const ws=el('div','ws');PL=el('section','wpane pl');PR=el('section','wpane pr');ws.append(PL,PR);main.append(ws);
-  const hb=document.querySelector('.bar');if(hb&&!hb.querySelector('.hbtns')){const g=el('div','hbtns');g.append(btn('Homework',homework,'main sm'),(()=>{const a=el('a','btn sm','Block 1 tasks →');a.href='block1.html?v=31';a.style.textDecoration='none';return a;})(),btn('Учителю',teacher,'acc sm'));hb.append(g);}
+  const hb=document.querySelector('.bar');if(hb&&!hb.querySelector('.hbtns')){const g=el('div','hbtns');g.append(btn('Homework',homework,'main sm'),(()=>{const a=el('a','btn sm','Далее · письменная часть →');a.href='block1.html?v=48#1';a.style.textDecoration='none';return a;})(),btn('Учителю',teacher,'acc sm'));hb.append(g);}
   drawLeft();drawRight();}
 
 /* ---------- Слева: карточки Quizlet ---------- */
