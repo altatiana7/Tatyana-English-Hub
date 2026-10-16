@@ -1,7 +1,7 @@
 /* Главный экран: разделы под кнопками (при каждом открытии все закрыты),
    занятия и задания открываются поверх главного экрана во весь экран. */
 (function(){
-  const V='46';
+  const V='47';
   /* домашнее задание: баннер и блокировка ссылок */
   (function(){
     const nr=document.getElementById('nowrow');if(!nr)return;
@@ -47,7 +47,7 @@
   /* блоки ФИПИ: карточки, карта месяцев, «Сейчас» */
   (function(){const BL=window.BLOCKS,SC=window.SCHED;if(!BL||!SC)return;const cb=SC.curBlock;
     const g=document.getElementById('blks');
-    if(g){BL.forEach(b=>{const short=b.ru.split(/[.:;]/)[0],has=!!b.page,x=document.createElement(has?'a':'div');x.className='br'+(b.n===cb?' cur':'')+(b.n<cb?' done':'')+(has?' has':'');if(has)x.href=b.page+'?v='+V;x.title=b.ru+'\nНа уроках: '+b.focus+(b.mock?' · '+b.mock:'');
+    if(g){BL.forEach(b=>{const short=b.ru.split(/[.:;]/)[0],has=!!b.page,x=document.createElement(has?'a':'div');x.className='br'+(b.n===cb?' cur':'')+(b.n<cb?' done':'')+(has?' has':'');if(has){const [target,anchor='']=b.page.split('#');x.href=target+'?v='+V+(anchor?'#'+anchor:'');}x.title=b.ru+'\nНа уроках: '+b.focus+(b.mock?' · '+b.mock:'');
         x.innerHTML='<i>'+b.n+'</i><b>'+b.en+'</b><span>'+short+'</span><em>'+SC.blockDates(b.n)+'</em>';g.append(x);});
       const det=document.getElementById('bdet'),show=b=>{if(det)det.innerHTML='<b>'+b.n+' · '+b.en+'</b> · тема ФИПИ: '+b.ru+'. <i>На уроках: '+b.focus+(b.mock?' · '+b.mock:'')+'.</i>';};
       [...g.children].forEach((x,k)=>{x.addEventListener('mouseenter',()=>show(BL[k]));if(!BL[k].page)x.addEventListener('click',()=>show(BL[k]));});show(BL[cb-1]);
