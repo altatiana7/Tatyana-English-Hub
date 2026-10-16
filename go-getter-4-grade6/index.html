@@ -602,7 +602,7 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
         '<div class="module-box"><h4>Skills</h4><ul>'+m.skills.map(item=>'<li>'+item+'</li>').join('')+'</ul></div>'+
       '</div>'+
       '<div class="module-open">'+
-        (m.no==='1' ? '<button class="primary" data-go="lesson">Open Lesson 1</button>' : '<span class="badge">Module preview ready</span>')+
+        (m.no==='0' ? '<button class="primary" data-go="reviewLab">Open Get Started · Verb &amp; Reading Lab</button>' : m.no==='1' ? '<button class="primary" data-go="lesson">Open Lesson 1</button>' : '<span class="badge">Module preview ready</span>')+
       '</div>';
 
     moduleDetail.querySelectorAll('[data-go]').forEach(btn=>{
