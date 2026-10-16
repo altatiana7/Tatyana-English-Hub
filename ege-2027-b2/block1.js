@@ -50,7 +50,7 @@ function phead(p,key,list,reset,names,extra){const h=el('div','ph');h.append(el(
   h.append(bk,sel,fw);if(extra)h.append(...extra);else h.append(el('span','cnt',(pos+1)+' / '+op.length));p.append(h);}
 
 /* ---------- Грамматика и словообразование: текст с пропусками ---------- */
-function parse(x){const gaps=[];const paras=x.split('\n').map(line=>line.split(/(\[\[[^\]]+\]\])/).map(ch=>{const m=ch.match(/^\[\[([^|]+)\|([^\]]+)\]\]$/);if(!m)return ch;const g={base:m[1],acc:m[2].split('/').map(s=>s.trim()),i:gaps.length};gaps.push(g);return g;}));return {gaps,paras};}
+function parse(x){const gaps=[];const paras=[x.replace(/\s*\n\s*/g,' ')].map(line=>line.split(/(\[\[[^\]]+\]\])/).map(ch=>{const m=ch.match(/^\[\[([^|]+)\|([^\]]+)\]\]$/);if(!m)return ch;const g={base:m[1],acc:m[2].split('/').map(s=>s.trim()),i:gaps.length};gaps.push(g);return g;}));return {gaps,paras};}
 const okAns=(g,v)=>g.acc.some(a=>norm(a)===norm(v||''));
 function gaps(p,key,list,task){const st=S[key],d=list[st.v],P=parse(d.x),reset=()=>{st.val={};st.done=false;};
   const P2=P;let ctl;
@@ -58,7 +58,7 @@ function gaps(p,key,list,task){const st=S[key],d=list[st.v],P=parse(d.x),reset=(
   else ctl=[btn('Check',()=>{st.done=true;repaint(key);},'main sm')];
   ctl.push(teachBtn(key));
   phead(p,key,list,reset,null,ctl);p.append(el('div','ptask',task));
-  const box=el('div','gtext scr continuous-exam');box.dataset.max=16;box.dataset.min=14;
+  const box=el('div','gtext scr continuous-exam');
   P.paras.forEach((par,pi)=>{const pp=el('p');par.forEach(ch=>{if(typeof ch==='string'){pp.append(document.createTextNode(ch));return;}
     const g=ch,ok=st.done&&okAns(g,st.val[g.i]),w=el('span','fgap'),n=el('span','fnum'+(st.done?(ok?' ok':' bad'):''),String(g.i+1));
     const inp=el('input','ans fin'+(st.done?(ok?' ok':' bad'):''));inp.type='text';inp.autocomplete='off';inp.spellcheck=false;inp.setAttribute('autocapitalize','off');inp.setAttribute('aria-label',PANE[key].title+' gap '+(g.i+1));
