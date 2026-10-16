@@ -21,11 +21,17 @@ const PANE={
  r:{title:'Reading',color:'#66549a',draw:reading},
  l:{title:'Letter 37',color:'#2c7f78',draw:letter}};
 let cur=0;
-function paintTabs(){tabs.innerHTML='';SCREENS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.type='button';b.title=s.label;b.style.setProperty('--c',s.color);b.onclick=()=>go(k);tabs.append(b);});}
-function go(k){document.querySelectorAll('.overlay').forEach(x=>x.remove());cur=k;document.body.style.setProperty('--step',SCREENS[k].color);paintTabs();main.innerHTML='';
+/* ДОМАШКА: открыты только тексты из homework.js (HW.items), остальные закрыты */
+const LEN={g:()=>B.grammar.length,w:()=>B.wf.length,r:()=>B.reading.length,l:()=>B.letters.length};
+const opens=key=>{const all=[...Array(LEN[key]()).keys()];return HW.items.length?all.filter(k=>HW.has('block1:'+key+(k+1))):all;};
+const screenOpen=k=>SCREENS[k].panes.some(key=>opens(key).length);
+function locked(p,key){const b=el('div','lockbox');b.innerHTML='<b>'+PANE[key].title+'</b><span>Locked – not in your homework</span>';p.append(b);}
+function paintTabs(){tabs.innerHTML='';SCREENS.forEach((s,k)=>{const lk=!screenOpen(k);const b=el('button','tab num'+(k===cur?' on':'')+(lk?' lock':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.type='button';b.title=s.label;b.style.setProperty('--c',s.color);b.onclick=()=>go(k);b.disabled=lk;tabs.append(b);});}
+function go(k){if(!screenOpen(k)){const a=SCREENS.findIndex((x,i)=>screenOpen(i));if(a<0){main.innerHTML='';paintTabs();main.append(el('div','lockbox big','<b>No homework right now</b><span>Tasks open when your teacher sets them.</span>'));return;}k=a;}
+  document.querySelectorAll('.overlay').forEach(x=>x.remove());cur=k;document.body.style.setProperty('--step',SCREENS[k].color);paintTabs();main.innerHTML='';
   const ws=el('div','ws2 n'+SCREENS[k].panes.length);SCREENS[k].panes.forEach(key=>{const p=el('section','wp');p.dataset.k=key;p.style.setProperty('--pc',PANE[key].color);ws.append(p);drawPane(p);});main.append(ws);
   const f=ws.querySelector('input.fin:not([disabled])');f&&f.focus({preventScroll:true});}
-function drawPane(p){const key=p.dataset.k,sc=p.querySelector('.scr'),sy=sc?sc.scrollTop:0;p.innerHTML='';PANE[key].draw(p);fitAll(p);const s2=p.querySelector('.scr');if(s2)s2.scrollTop=sy;}
+function drawPane(p){const key=p.dataset.k,sc=p.querySelector('.scr'),sy=sc?sc.scrollTop:0;p.innerHTML='';const op=opens(key);if(!op.length)locked(p,key);else{if(op.indexOf(S[key].v)<0){S[key].v=op[0];S[key].val={};S[key].done=false;}PANE[key].draw(p);}fitAll(p);const s2=p.querySelector('.scr');if(s2)s2.scrollTop=sy;}
 /* подбор шрифта: уменьшаем, пока текст не поместится без прокрутки */
 function fit(e){if(!e)return;const mx=+e.dataset.max,mn=+e.dataset.min;let f=mx;e.style.fontSize=f+'px';e.classList.remove('one');const over=()=>e.scrollHeight>e.clientHeight+1||e.scrollWidth>e.clientWidth+1;while(f>mn&&over()){f-=.5;e.style.fontSize=f+'px';}
   if(over()&&e.dataset.one){e.classList.add('one');e.style.fontSize=e.dataset.one+'px';}}
@@ -37,10 +43,11 @@ function overlay(title,html){const ov=el('div','overlay'),t=el('div','teach');t.
 function teachBtn(key){return btn('Учителю',()=>overlay(PANE[key].title+' · только для вас',NOTE[key]),'acc sm');}
 /* шапка колонки: название + выбор текста ← список → */
 function phead(p,key,list,reset,names,extra){const h=el('div','ph');h.append(el('b','pt',PANE[key].title));
-  const sel=el('select');sel.setAttribute('aria-label',PANE[key].title+' text');(names||list.map(x=>x.t)).forEach((t,k)=>sel.append(new Option((k+1)+'. '+t,k)));const st=S[key];sel.value=st.v;
+  const sel=el('select');sel.setAttribute('aria-label',PANE[key].title+' text');const op=opens(key);(names||list.map(x=>x.t)).forEach((t,k)=>{if(op.indexOf(k)>=0)sel.append(new Option((k+1)+'. '+t,k));});const st=S[key];sel.value=st.v;
+  const pos=op.indexOf(st.v);
   const set=v=>{st.v=v;reset();repaint(key);};sel.onchange=()=>set(+sel.value);
-  const bk=btn('←',()=>set(st.v-1),'sm'),fw=btn('→',()=>set(st.v<list.length-1?st.v+1:0),'sm');bk.disabled=st.v===0;bk.title='Previous text';fw.title=st.v<list.length-1?'Next text':'First text';
-  h.append(bk,sel,fw);if(extra)h.append(...extra);else h.append(el('span','cnt',(st.v+1)+' / '+list.length));p.append(h);}
+  const bk=btn('←',()=>set(op[pos-1]),'sm'),fw=btn('→',()=>set(op[pos<op.length-1?pos+1:0]),'sm');bk.disabled=pos<=0;bk.title='Previous text';fw.disabled=op.length<2;fw.title=pos<op.length-1?'Next text':'First text';
+  h.append(bk,sel,fw);if(extra)h.append(...extra);else h.append(el('span','cnt',(pos+1)+' / '+op.length));p.append(h);}
 
 /* ---------- Грамматика и словообразование: текст с пропусками ---------- */
 function parse(x){const gaps=[];const paras=x.split('\n').map(line=>line.split(/(\[\[[^\]]+\]\])/).map(ch=>{const m=ch.match(/^\[\[([^|]+)\|([^\]]+)\]\]$/);if(!m)return ch;const g={base:m[1],acc:m[2].split('/').map(s=>s.trim()),i:gaps.length};gaps.push(g);return g;}));return {gaps,paras};}
@@ -71,7 +78,7 @@ function reading(p){const st=S.r,d=B.reading[st.v],reset=()=>{st.val={};st.done=
     r.append(b);sts.append(r);});
   const rb=el('div','rbody');rb.append(txt,sts);p.append(rb);
   const f=el('div','pf');
-  if(st.done){const n=d.key.filter((a,k)=>st.val[k]===a).length;f.append(el('b','sc',n+' / 7'),btn('Try again',()=>{reset();repaint('r');},'sm'),btn(st.v<B.reading.length-1?'Next text →':'First text',()=>{st.v=st.v<B.reading.length-1?st.v+1:0;reset();repaint('r');},'main sm'));}
+  if(st.done){const n=d.key.filter((a,k)=>st.val[k]===a).length;f.append(el('b','sc',n+' / 7'),btn('Try again',()=>{reset();repaint('r');},'sm'),btn(opens('r').indexOf(st.v)<opens('r').length-1?'Next text →':'First text',()=>{const o=opens('r'),i=o.indexOf(st.v);st.v=o[i<o.length-1?i+1:0];reset();repaint('r');},'main sm'));}
   else f.append(btn('Check',()=>{st.done=true;repaint('r');},'main sm'),el('span','note',Object.keys(st.val).length+' / 7'));
   f.append(teachBtn('r'));p.append(f);
 }
@@ -88,4 +95,6 @@ function letter(p){const st=S.l,x=B.letters[st.v];
 }
 
 /* #1, #2 – первый экран; #3 – чтение; #4 – письмо */
-go([0,0,0,1,2][Math.min(4,+location.hash.slice(1)||1)]);
+{const h=location.hash.slice(1),m=h.match(/^([gwrl])(\d+)$/);
+ if(m){S[m[1]].v=+m[2]-1;go({g:0,w:0,r:1,l:2}[m[1]]);}
+ else go([0,0,0,1,2][Math.min(4,+h||1)]);}

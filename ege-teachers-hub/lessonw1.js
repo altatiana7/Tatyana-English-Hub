@@ -95,7 +95,7 @@ function stopSay(){try{window.speechSynthesis&&speechSynthesis.cancel();}catch(e
 
 /* ---------- Раскладка: слева карточки, справа устная часть, внизу домашнее задание и заметки учителя ---------- */
 function layout(){main.innerHTML='';const ws=el('div','ws');PL=el('section','wpane pl');PR=el('section','wpane pr');ws.append(PL,PR);main.append(ws);
-  const hb=document.querySelector('.bar');if(hb&&!hb.querySelector('.hbtns')){const g=el('div','hbtns');g.append(btn('Homework',homework,'main sm'),(()=>{const a=el('a','btn sm','Block 1 tasks →');a.href='block1.html?v=31c';a.style.textDecoration='none';return a;})(),btn('Учителю',teacher,'acc sm'));hb.append(g);}
+  const hb=document.querySelector('.bar');if(hb&&!hb.querySelector('.hbtns')){const g=el('div','hbtns');g.append(btn('Homework',homework,'main sm'),(()=>{const a=el('a','btn sm','Block 1 tasks →');a.href='block1.html?v=31c';a.style.textDecoration='none';return a;})(),btn('Заметки',teacher,'acc sm'));hb.append(g);}
   drawLeft();drawRight();}
 
 /* ---------- Слева: карточки Quizlet ---------- */
@@ -180,7 +180,7 @@ function teacher(){const notes={1:'<p><b>Задание 1 · чтение всл
   2:'<p><b>Задание 2 · вопросы.</b> По 1 баллу за прямой, грамматически верный вопрос по пункту. Перед заданием – Error hunter слева: ловушки «Can you tell me…», are/is there, вспомогательный глагол.</p>',
   3:'<p><b>Задание 3 · интервью.</b> Вопросы звучат голосом браузера; если голоса нет, прочитайте вопрос сами, не показывая текст. По 1 баллу: 2–3 фразы, верное время глагола, ответ на обе части вопроса. Просите использовать 1–2 фразы из Words.</p>',
   4:'<p><b>Задание 4 · монолог.</b> Вариант 1 – по двум фото в формате ЕГЭ; вариант 2 – «Your best friend» из подборки (формат ОГЭ: 10–12 фраз по плану, 1,5 мин подготовки, 2 мин ответ) – как разминка перед ЕГЭ-монологом. К1 (0–4): все четыре пункта, 12–15 фраз; К2 (0–3): обращение к другу, вступление и заключение, связность; К3 (0–3): язык. При 0 по К1 всё задание – 0.</p>'};
-  overlay('Учителю · только для вас','<p><b>Ход урока, 60 минут.</b> 0–7: Words слева (карточки, потом Match). 7–15: Error hunter. 15–25: задание 2. 25–45: задание 3, Set 1 и Set 2 с записью. 45–55: задание 1 или 4 – по времени. 55–60: Homework.</p>'+notes[S.right],
+  overlay('Заметки к уроку','<p><b>Ход урока, 60 минут.</b> 0–7: Words слева (карточки, потом Match). 7–15: Error hunter. 15–25: задание 2. 25–45: задание 3, Set 1 и Set 2 с записью. 45–55: задание 1 или 4 – по времени. 55–60: Homework.</p>'+notes[S.right],
    S.right===2?ADS[S.t2.v].points.map((p,k)=>scoreRow((k+1)+'. '+p,1,()=>S.sc.t2[k],n=>S.sc.t2[k]=n)):S.right===3?IV[S.iv.v].q.map((q,k)=>scoreRow('Answer '+(k+1),1,()=>S.sc.t3[k],n=>S.sc.t3[k]=n)):S.right===1?[scoreRow('Reading aloud',1,()=>S.sc.t1,n=>S.sc.t1=n)]:[scoreRow('К1',4,()=>S.sc.k1,n=>S.sc.k1=n),scoreRow('К2',3,()=>S.sc.k2,n=>S.sc.k2=n),scoreRow('К3',3,()=>S.sc.k3,n=>S.sc.k3=n)]);}
 
 /* ссылки с главного экрана: #w #h #m – карточки слева, #t1–#t4 – устная часть справа, #hw – домашнее задание */

@@ -80,11 +80,19 @@ const P4={project:'Spending free time',kind:'the two ways of spending free time'
 const S={left:'cards',w:{i:0,order:null,shuf:false,flip:{},mt:null},h:{i:0,order:null,shuf:false,flip:{}},right:1,t1:{v:0},t4:{v:0},t2:{v:0},iv:{v:0,q:0,flip:false,smp:false},sc:{t1:null,t2:[null,null,null,null],t3:[null,null,null,null,null],k1:null,k2:null,k3:null}};
 let keyH=null,cleanL=null,cleanR=null,PL=null,PR=null;
 tabs.innerHTML='<span class="ttlb">Block 1 · Family and friends</span>';
+/* ДОМАШКА: какие сегменты открыты */
+const LMAP={cards:'words',hunt:'hunt',match:'match'};
+const RMAP={1:'t1-1',2:'t2-1',3:'iv1',4:'t4-1'};
+function hwLeft(v){return !HW.items.length||HW.has('lessonw1:'+LMAP[v]);}
+function hwRight(v){if(!HW.items.length)return true;const p='lessonw1:';if(v===1)return HW.has(p+'t1-1')||HW.has(p+'t1-2');if(v===2)return HW.has(p+'t2-1')||HW.has(p+'t2-2');if(v===3)return HW.has(p+'iv1')||HW.has(p+'iv2')||HW.has(p+'iv3');if(v===4)return HW.has(p+'t4-1')||HW.has(p+'t4-2');return false;}
+function hwAnyLeft(){return ['cards','hunt','match'].some(hwLeft);}
+function hwAnyRight(){return [1,2,3,4].some(hwRight);}
 
 function overlay(title,html,rows){const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,title));t.insertAdjacentHTML('beforeend',html);(rows||[]).forEach(r=>t.append(r));t.append(btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}
 function overlayEn(title,html){const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,title));t.insertAdjacentHTML('beforeend',html);t.append(btn('Close',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}
 function scoreRow(label,max,get,set){const r=el('div','score');r.append(el('span',null,label));for(let n=0;n<=max;n++){const b=el('button',get()===n?'on':'',String(n));b.type='button';b.onclick=()=>{set(n);[...r.querySelectorAll('button')].forEach((x,k)=>x.classList.toggle('on',k===n));};r.append(b);}return r;}
 function seg(items,cur,onPick){const s=el('div','seg');items.forEach(([v,l])=>{const b=el('button','segb'+(v===cur?' on':''),l);b.type='button';b.onclick=()=>onPick(v);s.append(b);});return s;}
+function segHW(items,cur,onPick,check){const s=el('div','seg');items.forEach(([v,l])=>{const ok=check(v);const b=el('button','segb'+(v===cur?' on':'')+(ok?'':' lock'),l);b.type='button';if(ok)b.onclick=()=>onPick(v);else{b.disabled=true;b.title='Locked';}s.append(b);});return s;}
 function recBtn(){const b=btn('',async()=>{if(!Rec.on){if(!(await Rec.enable())){b.textContent='No microphone';return;}Rec.on=true;}else Rec.on=false;paint();},'sm wide');const paint=()=>{b.textContent='Recording: '+(Rec.on?'on':'off');b.classList.toggle('main',Rec.on);};paint();return b;}
 /* ---------- Озвучка голосом браузера ---------- */
 let voice=null;
@@ -100,7 +108,9 @@ function layout(){main.innerHTML='';const ws=el('div','ws');PL=el('section','wpa
 
 /* ---------- Слева: карточки Quizlet ---------- */
 function drawLeft(){if(cleanL){cleanL();cleanL=null;}PL.innerHTML='';
-  PL.append(seg([['cards','Words'],['hunt','Error hunter'],['match','Match']],S.left,v=>{S.left=v;if(v==='match')S.w.mt=null;drawLeft();}));
+  if(!hwAnyLeft()){PL.append(el('div','lockbox','<b>Locked</b><span>Not in your homework</span>'));return;}
+  if(!hwLeft(S.left)){S.left=['cards','hunt','match'].find(hwLeft)||'cards';}
+  PL.append(segHW([['cards','Words'],['hunt','Error hunter'],['match','Match']],S.left,v=>{S.left=v;if(v==='match')S.w.mt=null;drawLeft();},hwLeft));
   const body=el('div','pbody');PL.append(body);
   if(S.left==='cards')quizlet(body,S.w,WORDS.length,k=>['Term','<div class="qzterm">'+esc(WORDS[k][0])+'</div>'],k=>['Definition','<div class="qzdef">'+ED.t('w1.w.'+k+'.d',WORDS[k][1])+'</div><div class="qzex">'+ED.t('w1.w.'+k+'.x',WORDS[k][2])+'</div>'],(k,f)=>f?WORDS[k][1]+'. '+WORDS[k][2]:WORDS[k][0]);
   else if(S.left==='hunt')quizlet(body,S.h,HUNT.length,k=>['Find the mistake','<div class="qzterm">'+esc(HUNT[k][0])+'</div>'],k=>['Correct question','<div class="qzwrong">'+esc(HUNT[k][0])+'</div><div class="qzdef qzok">'+ED.t('w1.h.'+k,HUNT[k][1])+'</div><div class="qzex">'+esc(HUNT[k][2])+'</div>'],(k,f)=>f?HUNT[k][1]:'');
@@ -132,7 +142,9 @@ function match(box){const st=S.w;
 
 /* ---------- Справа: устная часть, задания 1–4 под кнопками ---------- */
 function drawRight(){if(cleanR){cleanR();cleanR=null;}stopSay();PR.innerHTML='';
-  PR.append(seg([[1,'1 · Reading aloud'],[2,'2 · Questions'],[3,'3 · Interview'],[4,'4 · Monologue']],S.right,v=>{S.right=v;drawRight();}));
+  if(!hwAnyRight()){PR.append(el('div','lockbox','<b>Locked</b><span>Not in your homework</span>'));return;}
+  if(!hwRight(S.right)){S.right=[1,2,3,4].find(hwRight)||1;}
+  PR.append(segHW([[1,'1 · Reading aloud'],[2,'2 · Questions'],[3,'3 · Interview'],[4,'4 · Monologue']],S.right,v=>{S.right=v;drawRight();},hwRight));
   const body=el('div','pbody sp4');PR.append(body);[null,t1,t2,t3,t4][S.right](body);}
 /* общий блок управления: круговой таймер с фазами и запись */
 function ctl(box,phases,name,extra,onPhase){const c=el('div','ctl2'),ring=ringEl(phases[0].sec),label=el('div','phase','Press Start'),rec=el('div','rec');ring.querySelector('span').textContent='ready';

@@ -130,10 +130,10 @@ function reportText(){const r=scores();return 'ЕГЭ 2027 · диагности
   [line('Аудирование 1',S.l1,D.lis.k1,0,'ABCDEF'),line('Аудирование 2',S.l2,D.lis.k2,0,AG),line('Аудирование 3–9',S.l3,D.lis.k3,3),line('Чтение 10',S.r10,D.r10.a,0,AG),line('Чтение 12–18',S.r12,D.r12.a,12)].join('\n')+
   '\n\n=== Трудные случаи · ошибки ===\n'+(trErrors().join('\n')||'ошибок нет')+'\n\n=== Задание 37 · '+words(S.w37)+' слов ===\n'+(S.w37.trim()||'(нет ответа)')+'\n\n=== Задание 38 · '+words(S.w38)+' слов ===\n'+(S.w38.trim()||'(нет ответа)')+'\n';}
 function report(){
-  head(NAMES[who]+' · '+(S.checked?'работа проверена. Отправьте отчёт учителю: письмо 37 и 38 оценивает учитель по критериям ФИПИ.':'проверьте, что вверху выбрано ваше имя. Когда всё готово, нажмите «Проверить работу». После проверки ответы изменить нельзя.'));
+  head(NAMES[who]+' · '+(S.checked?'работа проверена. Письмо 37 и 38 оцениваются по критериям ФИПИ.':'проверьте, что вверху выбрано ваше имя. Когда всё готово, нажмите «Проверить работу». После проверки ответы изменить нельзя.'));
   const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
   if(!S.checked){a.append(el('h3',null,'Что сделано'));STEPS.slice(0,8).forEach(s=>a.append(el('div','rrow','<span>'+s.label+'</span><span class="note">'+(isDone(s.id)?'готово':'не закончено')+'</span><b>'+(isDone(s.id)?'✓':'—')+'</b>')));
-    b.append(el('h3',null,'Как отправить'),el('p',null,'1. Нажмите «Проверить работу».<br>2. Нажмите «Скопировать отчёт» и вставьте текст в сообщение учителю – или скачайте файл и отправьте его.'),el('p','note','В отчёт попадают ответы, баллы и оба письменных текста.'));}
+    b.append(el('h3',null,'Как проверить'),el('p',null,'1. Нажмите «Проверить работу».<br>2. Нажмите «Скопировать отчёт» или скачайте файл.'),el('p','note','В отчёт попадают ответы, баллы и оба письменных текста.'));}
   else{const r=scores();a.append(el('h3',null,'Баллы · автоматическая проверка'));r.forEach(x=>{const p=x[1]/x[2];a.append(el('div','rrow','<span>'+x[0]+'</span><div class="meter"><i class="'+(p<.7?'low':p<.86?'mid':'high')+'" style="width:'+p*100+'%"></i></div><b>'+x[1]+' / '+x[2]+'</b>'));});
     a.append(el('div','rrow','<span class="total">Итого</span><span class="note">письмо (20 баллов) оценит учитель</span><b class="total">'+r.reduce((s,x)=>s+x[1],0)+' / 22</b>'));
     {const t=trScore(),p=t/TRN;a.append(el('div','rrow','<span>Трудные случаи</span><div class="meter"><i class="'+(p<.7?'low':p<.86?'mid':'high')+'" style="width:'+p*100+'%"></i></div><b>'+t+' / '+TRN+'</b>'));}
@@ -141,7 +141,7 @@ function report(){
   res.append(a,b);main.append(res);
   const nav=el('div','navrow'),msg=el('span','note');
   if(!S.checked)nav.append(btn('Проверить работу',()=>{S.checked=true;save();redraw();},'acc'));
-  else{nav.append(btn('Скопировать отчёт',()=>{(navigator.clipboard?navigator.clipboard.writeText(reportText()):Promise.reject()).then(()=>{msg.textContent='Скопировано – вставьте в сообщение учителю.';}).catch(()=>{msg.textContent='Не получилось скопировать – скачайте файл.';});},'main'));
+  else{nav.append(btn('Скопировать отчёт',()=>{(navigator.clipboard?navigator.clipboard.writeText(reportText()):Promise.reject()).then(()=>{msg.textContent='Скопировано.';}).catch(()=>{msg.textContent='Не получилось скопировать – скачайте файл.';});},'main'));
     const d=el('a','btn','Скачать отчёт файлом');d.download='ege-diagnostic-home-'+(who?'student2':'student1')+'.txt';d.href=URL.createObjectURL(new Blob([reportText()],{type:'text/plain;charset=utf-8'}));nav.append(d);}
   nav.append(msg);const clr=btn('Очистить всё',()=>{if(clr.dataset.sure){try{localStorage.removeItem(KEY+'-'+who);}catch(e){}S=blank();go(0);}else{clr.dataset.sure=1;clr.textContent='Точно очистить? Нажмите ещё раз';}},'sm sp');nav.append(clr);main.append(nav);
 }

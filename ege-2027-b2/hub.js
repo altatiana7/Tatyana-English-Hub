@@ -1,13 +1,51 @@
 /* Главный экран: разделы под кнопками (при каждом открытии все закрыты),
    занятия и задания открываются поверх главного экрана во весь экран. */
 (function(){
+  const V='40';
+  /* домашнее задание: баннер и блокировка ссылок */
+  (function(){
+    const nr=document.getElementById('nowrow');if(!nr)return;
+    const has=HW.items.length>0;
+    /* быстрые ссылки на урок */
+    const LW=[['w','Words','lessonw1:words'],['h','Error hunter','lessonw1:hunt'],['t1','Task 1','lessonw1:t1-1'],['t2','Task 2','lessonw1:t2-1'],['t3','Task 3','lessonw1:iv1'],['t4','Task 4','lessonw1:t4-1']];
+    const LB=[['1','Grammar · 12','block1:g'],['2','Word formation · 8','block1:w'],['3','Reading · 3','block1:r'],['4','Letter 37 · 4','block1:l']];
+    function lk(href,text,hwPfx){
+      const a=document.createElement('a');a.textContent=text;
+      const open=!has||HW.items.some(x=>x===hwPfx||x.indexOf(hwPfx)===0);
+      if(open){a.href=href;}else{a.className='lock';a.href='#';a.onclick=e=>e.preventDefault();}
+      return a;
+    }
+    /* «Продолжить урок» */
+    const contOpen=!has||HW.page('lessonw1');
+    const cont=document.createElement('a');cont.className='cont';cont.style.textDecoration='none';
+    if(contOpen){cont.href='lessonw1.html?v='+V;}else{cont.href='#';cont.onclick=e=>e.preventDefault();cont.style.opacity='.4';cont.style.cursor='not-allowed';}
+    cont.innerHTML='<span>Занятие 1 · неделя 1</span><b>Продолжить урок →</b>';
+    const qk=document.createElement('div');qk.className='qk';
+    /* урок */
+    const ql1=document.createElement('span');ql1.className='ql';ql1.textContent='Урок';qk.append(ql1);
+    LW.forEach(x=>qk.append(lk('lessonw1.html?v='+V+'#'+x[0],x[1],x[2])));
+    /* банк заданий */
+    const ql2=document.createElement('span');ql2.className='ql';ql2.textContent='Банк заданий блока';qk.append(ql2);
+    LB.forEach(x=>qk.append(lk('block1.html?v='+V+'#'+x[0],x[1],x[2])));
+    nr.append(cont,qk);
+    /* баннер домашнего задания */
+    if(has){
+      const bar=document.createElement('div');bar.className='hwbar';
+      bar.innerHTML='<b>Homework'+(HW.due?' · due '+HW.due:'')+'</b>';
+      const list=document.createElement('div');list.className='hwlist';
+      HW.items.forEach(id=>{const a=document.createElement('a');a.className='hwt';a.textContent=HW.label(id);a.href=HW.href(id)+'?v='+V;list.append(a);});
+      bar.append(list);
+      const np=document.getElementById('now-panel');np.insertBefore(bar,np.firstChild);
+    }
+  })();
+
   const secs=[...document.querySelectorAll('.sec')];
   secs.forEach(b=>b.onclick=()=>{const id='p-'+b.dataset.p,open=b.classList.contains('on');
     secs.forEach(x=>{x.classList.remove('on');document.getElementById('p-'+x.dataset.p).hidden=true;});
     if(!open){b.classList.add('on');document.getElementById(id).hidden=false;}
     const d=document.getElementById('dash');if(d)d.hidden=!open;});
   /* блоки ФИПИ: карточки, карта месяцев, «Сейчас» */
-  (function(){const BL=window.BLOCKS,SC=window.SCHED;if(!BL||!SC)return;const cb=SC.curBlock,V='39';
+  (function(){const BL=window.BLOCKS,SC=window.SCHED;if(!BL||!SC)return;const cb=SC.curBlock;
     const g=document.getElementById('blks');
     if(g){BL.forEach(b=>{const short=b.ru.split(/[.:;]/)[0],has=!!b.page,x=document.createElement(has?'a':'div');x.className='br'+(b.n===cb?' cur':'')+(b.n<cb?' done':'')+(has?' has':'');if(has)x.href=b.page+'?v='+V;x.title=b.ru+'\nНа уроках: '+b.focus+(b.mock?' · '+b.mock:'');
         x.innerHTML='<i>'+b.n+'</i><b>'+b.en+'</b><span>'+short+'</span><em>'+SC.blockDates(b.n)+'</em>';g.append(x);});

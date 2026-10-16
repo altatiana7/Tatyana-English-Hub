@@ -34,7 +34,7 @@ let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>fitAll(
 const paneOf=key=>main.querySelector('.wp[data-k="'+key+'"]');
 const repaint=key=>drawPane(paneOf(key));
 function overlay(title,html){const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,title));t.insertAdjacentHTML('beforeend',html);t.append(btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}
-function teachBtn(key){return btn('Учителю',()=>overlay(PANE[key].title+' · только для вас',NOTE[key]),'acc sm');}
+function teachBtn(key){return btn('Заметки',()=>overlay(PANE[key].title+' · заметки',NOTE[key]),'acc sm');}
 /* шапка колонки: название + выбор текста ← список → */
 function phead(p,key,list,reset,names,extra){const h=el('div','ph');h.append(el('b','pt',PANE[key].title));
   const sel=el('select');sel.setAttribute('aria-label',PANE[key].title+' text');(names||list.map(x=>x.t)).forEach((t,k)=>sel.append(new Option((k+1)+'. '+t,k)));const st=S[key];sel.value=st.v;
