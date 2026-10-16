@@ -368,7 +368,7 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
   <div class="shell">
     <aside class="sidebar" aria-label="Lesson navigation">
       <div class="nav-heading">COURSE</div><button class="navbtn active" data-go="home">Home</button>
-      <button class="navbtn" data-go="modules">Modules</button>
+      <button class="navbtn" data-go="modules">Modules</button>\n      <div class="nav-heading">GET STARTED</div><button class="navbtn" data-go="reviewLab">Verb &amp; Reading Lab</button>
       <div class="nav-heading">LESSON 1</div><button class="navbtn" data-go="vocab">1 Vocabulary</button>
       <button class="navbtn" data-go="irregular">2 Irregular verbs</button>
       <button class="navbtn" data-go="grammar">3 Grammar</button>
@@ -437,7 +437,13 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
       </section>
 
 
-      <section id="irregular" class="screen">
+      
+<section id="reviewLab" class="screen" aria-label="Get Started revision lab">
+ <div class="rl-head"><h2>Get Started · Verb & Reading Lab</h2><p>Learn it → say it → remember it → write it. 20 irregular verbs + -ed pronunciation.</p><div><span class="rl-pill" id="rlSaved">Progress saved on this device</span><span class="rl-pill" id="rlStats"></span></div></div>
+ <div class="rl-steps" role="group" aria-label="Learning stages">
+ <button type="button" data-rl-tab="learn">1 Learn</button><button type="button" data-rl-tab="recall">2 Remember</button><button type="button" data-rl-tab="type">3 Type</button><button type="button" data-rl-tab="sounds">4 Read -ed</button><button type="button" data-rl-tab="challenge">5 Final test</button><button type="button" data-rl-tab="errors">My mistakes</button>
+ </div><div class="rl-progress"><div id="rlBar"></div></div><div id="rlStage" class="rl-stage" aria-live="polite"></div>
+</section>\n<section id="irregular" class="screen">
         <div class="section-head">
           <div>
             <h2>2. Irregular Verbs Arena</h2>
@@ -848,7 +854,7 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
   root.getElementById('ivRestart').addEventListener('click',restartIv);
   resetIvDeck();ivStats();renderIv();
 
-  const ids=['home','modules','methodList','methodActivity','methodExtras','lesson','vocab','irregular','grammar','reading','speed','exit'];
+  const ids=['home','modules','reviewLab','methodList','methodActivity','methodExtras','lesson','vocab','irregular','grammar','reading','speed','exit'];
   let currentScreen='home';const screenHistory=[];
   root.getElementById('backScreen').addEventListener('click',()=>go(screenHistory.pop()||'home',false));
   const fullButton=root.getElementById('fullscreen');
@@ -969,7 +975,120 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
 
 })();
 </script>
-</body>
+
+<script id="review-lab-script">
+(function(){
+'use strict';
+const verbs=[
+['read','read','read'],['write','wrote','written'],['see','saw','seen'],['say','said','said'],['sleep','slept','slept'],
+['meet','met','met'],['come','came','come'],['run','ran','run'],['sing','sang','sung'],['go','went','gone'],
+['drink','drank','drunk'],['do','did','done'],['have','had','had'],['eat','ate','eaten'],['be','was/were','been'],
+['know','knew','known'],['swim','swam','swum'],['choose','chose','chosen'],['make','made','made'],['bring','brought','brought']
+];
+const sentences=[
+'I ___ a great book yesterday.','She ___ a story last night.','We ___ our friends at the park.','He ___ hello to me.','The baby ___ for ten hours.','We ___ at school yesterday.','My aunt ___ to visit us.','I ___ home after school.','They ___ a song together.','We ___ to the cinema last Friday.','She ___ some water.','I ___ my homework before dinner.','We ___ a fantastic time.','He ___ breakfast early.','They ___ happy yesterday.','I ___ the answer.','We ___ in the sea.','She ___ the blue bag.','I ___ a birthday card.','Dad ___ some snacks.'
+];
+const sounds=[
+{w:'worked',s:'t',base:'work',ex:'I worked yesterday.'},{w:'watched',s:'t',base:'watch',ex:'We watched a film.'},{w:'helped',s:'t',base:'help',ex:'She helped me.'},{w:'liked',s:'t',base:'like',ex:'I liked it.'},
+{w:'played',s:'d',base:'play',ex:'We played football.'},{w:'cleaned',s:'d',base:'clean',ex:'He cleaned his room.'},{w:'lived',s:'d',base:'live',ex:'They lived here.'},{w:'opened',s:'d',base:'open',ex:'She opened the door.'},
+{w:'wanted',s:'id',base:'want',ex:'I wanted a drink.'},{w:'needed',s:'id',base:'need',ex:'We needed help.'},{w:'visited',s:'id',base:'visit',ex:'They visited us.'},{w:'started',s:'id',base:'start',ex:'We started early.'}
+];
+const el=document.getElementById('reviewLab'), stage=document.getElementById('rlStage');
+if(!el||!stage)return;
+const key='gg4-getstarted-revision-v1';
+let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+const state={tab:'learn',index:0,reveal:false,showResult:false,attempts:saved.attempts||{},mistakes:saved.mistakes||{},soundIndex:0,soundScore:0,challengeScore:0,challengeIndex:0,challengeItems:[],soundItems:[],soundFinished:false,typedCorrect:0};
+const clean=t=>String(t||'').trim().toLowerCase().replace(/\s+/g,' ').replace(/[’]/g,"'");
+const escape=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const reorder=a=>[...a].sort(()=>Math.random()-.5);
+function persist(){try{localStorage.setItem(key,JSON.stringify({attempts:state.attempts,mistakes:state.mistakes}))}catch(e){}}
+function note(id,correct){state.attempts[id]=(state.attempts[id]||0)+1;if(correct){delete state.mistakes[id]}else{state.mistakes[id]=(state.mistakes[id]||0)+1}persist()}
+function speak(text){if(!('speechSynthesis' in window)){show('Audio is not supported by this browser.',false);return}window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';u.rate=.78;const voices=window.speechSynthesis.getVoices();const gb=voices.find(v=>v.lang.toLowerCase().startsWith('en-gb'));if(gb)u.voice=gb;window.speechSynthesis.speak(u)}
+function show(t,ok){const x=document.getElementById('rlMsg');if(x){x.className='rl-msg '+(ok?'rl-correct':'rl-wrong');x.textContent=t}}
+function btn(t,id,kind){return '<button type="button" class="rl-'+(kind||'secondary')+'" data-rl-act="'+id+'">'+t+'</button>'}
+function stats(){document.getElementById('rlStats').textContent=Object.keys(state.mistakes).length+' to review · '+Object.keys(state.attempts).length+' practiced'}
+function head(title,desc){return '<h3>'+title+'</h3><p class="rl-hint">'+desc+'</p>'}
+function render(){
+stats();el.querySelectorAll('[data-rl-tab]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.rlTab===state.tab)));
+let h='',progress=0;
+const v=verbs[state.index%verbs.length];
+if(state.tab==='learn'){
+progress=(state.index%verbs.length)/verbs.length*100;
+h=head('Learn five at a time','Look, listen, say all three forms aloud. Cover V2 and V3 and try from memory.');
+h+='<div class="rl-small">Set '+(Math.floor(state.index/5)+1)+' of 4 · Card '+(state.index+1)+' of 20</div>';
+h+='<div class="rl-forms">'+v.map((x,i)=>'<span>'+escape(x)+'</span>'+(i<2?' &nbsp;–&nbsp; ':'')).join('')+'</div>';
+h+='<p class="rl-hint">'+(v[0]==='read'?'Attention: read /riːd/ → read /red/ → read /red/. The spelling stays the same, the sound changes.':'Say the forms in rhythm. Notice what changes.')+'</p>';
+h+=btn('Listen','speak-forms','primary')+btn('Hide V2 + V3','cover')+btn('Next verb →','next-learn','primary');
+h+='<div class="rl-msg" id="rlMsg"></div>';
+}else if(state.tab==='recall'){
+progress=state.index/verbs.length*100;
+h=head('Memory challenge','Say V2 and V3 BEFORE revealing. No multiple choice.')+'<div class="rl-small">'+(state.index+1)+' / 20</div><div class="rl-big">'+escape(v[0])+'</div>';
+h+=(state.reveal?'<div class="rl-forms">'+escape(v[1])+' &nbsp;–&nbsp; '+escape(v[2])+'</div><p>Did you remember both forms correctly?</p>'+btn('Yes, I knew it','recall-yes','primary')+btn('Not yet','recall-no'):btn('Reveal V2 + V3','reveal','primary'));
+h+=btn('Listen','speak-forms');h+='<div id="rlMsg" class="rl-msg"></div>';
+}else if(state.tab==='type'||state.tab==='errors'){
+const errorIds=Object.keys(state.mistakes).filter(k=>k.startsWith('verb-')).map(k=>Number(k.split('-')[1])).filter(n=>Number.isInteger(n)&&n>=0&&n<verbs.length);
+const items=state.tab==='errors'?errorIds:verbs.map((_,i)=>i);
+if(!items.length){h=head('My mistakes','All recorded verb errors have been corrected. Great work!')+btn('Practise all verbs','switch-type','primary')}
+else{const which=items[state.index%items.length],item=verbs[which];progress=((state.index%items.length)/items.length)*100;
+h=head(state.tab==='errors'?'Repair your mistakes':'Write both forms','Type V2 and V3 from memory. Use Enter to check.')+'<div class="rl-small">'+((state.index%items.length)+1)+' / '+items.length+'</div><div class="rl-big">'+escape(item[0])+'</div>';
+h+='<div class="rl-fields"><label>V2 · Past Simple<input id="rlV2" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="Type V2" aria-label="Past Simple form"></label><label>V3 · Past Participle<input id="rlV3" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="Type V3" aria-label="Past Participle form"></label></div>';
+h+=btn('Check spelling','check-type','primary')+btn('Hear the forms','speak-specific')+'<p id="rlMsg" class="rl-msg"></p>';state.currentVerb=which;
+}
+}else if(state.tab==='sounds'){
+const q=sounds[state.soundIndex%sounds.length];progress=state.soundIndex/sounds.length*100;
+h=head('Reading Lab · final -ed','-ed is not always a separate syllable. Listen carefully and read the words aloud.');
+h+='<div class="rl-sounds"><div class="rl-sound"><strong>/t/</strong><span>worked · watched</span><p class="rl-small">After a voiceless sound (except /t/)</p></div><div class="rl-sound"><strong>/d/</strong><span>played · cleaned</span><p class="rl-small">After a voiced sound (except /d/)</p></div><div class="rl-sound"><strong>/ɪd/</strong><span>wanted · needed</span><p class="rl-small">After /t/ or /d/. Extra syllable!</p></div></div>';
+h+='<p class="rl-hint">Listen to the whole word. Choose the sound of the ending, not the last letter.</p><div class="rl-small">Word '+(state.soundIndex+1)+' / 12</div><div class="rl-big">'+escape(q.w)+'</div>';
+h+=btn('Listen','speak-ed','primary')+btn('Listen in a sentence','speak-sentence')+'<div class="rl-choice">'+['t','d','id'].map(k=>'<button data-rl-sound="'+k+'">'+(k==='id'?'/ɪd/':'/'+k+'/')+'</button>').join('')+'</div><p id="rlMsg" class="rl-msg"></p><div class="rl-examples">'+sounds.slice(0,4).map(x=>'<button data-rl-speak="'+x.w+'">'+x.w+' ↗</button>').join('')+'</div>';
+}else if(state.tab==='challenge'){
+progress=state.challengeIndex/10*100;
+if(state.challengeIndex>=10){h=head('Final result',state.challengeScore+' / 10 correct on the first attempt.')+btn('Restart final test','reset-challenge','primary')+btn('Review mistakes','switch-errors')}
+else{const n=state.challengeItems[state.challengeIndex];const item=verbs[n];h=head('Final Challenge','Complete a sentence with V2. No suggestions or multiple-choice answers.')+'<div class="rl-small">Question '+(state.challengeIndex+1)+' / 10</div><div class="rl-big" style="font-size:clamp(20px,3vw,27px)">'+escape(sentences[n])+'</div>';
+h+='<div class="rl-hint">Base form: <strong>'+escape(item[0])+'</strong></div><div class="rl-fields"><label>Write the past form<input id="rlAnswer" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Your answer"></label></div>'+btn('Check answer','check-challenge','primary')+'<p id="rlMsg" class="rl-msg"></p>';}}
+stage.innerHTML=h;document.getElementById('rlBar').style.width=progress+'%';
+const focus=stage.querySelector('input');if(focus)focus.focus();
+}
+function change(tab){state.tab=tab;state.index=0;state.reveal=false;state.soundIndex=0;state.soundScore=0;if(tab==='challenge')beginChallenge();render()}
+function beginChallenge(){state.challengeItems=reorder(verbs.map((_,i)=>i)).slice(0,10);state.challengeIndex=0;state.challengeScore=0}
+function next(){state.index=(state.index+1)%verbs.length;state.reveal=false;render()}
+function advanceSound(){state.soundIndex=(state.soundIndex+1)%sounds.length;render()}
+stage.addEventListener('keydown',e=>{if(e.key==='Enter'){if(state.tab==='type'||state.tab==='errors')act('check-type');if(state.tab==='challenge')act('check-challenge')}});
+el.querySelectorAll('[data-rl-tab]').forEach(b=>b.addEventListener('click',()=>change(b.dataset.rlTab)));
+stage.addEventListener('click',e=>{
+const sound=e.target.closest('[data-rl-sound]');if(sound){const q=sounds[state.soundIndex%sounds.length],yes=q.s===sound.dataset.rlSound;note('sound-'+q.w,yes);show(yes?'Correct! '+q.w+' ends in /'+(q.s==='id'?'ɪd':q.s)+'/ .':'Not yet. Listen again: '+q.w+' → /'+(q.s==='id'?'ɪd':q.s)+'/.',yes);if(yes){state.soundScore++;const buttons=stage.querySelectorAll('[data-rl-sound]');buttons.forEach(b=>b.disabled=true);const m=document.getElementById('rlMsg');m.insertAdjacentHTML('beforeend',' '+btn('Next sound →','next-sound','primary'));}return}
+const sp=e.target.closest('[data-rl-speak]');if(sp){speak(sp.dataset.rlSpeak);return}
+const b=e.target.closest('[data-rl-act]');if(b)act(b.dataset.rlAct);
+});
+function act(a){
+if(a==='speak-forms'){const v=verbs[state.index];speak(v.join('. '));return}
+if(a==='cover'){const f=stage.querySelector('.rl-forms');if(f){f.textContent=verbs[state.index][0]+' — ? — ?';show('Say the other forms aloud. Press Next to continue.',true)}return}
+if(a==='next-learn'){next();return}
+if(a==='reveal'){state.reveal=true;render();return}
+if(a==='recall-yes'||a==='recall-no'){note('verb-'+state.index,a==='recall-yes');next();return}
+if(a==='switch-type'){change('type');return}
+if(a==='switch-errors'){change('errors');return}
+if(a==='speak-specific'){speak(verbs[state.currentVerb].join('. '));return}
+if(a==='check-type'){
+const i=state.currentVerb,v=verbs[i],v2=document.getElementById('rlV2'),v3=document.getElementById('rlV3');if(!v2||!v3)return;
+const a2=clean(v2.value),a3=clean(v3.value);if(!a2||!a3){show('Complete both forms first.',false);return}
+const valid2=v[0]==='be'?['was/were','were/was','was','were'].includes(a2):a2===v[1];
+const yes=valid2&&a3===v[2];note('verb-'+i,yes);
+if(yes){state.typedCorrect++;show('Correct: '+v.join(' – '),true);const b=stage.querySelector('[data-rl-act="check-type"]');b.disabled=true;document.getElementById('rlMsg').insertAdjacentHTML('beforeend',' '+btn('Next →','next-type','primary'))}
+else{show('Correct forms: '+v.join(' – ')+'. Read aloud, then type them again without looking.',false);v2.value='';v3.value='';v2.focus()}return}
+if(a==='next-type'){state.index++;render();return}
+if(a==='speak-ed'){speak(sounds[state.soundIndex%sounds.length].w);return}
+if(a==='speak-sentence'){speak(sounds[state.soundIndex%sounds.length].ex);return}
+if(a==='next-sound'){advanceSound();return}
+if(a==='check-challenge'){
+const n=state.challengeItems[state.challengeIndex],v=verbs[n],i=stage.querySelector('#rlAnswer');if(!i||!clean(i.value)){show('Write the past form first.',false);return}
+const yes=v[0]==='be'?['was','were'].includes(clean(i.value)):clean(i.value)===v[1];note('verb-'+n,yes);
+if(yes)state.challengeScore++;show((yes?'Correct! ':'Try to remember this one. ')+v[0]+' → '+v[1],yes);stage.querySelector('[data-rl-act="check-challenge"]').disabled=true;document.getElementById('rlMsg').insertAdjacentHTML('beforeend',' '+btn('Next question →','next-challenge','primary'));return}
+if(a==='next-challenge'){state.challengeIndex++;render();return}
+if(a==='reset-challenge'){change('challenge');return}
+}
+render();
+})();
+</script>\n</body>
 </html>
 
 
