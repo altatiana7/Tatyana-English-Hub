@@ -12,8 +12,7 @@ const NOTE={
  r:'<p><b>Чтение: True / False / Not stated.</b> Три рассказа по 500 слов (ОГЭ, задания 13–19). В ЕГЭ такой формат – в аудировании (задание 2), поэтому тексты хороши для тренировки различия False и Not stated.</p><p>После проверки попросите ученицу для каждого ответа показать строку в тексте. Для Not stated – объяснить, почему в тексте нет ни «да», ни «нет».</p><p>Время: 10–12 минут на текст.</p>',
  l:'<p><b>Письмо 37.</b> Четыре письма из подборки (там они в формате ОГЭ: ответить на 3 вопроса, 100–120 слов). Для ЕГЭ добавлены последняя строка письма и требование задать 3 вопроса, объём 100–140 слов. Эта часть и примерные письма составлены для сайта; их можно исправить через «Правка ответов».</p><p>Время: 20 минут. Пишется дома; на уроке – разбор по критериям К1–К3.</p>'};
 const SCREENS=[
- {label:'Grammar · 19–24',color:'#b0683a',panes:['g']},
- {label:'Word formation · 25–29',color:'#a85050',panes:['w']},
+ {label:'Grammar + Word formation',color:'#b0683a',panes:['g','w']},
  {label:'Reading',color:'#66549a',panes:['r']},
  {label:'Letter 37',color:'#2c7f78',panes:['l']}];
 const PANE={
@@ -59,7 +58,7 @@ function gaps(p,key,list,task){const st=S[key],d=list[st.v],P=parse(d.x),reset=(
   else ctl=[btn('Check',()=>{st.done=true;repaint(key);},'main sm')];
   ctl.push(teachBtn(key));
   phead(p,key,list,reset,null,ctl);p.append(el('div','ptask',task));
-  const box=el('div','gtext scr continuous-exam');box.dataset.max=19;box.dataset.min=16;
+  const box=el('div','gtext scr continuous-exam');box.dataset.max=16;box.dataset.min=14;
   P.paras.forEach((par,pi)=>{const pp=el('p');par.forEach(ch=>{if(typeof ch==='string'){pp.append(document.createTextNode(ch));return;}
     const g=ch,ok=st.done&&okAns(g,st.val[g.i]),w=el('span','fgap'),n=el('span','fnum'+(st.done?(ok?' ok':' bad'):''),String(g.i+1));
     const inp=el('input','ans fin'+(st.done?(ok?' ok':' bad'):''));inp.type='text';inp.autocomplete='off';inp.spellcheck=false;inp.setAttribute('autocapitalize','off');inp.setAttribute('aria-label',PANE[key].title+' gap '+(g.i+1));
@@ -97,5 +96,5 @@ function letter(p){const st=S.l,x=B.letters[st.v];
 
 /* #1, #2 – первый экран; #3 – чтение; #4 – письмо */
 {const h=location.hash.slice(1),m=h.match(/^([gwrl])(\d+)$/);
- if(m){S[m[1]].v=+m[2]-1;go({g:0,w:1,r:2,l:3}[m[1]]);}
- else go([0,0,1,2,3][Math.min(4,+h||1)]);}
+ if(m){S[m[1]].v=+m[2]-1;go({g:0,w:0,r:1,l:2}[m[1]]);}
+ else go([0,0,0,1,2][Math.min(4,+h||1)]);}
