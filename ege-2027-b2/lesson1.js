@@ -52,14 +52,30 @@ function noteBar(html,cls){return el('div','verdict flat'+(cls?' '+cls:''),html)
 function typed(key,ru){
   const d=D[key],st=S[key];head(ru,d.title);
   const stage=el('div','stage'),card=el('div','panel grow flow');card.append(el('h3',null,esc(d.title)));
-  const p=el('p');
-  d.items.forEach((it,k)=>{const parts=it.text.split('___');p.append(document.createTextNode(parts[0]));
-    const g=el('span','fgap'),nb=el('button','fnum'+(st.un[k]?' un':'')+(st.done?(typedOk(key,k)?' ok':' bad'):''),String(it.n));nb.type='button';nb.title=st.done?'Показать пояснение':'Отметить: сомневаюсь';
+  // Render exam tasks as continuous reading passages rather than separate sentence cards.
+  // Each original task retains its context and its FIPI number.
+  const passage=el('div','ege-continuous-text');
+  const perParagraph=key==='g'?3:2;
+  let p=null;
+  d.items.forEach((it,k)=>{
+    if(k%perParagraph===0){
+      p=el('p','ege-passage-paragraph');
+      passage.append(p);
+    }
+    const parts=it.text.split('___');
+    if(k%perParagraph!==0)p.append(document.createTextNode(' '));
+    p.append(document.createTextNode(parts[0]));
+    const g=el('span','fgap'),nb=el('button','fnum'+(st.un[k]?' un':'')+(st.done?(typedOk(key,k)?' ok':' bad'):''),String(it.n));
+    nb.type='button';nb.title=st.done?'Показать пояснение':'Отметить: сомневаюсь';
     nb.onclick=()=>{if(st.done){st.cur=k;redraw();}else{st.un[k]=!st.un[k];nb.classList.toggle('un',!!st.un[k]);}};
     const inp=el('input','ans fin'+(st.done?(typedOk(key,k)?' ok':' bad'):''));inp.type='text';inp.autocomplete='off';inp.spellcheck=false;inp.setAttribute('autocapitalize','off');inp.value=st.val[k]||'';inp.disabled=st.done;inp.setAttribute('aria-label','Ответ '+it.n);
     inp.style.width=Math.max(8,it.show.length+4)+'ch';inp.oninput=()=>{st.val[k]=inp.value;};
-    g.append(nb,inp);if(st.done&&!typedOk(key,k))g.append(el('b','fright','→ '+esc(it.show)));g.append(el('span','base sm',esc(it.base)));p.append(g,document.createTextNode((parts[1]||'')+' '));});
-  card.append(p);stage.append(card);main.append(stage);
+    g.append(nb,inp);
+    if(st.done&&!typedOk(key,k))g.append(el('b','fright','→ '+esc(it.show)));
+    g.append(el('span','base sm',esc(it.base)));
+    p.append(g,document.createTextNode(parts.slice(1).join('___')));
+  });
+  card.append(passage);stage.append(card);main.append(stage);
   if(st.done){const it=d.items[st.cur],ok=typedOk(key,st.cur);main.append(noteBar('<b>'+it.n+'. '+(ok?'Верно':'Неверно')+': '+esc(it.show)+'.</b> '+esc(it.note)+(st.un[st.cur]&&ok?' <i>Отмечено «сомневаюсь» – повторить.</i>':''),ok?'ok':'bad'));}
   const nav=el('div','navrow');
   if(st.done){const n=d.items.filter((x,k)=>typedOk(key,k)).length;nav.append(el('b',null,'Результат: '+n+' из '+d.items.length),el('span','note hint','Нажмите номер пропуска, чтобы увидеть пояснение.'),nextBtn());}
