@@ -71,7 +71,7 @@ function gaps(p,key,list,task){const st=S[key],d=list[st.v],P=parse(d.x),reset=(
 /* ---------- Чтение: True / False / Not stated ---------- */
 function reading(p){const st=S.r,d=B.reading[st.v],reset=()=>{st.val={};st.done=false;};
   phead(p,'r',B.reading,reset);p.append(el('div','ptask','Decide which statements are True (T), False (F) or Not stated (NS).'));
-  const txt=el('div','txt scr');txt.dataset.max=17;txt.dataset.min=14;txt.dataset.one=16;txt.append(el('h3',null,esc(d.t)));d.x.split('\n').forEach(x=>txt.append(el('p',null,esc(x))));
+  const txt=el('div','txt scr');txt.dataset.max=17;txt.dataset.min=14;txt.dataset.one=15;txt.append(el('h3',null,esc(d.t)));d.x.split('\n').forEach(x=>txt.append(el('p',null,esc(x))));
   const sts=el('div','sts');
   d.st.forEach((s,k)=>{const r=el('div','sti'),b=el('div','tfn');r.append(el('i',null,String(k+1)),el('span',null,esc(s)));
     ['T','F','NS'].forEach((lab,j)=>{const v=j+1,on=st.val[k]===v,cls=st.done?(on?(v===d.key[k]?'ok':'bad'):(v===d.key[k]?'right':'')):(on?'on':''),x=el('button',cls,lab);x.type='button';x.disabled=st.done;x.onclick=()=>{st.val[k]=v;repaint('r');};b.append(x);});
