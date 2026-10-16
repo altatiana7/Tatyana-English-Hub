@@ -13,12 +13,12 @@ const NOTE={
  l:'<p><b>Письмо 37.</b> Четыре письма из подборки (там они в формате ОГЭ: ответить на 3 вопроса, 100–120 слов). Для ЕГЭ добавлены последняя строка письма и требование задать 3 вопроса, объём 100–140 слов. Эта часть и примерные письма составлены для сайта; их можно исправить через «Правка ответов».</p><p>Время: 20 минут. Пишется дома; на уроке – разбор по критериям К1–К3.</p>'};
 const SCREENS=[
  {label:'Grammar + Word formation',color:'#b0683a',panes:['g','w']},
- {label:'Reading',color:'#66549a',panes:['r']},
+ {label:'Reading',color:'#5a7a3f',panes:['r']},
  {label:'Letter 37',color:'#2c7f78',panes:['l']}];
 const PANE={
  g:{title:'Grammar',color:'#b0683a',draw:b=>gaps(b,'g',B.grammar,'Change the words in capitals so that they fit the text grammatically.')},
  w:{title:'Word formation',color:'#a85050',draw:b=>gaps(b,'w',B.wf,'Form a word from the word in capitals so that it fits the text grammatically and lexically.')},
- r:{title:'Reading',color:'#66549a',draw:reading},
+ r:{title:'Reading',color:'#5a7a3f',draw:reading},
  l:{title:'Letter 37',color:'#2c7f78',draw:letter}};
 let cur=0;
 function paintTabs(){tabs.innerHTML='';SCREENS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.type='button';b.title=s.label;b.style.setProperty('--c',s.color);b.onclick=()=>go(k);tabs.append(b);});}

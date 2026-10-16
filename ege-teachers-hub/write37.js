@@ -4,11 +4,11 @@ const L=window.W37,main=$('#main'),tabs=$('#tabs'),NAMES=['Ученица 1','У
 let who=0;try{who=+localStorage.getItem(KEY+'-who')||0;}catch(e){}
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const TYPES={
- habit:{n:'О себе: привычки и вкусы',c:'#2f6f9f',how:'Отвечай о себе в Present Simple: одна-две фразы с деталью.',fr:'I usually … · I’m keen on … · My favourite … is … because …'},
+ habit:{n:'О себе: привычки и вкусы',c:'#2b6f69',how:'Отвечай о себе в Present Simple: одна-две фразы с деталью.',fr:'I usually … · I’m keen on … · My favourite … is … because …'},
  country:{n:'О России и ровесниках',c:'#2c7f78',how:'Вопрос не о тебе: пиши о подростках, стране или своём регионе.',fr:'Most Russian teenagers … · In my country … · In my region …'},
  opinion:{n:'Мнение и причина',c:'#a8802a',how:'Нужна позиция и объяснение. Без because ответ неполный.',fr:'I think … because … · In my opinion, … · To my mind, …'},
- would:{n:'Would: мечты и советы',c:'#8f4d7c',how:'В вопросе would – в ответе тоже would. На «If you could …, what would …?» отвечай: If I could, I would … because …',fr:'I’d like to … because … · I’d advise you to … · If I were you, I’d …'},
- past:{n:'Прошлое и опыт',c:'#66549a',how:'Время как в вопросе: Past Simple или Present Perfect.',fr:'When I was a child, I … · I have never … · The last … I’ve … was …'},
+ would:{n:'Would: мечты и советы',c:'#a0742c',how:'В вопросе would – в ответе тоже would. На «If you could …, what would …?» отвечай: If I could, I would … because …',fr:'I’d like to … because … · I’d advise you to … · If I were you, I’d …'},
+ past:{n:'Прошлое и опыт',c:'#5a7a3f',how:'Время как в вопросе: Past Simple или Present Perfect.',fr:'When I was a child, I … · I have never … · The last … I’ve … was …'},
  future:{n:'Планы и будущее',c:'#b0683a',how:'Планы – going to, прогноз – will.',fr:'I’m going to … · I’m planning to … · I think … will …'}
 };
 const TK=Object.keys(TYPES);
@@ -27,7 +27,7 @@ const PARTS=[['Обращение','Hi Emily,','Hello Emily, · Dear Emily,','Н
  ['Подпись','Anna','Только имя, без фамилии.','На отдельной строке, без точки.']];
 const ST={order:null,placed:0,miss:0, typ:'habit', pool:null,pi:0,filt:'all',stage:0,score:0,streak:0,pick:null,dpick:null,show:false, ap:null,ai:0,apick:null,aval:['','',''],achk:false, cur:0};
 let cur=0;
-const STEPS=[['Структура','#4a4f8f',0,structure],['Разбор вопросов','#2f6f9f',0,analysis],['Отвечаю на вопросы','#2c7f78',0,answer],['Задаю вопросы','#4c7f4a',0,ask],['Пишу письмо','#b0683a',20,letter],['Банк писем','#66549a',0,bank]];
+const STEPS=[['Структура','#3f6b4f',0,structure],['Разбор вопросов','#2b6f69',0,analysis],['Отвечаю на вопросы','#2c7f78',0,answer],['Задаю вопросы','#4c7f4a',0,ask],['Пишу письмо','#b0683a',20,letter],['Банк писем','#5a7a3f',0,bank]];
 function paintWho(){const w=$('#who');w.innerHTML='';NAMES.forEach((n,i)=>{const b=el('button','tab'+(i===who?' on':''),n);b.type='button';b.onclick=()=>{who=i;try{localStorage.setItem(KEY+'-who',i);}catch(e){}paintWho();redraw();};w.append(b);});}
 function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':''),'<i>'+(k+1)+'</i><span>'+s[0]+'</span>');b.type='button';b.title=s[0];b.style.setProperty('--c',s[1]);b.onclick=()=>go(k);tabs.append(b);});}
 function go(k){cur=k;document.body.style.setProperty('--step',STEPS[k][1]);Clock.set(STEPS[k][2]*60);redraw();}

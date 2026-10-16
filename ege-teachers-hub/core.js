@@ -37,7 +37,7 @@ function phaseRunner(o){ /* o: ring, label, phases[{label,kind,sec}], onPhase(i)
   let i=-1,end=0,left=0,t=null,paused=false;
   const b=o.ring.querySelector('b'),sp=o.ring.querySelector('span');
   const paint=()=>{const p=o.phases[i];b.textContent=mmss(left);o.ring.classList.toggle('ans',p.kind==='answer');o.ring.classList.remove('end');
-    o.ring.style.background='conic-gradient('+(p.kind==='answer'?'var(--acc)':'var(--blue)')+' '+(left/p.sec*360)+'deg,#e3e9f5 0)';};
+    o.ring.style.background='conic-gradient('+(p.kind==='answer'?'var(--acc)':'var(--blue)')+' '+(left/p.sec*360)+'deg,#e1ece8 0)';};
   const tick=()=>{left=(end-Date.now())/1000;if(left<=0){next();return;}paint();};
   function enter(){const p=o.phases[i];left=p.sec;end=Date.now()+left*1000;sp.textContent=p.kind==='answer'?(o.en?'answer':'ответ'):(o.en?'preparation':'подготовка');o.label.textContent=p.label;paint();
     beep(p.kind==='answer'?880:660,220);if(p.kind==='answer')Rec.start();o.onPhase&&o.onPhase(i);clearInterval(t);t=setInterval(tick,200);}

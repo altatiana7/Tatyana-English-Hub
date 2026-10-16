@@ -123,7 +123,7 @@ window.RUADS=[
 {title:"Russian cooking class: make pelmeni and blini!",sub:"Cook and taste traditional dishes",c:"#2c7f78",intro:"You are considering taking the class and now you’d like to get more information.",
  points:["date of the next class","duration of the class","number of people in a group","if ingredients are provided"],
  key:["When is the next class? / What is the date of the next class?","How long does the class last? / What is the duration of the class?","How many people are there in a group?","Are the ingredients provided? / Do you provide the ingredients?"]},
-{title:"Take a river cruise along the Volga!",sub:"From Nizhny Novgorod to Kazan",c:"#2f6f9f",intro:"You are considering going on the cruise and now you’d like to get more information.",
+{title:"Take a river cruise along the Volga!",sub:"From Nizhny Novgorod to Kazan",c:"#2b6f69",intro:"You are considering going on the cruise and now you’d like to get more information.",
  points:["departure date","types of cabins","excursions on the way","discounts for students"],
  key:["When does the cruise depart? / What is the departure date?","What types of cabins are available? / What types of cabins do you have?","What excursions are there on the way? / Are there any excursions on the way?","Are there any discounts for students? / Do you offer discounts for students?"]}
 ];

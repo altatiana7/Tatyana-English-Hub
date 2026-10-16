@@ -5,7 +5,7 @@ const main=$('#main'),tabs=$('#tabs'),IV=window.RUIV,RD=window.RUREAD,ADS=window
 const isRu=q=>q.k==='country'||/Russia/.test(q.t);
 const LET=window.W37.filter(l=>l.q.some(isRu));
 const S={tab:0,iv:{v:0,q:0,flip:false},t1:{v:0,flip:false},t2:{v:0,flip:false},t4:{v:0,flip:false},lt:{v:0,flip:false},pics:{}};
-const TABS=[['Interview','#4a4f8f',interview],['Reading aloud','#2c7f78',reading],['Questions','#2f6f9f',questions],['Monologue','#4c7f4a',monologue],['Letters','#8f4d7c',letters]];
+const TABS=[['Interview','#3f6b4f',interview],['Reading aloud','#2c7f78',reading],['Questions','#2b6f69',questions],['Monologue','#4c7f4a',monologue],['Letters','#a0742c',letters]];
 let cleanup=null,flipNow=null;
 /* real flip: the card turns over, the other side is painted at the half-way point; a click on the card flips it too */
 function makeFlip(st,card,paint){let busy=false;const f=()=>{if(busy)return;busy=true;card.classList.add('flipout');setTimeout(()=>{st.flip=!st.flip;paint();card.classList.remove('flipout');card.classList.add('flipin');setTimeout(()=>{card.classList.remove('flipin');busy=false;},270);},170);};
@@ -21,7 +21,7 @@ function varNav(st,list,name,extra){const n=list.length,nav=el('div','navrow'),s
   nav.append(bk,sel,fw,btn('Flip the card',()=>flipNow&&flipNow(),'main'));if(extra)extra.forEach(x=>nav.append(x));nav.append(el('span','note hint',name+' '+(st.v+1)+' of '+n+' · answers on the back: click the card'));main.append(nav);}
 /* timer with phases (preparation / answer) */
 function runner(o){let i=-1,end=0,left=0,t=null,paused=false;const b=o.ring.querySelector('b'),sp=o.ring.querySelector('span');
-  const paint=()=>{const p=o.phases[i];b.textContent=mmss(left);o.ring.classList.toggle('ans',p.kind==='answer');o.ring.classList.remove('end');o.ring.style.background='conic-gradient('+(p.kind==='answer'?'var(--acc)':'var(--blue)')+' '+(left/p.sec*360)+'deg,#e3e9f5 0)';};
+  const paint=()=>{const p=o.phases[i];b.textContent=mmss(left);o.ring.classList.toggle('ans',p.kind==='answer');o.ring.classList.remove('end');o.ring.style.background='conic-gradient('+(p.kind==='answer'?'var(--acc)':'var(--blue)')+' '+(left/p.sec*360)+'deg,#e1ece8 0)';};
   const tick=()=>{left=(end-Date.now())/1000;if(left<=0){next();return;}paint();};
   function enter(){const p=o.phases[i];left=p.sec;end=Date.now()+left*1000;sp.textContent=p.kind==='answer'?'answer':'preparation';o.label.textContent=p.label;paint();beep(p.kind==='answer'?880:660,220);if(p.kind==='answer')Rec.start();o.onPhase&&o.onPhase(i);clearInterval(t);t=setInterval(tick,200);}
   function next(){clearInterval(t);if(i>=0&&o.phases[i].kind==='answer'&&(i+1>=o.phases.length||o.phases[i+1].kind!=='answer'))Rec.stop(o.recBox,o.recName);
@@ -52,7 +52,7 @@ function interview(){
   const paint=()=>{ring.querySelector('b').textContent=left;ring.style.background='conic-gradient(var(--acc) '+(left/40*360)+'deg,#f3ddd6 0)';ring.classList.toggle('end',left===0);};
   const stopT=()=>{clearInterval(t);t=null;};const recBox=el('div','rec');
   const runT=()=>{stopT();left=40;paint();label.textContent='Answer';beep(880,200);Rec.start();const end=Date.now()+40000;t=setInterval(()=>{left=Math.max(0,Math.ceil((end-Date.now())/1000));paint();if(left===0){stopT();label.textContent='Time is up';beep(520,500);Rec.stop(recBox,v.id+'-q'+(st.q+1));}},200);};
-  function play(what){stopT();Rec.cancel();left=40;paint();au.pause();au.src='audio/'+v.id+'-'+what+'.mp3?v=17';label.textContent=what==='intro'?'Introduction is playing':'Question is playing';
+  function play(what){stopT();Rec.cancel();left=40;paint();au.pause();au.src='audio/'+v.id+'-'+what+'.mp3?v=17c';label.textContent=what==='intro'?'Introduction is playing':'Question is playing';
     au.onended=()=>{if(what==='intro'){label.textContent='Now press Play';}else runT();};au.onerror=()=>{label.textContent='Audio did not load';};au.play().catch(()=>{label.textContent='Audio did not load';});}
   function face(){card.className='ivcard flipcard'+(st.flip?' back':'');card.innerHTML='';
     if(st.flip)card.append(el('div','ey','Question '+(st.q+1)+' · '+esc(v.theme)),el('div','qq',esc(v.q[st.q])),el('div','ey','Sample answer'),el('div','smpa',ED.t('ru.iv.'+v.id+'.'+st.q,v.a[st.q])));

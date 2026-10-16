@@ -8,7 +8,7 @@
   SECT.forEach(s=>{const a=document.createElement('a');a.href=s[0]+'?v='+V;a.className=s[0]===here?'on':'';a.innerHTML='<b>'+s[1]+'</b><span>'+s[2]+'</span>';m.append(a);});
   /* кнопка «На главную» на каждой странице и в каждом задании: сам логотип стал кнопкой со стрелкой */
   if(here!=='index.html'){home.href='index.html?v='+V;home.title='На главную';home.classList.add('homebtn');home.innerHTML='<em class="harr">←</em>Главная';
-    const hs=document.createElement('style');hs.textContent='.bar a.home.homebtn{border:1.5px solid #c9d3e6;border-radius:12px;padding:6px 10px 6px 8px;background:#fff;gap:5px;font-size:16px}.bar a.home.homebtn::before{display:none}.bar a.home.homebtn:hover{background:#edf4ff}.bar a.home .harr{font-style:normal;font-weight:900;font-size:19px;color:#2855d9;margin-right:2px}';document.head.append(hs);}
+    const hs=document.createElement('style');hs.textContent='.bar a.home.homebtn{border:1.5px solid #c6d8d1;border-radius:12px;padding:6px 10px 6px 8px;background:#fff;gap:5px;font-size:16px}.bar a.home.homebtn::before{display:none}.bar a.home.homebtn:hover{background:#e8f3f0}.bar a.home .harr{font-style:normal;font-weight:900;font-size:19px;color:#227066;margin-right:2px}';document.head.append(hs);}
   if(typeof ED!=='undefined'){const a=document.createElement('a');a.href='#';a.innerHTML='<b>Правка ответов</b><span>для учителя</span>';a.onclick=e=>{e.preventDefault();close();ED.toggle();};m.append(a);}
   /* подсказки и рекомендации скрыты: ученик видит экран учителя. Показываются кнопкой и снова прячутся при каждом открытии страницы */
   const hst=document.createElement('style');hst.textContent='body:not(.showhints) .hint{display:none!important}.hintb{white-space:nowrap;flex:0 0 auto}';document.head.append(hst);

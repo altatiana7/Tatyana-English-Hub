@@ -36,7 +36,7 @@ const ADS=[
  {title:'Family Memories Photo Studio',sub:'Professional photo sessions for the whole family',c:'#2c7f78',intro:'You are considering having a family photo session and now you’d like to get more information.',
   points:['location of the studio','price of a session','discounts for large families','number of photos you get'],
   key:['Where is the studio located?\nWhere can I find the studio?','How much does a session cost?\nWhat is the price of a photo session?','Are there any discounts for large families?\nDo you offer discounts for large families?','How many photos do we get?\nHow many photos are included in the price?']},
- {title:'Family Weekend Camp',sub:'Two days of fun for parents and children',c:'#4a4f8f',intro:'You are considering going to the camp with your family and now you’d like to get more information.',
+ {title:'Family Weekend Camp',sub:'Two days of fun for parents and children',c:'#3f6b4f',intro:'You are considering going to the camp with your family and now you’d like to get more information.',
   points:['dates of the next camp','activities for parents and children','accommodation','price for a family of four'],
   key:['When is the next camp?\nWhat are the dates of the next camp?','What activities are there for parents and children?\nWhat can parents and children do together?','Where do families stay?\nWhat kind of accommodation do you offer?','How much does the camp cost for a family of four?\nWhat is the price for a family of four?']}];
 
@@ -95,7 +95,7 @@ function stopSay(){try{window.speechSynthesis&&speechSynthesis.cancel();}catch(e
 
 /* ---------- Раскладка: слева карточки, справа устная часть, внизу домашнее задание и заметки учителя ---------- */
 function layout(){main.innerHTML='';const ws=el('div','ws');PL=el('section','wpane pl');PR=el('section','wpane pr');ws.append(PL,PR);main.append(ws);
-  const hb=document.querySelector('.bar');if(hb&&!hb.querySelector('.hbtns')){const g=el('div','hbtns');g.append(btn('Homework',homework,'main sm'),(()=>{const a=el('a','btn sm','Block 1 tasks →');a.href='block1.html?v=31';a.style.textDecoration='none';return a;})(),btn('Учителю',teacher,'acc sm'));hb.append(g);}
+  const hb=document.querySelector('.bar');if(hb&&!hb.querySelector('.hbtns')){const g=el('div','hbtns');g.append(btn('Homework',homework,'main sm'),(()=>{const a=el('a','btn sm','Block 1 tasks →');a.href='block1.html?v=31c';a.style.textDecoration='none';return a;})(),btn('Учителю',teacher,'acc sm'));hb.append(g);}
   drawLeft();drawRight();}
 
 /* ---------- Слева: карточки Quizlet ---------- */
