@@ -5,7 +5,7 @@ const main=$('#main'),tabs=$('#tabs'),IV=window.RUIV,RD=window.RUREAD,ADS=window
 const isRu=q=>q.k==='country'||/Russia/.test(q.t);
 const LET=window.W37.filter(l=>l.q.some(isRu));
 const S={tab:0,iv:{v:0,q:0,flip:false},t1:{v:0,flip:false},t2:{v:0,flip:false},t4:{v:0,flip:false},lt:{v:0,flip:false},pics:{}};
-const TABS=[['Interview','#3f6b4f',interview],['Reading aloud','#2c7f78',reading],['Questions','#2b6f69',questions],['Monologue','#4c7f4a',monologue],['Letters','#a0742c',letters]];
+const TABS=[['Interview','#3f6b4f',interview],['Reading aloud','#2c7f78',reading],['Questions','#2f6f9f',questions],['Monologue','#4c7f4a',monologue],['Letters','#a0742c',letters]];
 let cleanup=null,flipNow=null;
 /* real flip: the card turns over, the other side is painted at the half-way point; a click on the card flips it too */
 function makeFlip(st,card,paint){let busy=false;const f=()=>{if(busy)return;busy=true;card.classList.add('flipout');setTimeout(()=>{st.flip=!st.flip;paint();card.classList.remove('flipout');card.classList.add('flipin');setTimeout(()=>{card.classList.remove('flipin');busy=false;},270);},170);};
@@ -52,7 +52,7 @@ function interview(){
   const paint=()=>{ring.querySelector('b').textContent=left;ring.style.background='conic-gradient(var(--acc) '+(left/40*360)+'deg,#f3ddd6 0)';ring.classList.toggle('end',left===0);};
   const stopT=()=>{clearInterval(t);t=null;};const recBox=el('div','rec');
   const runT=()=>{stopT();left=40;paint();label.textContent='Answer';beep(880,200);Rec.start();const end=Date.now()+40000;t=setInterval(()=>{left=Math.max(0,Math.ceil((end-Date.now())/1000));paint();if(left===0){stopT();label.textContent='Time is up';beep(520,500);Rec.stop(recBox,v.id+'-q'+(st.q+1));}},200);};
-  function play(what){stopT();Rec.cancel();left=40;paint();au.pause();au.src='audio/'+v.id+'-'+what+'.mp3?v=17c';label.textContent=what==='intro'?'Introduction is playing':'Question is playing';
+  function play(what){stopT();Rec.cancel();left=40;paint();au.pause();au.src='audio/'+v.id+'-'+what+'.mp3?v=17';label.textContent=what==='intro'?'Introduction is playing':'Question is playing';
     au.onended=()=>{if(what==='intro'){label.textContent='Now press Play';}else runT();};au.onerror=()=>{label.textContent='Audio did not load';};au.play().catch(()=>{label.textContent='Audio did not load';});}
   function face(){card.className='ivcard flipcard'+(st.flip?' back':'');card.innerHTML='';
     if(st.flip)card.append(el('div','ey','Question '+(st.q+1)+' · '+esc(v.theme)),el('div','qq',esc(v.q[st.q])),el('div','ey','Sample answer'),el('div','smpa',ED.t('ru.iv.'+v.id+'.'+st.q,v.a[st.q])));

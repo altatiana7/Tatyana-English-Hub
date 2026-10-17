@@ -1,0 +1,73 @@
+/* Единый стиль сайта: компактно, но не мелко; один размер шрифта для одного вида текста.
+   Подключается последним на каждой странице и заменяет прежние наслоенные правки. */
+:root{--fs:16px;--fs-text:16.5px;--fs-ui:14.5px;--fs-small:13.5px}
+html,body{font-size:var(--fs)!important;line-height:1.45!important}
+body{padding:6px 10px 6px!important}
+h1{font-size:22px!important;line-height:1.2!important}
+h2{font-size:19px!important;line-height:1.25!important}
+h3{font-size:17px!important;line-height:1.3!important}
+
+/* верхняя панель – компактная */
+body>.bar{min-height:40px!important;padding:4px 10px!important;margin:0 auto 6px!important}
+.bar .tab,.bar button,.bar a.home,.bar .btn{font-size:var(--fs-ui)!important}
+.bar .ttlb{font-size:var(--fs-ui)!important}
+
+/* все кнопки, вкладки, списки выбора – одного размера */
+button,.btn,select,input,textarea,.tab,.segb,.chip,.opt,.part,.qk a,.hwt{font-size:var(--fs-ui)!important;line-height:1.3!important}
+textarea{font-size:var(--fs-text)!important;line-height:1.5!important}
+.note,.src,.hint,.qk .ql,.ey,.qzk{font-size:var(--fs-small)!important}
+
+/* формулировки заданий */
+#main>.inst,#main>.inst b,.task,.kim .task,.kim2 .task{font-size:var(--fs)!important;line-height:1.4!important}
+#main>.inst{margin:0 0 6px!important}
+
+/* тексты для чтения и все пункты заданий */
+.textbox,.kim,.kim2,.kim .textbox,.kim2 .textbox,.read,.read p,.flow,.flow .cols,.flow .cols p,.ege-continuous-text,
+.panel li,.panel .hl li,.hl,.score span,.qtext,.qtext.long,.tq,.trow,.stim,.match b,.rrow,.errs li,.verdict,.lc span,.sec span,.bdet{font-size:var(--fs-text)!important;line-height:1.5!important}
+.score.tf span{font-size:var(--fs-text)!important}
+.match b{font-weight:700}
+
+/* карточки Quizlet – обычного размера */
+.qzcard{height:200px!important}
+.qzterm{font-size:22px!important}.qzdef{font-size:17px!important}.qzex{font-size:15px!important}
+.ivw .ivcard .big,.ivcard .big{font-size:22px!important}
+
+/* рабочая область и колонки */
+.stage{gap:8px!important}
+.stage>.panel{padding:10px 12px!important}
+.stage>.panel.side{flex:0 0 clamp(250px,28%,330px)!important;width:clamp(250px,28%,330px)!important;min-width:0!important}
+.stage>.panel.ctl{flex:0 0 215px!important;width:215px!important;padding:8px!important}
+.ctlbtns{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}.ctlbtns .btn{min-width:0;white-space:normal}
+.ctl .ring b,.ctl2 .ring b{font-size:24px!important}
+#main>.navrow{gap:8px!important;padding:4px 4px!important}
+.ctl .ring,.ctl2 .ring{width:86px!important;height:86px!important}
+
+/* чтение 11: текст слева, части предложений справа */
+@media(min-width:760px){
+ #main>.stage:has(.panel.read){display:grid!important;grid-template-columns:minmax(0,1fr) 270px!important;align-items:stretch!important}
+ #main>.stage:has(.panel.read)>.panel.read{width:100%!important;max-width:none!important;flex:auto!important}
+ #main>.stage:has(.panel.read)>.panel.side{width:270px!important;max-width:270px!important;min-width:270px!important;flex:none!important}
+}
+#main>.stage .panel.read p{margin:0 0 8px!important}
+.read .gbtn{font-size:var(--fs-ui)!important}
+
+/* 30–36: один связный текст по центру */
+#main .flow.panel{width:min(980px,94vw)!important;max-width:980px!important;height:auto!important;align-self:center!important;margin:4px auto!important;padding:14px 20px!important;flex:0 0 auto!important;overflow:auto!important}
+#main .flow .cols{display:block!important;columns:1!important}
+#main .flow .cols p{margin:0 0 8px!important}
+#main .flow .fsel,#main .flow select{height:32px!important;vertical-align:middle!important}
+
+/* занятие по теме блока: колонка карточек пошире, чтобы вкладки были в одну строку */
+@media(min-width:1001px){.ws{grid-template-columns:390px minmax(0,1fr)!important;max-width:1240px!important}}
+
+/* главный экран */
+.qk a{white-space:normal!important;padding:5px 9px!important}
+.sec b{font-size:19px!important}
+.lc b{font-size:17px!important}
+
+@media(max-width:800px){.stage>.panel.side{flex-basis:38%!important;width:38%!important}.stage>.panel.ctl{flex-basis:140px!important;width:140px!important}}
+
+/* компактная строка задания: формулировка и источник в одну узкую строку */
+#main>.inst,.inst{flex-wrap:nowrap!important;align-items:center!important;gap:10px!important;padding:2px 6px!important;margin:0 0 4px!important;min-height:0!important}
+#main>.inst b,.inst b{font-size:14.5px!important;font-weight:700!important;line-height:1.3!important}
+.inst .src{white-space:nowrap!important;font-size:12.5px!important;margin-left:auto}

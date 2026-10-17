@@ -3,7 +3,7 @@
    Правки сохраняются в этом браузере и показываются вместо исходного текста везде, где стоит этот ответ.
    Режим правки при каждом открытии страницы выключен. */
 const ED=(function(){
-  const KEY='egeth-answer-edits',ORIG={};let on=false,last=null,btnTop=null,fileM=null,tools=null,onB=null,cntL=null;
+  const KEY='ege27k-answer-edits',ORIG={};let on=false,last=null,btnTop=null,fileM=null,tools=null,onB=null,cntL=null;
   const load=()=>{try{const o=JSON.parse(localStorage.getItem(KEY)||'{}')||{};Object.keys(o).forEach(k=>{if(k.indexOf('ru.lt.')===0){o[k.slice(3)]=o[k];delete o[k];}});return o;}catch(e){return {};}};
   const save=o=>{try{localStorage.setItem(KEY,JSON.stringify(o));return true;}catch(e){return false;}};
   const html=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])).replace(/\n/g,'<br>');
@@ -50,7 +50,7 @@ const ED=(function(){
       
       '.editing [data-ed].edited{box-shadow:inset 3px 0 0 #2f8f5f}'+
       '.edmenu .edcnt{font-size:14px;color:#667;padding:2px 6px}'+
-      '.edmenu{position:fixed;z-index:61;background:#fff;border:1px solid #d5e0dc;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.16);padding:6px;display:flex;flex-direction:column;gap:4px}'+
+      '.edmenu{position:fixed;z-index:61;background:#fff;border:1px solid #d6dbe8;border-radius:12px;box-shadow:0 12px 32px rgba(0,0,0,.16);padding:6px;display:flex;flex-direction:column;gap:4px}'+
       '.edtools{position:fixed;z-index:61;display:flex;gap:6px;background:#fff;border:2px solid #d9822b;border-radius:10px;padding:4px;box-shadow:0 6px 18px rgba(0,0,0,.18)}'+
       '.edtoast{position:fixed;z-index:62;top:64px;left:50%;transform:translateX(-50%);background:#22403a;color:#fff;font-size:16px;padding:8px 14px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.2);pointer-events:none;max-width:90vw}';
     document.head.append(st);paintCount();
