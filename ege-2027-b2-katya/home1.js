@@ -82,10 +82,24 @@ function chipsQ(first,n,curK,sel,key,okFn){const c=el('div','chips');for(let k=0
 function qCard(q,opts,first,k,sel,right,cls){const card=el('div','panel grow qcard');card.append(el('div','qhead','<span class="qnum">'+(first+k)+'</span>'));card.append(el('div','qtext long',esc(q)));
   const o=el('div','opts '+cls);opts.forEach((w,j)=>{const b=lock(el('button','opt'+(S.checked?(j+1===right?' ok':(sel[k]===j+1?' bad':'')):(sel[k]===j+1?' sel':'')),(j+1)+') '+esc(w)));b.type='button';b.onclick=()=>{sel[k]=j+1;save();redraw();};o.append(b);});card.append(o);return card;}
 function lis3(){
-  lisHead('Задания 3–9. Вы услышите интервью. В заданиях 3–9 выберите вариант ответа 1, 2 или 3. Запись звучит дважды.');
-  const k=S.q3,q=D.lis.mc[k],stage=el('div','stage');stage.append(qCard(q[0],q[1],3,k,S.l3,D.lis.k3[k],'c3'));main.append(stage);
-  const nav=el('div','navrow');nav.append(chipsQ(3,7,k,S.l3,'q3',i=>S.l3[i]===D.lis.k3[i]),btn('← Назад',()=>{S.q3--;redraw();},'sm'),btn('Вперёд →',()=>{S.q3++;redraw();},'sm'),nextBtn());
-  nav.children[1].disabled=k===0;nav.children[2].disabled=k===6;main.append(nav);
+  lisHead('Задания 3–9. Вы услышите интервью. Для каждого вопроса выберите ответ 1, 2 или 3. Вы услышите запись дважды.');
+  const stage=el('div','stage listening39'),sheet=el('div','panel grow exam39');
+  D.lis.mc.forEach((q,k)=>{
+    const item=el('section','exam39-item');
+    const top=el('div','exam39-title');
+    top.append(el('span','exam39-no',String(k+3)),el('strong',null,esc(q[0])));item.append(top);
+    const options=el('div','exam39-options');
+    q[1].forEach((answer,j)=>{
+      const label=el('label','exam39-answer');
+      const radio=el('input');radio.type='radio';radio.name='ege-l3-'+k;radio.value=String(j+1);radio.checked=S.l3[k]===j+1;radio.disabled=!!(S.checked||S.sent);
+      radio.onchange=()=>{S.l3[k]=j+1;save();paintTabs();};
+      label.append(radio,el('span',null,(j+1)+') '+esc(answer)));
+      if(S.checked&&j+1===D.lis.k3[k])label.classList.add('correct');
+      options.append(label);
+    });item.append(options);sheet.append(item);
+  });
+  stage.append(sheet);main.append(stage);
+  const nav=el('div','navrow');nav.append(el('span','note','Все семь ответов 3–9 сохраняются автоматически.'),nextBtn());main.append(nav);
 }
 
 /* ---------- Чтение ---------- */
