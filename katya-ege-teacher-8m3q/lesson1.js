@@ -35,13 +35,12 @@ const STEPS=[
  {id:'s1',label:'Чтение вслух',color:'#2c7f78',min:0,draw:speak1},
  {id:'s4',label:'Монолог',color:'#4c7f4a',min:0,draw:speak4},
  {id:'l',label:'Аудирование',color:'#a8802a',min:0,draw:listen},
- {id:'g',label:'Грамматика',color:'#b0683a',min:7,draw:()=>typed('g','Преобразуйте, если необходимо, слово, напечатанное заглавными буквами, так, чтобы оно грамматически соответствовало содержанию текста.')},
- {id:'w',label:'Словообр.',color:'#a85050',min:6,draw:()=>typed('w','Образуйте от слова, напечатанного заглавными буквами, однокоренное слово так, чтобы оно грамматически и лексически соответствовало содержанию текста.')},
+ {id:'gw',label:'Грамматика + словообр.',color:'#b0683a',min:13,draw:gramWord},
  {id:'v',label:'Лексика',color:'#8f4d7c',min:7,draw:mcq},
  {id:'r',label:'Чтение 11',color:'#66549a',min:7,draw:read11},
  {id:'res',label:'Итоги',color:'#2b2f4a',min:0,draw:results}
 ];
-function isDone(id){const sp=S.sp;return id==='s1'?sp.t1!=null:id==='s2'?sp.t2.every(x=>x!=null):id==='s3'?sp.t3.every(x=>x!=null):id==='s4'?(sp.k1!=null&&sp.k2!=null&&sp.k3!=null):id==='res'?false:S[id].done;}
+function isDone(id){const sp=S.sp;return id==='s1'?sp.t1!=null:id==='s2'?sp.t2.every(x=>x!=null):id==='s3'?sp.t3.every(x=>x!=null):id==='s4'?(sp.k1!=null&&sp.k2!=null&&sp.k3!=null):id==='res'?false:id==='gw'?(S.g.done&&S.w.done):S[id].done;}
 const lisErr=()=>LIS.key.filter((a,k)=>S.l.val[k]!==a).length,lisScore=()=>{const e=lisErr();return e===0?3:e===1?2:e===2?1:0;};
 function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':'')+(isDone(s.id)?' done':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.type='button';b.title=s.label;b.style.setProperty('--c',s.color);b.onclick=()=>go(k);tabs.append(b);});
   const on=tabs.querySelector('.on');if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'nearest'});}
@@ -87,6 +86,21 @@ function typed(key,ru){
   else if(st.done){const n=d.items.filter((x,k)=>typedOk(key,k)).length;nav.append(el('b',null,'Результат: '+n+' из '+d.items.length),el('span','note hint','Нажмите номер пропуска, чтобы увидеть пояснение.'),nextBtn());}
   else nav.append(el('span','note hint','Слово справа от пропуска поставьте в нужную форму. Если ответ угадан, нажмите номер пропуска: он станет жёлтым.'),btn(SHOW?'Проверить раздел':'Сохранить ответы',()=>{st.done=true;const w=d.items.findIndex((x,k)=>!typedOk(key,k));st.cur=w<0?0:w;Clock.stop();redraw();},'acc sp'));
   main.append(nav);if(!st.done){const f=card.querySelector('input');f&&f.focus();}
+}
+
+/* 19–24 и 25–29 на одной странице: две колонки рядом */
+function gramWord(){
+  const cols=el('div','gwcols'),a=el('div','gwcol'),b=el('div','gwcol');
+  typed('g','Преобразуйте, если необходимо, слово, напечатанное заглавными буквами, так, чтобы оно грамматически соответствовало содержанию текста.');while(main.firstChild)a.append(main.firstChild);
+  typed('w','Образуйте от слова, напечатанного заглавными буквами, однокоренное слово так, чтобы оно грамматически и лексически соответствовало содержанию текста.');while(main.firstChild)b.append(main.firstChild);
+  a.querySelectorAll('.navrow .main.sp').forEach(x=>x.remove());
+  cols.append(a,b);main.append(cols);
+  /* шрифт уменьшается, пока оба текста не поместятся без прокрутки */
+  const fit=()=>{const ps=[...cols.querySelectorAll('.flow.panel')];
+    const set=(pn,f)=>{const t=pn.querySelector('.ege-continuous-text')||pn;pn.style.setProperty('font-size',f+'px','important');t.style.setProperty('font-size',f+'px','important');};
+    let m=17;ps.forEach(pn=>{let f=17;set(pn,f);while(f>13&&pn.scrollHeight>pn.clientHeight+1){f-=.5;set(pn,f);}m=Math.min(m,f);});
+    ps.forEach(pn=>set(pn,m));};/* одинаковый размер шрифта в обоих текстах */
+  setTimeout(fit,0);
 }
 
 /* ---------- 30–36: сплошной текст, выбор из четырёх в каждом пропуске ---------- */
