@@ -82,24 +82,28 @@ function chipsQ(first,n,curK,sel,key,okFn){const c=el('div','chips');for(let k=0
 function qCard(q,opts,first,k,sel,right,cls){const card=el('div','panel grow qcard');card.append(el('div','qhead','<span class="qnum">'+(first+k)+'</span>'));card.append(el('div','qtext long',esc(q)));
   const o=el('div','opts '+cls);opts.forEach((w,j)=>{const b=lock(el('button','opt'+(S.checked?(j+1===right?' ok':(sel[k]===j+1?' bad':'')):(sel[k]===j+1?' sel':'')),(j+1)+') '+esc(w)));b.type='button';b.onclick=()=>{sel[k]=j+1;save();redraw();};o.append(b);});card.append(o);return card;}
 function lis3(){
-  lisHead('Задания 3–9. Вы услышите интервью. Для каждого вопроса выберите ответ 1, 2 или 3. Вы услышите запись дважды.');
-  const stage=el('div','stage listening39'),sheet=el('div','panel grow exam39');
+  {const r=el('div','navrow');r.append(audio);main.append(r);}
+  /* формат бланка КИМ: рамка с инструкцией, номер в клетке, варианты 1) 2) 3), «Ответ:» с клеткой */
+  const stage=el('div','stage listening39'),sheet=el('div','panel kimsheet');
+  sheet.append(el('div','kimnote','Вы услышите интервью. В заданиях 3–9 запишите в поле ответа цифру 1, 2 или 3, соответствующую выбранному Вами варианту ответа. Вы услышите запись дважды.'));
+  const grid=el('div','kimgrid');
   D.lis.mc.forEach((q,k)=>{
-    const item=el('section','exam39-item');
-    const top=el('div','exam39-title');
-    top.append(el('span','exam39-no',String(k+3)),el('strong',null,esc(q[0])));item.append(top);
-    const options=el('div','exam39-options');
-    q[1].forEach((answer,j)=>{
-      const label=el('label','exam39-answer');
-      const radio=el('input');radio.type='radio';radio.name='ege-l3-'+k;radio.value=String(j+1);radio.checked=S.l3[k]===j+1;radio.disabled=!!(S.checked||S.sent);
-      radio.onchange=()=>{S.l3[k]=j+1;save();paintTabs();};
-      label.append(radio,el('span',null,(j+1)+') '+esc(answer)));
-      if(S.checked&&j+1===D.lis.k3[k])label.classList.add('correct');
-      options.append(label);
-    });item.append(options);sheet.append(item);
+    const item=el('section','kimitem');
+    const top=el('div','kimq');top.append(el('span','kimno',String(k+3)),el('span',null,esc(q[0])));item.append(top);
+    const short=q[1].every(x=>x.length<=24);
+    const opts=el('div','kimopts'+(short?' row':''));
+    const box=lock(el('input','kimbox'));box.maxLength=1;box.inputMode='numeric';box.value=S.l3[k]||'';box.setAttribute('aria-label','Ответ '+(k+3));
+    const paint=()=>{opts.querySelectorAll('.kimopt').forEach((o,j)=>o.classList.toggle('on',S.l3[k]===j+1));box.value=S.l3[k]||'';};
+    const set=v=>{if(S.checked||S.sent)return;S.l3[k]=v;save();paint();paintTabs();};
+    q[1].forEach((ans,j)=>{const o=el('div','kimopt',(j+1)+') '+esc(ans));o.onclick=()=>set(j+1);
+      if(S.checked&&j+1===D.lis.k3[k])o.classList.add('correct');opts.append(o);});
+    box.oninput=()=>{const v=+box.value;if(v>=1&&v<=3)set(v);else{box.value='';set(null);}};
+    const ans=el('div','kimans');ans.append(el('span',null,'Ответ:'),box);
+    if(S.checked)box.classList.add(S.l3[k]===D.lis.k3[k]?'ok':'bad');
+    const bd=el('div','kimbody');bd.append(opts,ans);item.append(bd);grid.append(item);paint();
   });
-  stage.append(sheet);main.append(stage);
-  const nav=el('div','navrow');nav.append(el('span','note','Все семь ответов 3–9 сохраняются автоматически.'),nextBtn());main.append(nav);
+  sheet.append(grid);stage.append(sheet);main.append(stage);
+  const nav=el('div','navrow');nav.append(nextBtn());main.append(nav);
 }
 
 /* ---------- Чтение ---------- */
@@ -126,9 +130,9 @@ const LIM={37:{min:100,max:140,lo:90,hi:154},38:{min:200,max:250,lo:180,hi:275}}
 function writing(n){
   const key='w'+n,L=LIM[n];
   head(n===37?'Задание 37. Электронное письмо личного характера. Рекомендуемое время – 20 минут.':'Задание 38. Письменное высказывание с элементами рассуждения на основе таблицы. Рекомендуемое время – 40 минут.','Задание составлено для сайта по образцу демоверсии ФИПИ');
-  const stage=el('div','stage'),a=el('div','panel side kim'),b=el('div','panel grow col wr');a.style.fontSize='18px';a.style.flexBasis='46%';a.style.width='46%';
-  if(n===37){a.innerHTML='<p class="task">You have received an email message from your English-speaking pen-friend Emily:</p><div class="stim"><div class="hd">From: '+EMAIL.from+'<br>To: '+EMAIL.to+'<br>Subject: '+EMAIL.subj+'</div>'+esc(EMAIL.body).replace(/\n/g,'<br>')+'</div><p class="task" style="margin-top:8px">Write an email to Emily.<br>In your message:<br>– answer her questions;<br>– ask 3 questions about '+EMAIL.about+'.</p><p class="task">Write 100–140 words.<br>Remember the rules of email writing.</p>';}
-  else{a.innerHTML='<p class="task">Imagine that you are doing a project on '+PROJ.subj+'. You have found some data on the subject – the results of a survey conducted among teenagers in Zetland (see the table below).</p><p class="task">Comment on the survey data and give your opinion on the subject of the project.</p><p style="text-align:center;margin:4px 0"><b>The survey question:</b> What skill is the most important for your future career?<br><i>Choose one option</i></p><table class="t"><tr><th>'+PROJ.col+'</th><th>Number of respondents (%)</th></tr>'+PROJ.rows.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>').join('')+'</table><p class="task">Write 200–250 words.<br>Use the following plan:</p><ul style="list-style:none;padding-left:4px"><li>– make an opening statement on the subject of the project;</li><li>– select and report 2–3 facts;</li><li>– make 1–2 comparisons where relevant and give your comments;</li><li>– outline a problem that can arise with '+PROJ.problem+' and suggest a way of solving it;</li><li>– conclude by giving and explaining your opinion on '+PROJ.opinion+'.</li></ul>';}
+  const stage=el('div','stage'),a=el('div','panel side kim kimsheet kimw'),b=el('div','panel grow col wr');a.style.flexBasis='50%';a.style.width='50%';
+  if(n===37){a.innerHTML='<div class="kimtask"><span class="kimno">37</span><div>You have received an email message from your English-speaking pen-friend '+EMAIL.from.split('@')[0]+':</div></div><div class="kimmail"><div class="mr"><b>From:</b> '+EMAIL.from+'</div><div class="mr"><b>To:</b> '+EMAIL.to+'</div><div class="mr"><b>Subject:</b> '+EMAIL.subj+'</div><div class="mb">'+esc(EMAIL.body).replace(/\n/g,'<br>')+'</div></div><p>Write an email to '+EMAIL.from.split('@')[0]+'.<br>In your message:<br>– answer her questions;<br>– ask 3 questions about '+EMAIL.about+'.</p><p><b>Write 100–140 words.</b><br>Remember the rules of email writing.</p>';}
+  else{a.innerHTML='<div class="kimtask"><span class="kimno">38</span><div>Imagine that you are doing a project on <b>'+PROJ.subj+'</b>. You have found some data on the subject – the results of a survey conducted among teenagers in Zetland (see the table below).<br><b>Comment on the survey data and give your opinion on the subject of the project.</b></div></div><div class="kimrow"><table class="kimtab"><tr><th colspan="2">The survey question:<br>What skill is the most important for your future career?<br><i>Choose one option</i></th></tr><tr><th>'+PROJ.col+'</th><th>Number of respondents (%)</th></tr>'+PROJ.rows.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>').join('')+'</table><div><p><b>Write 200–250 words.</b> Use the following plan:</p><ul class="kimplan"><li>– make an opening statement on the subject of the project;</li><li>– select and report 2–3 facts;</li><li>– make 1–2 comparisons where relevant and give your comments;</li><li>– outline a problem that can arise with '+PROJ.problem+' and suggest a way of solving it;</li><li>– conclude by giving and explaining your opinion on '+PROJ.opinion+'.</li></ul></div></div>';}
   const ta=lock(el('textarea'));ta.value=S[key];ta.placeholder='Пишите здесь. Черновик сохраняется в этом браузере.';ta.spellcheck=false;ta.setAttribute('aria-label','Ответ на задание '+n);
   const wc=el('div','wc'),num=el('b'),msg=el('span');wc.append(num,msg);
   const upd=()=>{const w=words(ta.value),ok=w>=L.min&&w<=L.max,soft=w>=L.lo&&w<=L.hi;num.textContent=w;num.className=ok?'ok':(w&&!soft?'bad':'');
