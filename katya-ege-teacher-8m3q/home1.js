@@ -122,11 +122,12 @@ function read10(){
 }
 function read12(){
   head('Задания 12–18. Прочитайте текст и выберите вариант ответа 1, 2, 3 или 4.','Открытый банк ФИПИ');
-  const k=S.q12,q=D.r12.q[k],stage=el('div','stage'),a=el('div','panel grow read');a.append(el('h3',null,esc(D.r12.title)));D.r12.p.forEach(p=>a.append(el('p',null,esc(p))));
-  const card=qCard(q.q,q.o,12,k,S.r12,D.r12.a[k],'c1');card.classList.remove('grow');card.classList.add('side');card.style.justifyContent='flex-start';card.querySelector('.qtext').style.fontSize='20px';card.querySelectorAll('.opt').forEach(o=>{o.style.fontSize='18px';o.style.padding='7px 10px';});
+  const k=S.q12,q=D.r12.q[k],stage=el('div','stage read12'),a=el('div','panel grow read');a.append(el('h3',null,esc(D.r12.title)));D.r12.p.forEach(p=>a.append(el('p',null,esc(p))));
+  const card=qCard(q.q,q.o,12,k,S.r12,D.r12.a[k],'c1');card.classList.remove('grow');card.classList.add('side');card.classList.add('q12card');card.style.justifyContent='flex-start';card.querySelector('.qtext').style.fontSize='20px';card.querySelectorAll('.opt').forEach(o=>{o.style.fontSize='18px';o.style.padding='7px 10px';});
   stage.append(a,card);main.append(stage);
   const nav=el('div','navrow');nav.append(chipsQ(12,7,k,S.r12,'q12',i=>S.r12[i]===D.r12.a[i]),btn('← Назад',()=>{S.q12--;redraw();},'sm'),btn('Вперёд →',()=>{S.q12++;redraw();},'sm'),nextBtn());
   nav.children[1].disabled=k===0;nav.children[2].disabled=k===6;main.append(nav);
+  {let wide=false;const wb=btn('Текст на весь экран',()=>{wide=!wide;stage.classList.toggle('wide',wide);wb.textContent=wide?'Показать вопрос':'Текст на весь экран';},'sm');nav.insertBefore(wb,nav.lastChild);}
 }
 
 /* ---------- Письмо ---------- */
