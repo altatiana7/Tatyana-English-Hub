@@ -1,14 +1,14 @@
 /* Главный экран: разделы под кнопками (при каждом открытии все закрыты),
    занятия и задания открываются поверх главного экрана во весь экран. */
 (function(){
-  const V='67';
+  const V='92';
   /* домашнее задание: баннер и блокировка ссылок */
   (function(){
     const nr=document.getElementById('nowrow');if(!nr)return;
     const has=HW.items.length>0;
     /* быстрые ссылки на урок */
     const LW=[['family-quizlet.html?v=67','Topic Practice',''],['extra-family.html?v=57','Words & Vocabulary',''],['lessonw1.html?v=57#h','Error hunter','lessonw1:hunt'],['lessonw1.html?v=57#t1','Task 1','lessonw1:t1-1'],['lessonw1.html?v=57#t2','Task 2','lessonw1:t2-1'],['lessonw1.html?v=57#t3','Task 3','lessonw1:iv1'],['lessonw1.html?v=57#t4','Task 4','lessonw1:t4-1']];
-    const LB=[['lesson1.html?v=57#5','Listening · 1–9',''],['lesson1.html?v=57#9','Reading · 11',''],['lesson1.html?v=57#6','Grammar · 19–24',''],['lesson1.html?v=57#7','Word Formation · 25–29',''],['lesson1.html?v=57#8','Vocabulary · 30–36',''],['write37.html?v=57','Writing · 37',''],['write38.html?v=57','Writing · 38','']];
+    const LB=[['lesson1.html?v=92#5','Listening · 1–9',''],['lesson1.html?v=92#9','Reading · 11',''],['lesson1.html?v=92#6','Grammar · 19–24',''],['lesson1.html?v=92#7','Word Formation · 25–29',''],['lesson1.html?v=92#8','Vocabulary · 30–36',''],['write37.html?v=57','Writing · 37',''],['write38.html?v=57','Writing · 38','']];
     function lk(href,text,hwPfx){
       const a=document.createElement('a');a.textContent=text;
       const open=!has||HW.items.some(x=>x===hwPfx||x.indexOf(hwPfx)===0);
