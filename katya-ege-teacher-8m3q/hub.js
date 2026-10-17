@@ -9,8 +9,8 @@
     const nr=document.getElementById('nowrow');if(!nr)return;
     const has=HW.items.length>0;
     /* быстрые ссылки на урок */
-    const LW=[['lessonw1.html?v=74#w','Words','lessonw1:words'],['lessonw1.html?v=74#c','Collocations','lessonw1:colls'],['lessonw1.html?v=74#h','Error hunter','lessonw1:hunt'],['lessonw1.html?v=74#m','Match','lessonw1:match'],['lessonw1.html?v=74#t1','Task 1','lessonw1:t1-1'],['lessonw1.html?v=74#t2','Task 2','lessonw1:t2-1'],['lessonw1.html?v=74#t3','Task 3','lessonw1:iv1'],['lessonw1.html?v=74#t4','Task 4','lessonw1:t4-1'],['family-quizlet.html?v=67','Topic Practice','',1],['extra-family.html?v=57','Words & Vocabulary','',1]];
-    const LB=[['lesson1.html?v=93#5','Listening · 1–9','',1],['lesson1.html?v=93#9','Reading · 11','',1],['lesson1.html?v=93#6','Grammar · 19–24','',1],['lesson1.html?v=93#7','Word Formation · 25–29','',1],['lesson1.html?v=93#8','Vocabulary · 30–36','',1],['write37.html?v=57','Writing · 37','',1],['write38.html?v=57','Writing · 38','',1]];
+    const LW=[['lessonw1.html?v=74#w','Words','lessonw1:words'],['lessonw1.html?v=74#c','Collocations','lessonw1:colls'],['lessonw1.html?v=74#h','Error hunter','lessonw1:hunt'],['lessonw1.html?v=74#m','Match','lessonw1:match'],['lessonw1.html?v=74#t1','Task 1','lessonw1:t1-1'],['lessonw1.html?v=74#t2','Task 2','lessonw1:t2-1'],['lessonw1.html?v=74#t3','Task 3','lessonw1:iv1'],['lessonw1.html?v=74#t4','Task 4','lessonw1:t4-1'],['family-quizlet.html?v=68','Topic Practice','',0],['extra-family.html?v=57','Words & Vocabulary','',1]];
+    const LB=[['lesson1.html?v=93#5','Listening · 1–9','',1],['lesson1.html?v=94#8','Reading · 11','',1],['lesson1.html?v=93#6','Grammar · 19–24','',1],['lesson1.html?v=94#6','Word Formation · 25–29','',1],['lesson1.html?v=94#7','Vocabulary · 30–36','',1],['write37.html?v=57','Writing · 37','',1],['write38.html?v=57','Writing · 38','',1]];
     function lk(href,text,hwPfx,xtra){
       const a=document.createElement('a');a.textContent=text;
       const open=(TCH||!xtra)&&(!has||HW.items.some(x=>x===hwPfx||x.indexOf(hwPfx)===0));if(xtra&&!TCH)a.title='Открывает учитель';
@@ -74,7 +74,7 @@
   /* сайт учителя: проверка домашки по коду */
   const cb=document.getElementById('chkbtn');
   if(cb)cb.onclick=async()=>{const m=document.getElementById('chkmsg');try{const o=await KS.unpack(document.getElementById('chkcode').value);
-      const P={home1:'home1.html?v=41',lesson1:'lesson1.html?v=93#10',lessonw1:'lessonw1.html?v=74'}[o.page];if(!P)throw new Error('Неизвестная работа: '+o.page);
+      const P={home1:'home1.html?v=41',lesson1:'lesson1.html?v=94#9',lessonw1:'lessonw1.html?v=74'}[o.page];if(!P)throw new Error('Неизвестная работа: '+o.page);
       sessionStorage.setItem('katya-review',JSON.stringify({page:o.page,data:o.data}));m.textContent='Открыта работа от '+(o.data._at||'')+'.';open(P);}
     catch(e){m.textContent='Не получилось открыть код: '+e.message;}};
   window.addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='ege-home')close();});
