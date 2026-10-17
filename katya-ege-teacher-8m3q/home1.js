@@ -103,6 +103,10 @@ function lis3(){
     const bd=el('div','kimbody');bd.append(opts,ans);item.append(bd);grid.append(item);paint();
   });
   sheet.append(grid);stage.append(sheet);main.append(stage);
+  /* подгонка под экран: шрифт уменьшается, пока всё не поместится без прокрутки */
+  const fit=()=>{let f=15;sheet.style.fontSize=f+'px';const nb=()=>{const n=main.querySelector('.navrow:last-child');return n?n.offsetHeight+8:50};
+    while(f>11.5&&sheet.getBoundingClientRect().bottom+nb()>window.innerHeight){f-=.5;sheet.style.setProperty('font-size',f+'px','important');}};
+  setTimeout(fit,0);window.onresize=()=>{if(sheet.isConnected)fit();};
   const nav=el('div','navrow');nav.append(nextBtn());main.append(nav);
 }
 
