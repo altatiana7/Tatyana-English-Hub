@@ -7,8 +7,8 @@
     const nr=document.getElementById('nowrow');if(!nr)return;
     const has=HW.items.length>0;
     /* быстрые ссылки на урок */
-    const LW=[['w','Words','lessonw1:words'],['h','Error hunter','lessonw1:hunt'],['t1','Task 1','lessonw1:t1-1'],['t2','Task 2','lessonw1:t2-1'],['t3','Task 3','lessonw1:iv1'],['t4','Task 4','lessonw1:t4-1']];
-    const LB=[['1','Grammar · 12','block1:g'],['2','Word formation · 8','block1:w'],['3','Reading · 3','block1:r'],['4','Letter 37 · 4','block1:l']];
+    const LW=[['family-lesson13.html?v=57','Topic Practice',''],['extra-family.html?v=57','Words & Vocabulary',''],['lessonw1.html?v=57#h','Error hunter','lessonw1:hunt'],['lessonw1.html?v=57#t1','Task 1','lessonw1:t1-1'],['lessonw1.html?v=57#t2','Task 2','lessonw1:t2-1'],['lessonw1.html?v=57#t3','Task 3','lessonw1:iv1'],['lessonw1.html?v=57#t4','Task 4','lessonw1:t4-1']];
+    const LB=[['lesson1.html?v=57#5','Listening · 1–9',''],['lesson1.html?v=57#9','Reading · 11',''],['lesson1.html?v=57#6','Grammar · 19–24',''],['lesson1.html?v=57#7','Word Formation · 25–29',''],['lesson1.html?v=57#8','Vocabulary · 30–36',''],['write37.html?v=57','Writing · 37',''],['write38.html?v=57','Writing · 38','']];
     function lk(href,text,hwPfx){
       const a=document.createElement('a');a.textContent=text;
       const open=!has||HW.items.some(x=>x===hwPfx||x.indexOf(hwPfx)===0);
@@ -23,10 +23,10 @@
     const qk=document.createElement('div');qk.className='qk';
     /* урок */
     const ql1=document.createElement('span');ql1.className='ql';ql1.textContent='Урок';qk.append(ql1);
-    LW.forEach(x=>qk.append(lk('lessonw1.html?v='+V+'#'+x[0],x[1],x[2])));
+    LW.forEach(x=>qk.append(lk(x[0],x[1],x[2])));
     /* банк заданий */
-    const ql2=document.createElement('span');ql2.className='ql';ql2.textContent='Банк заданий блока';qk.append(ql2);
-    LB.forEach(x=>qk.append(lk('block1.html?v='+V+'#'+x[0],x[1],x[2])));
+    const ql2=document.createElement('span');ql2.className='ql';ql2.textContent='Письменная часть ЕГЭ · переход сразу к заданию';qk.append(ql2);
+    LB.forEach(x=>qk.append(lk(x[0],x[1],x[2])));
     nr.append(cont,qk);
     /* баннер домашнего задания */
     if(has){
