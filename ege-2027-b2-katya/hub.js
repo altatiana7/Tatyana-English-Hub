@@ -1,7 +1,7 @@
 /* Главный экран: разделы под кнопками (при каждом открытии все закрыты),
    занятия и задания открываются поверх главного экрана во весь экран. */
 (function(){
-  const V='48';
+  const V='62';
   /* домашнее задание: баннер и блокировка ссылок */
   (function(){
     const nr=document.getElementById('nowrow');if(!nr)return;
@@ -61,14 +61,14 @@
   })();
 
   let box=null;
-  function close(){if(!box)return;const b=box;box=null;if(document.fullscreenElement){document.exitFullscreen().catch(()=>{});}b.remove();document.title='ЕГЭ 2027 · К · английский';}
+  function close(){if(!box)return;const b=box;box=null;b.remove();document.title='ЕГЭ 2027 · К · английский';}
   function open(href){close();box=document.createElement('div');box.className='fsbox';
     const f=document.createElement('iframe');f.src=href;f.title='Задание';f.allow='fullscreen; microphone; autoplay; clipboard-write';f.setAttribute('allowfullscreen','');
     f.onload=()=>{try{document.title=f.contentDocument.title;}catch(e){}};
     box.append(f);document.body.append(box);
-    const r=box.requestFullscreen&&box.requestFullscreen();if(r&&r.catch)r.catch(()=>{});
+
     setTimeout(()=>{try{f.focus();}catch(e){}},50);}
-  document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement&&box)close();});
+
   window.addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='ege-home')close();});
   document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('main a[href], .sitemenu a[href]');if(!a)return;
     const u=new URL(a.href,location.href);if(u.origin!==location.origin||/index\.html$/.test(u.pathname)||!/\.html$/.test(u.pathname))return;
