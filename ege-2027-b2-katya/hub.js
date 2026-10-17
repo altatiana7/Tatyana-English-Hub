@@ -1,17 +1,19 @@
 /* Главный экран: разделы под кнопками (при каждом открытии все закрыты),
    занятия и задания открываются поверх главного экрана во весь экран. */
 (function(){
-  const V='92';
+  const V='97',TCH=!!window.TEACHER;
+  /* сайт ученицы: дополнительные материалы закрыты, их открывает учитель */
+  if(!TCH)document.querySelectorAll('a.lc.xtra').forEach(a=>{a.classList.add('xlock');a.removeAttribute('href');a.setAttribute('aria-disabled','true');a.title='Открывает учитель';});
   /* домашнее задание: баннер и блокировка ссылок */
   (function(){
     const nr=document.getElementById('nowrow');if(!nr)return;
     const has=HW.items.length>0;
     /* быстрые ссылки на урок */
-    const LW=[['family-quizlet.html?v=67','Topic Practice',''],['extra-family.html?v=57','Words & Vocabulary',''],['lessonw1.html?v=57#h','Error hunter','lessonw1:hunt'],['lessonw1.html?v=57#t1','Task 1','lessonw1:t1-1'],['lessonw1.html?v=57#t2','Task 2','lessonw1:t2-1'],['lessonw1.html?v=57#t3','Task 3','lessonw1:iv1'],['lessonw1.html?v=57#t4','Task 4','lessonw1:t4-1']];
-    const LB=[['lesson1.html?v=92#5','Listening · 1–9',''],['lesson1.html?v=92#9','Reading · 11',''],['lesson1.html?v=92#6','Grammar · 19–24',''],['lesson1.html?v=92#7','Word Formation · 25–29',''],['lesson1.html?v=92#8','Vocabulary · 30–36',''],['write37.html?v=57','Writing · 37',''],['write38.html?v=57','Writing · 38','']];
-    function lk(href,text,hwPfx){
+    const LW=[['lessonw1.html?v=74#w','Words','lessonw1:words'],['lessonw1.html?v=74#c','Collocations','lessonw1:colls'],['lessonw1.html?v=74#h','Error hunter','lessonw1:hunt'],['lessonw1.html?v=74#m','Match','lessonw1:match'],['lessonw1.html?v=74#t1','Task 1','lessonw1:t1-1'],['lessonw1.html?v=74#t2','Task 2','lessonw1:t2-1'],['lessonw1.html?v=74#t3','Task 3','lessonw1:iv1'],['lessonw1.html?v=74#t4','Task 4','lessonw1:t4-1'],['family-quizlet.html?v=67','Topic Practice','',1],['extra-family.html?v=57','Words & Vocabulary','',1]];
+    const LB=[['lesson1.html?v=93#5','Listening · 1–9','',1],['lesson1.html?v=93#9','Reading · 11','',1],['lesson1.html?v=93#6','Grammar · 19–24','',1],['lesson1.html?v=93#7','Word Formation · 25–29','',1],['lesson1.html?v=93#8','Vocabulary · 30–36','',1],['write37.html?v=57','Writing · 37','',1],['write38.html?v=57','Writing · 38','',1]];
+    function lk(href,text,hwPfx,xtra){
       const a=document.createElement('a');a.textContent=text;
-      const open=!has||HW.items.some(x=>x===hwPfx||x.indexOf(hwPfx)===0);
+      const open=(TCH||!xtra)&&(!has||HW.items.some(x=>x===hwPfx||x.indexOf(hwPfx)===0));if(xtra&&!TCH)a.title='Открывает учитель';
       if(open){a.href=href;}else{a.className='lock';a.href='#';a.onclick=e=>e.preventDefault();}
       return a;
     }
@@ -22,11 +24,11 @@
     cont.innerHTML='<span>Занятие 1 · неделя 1</span><b>Продолжить урок →</b>';
     const qk=document.createElement('div');qk.className='qk';
     /* урок */
-    const ql1=document.createElement('span');ql1.className='ql';ql1.textContent='Урок';qk.append(ql1);
-    LW.forEach(x=>qk.append(lk(x[0],x[1],x[2])));
+    const ql1=document.createElement('span');ql1.className='ql';ql1.textContent='Тема блока · слова, коллокации, тренировка, устная часть';qk.append(ql1);
+    LW.forEach(x=>qk.append(lk(x[0],x[1],x[2],x[3])));
     /* банк заданий */
-    const ql2=document.createElement('span');ql2.className='ql';ql2.textContent='Письменная часть ЕГЭ · переход сразу к заданию';qk.append(ql2);
-    LB.forEach(x=>qk.append(lk(x[0],x[1],x[2])));
+    const ql2=document.createElement('span');ql2.className='ql';ql2.textContent=TCH?'Письменная часть ЕГЭ · переход сразу к заданию':'Письменная часть ЕГЭ · открывает учитель';qk.append(ql2);
+    LB.forEach(x=>qk.append(lk(x[0],x[1],x[2],x[3])));
     nr.append(cont,qk);
     /* баннер домашнего задания */
     if(has){
@@ -69,6 +71,12 @@
 
     setTimeout(()=>{try{f.focus();}catch(e){}},50);}
 
+  /* сайт учителя: проверка домашки по коду */
+  const cb=document.getElementById('chkbtn');
+  if(cb)cb.onclick=async()=>{const m=document.getElementById('chkmsg');try{const o=await KS.unpack(document.getElementById('chkcode').value);
+      const P={home1:'home1.html?v=41',lesson1:'lesson1.html?v=93#10',lessonw1:'lessonw1.html?v=74'}[o.page];if(!P)throw new Error('Неизвестная работа: '+o.page);
+      sessionStorage.setItem('katya-review',JSON.stringify({page:o.page,data:o.data}));m.textContent='Открыта работа от '+(o.data._at||'')+'.';open(P);}
+    catch(e){m.textContent='Не получилось открыть код: '+e.message;}};
   window.addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='ege-home')close();});
   document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('main a[href], .sitemenu a[href]');if(!a)return;
     const u=new URL(a.href,location.href);if(u.origin!==location.origin||/index\.html$/.test(u.pathname)||!/\.html$/.test(u.pathname))return;

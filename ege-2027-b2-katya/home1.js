@@ -3,8 +3,12 @@
 const D=window.DIAG,main=$('#main'),tabs=$('#tabs'),KEY='ege27k-home1';
 const blank=()=>({l1:{},l2:{},l3:{},r10:{},r12:{},w37:'',w38:'',q3:0,q12:0,tr:{},tb:0,checked:false});
 const NAMES=['Ученица К'];let who=0;try{who=+localStorage.getItem(KEY+'-who')||0;}catch(e){}
-let S=blank();const load=()=>{S=blank();try{const s=JSON.parse(localStorage.getItem(KEY+'-'+who)||'null');if(s)S=Object.assign(blank(),s);}catch(e){}};load();
-const save=()=>{try{localStorage.setItem(KEY+'-'+who,JSON.stringify(S));}catch(e){}};
+const T=!!window.TEACHER,RV=KS.review('home1');let SENT=KS.sent('home1');
+let S=blank();const load=()=>{S=blank();
+  if(RV){S=Object.assign(blank(),RV.data);S.checked=true;return;}
+  if(SENT){S=Object.assign(blank(),SENT.data);S.sent=true;S.checked=false;return;}
+  try{const s=JSON.parse(localStorage.getItem(KEY+'-'+who)||'null');if(s)S=Object.assign(blank(),s);}catch(e){}if(!T)S.checked=false;};load();
+const save=()=>{if(RV||S.sent)return;try{localStorage.setItem(KEY+'-'+who,JSON.stringify(S));}catch(e){}};
 function paintWho(){const w=$('#who');w.innerHTML='';NAMES.forEach((n,i)=>{const b=el('button','tab'+(i===who?' on':''),n);b.type='button';b.onclick=()=>{who=i;try{localStorage.setItem(KEY+'-who',i);}catch(e){}load();paintWho();go(0);};w.append(b);});}
 let cur=0;const AG='ABCDEFG';
 const audio=el('audio','main');audio.controls=true;audio.preload='none';audio.src='audio/listening.mp3';
@@ -21,7 +25,7 @@ const STEPS=[
  {id:'rep',label:'Отчёт',min:0,draw:report}
 ];
 const cnt=o=>Object.keys(o).filter(k=>o[k]!=null&&o[k]!=='').length;
-function isDone(id){return id==='l1'?cnt(S.l1)===6:id==='l2'?cnt(S.l2)===7:id==='l3'?cnt(S.l3)===7:id==='r10'?cnt(S.r10)===7:id==='r12'?cnt(S.r12)===7:id==='w37'?words(S.w37)>=90:id==='w38'?words(S.w38)>=180:id==='tr'?TRN===Object.keys(S.tr).filter(k=>S.tr[k]!==''&&S.tr[k]!=null).length:S.checked;}
+function isDone(id){return id==='l1'?cnt(S.l1)===6:id==='l2'?cnt(S.l2)===7:id==='l3'?cnt(S.l3)===7:id==='r10'?cnt(S.r10)===7:id==='r12'?cnt(S.r12)===7:id==='w37'?words(S.w37)>=90:id==='w38'?words(S.w38)>=180:id==='tr'?TRN===Object.keys(S.tr).filter(k=>S.tr[k]!==''&&S.tr[k]!=null).length:(S.checked||S.sent);}
 function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':'')+(isDone(s.id)?' done':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.title=s.label;b.type='button';b.onclick=()=>go(k);tabs.append(b);});
   const on=tabs.querySelector('.on');if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'nearest'});}
 function go(k){cur=k;if(k>2)audio.pause();Clock.set(STEPS[k].min*60);redraw();}
@@ -46,13 +50,13 @@ function tricky(){
       if(S.checked)row.append(el('div','texp'+(ok?'':' bad'),esc(it[3])));}
     a.append(row);});
   stage.append(a);main.append(stage);const nav=el('div','navrow');
-  nav.append(btn('← Назад',()=>{S.tb--;save();redraw();},'sm'),btn('Вперёд →',()=>{S.tb++;save();redraw();},'sm'),el('span','note',S.checked?'Верно: '+trScore()+' из '+TRN+'. Пояснения – под каждым заданием.':'Блок '+(S.tb+1)+' из '+TR.length+'. Пояснения откроются после проверки работы на вкладке «Отчёт».'),nextBtn());
+  nav.append(btn('← Назад',()=>{S.tb--;save();redraw();},'sm'),btn('Вперёд →',()=>{S.tb++;save();redraw();},'sm'),el('span','note',S.checked?'Верно: '+trScore()+' из '+TRN+'. Пояснения – под каждым заданием.':'Блок '+(S.tb+1)+' из '+TR.length+(T?'. Пояснения откроются после проверки работы на вкладке «Отчёт».':'. Ответы проверит учитель.')),nextBtn());
   nav.children[0].disabled=S.tb===0;nav.children[1].disabled=S.tb===TR.length-1;main.append(nav);
 }
 function trErrors(){const out=[];TR.forEach(b=>b.items.forEach((it,i)=>{if(!trOk(b,i)){const v=S.tr[b.id+i];out.push(b.name+' · '+(b.type==='typed'?it[1]+': '+((v||'').trim()||'—')+' → '+it[3]:it[0].replace(/<br>/g,' ').replace(/“|”/g,'"').slice(0,70)+'… : '+(v==null?'—':it[1][v])+' → '+it[1][it[2]]));}}));return out;}
 function head(ru,src){main.append(el('div','inst','<b>'+ru+'</b>'+(src?'<span class="src">'+src+'</span>':'')));}
 function lisHead(ru){head(ru);const r=el('div','navrow');r.append(audio);main.append(r);}
-function lock(e){if(S.checked)e.disabled=true;return e;}
+function lock(e){if(S.checked||S.sent)e.disabled=true;return e;}
 function mark(ok){return S.checked?(ok?' ok':' bad'):'';}
 
 /* ---------- Аудирование ---------- */
@@ -118,7 +122,7 @@ function writing(n){
   ta.oninput=()=>{S[key]=ta.value;save();upd();const t=tabs.children[cur];t&&t.classList.toggle('done',isDone(key));};upd();
   b.append(ta,wc);stage.append(a,b);main.append(stage);
   const nav=el('div','navrow');if(S.checked)nav.append(btn('Примерный ответ',()=>showSample('Задание '+n+' · примерный ответ','<p>'+ED.t('h1.w'+n,SAMPLES['w'+n])+'</p>',words(SAMPLES['w'+n])+' слов. Это образец, а не единственно верный ответ. Текст составлен для сайта.'),'main'));
-  nav.append(el('span','note',S.checked?'Работа проверена. Сравните свой текст с примерным ответом; баллы поставит учитель.':'Пишите без словаря и переводчика: это диагностика, а не оценка. Примерный ответ откроется после проверки.'),nextBtn());main.append(nav);
+  nav.append(el('span','note',S.checked?'Работа проверена. Сравните свой текст с примерным ответом; баллы поставит учитель.':(T?'Пишите без словаря и переводчика: это диагностика, а не оценка. Примерный ответ откроется после проверки.':'Пишите без словаря и переводчика. Текст оценит учитель по критериям ФИПИ.')),nextBtn());main.append(nav);
 }
 
 /* ---------- Отчёт ---------- */
@@ -129,8 +133,9 @@ function line(lbl,sel,key,first,letters){return lbl+': '+key.map((a,k)=>(letters
 function reportText(){const r=scores();return 'ЕГЭ 2027 · диагностика · домашняя часть · '+NAMES[who]+'\n'+r.map(x=>x[0]+': '+x[1]+' / '+x[2]).join('\n')+'\nИтого с автоматической проверкой: '+r.reduce((a,x)=>a+x[1],0)+' / 22\nТрудные случаи (вне баллов ЕГЭ): '+trScore()+' / '+TRN+'\n\n'+
   [line('Аудирование 1',S.l1,D.lis.k1,0,'ABCDEF'),line('Аудирование 2',S.l2,D.lis.k2,0,AG),line('Аудирование 3–9',S.l3,D.lis.k3,3),line('Чтение 10',S.r10,D.r10.a,0,AG),line('Чтение 12–18',S.r12,D.r12.a,12)].join('\n')+
   '\n\n=== Трудные случаи · ошибки ===\n'+(trErrors().join('\n')||'ошибок нет')+'\n\n=== Задание 37 · '+words(S.w37)+' слов ===\n'+(S.w37.trim()||'(нет ответа)')+'\n\n=== Задание 38 · '+words(S.w38)+' слов ===\n'+(S.w38.trim()||'(нет ответа)')+'\n';}
-function report(){
-  head(NAMES[who]+' · '+(S.checked?'работа проверена. Отправьте отчёт учителю: письмо 37 и 38 оценивает учитель по критериям ФИПИ.':'проверьте ответы. Когда всё готово, нажмите «Проверить работу». После проверки ответы изменить нельзя.'));
+function report(){if(!T)return reportStudent();
+  if(RV)main.append(KS.reviewBar(RV));
+  head(NAMES[who]+' · '+(RV?'работа проверена автоматически. Письмо 37 и 38 оцените по критериям ФИПИ на вкладках «Письмо».':S.checked?'работа проверена. Отправьте отчёт учителю: письмо 37 и 38 оценивает учитель по критериям ФИПИ.':'проверьте ответы. Когда всё готово, нажмите «Проверить работу». После проверки ответы изменить нельзя.'));
   const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
   if(!S.checked){a.append(el('h3',null,'Что сделано'));STEPS.slice(0,8).forEach(s=>a.append(el('div','rrow','<span>'+s.label+'</span><span class="note">'+(isDone(s.id)?'готово':'не закончено')+'</span><b>'+(isDone(s.id)?'✓':'—')+'</b>')));
     b.append(el('h3',null,'Как отправить'),el('p',null,'1. Нажмите «Проверить работу».<br>2. Нажмите «Скопировать отчёт» и вставьте текст в сообщение учителю – или скачайте файл и отправьте его.'),el('p','note','В отчёт попадают ответы, баллы и оба письменных текста.'));}
@@ -143,6 +148,14 @@ function report(){
   if(!S.checked)nav.append(btn('Проверить работу',()=>{S.checked=true;save();redraw();},'acc'));
   else{nav.append(btn('Скопировать отчёт',()=>{(navigator.clipboard?navigator.clipboard.writeText(reportText()):Promise.reject()).then(()=>{msg.textContent='Скопировано – вставьте в сообщение учителю.';}).catch(()=>{msg.textContent='Не получилось скопировать – скачайте файл.';});},'main'));
     const d=el('a','btn','Скачать отчёт файлом');d.download='ege-diagnostic-home-'+(who?'student2':'student1')+'.txt';d.href=URL.createObjectURL(new Blob([reportText()],{type:'text/plain;charset=utf-8'}));nav.append(d);}
-  nav.append(msg);const clr=btn('Очистить всё',()=>{if(clr.dataset.sure){try{localStorage.removeItem(KEY+'-'+who);}catch(e){}S=blank();go(0);}else{clr.dataset.sure=1;clr.textContent='Точно очистить? Нажмите ещё раз';}},'sm sp');nav.append(clr);main.append(nav);
+  nav.append(msg);if(RV){main.append(nav);return;}const clr=btn('Очистить всё',()=>{if(clr.dataset.sure){try{localStorage.removeItem(KEY+'-'+who);}catch(e){}S=blank();go(0);}else{clr.dataset.sure=1;clr.textContent='Точно очистить? Нажмите ещё раз';}},'sm sp');nav.append(clr);main.append(nav);
 }
-Clock.mount();paintWho();go(0);
+function reportStudent(){
+  head(S.sent?'Работа отправлена учителю. Ответы и баллы покажет учитель.':'Проверьте, всё ли сделано, и отправьте работу учителю. Отправить можно один раз: после отправки ответы изменить нельзя.');
+  const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
+  a.append(el('h3',null,'Что сделано'));STEPS.slice(0,8).forEach(s=>a.append(el('div','rrow','<span>'+s.label+'</span><span class="note">'+(isDone(s.id)?'готово':'не закончено')+'</span><b>'+(isDone(s.id)?'✓':'—')+'</b>')));
+  b.append(el('h3',null,'Как отправить'),el('p',null,'1. Нажмите «Отправить учителю на проверку».<br>2. Код скопируется сам – вставьте его в чат с учителем и отправьте.'),el('p','note','В код попадают все ответы и оба письменных текста.'));
+  res.append(a,b);main.append(res);
+  const nav=el('div','navrow');nav.append(KS.button('home1',()=>{const d=JSON.parse(JSON.stringify(S));delete d.sent;delete d.checked;return d;},o=>{SENT=o;S.sent=true;redraw();}));main.append(nav);
+}
+Clock.mount();paintWho();go(RV?STEPS.length-1:0);

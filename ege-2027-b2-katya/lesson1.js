@@ -1,5 +1,6 @@
 /* Занятие 1 · диагностика в формате ЕГЭ. Ничего не сохраняется: страница каждый раз открывается чистой. */
 const D=window.DIAG,main=$('#main'),tabs=$('#tabs');
+const SHOW=!!window.TEACHER,sh=st=>st.done&&SHOW; /* ученица не видит верных ответов */
 const READ_A="Many people believe that our brain simply rests while we are asleep. In fact, scientists have discovered that it stays surprisingly busy throughout the night. During deep sleep the brain sorts through everything we have learned during the day and decides which information is worth keeping. Important facts and skills are moved into long-term memory, while unnecessary details are thrown away. This explains why students who sleep for at least eight hours usually remember new material better than those who study late into the night. Researchers have also found that sleep helps us to solve difficult problems. People who were given a puzzle in the evening were twice as likely to find the answer after a good night’s rest. Nevertheless, about a third of teenagers regularly get less sleep than they need, mainly because of bright screens and early school timetables. Doctors therefore advise switching off all gadgets an hour before going to bed.";
 const READ_B="Honey is the only food that practically never goes bad. Archaeologists have found pots of honey in ancient Egyptian tombs which were over three thousand years old and still perfectly good to eat. The secret lies in its chemistry. Honey contains very little water and a lot of sugar, so bacteria simply cannot survive in it. Besides, bees add a special enzyme which produces a natural disinfectant. To make just one kilogram of honey, bees have to visit about four million flowers and fly a distance equal to several trips around the world. Throughout history people have used honey not only as a sweetener but also as a medicine. Doctors in ancient Greece treated wounds and burns with it, and modern research has confirmed that this method really works. Nevertheless, scientists warn that honey should not be given to children under the age of one.";
 const READS=[READ_A,READ_B],RNOTE=["throughout, discovered, learned, unnecessary, puzzle, therefore, twice","archaeologists, ancient, tombs, chemistry, bacteria, enzyme, disinfectant, throughout, wounds"];
@@ -18,6 +19,10 @@ const NAMES=['Ученица К'];
 const fresh=i=>({vr:i,g:{val:[],un:[],cur:0,done:false},w:{val:[],un:[],cur:0,done:false},v:{val:[],un:[],cur:0,done:false},r:{sel:{},act:0,done:false},l:{val:[],done:false},
   sp:{t1:null,t2:[null,null,null,null],t3:[null,null,null,null,null],k1:null,k2:null,k3:null},iv:{v:i,q:0,flip:false}});
 const ALL=[fresh(0)];let who=0,S=ALL[0];
+/* одна попытка: отправленная работа открывается закрытой; на сайте учителя – работа из «Проверки домашки» */
+const RV=KS.review('lesson1');let SENT=KS.sent('lesson1');
+if(RV){Object.assign(S,RV.data);['g','w','v','r','l'].forEach(k=>{if(S[k])S[k].done=true;});}
+else if(SENT){Object.assign(S,SENT.data);['g','w','v','r','l'].forEach(k=>{if(S[k])S[k].done=true;});}
 function paintWho(){const w=$('#who');w.innerHTML='';NAMES.forEach((n,i)=>{const b=el('button','tab'+(i===who?' on':''),n);b.type='button';b.onclick=()=>{who=i;S=ALL[i];paintWho();go(cur);};w.append(b);});}
 let cleanup=null,cur=0;
 
@@ -43,7 +48,7 @@ function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button'
 function go(k){if(cleanup){cleanup();cleanup=null;}cur=k;document.body.style.setProperty('--step',STEPS[k].color);Clock.set(STEPS[k].min*60);paintTabs();main.innerHTML='';STEPS[k].draw();}
 function redraw(){if(cleanup){cleanup();cleanup=null;}paintTabs();main.innerHTML='';STEPS[cur].draw();}
 function nextBtn(){return cur<STEPS.length-1?btn('Дальше: '+STEPS[cur+1].label+' →',()=>go(cur+1),'main sp'):el('span');}
-function chips(items,st,filled,okFn){const c=el('div','chips');items.forEach((it,k)=>{const b=el('button','chip'+(k===st.cur?' on':'')+(st.done?(okFn(k)?' ok':' bad'):(filled(k)?' fill':'')),String(it.n));b.type='button';b.onclick=()=>{st.cur=k;redraw();};c.append(b);});return c;}
+function chips(items,st,filled,okFn){const c=el('div','chips');items.forEach((it,k)=>{const b=el('button','chip'+(k===st.cur?' on':'')+(sh(st)?(okFn(k)?' ok':' bad'):(filled(k)?' fill':'')),String(it.n));b.type='button';b.onclick=()=>{st.cur=k;redraw();};c.append(b);});return c;}
 function head(ru,title){const h=el('div','inst','<b>'+ru+'</b>'+(title?'<span class="src">Текст: '+esc(title)+' · Открытый банк ФИПИ</span>':''));main.append(h);}
 
 /* ---------- 19–24 и 25–29: сплошной текст с пропусками ---------- */
@@ -65,21 +70,22 @@ function typed(key,ru){
     const parts=it.text.split('___');
     if(k%perParagraph!==0)p.append(document.createTextNode(' '));
     p.append(document.createTextNode(parts[0]));
-    const g=el('span','fgap'),nb=el('button','fnum'+(st.un[k]?' un':'')+(st.done?(typedOk(key,k)?' ok':' bad'):''),String(it.n));
-    nb.type='button';nb.title=st.done?'Показать пояснение':'Отметить: сомневаюсь';
-    nb.onclick=()=>{if(st.done){st.cur=k;redraw();}else{st.un[k]=!st.un[k];nb.classList.toggle('un',!!st.un[k]);}};
-    const inp=el('input','ans fin'+(st.done?(typedOk(key,k)?' ok':' bad'):''));inp.type='text';inp.autocomplete='off';inp.spellcheck=false;inp.setAttribute('autocapitalize','off');inp.value=st.val[k]||'';inp.disabled=st.done;inp.setAttribute('aria-label','Ответ '+it.n);
+    const g=el('span','fgap'),nb=el('button','fnum'+(st.un[k]?' un':'')+(sh(st)?(typedOk(key,k)?' ok':' bad'):''),String(it.n));
+    nb.type='button';nb.title=sh(st)?'Показать пояснение':'Отметить: сомневаюсь';
+    nb.onclick=()=>{if(st.done){if(SHOW){st.cur=k;redraw();}return;}else{st.un[k]=!st.un[k];nb.classList.toggle('un',!!st.un[k]);}};
+    const inp=el('input','ans fin'+(sh(st)?(typedOk(key,k)?' ok':' bad'):''));inp.type='text';inp.autocomplete='off';inp.spellcheck=false;inp.setAttribute('autocapitalize','off');inp.value=st.val[k]||'';inp.disabled=st.done;inp.setAttribute('aria-label','Ответ '+it.n);
     inp.style.width=Math.max(8,it.show.length+4)+'ch';inp.oninput=()=>{st.val[k]=inp.value;};
     g.append(nb,inp);
-    if(st.done&&!typedOk(key,k))g.append(el('b','fright','→ '+esc(it.show)));
+    if(sh(st)&&!typedOk(key,k))g.append(el('b','fright','→ '+esc(it.show)));
     g.append(el('span','base sm',esc(it.base)));
     p.append(g,document.createTextNode(parts.slice(1).join('___')));
   });
   card.append(passage);stage.append(card);main.append(stage);
-  if(st.done){const it=d.items[st.cur],ok=typedOk(key,st.cur);main.append(noteBar('<b>'+it.n+'. '+(ok?'Верно':'Неверно')+': '+esc(it.show)+'.</b> '+esc(it.note)+(st.un[st.cur]&&ok?' <i>Отмечено «сомневаюсь» – повторить.</i>':''),ok?'ok':'bad'));}
+  if(sh(st)){const it=d.items[st.cur],ok=typedOk(key,st.cur);main.append(noteBar('<b>'+it.n+'. '+(ok?'Верно':'Неверно')+': '+esc(it.show)+'.</b> '+esc(it.note)+(st.un[st.cur]&&ok?' <i>Отмечено «сомневаюсь» – повторить.</i>':''),ok?'ok':'bad'));}
   const nav=el('div','navrow');
-  if(st.done){const n=d.items.filter((x,k)=>typedOk(key,k)).length;nav.append(el('b',null,'Результат: '+n+' из '+d.items.length),el('span','note hint','Нажмите номер пропуска, чтобы увидеть пояснение.'),nextBtn());}
-  else nav.append(el('span','note hint','Слово справа от пропуска поставьте в нужную форму. Если ответ угадан, нажмите номер пропуска: он станет жёлтым.'),btn('Проверить раздел',()=>{st.done=true;const w=d.items.findIndex((x,k)=>!typedOk(key,k));st.cur=w<0?0:w;Clock.stop();redraw();},'acc sp'));
+  if(st.done&&!SHOW)nav.append(el('span','note','Ответы сохранены – их проверит учитель.'),nextBtn());
+  else if(st.done){const n=d.items.filter((x,k)=>typedOk(key,k)).length;nav.append(el('b',null,'Результат: '+n+' из '+d.items.length),el('span','note hint','Нажмите номер пропуска, чтобы увидеть пояснение.'),nextBtn());}
+  else nav.append(el('span','note hint','Слово справа от пропуска поставьте в нужную форму. Если ответ угадан, нажмите номер пропуска: он станет жёлтым.'),btn(SHOW?'Проверить раздел':'Сохранить ответы',()=>{st.done=true;const w=d.items.findIndex((x,k)=>!typedOk(key,k));st.cur=w<0?0:w;Clock.stop();redraw();},'acc sp'));
   main.append(nav);if(!st.done){const f=card.querySelector('input');f&&f.focus();}
 }
 
@@ -88,15 +94,16 @@ function mcq(){
   const d=D.v,st=S.v,ok=k=>st.val[k]===d.items[k].a-1;head('Прочитайте текст с пропусками 30–36 и выберите для каждого пропуска один из четырёх вариантов.');
   const stage=el('div','stage'),panel=el('div','panel grow flow'),card=el('div','cols');panel.append(card);
   d.p.forEach(par=>{const p=el('p');par.split(/(\{\{\d+\}\})/).forEach(ch=>{const m=ch.match(/^\{\{(\d+)\}\}$/);if(!m){p.append(document.createTextNode(ch));return;}
-      const k=m[1]-30,it=d.items[k],g=el('span','fgap'),nb=el('button','fnum'+(st.un[k]?' un':'')+(st.done?(ok(k)?' ok':' bad'):''),String(it.n));nb.type='button';nb.title=st.done?'Показать пояснение':'Отметить: сомневаюсь';
-      nb.onclick=()=>{if(st.done){st.cur=k;redraw();}else{st.un[k]=!st.un[k];nb.classList.toggle('un',!!st.un[k]);}};
-      const sel=el('select','fsel'+(st.done?(ok(k)?' ok':' bad'):''));sel.setAttribute('aria-label','Пропуск '+it.n);sel.append(new Option('…',''));it.o.forEach((w,j)=>sel.append(new Option((j+1)+') '+w,j)));sel.value=st.val[k]==null?'':st.val[k];sel.disabled=st.done;
-      sel.onchange=()=>{st.val[k]=sel.value===''?null:+sel.value;};g.append(nb,sel);if(st.done&&!ok(k))g.append(el('b','fright','→ '+esc(it.o[it.a-1])));p.append(g);});card.append(p);});
+      const k=m[1]-30,it=d.items[k],g=el('span','fgap'),nb=el('button','fnum'+(st.un[k]?' un':'')+(sh(st)?(ok(k)?' ok':' bad'):''),String(it.n));nb.type='button';nb.title=sh(st)?'Показать пояснение':'Отметить: сомневаюсь';
+      nb.onclick=()=>{if(st.done){if(SHOW){st.cur=k;redraw();}return;}else{st.un[k]=!st.un[k];nb.classList.toggle('un',!!st.un[k]);}};
+      const sel=el('select','fsel'+(sh(st)?(ok(k)?' ok':' bad'):''));sel.setAttribute('aria-label','Пропуск '+it.n);sel.append(new Option('…',''));it.o.forEach((w,j)=>sel.append(new Option((j+1)+') '+w,j)));sel.value=st.val[k]==null?'':st.val[k];sel.disabled=st.done;
+      sel.onchange=()=>{st.val[k]=sel.value===''?null:+sel.value;};g.append(nb,sel);if(sh(st)&&!ok(k))g.append(el('b','fright','→ '+esc(it.o[it.a-1])));p.append(g);});card.append(p);});
   stage.append(panel);main.append(stage);
-  if(st.done){const it=d.items[st.cur],o=ok(st.cur);main.append(noteBar('<b>'+it.n+'. '+(o?'Верно':'Неверно')+': '+esc(it.o[it.a-1])+'.</b> '+esc(it.note),o?'ok':'bad'));}
+  if(sh(st)){const it=d.items[st.cur],o=ok(st.cur);main.append(noteBar('<b>'+it.n+'. '+(o?'Верно':'Неверно')+': '+esc(it.o[it.a-1])+'.</b> '+esc(it.note),o?'ok':'bad'));}
   const nav=el('div','navrow');
-  if(st.done){nav.append(el('b',null,'Результат: '+d.items.filter((x,k)=>ok(k)).length+' из 7'),el('span','note hint','Нажмите номер пропуска, чтобы увидеть пояснение.'),nextBtn());}
-  else nav.append(el('span','note hint','Текст: '+esc(d.title)+' · Открытый банк ФИПИ. Если ответ угадан, нажмите номер пропуска: он станет жёлтым.'),btn('Проверить раздел',()=>{st.done=true;const w=d.items.findIndex((x,k)=>!ok(k));st.cur=w<0?0:w;Clock.stop();redraw();},'acc sp'));
+  if(st.done&&!SHOW)nav.append(el('span','note','Ответы сохранены – их проверит учитель.'),nextBtn());
+  else if(st.done){nav.append(el('b',null,'Результат: '+d.items.filter((x,k)=>ok(k)).length+' из 7'),el('span','note hint','Нажмите номер пропуска, чтобы увидеть пояснение.'),nextBtn());}
+  else nav.append(el('span','note hint','Текст: '+esc(d.title)+' · Открытый банк ФИПИ. Если ответ угадан, нажмите номер пропуска: он станет жёлтым.'),btn(SHOW?'Проверить раздел':'Сохранить ответы',()=>{st.done=true;const w=d.items.findIndex((x,k)=>!ok(k));st.cur=w<0?0:w;Clock.stop();redraw();},'acc sp'));
   main.append(nav);
 }
 
@@ -109,15 +116,16 @@ function read11(){
   const stage=el('div','stage'),txt=el('div','panel grow read'),side=el('div','panel side col');
   txt.append(el('h3',null,esc(d.title)));
   d.p.forEach(p=>{txt.append(el('p',null,esc(p).replace(/\{\{([A-F])\}\}/g,(m,L)=>{const k=AF.indexOf(L),s=st.sel[k];
-    return '<button type="button" class="gbtn'+(st.done?(s===d.a[k]?' ok':' bad'):(k===st.act?' on':''))+'" data-g="'+k+'">'+L+' · '+(s?s:'?')+(st.done&&s!==d.a[k]?' → '+d.a[k]:'')+'</button>';})));});
+    return '<button type="button" class="gbtn'+(sh(st)?(s===d.a[k]?' ok':' bad'):(k===st.act?' on':''))+'" data-g="'+k+'">'+L+' · '+(s?s:'?')+(sh(st)&&s!==d.a[k]?' → '+d.a[k]:'')+'</button>';})));});
   txt.querySelectorAll('.gbtn').forEach(b=>b.onclick=()=>{if(st.done)return;st.act=+b.dataset.g;redraw();});
     const parts=el('div','parts');d.parts.forEach((t,j)=>{const n=j+1,usedBy=Object.keys(st.sel).find(k=>st.sel[k]===n);
     const b=el('button','part'+(usedBy!=null?' used':''),'<b>'+n+'</b>'+esc(t)+(usedBy!=null?' <i>('+AF[usedBy]+')</i>':''));b.type='button';b.disabled=st.done;
     b.onclick=()=>{Object.keys(st.sel).forEach(k=>{if(st.sel[k]===n)delete st.sel[k];});st.sel[st.act]=n;const free=[0,1,2,3,4,5].find(k=>st.sel[k]==null&&k>st.act);const any=[0,1,2,3,4,5].find(k=>st.sel[k]==null);st.act=free!=null?free:(any!=null?any:st.act);redraw();};parts.append(b);});
   side.append(parts);stage.append(txt,side);main.append(stage);
   const nav=el('div','navrow');
-  if(st.done){nav.append(el('b',null,'Результат: '+r11score()+' из 2 баллов · ошибок: '+r11errors()));nav.append(el('span','note hint','0 ошибок – 2 балла, 1 – 1 балл, 2 и более – 0. После стрелки – верный номер.'));nav.append(nextBtn());}
-  else{nav.append(el('span','note','Нажмите пропуск в тексте, затем часть предложения. Выбран пропуск <b>'+AF[st.act]+'</b> · заполнено '+Object.keys(st.sel).length+' из 6'));nav.append(btn('Проверить задание',()=>{st.done=true;Clock.stop();redraw();},'acc sp'));}
+  if(st.done&&!SHOW)nav.append(el('span','note','Ответы сохранены – их проверит учитель.'),nextBtn());
+  else if(st.done){nav.append(el('b',null,'Результат: '+r11score()+' из 2 баллов · ошибок: '+r11errors()));nav.append(el('span','note hint','0 ошибок – 2 балла, 1 – 1 балл, 2 и более – 0. После стрелки – верный номер.'));nav.append(nextBtn());}
+  else{nav.append(el('span','note','Нажмите пропуск в тексте, затем часть предложения. Выбран пропуск <b>'+AF[st.act]+'</b> · заполнено '+Object.keys(st.sel).length+' из 6'));nav.append(btn(SHOW?'Проверить задание':'Сохранить ответы',()=>{st.done=true;Clock.stop();redraw();},'acc sp'));}
   main.append(nav);
 }
 
@@ -131,7 +139,7 @@ function speakShell(taskHtml,phases,opts){
   const startB=btn('Начать',()=>{run.start();startB.textContent='Сначала';pauseB.disabled=skipB.disabled=false;pauseB.textContent='Пауза';},'main wide');
   const pauseB=btn('Пауза',()=>{pauseB.textContent=run.pause()?'Продолжить':'Пауза';},'sm'),skipB=btn('Пропустить',()=>run.skip(),'sm');pauseB.disabled=skipB.disabled=true;
   const ov=teacherPanel(opts.teachHtml,opts.rows);
-  const box=el('div','ctlbtns');box.append(startB,pauseB,skipB,recToggle());if(opts.sample)box.append(btn('Примерный ответ',()=>showSample(opts.sample[0],opts.sample[1],'Это образец, а не единственно верный ответ. Текст составлен для сайта.'),'sm wide'));box.append(btn('Оценка учителя',()=>{ov.hidden=false;},'acc sm wide'));
+  const box=el('div','ctlbtns');box.append(startB,pauseB,skipB,recToggle());if(opts.sample&&SHOW)box.append(btn('Примерный ответ',()=>showSample(opts.sample[0],opts.sample[1],'Это образец, а не единственно верный ответ. Текст составлен для сайта.'),'sm wide'));if(SHOW)box.append(btn('Оценка учителя',()=>{ov.hidden=false;},'acc sm wide'));
   ctl.append(ring,label,box,recBox);stage.append(kim,ctl);main.append(stage);
   const nav=el('div','navrow');nav.append(btn('Вариант '+(S.vr+1)+' из 2',()=>{S.vr=1-S.vr;redraw();},'sm'),el('span','note hint',opts.note||''));nav.append(nextBtn());main.append(nav);
   cleanup=()=>{run.stop();ov.remove();document.querySelectorAll('.overlay.smp').forEach(x=>x.remove());};return kim;
@@ -166,7 +174,7 @@ function speak3(){
   sel.onchange=()=>{st.v=+sel.value;st.q=0;st.flip=false;st.smp=false;redraw();};top.append(sel);
   const qc=el('div','chips');v.q.forEach((q,k)=>{const b=el('button','chip'+(k===st.q?' on':''),String(k+1));b.type='button';b.onclick=()=>{st.q=k;st.flip=false;st.smp=false;redraw();};qc.append(b);});top.append(el('span','note','Вопрос:'),qc);
   const ov=teacherPanel('<p>По <b>1 баллу</b> за ответ: полный и точный ответ из 2–3 фраз, без ошибок, мешающих пониманию. 0 – ответ короче двух фраз, не на тот вопрос или с ошибкой во времени глагола.</p><p><b>Вопросы и примерные ответы:</b></p>'+v.q.map((x,k)=>'<p><b>'+(k+1)+'. '+esc(x)+'</b><br>'+ED.t('l1.iv.'+v.id+'.'+k,SAMPLES.iv[v.id][k])+'</p>').join(''),v.q.map((q,k)=>scoreRow('Ответ '+(k+1),1,()=>S.sp.t3[k],n=>S.sp.t3[k]=n)));
-  top.append(btn('Вступление',()=>play('intro'),'sm'),btn('Оценка учителя',()=>{ov.hidden=false;},'acc sm sp'));main.append(top);
+  top.append(btn('Вступление',()=>play('intro'),'sm'),(SHOW?btn('Оценка учителя',()=>{ov.hidden=false;},'acc sm sp'):el('span')));main.append(top);
   const stage=el('div','stage'),card=el('div','ivcard'+(st.flip?' back':'')),side=el('div','panel ctl col');
   const ring=el('div','ring ans','<b>40</b><span>секунд</span>'),label=el('div','phase','Нажмите Play');
   const paint=()=>{ring.querySelector('b').textContent=left;ring.style.background='conic-gradient(var(--acc) '+(left/40*360)+'deg,#f3ddd6 0)';ring.classList.toggle('end',left===0);};
@@ -176,7 +184,7 @@ function speak3(){
     au.onended=()=>{if(what==='intro'){label.textContent='Теперь нажмите Play';}else runT();};au.onerror=()=>{label.textContent='Запись не загрузилась';};au.play().catch(()=>{label.textContent='Запись не загрузилась';});}
   const recBox=el('div','rec');
   function face(){card.className='ivcard'+(st.flip?' back':'');card.innerHTML='';
-    if(st.flip){card.append(el('div','ey','Question '+(st.q+1)+' · '+esc(v.theme)),el('div','qq',esc(v.q[st.q])));if(st.smp)card.append(el('div','ey','Примерный ответ'),el('div','smpa',ED.t('l1.iv.'+v.id+'.'+st.q,SAMPLES.iv[v.id][st.q])));else card.append(el('div','tip hint',IVTIP));const sb=btn(st.smp?'Скрыть ответ':'Примерный ответ',()=>{st.smp=!st.smp;face();},'sm');card.append(sb);}
+    if(st.flip){card.append(el('div','ey','Question '+(st.q+1)+' · '+esc(v.theme)),el('div','qq',esc(v.q[st.q])));if(st.smp)card.append(el('div','ey','Примерный ответ'),el('div','smpa',ED.t('l1.iv.'+v.id+'.'+st.q,SAMPLES.iv[v.id][st.q])));else card.append(el('div','tip hint',IVTIP));if(SHOW){const sb=btn(st.smp?'Скрыть ответ':'Примерный ответ',()=>{st.smp=!st.smp;face();},'sm');card.append(sb);}}
     else{card.append(el('div','ey','Question '+(st.q+1)+' of 5'),el('div','big','Listen and answer'),el('div','note hint','Вопрос только звучит. Текст – на обороте карточки.'));
       const pb=el('div','navrow');pb.append(btn('Play',()=>play('q'+(st.q+1)),'main'),btn('Replay',()=>play('q'+(st.q+1))),btn('Stop',()=>{au.pause();stopT();Rec.cancel();label.textContent='Остановлено';}));card.append(pb);}}
   face();
@@ -193,10 +201,11 @@ function listen(){
   const au=el('audio','main');au.controls=true;au.preload='metadata';au.src='audio/lesson-dialogue.mp3';const r0=el('div','navrow');r0.append(au);main.append(r0);
   const stage=el('div','stage'),a=el('div','panel grow'),names=['True','False','Not stated'];
   LIS.st.forEach((t,k)=>{const r=el('div','score tf');r.append(el('span',null,'<b>'+'ABCDEFG'[k]+'</b> '+esc(t)));
-    names.forEach((nm,j)=>{const b=el('button',st.done?(j+1===LIS.key[k]?'ok':(st.val[k]===j+1?'bad':'')):(st.val[k]===j+1?'on':''),(j+1)+' · '+nm);b.type='button';b.disabled=st.done;b.onclick=()=>{st.val[k]=j+1;redraw();};r.append(b);});a.append(r);});
+    names.forEach((nm,j)=>{const b=el('button',sh(st)?(j+1===LIS.key[k]?'ok':(st.val[k]===j+1?'bad':'')):(st.done&&st.val[k]===j+1)?'on':(st.val[k]===j+1?'on':''),(j+1)+' · '+nm);b.type='button';b.disabled=st.done;b.onclick=()=>{st.val[k]=j+1;redraw();};r.append(b);});a.append(r);});
   stage.append(a);main.append(stage);const nav=el('div','navrow');
-  if(st.done){nav.append(el('b',null,'Результат: '+lisScore()+' из 3 баллов · ошибок: '+lisErr()),el('span','note hint','0 ошибок – 3 балла, 1 – 2, 2 – 1, 3 и более – 0.'),nextBtn());}
-  else{nav.append(el('span','note hint','Сначала 20 секунд на чтение утверждений, затем запись. На уроке слушаем один раз; на экзамене запись звучит дважды.'),btn('Проверить задание',()=>{st.done=true;au.pause();redraw();},'acc sp'));}
+  if(st.done&&!SHOW)nav.append(el('span','note','Ответы сохранены – их проверит учитель.'),nextBtn());
+  else if(st.done){nav.append(el('b',null,'Результат: '+lisScore()+' из 3 баллов · ошибок: '+lisErr()),el('span','note hint','0 ошибок – 3 балла, 1 – 2, 2 – 1, 3 и более – 0.'),nextBtn());}
+  else{nav.append(el('span','note hint','Сначала 20 секунд на чтение утверждений, затем запись. На уроке слушаем один раз; на экзамене запись звучит дважды.'),btn(SHOW?'Проверить задание':'Сохранить ответы',()=>{st.done=true;au.pause();redraw();},'acc sp'));}
   main.append(nav);cleanup=()=>{au.pause();};
 }
 
@@ -215,7 +224,8 @@ function errList(){const out=[],un=[];
   if(S.r.done)D.r11.a.forEach((a,k)=>{if(S.r.sel[k]!==a)out.push(['11 '+AF[k],'Чтение · связность текста',S.r.sel[k]?String(S.r.sel[k]):'—',String(a)]);});return {out,un};}
 function reportText(){const r=calc(),e=errList(),sum=r.reduce((a,x)=>a+x[1],0),max=r.reduce((a,x)=>a+x[2],0);
   return 'ЕГЭ 2027 · диагностика, занятие 1 · '+NAMES[who]+'\n'+r.map(x=>x[0]+': '+(x[3]?x[1]:'—')+' / '+x[2]).join('\n')+'\nИтого на занятии: '+sum+' / '+max+'\n\nОшибки:\n'+(e.out.map(x=>x[0]+' · '+x[1]+' · ответ: '+x[2]+' · верно: '+x[3]).join('\n')||'нет')+'\n\nВерно, но с сомнением:\n'+(e.un.map(x=>x[0]+' · '+x[1]+' · '+x[2]).join('\n')||'нет');}
-function results(){
+function results(){if(!SHOW)return resultsStudent();
+  if(RV)main.append(KS.reviewBar(RV));
   const r=calc(),e=errList(),sum=r.reduce((a,x)=>a+x[1],0),max=r.reduce((a,x)=>a+x[2],0);
   head(NAMES[who]+' · итоги диагностики на занятии. Полное аудирование 1–9, чтение 10 и 12–18 и письмо – в домашней части.');
   const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
@@ -231,5 +241,15 @@ function results(){
   nav.append(btn('Скопировать итоги',()=>{const t=reportText();(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{msg.textContent='Скопировано – вставьте в заметки или сообщение.';}).catch(()=>{msg.textContent='Не получилось скопировать автоматически.';});},'main'),
     btn('Сбросить всё и начать заново',()=>{location.reload();}),msg);
   const h=el('a','btn sp','Домашняя часть →');h.href='home1.html';nav.append(h);main.append(nav);
+}
+function resultsStudent(){
+  const SEC=[['l','Аудирование · диалог'],['g','Грамматика 19–24'],['w','Словообразование 25–29'],['v','Лексика 30–36'],['r','Чтение · задание 11']];
+  head(SENT?'Работа отправлена учителю. Ответы и баллы покажет учитель.':'Нажмите «Сохранить ответы» в каждом письменном задании, затем отправьте работу учителю. Отправить можно один раз.');
+  const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
+  a.append(el('h3',null,'Что сделано'));SEC.forEach(([k,l])=>a.append(el('div','rrow','<span>'+l+'</span><span class="note">'+(S[k].done?'ответы сохранены':'не сохранено')+'</span><b>'+(S[k].done?'✓':'—')+'</b>')));
+  b.append(el('h3',null,'Как отправить'),el('p',null,'1. Нажмите «Отправить учителю на проверку».<br>2. Код скопируется сам – вставьте его в чат с учителем и отправьте.'),el('p','note','Устную часть учитель оценивает на занятии.'));
+  res.append(a,b);main.append(res);
+  const nav=el('div','navrow');nav.append(KS.button('lesson1',()=>{const d=JSON.parse(JSON.stringify(S));return d;},o=>{SENT=o;['g','w','v','r','l'].forEach(k=>S[k].done=true);redraw();}));
+  const h=el('a','btn sp','Домашняя работа →');h.href='home1.html';nav.append(h);main.append(nav);
 }
 Clock.mount();paintWho();go(Math.min(STEPS.length-1,Math.max(0,(+location.hash.slice(1)||1)-1)));
