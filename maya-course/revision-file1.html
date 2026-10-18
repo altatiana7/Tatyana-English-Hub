@@ -21,7 +21,7 @@ input{font:inherit}
 .tab{border:0;border-radius:6px;padding:6px 11px;font-size:15px;font-weight:700;white-space:nowrap;color:#fff;opacity:.72;background:#ffffff1f}
 .tab.on{opacity:1;box-shadow:0 2px 8px #0005}
 .tab[data-p=warm].on{background:var(--pink)}.tab[data-p=hw].on{background:var(--orange)}.tab[data-p=games].on{background:var(--green)}
-.tab[data-p=photo].on{background:var(--teal)}.tab[data-p=video].on{background:var(--blue)}.tab[data-p=reception].on{background:var(--purple)}.tab[data-p=jeo].on{background:var(--pink)}.tab[data-p=talk].on{background:#b8955a}
+.tab[data-p=photo].on{background:var(--teal)}.tab[data-p=video].on{background:var(--blue)}.tab[data-p=reception].on{background:var(--purple)}.tab[data-p=jeo].on{background:var(--pink)}.tab[data-p=talk].on{background:#b8955a}.tab[data-p=ef].on{background:#4f7f7d}
 .tbtn{border:1px solid #ffffff66;background:transparent;color:#fff;border-radius:9px;padding:6px 11px;font-size:14px;white-space:nowrap}
 main{flex:1;min-height:0;padding:9px 12px}
 .pane{display:none;height:100%;gap:10px}
@@ -137,6 +137,12 @@ main{flex:1;min-height:0;padding:9px 12px}
 .gr input.ok{border-color:var(--ok);background:var(--okbg)}.gr input.no{border-color:var(--no);background:var(--nobg)}
 .gr .ck{border:0;border-radius:8px;background:#3e5c76;color:#fff;font-weight:700;padding:4px 0;font-size:14px}
 .gr .why{grid-column:2 / 5;font-size:13px;color:#3c6a4a;margin-top:-3px}
+.steps4{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;font-size:14px}
+.steps4 b{display:inline-flex;width:18px;height:18px;border-radius:50%;background:#3e5c76;color:#fff;align-items:center;justify-content:center;font-size:12px;margin-right:4px}
+.ln{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;height:clamp(78px,17vh,110px);flex:0 0 auto}
+.ln .fc{height:100%}
+.ln .front{font-size:14px;text-align:left;justify-content:flex-start;border:1px solid #d3dbe3;background:#f6f8fa}
+.ln .back{font-size:14px;text-align:left;justify-content:flex-start;font-weight:400}
 .racebar{height:10px;border-radius:6px;background:#e5eaef;overflow:hidden}
 .racebar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3e5c76,#6a8aa3);transition:width .3s}
 /* mystery box */
@@ -202,6 +208,20 @@ main{flex:1;min-height:0;padding:9px 12px}
 .oi b{min-width:22px;height:22px;border-radius:50%;background:#efe9df;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
 .oi.set b{background:#b8955a;color:#fff}
 .oi.ok{border-color:var(--ok);background:var(--okbg)}.oi.no{border-color:var(--no);background:var(--nobg)}
+.efsw{display:flex;gap:5px;flex-wrap:wrap}
+.efsw button{border:1px solid #c9d1da;background:#fff;border-radius:6px;padding:3px 10px;font-size:14px;font-weight:700;color:#3e5c76}
+.efsw button.on{background:#4f7f7d;border-color:#4f7f7d;color:#fff}
+.efv{flex:1;min-height:0;display:flex;align-items:flex-start}
+.efv video{width:100%;max-height:100%;border-radius:10px;background:#000}
+.efpane{display:none;flex-direction:column;gap:6px;flex:1;min-height:0}
+.efpane.on{display:flex}
+.stp{border:1px solid #e4ded3;border-radius:8px;padding:4px 9px;background:#fff;font-size:15px}
+.stp b{display:block;font-size:12px;letter-spacing:.08em;color:#4f7f7d}
+.efc{display:grid;grid-template-columns:1fr 1fr;gap:6px;height:clamp(64px,14vh,92px);flex:0 0 auto}
+.efc4{display:grid;grid-template-columns:1fr 1fr;gap:6px;flex:1;min-height:0}
+.efc .fc,.efc4 .fc{height:100%;min-height:52px}
+.efc .front,.efc4 .front{font-size:15px;border:1px solid #d2e2e0;background:#f2f7f6}
+.efc .back,.efc4 .back{font-size:15px}
 /* teacher drawer */
 .drawer{position:fixed;top:46px;right:10px;width:min(440px,92vw);max-height:calc(100vh - 56px);overflow:auto;background:#fffdf7;border:1px solid #e3d6b0;border-radius:12px;box-shadow:0 10px 30px #0003;padding:10px 16px;display:none;z-index:20;font-size:15px}
 .drawer.on{display:block}
@@ -219,10 +239,11 @@ main{flex:1;min-height:0;padding:9px 12px}
     <button class="tab" data-p="hw">2 Homework</button>
     <button class="tab" data-p="games">3 Games</button>
     <button class="tab" data-p="photo">4 Photo</button>
-    <button class="tab" data-p="video">5 Rob calls</button>
-    <button class="tab" data-p="reception">6 Reception</button>
-    <button class="tab" data-p="talk">7 Talk Show</button>
-    <button class="tab" data-p="jeo">8 Jeopardy</button>
+    <button class="tab" data-p="ef">5 English File</button>
+    <button class="tab" data-p="video">6 Listening · Rob</button>
+    <button class="tab" data-p="reception">7 Reception</button>
+    <button class="tab" data-p="talk">8 Talk Show</button>
+    <button class="tab" data-p="jeo">9 Jeopardy</button>
   </nav>
   <button class="tbtn" id="teacherBtn">Teacher</button>
 </div>
@@ -235,7 +256,8 @@ main{flex:1;min-height:0;padding:9px 12px}
     <li><b>Homework (12 min).</b> 1D test as bombs: 15 seconds, 4 cards. Grammar Doctor: she finds and fixes the mistake, you flip.</li>
     <li><b>Games (8 min).</b> Floor is Lava for tenses, Rapid Categories for words.</li>
     <li><b>Photo (8 min).</b> Open the hotspots one by one, then 30-second talk.</li>
-    <li><b>Rob calls (10 min).</b> Watch once: how many times does Rob call Reception? Then Audio Gap Race.</li>
+    <li><b>English File 4th + 5th (12 min) – not finished last lesson.</b> Three videos, tasks on the right; flip cards for Call 1/2 and the T/F. Bridge: “Rob was in room 613. Emma is in a different hotel and a different story, but what does a guest still need to say when something stops working?”</li>
+    <li><b>Listening · Rob (10 min) – not finished last lesson.</b> Watch once: how many times does Rob call Reception? Then Audio Gap Race.</li>
     <li><b>Reception (10 min).</b> Who says it? (lines from the book dialogue), Say it politely, then Mystery Box: she opens a box, presses Start and calls you; you answer as Reception; flip to compare. Swap roles.</li>
     <li><b>Talk Show (8 min).</b> Play: how many times does Emma call Reception? True/False, order the events, then Maya retells as Emma (40 s). Script only at the end.</li>
     <li><b>Jeopardy (5 min).</b> Each finished column opens one digit of the lock.</li>
@@ -343,14 +365,67 @@ main{flex:1;min-height:0;padding:9px 12px}
   </div>
 </section>
 
+<!-- ENGLISH FILE 4th + 5th -->
+<section class="pane" id="ef" style="grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)">
+  <div class="box teal">
+    <div class="bh">04 · English File · 4th + 5th Editions <small>from last lesson</small></div>
+    <div class="bb">
+      <div class="efsw" id="efsw"><button class="on" data-v="0">4th · Rob calls Reception</button><button data-v="1">5th · Story so far</button><button data-v="2">5th · Six months later</button></div>
+      <div class="efv" id="efv0"><div class="vid"><iframe data-src="https://www.youtube.com/embed/hq0-y-iYgBI?playsinline=1&rel=0" title="English File 4th · Rob calls Reception" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+      <div class="efv" id="efv1" style="display:none"><video controls playsinline preload="none" src="media/ef5e-preint-pe1-recap.mp4"></video></div>
+      <div class="efv" id="efv2" style="display:none"><video controls playsinline preload="none" src="media/ef5e-preint-pe1-main.mp4"></video></div>
+    </div>
+  </div>
+  <div class="box blue">
+    <div class="bh">Tasks <small id="efTitle">Rob · Calling Reception</small></div>
+    <div class="bb">
+      <div class="efpane on" data-v="0">
+        <div class="stp"><b>BEFORE WATCHING</b>Rob is in room 613. Predict two problems he might have.</div>
+        <div class="stp"><b>WATCH 1 · GIST</b>How many times does Rob call Reception?</div>
+        <div class="stp"><b>FROM MEMORY</b>Problem 1 = ? · Problem 2 = ? · Which one needs IT?</div>
+        <div class="stp"><b>WATCH 2 · SOLUTIONS</b>What does Reception promise after each complaint?</div>
+        <div class="efc">
+          <div class="fc"><div class="in"><div class="face front"><span><b>Call 1</b> · What is wrong?</span></div><div class="face back"><span>Air conditioning: it isn’t working. Reception will send somebody up.</span></div></div></div>
+          <div class="fc"><div class="in"><div class="face front"><span><b>Call 2</b> · What is wrong?</span></div><div class="face back"><span>Wi-Fi: Rob can’t get a signal. Reception will put him through to IT.</span></div></div></div>
+        </div>
+        <div class="stp"><b>BRIDGE · ROB → JENNY</b>A little later Jenny asks, “And how’s your hotel?” What do you think he says?</div>
+      </div>
+      <div class="efpane" data-v="1">
+        <div class="stp"><b>BEFORE WATCHING</b>Watch and work out who is connected to whom.</div>
+        <div class="stp"><b>WATCH 1 · WHO IS WHO?</b>Find Ben · Izzy · Andre · Carla · Pamela.</div>
+        <div class="stp"><b>WATCH 2 · RELATIONSHIPS</b>Who studies photography? Who works in the café? Who is Izzy’s friend / landlady? What connects Ben and Izzy?</div>
+        <div class="stp"><b>MEMORY CHECK</b>Close the video and give one fact about each person.</div>
+        <div class="stp"><b>TRANSITION</b>That was Season 1. Now jump forward: six months later. What do you predict has changed for Ben and Izzy?</div>
+      </div>
+      <div class="efpane" data-v="2">
+        <div class="stp"><b>HEADS-UP</b>Where are Ben and Izzy now? Watch for their jobs, not every word.</div>
+        <div class="stp"><b>WATCH 1 · GIST</b>Who is Emma? Where is she staying? Who is she going to meet?</div>
+        <div class="stp"><b>WATCH 2 · DETAIL</b>What does Ben think about Emma and Izzy? Why might Izzy change her evening plans?</div>
+        <div class="efc4">
+          <div class="fc"><div class="in"><div class="face front"><span>Emma is staying with Ben. <b>T / F?</b></span></div><div class="face back"><span>FALSE · She is staying in a hotel.</span></div></div></div>
+          <div class="fc"><div class="in"><div class="face front"><span>Emma is Ben’s twin sister. <b>T / F?</b></span></div><div class="face back"><span>TRUE.</span></div></div></div>
+          <div class="fc"><div class="in"><div class="face front"><span>Ben thinks Emma and Izzy are very similar. <b>T / F?</b></span></div><div class="face back"><span>FALSE · He thinks they are very different.</span></div></div></div>
+          <div class="fc"><div class="in"><div class="face front"><span>Izzy may go to a work event later. <b>T / F?</b></span></div><div class="face back"><span>TRUE.</span></div></div></div>
+        </div>
+        <div class="stp"><b>PREDICT</b>Emma is at the hotel now. What kind of problem could take us to Calling Reception?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 5 VIDEO -->
 <section class="pane" id="video" style="grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)">
   <div class="box blue">
-    <div class="bh">Rob calls Reception <small>English File · watch first</small></div>
+    <div class="bh">05 · Listening Accuracy · Rob Calls Reception <small>from last lesson</small></div>
     <div class="bb">
-      <div class="big"><b>Gist:</b> How many times does Rob call Reception?</div>
+      <div class="steps4"><span><b>1</b> Listen once. How many times does Rob call Reception?</span><span><b>2</b> Listen for verbs: fill the gaps.</span><span><b>3</b> Say the whole phrase aloud.</span><span><b>4</b> Notice: problem or solution?</span></div>
       <div style="flex:1;min-height:0;display:flex;align-items:flex-start"><div class="vid"><iframe src="https://www.youtube.com/embed/hq0-y-iYgBI?playsinline=1&rel=0" title="English File · Rob calls Reception" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
-    </div>
+    
+      <div class="ln">
+        <div class="fc"><div class="in"><div class="face front"><span><b>Notice</b><br>Which line describes the problem? Which offers a solution?</span></div><div class="face back"><span>Problem: <i>The air conditioning isn’t working.</i><br>Solution: <i>I’ll send somebody up to look at it.</i></span></div></div></div>
+        <div class="fc"><div class="in"><div class="face front"><span><b>It isn’t ___.</b><br>What describes a broken device?</span></div><div class="face back"><span><b>It isn’t working.</b><br>Present Continuous: a service or device is not functioning.</span></div></div></div>
+        <div class="fc"><div class="in"><div class="face front"><span><b>I’ll ___ somebody up.</b><br>What does Reception offer?</span></div><div class="face back"><span><b>I’ll send somebody up.</b><br>I’ll + verb = an immediate offer or decision.</span></div></div></div>
+      </div></div>
   </div>
   <div class="box pink">
     <div class="bh">Audio Gap Race<span class="sp"></span><span class="digital" id="gClock" style="font-size:17px;padding:0 8px">00:00</span></div>
@@ -611,7 +686,8 @@ function gStart(){if(gT0)return;gT0=Date.now();timers.g=setInterval(()=>{const s
 function gCheck(i){gStart();const inp=$(`.gr input[data-i="${i}"]`);if(inp.classList.contains('ok'))return;const ok=inp.value.trim().toLowerCase()===GAPS[i][1];inp.classList.toggle('ok',ok);inp.classList.toggle('no',!ok);
  if(ok){inp.disabled=true;gDone++;$('#gw'+i).textContent=GAPS[i][2]+' · '+GAPS[i][3];$('#gBar').style.width=(gDone/GAPS.length*100)+'%';if(gDone===GAPS.length){stopT('g');$('#gRes').innerHTML=`Finished in <b>${$('#gClock').textContent}</b>`}}}
 $('#gPrev').onclick=$('#gNext').onclick=()=>{gPage=1-gPage;gShow()};
-$('#gReset').onclick=gRender;gRender();
+$('#gReset').onclick=gRender;
+$$('.ln .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));gRender();
 
 /* ===== RECEPTION ===== */
 const NAT=[['My Wi-Fi is broken. Fix it.','There’s a problem with the Wi-Fi. Could you help me, please?'],['Give me towels.','Could you send up some clean towels, please?'],['The air conditioning doesn’t work.','The air conditioning isn’t working.'],['I want IT.','Could you put me through to IT, please?']];
@@ -632,6 +708,14 @@ $$('.gift').forEach(b=>b.onclick=()=>{const r=ROLE[+b.dataset.r];$$('.gift').for
 $('#mCard').onclick=()=>{if(mCur)$('#mCard').classList.toggle('f')};
 $('#mStart').onclick=()=>{$('#mStart').disabled=true;countdown('m',30,l=>$('#mClock').textContent=mmss(l),()=>{$('#mStart').disabled=false})};
 
+
+
+/* ===== ENGLISH FILE 4th + 5th ===== */
+const EFT=['Rob · Calling Reception','Pictures of You · The Story So Far','Episode 1 · Six Months Later'];
+function efShow(v){$$('#efsw button').forEach(b=>b.classList.toggle('on',+b.dataset.v===v));[0,1,2].forEach(k=>{$('#efv'+k).style.display=k===v?'':'none';if(k!==v){const vd=$('#efv'+k+' video');if(vd)vd.pause()}});$$('.efpane').forEach(p=>p.classList.toggle('on',+p.dataset.v===v));$('#efTitle').textContent=EFT[v];const f=$('#efv0 iframe');if(v===0&&!f.src)f.src=f.dataset.src}
+$$('#efsw button').forEach(b=>b.onclick=()=>efShow(+b.dataset.v));
+$$('#ef .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));
+$$('.tab').forEach(t=>t.addEventListener('click',()=>{if(t.dataset.p==='ef')efShow([0,1,2].find(k=>$('#efv'+k).style.display!=='none'));else $$('#ef video').forEach(v=>v.pause())}));
 
 /* ===== TALK SHOW ===== */
 const TALK=[
