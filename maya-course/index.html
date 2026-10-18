@@ -13,6 +13,6 @@
 </main>
 <div class="tools"><button id="full">Full screen</button></div>
 <section id="screen" hidden><header><button id="back">← Course</button><h1 id="title"></h1><button id="complete" hidden>Mark complete</button></header><div id="body"></div></section>
-<script src="app.js?v=20261018e"></script><script>
+<script src="app.js?v=20261018f"></script><script>
 (()=>{const W=1536,H=864,boxes=[[22,123,238,62],[22,193,238,63],[22,264,238,63],[22,335,238,63],[22,405,238,63],[22,476,238,63],[22,547,238,63],[22,617,238,64],[22,688,238,63],[22,759,238,63]];function place(){const vw=innerWidth,vh=innerHeight,s=Math.max(vw/W,vh/H),rw=W*s,rh=H*s,ox=(vw/rw<1&&vw/vh<16/9)?0:(vw-rw)/2,oy=(vh-rh)/2;document.querySelectorAll('.hotspot').forEach((b,i)=>{const q=boxes[i];Object.assign(b.style,{left:(ox+q[0]*s)+'px',top:(oy+q[1]*s)+'px',width:(q[2]*s)+'px',height:(q[3]*s)+'px'});});}document.querySelectorAll('.hotspot').forEach(b=>b.addEventListener('click',()=>moduleView(+b.dataset.module)));addEventListener('resize',place);place();})();
 </script><script src="enhancements.js"></script><script src="scrollfix.js"></script></body></html>

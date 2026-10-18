@@ -21,7 +21,7 @@ input{font:inherit}
 .tab{border:0;border-radius:6px;padding:6px 11px;font-size:15px;font-weight:700;white-space:nowrap;color:#fff;opacity:.72;background:#ffffff1f}
 .tab.on{opacity:1;box-shadow:0 2px 8px #0005}
 .tab[data-p=warm].on{background:var(--pink)}.tab[data-p=hw].on{background:var(--orange)}.tab[data-p=games].on{background:var(--green)}
-.tab[data-p=photo].on{background:var(--teal)}.tab[data-p=video].on{background:var(--blue)}.tab[data-p=reception].on{background:var(--purple)}.tab[data-p=jeo].on{background:var(--pink)}
+.tab[data-p=photo].on{background:var(--teal)}.tab[data-p=video].on{background:var(--blue)}.tab[data-p=reception].on{background:var(--purple)}.tab[data-p=jeo].on{background:var(--pink)}.tab[data-p=talk].on{background:#b8955a}
 .tbtn{border:1px solid #ffffff66;background:transparent;color:#fff;border-radius:9px;padding:6px 11px;font-size:14px;white-space:nowrap}
 main{flex:1;min-height:0;padding:9px 12px}
 .pane{display:none;height:100%;gap:10px}
@@ -177,6 +177,31 @@ main{flex:1;min-height:0;padding:9px 12px}
 .tfo.on{display:flex;flex-direction:column}
 .tfo .tfh{display:flex;justify-content:flex-end;padding-bottom:6px}
 .tfo iframe{flex:1;border:0;border-radius:12px;background:#16203a;width:100%}
+/* talk show */
+.studio{background:#1f2d3d;color:#f3ede2;border:1px solid #1f2d3d}
+.studio .bb{gap:8px}
+.guests{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.guest{position:relative;border-radius:10px;overflow:hidden;border:3px solid #34495e;transition:border-color .2s}
+.guest img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.guest span{position:absolute;left:0;right:0;bottom:0;background:#1f2d3dcc;padding:3px 8px;font-size:14px}
+.guest span b{color:#e2c98e}
+.guest.on{border-color:#e2c98e;box-shadow:0 0 0 3px #e2c98e55}
+.showtitle{font-size:19px;font-weight:700;color:#e2c98e;letter-spacing:.02em}
+.script{flex:1;min-height:0;overflow:auto;background:#fbf7ee;color:#1c2236;border-radius:8px;padding:8px 11px;font-size:15px;line-height:1.4;display:none}
+.script.on{display:block}
+.script p{margin:0 0 4px}
+.tfq{display:flex;flex-direction:column;gap:6px;flex:1;min-height:0}
+.tfi{border:1px solid #e4ded3;border-radius:9px;padding:6px 9px;background:#fff;display:flex;flex-direction:column;gap:4px}
+.tfi .st{font-size:16px}
+.tfi .row button{border:1px solid #cfc6b6;background:#fff;border-radius:7px;padding:2px 12px;font-size:14px;font-weight:700}
+.tfi .row button.ok{background:var(--okbg);border-color:var(--ok);color:#3c6a4a}
+.tfi .row button.no{background:var(--nobg);border-color:var(--no);color:var(--no)}
+.tfi .why{font-size:13px;color:#3c6a4a}
+.ord{display:flex;flex-direction:column;gap:5px}
+.oi{border:1px solid #e4ded3;background:#fff;border-radius:8px;padding:5px 9px;font-size:15px;text-align:left;display:flex;gap:8px;align-items:center}
+.oi b{min-width:22px;height:22px;border-radius:50%;background:#efe9df;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+.oi.set b{background:#b8955a;color:#fff}
+.oi.ok{border-color:var(--ok);background:var(--okbg)}.oi.no{border-color:var(--no);background:var(--nobg)}
 /* teacher drawer */
 .drawer{position:fixed;top:46px;right:10px;width:min(440px,92vw);max-height:calc(100vh - 56px);overflow:auto;background:#fffdf7;border:1px solid #e3d6b0;border-radius:12px;box-shadow:0 10px 30px #0003;padding:10px 16px;display:none;z-index:20;font-size:15px}
 .drawer.on{display:block}
@@ -196,7 +221,8 @@ main{flex:1;min-height:0;padding:9px 12px}
     <button class="tab" data-p="photo">4 Photo</button>
     <button class="tab" data-p="video">5 Rob calls</button>
     <button class="tab" data-p="reception">6 Reception</button>
-    <button class="tab" data-p="jeo">7 Jeopardy</button>
+    <button class="tab" data-p="talk">7 Talk Show</button>
+    <button class="tab" data-p="jeo">8 Jeopardy</button>
   </nav>
   <button class="tbtn" id="teacherBtn">Teacher</button>
 </div>
@@ -211,6 +237,7 @@ main{flex:1;min-height:0;padding:9px 12px}
     <li><b>Photo (8 min).</b> Open the hotspots one by one, then 30-second talk.</li>
     <li><b>Rob calls (10 min).</b> Watch once: how many times does Rob call Reception? Then Audio Gap Race.</li>
     <li><b>Reception (10 min).</b> Who says it? (lines from the book dialogue), Say it politely, then Mystery Box: she opens a box, presses Start and calls you; you answer as Reception; flip to compare. Swap roles.</li>
+    <li><b>Talk Show (8 min).</b> Play: how many times does Emma call Reception? True/False, order the events, then Maya retells as Emma (40 s). Script only at the end.</li>
     <li><b>Jeopardy (5 min).</b> Each finished column opens one digit of the lock.</li>
   </ol>
   <h3>Watch for</h3>
@@ -319,7 +346,7 @@ main{flex:1;min-height:0;padding:9px 12px}
 <!-- 5 VIDEO -->
 <section class="pane" id="video" style="grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)">
   <div class="box blue">
-    <div class="bh">Rob calls Reception <small>English File · watch first</small><a class="tf" href="https://activities.coolenglish.org/videos/Talk%20Show%20Chats/talk-show-stories-2/index.html" target="_blank" rel="noopener" style="text-decoration:none">Talk Show Stories · Cool English</a></div>
+    <div class="bh">Rob calls Reception <small>English File · watch first</small></div>
     <div class="bb">
       <div class="big"><b>Gist:</b> How many times does Rob call Reception?</div>
       <div style="flex:1;min-height:0;display:flex;align-items:flex-start"><div class="vid"><iframe src="https://www.youtube.com/embed/hq0-y-iYgBI?playsinline=1&rel=0" title="English File · Rob calls Reception" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
@@ -357,6 +384,39 @@ main{flex:1;min-height:0;padding:9px 12px}
       <div class="boxes" id="mBoxes"></div>
       <div class="mcard" id="mCard"><div class="in"><div class="face front" id="mFront"><span class="muted">Choose a box above.</span></div><div class="face back" id="mBack"></div></div></div>
       <div class="ringrow"><span class="digital" id="mClock" style="font-size:22px">00:30</span><button class="btn" id="mStart" style="background:#6b4e71" disabled>Start 30 s</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- TALK SHOW -->
+<section class="pane" id="talk" style="grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr)">
+  <div class="box studio">
+    <div class="bh" style="background:#b8955a">Talk Show Stories <small>listen first, the script is hidden</small></div>
+    <div class="bb">
+      <div class="showtitle">Tonight: a hotel story</div>
+      <div class="guests">
+        <div class="guest" id="gHost"><img src="ten-faces/nathan.jpg" alt="Host"><span><b>Nathan</b> · host</span></div>
+        <div class="guest" id="gStar"><img src="ten-faces/emma.jpg" alt="Guest"><span><b>Emma Lane</b> · actress</span></div>
+      </div>
+      <div class="row"><button class="btn" id="tPlay" style="background:#b8955a">Play</button><button class="btn alt" id="tStop">Stop</button><button class="btn alt" id="tSlow">Slower</button><button class="btn alt" id="tScript">Script</button></div>
+      <div class="muted" id="tNow" style="color:#c9d1da">Gist: how many times does Emma call Reception?</div>
+      <div class="script" id="tText"></div>
+    </div>
+  </div>
+  <div class="box green">
+    <div class="bh">True or False?<span class="sp"></span><span class="pts" id="tfScore">0</span></div>
+    <div class="bb">
+      <div class="tfq" id="tfq"></div>
+      <div class="qnav"><button class="arrow" id="tfPrev">&#8592;</button><span class="count" id="tfCount"></span><button class="arrow" id="tfNext">&#8594;</button></div>
+    </div>
+  </div>
+  <div class="box purple">
+    <div class="bh">Listen &amp; Order <small>tap in order</small></div>
+    <div class="bb">
+      <div class="ord" id="ord"></div>
+      <div class="row"><button class="btn" id="oCheck" style="background:#6b4e71">Check</button><button class="btn alt" id="oReset">Again</button><span class="result" id="oR"></span></div>
+      <div class="sptext" style="border-left-color:#6b4e71;background:#f8f6f8;margin-top:auto">Now you are Emma. Tell the story in 40 seconds: <i>I arrived… The air conditioning wasn’t working… I called Reception…</i></div>
+      <div class="ringrow"><span class="digital" id="rtClock" style="font-size:20px">00:40</span><button class="btn" id="rtStart" style="background:#6b4e71">Start 40 s</button></div>
     </div>
   </div>
 </section>
@@ -571,6 +631,53 @@ $$('.gift').forEach(b=>b.onclick=()=>{const r=ROLE[+b.dataset.r];$$('.gift').for
  $('#mBack').innerHTML=`<span class="room">GUEST</span><span class="g">${r[1]}</span><span class="room">RECEPTION</span><span class="r">${r[3]}</span>`});
 $('#mCard').onclick=()=>{if(mCur)$('#mCard').classList.toggle('f')};
 $('#mStart').onclick=()=>{$('#mStart').disabled=true;countdown('m',30,l=>$('#mClock').textContent=mmss(l),()=>{$('#mStart').disabled=false})};
+
+
+/* ===== TALK SHOW ===== */
+const TALK=[
+ ['H','Emma, welcome to the show! You were in New York last month. How was the hotel?'],
+ ['S','Oh, don’t ask! I arrived at the hotel at midnight. I was really tired. I went up to my room, room 613, and it was very hot. The air conditioning wasn’t working.'],
+ ['H','So what did you do?'],
+ ['S','I called Reception. The receptionist was very nice. She said, I’m sorry. I’ll send somebody up to look at it right now. And a man came and fixed it in ten minutes.'],
+ ['H','Great! So the problem was over?'],
+ ['S','No! Then I wanted to call my agent, but I couldn’t get a signal on the wi-fi. I called Reception again. I said, I’m sorry to bother you again. And they put me through to IT.'],
+ ['H','And then?'],
+ ['S','Then I went to take a shower, and there were no clean towels! So I called Reception a third time.'],
+ ['H','Three times! What did they say?'],
+ ['S','They laughed and said, We’ll send some towels up right away, and a free breakfast for you!'],
+ ['H','So, would you stay there again?'],
+ ['S','Yes, actually! The staff were wonderful.']];
+let tIdx=0,tOn=false,tSlow=false;
+function tVoice(who){try{const v=speechSynthesis.getVoices().filter(x=>/^en/i.test(x.lang));if(!v.length)return null;const f=v.find(x=>/female|samantha|victoria|serena|karen|moira|tessa|zira|libby|sonia|hazel/i.test(x.name)),m=v.find(x=>/male|daniel|alex|fred|ryan|george|david|guy|thomas/i.test(x.name)&&!/female/i.test(x.name));return who==='S'?(f||v[0]):(m||v[v.length>1?1:0])}catch(e){return null}}
+function tSay(){if(!tOn||tIdx>=TALK.length){tOn=false;$('#gHost').classList.remove('on');$('#gStar').classList.remove('on');$('#tPlay').textContent='Play again';$('#tNow').textContent='The end. Gist: how many times did Emma call Reception?';return}
+ const [w,t]=TALK[tIdx];$('#gHost').classList.toggle('on',w==='H');$('#gStar').classList.toggle('on',w==='S');$('#tNow').textContent=(w==='H'?'Nathan':'Emma')+' is speaking… '+(tIdx+1)+' / '+TALK.length;
+ try{const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';const v=tVoice(w);if(v)u.voice=v;u.pitch=w==='S'?1.2:.85;u.rate=tSlow?.72:.92;u.onend=()=>{tIdx++;setTimeout(tSay,350)};u.onerror=()=>{tOn=false};speechSynthesis.speak(u)}catch(e){tOn=false}}
+$('#tPlay').onclick=()=>{try{speechSynthesis.cancel()}catch(e){}if(tIdx>=TALK.length)tIdx=0;tOn=true;$('#tPlay').textContent='Playing';tSay()};
+$('#tStop').onclick=()=>{tOn=false;try{speechSynthesis.cancel()}catch(e){}$('#tPlay').textContent='Continue';$('#tNow').textContent='Paused';$('#gHost').classList.remove('on');$('#gStar').classList.remove('on')};
+$('#tSlow').onclick=()=>{tSlow=!tSlow;$('#tSlow').classList.toggle('on',tSlow);$('#tSlow').textContent=tSlow?'Normal speed':'Slower'};
+$('#tText').innerHTML=TALK.map(([w,t])=>`<p><b>${w==='H'?'Nathan':'Emma'}:</b> ${t}</p>`).join('');
+$('#tScript').onclick=()=>{const on=$('#tText').classList.toggle('on');$('.guests').style.display=on?'none':'';$('#tScript').textContent=on?'Hide script':'Script'};
+const TF=[
+ ['Emma arrived at the hotel in the morning.',0,'She arrived at midnight.'],
+ ['Her room was very cold.',0,'It was very hot.'],
+ ['A man fixed the air conditioning in ten minutes.',1,'Yes, in ten minutes.'],
+ ['She wanted to call her agent.',1,'Yes, but she couldn’t get a signal.'],
+ ['Reception put her through to IT.',1,'Yes.'],
+ ['There were no clean towels.',1,'Yes, so she called again.'],
+ ['She called Reception twice.',0,'Three times.'],
+ ['Emma would not stay there again.',0,'She would: the staff were wonderful.']];
+let tfp=0,tfScore=0,tfDone={};
+function tfRender(){$('#tfq').innerHTML=TF.slice(tfp*4,tfp*4+4).map((t,k)=>{const i=tfp*4+k,d=tfDone[i];return `<div class="tfi"><div class="st"><b>${i+1}.</b> ${t[0]}</div><div class="row"><button data-i="${i}" data-v="1" class="${d?(t[1]===1?'ok':d===1?'no':''):''}">True</button><button data-i="${i}" data-v="0" class="${d?(t[1]===0?'ok':d===2?'no':''):''}">False</button></div>${d?`<div class="why">${t[2]}</div>`:''}</div>`}).join('');
+ $$('.tfi .row button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(tfDone[i])return;const v=+b.dataset.v;tfDone[i]=v===1?1:2;if(v===TF[i][1]){tfScore++;$('#tfScore').textContent=tfScore}tfRender()});$('#tfCount').textContent=`${tfp*4+1}–${tfp*4+4} / ${TF.length}`}
+$('#tfPrev').onclick=$('#tfNext').onclick=()=>{tfp=1-tfp;tfRender()};tfRender();
+const ORD=['Emma arrives at midnight.','Her room is very hot.','A man fixes the air conditioning.','She can’t get a signal on the wi-fi.','There are no clean towels.','Reception offers a free breakfast.'];
+let oSeq=[];
+function oRender(){oSeq=[];$('#oR').textContent='';$('#ord').innerHTML=shuffle(ORD.map((t,i)=>[t,i])).map(([t,i])=>`<button class="oi" data-i="${i}"><b></b><span>${t}</span></button>`).join('');
+ $$('.oi').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;const k=oSeq.indexOf(i);if(k>=0){oSeq.splice(k,1)}else oSeq.push(i);$$('.oi').forEach(x=>{const n=oSeq.indexOf(+x.dataset.i);x.classList.toggle('set',n>=0);x.classList.remove('ok','no');x.querySelector('b').textContent=n>=0?n+1:''})})}
+$('#oCheck').onclick=()=>{let ok=0;$$('.oi').forEach(x=>{const n=oSeq.indexOf(+x.dataset.i);const r=n===+x.dataset.i;x.classList.toggle('ok',r);x.classList.toggle('no',!r);if(r)ok++});$('#oR').textContent=`${ok} / 6`};
+$('#oReset').onclick=oRender;oRender();
+$('#rtStart').onclick=()=>{$('#rtStart').disabled=true;countdown('rt',40,l=>$('#rtClock').textContent=mmss(l),()=>{$('#rtStart').disabled=false})};
+$$('.tab').forEach(t=>t.addEventListener('click',()=>{if(t.dataset.p!=='talk'&&tOn){$('#tStop').click()}}));
 
 /* ===== JEOPARDY + escape code ===== */
 const JEO=[

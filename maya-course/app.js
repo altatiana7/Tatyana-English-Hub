@@ -4,7 +4,7 @@ const materials={
  '1B':[{title:'Style & Hair',url:'../maya-english-hub/style-hair.html',type:'learn'},{title:'Style & Hair · Flashcards',url:'../maya-english-hub/style-hair-flashcards.html',type:'practice'}],
  '1C':[{title:'Art Detective · Remakes · Present Simple vs Continuous',url:'1c-remakes-today.html',type:'learn'}],
  '1PE':[{title:'Practical English · Hotel Problems · Calling Reception',url:'practical-english.html',type:'learn'}],
- '1REV':[{title:'Revision · File 1 + Hotel Problems',url:'revision-file1.html?v=20261018e',type:'learn'}]
+ '1REV':[{title:'Revision · File 1 + Hotel Problems',url:'revision-file1.html?v=20261018f',type:'learn'}]
 };
 const $=s=>document.querySelector(s),links=$('#links'),screen=$('#screen'),body=$('#body');let active=null,lastFocus=null;let completed=[];try{completed=JSON.parse(localStorage.getItem('maya-course-completed')||'[]');if(!Array.isArray(completed))completed=[];completed=completed.filter(x=>x!=='1C')}catch{}
 function hotspot(label,x,y,w,h,action,code){const b=document.createElement('button');b.className='hot';b.style.cssText=`left:${x/1672*100}%;top:${y/941*100}%;width:${w/1672*100}%;height:${h/941*100}%`;b.setAttribute('aria-label',label);b.title=label;if(code)b.dataset.code=code;b.onclick=action;links.append(b)}
