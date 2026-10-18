@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Maya · Revision File 1</title>
+<title>Maya · A trip to a hotel</title>
 <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#1c2236;--muted:#5d6478;--line:#e1e3ee;--ok:#4f8a5f;--okbg:#e6efe7;--no:#a9443a;--nobg:#f6e7e3;
@@ -260,377 +260,404 @@ main{flex:1;min-height:0;padding:9px 12px}
 .drawer ol{margin:0;padding-left:20px}
 .drawer li{margin-bottom:4px}
 @media (max-height:620px){body{font-size:16px}.bb{padding:6px 10px;gap:5px}.flip .front{font-size:23px}.bq{font-size:15px}.op{font-size:14px;padding:2px 4px}.digital{font-size:28px}.lava .sent{font-size:17px}.stone{padding:7px 12px}main{padding:7px 10px}.jc{font-size:19px}}
+/* ===== flow layout ===== */
+.steps{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.st{border:0;border-radius:6px;padding:5px 8px;font-size:14px;font-weight:700;white-space:nowrap;color:#fff;opacity:.6;background:#ffffff1a}
+.st.on{opacity:1;background:#b8955a}
+.st.done{opacity:.85}
+.stage{display:none;height:100%;flex-direction:column;gap:7px}
+.stage.on{display:flex}
+.grid{flex:1;min-height:0;display:grid;gap:10px}
+.bridge{flex:0 0 auto;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e4ded3;border-left:4px solid #b8955a;border-radius:8px;padding:5px 10px}
+.bridge .lbl{font-size:12px;letter-spacing:.1em;color:#a8844c;font-weight:700}
+.bridge .q{flex:1;font-size:16px;font-style:italic}
+.bridge .nx{border:0;border-radius:8px;background:#1f2d3d;color:#fff;font-weight:700;padding:6px 14px;font-size:15px;white-space:nowrap}
+/* interview card */
+.iv-top{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.iv-top button{border:1px solid #d3dbe3;background:#fff;border-radius:6px;padding:2px 9px;font-size:14px;font-weight:700;color:#3e5c76}
+.iv-top button.on{background:#3e5c76;border-color:#3e5c76;color:#fff}
+.ivcard{flex:1;min-height:0;perspective:900px;cursor:pointer}
+.ivcard .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.ivcard.f .in{transform:rotateY(180deg)}
+.ivcard .front{background:#1f2d3d;color:#f3ede2;flex-direction:column;gap:8px}
+.ivcard .back{transform:rotateY(180deg);background:#fbf7ee;border:2px solid #d2b886;font-size:21px;font-weight:700}
+.ivring{width:64px;height:64px}
+.ivring circle{fill:none;stroke-width:6}
+.ivnum{font-size:13px;letter-spacing:.1em;color:#e2c98e}
+.ivbtns{display:flex;gap:6px;justify-content:center}
+.ivbtns button{border:1px solid #ffffff55;background:#ffffff14;color:#fff;border-radius:7px;padding:4px 12px;font-size:14px;font-weight:700}
+.ivnav{display:flex;gap:6px;justify-content:center}
+/* quizlet photo */
+.flip .front.ph{flex-direction:column;gap:6px;padding:6px}
+.flip .front.ph img{height:62%;max-width:90%;object-fit:contain;border-radius:8px}
+/* photo stage */
+.pgrid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.pc{perspective:900px;cursor:pointer;min-height:0}
+.pc .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.pc.f .in{transform:rotateY(180deg)}
+.pc .front{padding:0;overflow:hidden;background:#1f2d3d;border-radius:10px}
+.pc .front img{width:100%;height:100%;object-fit:cover}
+.pc .front span{position:absolute;left:6px;top:6px;background:#1f2d3dd9;color:#e2c98e;border-radius:6px;padding:1px 7px;font-size:13px;font-weight:700}
+.pc .back{transform:rotateY(180deg);background:#fbf7ee;border:2px solid #d2b886;font-size:15px;flex-direction:column;gap:6px;text-align:left;justify-content:center}
+.pc .back button{border:0;background:#b8955a;color:#fff;border-radius:50%;width:28px;height:28px;font-size:11px}
+.lang{display:flex;flex-direction:column;gap:5px}
+.lang div{border:1px solid #e4ded3;border-radius:8px;padding:4px 9px;background:#fff;font-size:15px}
+.lang b{color:#4f7f7d}
+/* playing */
+.pl.playing,.pc .back button.playing{background:#a9503b!important}
+
+.tfi .st2{font-size:16px}
 </style>
 </head>
 <body>
 <div class="bar">
-  <div class="name">Maya · Revision</div>
-  <nav class="tabs">
-    <button class="tab on" data-p="warm">1 Warm-up</button>
-    <button class="tab" data-p="hw">2 Homework</button>
-    <button class="tab" data-p="games">3 Games</button>
-    <button class="tab" data-p="photo">4 Photo</button>
-    <button class="tab" data-p="ef">5 English File</button>
-    <button class="tab" data-p="video">6 Listening</button>
-    <button class="tab" data-p="reception">7 Reception</button>
-    <button class="tab" data-p="call">8 Phone call</button>
-    <button class="tab" data-p="talk">9 Talk Show</button>
-    <button class="tab" data-p="jeo">10 Jeopardy</button>
-  </nav>
+  <div class="name">Maya · A trip to a hotel</div>
+  <nav class="steps" id="steps"></nav>
   <button class="tbtn" id="teacherBtn">Teacher</button>
 </div>
 
 <div class="drawer" id="drawer">
-  <h3>Plan · 60 min · after a two-week break</h3>
+  <h3>Plan · 60 min · one storyline: back after a break → a hotel trip</h3>
   <ol>
-    <li><b>Ten Faces.</b> Button in Warm-up: File 1 questions. Button in Reception: guests call with a problem, Maya answers as Reception.</li>
-    <li><b>Warm-up (8 min).</b> Quizlet: she says the word and a sentence about herself, then flip. 60-Second Challenge: she names words aloud, you type them. Odd One Out: why is it different? Speaking 1–4.</li>
-    <li><b>Homework (12 min).</b> 1D test as bombs: 15 seconds, 4 cards. Grammar Doctor: she finds and fixes the mistake, you flip.</li>
-    <li><b>Games (8 min).</b> Floor is Lava for tenses, Rapid Categories for words.</li>
-    <li><b>Photo (8 min).</b> Open the hotspots one by one, then 30-second talk.</li>
-    <li><b>English File 4th + 5th (12 min) – not finished last lesson.</b> Three videos, tasks on the right; flip cards for Call 1/2 and the T/F. Bridge: “Rob was in room 613. Emma is in a different hotel and a different story, but what does a guest still need to say when something stops working?”</li>
-    <li><b>Listening · Rob (10 min) – not finished last lesson.</b> Watch once: how many times does Rob call Reception? Then Audio Gap Race.</li>
-    <li><b>Reception (10 min).</b> Who says it? (lines from the book dialogue), Say it politely, then Mystery Box: 12 photos of hotel problems; she opens a box, says the problem from the photo, presses Start and calls you; you answer as Reception; flip to compare. Swap roles.</li>
-    <li><b>Phone call (10 min).</b> Call Simulator: one Reception line at a time, she chooses, says it aloud, Next. Politeness Lab. Repair Clinic: she corrects aloud, you flip. Unexpected reply: you read Reception’s line, she reacts, flip for the model.</li>
-    <li><b>Talk Show (8 min).</b> Play: how many times does Emma call Reception? True/False, order the events, then Maya retells as Emma (40 s). Script only at the end.</li>
-    <li><b>Jeopardy (5 min).</b> Each finished column opens one digit of the lock.</li>
+    <li><b>1 Back (8 min).</b> Quizlet: she says the word and a sentence about herself. Interview: question sounds only, 40 seconds, flip to check. Rapid Categories: 20 seconds per round.</li>
+    <li><b>2 Homework (10 min).</b> 1D test as bombs, then Grammar Doctor. Bridge: Present Continuous = what is happening now → photos.</li>
+    <li><b>3 What’s happening? (8 min).</b> Hotel photos: she describes in Present Continuous and names the problem; flip and listen.</li>
+    <li><b>4 Rob calls (10 min).</b> Watch once: how many calls? Call 1 / Call 2 cards, then Audio Gap Race (real voices). Notice: problem vs solution, I’ll + verb.</li>
+    <li><b>5 Your call (8 min).</b> Call Simulator (choose, say aloud), Politeness Lab.</li>
+    <li><b>6 Rooms (8 min).</b> Mystery Box: she is the guest, you are Reception; then Unexpected reply / Repair Clinic.</li>
+    <li><b>7 English File 5th.</b> Not finished last lesson: Story so far and Six months later with their tasks. Bridge: Emma is now a hotel guest.</li>
+    <li><b>8 Talk Show (8 min).</b> Gist: how many times does Emma call Reception? T/F, order, retell as Emma.</li>
+    <li><b>9 Final (5 min).</b> Jeopardy: each finished column opens one digit of the lock.</li>
   </ol>
   <h3>Watch for</h3>
   <ol>
     <li>Stative verbs in Continuous: <i>I am needing, she is preferring</i>.</li>
-    <li>Present Simple for now in the photo: <i>she sits</i> instead of <i>she is sitting</i>.</li>
-    <li><i>doesn't work</i> instead of <i>isn't working</i> for broken things.</li>
+    <li>Present Simple for now in photo description: <i>she stands</i> instead of <i>she is standing</i>.</li>
+    <li><i>doesn’t work</i> instead of <i>isn’t working</i>; <i>Could you to send…</i></li>
   </ol>
+  <h3>Audio</h3>
+  <p style="margin:0">Voices are recorded with a neural text-to-speech engine (not the textbook audio). The English File videos are the original clips.</p>
 </div>
 
-<div class="tfo" id="tfo"><div class="tfh"><button class="btn" id="tfClose" style="background:#b5523b">Close</button></div><iframe id="tfFrame" title="Ten Faces" allow="autoplay"></iframe></div>
 <main>
-<!-- 1 WARM-UP -->
-<section class="pane on" id="warm" style="grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(0,.9fr)">
-  <div class="box pink">
-    <div class="bh">Quizlet Flashcards <small>tap to flip</small><button class="tf" data-ed="0">Ten Faces · Revision</button></div>
-    <div class="bb">
-      <div class="sets" id="sets"></div>
-      <div class="flip" id="flash"><div class="in"><div class="face front" id="fFront"></div><div class="face back" id="fBack"></div></div></div>
-      <div class="qnav"><button class="arrow" id="fPrev">&#8592;</button><span class="count" id="fCount"></span><button class="arrow" id="fNext">&#8594;</button><button class="btn alt" id="fSay">Audio</button></div>
-      <div class="spk" id="spk"></div>
-      <div class="sptext" id="spText">Speaking 1–4: make the question, then answer.</div>
+<!-- 1 BACK -->
+<section class="stage on" data-s="1">
+  <div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)">
+    <div class="box pink">
+      <div class="bh">Quizlet · 1A–1D + Hotel <small>tap to flip</small></div>
+      <div class="bb">
+        <div class="sets" id="sets"></div>
+        <div class="flip" id="flash" style="flex:1;height:auto"><div class="in"><div class="face front" id="fFront"></div><div class="face back" id="fBack"></div></div></div>
+        <div class="qnav"><button class="arrow" id="fPrev">&#8592;</button><span class="count" id="fCount"></span><button class="arrow" id="fNext">&#8594;</button><button class="btn alt" id="fSay">Audio</button></div>
+      </div>
+    </div>
+    <div class="box blue">
+      <div class="bh">Interview <small>listen · answer · flip</small></div>
+      <div class="bb">
+        <div class="iv-top" id="ivVar"></div>
+        <div class="iv-top" id="ivNum"></div>
+        <div class="ivcard" id="ivCard"><div class="in">
+          <div class="face front">
+            <span class="ivnum" id="ivLbl"></span>
+            <svg class="ivring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" stroke="#34495e"/><circle id="ivRing" cx="30" cy="30" r="25" stroke="#e2c98e" stroke-dasharray="157" stroke-dashoffset="0" transform="rotate(-90 30 30)" stroke-linecap="round"/><text id="ivT" x="30" y="36" text-anchor="middle" fill="#f3ede2" font-size="17" font-family="PT Serif,serif">40</text></svg>
+            <div class="ivbtns"><button id="ivPlay">Play</button><button id="ivReplay">Replay</button><button id="ivStop">Stop</button></div>
+          </div>
+          <div class="face back" id="ivBack"></div>
+        </div></div>
+        <div class="ivnav"><button class="btn alt" id="ivPrev">&#8592; Back</button><button class="btn" id="ivFlip" style="background:#3e5c76">Flip the card</button><button class="btn alt" id="ivNext">Next &#8594;</button></div>
+      </div>
+    </div>
+    <div class="box green">
+      <div class="bh">Rapid Categories <small>tap the words that belong</small><span class="sp"></span><span class="pts" id="rScore">0</span></div>
+      <div class="bb">
+        <div class="rc-top"><span class="rc-cat" id="rCat"></span><span class="digital" id="rClock" style="font-size:22px">00:20</span></div>
+        <div class="rcg" id="rGrid"></div>
+        <div class="row"><button class="btn" id="rStart" style="background:#5c7f69">Start</button><span class="result" id="rRes"></span></div>
+      </div>
     </div>
   </div>
-  <div class="box blue">
-    <div class="bh">
-      <svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M12 9v4l3 2M9 2h6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
-      60-Second Challenge<span class="sp"></span><span class="pts" id="cScore">0</span></div>
-    <div class="bb">
-      <div class="cat" id="cCat"></div>
-      <div class="clock"><span class="digital" id="cClock">01:00</span><button class="btn" id="cStart" style="background:#3e5c76">Start</button></div>
-      <input class="typein" id="cIn" placeholder="type here… (Enter)" autocomplete="off">
-      <div class="found" id="cFound"></div>
-    </div>
-  </div>
-  <div class="box green">
-    <div class="bh">Odd One Out<span class="sp"></span><span class="pts" id="oScore">0</span></div>
-    <div class="bb">
-      <div class="muted">Which one is different? Say why.</div>
-      <div class="odd" id="odd"></div>
-      <div class="row"><button class="btn" id="oNext" style="background:#5c7f69">Next</button><span class="result" id="oRes"></span></div>
-    </div>
-  </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">Maya is travelling again. Before the trip, let’s check the homework.</span><button class="nx" data-go="2">Homework &#8594;</button></div>
 </section>
 
 <!-- 2 HOMEWORK -->
-<section class="pane" id="hw" style="grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)">
-  <div class="box orange">
-    <div class="bh">
-      <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="10" cy="14" r="7.5" fill="#1f2d3d"/><path d="M14 8l3-3" stroke="#1f2d3d" stroke-width="2.4"/><circle cx="18.5" cy="3.8" r="2" fill="#fff"/></svg>
-      Error Bomb · Homework 1D <small>15 seconds per card</small><span class="sp"></span><span class="pts" id="bScore">0 / 20</span></div>
-    <div class="bb">
-      <div class="bombs" id="bombs"></div>
-      <div class="row"><button class="btn" id="bStart" style="background:#a8844c">Light the fuse</button><button class="btn alt" id="bNext">Next 4</button><span class="muted" id="bPage"></span><span class="result" id="bRes"></span></div>
-    </div>
-  </div>
-  <div class="box pink">
-    <div class="bh">Grammar Doctor <small>find and fix · tap to check</small></div>
-    <div class="bb">
-      <div class="docs" id="docs"></div>
-      <div class="qnav"><button class="arrow" id="dPrev">&#8592;</button><span class="count" id="dCount"></span><button class="arrow" id="dNext">&#8594;</button></div>
-    </div>
-  </div>
-</section>
-
-<!-- 3 GAMES -->
-<section class="pane" id="games" style="grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)">
-  <div class="box orange">
-    <div class="bh">Floor Is Lava <small>step on the right stone</small><span class="sp"></span><span class="lives" id="lLives"></span><span class="pts" id="lScore">0</span></div>
-    <div class="bb">
-      <div class="lava"><div class="sent" id="lSent"></div><div class="stones" id="lStones"></div></div>
-      <div class="row"><button class="btn" id="lNext" style="background:#a8844c">Next</button><span class="result" id="lRes"></span></div>
-    </div>
-  </div>
-  <div class="box blue">
-    <div class="bh">Rapid Categories <small>tap only the words that belong</small><span class="sp"></span><span class="pts" id="rScore">0</span></div>
-    <div class="bb">
-      <div class="rc-top"><span class="rc-cat" id="rCat"></span><span class="digital" id="rClock" style="font-size:24px">00:30</span></div>
-      <div class="rcg" id="rGrid"></div>
-      <div class="row"><button class="btn" id="rStart" style="background:#3e5c76">Start</button><span class="result" id="rRes"></span></div>
-    </div>
-  </div>
-</section>
-
-<!-- 4 PHOTO -->
-<section class="pane" id="photo" style="grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)">
-  <div class="box teal">
-    <div class="bh">Hotspot <small>tap a point · describe that part</small></div>
-    <div class="bb"><div class="pwrap"><div class="pic" id="pic"><img src="../maya-english-hub/assets/maya-1d-photo.png" alt="Homework 1D picture"></div></div></div>
-  </div>
-  <div class="box purple">
-    <div class="bh">30-Second Talk</div>
-    <div class="bb">
-      <div class="prompt" id="pPrompt">Tap a point on the picture.</div>
-      <div class="ringrow">
-        <svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" stroke="#efe9ef"/><circle id="pRing" cx="30" cy="30" r="25" stroke="#6b4e71" stroke-dasharray="157" stroke-dashoffset="0" transform="rotate(-90 30 30)" stroke-linecap="round"/></svg>
-        <span class="tnum" id="pNum">30</span>
-        <button class="btn" id="pStart" style="background:#6b4e71">Start</button><button class="btn alt" id="pReset">Reset</button>
+<section class="stage" data-s="2">
+  <div class="grid" style="grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)">
+    <div class="box orange">
+      <div class="bh">Homework 1D · Error Bomb <small>15 seconds per card</small><span class="sp"></span><span class="pts" id="bScore">0 / 20</span></div>
+      <div class="bb">
+        <div class="bombs" id="bombs"></div>
+        <div class="row"><button class="btn" id="bStart" style="background:#a8844c">Light the fuse</button><button class="btn alt" id="bNext">Next 4</button><span class="muted" id="bPage"></span><span class="result" id="bRes"></span></div>
       </div>
-      <div class="muted">Tap a phrase when Maya uses it.</div>
-      <div class="chips" id="pChips"></div>
+    </div>
+    <div class="box pink">
+      <div class="bh">Grammar Doctor <small>find and fix · tap to check</small></div>
+      <div class="bb">
+        <div class="docs" id="docs"></div>
+        <div class="qnav"><button class="arrow" id="dPrev">&#8592;</button><span class="count" id="dCount"></span><button class="arrow" id="dNext">&#8594;</button></div>
+      </div>
     </div>
   </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">We use Present Continuous for what is happening now. Look at these hotel guests: what is happening?</span><button class="nx" data-go="3">What’s happening? &#8594;</button></div>
 </section>
 
-<!-- ENGLISH FILE 4th + 5th -->
-<section class="pane" id="ef" style="grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)">
-  <div class="box teal">
-    <div class="bh">04 · English File · 4th + 5th Editions <small>from last lesson</small></div>
-    <div class="bb">
-      <div class="efsw" id="efsw"><button class="on" data-v="0">4th · Rob calls Reception</button><button data-v="1">5th · Story so far</button><button data-v="2">5th · Six months later</button></div>
-      <div class="efv" id="efv0"><div class="vid"><iframe data-src="https://www.youtube.com/embed/hq0-y-iYgBI?playsinline=1&rel=0" title="English File 4th · Rob calls Reception" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
-      <div class="efv" id="efv1" style="display:none"><video controls playsinline preload="none" src="media/ef5e-preint-pe1-recap.mp4"></video></div>
-      <div class="efv" id="efv2" style="display:none"><video controls playsinline preload="none" src="media/ef5e-preint-pe1-main.mp4"></video></div>
+<!-- 3 PHOTOS -->
+<section class="stage" data-s="3">
+  <div class="grid" style="grid-template-columns:minmax(0,2.3fr) minmax(0,1fr)">
+    <div class="box teal">
+      <div class="bh">What’s happening? <small>describe the photo, then tap it</small><span class="sp"></span><span class="pts" id="phPg"></span></div>
+      <div class="bb">
+        <div class="pgrid" id="pgrid"></div>
+        <div class="qnav"><button class="arrow" id="phPrev">&#8592;</button><button class="arrow" id="phNext">&#8594;</button></div>
+      </div>
     </div>
-  </div>
-  <div class="box blue">
-    <div class="bh">Tasks <small id="efTitle">Rob · Calling Reception</small></div>
-    <div class="bb">
-      <div class="efpane on" data-v="0">
-        <div class="stp"><b>BEFORE WATCHING</b>Rob is in room 613. Predict two problems he might have.</div>
-        <div class="stp"><b>WATCH 1 · GIST</b>How many times does Rob call Reception?</div>
-        <div class="stp"><b>FROM MEMORY</b>Problem 1 = ? · Problem 2 = ? · Which one needs IT?</div>
-        <div class="stp"><b>WATCH 2 · SOLUTIONS</b>What does Reception promise after each complaint?</div>
-        <div class="efc">
-          <div class="fc"><div class="in"><div class="face front"><span><b>Call 1</b> · What is wrong?</span></div><div class="face back"><span>Air conditioning: it isn’t working. Reception will send somebody up.</span></div></div></div>
-          <div class="fc"><div class="in"><div class="face front"><span><b>Call 2</b> · What is wrong?</span></div><div class="face back"><span>Wi-Fi: Rob can’t get a signal. Reception will put him through to IT.</span></div></div></div>
+    <div class="box purple">
+      <div class="bh">Say it</div>
+      <div class="bb">
+        <div class="lang">
+          <div><b>What is she / he doing?</b><br>She’s trying to… · He’s holding… · He’s lying…</div>
+          <div><b>How does she look?</b><br>She looks annoyed / tired / unhappy.</div>
+          <div><b>What’s the problem?</b><br>The … isn’t working. · There’s no… · There isn’t any… · He can’t…</div>
         </div>
-        <div class="stp"><b>BRIDGE · ROB → JENNY</b>A little later Jenny asks, “And how’s your hotel?” What do you think he says?</div>
-      </div>
-      <div class="efpane" data-v="1">
-        <div class="stp"><b>BEFORE WATCHING</b>Watch and work out who is connected to whom.</div>
-        <div class="stp"><b>WATCH 1 · WHO IS WHO?</b>Find Ben · Izzy · Andre · Carla · Pamela.</div>
-        <div class="stp"><b>WATCH 2 · RELATIONSHIPS</b>Who studies photography? Who works in the café? Who is Izzy’s friend / landlady? What connects Ben and Izzy?</div>
-        <div class="stp"><b>MEMORY CHECK</b>Close the video and give one fact about each person.</div>
-        <div class="stp"><b>TRANSITION</b>That was Season 1. Now jump forward: six months later. What do you predict has changed for Ben and Izzy?</div>
-      </div>
-      <div class="efpane" data-v="2">
-        <div class="stp"><b>HEADS-UP</b>Where are Ben and Izzy now? Watch for their jobs, not every word.</div>
-        <div class="stp"><b>WATCH 1 · GIST</b>Who is Emma? Where is she staying? Who is she going to meet?</div>
-        <div class="stp"><b>WATCH 2 · DETAIL</b>What does Ben think about Emma and Izzy? Why might Izzy change her evening plans?</div>
-        <div class="efc4">
-          <div class="fc"><div class="in"><div class="face front"><span>Emma is staying with Ben. <b>T / F?</b></span></div><div class="face back"><span>FALSE · She is staying in a hotel.</span></div></div></div>
-          <div class="fc"><div class="in"><div class="face front"><span>Emma is Ben’s twin sister. <b>T / F?</b></span></div><div class="face back"><span>TRUE.</span></div></div></div>
-          <div class="fc"><div class="in"><div class="face front"><span>Ben thinks Emma and Izzy are very similar. <b>T / F?</b></span></div><div class="face back"><span>FALSE · He thinks they are very different.</span></div></div></div>
-          <div class="fc"><div class="in"><div class="face front"><span>Izzy may go to a work event later. <b>T / F?</b></span></div><div class="face back"><span>TRUE.</span></div></div></div>
+        <div class="ringrow" style="margin-top:auto">
+          <svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" stroke="#efe9ef"/><circle id="pRing" cx="30" cy="30" r="25" stroke="#6b4e71" stroke-dasharray="157" stroke-dashoffset="0" transform="rotate(-90 30 30)" stroke-linecap="round"/></svg>
+          <span class="tnum" id="pNum">30</span><button class="btn" id="pStart" style="background:#6b4e71">Start 30 s</button>
         </div>
-        <div class="stp"><b>PREDICT</b>Emma is at the hotel now. What kind of problem could take us to Calling Reception?</div>
       </div>
     </div>
   </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">These guests need help. What do you say to Reception? Watch Rob in New York.</span><button class="nx" data-go="4">Rob calls Reception &#8594;</button></div>
 </section>
 
-<!-- 5 VIDEO -->
-<section class="pane" id="video" style="grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)">
-  <div class="box blue">
-    <div class="bh">05 · Listening Accuracy · Rob Calls Reception <small>from last lesson</small></div>
-    <div class="bb">
-      <div class="steps4"><span><b>1</b> Listen once. How many times does Rob call Reception?</span><span><b>2</b> Listen for verbs: fill the gaps.</span><span><b>3</b> Say the whole phrase aloud.</span><span><b>4</b> Notice: problem or solution?</span></div>
-      <div style="flex:1;min-height:0;display:flex;align-items:flex-start"><div class="vid"><iframe src="https://www.youtube.com/embed/hq0-y-iYgBI?playsinline=1&rel=0" title="English File · Rob calls Reception" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
-    
-      <div class="ln">
-        <div class="fc"><div class="in"><div class="face front"><span><b>Notice</b><br>Which line describes the problem? Which offers a solution?</span></div><div class="face back"><span>Problem: <i>The air conditioning isn’t working.</i><br>Solution: <i>I’ll send somebody up to look at it.</i></span></div></div></div>
-        <div class="fc"><div class="in"><div class="face front"><span><b>It isn’t ___.</b><br>What describes a broken device?</span></div><div class="face back"><span><b>It isn’t working.</b><br>Present Continuous: a service or device is not functioning.</span></div></div></div>
-        <div class="fc"><div class="in"><div class="face front"><span><b>I’ll ___ somebody up.</b><br>What does Reception offer?</span></div><div class="face back"><span><b>I’ll send somebody up.</b><br>I’ll + verb = an immediate offer or decision.</span></div></div></div>
-      </div></div>
-  </div>
-  <div class="box pink">
-    <div class="bh">Audio Gap Race<span class="sp"></span><span class="digital" id="gClock" style="font-size:17px;padding:0 8px">00:00</span></div>
-    <div class="bb">
-      <div class="racebar"><i id="gBar"></i></div>
-      <div id="gRows" style="display:flex;flex-direction:column;gap:5px;flex:1;min-height:0"></div>
-      <div class="row"><button class="arrow" id="gPrev">&#8592;</button><span class="count" id="gPg"></span><button class="arrow" id="gNext">&#8594;</button><button class="btn" id="gReset" style="background:#b5523b">Race again</button><span class="result" id="gRes"></span></div>
-    </div>
-  </div>
-</section>
-
-<!-- 6 RECEPTION -->
-<section class="pane" id="reception" style="grid-template-columns:minmax(0,1fr) minmax(0,.95fr) minmax(0,1.1fr)">
-  <div class="box blue">
-    <div class="bh">Who says it? <small>Guest or Reception</small><span class="sp"></span><span class="pts" id="wScore">0</span></div>
-    <div class="bb">
-      <div class="who-q" id="wQ"></div>
-      <div class="row" style="justify-content:center"><button class="btn" id="wG" style="background:#5c7f69">Guest</button><button class="btn" id="wR" style="background:#3e5c76">Reception</button></div>
-      <div class="result" id="wRes" style="text-align:center"></div>
-      <div class="row" style="margin-top:auto;justify-content:center"><span class="count" id="wCount"></span><button class="btn alt" id="wNext">Next</button></div>
-    </div>
-  </div>
-  <div class="box green">
-    <div class="bh">Say it politely<button class="tf" data-ed="1">Ten Faces · Hotel</button></div>
-    <div class="bb"><div id="lab" style="display:flex;flex-direction:column;gap:7px"></div><div style="margin-top:auto;border:1px solid #d2b886;background:#fbf7ee;border-radius:8px;padding:7px 11px;font-size:15px"><b>I’ll</b><br>A There’s a problem with the air conditioning.<br>B I’ll send somebody to look at it.<br><i>I’ll = I will. We use I’ll + verb to offer to do something.</i></div></div>
-  </div>
-  <div class="box purple">
-    <div class="bh">Mystery Box · Phone call <small>you are the guest</small></div>
-    <div class="bb">
-      <ol class="mhelp"><li>Open a box: look at the photo. This is your room and your problem.</li><li>Press Start and call Reception. Begin: <i>Hello, this is room …</i> The teacher is Reception.</li><li>Tap the card to compare with the model. Then swap roles.</li></ol>
-      <div class="boxes" id="mBoxes"></div>
-      <div class="mcard" id="mCard"><div class="in"><div class="face front" id="mFront"><span class="muted">Choose a box above.</span></div><div class="face back" id="mBack"></div></div></div>
-      <div class="ringrow"><span class="digital" id="mClock" style="font-size:22px">00:30</span><button class="btn" id="mStart" style="background:#6b4e71" disabled>Start 30 s</button></div>
-    </div>
-  </div>
-</section>
-
-<!-- PHONE CALL -->
-<section class="pane" id="call" style="grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr)">
-  <div class="box blue">
-    <div class="bh">Call Simulator <small>choose, then say it aloud</small><span class="sp"></span><span class="dots" id="sDots"></span></div>
-    <div class="bb">
-      <div class="sim-sit"><b>Situation:</b> You have checked into a hotel, but there is no hot water. Call Reception.</div>
-      <div class="rline"><button class="pl" id="sPlay">&#9654;</button><div><b>RECEPTIONIST</b><span id="sLine"></span></div></div>
-      <div class="opt3" id="sOpts"></div>
-      <div class="simnote" id="sNote"></div>
-      <div class="row" style="margin-top:auto"><button class="btn" id="sNext" style="background:#3e5c76" disabled>Next turn</button><button class="btn alt" id="sAgain">Start again</button></div>
-    </div>
-  </div>
-  <div class="box green">
-    <div class="bh">Politeness Lab <small>which one is polite?</small><span class="sp"></span><span class="pts" id="pScore">0 / 4</span></div>
-    <div class="bb">
-      <div class="pl2" id="pLab"></div>
-      <div class="qnav"><button class="arrow" id="pPrev">&#8592;</button><span class="count" id="pCount"></span><button class="arrow" id="pNext">&#8594;</button></div>
-    </div>
-  </div>
-  <div class="box purple">
-    <div class="bh">Fix it <small>say it, then tap the card</small></div>
-    <div class="bb">
-      <div class="rcsw"><button class="on" data-k="rc">Repair Clinic</button><button data-k="ux">Unexpected reply</button></div>
-      <div class="rcl" id="rcl"></div>
-      <div class="qnav"><button class="arrow" id="rcPrev">&#8592;</button><span class="count" id="rcCount"></span><button class="arrow" id="rcNext">&#8594;</button></div>
-    </div>
-  </div>
-</section>
-
-<!-- TALK SHOW -->
-<section class="pane" id="talk" style="grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr)">
-  <div class="box studio">
-    <div class="bh" style="background:#b8955a">Talk Show Stories <small>listen first, the script is hidden</small></div>
-    <div class="bb">
-      <div class="showtitle">Tonight: a hotel story</div>
-      <div class="guests">
-        <div class="guest" id="gHost"><img src="ten-faces/nathan.jpg" alt="Host"><span><b>Nathan</b> · host</span></div>
-        <div class="guest" id="gStar"><img src="ten-faces/emma.jpg" alt="Guest"><span><b>Emma Lane</b> · actress</span></div>
+<!-- 4 ROB -->
+<section class="stage" data-s="4">
+  <div class="grid" style="grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)">
+    <div class="box blue">
+      <div class="bh">Rob calls Reception <small>English File 4th · watch first</small></div>
+      <div class="bb">
+        <div class="steps4"><span><b>1</b> Rob is in room 613. Predict two problems.</span><span><b>2</b> Watch: how many times does he call?</span><span><b>3</b> What does Reception promise?</span><span><b>4</b> Fill the gaps, say the phrase aloud.</span></div>
+        <div style="flex:1;min-height:0;display:flex;align-items:flex-start"><div class="vid"><iframe data-src="https://www.youtube.com/embed/hq0-y-iYgBI?playsinline=1&rel=0" title="English File · Rob calls Reception" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
+        <div class="ln">
+          <div class="fc"><div class="in"><div class="face front"><span><b>Call 1</b><br>What is wrong?</span></div><div class="face back"><span>Air conditioning: it isn’t working. Reception will send somebody up.</span></div></div></div>
+          <div class="fc"><div class="in"><div class="face front"><span><b>Call 2</b><br>What is wrong?</span></div><div class="face back"><span>Wi-Fi: Rob can’t get a signal. Reception will put him through to IT.</span></div></div></div>
+          <div class="fc"><div class="in"><div class="face front"><span><b>I’ll ___ somebody up.</b><br>What does Reception offer?</span></div><div class="face back"><span><b>I’ll send somebody up.</b><br>I’ll + verb = an immediate offer.</span></div></div></div>
+        </div>
       </div>
-      <div class="row"><button class="btn" id="tPlay" style="background:#b8955a">Play</button><button class="btn alt" id="tStop">Stop</button><button class="btn alt" id="tSlow">Slower</button><button class="btn alt" id="tScript">Script</button></div>
-      <div class="muted" id="tNow" style="color:#c9d1da">Gist: how many times does Emma call Reception?</div>
-      <div class="script" id="tText"></div>
+    </div>
+    <div class="box pink">
+      <div class="bh">Audio Gap Race <small>listen · type · check</small><span class="sp"></span><span class="digital" id="gClock" style="font-size:17px;padding:0 8px">00:00</span></div>
+      <div class="bb">
+        <div class="racebar"><i id="gBar"></i></div>
+        <div id="gRows" style="display:flex;flex-direction:column;gap:5px;flex:1;min-height:0"></div>
+        <div class="row"><button class="arrow" id="gPrev">&#8592;</button><span class="count" id="gPg"></span><button class="arrow" id="gNext">&#8594;</button><button class="btn" id="gReset" style="background:#a9503b">Race again</button><span class="result" id="gRes"></span></div>
+      </div>
     </div>
   </div>
-  <div class="box green">
-    <div class="bh">True or False?<span class="sp"></span><span class="pts" id="tfScore">0</span></div>
-    <div class="bb">
-      <div class="tfq" id="tfq"></div>
-      <div class="qnav"><button class="arrow" id="tfPrev">&#8592;</button><span class="count" id="tfCount"></span><button class="arrow" id="tfNext">&#8594;</button></div>
-    </div>
-  </div>
-  <div class="box purple">
-    <div class="bh">Listen &amp; Order <small>tap in order</small></div>
-    <div class="bb">
-      <div class="ord" id="ord"></div>
-      <div class="row"><button class="btn" id="oCheck" style="background:#6b4e71">Check</button><button class="btn alt" id="oReset">Again</button><span class="result" id="oR"></span></div>
-      <div class="sptext" style="border-left-color:#6b4e71;background:#f8f6f8;margin-top:auto">Now you are Emma. Tell the story in 40 seconds: <i>I arrived… The air conditioning wasn’t working… I called Reception…</i></div>
-      <div class="ringrow"><span class="digital" id="rtClock" style="font-size:20px">00:40</span><button class="btn" id="rtStart" style="background:#6b4e71">Start 40 s</button></div>
-    </div>
-  </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">Now it’s your turn. You are in a hotel and there is no hot water. Call Reception.</span><button class="nx" data-go="5">Your call &#8594;</button></div>
 </section>
 
-<!-- 7 JEOPARDY -->
-<section class="pane" id="jeo" style="grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)">
-  <div class="box purple">
-    <div class="bh">Jeopardy<span class="sp"></span><span class="pts" id="jScore">0</span></div>
-    <div class="bb"><div class="jb" id="jBoard"></div></div>
-  </div>
-  <div class="box orange">
-    <div class="bh">Question <small>tap the card for the answer</small></div>
-    <div class="bb">
-      <div class="jq" id="jQ"><div class="in"><div class="face front" id="jFront">Choose a category and points.</div><div class="face back" id="jBack"></div></div></div>
-      <div class="row"><button class="btn" id="jYes" style="background:#4f8a5f" disabled>Correct</button><button class="btn" id="jNo" style="background:#a9443a" disabled>Wrong</button><button class="btn alt" id="jNew">New game</button></div>
-      <div class="row"><span class="muted">Escape Room · finish a column to get a digit</span></div>
-      <div class="lock" id="jLock"></div>
+<!-- 5 YOUR CALL -->
+<section class="stage" data-s="5">
+  <div class="grid" style="grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)">
+    <div class="box blue">
+      <div class="bh">Call Simulator <small>listen, choose, say it aloud</small><span class="sp"></span><span class="dots" id="sDots"></span></div>
+      <div class="bb">
+        <div class="sim-sit"><b>Situation:</b> You have checked into a hotel, but there is no hot water. Call Reception.</div>
+        <div class="rline"><button class="pl" id="sPlay">&#9654;</button><div><b>RECEPTIONIST</b><span id="sLine"></span></div></div>
+        <div class="opt3" id="sOpts"></div>
+        <div class="simnote" id="sNote"></div>
+        <div class="row" style="margin-top:auto"><button class="btn" id="sNext" style="background:#3e5c76" disabled>Next turn</button><button class="btn alt" id="sAgain">Start again</button></div>
+      </div>
+    </div>
+    <div class="box green">
+      <div class="bh">Politeness Lab <small>which one is polite?</small><span class="sp"></span><span class="pts" id="pScore">0 / 4</span></div>
+      <div class="bb">
+        <div class="pl2" id="pLab"></div>
+        <div class="qnav"><button class="arrow" id="plPrev">&#8592;</button><span class="count" id="plCount"></span><button class="arrow" id="plNext">&#8594;</button></div>
+      </div>
     </div>
   </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">Choose a room, look at the photo and make a real call. The teacher is Reception.</span><button class="nx" data-go="6">Rooms &#8594;</button></div>
+</section>
+
+<!-- 6 ROOMS -->
+<section class="stage" data-s="6">
+  <div class="grid" style="grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)">
+    <div class="box purple">
+      <div class="bh">Mystery Box · Phone call <small>you are the guest</small></div>
+      <div class="bb">
+        <ol class="mhelp"><li>Open a box: this is your room and your problem.</li><li>Press Start and call Reception: <i>Hello, this is room …</i></li><li>Tap the photo to compare with the model. Then swap roles.</li></ol>
+        <div class="boxes" id="mBoxes"></div>
+        <div class="mcard" id="mCard"><div class="in"><div class="face front" id="mFront"><span class="muted" style="position:static">Choose a box above.</span></div><div class="face back" id="mBack"></div></div></div>
+        <div class="ringrow"><span class="digital" id="mClock" style="font-size:20px">00:30</span><button class="btn" id="mStart" style="background:#6b4e71" disabled>Start 30 s</button></div>
+      </div>
+    </div>
+    <div class="box orange">
+      <div class="bh">When things go wrong <small>say it, then tap the card</small></div>
+      <div class="bb">
+        <div class="rcsw"><button class="on" data-k="ux">Unexpected reply</button><button data-k="rc">Repair Clinic</button></div>
+        <div class="rcl" id="rcl"></div>
+        <div class="qnav"><button class="arrow" id="rcPrev">&#8592;</button><span class="count" id="rcCount"></span><button class="arrow" id="rcNext">&#8594;</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">In English File 5th edition, Emma arrives in a new city. Where is she staying?</span><button class="nx" data-go="7">English File 5th &#8594;</button></div>
+</section>
+
+<!-- 7 EF 5th -->
+<section class="stage" data-s="7">
+  <div class="grid" style="grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)">
+    <div class="box teal">
+      <div class="bh">English File 5th · Pictures of You <small>from last lesson</small></div>
+      <div class="bb">
+        <div class="efsw" id="efsw"><button class="on" data-v="1">The story so far</button><button data-v="2">Six months later</button></div>
+        <div class="efv" id="efv1"><video controls playsinline preload="none" src="media/ef5e-preint-pe1-recap.mp4"></video></div>
+        <div class="efv" id="efv2" style="display:none"><video controls playsinline preload="none" src="media/ef5e-preint-pe1-main.mp4"></video></div>
+      </div>
+    </div>
+    <div class="box blue">
+      <div class="bh">Tasks <small id="efTitle">The story so far</small></div>
+      <div class="bb">
+        <div class="efpane on" data-v="1">
+          <div class="stp"><b>WATCH 1 · WHO IS WHO?</b>Find Ben · Izzy · Andre · Carla · Pamela.</div>
+          <div class="stp"><b>WATCH 2 · RELATIONSHIPS</b>Who studies photography? Who works in the café? Who is Izzy’s friend / landlady? What connects Ben and Izzy?</div>
+          <div class="stp"><b>MEMORY CHECK</b>Close the video and give one fact about each person.</div>
+          <div class="stp"><b>TRANSITION</b>Now jump forward: six months later. What has changed for Ben and Izzy?</div>
+        </div>
+        <div class="efpane" data-v="2">
+          <div class="stp"><b>WATCH 1 · GIST</b>Who is Emma? Where is she staying? Who is she going to meet?</div>
+          <div class="stp"><b>WATCH 2 · DETAIL</b>What does Ben think about Emma and Izzy? Why might Izzy change her evening plans?</div>
+          <div class="efc4">
+            <div class="fc"><div class="in"><div class="face front"><span>Emma is staying with Ben. <b>T / F?</b></span></div><div class="face back"><span>FALSE · She is staying in a hotel.</span></div></div></div>
+            <div class="fc"><div class="in"><div class="face front"><span>Emma is Ben’s twin sister. <b>T / F?</b></span></div><div class="face back"><span>TRUE.</span></div></div></div>
+            <div class="fc"><div class="in"><div class="face front"><span>Ben thinks Emma and Izzy are very similar. <b>T / F?</b></span></div><div class="face back"><span>FALSE · He thinks they are very different.</span></div></div></div>
+            <div class="fc"><div class="in"><div class="face front"><span>Izzy may go to a work event later. <b>T / F?</b></span></div><div class="face back"><span>TRUE.</span></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">Emma is a hotel guest now. Tonight on our talk show: another Emma with a hotel story.</span><button class="nx" data-go="8">Talk Show &#8594;</button></div>
+</section>
+
+<!-- 8 TALK SHOW -->
+<section class="stage" data-s="8">
+  <div class="grid" style="grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr)">
+    <div class="box studio">
+      <div class="bh" style="background:#b8955a">Talk Show Stories <small>listen first, the script is hidden</small></div>
+      <div class="bb">
+        <div class="showtitle">Tonight: a hotel story</div>
+        <div class="guests">
+          <div class="guest" id="gHost"><img src="ten-faces/nathan.jpg" alt="Host"><span><b>Nathan</b> · host</span></div>
+          <div class="guest" id="gStar"><img src="ten-faces/emma.jpg" alt="Guest"><span><b>Emma Lane</b> · actress</span></div>
+        </div>
+        <div class="row"><button class="btn" id="tPlay" style="background:#b8955a">Play</button><button class="btn alt" id="tStop">Stop</button><button class="btn alt" id="tScript">Script</button></div>
+        <div class="muted" id="tNow" style="color:#c9d1da">Gist: how many times does Emma call Reception?</div>
+        <div class="script" id="tText"></div>
+      </div>
+    </div>
+    <div class="box green">
+      <div class="bh">True or False?<span class="sp"></span><span class="pts" id="tfScore">0</span></div>
+      <div class="bb">
+        <div class="tfq" id="tfq"></div>
+        <div class="qnav"><button class="arrow" id="tfPrev">&#8592;</button><span class="count" id="tfCount"></span><button class="arrow" id="tfNext">&#8594;</button></div>
+      </div>
+    </div>
+    <div class="box purple">
+      <div class="bh">Listen &amp; Order <small>tap in order</small></div>
+      <div class="bb">
+        <div class="ord" id="ord"></div>
+        <div class="row"><button class="btn" id="oCheck" style="background:#6b4e71">Check</button><button class="btn alt" id="oReset">Again</button><span class="result" id="oR"></span></div>
+        <div class="sptext" style="border-left-color:#6b4e71;background:#f8f6f8;margin-top:auto">Now you are Emma. Tell the story in 40 seconds: <i>I arrived… The air conditioning wasn’t working… I called Reception…</i></div>
+        <div class="ringrow"><span class="digital" id="rtClock" style="font-size:20px">00:40</span><button class="btn" id="rtStart" style="background:#6b4e71">Start 40 s</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">Final check: everything from today. Can you open the lock?</span><button class="nx" data-go="9">Final &#8594;</button></div>
+</section>
+
+<!-- 9 JEOPARDY -->
+<section class="stage" data-s="9">
+  <div class="grid" style="grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)">
+    <div class="box purple">
+      <div class="bh">Jeopardy<span class="sp"></span><span class="pts" id="jScore">0</span></div>
+      <div class="bb"><div class="jb" id="jBoard"></div></div>
+    </div>
+    <div class="box orange">
+      <div class="bh">Question <small>tap the card for the answer</small></div>
+      <div class="bb">
+        <div class="jq" id="jQ"><div class="in"><div class="face front" id="jFront">Choose a category and points.</div><div class="face back" id="jBack"></div></div></div>
+        <div class="row"><button class="btn" id="jYes" style="background:#4f8a5f" disabled>Correct</button><button class="btn" id="jNo" style="background:#a9443a" disabled>Wrong</button><button class="btn alt" id="jNew">New game</button></div>
+        <div class="row"><span class="muted">Escape Room · finish a column to get a digit</span></div>
+        <div class="lock" id="jLock"></div>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span class="lbl">END</span><span class="q">Well done! Homework: call a hotel in English in your head – three problems, three polite requests.</span><button class="nx" data-go="1">Back to start</button></div>
 </section>
 </main>
 
+<script src="revision-data.js?v=20261018k"></script>
 <script>
 'use strict';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 const mmss=s=>{const c=Math.max(0,Math.ceil(s));return String(Math.floor(c/60)).padStart(2,'0')+':'+String(c%60).padStart(2,'0')};
-function say(t,rate=.9){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=rate;speechSynthesis.speak(u)}catch(e){}}
 const timers={};function stopT(k){clearInterval(timers[k]);timers[k]=null}
 function countdown(k,secs,onTick,onEnd){stopT(k);const t0=Date.now();timers[k]=setInterval(()=>{const left=secs-(Date.now()-t0)/1000;onTick(Math.max(0,left));if(left<=0){stopT(k);onEnd&&onEnd()}},100)}
+const R=window.REV,AU=window.AU,VO=R.voices;
+/* ---- natural audio ---- */
+let cur=null;
+function stopAudio(){if(cur){try{cur.pause()}catch(e){}cur.onended=null;cur=null}$$('.playing').forEach(x=>x.classList.remove('playing'))}
+function play(text,voice,onEnd,btn){stopAudio();const k=AU[voice+'|'+text];if(!k){onEnd&&onEnd();return}const a=new Audio('rev-audio/'+k+'.mp3');cur=a;if(btn)btn.classList.add('playing');a.onended=()=>{if(btn)btn.classList.remove('playing');if(cur===a)cur=null;onEnd&&onEnd()};a.play().catch(()=>{})}
 
-$$('.tab').forEach(t=>t.onclick=()=>{$$('.tab').forEach(x=>x.classList.toggle('on',x===t));$$('.pane').forEach(p=>p.classList.toggle('on',p.id===t.dataset.p))});
-$$('.tf').forEach(b=>b.onclick=()=>{$('#tfFrame').src='ten-faces-maya.html?v=20261018c&ed='+b.dataset.ed;$('#tfo').classList.add('on')});
-$('#tfClose').onclick=()=>{$('#tfo').classList.remove('on');$('#tfFrame').src='about:blank'};
+/* ---- stages ---- */
+const ST=['1 Back','2 Homework','3 What’s happening?','4 Rob calls','5 Your call','6 Rooms','7 English File 5th','8 Talk Show','9 Final'];
+$('#steps').innerHTML=ST.map((t,i)=>`<button class="st${i===0?' on':''}" data-go="${i+1}">${t}</button>`).join('');
+function go(n){stopAudio();stopBombs();$$('video').forEach(v=>v.pause());$$('.stage').forEach(s=>s.classList.toggle('on',+s.dataset.s===n));$$('.st').forEach(b=>{b.classList.toggle('on',+b.dataset.go===n);b.classList.toggle('done',+b.dataset.go<n)});
+ if(n===4){const f=$('[data-s="4"] iframe');if(!f.src)f.src=f.dataset.src}}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(+b.dataset.go)});
 $('#teacherBtn').onclick=()=>$('#drawer').classList.toggle('on');
 document.addEventListener('click',e=>{if(!e.target.closest('#drawer')&&e.target.id!=='teacherBtn')$('#drawer').classList.remove('on')});
 
-/* ===== WORDS (Maya's hub + homework 1D) ===== */
-const SETS={
- people:['People',[['get on well with','хорошо ладить с','She gets on well with her colleagues.'],['keep in touch','поддерживать связь','We keep in touch online.'],['have a lot in common','иметь много общего','They have a lot in common.'],['relationship','отношения','They are talking about their relationship.'],['colleague','коллега','I get on well with my colleagues.'],['confident','уверенный в себе','She looks confident.'],['outgoing','общительный','He is friendly and outgoing.'],['get divorced','развестись','']]],
- style:['Clothes',[['suit someone','идти кому-то','That colour really suits you.'],['go with','сочетаться с','These shoes go with the jacket.'],['appearance','внешность','Describe her appearance.'],['slim','стройный','She is slim and quite tall.'],['fitted','приталенный','She is wearing a fitted jacket.'],['oversized','свободного, увеличенного кроя','He likes oversized hoodies.'],['high-waisted','с высокой талией','These are high-waisted trousers.'],['hoodie','толстовка с капюшоном',''],['boots','ботинки',''],['modern clothes','современная одежда','']]],
- photo:['Photo',[['in the foreground','на переднем плане','In the foreground, I can see a table.'],['in the background','на заднем плане','There is a window in the background.'],['next to','рядом с',''],['in front of','перед',''],['behind','позади',''],['between','между',''],['on the left','слева',''],['on the right','справа',''],['in the middle','посередине',''],['pose','поза',''],['serious','серьёзный',''],['relaxed','расслабленный','']]],
- art:['Remakes',[['remake','ремейк',''],['portrait','портрет',''],['similar','похожий',''],['different','отличающийся',''],['hold hands','держаться за руки',''],['garden fork','садовые вилы',''],['rooftop garden','сад на крыше',''],['city skyline','городской пейзаж',''],['fashion designer','модельер',''],['symbolize','символизировать','']]]};
-const ALL=Object.values(SETS).flatMap(s=>s[1]);
-let deck=ALL,fi=0,curSet='all';
-function renderSets(){$('#sets').innerHTML=[['all','All']].concat(Object.entries(SETS).map(([k,v])=>[k,v[0]])).map(([k,t])=>`<button class="set${k===curSet?' on':''}" data-s="${k}">${t}</button>`).join('');$$('.set').forEach(b=>b.onclick=()=>{curSet=b.dataset.s;deck=curSet==='all'?ALL:SETS[curSet][1];fi=0;renderSets();renderCard()})}
-function renderCard(){const c=deck[fi];$('#flash').classList.remove('f');$('#fFront').textContent=c[0];$('#fBack').innerHTML=`<div class="ru">${c[1]}</div>${c[2]?`<div class="ex">${c[2]}</div>`:''}`;$('#fCount').textContent=(fi+1)+' / '+deck.length}
-$('#flash').onclick=()=>$('#flash').classList.toggle('f');
-$('#fPrev').onclick=()=>{fi=(fi-1+deck.length)%deck.length;renderCard()};$('#fNext').onclick=()=>{fi=(fi+1)%deck.length;renderCard()};$('#fSay').onclick=()=>say(deck[fi][0]);
-renderSets();renderCard();
+/* ===== 1 QUIZLET ===== */
+const PIC={'key card':'keycard','air conditioning':'aircon','get a signal':'wifi','towels':'towels','reception':'phone','send somebody up':'towels'};
+const SETS=R.vocab,ALL=SETS.flatMap(s=>s[1]);let deck=ALL,fi=0,curSet=-1;
+function renderSets(){$('#sets').innerHTML=[[-1,'All']].concat(SETS.map((s,i)=>[i,s[0]])).map(([k,t])=>`<button class="set${k===curSet?' on':''}" data-s="${k}">${t}</button>`).join('');$$('.set').forEach(b=>b.onclick=()=>{curSet=+b.dataset.s;deck=curSet<0?ALL:SETS[curSet][1];fi=0;renderSets();renderCard()})}
+function renderCard(){const c=deck[fi];$('#flash').classList.remove('f');const p=PIC[c[0]];$('#fFront').className='face front'+(p?' ph':'');$('#fFront').innerHTML=(p?`<img src="hotel-photos/${p}.jpg" alt="">`:'')+`<span>${c[0]}</span>`;$('#fBack').innerHTML=`<div class="ru">${c[1]}</div>${c[2]?`<div class="ex">${c[2]}</div>`:''}`;$('#fCount').textContent=(fi+1)+' / '+deck.length}
+$('#flash').onclick=()=>{$('#flash').classList.toggle('f');const c=deck[fi];if($('#flash').classList.contains('f')&&c[2])play(c[2],'af_heart')};
+$('#fPrev').onclick=()=>{fi=(fi-1+deck.length)%deck.length;renderCard()};$('#fNext').onclick=()=>{fi=(fi+1)%deck.length;renderCard()};
+$('#fSay').onclick=()=>play(deck[fi][0],'af_heart',null,$('#fSay'));renderSets();renderCard();
 
-const SPEAK=[['you / usually / what time / get up?','What time do you usually get up?'],['what / you / do / this week?','What are you doing this week?'],['clothes / you / usually wear?','What clothes do you usually wear?'],['who / you / live with?','Who do you live with?']];
-$('#spk').innerHTML=SPEAK.map((s,i)=>`<button class="spb" data-i="${i}">${i+1}</button>`).join('');
-$$('.spb').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,t=$('#spText');if(b.classList.contains('on')&&t.dataset.st==='q'){t.innerHTML=`<b>${SPEAK[i][1]}</b>`;t.dataset.st='a';return}$$('.spb').forEach(x=>x.classList.toggle('on',x===b));t.dataset.st='q';t.innerHTML=`${SPEAK[i][0]} <span class="muted">· tap again</span>`});
+/* ===== 1 INTERVIEW ===== */
+let ivV=0,ivI=0;
+function ivRender(){stopT('iv');stopAudio();const qs=R.interview[ivV][1];
+ $('#ivVar').innerHTML=R.interview.map((v,k)=>`<button class="${k===ivV?'on':''}" data-v="${k}">${v[0]}</button>`).join('');
+ $('#ivNum').innerHTML=qs.map((_,k)=>`<button class="${k===ivI?'on':''}" data-n="${k}">${k+1}</button>`).join('');
+ $$('#ivVar button').forEach(b=>b.onclick=()=>{ivV=+b.dataset.v;ivI=0;ivRender()});$$('#ivNum button').forEach(b=>b.onclick=()=>{ivI=+b.dataset.n;ivRender()});
+ $('#ivCard').classList.remove('f');$('#ivLbl').textContent=`QUESTION ${ivI+1} / ${qs.length}`;$('#ivBack').textContent=qs[ivI];$('#ivT').textContent='40';$('#ivRing').style.strokeDashoffset=0}
+function ivTimer(){countdown('iv',40,l=>{$('#ivT').textContent=Math.ceil(l);$('#ivRing').style.strokeDashoffset=157*(1-l/40)})}
+$('#ivPlay').onclick=e=>{e.stopPropagation();play(R.interview[ivV][1][ivI],'am_michael',ivTimer)};
+$('#ivReplay').onclick=e=>{e.stopPropagation();stopT('iv');play(R.interview[ivV][1][ivI],'am_michael',ivTimer)};
+$('#ivStop').onclick=e=>{e.stopPropagation();stopAudio();stopT('iv')};
+$('#ivCard').onclick=()=>$('#ivCard').classList.toggle('f');$('#ivFlip').onclick=()=>$('#ivCard').classList.toggle('f');
+$('#ivPrev').onclick=()=>{const n=R.interview[ivV][1].length;ivI=(ivI-1+n)%n;ivRender()};$('#ivNext').onclick=()=>{const n=R.interview[ivV][1].length;ivI=(ivI+1)%n;ivRender()};ivRender();
 
-/* 60-second challenge */
-let cKey='style',cOn=false,cGot=new Set(),cScore=0;
-function renderCat(){$('#cCat').innerHTML=Object.entries(SETS).map(([k,v])=>`<button data-k="${k}" class="${k===cKey?'on':''}">${v[0]}</button>`).join('');$$('#cCat button').forEach(b=>b.onclick=()=>{if(cOn)return;cKey=b.dataset.k;renderCat();cReset()})}
-function cReset(){stopT('c');cOn=false;cGot=new Set();cScore=0;$('#cScore').textContent=0;$('#cClock').textContent='01:00';$('#cFound').innerHTML='';$('#cIn').value='';$('#cStart').textContent='Start';$('#cStart').disabled=false}
-$('#cStart').onclick=()=>{cReset();cOn=true;$('#cStart').disabled=true;$('#cIn').focus();
- countdown('c',60,l=>{$('#cClock').textContent=mmss(l)},()=>{cOn=false;$('#cStart').disabled=false;$('#cStart').textContent='Play again';
-  const miss=SETS[cKey][1].map(x=>x[0]).filter(w=>!cGot.has(w));$('#cFound').insertAdjacentHTML('beforeend',miss.map(w=>`<span class="tag m">${w}</span>`).join(''))})};
-$('#cIn').onkeydown=e=>{if(e.key!=='Enter')return;const v=$('#cIn').value.trim().toLowerCase();$('#cIn').value='';if(!v||!cOn)return;
- const hit=SETS[cKey][1].map(x=>x[0]).find(w=>w.toLowerCase()===v);if(hit&&!cGot.has(hit)){cGot.add(hit);cScore++;$('#cScore').textContent=cScore;$('#cFound').insertAdjacentHTML('beforeend',`<span class="tag y">${hit}</span>`)}else if(!hit){$('#cFound').insertAdjacentHTML('beforeend',`<span class="tag">${v}</span>`)}};
-renderCat();
+/* ===== 1 RAPID CATEGORIES (20 s, category changes every round) ===== */
+const RC_CATS=[
+ ['Clothes & appearance',['slim','fitted','oversized','high-waisted','hoodie','boots','modern clothes','appearance']],
+ ['People & relationships',['get on well with','keep in touch','have a lot in common','relationship','colleague','confident','outgoing','get divorced']],
+ ['Where in the picture?',['in the foreground','in the background','next to','in front of','behind','between','on the left','on the right','in the middle']],
+ ['In a hotel',['key card','reception','air conditioning','towels','get a signal','send somebody up','shampoo','the safe']]];
+let rScore=0,rOn=false,rRound=-1;
+function rNew(){stopT('r');rOn=false;rRound=(rRound+1)%RC_CATS.length;const [cat,good]=RC_CATS[rRound];$('#rCat').textContent=cat;$('#rClock').textContent='00:20';$('#rRes').textContent='';
+ const g=shuffle(good).slice(0,4).map(w=>[w,1]),b=shuffle(RC_CATS.filter((_,i)=>i!==rRound).flatMap(c=>c[1])).slice(0,5).map(w=>[w,0]);
+ $('#rGrid').innerHTML=shuffle([...g,...b]).map(([w,k])=>`<button class="rt" data-g="${k}">${w}</button>`).join('');
+ $$('.rt').forEach(x=>x.onclick=()=>{if(!rOn||x.classList.contains('ok')||x.classList.contains('no'))return;if(x.dataset.g==='1'){x.classList.add('ok');rScore++}else{x.classList.add('no');rScore=Math.max(0,rScore-1)}$('#rScore').textContent=rScore;if($$('.rt[data-g="1"]').every(y=>y.classList.contains('ok')))rEnd(true)});
+ $('#rStart').textContent='Start';$('#rStart').disabled=false}
+function rEnd(all){stopT('r');rOn=false;$$('.rt[data-g="1"]:not(.ok)').forEach(x=>x.classList.add('miss'));$('#rRes').textContent=all?'All found!':'Time! Yellow = missed.';$('#rStart').textContent='Next category';$('#rStart').disabled=false}
+$('#rStart').onclick=()=>{if($('#rStart').textContent==='Next category'){rNew();return}rOn=true;$('#rStart').disabled=true;countdown('r',20,l=>$('#rClock').textContent=mmss(l),()=>rEnd(false))};rNew();
 
-/* odd one out */
-let oScore=0;
-function oddRound(){$('#oRes').textContent='';const keys=shuffle(Object.keys(SETS));const main=keys[0],other=keys[1];
- const three=shuffle(SETS[main][1]).slice(0,3).map(x=>[x[0],main]),one=[shuffle(SETS[other][1])[0][0],other];
- const items=shuffle([...three,one]);let done=false;
- $('#odd').innerHTML=items.map(([w,k])=>`<button class="ot" data-k="${k}">${w}</button>`).join('');
- $$('.ot').forEach(b=>b.onclick=()=>{if(done)return;done=true;const right=b.dataset.k===other;b.classList.add(right?'ok':'no');if(!right)$$('.ot').find(x=>x.dataset.k===other).classList.add('ok');if(right){oScore++;$('#oScore').textContent=oScore}
-  $('#oRes').innerHTML=`Three are <b>${SETS[main][0]}</b>, one is <b>${SETS[other][0]}</b>.`})}
-$('#oNext').onclick=oddRound;oddRound();
-
-/* ===== HOMEWORK 1D: error bomb ===== */
+/* ===== 2 BOMB + DOCTOR ===== */
 const Q=[
 {q:'Maya usually ___ in touch with her friends online.',o:['keeps','is keeping','keep','does keep'],a:0},
 {q:'Look at the picture: the woman ___ near the window.',o:['stands','is standing','stand','standing'],a:1},
@@ -662,99 +689,55 @@ function answerB(k,j){const st=bState[k];if(st.done)return;if(!bRun){$('#bRes').
  st.done=true;stopT('b'+k);const it=Q[bPage*4+k],btns=$$(`#bc${k} .op`);btns[it.a].classList.add('ok');if(j!==it.a)btns[j].classList.add('no');else bOk++;$('#bScore').textContent=bOk+' / 20';endCheck()}
 function boom(k){const st=bState[k];if(st.done)return;st.done=true;const it=Q[bPage*4+k];$(`#bc${k}`).classList.add('boom');$(`#bc${k}`).insertAdjacentHTML('beforeend','<span class="boomtag">BOOM</span>');$$(`#bc${k} .op`)[it.a].classList.add('ok');endCheck()}
 function endCheck(){if(bState.every(s=>s.done)){bRun=false;if(bPage===4)$('#bRes').innerHTML=`Result: <b>${bOk} / 20</b>`}}
-$('#bStart').onclick=()=>{if(bRun)return;bRun=true;$('#bStart').disabled=true;$('#bRes').textContent='';
- [0,1,2,3].forEach(k=>countdown('b'+k,BT,l=>{$(`#fz${k}`).style.transform=`scaleX(${l/BT})`;$(`#bt${k}`).textContent=Math.ceil(l)},()=>boom(k)))};
-$('#bNext').onclick=()=>{if(bPage===4){bPage=0;bOk=0;$('#bScore').textContent='0 / 20';$('#bRes').textContent=''}else bPage++;renderBombs()};
-renderBombs();
-
-/* grammar doctor (wrong options from the same homework) */
+$('#bStart').onclick=()=>{if(bRun)return;bRun=true;$('#bStart').disabled=true;$('#bRes').textContent='';[0,1,2,3].forEach(k=>countdown('b'+k,BT,l=>{$(`#fz${k}`).style.transform=`scaleX(${l/BT})`;$(`#bt${k}`).textContent=Math.ceil(l)},()=>boom(k)))};
+$('#bNext').onclick=()=>{if(bPage===4){bPage=0;bOk=0;$('#bScore').textContent='0 / 20';$('#bRes').textContent=''}else bPage++;renderBombs()};renderBombs();
 const WRONG=[1,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0];
-const DOC=Q.map((it,k)=>[it.q.replace('___',it.o[WRONG[k]]),it.q.replace('___','<u>'+it.o[it.a]+'</u>')]);
-let dp=0;
-function renderDoc(){const p=DOC.slice(dp*3,dp*3+3);$('#docs').innerHTML=p.map(d=>`<div class="fc"><div class="in"><div class="face front"><span class="rx">FIX</span><span>${d[0]}</span></div><div class="face back"><span>${d[1]}</span></div></div></div>`).join('');$$('#docs .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));$('#dCount').textContent=`${dp*3+1}–${Math.min(dp*3+3,DOC.length)} / ${DOC.length}`}
-const dPages=Math.ceil(DOC.length/3);$('#dPrev').onclick=()=>{dp=(dp+dPages-1)%dPages;renderDoc()};$('#dNext').onclick=()=>{dp=(dp+1)%dPages;renderDoc()};renderDoc();
+const DOC=Q.map((it,k)=>[it.q.replace('___',it.o[WRONG[k]]),it.q.replace('___','<u>'+it.o[it.a]+'</u>')]);let dp=0;const dPages=Math.ceil(DOC.length/3);
+function renderDoc(){$('#docs').innerHTML=DOC.slice(dp*3,dp*3+3).map(d=>`<div class="fc"><div class="in"><div class="face front"><span class="rx">FIX</span><span>${d[0]}</span></div><div class="face back"><span>${d[1]}</span></div></div></div>`).join('');$$('#docs .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));$('#dCount').textContent=`${dp*3+1}–${Math.min(dp*3+3,DOC.length)} / ${DOC.length}`}
+$('#dPrev').onclick=()=>{dp=(dp+dPages-1)%dPages;renderDoc()};$('#dNext').onclick=()=>{dp=(dp+1)%dPages;renderDoc()};renderDoc();
 
-/* ===== GAMES: floor is lava (rule examples from homework 1D) ===== */
-const LAVA=[
- ['I usually ___ my friends after work.',['meet','am meeting','meets'],0],
- ['The Earth ___ around the Sun.',['moves','is moving','move'],0],
- ['She ___ simple clothes.',['likes','is liking','like'],0],
- ['He ___ in Berlin.',['lives','is living','live'],0],
- ['I ___ the answer.',['know','am knowing','knows'],0],
- ['She ___ a letter now.',['is reading','reads','read'],0],
- ['He ___ with friends this week.',['is staying','stays','stay'],0],
- ['Her English ___ better.',['is getting','gets','get'],0],
- ['We ___ at seven tonight.',['are meeting','meet','meets'],0],
- ['You ___ me!',['are always interrupting','always interrupts','always interrupting'],0]];
-let lOrder=[],li=0,lScore=0,lLives=3,lDone=false;
-const LAVA_ALL=LAVA.concat(Q.map(it=>{const w=it.o.filter((o,k)=>k!==it.a);return [it.q,[it.o[it.a],...shuffle(w).slice(0,2)],0]}));
-function lavaStart(){lOrder=shuffle(LAVA_ALL).slice(0,10);li=0;lScore=0;lLives=3;$('#lScore').textContent=0;lavaQ()}
-function drawLives(){$('#lLives').innerHTML=[0,1,2].map(i=>`<i class="${i<lLives?'':'off'}"></i>`).join('')}
-function lavaQ(){drawLives();$('#lRes').textContent='';lDone=false;$('#lNext').textContent='Next';
- if(li>=lOrder.length||lLives<=0){$('#lSent').innerHTML=lLives<=0?'<b>Game over.</b> You fell into the lava.':`<b>You crossed the lava!</b> ${lScore} / ${lOrder.length}`;$('#lStones').innerHTML='';$('#lNext').textContent='Play again';lDone=true;return}
- const [s,opts,a]=lOrder[li];$('#lSent').innerHTML=`<span class="muted">${li+1} / ${lOrder.length}</span><br>${s.replace('___','<b>_____</b>')}`;
- const sh=shuffle(opts.map((o,i)=>[o,i===a]));$('#lStones').innerHTML=sh.map(([o,r])=>`<button class="stone" data-r="${r?1:0}">${o}</button>`).join('');
- $$('.stone').forEach(b=>b.onclick=()=>{if(lDone)return;lDone=true;if(b.dataset.r==='1'){b.classList.add('ok');lScore++;$('#lScore').textContent=lScore;$('#lRes').textContent='Safe!'}else{b.classList.add('sink');$$('.stone').find(x=>x.dataset.r==='1').classList.add('ok');lLives--;drawLives();$('#lRes').textContent='Lava! Why is the green one right?'}})}
-$('#lNext').onclick=()=>{if(li>=lOrder.length||lLives<=0){lavaStart();return}if(!lDone)return;li++;lavaQ()};lavaStart();
+/* ===== 3 PHOTOS ===== */
+const PH=R.photos;let php=0;const phPages=Math.ceil(PH.length/4);
+function phRender(){stopAudio();$('#pgrid').innerHTML=PH.slice(php*4,php*4+4).map((p,k)=>`<div class="pc"><div class="in"><div class="face front"><img src="hotel-photos/${p[0]}.jpg" alt=""><span>${php*4+k+1}</span></div><div class="face back"><button class="pb" data-t="${php*4+k}">&#9654;</button><div>${p[1]}</div></div></div></div>`).join('');
+ $$('.pc').forEach(c=>c.onclick=e=>{if(e.target.closest('.pb'))return;c.classList.toggle('f')});
+ $$('.pb').forEach(b=>b.onclick=e=>{e.stopPropagation();play(PH[+b.dataset.t][1],'af_heart',null,b)});$('#phPg').textContent=`${php*4+1}–${php*4+4} / ${PH.length}`}
+$('#phPrev').onclick=()=>{php=(php+phPages-1)%phPages;phRender()};$('#phNext').onclick=()=>{php=(php+1)%phPages;phRender()};phRender();
+$('#pStart').onclick=()=>{$('#pStart').disabled=true;countdown('p',30,l=>{$('#pNum').textContent=Math.ceil(l);$('#pRing').style.strokeDashoffset=157*(1-l/30)},()=>{$('#pStart').disabled=false})};
 
-/* rapid categories */
-let rScore=0,rOn=false,rKey;
-function rRound(){stopT('r');rOn=false;const keys=shuffle(Object.keys(SETS));rKey=keys[0];$('#rCat').textContent=SETS[rKey][0];$('#rClock').textContent='00:30';$('#rRes').textContent='';
- const good=shuffle(SETS[rKey][1]).slice(0,4).map(x=>[x[0],1]),bad=keys.slice(1).flatMap(k=>shuffle(SETS[k][1]).slice(0,2).map(x=>[x[0],0]));
- $('#rGrid').innerHTML=shuffle([...good,...bad.slice(0,5)]).map(([w,g])=>`<button class="rt" data-g="${g}">${w}</button>`).join('');
- $$('.rt').forEach(b=>b.onclick=()=>{if(!rOn||b.classList.contains('ok')||b.classList.contains('no'))return;if(b.dataset.g==='1'){b.classList.add('ok');rScore++}else{b.classList.add('no');rScore=Math.max(0,rScore-1)}$('#rScore').textContent=rScore;if($$('.rt[data-g="1"]').every(x=>x.classList.contains('ok')))rEnd(true)});
- $('#rStart').textContent='Start';$('#rStart').disabled=false}
-function rEnd(all){stopT('r');rOn=false;$$('.rt[data-g="1"]:not(.ok)').forEach(x=>x.classList.add('miss'));$('#rRes').textContent=all?'All found!':'Time! Yellow = missed.';$('#rStart').textContent='Next round';$('#rStart').disabled=false}
-$('#rStart').onclick=()=>{if($('#rStart').textContent==='Next round'){rRound();return}rOn=true;$('#rStart').disabled=true;countdown('r',30,l=>$('#rClock').textContent=mmss(l),()=>rEnd(false))};
-rRound();
-
-/* ===== PHOTO hotspots ===== */
-const HS=[
- [32,46,'The woman: where is she? What is she wearing? What is she doing?'],
- [73,62,'The man: describe his appearance and clothes. What is he doing?'],
- [69,41,'The cat: where is it? Use on, next to, in front of.'],
- [52,18,'The background: what can you see in the background?'],
- [19,80,'The foreground: what can you see in the foreground?'],
- [93,86,'On the right: what objects can you see?'],
- [50,55,'The people: how do they feel? Use seems and looks.']];
-$('#pic').insertAdjacentHTML('beforeend',HS.map((h,i)=>`<button class="hs" style="left:${h[0]}%;top:${h[1]}%" data-i="${i}">${i+1}</button>`).join(''));
-$$('.hs').forEach(b=>b.onclick=()=>{b.classList.add('seen');$('#pPrompt').innerHTML=`<b>${+b.dataset.i+1}.</b> ${HS[+b.dataset.i][2]}`;pReset(false)});
-const PCH=['in the foreground','in the background','next to','in front of','on the left','on the right','seems','looks','is wearing','is sitting','is standing'];
-$('#pChips').innerHTML=PCH.map(p=>`<button class="pchip">${p}</button>`).join('');$$('.pchip').forEach(b=>b.onclick=()=>b.classList.toggle('used'));
-function pReset(chips=true){stopT('p');$('#pNum').textContent='30';$('#pRing').style.strokeDashoffset=0;$('#pStart').disabled=false;if(chips)$$('.pchip').forEach(b=>b.classList.remove('used'))}
-$('#pStart').onclick=()=>{$('#pStart').disabled=true;countdown('p',30,l=>{$('#pNum').textContent=Math.ceil(l);$('#pRing').style.strokeDashoffset=157*(1-l/30)},()=>{$('#pStart').disabled=false;$('#pStart').textContent='Again'})};
-$('#pReset').onclick=()=>{pReset(true);$$('.hs').forEach(b=>b.classList.remove('seen'));$('#pPrompt').textContent='Tap a point on the picture.'};
-
-/* ===== VIDEO: audio gap race ===== */
-const GAPS=[
- ['Hello. This is ___ 613.','room','Hello. This is room 613.','the guest says the room number'],
- ['How can I ___ you?','help','How can I help you?','offer assistance'],
- ['There’s a ___ with the air conditioning.','problem','There’s a problem with the air conditioning.','a standard way to start'],
- ['It isn’t working, and it’s very ___ in my room.','hot','It isn’t working, and it’s very hot in my room.','say why it is a problem'],
- ['I’m sorry, sir. I’ll ___ somebody up to look at it right now.','send','I’m sorry, sir. I’ll send somebody up to look at it right now.','a staff member comes to the room'],
- ['Good ___, reception.','evening','Good evening, reception.','the second call'],
- ['Hello. I’m sorry to ___ you again.','bother','Hello. I’m sorry to bother you again. This is room 613.','polite: the second call'],
- ['I ___ a problem with the wi-fi.','have','I have a problem with the wi-fi.','a standard way to start'],
- ['I can’t ___ a signal.','get','I can’t get a signal.','get a usable connection'],
- ['I’m sorry, sir. I’ll ___ you through to IT.','put','I’m sorry, sir. I’ll put you through to I T.','connect a phone call']];
-let gT0=null,gDone=0,gPage=0;
+/* ===== 4 ROB ===== */
+$$('[data-s="4"] .ln .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));
+const GAPS=R.gaps;let gT0=null,gDone=0,gPage=0;
 function gRender(){stopT('g');gT0=null;gDone=0;$('#gClock').textContent='00:00';$('#gBar').style.width='0';$('#gRes').textContent='';
  $('#gRows').innerHTML=GAPS.map((g,i)=>`<div class="grw" data-pg="${Math.floor(i/5)}"><div class="gr"><button class="pl" data-i="${i}">&#9654;</button><span>${g[0].replace('___','<b>____</b>')}</span><input data-i="${i}" autocomplete="off"><button class="ck" data-i="${i}">Check</button><span class="why" id="gw${i}"></span></div></div>`).join('');
- $$('.gr .pl').forEach(b=>b.onclick=()=>{gStart();say(GAPS[+b.dataset.i][2],.85)});
+ $$('.gr .pl').forEach(b=>b.onclick=()=>{gStart();const g=GAPS[+b.dataset.i];play(g[2],VO[g[4]],null,b)});
  $$('.gr input').forEach(inp=>{inp.onfocus=gStart;inp.onkeydown=e=>{if(e.key==='Enter')gCheck(+inp.dataset.i)}});
  $$('.gr .ck').forEach(b=>b.onclick=()=>gCheck(+b.dataset.i));gPage=0;gShow()}
 function gShow(){$$('.grw').forEach(r=>r.style.display=+r.dataset.pg===gPage?'':'none');$('#gPg').textContent=`${gPage*5+1}–${gPage*5+5} / ${GAPS.length}`}
 function gStart(){if(gT0)return;gT0=Date.now();timers.g=setInterval(()=>{const s=Math.floor((Date.now()-gT0)/1000);$('#gClock').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},250)}
 function gCheck(i){gStart();const inp=$(`.gr input[data-i="${i}"]`);if(inp.classList.contains('ok'))return;const ok=inp.value.trim().toLowerCase()===GAPS[i][1];inp.classList.toggle('ok',ok);inp.classList.toggle('no',!ok);
  if(ok){inp.disabled=true;gDone++;$('#gw'+i).textContent=GAPS[i][2]+' · '+GAPS[i][3];$('#gBar').style.width=(gDone/GAPS.length*100)+'%';if(gDone===GAPS.length){stopT('g');$('#gRes').innerHTML=`Finished in <b>${$('#gClock').textContent}</b>`}}}
-$('#gPrev').onclick=$('#gNext').onclick=()=>{gPage=1-gPage;gShow()};
-$('#gReset').onclick=gRender;
-$$('.ln .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));gRender();
+$('#gPrev').onclick=$('#gNext').onclick=()=>{gPage=1-gPage;gShow()};$('#gReset').onclick=gRender;gRender();
 
-/* ===== RECEPTION ===== */
-const NAT=[['My Wi-Fi is broken. Fix it.','There’s a problem with the Wi-Fi. Could you help me, please?'],['Give me towels.','Could you send up some clean towels, please?'],['The air conditioning doesn’t work.','The air conditioning isn’t working.'],['I want IT.','Could you put me through to IT, please?']];
-$('#lab').innerHTML=NAT.map((n,i)=>`<div class="lr"><div class="bad">${n[0]}</div><button class="good" data-i="${i}">Your version?</button></div>`).join('');
-$$('#lab .good').forEach(b=>b.onclick=()=>{const s=b.classList.toggle('show');b.textContent=s?NAT[+b.dataset.i][1]:'Your version?'});
+/* ===== 5 CALL SIMULATOR + POLITENESS ===== */
+const SIM=R.sim;let si=0,sDone=false;
+function simRender(){$('#sDots').innerHTML=SIM.map((_,k)=>`<i class="${k<si?'ok':k===si?'on':''}"></i>`).join('');
+ if(si>=SIM.length){$('#sLine').textContent='Call complete. Now do the whole call again without the options.';$('#sOpts').innerHTML='';$('#sNote').textContent='';$('#sNext').disabled=true;return}
+ const t=SIM[si];sDone=false;$('#sLine').textContent=t[0];$('#sNote').textContent='';$('#sNext').disabled=true;
+ $('#sOpts').innerHTML=t[1].map((o,k)=>`<button data-k="${k}">${String.fromCharCode(65+k)}. ${o}</button>`).join('');
+ $$('#sOpts button').forEach(b=>b.onclick=()=>{if(sDone)return;const k=+b.dataset.k;if(k===t[2]){sDone=true;b.classList.add('ok');$('#sNote').textContent=t[3]+' Now say it aloud.';$('#sNext').disabled=false}else{b.classList.add('no');$('#sNote').textContent='Try again.'}})}
+$('#sPlay').onclick=()=>{if(si<SIM.length)play(SIM[si][0],'af_heart',null,$('#sPlay'))};
+$('#sNext').onclick=()=>{si++;simRender();if(si<SIM.length)play(SIM[si][0],'af_heart',null,$('#sPlay'))};$('#sAgain').onclick=()=>{si=0;simRender()};simRender();
+const PLAB=[
+ ['You need clean towels.',['Bring me towels now.','Could you send up some clean towels, please?','You must give me towels.'],1],
+ ['The shower doesn’t work.',['Could you send someone to have a look at the shower?','Your shower is terrible!','I want you to repair shower.'],0],
+ ['You have been waiting for 40 minutes.',['Why are you so slow?','Nobody is doing their job.','I’m afraid I’m still waiting for someone to come.'],2],
+ ['You want a different room.',['Would it be possible to move to another room?','Give me a better room.','I need other room.'],0]];
+let pp=0,pScore=0,pAns={};
+function plabRender(){$('#pLab').innerHTML=PLAB.slice(pp*2,pp*2+2).map((q,k)=>{const i=pp*2+k,a=pAns[i];return `<div class="plq"><div class="s">${i+1}. ${q[0]}</div>${q[1].map((o,j)=>`<button data-i="${i}" data-j="${j}" class="${a!==undefined?(j===q[2]?'ok':j===a?'no':''):''}">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}</div>`}).join('');
+ $$('#pLab button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(pAns[i]!==undefined)return;pAns[i]=+b.dataset.j;if(pAns[i]===PLAB[i][2]){pScore++;$('#pScore').textContent=pScore+' / 4'}plabRender()});$('#plCount').textContent=`${pp*2+1}–${pp*2+2} / 4`}
+$('#plPrev').onclick=$('#plNext').onclick=()=>{pp=1-pp;plabRender()};plabRender();
+
+/* ===== 6 MYSTERY BOX + WHEN THINGS GO WRONG ===== */
 const ROLE=[
  ['312','keycard','My key card isn’t working.','Please come to Reception and I’ll make a new key card for you.'],
  ['302','shower','There’s no hot water in the shower.','I’m sorry about that. I’ll ask maintenance to check it immediately.'],
@@ -768,125 +751,66 @@ const ROLE=[
  ['117','messy','My room isn’t clean.','I’m sorry. I’ll send somebody up to clean it right now.'],
  ['809','toilet','The toilet isn’t working.','I’m sorry. I’ll send somebody up to look at it right now.'],
  ['321','shampoo','There isn’t any shampoo or soap in the bathroom.','Of course. I’ll send some up right away.']];
-const WHO=[['Hello, reception.','R'],['Hello. This is room 613.','G'],['How can I help you?','R'],['There’s a problem with the air conditioning. It isn’t working, and it’s very hot in my room.','G'],['I’m sorry, sir. I’ll send somebody up to look at it right now.','R'],['Thank you.','G'],['Good evening, reception.','R'],['Hello. I’m sorry to bother you again. This is room 613.','G'],['I have a problem with the wi-fi. I can’t get a signal.','G'],['I’m sorry, sir. I’ll put you through to IT.','R'],['Could you send up some clean towels, please?','G'],['Could you put me through to IT, please?','G']];
-let wOrd=shuffle(WHO),wi=0,wScore=0,wDone=false;
-function wShow(){if(wi>=wOrd.length){$('#wQ').innerHTML=`Done: ${wScore} / ${wOrd.length}`;$('#wRes').textContent='';$('#wNext').textContent='Again';return}wDone=false;$('#wQ').textContent=wOrd[wi][0];$('#wRes').textContent='';$('#wCount').textContent=`${wi+1} / ${wOrd.length}`;$('#wNext').textContent='Next'}
-function wAns(a){if(wDone||wi>=wOrd.length)return;wDone=true;const ok=a===wOrd[wi][1];if(ok){wScore++;$('#wScore').textContent=wScore}$('#wRes').innerHTML=(ok?'<b style="color:#3c6a4a">Right.</b> ':'<b style="color:#a9443a">No.</b> ')+(wOrd[wi][1]==='G'?'The guest says it.':'Reception says it.')}
-$('#wG').onclick=()=>wAns('G');$('#wR').onclick=()=>wAns('R');
-$('#wNext').onclick=()=>{if(wi>=wOrd.length){wOrd=shuffle(WHO);wi=0;wScore=0;$('#wScore').textContent=0}else wi++;wShow()};wShow();
 const BOXORDER=shuffle(ROLE.map((_,i)=>i));let mCur=null;
-$('#mBoxes').innerHTML=BOXORDER.map((r,i)=>`<button class="gift" data-r="${r}"><svg width="26" height="22" viewBox="0 0 26 22"><rect x="2" y="8" width="22" height="13" rx="2" fill="#ffffff33" stroke="#fff" stroke-width="2"/><rect x="1" y="5" width="24" height="5" rx="1.5" fill="#fff"/><rect x="11.5" y="5" width="3" height="16" fill="#e2c98e"/></svg>Box ${i+1}</button>`).join('');
+$('#mBoxes').innerHTML=BOXORDER.map((r,i)=>`<button class="gift" data-r="${r}">Box ${i+1}</button>`).join('');
 $$('.gift').forEach(b=>b.onclick=()=>{const r=ROLE[+b.dataset.r];$$('.gift').forEach(x=>x.classList.remove('cur'));b.classList.add('open','cur');mCur=r;stopT('m');$('#mClock').textContent='00:30';$('#mStart').disabled=false;$('#mCard').classList.remove('f');
  $('#mFront').innerHTML=`<img src="hotel-photos/${r[1]}.jpg" alt=""><span class="room">ROOM ${r[0]}</span><span class="ask">What is the problem? Press Start and call Reception.</span>`;
  $('#mBack').innerHTML=`<span class="room">GUEST</span><span class="g">Hello, this is room ${r[0]}. ${r[2]}</span><span class="room">RECEPTION</span><span class="r">${r[3]}</span>`});
 $('#mCard').onclick=()=>{if(mCur)$('#mCard').classList.toggle('f')};
 $('#mStart').onclick=()=>{$('#mStart').disabled=true;countdown('m',30,l=>$('#mClock').textContent=mmss(l),()=>{$('#mStart').disabled=false})};
-
-
-
-/* ===== ENGLISH FILE 4th + 5th ===== */
-const EFT=['Rob · Calling Reception','Pictures of You · The Story So Far','Episode 1 · Six Months Later'];
-function efShow(v){$$('#efsw button').forEach(b=>b.classList.toggle('on',+b.dataset.v===v));[0,1,2].forEach(k=>{$('#efv'+k).style.display=k===v?'':'none';if(k!==v){const vd=$('#efv'+k+' video');if(vd)vd.pause()}});$$('.efpane').forEach(p=>p.classList.toggle('on',+p.dataset.v===v));$('#efTitle').textContent=EFT[v];const f=$('#efv0 iframe');if(v===0&&!f.src)f.src=f.dataset.src}
-$$('#efsw button').forEach(b=>b.onclick=()=>efShow(+b.dataset.v));
-$$('#ef .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));
-$$('.tab').forEach(t=>t.addEventListener('click',()=>{if(t.dataset.p==='ef')efShow([0,1,2].find(k=>$('#efv'+k).style.display!=='none'));else $$('#ef video').forEach(v=>v.pause())}));
-
-
-/* ===== PHONE CALL (lesson pack: 2B, 3B, 5D, 2E) ===== */
-const SIM=[
- ['Good evening. Reception. How can I help you?',['I want my breakfast now.','Hello. I’m calling from room 305.','Where is the airport?'],1,'Begin with greeting + room number.'],
- ['I’m sorry to hear that. What’s the problem?',['There isn’t any hot water in the bathroom.','I am hot water.','Yes, the hotel is very nice.'],0,'State the specific fault.'],
- ['Would you like me to send someone to have a look?',['You must!','Yes, please. That would be great.','No, I’m calling from room 305.'],1,'Politely accept the offer.'],
- ['Of course. Someone will be there in ten minutes.',['Thank you very much for your help.','No, this is a hotel.','I don’t know your name.'],0,'Finish the call politely.']];
-let si=0,sDone=false;
-function simRender(){$('#sDots').innerHTML=SIM.map((_,k)=>`<i class="${k<si?'ok':k===si?'on':''}"></i>`).join('');
- if(si>=SIM.length){$('#sLine').textContent='Call complete. Now do the whole call again without the options.';$('#sOpts').innerHTML='';$('#sNote').textContent='';$('#sNext').disabled=true;return}
- const t=SIM[si];sDone=false;$('#sLine').textContent=t[0];$('#sNote').textContent='';$('#sNext').disabled=true;
- $('#sOpts').innerHTML=t[1].map((o,k)=>`<button data-k="${k}">${String.fromCharCode(65+k)}. ${o}</button>`).join('');
- $$('#sOpts button').forEach(b=>b.onclick=()=>{if(sDone)return;const k=+b.dataset.k;if(k===t[2]){sDone=true;b.classList.add('ok');$('#sNote').textContent=t[3]+' Now say it aloud.';$('#sNext').disabled=false}else{b.classList.add('no');$('#sNote').textContent='Try again.'}})}
-$('#sPlay').onclick=()=>{if(si<SIM.length)say(SIM[si][0],.9)};
-$('#sNext').onclick=()=>{si++;simRender()};$('#sAgain').onclick=()=>{si=0;simRender()};simRender();
-const PLAB=[
- ['You need clean towels.',['Bring me towels now.','Could you send up some clean towels, please?','You must give me towels.'],1],
- ['The shower doesn’t work.',['Could you send someone to have a look at the shower?','Your shower is terrible!','I want you to repair shower.'],0],
- ['You have been waiting for 40 minutes.',['Why are you so slow?','Nobody is doing their job.','I’m afraid I’m still waiting for someone to come.'],2],
- ['You want a different room.',['Would it be possible to move to another room?','Give me a better room.','I need other room.'],0]];
-let pp=0,pScore=0,pAns={};
-function plabRender(){$('#pLab').innerHTML=PLAB.slice(pp*2,pp*2+2).map((q,k)=>{const i=pp*2+k,a=pAns[i];return `<div class="plq"><div class="s">${i+1}. ${q[0]}</div>${q[1].map((o,j)=>`<button data-i="${i}" data-j="${j}" class="${a!==undefined?(j===q[2]?'ok':j===a?'no':''):''}">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}</div>`}).join('');
- $$('#pLab button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(pAns[i]!==undefined)return;pAns[i]=+b.dataset.j;if(pAns[i]===PLAB[i][2]){pScore++;$('#pScore').textContent=pScore+' / 4'}plabRender()});$('#pCount').textContent=`${pp*2+1}–${pp*2+2} / 4`}
-$('#pPrev').onclick=$('#pNext').onclick=()=>{pp=1-pp;plabRender()};plabRender();
-const RC={rc:[
- ['Repair Clinic','I have problem with air conditioner.','I have a problem with the air conditioning.'],
- ['Repair Clinic','Could you to send someone?','Could you send someone?'],
- ['Repair Clinic','Nobody didn’t come yet.','Nobody has come yet.'],
- ['Repair Clinic','I am waiting since 30 minutes.','I’ve been waiting for 30 minutes.'],
- ['Repair Clinic','I want change my room.','I’d like to change rooms.'],
- ['Repair Clinic','Can you explain me the problem?','Could you explain the problem to me?']],
- ux:[
+const RC={ux:[
  ['Reception: “I’m very sorry, but our maintenance team has gone home.”','Mission: ask whether you can change rooms.','I understand. Would it be possible to change rooms?'],
  ['Reception: “We can send someone, but it may take about an hour.”','Mission: explain why you need help sooner.','I’m sorry, but I really need to take a shower now. Is there anything else you can do?'],
- ['Reception: “I’m afraid we don’t have any other rooms available.”','Mission: politely ask for another solution.','I see. Could you suggest another solution, please?']]};
-let rcK='rc',rcP=0;
+ ['Reception: “I’m afraid we don’t have any other rooms available.”','Mission: politely ask for another solution.','I see. Could you suggest another solution, please?']],
+ rc:[
+ ['FIND THE MISTAKE','I have problem with air conditioner.','I have a problem with the air conditioning.'],
+ ['FIND THE MISTAKE','Could you to send someone?','Could you send someone?'],
+ ['FIND THE MISTAKE','Nobody didn’t come yet.','Nobody has come yet.'],
+ ['FIND THE MISTAKE','I am waiting since 30 minutes.','I’ve been waiting for 30 minutes.'],
+ ['FIND THE MISTAKE','I want change my room.','I’d like to change rooms.'],
+ ['FIND THE MISTAKE','Can you explain me the problem?','Could you explain the problem to me?']]};
+let rcK='ux',rcP=0;
 function rcRender(){const L=RC[rcK],pages=Math.ceil(L.length/3);rcP=Math.min(rcP,pages-1);
- $('#rcl').innerHTML=L.slice(rcP*3,rcP*3+3).map(c=>`<div class="fc"><div class="in"><div class="face front"><small>${rcK==='rc'?'FIND THE MISTAKE':c[0]}</small><span>${rcK==='rc'?c[1]:c[1]}</span></div><div class="face back"><span>${c[2]}</span></div></div></div>`).join('');
+ $('#rcl').innerHTML=L.slice(rcP*3,rcP*3+3).map(c=>`<div class="fc"><div class="in"><div class="face front"><small>${c[0]}</small><span>${c[1]}</span></div><div class="face back"><span>${c[2]}</span></div></div></div>`).join('');
  $$('#rcl .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));$('#rcCount').textContent=`${rcP*3+1}–${Math.min(rcP*3+3,L.length)} / ${L.length}`}
 $$('.rcsw button').forEach(b=>b.onclick=()=>{rcK=b.dataset.k;rcP=0;$$('.rcsw button').forEach(x=>x.classList.toggle('on',x===b));rcRender()});
 $('#rcPrev').onclick=$('#rcNext').onclick=()=>{const pages=Math.ceil(RC[rcK].length/3);rcP=(rcP+1)%pages;rcRender()};rcRender();
 
-/* ===== TALK SHOW ===== */
-const TALK=[
- ['H','Emma, welcome to the show! You were in New York last month. How was the hotel?'],
- ['S','Oh, don’t ask! I arrived at the hotel at midnight. I was really tired. I went up to my room, room 613, and it was very hot. The air conditioning wasn’t working.'],
- ['H','So what did you do?'],
- ['S','I called Reception. The receptionist was very nice. She said, I’m sorry. I’ll send somebody up to look at it right now. And a man came and fixed it in ten minutes.'],
- ['H','Great! So the problem was over?'],
- ['S','No! Then I wanted to call my agent, but I couldn’t get a signal on the wi-fi. I called Reception again. I said, I’m sorry to bother you again. And they put me through to IT.'],
- ['H','And then?'],
- ['S','Then I went to take a shower, and there were no clean towels! So I called Reception a third time.'],
- ['H','Three times! What did they say?'],
- ['S','They laughed and said, We’ll send some towels up right away, and a free breakfast for you!'],
- ['H','So, would you stay there again?'],
- ['S','Yes, actually! The staff were wonderful.']];
-let tIdx=0,tOn=false,tSlow=false;
-function tVoice(who){try{const v=speechSynthesis.getVoices().filter(x=>/^en/i.test(x.lang));if(!v.length)return null;const f=v.find(x=>/female|samantha|victoria|serena|karen|moira|tessa|zira|libby|sonia|hazel/i.test(x.name)),m=v.find(x=>/male|daniel|alex|fred|ryan|george|david|guy|thomas/i.test(x.name)&&!/female/i.test(x.name));return who==='S'?(f||v[0]):(m||v[v.length>1?1:0])}catch(e){return null}}
-function tSay(){if(!tOn||tIdx>=TALK.length){tOn=false;$('#gHost').classList.remove('on');$('#gStar').classList.remove('on');$('#tPlay').textContent='Play again';$('#tNow').textContent='The end. Gist: how many times did Emma call Reception?';return}
+/* ===== 7 EF 5th ===== */
+const EFT={1:'The story so far',2:'Six months later'};
+$$('#efsw button').forEach(b=>b.onclick=()=>{const v=+b.dataset.v;$$('#efsw button').forEach(x=>x.classList.toggle('on',x===b));[1,2].forEach(k=>{$('#efv'+k).style.display=k===v?'':'none';if(k!==v)$('#efv'+k+' video').pause()});$$('.efpane').forEach(p=>p.classList.toggle('on',+p.dataset.v===v));$('#efTitle').textContent=EFT[v]});
+$$('[data-s="7"] .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));
+
+/* ===== 8 TALK SHOW ===== */
+const TALK=R.talk;let tIdx=0,tOn=false;
+function tSay(){if(!tOn||tIdx>=TALK.length){tOn=false;$('#gHost').classList.remove('on');$('#gStar').classList.remove('on');if(tIdx>=TALK.length){$('#tPlay').textContent='Play again';$('#tNow').textContent='The end. Gist: how many times did Emma call Reception?'}return}
  const [w,t]=TALK[tIdx];$('#gHost').classList.toggle('on',w==='H');$('#gStar').classList.toggle('on',w==='S');$('#tNow').textContent=(w==='H'?'Nathan':'Emma')+' is speaking… '+(tIdx+1)+' / '+TALK.length;
- try{const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';const v=tVoice(w);if(v)u.voice=v;u.pitch=w==='S'?1.2:.85;u.rate=tSlow?.72:.92;u.onend=()=>{tIdx++;setTimeout(tSay,350)};u.onerror=()=>{tOn=false};speechSynthesis.speak(u)}catch(e){tOn=false}}
-$('#tPlay').onclick=()=>{try{speechSynthesis.cancel()}catch(e){}if(tIdx>=TALK.length)tIdx=0;tOn=true;$('#tPlay').textContent='Playing';tSay()};
-$('#tStop').onclick=()=>{tOn=false;try{speechSynthesis.cancel()}catch(e){}$('#tPlay').textContent='Continue';$('#tNow').textContent='Paused';$('#gHost').classList.remove('on');$('#gStar').classList.remove('on')};
-$('#tSlow').onclick=()=>{tSlow=!tSlow;$('#tSlow').classList.toggle('on',tSlow);$('#tSlow').textContent=tSlow?'Normal speed':'Slower'};
+ play(t,VO[w],()=>{tIdx++;setTimeout(tSay,300)})}
+$('#tPlay').onclick=()=>{if(tIdx>=TALK.length)tIdx=0;tOn=true;$('#tPlay').textContent='Playing';tSay()};
+$('#tStop').onclick=()=>{tOn=false;stopAudio();$('#tPlay').textContent='Continue';$('#tNow').textContent='Paused';$('#gHost').classList.remove('on');$('#gStar').classList.remove('on')};
 $('#tText').innerHTML=TALK.map(([w,t])=>`<p><b>${w==='H'?'Nathan':'Emma'}:</b> ${t}</p>`).join('');
 $('#tScript').onclick=()=>{const on=$('#tText').classList.toggle('on');$('.guests').style.display=on?'none':'';$('#tScript').textContent=on?'Hide script':'Script'};
 const TF=[
- ['Emma arrived at the hotel in the morning.',0,'She arrived at midnight.'],
- ['Her room was very cold.',0,'It was very hot.'],
- ['A man fixed the air conditioning in ten minutes.',1,'Yes, in ten minutes.'],
- ['She wanted to call her agent.',1,'Yes, but she couldn’t get a signal.'],
- ['Reception put her through to IT.',1,'Yes.'],
- ['There were no clean towels.',1,'Yes, so she called again.'],
- ['She called Reception twice.',0,'Three times.'],
- ['Emma would not stay there again.',0,'She would: the staff were wonderful.']];
+ ['Emma arrived at the hotel in the morning.',0,'She arrived at midnight.'],['Her room was very cold.',0,'It was very hot.'],['A man fixed the air conditioning in ten minutes.',1,'Yes, in ten minutes.'],['She wanted to call her agent.',1,'Yes, but she couldn’t get a signal.'],
+ ['Reception put her through to IT.',1,'Yes.'],['There were no clean towels.',1,'Yes, so she called again.'],['She called Reception twice.',0,'Three times.'],['Emma would not stay there again.',0,'She would: the staff were wonderful.']];
 let tfp=0,tfScore=0,tfDone={};
-function tfRender(){$('#tfq').innerHTML=TF.slice(tfp*4,tfp*4+4).map((t,k)=>{const i=tfp*4+k,d=tfDone[i];return `<div class="tfi"><div class="st"><b>${i+1}.</b> ${t[0]}</div><div class="row"><button data-i="${i}" data-v="1" class="${d?(t[1]===1?'ok':d===1?'no':''):''}">True</button><button data-i="${i}" data-v="0" class="${d?(t[1]===0?'ok':d===2?'no':''):''}">False</button></div>${d?`<div class="why">${t[2]}</div>`:''}</div>`}).join('');
+function tfRender(){$('#tfq').innerHTML=TF.slice(tfp*4,tfp*4+4).map((t,k)=>{const i=tfp*4+k,d=tfDone[i];return `<div class="tfi"><div class="st2"><b>${i+1}.</b> ${t[0]}</div><div class="row"><button data-i="${i}" data-v="1" class="${d?(t[1]===1?'ok':d===1?'no':''):''}">True</button><button data-i="${i}" data-v="0" class="${d?(t[1]===0?'ok':d===2?'no':''):''}">False</button></div>${d?`<div class="why">${t[2]}</div>`:''}</div>`}).join('');
  $$('.tfi .row button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(tfDone[i])return;const v=+b.dataset.v;tfDone[i]=v===1?1:2;if(v===TF[i][1]){tfScore++;$('#tfScore').textContent=tfScore}tfRender()});$('#tfCount').textContent=`${tfp*4+1}–${tfp*4+4} / ${TF.length}`}
 $('#tfPrev').onclick=$('#tfNext').onclick=()=>{tfp=1-tfp;tfRender()};tfRender();
-const ORD=['Emma arrives at midnight.','Her room is very hot.','A man fixes the air conditioning.','She can’t get a signal on the wi-fi.','There are no clean towels.','Reception offers a free breakfast.'];
-let oSeq=[];
+const ORD=['Emma arrives at midnight.','Her room is very hot.','A man fixes the air conditioning.','She can’t get a signal on the wi-fi.','There are no clean towels.','Reception offers a free breakfast.'];let oSeq=[];
 function oRender(){oSeq=[];$('#oR').textContent='';$('#ord').innerHTML=shuffle(ORD.map((t,i)=>[t,i])).map(([t,i])=>`<button class="oi" data-i="${i}"><b></b><span>${t}</span></button>`).join('');
- $$('.oi').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;const k=oSeq.indexOf(i);if(k>=0){oSeq.splice(k,1)}else oSeq.push(i);$$('.oi').forEach(x=>{const n=oSeq.indexOf(+x.dataset.i);x.classList.toggle('set',n>=0);x.classList.remove('ok','no');x.querySelector('b').textContent=n>=0?n+1:''})})}
+ $$('.oi').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;const k=oSeq.indexOf(i);if(k>=0)oSeq.splice(k,1);else oSeq.push(i);$$('.oi').forEach(x=>{const n=oSeq.indexOf(+x.dataset.i);x.classList.toggle('set',n>=0);x.classList.remove('ok','no');x.querySelector('b').textContent=n>=0?n+1:''})})}
 $('#oCheck').onclick=()=>{let ok=0;$$('.oi').forEach(x=>{const n=oSeq.indexOf(+x.dataset.i);const r=n===+x.dataset.i;x.classList.toggle('ok',r);x.classList.toggle('no',!r);if(r)ok++});$('#oR').textContent=`${ok} / 6`};
 $('#oReset').onclick=oRender;oRender();
 $('#rtStart').onclick=()=>{$('#rtStart').disabled=true;countdown('rt',40,l=>$('#rtClock').textContent=mmss(l),()=>{$('#rtStart').disabled=false})};
-$$('.tab').forEach(t=>t.addEventListener('click',()=>{if(t.dataset.p!=='talk'&&tOn){$('#tStop').click()}}));
 
-/* ===== JEOPARDY + escape code ===== */
+/* ===== 9 JEOPARDY ===== */
 const JEO=[
  ['Words',[[100,'Translate: поддерживать связь','keep in touch'],[200,'This colour really ___ you.','suits'],[300,'The opposite of fitted clothes','oversized']]],
  ['Grammar',[[100,'Listen! Someone ___ at the door.','is knocking'],[200,'Fix it: She is preferring fitted jackets.','She prefers fitted jackets.'],[300,'Why Present Simple with know, like, want, need?','They are stative verbs.']]],
- ['Photo',[[100,'на заднем плане','in the background'],[200,'The man in the picture ___ in a chair.','is sitting'],[300,'Describe the woman in the picture: 3 sentences in 30 seconds.','Open answer']]],
+ ['Photos',[[100,'на заднем плане','in the background'],[200,'Describe: a woman at room 312 with a key card.','She’s trying to open the door, but her key card isn’t working.'],[300,'Describe one hotel photo in 30 seconds.','Open answer']]],
  ['Hotel',[[100,'The air conditioning isn’t ___.','working'],[200,'I’ll ___ you through to IT.','put'],[300,'Say it politely: Give me towels.','Could you send up some clean towels, please?']]]];
-const CODE=[...String(1000+Math.floor(Math.random()*9000))];
-let jScore=0,jCur=null,jDoneSet=new Set();
+const CODE=[...String(1000+Math.floor(Math.random()*9000))];let jScore=0,jCur=null,jDoneSet=new Set();
 function jRender(){let h=JEO.map(c=>`<div class="jh">${c[0]}</div>`).join('');for(let r=0;r<3;r++)h+=JEO.map((c,ci)=>`<button class="jc" data-c="${ci}" data-r="${r}">${c[1][r][0]}</button>`).join('');$('#jBoard').innerHTML=h;
  $$('.jc').forEach(b=>b.onclick=()=>{if(b.classList.contains('done'))return;$$('.jc').forEach(x=>x.classList.remove('cur'));b.classList.add('cur');jCur=b;const q=JEO[+b.dataset.c][1][+b.dataset.r];$('#jQ').classList.remove('f');$('#jFront').innerHTML=`<span style="color:#e2c98e">${JEO[+b.dataset.c][0]} · ${q[0]}</span><span>${q[1]}</span>`;$('#jBack').textContent=q[2];$('#jYes').disabled=$('#jNo').disabled=false});
  $('#jLock').innerHTML=JEO.map((_,i)=>`<span id="jd${i}">_</span>`).join('')}
@@ -894,9 +818,9 @@ $('#jQ').onclick=()=>{if(jCur)$('#jQ').classList.toggle('f')};
 function jMark(ok){if(!jCur)return;const pts=+jCur.textContent;if(ok){jScore+=pts;$('#jScore').textContent=jScore}jCur.classList.remove('cur');jCur.classList.add('done');jDoneSet.add(jCur.dataset.c+'-'+jCur.dataset.r);
  const c=+jCur.dataset.c;if([0,1,2].every(r=>jDoneSet.has(c+'-'+r)))$('#jd'+c).textContent=CODE[c];jCur=null;$('#jYes').disabled=$('#jNo').disabled=true;
  if(jDoneSet.size===12){$('#jFront').innerHTML=`<span>Code: <b style="color:#e2c98e">${CODE.join('')}</b></span><span>You escaped! ${jScore} points.</span>`;$('#jQ').classList.remove('f');$('#jBack').textContent=''}}
-$('#jNew').onclick=()=>{jScore=0;jCur=null;jDoneSet=new Set();$('#jScore').textContent=0;$('#jQ').classList.remove('f');$('#jFront').textContent='Choose a category and points.';$('#jBack').textContent='';$('#jYes').disabled=$('#jNo').disabled=true;jRender()};
 $('#jYes').onclick=()=>jMark(true);$('#jNo').onclick=()=>jMark(false);
-jRender();
+$('#jNew').onclick=()=>{jScore=0;jCur=null;jDoneSet=new Set();$('#jScore').textContent=0;$('#jQ').classList.remove('f');$('#jFront').textContent='Choose a category and points.';$('#jBack').textContent='';$('#jYes').disabled=$('#jNo').disabled=true;jRender()};jRender();
 </script>
+
 </body>
 </html>
