@@ -146,7 +146,13 @@ main{flex:1;min-height:0;padding:9px 12px}
 .racebar{height:10px;border-radius:6px;background:#e5eaef;overflow:hidden}
 .racebar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3e5c76,#6a8aa3);transition:width .3s}
 /* mystery box */
-.boxes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.boxes{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.gift{padding:3px 2px!important;font-size:13px!important}
+.mcard .front{padding:0!important;overflow:hidden}
+.mcard .front{background:#1f2d3d!important}
+.mcard .front img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;border-radius:12px}
+.mcard .front .room{position:absolute;left:8px;top:8px;background:#1f2d3dd9;color:#e2c98e;border-radius:6px;padding:2px 8px}
+.mcard .front .ask{position:absolute;left:8px;right:8px;bottom:8px;background:#ffffffe6;border-radius:8px;padding:4px 8px;font-size:15px;color:#1c2236}
 .gift{border:0;border-radius:8px;background:linear-gradient(135deg,#6b4e71,#8f7394);color:#fff;font-weight:700;padding:6px 4px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 3px 0 #4b3650}
 .gift.open{background:#efe9ef;color:#7d6a80;box-shadow:none}
 .gift.cur{outline:3px solid #b8955a}
@@ -258,7 +264,7 @@ main{flex:1;min-height:0;padding:9px 12px}
     <li><b>Photo (8 min).</b> Open the hotspots one by one, then 30-second talk.</li>
     <li><b>English File 4th + 5th (12 min) – not finished last lesson.</b> Three videos, tasks on the right; flip cards for Call 1/2 and the T/F. Bridge: “Rob was in room 613. Emma is in a different hotel and a different story, but what does a guest still need to say when something stops working?”</li>
     <li><b>Listening · Rob (10 min) – not finished last lesson.</b> Watch once: how many times does Rob call Reception? Then Audio Gap Race.</li>
-    <li><b>Reception (10 min).</b> Who says it? (lines from the book dialogue), Say it politely, then Mystery Box: she opens a box, presses Start and calls you; you answer as Reception; flip to compare. Swap roles.</li>
+    <li><b>Reception (10 min).</b> Who says it? (lines from the book dialogue), Say it politely, then Mystery Box: 12 photos of hotel problems; she opens a box, says the problem from the photo, presses Start and calls you; you answer as Reception; flip to compare. Swap roles.</li>
     <li><b>Talk Show (8 min).</b> Play: how many times does Emma call Reception? True/False, order the events, then Maya retells as Emma (40 s). Script only at the end.</li>
     <li><b>Jeopardy (5 min).</b> Each finished column opens one digit of the lock.</li>
   </ol>
@@ -455,7 +461,7 @@ main{flex:1;min-height:0;padding:9px 12px}
   <div class="box purple">
     <div class="bh">Mystery Box · Phone call <small>you are the guest</small></div>
     <div class="bb">
-      <ol class="mhelp"><li>Open a box: this is your room and your problem.</li><li>Press Start and call Reception. Begin: <i>Hello, this is room …</i> The teacher is Reception.</li><li>Tap the card to compare with the model. Then swap roles.</li></ol>
+      <ol class="mhelp"><li>Open a box: look at the photo. This is your room and your problem.</li><li>Press Start and call Reception. Begin: <i>Hello, this is room …</i> The teacher is Reception.</li><li>Tap the card to compare with the model. Then swap roles.</li></ol>
       <div class="boxes" id="mBoxes"></div>
       <div class="mcard" id="mCard"><div class="in"><div class="face front" id="mFront"><span class="muted">Choose a box above.</span></div><div class="face back" id="mBack"></div></div></div>
       <div class="ringrow"><span class="digital" id="mClock" style="font-size:22px">00:30</span><button class="btn" id="mStart" style="background:#6b4e71" disabled>Start 30 s</button></div>
@@ -693,7 +699,19 @@ $$('.ln .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));gRender();
 const NAT=[['My Wi-Fi is broken. Fix it.','There’s a problem with the Wi-Fi. Could you help me, please?'],['Give me towels.','Could you send up some clean towels, please?'],['The air conditioning doesn’t work.','The air conditioning isn’t working.'],['I want IT.','Could you put me through to IT, please?']];
 $('#lab').innerHTML=NAT.map((n,i)=>`<div class="lr"><div class="bad">${n[0]}</div><button class="good" data-i="${i}">Your version?</button></div>`).join('');
 $$('#lab .good').forEach(b=>b.onclick=()=>{const s=b.classList.toggle('show');b.textContent=s?NAT[+b.dataset.i][1]:'Your version?'});
-const ROLE=[['408','The Wi-Fi isn’t working.','You have an online work call in 20 minutes.','I’m sorry about that. I’ll put you through to IT right now.'],['215','There are no clean towels.','You want to take a shower before dinner.','Of course. I’ll send some clean towels up right away.'],['614','The air conditioning isn’t working.','The room is very hot.','I’m sorry. I’ll send somebody up to have a look.'],['302','There’s no hot water.','You need to leave in 30 minutes.','I’m sorry about that. I’ll ask maintenance to check it immediately.'],['711','The TV isn’t working.','You want to watch the news.','I’ll send somebody up to check the TV.'],['129','My key card isn’t working.','You are locked out of your room.','Please come to Reception and I’ll make a new key card for you.'],['613','There’s a problem with the air conditioning. It isn’t working.','It’s very hot in your room.','I’m sorry, sir. I’ll send somebody up to look at it right now.'],['613 · again','I have a problem with the wi-fi. I can’t get a signal.','You called Reception before. Say sorry to bother them again.','I’m sorry, sir. I’ll put you through to IT.']];
+const ROLE=[
+ ['312','keycard','My key card isn’t working.','Please come to Reception and I’ll make a new key card for you.'],
+ ['302','shower','There’s no hot water in the shower.','I’m sorry about that. I’ll ask maintenance to check it immediately.'],
+ ['711','tv','The TV isn’t working.','I’ll send somebody up to check the TV.'],
+ ['506','lamp','The lamp isn’t working.','I’m sorry. I’ll send somebody up to look at it right now.'],
+ ['408','wifi','I have a problem with the wi-fi. I can’t get a signal.','I’m sorry. I’ll put you through to IT.'],
+ ['613','aircon','The air conditioning isn’t working. It’s very hot in my room.','I’m sorry. I’ll send somebody up to look at it right now.'],
+ ['418','noise','The room next door is very noisy. I can’t sleep.','I’m sorry about that. I’ll call them right now.'],
+ ['224','safe','The safe isn’t working. I can’t open it.','I’ll send somebody up to look at it right now.'],
+ ['215','towels','There aren’t any clean towels in my room.','Of course. I’ll send some clean towels up right away.'],
+ ['117','messy','My room isn’t clean.','I’m sorry. I’ll send somebody up to clean it right now.'],
+ ['809','toilet','The toilet isn’t working.','I’m sorry. I’ll send somebody up to look at it right now.'],
+ ['321','shampoo','There isn’t any shampoo or soap in the bathroom.','Of course. I’ll send some up right away.']];
 const WHO=[['Hello, reception.','R'],['Hello. This is room 613.','G'],['How can I help you?','R'],['There’s a problem with the air conditioning. It isn’t working, and it’s very hot in my room.','G'],['I’m sorry, sir. I’ll send somebody up to look at it right now.','R'],['Thank you.','G'],['Good evening, reception.','R'],['Hello. I’m sorry to bother you again. This is room 613.','G'],['I have a problem with the wi-fi. I can’t get a signal.','G'],['I’m sorry, sir. I’ll put you through to IT.','R'],['Could you send up some clean towels, please?','G'],['Could you put me through to IT, please?','G']];
 let wOrd=shuffle(WHO),wi=0,wScore=0,wDone=false;
 function wShow(){if(wi>=wOrd.length){$('#wQ').innerHTML=`Done: ${wScore} / ${wOrd.length}`;$('#wRes').textContent='';$('#wNext').textContent='Again';return}wDone=false;$('#wQ').textContent=wOrd[wi][0];$('#wRes').textContent='';$('#wCount').textContent=`${wi+1} / ${wOrd.length}`;$('#wNext').textContent='Next'}
@@ -703,8 +721,8 @@ $('#wNext').onclick=()=>{if(wi>=wOrd.length){wOrd=shuffle(WHO);wi=0;wScore=0;$('
 const BOXORDER=shuffle(ROLE.map((_,i)=>i));let mCur=null;
 $('#mBoxes').innerHTML=BOXORDER.map((r,i)=>`<button class="gift" data-r="${r}"><svg width="26" height="22" viewBox="0 0 26 22"><rect x="2" y="8" width="22" height="13" rx="2" fill="#ffffff33" stroke="#fff" stroke-width="2"/><rect x="1" y="5" width="24" height="5" rx="1.5" fill="#fff"/><rect x="11.5" y="5" width="3" height="16" fill="#e2c98e"/></svg>Box ${i+1}</button>`).join('');
 $$('.gift').forEach(b=>b.onclick=()=>{const r=ROLE[+b.dataset.r];$$('.gift').forEach(x=>x.classList.remove('cur'));b.classList.add('open','cur');mCur=r;stopT('m');$('#mClock').textContent='00:30';$('#mStart').disabled=false;$('#mCard').classList.remove('f');
- $('#mFront').innerHTML=`<span class="room">ROOM ${r[0]}</span><span class="prob">${r[1]}</span><span class="muted">${r[2]}</span><span class="muted">Press Start and call Reception.</span>`;
- $('#mBack').innerHTML=`<span class="room">GUEST</span><span class="g">${r[1]}</span><span class="room">RECEPTION</span><span class="r">${r[3]}</span>`});
+ $('#mFront').innerHTML=`<img src="hotel-photos/${r[1]}.jpg" alt=""><span class="room">ROOM ${r[0]}</span><span class="ask">What is the problem? Press Start and call Reception.</span>`;
+ $('#mBack').innerHTML=`<span class="room">GUEST</span><span class="g">Hello, this is room ${r[0]}. ${r[2]}</span><span class="room">RECEPTION</span><span class="r">${r[3]}</span>`});
 $('#mCard').onclick=()=>{if(mCur)$('#mCard').classList.toggle('f')};
 $('#mStart').onclick=()=>{$('#mStart').disabled=true;countdown('m',30,l=>$('#mClock').textContent=mmss(l),()=>{$('#mStart').disabled=false})};
 
