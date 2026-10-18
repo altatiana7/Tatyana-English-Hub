@@ -18,10 +18,10 @@ input{font:inherit}
 .bar{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:6px 10px;background:#1f2d3d;border-bottom:3px solid #b8955a}
 .bar .name{font-weight:700;font-size:17px;color:#fff;white-space:nowrap;margin-right:4px}
 .tabs{display:flex;gap:5px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
-.tab{border:0;border-radius:6px;padding:6px 11px;font-size:15px;font-weight:700;white-space:nowrap;color:#fff;opacity:.72;background:#ffffff1f}
+.tab{border:0;border-radius:6px;padding:6px 9px;font-size:15px;font-weight:700;white-space:nowrap;color:#fff;opacity:.72;background:#ffffff1f}
 .tab.on{opacity:1;box-shadow:0 2px 8px #0005}
 .tab[data-p=warm].on{background:var(--pink)}.tab[data-p=hw].on{background:var(--orange)}.tab[data-p=games].on{background:var(--green)}
-.tab[data-p=photo].on{background:var(--teal)}.tab[data-p=video].on{background:var(--blue)}.tab[data-p=reception].on{background:var(--purple)}.tab[data-p=jeo].on{background:var(--pink)}.tab[data-p=talk].on{background:#b8955a}.tab[data-p=ef].on{background:#4f7f7d}
+.tab[data-p=photo].on{background:var(--teal)}.tab[data-p=video].on{background:var(--blue)}.tab[data-p=reception].on{background:var(--purple)}.tab[data-p=jeo].on{background:var(--pink)}.tab[data-p=talk].on{background:#b8955a}.tab[data-p=ef].on{background:#4f7f7d}.tab[data-p=call].on{background:#3e5c76}
 .tbtn{border:1px solid #ffffff66;background:transparent;color:#fff;border-radius:9px;padding:6px 11px;font-size:14px;white-space:nowrap}
 main{flex:1;min-height:0;padding:9px 12px}
 .pane{display:none;height:100%;gap:10px}
@@ -228,6 +228,31 @@ main{flex:1;min-height:0;padding:9px 12px}
 .efc .fc,.efc4 .fc{height:100%;min-height:52px}
 .efc .front,.efc4 .front{font-size:15px;border:1px solid #d2e2e0;background:#f2f7f6}
 .efc .back,.efc4 .back{font-size:15px}
+/* phone call */
+.sim-sit{font-size:14px;color:#4a4f63;border-left:3px solid #3e5c76;padding:2px 8px;background:#f6f8fa}
+.dots{display:flex;gap:5px}.dots i{width:22px;height:6px;border-radius:3px;background:#dde3e9}.dots i.on{background:#3e5c76}.dots i.ok{background:#5c7f69}
+.rline{display:flex;gap:8px;align-items:flex-start;background:#1f2d3d;color:#f3ede2;border-radius:10px;padding:8px 10px;font-size:17px}
+.rline b{color:#e2c98e;font-size:13px;letter-spacing:.08em;display:block}
+.rline .pl{flex:0 0 auto;width:30px;height:30px;border-radius:50%;border:0;background:#b8955a;color:#fff;font-size:12px}
+.opt3{display:flex;flex-direction:column;gap:5px}
+.opt3 button{text-align:left;border:1px solid #d3dbe3;background:#fff;border-radius:8px;padding:6px 10px;font-size:16px}
+.opt3 button.ok{background:var(--okbg);border-color:var(--ok);color:#3c6a4a;font-weight:700}
+.opt3 button.no{background:var(--nobg);border-color:var(--no);color:var(--no)}
+.simnote{font-size:14px;color:#3c6a4a;min-height:20px}
+.pl2{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.plq{border:1px solid #e4ded3;border-radius:9px;padding:6px 9px;background:#fff}
+.plq .s{font-size:16px;font-weight:700;margin-bottom:4px}
+.plq button{display:block;width:100%;text-align:left;border:1px solid #e4ded3;background:#fdfbf7;border-radius:7px;padding:3px 8px;font-size:15px;margin-top:3px}
+.plq button.ok{background:var(--okbg);border-color:var(--ok);color:#3c6a4a;font-weight:700}
+.plq button.no{background:var(--nobg);border-color:var(--no);color:var(--no)}
+.rcsw{display:flex;gap:5px}
+.rcsw button{border:1px solid #c9d1da;background:#fff;border-radius:6px;padding:3px 10px;font-size:14px;font-weight:700;color:#6b4e71}
+.rcsw button.on{background:#6b4e71;border-color:#6b4e71;color:#fff}
+.rcl{display:grid;grid-template-rows:repeat(3,1fr);gap:6px;flex:1;min-height:0}
+.rcl .fc{min-height:0}
+.rcl .front{font-size:15px;text-align:left;justify-content:flex-start;flex-direction:column;align-items:flex-start;gap:2px;border:1px solid #ddd3de;background:#f8f6f8}
+.rcl .front small{font-size:12px;letter-spacing:.06em;color:#7d6a80;font-weight:700}
+.rcl .back{font-size:15px;text-align:left;justify-content:flex-start}
 /* teacher drawer */
 .drawer{position:fixed;top:46px;right:10px;width:min(440px,92vw);max-height:calc(100vh - 56px);overflow:auto;background:#fffdf7;border:1px solid #e3d6b0;border-radius:12px;box-shadow:0 10px 30px #0003;padding:10px 16px;display:none;z-index:20;font-size:15px}
 .drawer.on{display:block}
@@ -246,10 +271,11 @@ main{flex:1;min-height:0;padding:9px 12px}
     <button class="tab" data-p="games">3 Games</button>
     <button class="tab" data-p="photo">4 Photo</button>
     <button class="tab" data-p="ef">5 English File</button>
-    <button class="tab" data-p="video">6 Listening · Rob</button>
+    <button class="tab" data-p="video">6 Listening</button>
     <button class="tab" data-p="reception">7 Reception</button>
-    <button class="tab" data-p="talk">8 Talk Show</button>
-    <button class="tab" data-p="jeo">9 Jeopardy</button>
+    <button class="tab" data-p="call">8 Phone call</button>
+    <button class="tab" data-p="talk">9 Talk Show</button>
+    <button class="tab" data-p="jeo">10 Jeopardy</button>
   </nav>
   <button class="tbtn" id="teacherBtn">Teacher</button>
 </div>
@@ -265,6 +291,7 @@ main{flex:1;min-height:0;padding:9px 12px}
     <li><b>English File 4th + 5th (12 min) – not finished last lesson.</b> Three videos, tasks on the right; flip cards for Call 1/2 and the T/F. Bridge: “Rob was in room 613. Emma is in a different hotel and a different story, but what does a guest still need to say when something stops working?”</li>
     <li><b>Listening · Rob (10 min) – not finished last lesson.</b> Watch once: how many times does Rob call Reception? Then Audio Gap Race.</li>
     <li><b>Reception (10 min).</b> Who says it? (lines from the book dialogue), Say it politely, then Mystery Box: 12 photos of hotel problems; she opens a box, says the problem from the photo, presses Start and calls you; you answer as Reception; flip to compare. Swap roles.</li>
+    <li><b>Phone call (10 min).</b> Call Simulator: one Reception line at a time, she chooses, says it aloud, Next. Politeness Lab. Repair Clinic: she corrects aloud, you flip. Unexpected reply: you read Reception’s line, she reacts, flip for the model.</li>
     <li><b>Talk Show (8 min).</b> Play: how many times does Emma call Reception? True/False, order the events, then Maya retells as Emma (40 s). Script only at the end.</li>
     <li><b>Jeopardy (5 min).</b> Each finished column opens one digit of the lock.</li>
   </ol>
@@ -465,6 +492,35 @@ main{flex:1;min-height:0;padding:9px 12px}
       <div class="boxes" id="mBoxes"></div>
       <div class="mcard" id="mCard"><div class="in"><div class="face front" id="mFront"><span class="muted">Choose a box above.</span></div><div class="face back" id="mBack"></div></div></div>
       <div class="ringrow"><span class="digital" id="mClock" style="font-size:22px">00:30</span><button class="btn" id="mStart" style="background:#6b4e71" disabled>Start 30 s</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- PHONE CALL -->
+<section class="pane" id="call" style="grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr)">
+  <div class="box blue">
+    <div class="bh">Call Simulator <small>choose, then say it aloud</small><span class="sp"></span><span class="dots" id="sDots"></span></div>
+    <div class="bb">
+      <div class="sim-sit"><b>Situation:</b> You have checked into a hotel, but there is no hot water. Call Reception.</div>
+      <div class="rline"><button class="pl" id="sPlay">&#9654;</button><div><b>RECEPTIONIST</b><span id="sLine"></span></div></div>
+      <div class="opt3" id="sOpts"></div>
+      <div class="simnote" id="sNote"></div>
+      <div class="row" style="margin-top:auto"><button class="btn" id="sNext" style="background:#3e5c76" disabled>Next turn</button><button class="btn alt" id="sAgain">Start again</button></div>
+    </div>
+  </div>
+  <div class="box green">
+    <div class="bh">Politeness Lab <small>which one is polite?</small><span class="sp"></span><span class="pts" id="pScore">0 / 4</span></div>
+    <div class="bb">
+      <div class="pl2" id="pLab"></div>
+      <div class="qnav"><button class="arrow" id="pPrev">&#8592;</button><span class="count" id="pCount"></span><button class="arrow" id="pNext">&#8594;</button></div>
+    </div>
+  </div>
+  <div class="box purple">
+    <div class="bh">Fix it <small>say it, then tap the card</small></div>
+    <div class="bb">
+      <div class="rcsw"><button class="on" data-k="rc">Repair Clinic</button><button data-k="ux">Unexpected reply</button></div>
+      <div class="rcl" id="rcl"></div>
+      <div class="qnav"><button class="arrow" id="rcPrev">&#8592;</button><span class="count" id="rcCount"></span><button class="arrow" id="rcNext">&#8594;</button></div>
     </div>
   </div>
 </section>
@@ -734,6 +790,48 @@ function efShow(v){$$('#efsw button').forEach(b=>b.classList.toggle('on',+b.data
 $$('#efsw button').forEach(b=>b.onclick=()=>efShow(+b.dataset.v));
 $$('#ef .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));
 $$('.tab').forEach(t=>t.addEventListener('click',()=>{if(t.dataset.p==='ef')efShow([0,1,2].find(k=>$('#efv'+k).style.display!=='none'));else $$('#ef video').forEach(v=>v.pause())}));
+
+
+/* ===== PHONE CALL (lesson pack: 2B, 3B, 5D, 2E) ===== */
+const SIM=[
+ ['Good evening. Reception. How can I help you?',['I want my breakfast now.','Hello. I’m calling from room 305.','Where is the airport?'],1,'Begin with greeting + room number.'],
+ ['I’m sorry to hear that. What’s the problem?',['There isn’t any hot water in the bathroom.','I am hot water.','Yes, the hotel is very nice.'],0,'State the specific fault.'],
+ ['Would you like me to send someone to have a look?',['You must!','Yes, please. That would be great.','No, I’m calling from room 305.'],1,'Politely accept the offer.'],
+ ['Of course. Someone will be there in ten minutes.',['Thank you very much for your help.','No, this is a hotel.','I don’t know your name.'],0,'Finish the call politely.']];
+let si=0,sDone=false;
+function simRender(){$('#sDots').innerHTML=SIM.map((_,k)=>`<i class="${k<si?'ok':k===si?'on':''}"></i>`).join('');
+ if(si>=SIM.length){$('#sLine').textContent='Call complete. Now do the whole call again without the options.';$('#sOpts').innerHTML='';$('#sNote').textContent='';$('#sNext').disabled=true;return}
+ const t=SIM[si];sDone=false;$('#sLine').textContent=t[0];$('#sNote').textContent='';$('#sNext').disabled=true;
+ $('#sOpts').innerHTML=t[1].map((o,k)=>`<button data-k="${k}">${String.fromCharCode(65+k)}. ${o}</button>`).join('');
+ $$('#sOpts button').forEach(b=>b.onclick=()=>{if(sDone)return;const k=+b.dataset.k;if(k===t[2]){sDone=true;b.classList.add('ok');$('#sNote').textContent=t[3]+' Now say it aloud.';$('#sNext').disabled=false}else{b.classList.add('no');$('#sNote').textContent='Try again.'}})}
+$('#sPlay').onclick=()=>{if(si<SIM.length)say(SIM[si][0],.9)};
+$('#sNext').onclick=()=>{si++;simRender()};$('#sAgain').onclick=()=>{si=0;simRender()};simRender();
+const PLAB=[
+ ['You need clean towels.',['Bring me towels now.','Could you send up some clean towels, please?','You must give me towels.'],1],
+ ['The shower doesn’t work.',['Could you send someone to have a look at the shower?','Your shower is terrible!','I want you to repair shower.'],0],
+ ['You have been waiting for 40 minutes.',['Why are you so slow?','Nobody is doing their job.','I’m afraid I’m still waiting for someone to come.'],2],
+ ['You want a different room.',['Would it be possible to move to another room?','Give me a better room.','I need other room.'],0]];
+let pp=0,pScore=0,pAns={};
+function plabRender(){$('#pLab').innerHTML=PLAB.slice(pp*2,pp*2+2).map((q,k)=>{const i=pp*2+k,a=pAns[i];return `<div class="plq"><div class="s">${i+1}. ${q[0]}</div>${q[1].map((o,j)=>`<button data-i="${i}" data-j="${j}" class="${a!==undefined?(j===q[2]?'ok':j===a?'no':''):''}">${String.fromCharCode(65+j)}. ${o}</button>`).join('')}</div>`}).join('');
+ $$('#pLab button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;if(pAns[i]!==undefined)return;pAns[i]=+b.dataset.j;if(pAns[i]===PLAB[i][2]){pScore++;$('#pScore').textContent=pScore+' / 4'}plabRender()});$('#pCount').textContent=`${pp*2+1}–${pp*2+2} / 4`}
+$('#pPrev').onclick=$('#pNext').onclick=()=>{pp=1-pp;plabRender()};plabRender();
+const RC={rc:[
+ ['Repair Clinic','I have problem with air conditioner.','I have a problem with the air conditioning.'],
+ ['Repair Clinic','Could you to send someone?','Could you send someone?'],
+ ['Repair Clinic','Nobody didn’t come yet.','Nobody has come yet.'],
+ ['Repair Clinic','I am waiting since 30 minutes.','I’ve been waiting for 30 minutes.'],
+ ['Repair Clinic','I want change my room.','I’d like to change rooms.'],
+ ['Repair Clinic','Can you explain me the problem?','Could you explain the problem to me?']],
+ ux:[
+ ['Reception: “I’m very sorry, but our maintenance team has gone home.”','Mission: ask whether you can change rooms.','I understand. Would it be possible to change rooms?'],
+ ['Reception: “We can send someone, but it may take about an hour.”','Mission: explain why you need help sooner.','I’m sorry, but I really need to take a shower now. Is there anything else you can do?'],
+ ['Reception: “I’m afraid we don’t have any other rooms available.”','Mission: politely ask for another solution.','I see. Could you suggest another solution, please?']]};
+let rcK='rc',rcP=0;
+function rcRender(){const L=RC[rcK],pages=Math.ceil(L.length/3);rcP=Math.min(rcP,pages-1);
+ $('#rcl').innerHTML=L.slice(rcP*3,rcP*3+3).map(c=>`<div class="fc"><div class="in"><div class="face front"><small>${rcK==='rc'?'FIND THE MISTAKE':c[0]}</small><span>${rcK==='rc'?c[1]:c[1]}</span></div><div class="face back"><span>${c[2]}</span></div></div></div>`).join('');
+ $$('#rcl .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));$('#rcCount').textContent=`${rcP*3+1}–${Math.min(rcP*3+3,L.length)} / ${L.length}`}
+$$('.rcsw button').forEach(b=>b.onclick=()=>{rcK=b.dataset.k;rcP=0;$$('.rcsw button').forEach(x=>x.classList.toggle('on',x===b));rcRender()});
+$('#rcPrev').onclick=$('#rcNext').onclick=()=>{const pages=Math.ceil(RC[rcK].length/3);rcP=(rcP+1)%pages;rcRender()};rcRender();
 
 /* ===== TALK SHOW ===== */
 const TALK=[
