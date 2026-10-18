@@ -6,141 +6,189 @@
 <title>Maya · Revision File 1</title>
 <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1d2a3a;--muted:#5f6b7a;--line:#d9dee6;--bg:#f4f1ea;--card:#fff;--accent:#2f5d7c;--accent2:#e9f0f5;--ok:#2e8b57;--okbg:#e8f5ed;--no:#c0392b;--nobg:#fbeaea;--warn:#b7791f}
+:root{--ink:#1c2236;--muted:#5d6478;--line:#e1e3ee;--ok:#1f9d55;--okbg:#e3f7ea;--no:#e0364f;--nobg:#ffe8ec;
+--pink:linear-gradient(90deg,#ff3d7f,#ff8a4c);--blue:linear-gradient(90deg,#2f6bff,#33c2ff);--green:linear-gradient(90deg,#14a86a,#5fd38d);
+--orange:linear-gradient(90deg,#ff7a1a,#ffc53d);--purple:linear-gradient(90deg,#6a4cff,#b06bff);--teal:linear-gradient(90deg,#0aa3a3,#3fd0c9)}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
-body{background:var(--bg);color:var(--ink);font-family:'PT Serif',Georgia,'Times New Roman',serif;font-size:17px;overflow:hidden;display:flex;flex-direction:column}
+body{background:linear-gradient(135deg,#fdf0ff 0%,#eef4ff 50%,#fff4ea 100%);color:var(--ink);font-family:'PT Serif',Georgia,'Times New Roman',serif;font-size:17px;overflow:hidden;display:flex;flex-direction:column}
 button{font:inherit;cursor:pointer;color:inherit}
+input{font:inherit}
 /* top bar */
-.bar{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:6px 12px;background:#24394d;color:#fff}
-.bar .name{font-weight:700;font-size:17px;white-space:nowrap;margin-right:6px}
-.tabs{display:flex;gap:5px;flex:1;min-width:0}
-.tab{border:1px solid #ffffff40;background:transparent;color:#fff;border-radius:8px;padding:6px 11px;font-size:15px;white-space:nowrap}
-.tab b{opacity:.65;margin-right:5px}
-.tab.on{background:#fff;color:#24394d;border-color:#fff}
-.tbtn{border:1px solid #ffffff55;background:#ffffff14;color:#fff;border-radius:8px;padding:6px 11px;font-size:14px;white-space:nowrap}
-/* stage */
-main{flex:1;min-height:0;padding:10px 14px}
-.pane{display:none;height:100%;gap:12px}
+.bar{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:6px 10px;background:linear-gradient(90deg,#1b1f4b,#3a2a7a)}
+.bar .name{font-weight:700;font-size:17px;color:#fff;white-space:nowrap;margin-right:4px}
+.tabs{display:flex;gap:5px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.tab{border:0;border-radius:9px;padding:6px 11px;font-size:15px;font-weight:700;white-space:nowrap;color:#fff;opacity:.72;background:#ffffff1f}
+.tab.on{opacity:1;box-shadow:0 2px 8px #0005}
+.tab[data-p=warm].on{background:var(--pink)}.tab[data-p=hw].on{background:var(--orange)}.tab[data-p=games].on{background:var(--green)}
+.tab[data-p=photo].on{background:var(--teal)}.tab[data-p=video].on{background:var(--blue)}.tab[data-p=reception].on{background:var(--purple)}.tab[data-p=jeo].on{background:var(--pink)}
+.tbtn{border:1px solid #ffffff66;background:transparent;color:#fff;border-radius:9px;padding:6px 11px;font-size:14px;white-space:nowrap}
+main{flex:1;min-height:0;padding:9px 12px}
+.pane{display:none;height:100%;gap:10px}
 .pane.on{display:grid}
-.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-height:0;display:flex;flex-direction:column}
-.box h2{margin:0 0 6px;font-size:18px;color:var(--accent);display:flex;align-items:center;gap:8px}
-.box h2 small{font-size:14px;color:var(--muted);font-weight:400}
-.hint{font-size:14px;color:var(--muted);margin:0 0 6px}
-.btn{border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:6px 13px;font-size:15px}
-.btn.ghost{background:#fff;color:var(--accent)}
-.btn:disabled{opacity:.45;cursor:default}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.score{font-weight:700;color:var(--accent)}
+.box{background:#fff;border-radius:14px;box-shadow:0 3px 14px #2b1f6a14;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.bh{display:flex;align-items:center;gap:8px;padding:6px 12px;color:#fff;font-weight:700;font-size:16px}
+.bh small{font-weight:400;font-size:13px;opacity:.9}
+.bh .sp{flex:1}
+.bh .pts{background:#ffffff33;border-radius:999px;padding:1px 10px;font-size:15px}
+.bh svg{flex:0 0 auto}
+.pink .bh{background:var(--pink)}.blue .bh{background:var(--blue)}.green .bh{background:var(--green)}.orange .bh{background:var(--orange)}.purple .bh{background:var(--purple)}.teal .bh{background:var(--teal)}
+.bb{flex:1;min-height:0;padding:8px 12px;display:flex;flex-direction:column;gap:7px}
+.btn{border:0;border-radius:9px;padding:6px 14px;font-size:15px;font-weight:700;color:#fff;background:#3a2a7a}
+.btn.alt{background:#fff;color:#3a2a7a;border:1px solid #cfc7ee}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.muted{font-size:14px;color:var(--muted)}
+.result{font-size:15px}
+.big{font-size:18px}
 /* quizlet */
-.ql{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;justify-content:center}
-.sets{display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
-.set{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;font-size:14px}
-.set.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.flip{width:100%;max-width:400px;height:clamp(150px,30vh,220px);perspective:1000px;cursor:pointer}
-.flip .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
-.flip.f .in{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;border:1px solid #cfd6df;border-radius:14px;background:#fff;box-shadow:0 3px 10px #0000000d;display:flex;align-items:center;justify-content:center;text-align:center;padding:14px}
-.face.front{font-size:28px;font-weight:700}
-.face.back{transform:rotateY(180deg);background:#f8fafc;flex-direction:column;gap:10px}
-.face.back .ru{font-size:22px;font-weight:700}
-.face.back .ex{font-size:17px;font-style:italic;color:#3c4a5a}
-.qnav{display:flex;align-items:center;gap:12px}
-.arrow{width:40px;height:36px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:18px}
-.count{min-width:64px;text-align:center;color:var(--muted)}
-/* speaking buttons */
-.speak{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:6px}
-.sp{border:1px solid var(--line);background:var(--accent2);border-radius:8px;padding:6px;font-size:15px;font-weight:700;text-align:center}
-.sp.on{background:var(--accent);color:#fff}
-.sptext{min-height:44px;margin-top:6px;padding:8px 10px;border-left:3px solid var(--accent);background:#f7f9fb;border-radius:6px;font-size:17px}
-/* matching */
-.match{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:4px 0 8px}
-.mcol{display:flex;flex-direction:column;gap:7px}
-.mi{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 10px;font-size:17px;text-align:left}
-.mi.sel{border-color:var(--accent);background:var(--accent2)}
-.mi.done{background:var(--okbg);border-color:var(--ok);color:#1f6b42;cursor:default}
-.mi.bad{background:var(--nobg);border-color:var(--no)}
+.sets{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+.set{border:1px solid var(--line);background:#fff;border-radius:999px;padding:2px 9px;font-size:13px}
+.set.on{background:#ff3d7f;border-color:#ff3d7f;color:#fff}
+.flip{width:100%;height:clamp(110px,24vh,170px);perspective:1000px;cursor:pointer}
+.flip .in,.fc .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.f .in,.fc.f .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px}
+.flip .front{background:#fff;border:2px solid #ffd0e0;font-size:26px;font-weight:700;color:#2a1f5c}
+.flip .back{transform:rotateY(180deg);background:#fff6fa;border:2px solid #ff9cc0;flex-direction:column;gap:6px}
+.flip .back .ru{font-size:21px;font-weight:700}
+.flip .back .ex{font-size:16px;font-style:italic;color:#4a4f63}
+.qnav{display:flex;align-items:center;justify-content:center;gap:10px}
+.arrow{width:38px;height:32px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:17px}
+.count{min-width:58px;text-align:center;color:var(--muted);font-size:14px}
+.spk{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.spb{border:0;border-radius:8px;padding:5px;font-weight:700;background:#ffe3ee;color:#c2185b}
+.spb.on{background:#ff3d7f;color:#fff}
+.sptext{min-height:38px;padding:6px 9px;border-left:4px solid #ff3d7f;background:#fff6fa;border-radius:6px;font-size:16px}
+/* 60 sec */
+.clock{display:flex;align-items:center;justify-content:center;gap:10px}
+.digital{font-family:'Courier New',monospace;font-weight:700;font-size:34px;background:#1b1f4b;color:#ffd84d;border-radius:10px;padding:2px 14px;letter-spacing:2px}
+.cat{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
+.cat button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:2px 10px;font-size:14px}
+.cat button.on{background:#2f6bff;border-color:#2f6bff;color:#fff}
+.typein{width:100%;border:2px solid #cfe0ff;border-radius:9px;padding:6px 10px;font-size:17px}
+.found{display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start;flex:1;min-height:0;overflow:auto}
+.tag{border-radius:7px;padding:2px 8px;font-size:15px;background:#eef1f6}
+.tag.y{background:var(--okbg);color:#14703d;font-weight:700}
+.tag.m{background:#fff4d6;color:#8a5a00}
+/* odd one out */
+.odd{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex:1;min-height:0}
+.ot{border:2px solid #d6f2e3;background:#f7fffa;border-radius:12px;font-size:18px;font-weight:700;padding:6px}
+.ot.ok{background:var(--okbg);border-color:var(--ok)}.ot.no{background:var(--nobg);border-color:var(--no)}
 /* bomb */
-.bombs{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0}
-.bc{border:1px solid var(--line);border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:6px;background:#fff;position:relative}
-.bq{font-size:17px;line-height:1.3}
-.bq b{color:var(--accent)}
-.fuse{height:6px;border-radius:4px;background:#eceff3;overflow:hidden}
-.fuse i{display:block;height:100%;width:100%;background:var(--warn);transform-origin:left}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.op{border:1px solid var(--line);background:#fff;border-radius:7px;padding:4px 6px;font-size:15px}
-.op.ok{background:var(--okbg);border-color:var(--ok);color:#1f6b42;font-weight:700}
+.bombs{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex:1;min-height:0}
+.bc{border:2px solid #ffe1c2;border-radius:12px;padding:6px 9px;display:flex;flex-direction:column;gap:5px;background:#fffaf4;position:relative;min-height:0}
+.bq{font-size:16px;line-height:1.28;padding-right:62px}
+.bq b{color:#e35d00}
+.fuse{display:flex;align-items:center;gap:6px}
+.fuse .line{flex:1;height:7px;border-radius:4px;background:#f1e6da;overflow:hidden}
+.fuse .line i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ff3d3d,#ffb000);transform-origin:left}
+.fuse span{font-size:13px;color:#a05a1a;min-width:28px;text-align:right;font-weight:700}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.op{border:1px solid #ecd9c6;background:#fff;border-radius:7px;padding:3px 5px;font-size:15px}
+.op.ok{background:var(--okbg);border-color:var(--ok);color:#14703d;font-weight:700}
 .op.no{background:var(--nobg);border-color:var(--no);color:var(--no)}
-.bc.boom{background:#fdf1ef;border-color:var(--no)}
-.boomtag{position:absolute;right:8px;top:6px;font-weight:700;color:var(--no);font-size:14px;letter-spacing:.06em}
-.sec{font-size:13px;color:var(--muted)}
-/* sorting */
-.pool{display:flex;flex-wrap:wrap;gap:6px;min-height:40px;padding:6px;border:1px dashed var(--line);border-radius:9px;margin-bottom:8px}
-.chip{border:1px solid #cfd6df;background:#fff;border-radius:8px;padding:5px 9px;font-size:15px;cursor:grab;user-select:none}
-.chip.sel{border-color:var(--accent);background:var(--accent2)}
-.chip.ok{background:var(--okbg);border-color:var(--ok)}
-.chip.no{background:var(--nobg);border-color:var(--no)}
-.bins{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0}
-.bin{border:1px solid var(--line);border-radius:10px;padding:6px;background:#fafbfc;display:flex;flex-direction:column;gap:5px;overflow:auto}
-.bin h3{margin:0;font-size:15px;color:var(--accent)}
-.bin.over{background:var(--accent2)}
-/* photo */
-.photo{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
-.photo img{max-width:100%;max-height:100%;border-radius:10px;object-fit:contain}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.pchip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 11px;font-size:15px}
-.pchip.used{background:var(--okbg);border-color:var(--ok)}
-.timer{display:flex;align-items:center;gap:10px}
-.ring{width:54px;height:54px}
+.bc.boom{background:radial-gradient(circle at 80% 20%,#ffd1b0,#ffe9ec 60%);border-color:var(--no);animation:shake .4s}
+.boomtag{position:absolute;right:8px;top:4px;font-weight:700;color:#fff;background:var(--no);border-radius:6px;padding:0 7px;font-size:13px;letter-spacing:.08em}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+/* grammar doctor flip */
+.docs{display:grid;grid-template-rows:repeat(3,1fr);gap:7px;flex:1;min-height:0}
+.fc{perspective:900px;cursor:pointer;min-height:0}
+.fc .front{background:#fff;border:2px solid #ffd2cc;font-size:17px;justify-content:flex-start;text-align:left;gap:10px}
+.fc .front .rx{flex:0 0 auto;background:#ff5a5a;color:#fff;border-radius:6px;padding:1px 7px;font-size:13px;font-weight:700}
+.fc .back{transform:rotateY(180deg);background:var(--okbg);border:2px solid var(--ok);font-size:17px;justify-content:flex-start;text-align:left;color:#14703d;font-weight:700}
+/* lava */
+.lava{flex:1;min-height:0;border-radius:12px;background:linear-gradient(180deg,#ffe9a8 0%,#ff9f43 45%,#ff4d2e 100%);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-around;padding:10px;overflow:hidden}
+.lava .sent{background:#ffffffe8;border-radius:10px;padding:8px 16px;font-size:21px;text-align:center;max-width:95%}
+.stones{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.stone{border:0;min-width:120px;padding:10px 14px;border-radius:50% / 40%;background:radial-gradient(circle at 35% 30%,#9aa1ad,#4b505a);color:#fff;font-size:17px;font-weight:700;box-shadow:0 6px 0 #2e3138;transition:transform .5s,opacity .5s}
+.stone.ok{background:radial-gradient(circle at 35% 30%,#7ee2a6,#1f9d55)}
+.stone.sink{transform:translateY(60px) scale(.8);opacity:.25;background:radial-gradient(circle at 35% 30%,#ff8a8a,#c0182f)}
+.lives{display:flex;gap:4px}
+.lives i{width:14px;height:14px;border-radius:50%;background:#ff3d7f;display:inline-block}
+.lives i.off{background:#ddd}
+/* rapid categories */
+.rc-top{display:flex;align-items:center;gap:10px;justify-content:center}
+.rc-cat{background:#fff7d6;border:2px solid #ffd84d;border-radius:10px;padding:3px 16px;font-size:20px;font-weight:700}
+.rcg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;flex:1;min-height:0}
+.rt{border:2px solid #d9ecff;background:#f5faff;border-radius:10px;font-size:16px;font-weight:700;padding:4px}
+.rt.ok{background:var(--okbg);border-color:var(--ok)}.rt.no{background:var(--nobg);border-color:var(--no)}.rt.miss{background:#fff4d6;border-color:#ffb000}
+/* photo hotspots */
+.pwrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.pic{position:relative;max-width:100%;max-height:100%;aspect-ratio:546/341;height:100%}
+.pic img{width:100%;height:100%;display:block;border-radius:10px}
+.hs{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:3px solid #fff;background:#ff3d7f;color:#fff;font-weight:700;font-size:14px;box-shadow:0 0 0 4px #ff3d7f55;animation:pulse 1.6s infinite}
+.hs.seen{background:#1f9d55;box-shadow:0 0 0 4px #1f9d5555;animation:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px #ff3d7f66}50%{box-shadow:0 0 0 10px #ff3d7f00}}
+.prompt{min-height:56px;padding:8px 10px;border-left:4px solid #0aa3a3;background:#effcfb;border-radius:8px;font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.pchip{border:1px solid #bfeeea;background:#fff;border-radius:999px;padding:3px 10px;font-size:14px}
+.pchip.used{background:#0aa3a3;border-color:#0aa3a3;color:#fff}
+.ringrow{display:flex;align-items:center;gap:10px}
+.ring{width:56px;height:56px}
 .ring circle{fill:none;stroke-width:6}
-.tnum{font-weight:700;font-size:18px;min-width:30px}
-.steps{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-/* video */
+.tnum{font-weight:700;font-size:20px;min-width:30px}
+/* video + gap race */
 .vid{position:relative;width:100%;aspect-ratio:16/9;max-height:100%;background:#000;border-radius:10px;overflow:hidden}
 .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-.gaps{display:grid;grid-template-columns:1fr;gap:7px;flex:1;min-height:0}
-.gc{perspective:900px;cursor:pointer;min-height:0}
-.gc .in{position:relative;height:100%;min-height:52px;transition:transform .4s;transform-style:preserve-3d}
-.gc.f .in{transform:rotateY(180deg)}
-.gc .face{font-size:18px;padding:6px 12px;justify-content:flex-start;text-align:left}
-.gc .face.back{align-items:flex-start;gap:2px;justify-content:center}
-.gc .face.back .why{font-size:14px;color:var(--muted);font-style:normal}
-.gc .face.back .full{font-size:18px;font-weight:700;color:#1f6b42}
-/* reception */
-.rp{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0}
-.rc{perspective:900px;cursor:pointer;min-height:0}
-.rc .in{position:relative;height:100%;transition:transform .4s;transform-style:preserve-3d}
-.rc.f .in{transform:rotateY(180deg)}
-.rc .face{flex-direction:column;gap:4px;font-size:16px;padding:8px 10px}
-.rc .room{font-size:13px;color:var(--muted);letter-spacing:.08em}
-.rc .prob{font-size:18px;font-weight:700}
-.rc .face.back .g{color:#1f6b42;font-weight:700}
-.rc .face.back .r{color:var(--accent)}
-.lab{display:flex;flex-direction:column;gap:6px}
-.lr{display:grid;grid-template-columns:1fr 1fr;gap:6px;align-items:stretch}
-.lr .bad{border:1px solid #e6c9c9;background:#fdf6f6;border-radius:8px;padding:6px 9px;font-size:16px;text-decoration:line-through;text-decoration-color:#c0392b88}
-.lr .good{border:1px dashed var(--line);border-radius:8px;padding:6px 9px;font-size:16px;color:var(--muted);text-align:left;background:#fff}
-.lr .good.show{border-style:solid;border-color:var(--ok);background:var(--okbg);color:#1f6b42;font-weight:700}
+.gr{display:grid;grid-template-columns:30px 1fr 110px 62px;gap:6px;align-items:center;font-size:16px}
+.gr .pl{width:30px;height:30px;border-radius:50%;border:0;background:#2f6bff;color:#fff;font-size:12px}
+.gr input{border:2px solid #cfe0ff;border-radius:8px;padding:3px 7px;width:100%;font-size:16px}
+.gr input.ok{border-color:var(--ok);background:var(--okbg)}.gr input.no{border-color:var(--no);background:var(--nobg)}
+.gr .ck{border:0;border-radius:8px;background:#2f6bff;color:#fff;font-weight:700;padding:4px 0;font-size:14px}
+.gr .why{grid-column:2 / 5;font-size:13px;color:#14703d;margin-top:-3px}
+.racebar{height:10px;border-radius:6px;background:#e8eefc;overflow:hidden}
+.racebar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f6bff,#33c2ff);transition:width .3s}
+/* mystery box */
+.boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gift{border:0;border-radius:12px;background:linear-gradient(135deg,#7b4dff,#d24dff);color:#fff;font-weight:700;padding:6px 4px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 4px 0 #4a2bb0}
+.gift.open{background:#ece6ff;color:#7a6aa8;box-shadow:none}
+.gift.cur{outline:3px solid #ffb000}
+.mcard{flex:1;min-height:0;perspective:900px;cursor:pointer}
+.mcard .front{background:#f8f5ff;border:2px solid #d9cdff;flex-direction:column;gap:4px}
+.mcard .back{transform:rotateY(180deg);background:#fff;border:2px solid #b06bff;flex-direction:column;gap:4px;font-size:16px}
+.mcard.f .in{transform:rotateY(180deg)}
+.mcard .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.room{font-size:13px;letter-spacing:.1em;color:#7a6aa8;font-weight:700}
+.prob{font-size:20px;font-weight:700}
+.g{color:#14703d;font-weight:700}.r{color:#5a2bd0}
+.lr{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.lr .bad{border:2px solid #ffd2d8;background:#fff5f6;border-radius:9px;padding:5px 8px;font-size:15px;text-decoration:line-through;text-decoration-color:#e0364f99}
+.lr .good{border:2px dashed #d9cdff;border-radius:9px;padding:5px 8px;font-size:15px;color:var(--muted);text-align:left;background:#fff}
+.lr .good.show{border-style:solid;border-color:var(--ok);background:var(--okbg);color:#14703d;font-weight:700}
+/* jeopardy */
+.jb{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto 1fr 1fr 1fr;gap:6px;flex:1;min-height:0}
+.jh{background:#1b1f4b;color:#ffd84d;border-radius:8px;text-align:center;font-weight:700;padding:5px 2px;font-size:15px}
+.jc{border:0;border-radius:8px;background:linear-gradient(180deg,#2f4bff,#1d2fb8);color:#ffd84d;font-size:22px;font-weight:700}
+.jc.done{background:#e6e8f5;color:#9aa0b8}
+.jc.cur{outline:3px solid #ffb000}
+.jq{flex:1;min-height:0;perspective:900px;cursor:pointer}
+.jq .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.jq.f .in{transform:rotateY(180deg)}
+.jq .front{background:#1b1f4b;color:#fff;font-size:19px;flex-direction:column;gap:6px}
+.jq .back{transform:rotateY(180deg);background:#fff8dd;border:2px solid #ffd84d;font-size:19px;font-weight:700;color:#14703d}
+.lock{display:flex;gap:6px;justify-content:center}
+.lock span{width:38px;height:44px;border-radius:8px;background:#1b1f4b;color:#ffd84d;font-family:'Courier New',monospace;font-size:26px;font-weight:700;display:flex;align-items:center;justify-content:center}
 /* teacher drawer */
-.drawer{position:fixed;top:48px;right:10px;width:min(430px,92vw);max-height:calc(100vh - 60px);overflow:auto;background:#fffdf7;border:1px solid #d8cfb8;border-radius:12px;box-shadow:0 10px 30px #0003;padding:12px 16px;display:none;z-index:20;font-size:15px}
+.drawer{position:fixed;top:46px;right:10px;width:min(440px,92vw);max-height:calc(100vh - 56px);overflow:auto;background:#fffdf7;border:1px solid #e3d6b0;border-radius:12px;box-shadow:0 10px 30px #0003;padding:10px 16px;display:none;z-index:20;font-size:15px}
 .drawer.on{display:block}
-.drawer h3{margin:4px 0 6px;font-size:16px;color:#7a5a12}
+.drawer h3{margin:4px 0 5px;font-size:16px;color:#8a5a00}
 .drawer ol{margin:0;padding-left:20px}
-.drawer li{margin-bottom:5px}
-.result{font-size:15px;margin-top:4px;min-height:20px}
-.result .w{color:var(--no)}
-@media (max-height:620px){body{font-size:16px}.face.front{font-size:25px}.bq{font-size:16px}.mi{padding:6px 9px;font-size:16px}.box{padding:8px 12px}main{padding:8px 12px}}
+.drawer li{margin-bottom:4px}
+@media (max-height:620px){body{font-size:16px}.bb{padding:6px 10px;gap:5px}.flip .front{font-size:23px}.bq{font-size:15px}.op{font-size:14px;padding:2px 4px}.digital{font-size:28px}.lava .sent{font-size:17px}.stone{padding:7px 12px}main{padding:7px 10px}.jc{font-size:19px}}
 </style>
 </head>
 <body>
 <div class="bar">
-  <div class="name">Maya · Revision · File 1</div>
-  <nav class="tabs" id="tabs">
-    <button class="tab on" data-p="words"><b>1</b>Words</button>
-    <button class="tab" data-p="hw"><b>2</b>Homework check</button>
-    <button class="tab" data-p="photo"><b>3</b>Photo</button>
-    <button class="tab" data-p="video"><b>4</b>Rob calls Reception</button>
-    <button class="tab" data-p="reception"><b>5</b>At Reception</button>
+  <div class="name">Maya · Revision</div>
+  <nav class="tabs">
+    <button class="tab on" data-p="warm">1 Warm-up</button>
+    <button class="tab" data-p="hw">2 Homework</button>
+    <button class="tab" data-p="games">3 Games</button>
+    <button class="tab" data-p="photo">4 Photo</button>
+    <button class="tab" data-p="video">5 Rob calls</button>
+    <button class="tab" data-p="reception">6 Reception</button>
+    <button class="tab" data-p="jeo">7 Jeopardy</button>
   </nav>
   <button class="tbtn" id="teacherBtn">Teacher</button>
 </div>
@@ -148,216 +196,222 @@ main{flex:1;min-height:0;padding:10px 14px}
 <div class="drawer" id="drawer">
   <h3>Plan · 60 min · after a two-week break</h3>
   <ol>
-    <li><b>Words (10 min).</b> Quizlet: Maya says the word, then a sentence about herself; flip to check. Matching for a fast round. Speaking 1–4: full questions, answer in 2–3 sentences.</li>
-    <li><b>Homework check (15 min).</b> 1D test, bomb mode: 15 seconds per card, 4 cards per page. After each card ask: routine, now, temporary, change or state? Then sorting.</li>
-    <li><b>Photo (10 min).</b> The 1D homework photo. One minute, connected description; tap a phrase when she uses it.</li>
-    <li><b>Rob calls Reception (10 min).</b> Watch once: how many times does Rob call Reception? Then the 6 lines: she says the missing word, you flip.</li>
-    <li><b>At Reception (15 min).</b> Fix the rude complaints, then role play: you are Reception, she is the guest. Swap roles.</li>
+    <li><b>Warm-up (8 min).</b> Quizlet: she says the word and a sentence about herself, then flip. 60-Second Challenge: she names words aloud, you type them. Odd One Out: why is it different? Speaking 1–4.</li>
+    <li><b>Homework (12 min).</b> 1D test as bombs: 15 seconds, 4 cards. Grammar Doctor: she finds and fixes the mistake, you flip.</li>
+    <li><b>Games (8 min).</b> Floor is Lava for tenses, Rapid Categories for words.</li>
+    <li><b>Photo (8 min).</b> Open the hotspots one by one, then 30-second talk.</li>
+    <li><b>Rob calls (10 min).</b> Watch once: how many times does Rob call Reception? Then Audio Gap Race.</li>
+    <li><b>Reception (10 min).</b> Say it politely, then Mystery Box: she is the guest, you are Reception. Swap.</li>
+    <li><b>Jeopardy (5 min).</b> Each finished column opens one digit of the lock.</li>
   </ol>
   <h3>Watch for</h3>
   <ol>
     <li>Stative verbs in Continuous: <i>I am needing, she is preferring</i>.</li>
-    <li>Present Simple for now in photo description: <i>she sits</i> instead of <i>she is sitting</i>.</li>
+    <li>Present Simple for now in the photo: <i>she sits</i> instead of <i>she is sitting</i>.</li>
     <li><i>doesn't work</i> instead of <i>isn't working</i> for broken things.</li>
   </ol>
 </div>
 
 <main>
-  <!-- 1 WORDS -->
-  <section class="pane on" id="words" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
-    <div class="box">
-      <h2>Vocabulary 1A–1D <small>tap the card to flip</small></h2>
-      <div class="ql">
-        <div class="sets" id="sets"></div>
-        <div class="flip" id="flash"><div class="in"><div class="face front" id="fFront"></div><div class="face back" id="fBack"></div></div></div>
-        <div class="qnav">
-          <button class="arrow" id="fPrev" aria-label="Previous">&#8592;</button>
-          <span class="count" id="fCount"></span>
-          <button class="arrow" id="fNext" aria-label="Next">&#8594;</button>
-          <button class="btn ghost" id="fSay">Audio</button>
-        </div>
-      </div>
+<!-- 1 WARM-UP -->
+<section class="pane on" id="warm" style="grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(0,.9fr)">
+  <div class="box pink">
+    <div class="bh">Quizlet Flashcards <small>tap to flip</small></div>
+    <div class="bb">
+      <div class="sets" id="sets"></div>
+      <div class="flip" id="flash"><div class="in"><div class="face front" id="fFront"></div><div class="face back" id="fBack"></div></div></div>
+      <div class="qnav"><button class="arrow" id="fPrev">&#8592;</button><span class="count" id="fCount"></span><button class="arrow" id="fNext">&#8594;</button><button class="btn alt" id="fSay">Audio</button></div>
+      <div class="spk" id="spk"></div>
+      <div class="sptext" id="spText">Speaking 1–4: make the question, then answer.</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:12px;min-height:0">
-      <div class="box">
-        <h2>Matching <small>English – Russian</small><span style="flex:1"></span><span class="score" id="mScore">0</span></h2>
-        <div class="match"><div class="mcol" id="mEn"></div><div class="mcol" id="mRu"></div></div>
-        <div class="row"><button class="btn" id="mNew">New round</button><span class="result" id="mRes"></span></div>
-      </div>
-      <div class="box">
-        <h2>Speaking <small>make the question, then answer</small></h2>
-        <div class="speak" id="speak"></div>
-        <div class="sptext" id="spText">Choose 1–4.</div>
-      </div>
+  </div>
+  <div class="box blue">
+    <div class="bh">
+      <svg width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M12 9v4l3 2M9 2h6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+      60-Second Challenge<span class="sp"></span><span class="pts" id="cScore">0</span></div>
+    <div class="bb">
+      <div class="cat" id="cCat"></div>
+      <div class="clock"><span class="digital" id="cClock">01:00</span><button class="btn" id="cStart" style="background:#2f6bff">Start</button></div>
+      <input class="typein" id="cIn" placeholder="type here… (Enter)" autocomplete="off">
+      <div class="found" id="cFound"></div>
     </div>
-  </section>
+  </div>
+  <div class="box green">
+    <div class="bh">Odd One Out<span class="sp"></span><span class="pts" id="oScore">0</span></div>
+    <div class="bb">
+      <div class="muted">Which one is different? Say why.</div>
+      <div class="odd" id="odd"></div>
+      <div class="row"><button class="btn" id="oNext" style="background:#14a86a">Next</button><span class="result" id="oRes"></span></div>
+    </div>
+  </div>
+</section>
 
-  <!-- 2 HOMEWORK CHECK -->
-  <section class="pane" id="hw" style="grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)">
-    <div class="box">
-      <h2>Homework 1D · Bomb <small>15 seconds per card</small><span style="flex:1"></span><span class="score" id="bScore">0 / 20</span></h2>
+<!-- 2 HOMEWORK -->
+<section class="pane" id="hw" style="grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)">
+  <div class="box orange">
+    <div class="bh">
+      <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="10" cy="14" r="7.5" fill="#1b1f4b"/><path d="M14 8l3-3" stroke="#1b1f4b" stroke-width="2.4"/><circle cx="18.5" cy="3.8" r="2" fill="#fff"/></svg>
+      Error Bomb · Homework 1D <small>15 seconds per card</small><span class="sp"></span><span class="pts" id="bScore">0 / 20</span></div>
+    <div class="bb">
       <div class="bombs" id="bombs"></div>
-      <div class="row" style="margin-top:8px">
-        <button class="btn" id="bStart">Start</button>
-        <button class="btn ghost" id="bNext">Next 4</button>
-        <span class="sec" id="bPage"></span>
-        <span class="result" id="bRes"></span>
-      </div>
+      <div class="row"><button class="btn" id="bStart" style="background:#ff7a1a">Light the fuse</button><button class="btn alt" id="bNext">Next 4</button><span class="muted" id="bPage"></span><span class="result" id="bRes"></span></div>
     </div>
-    <div class="box">
-      <h2>Sorting <small>drag or tap, then tap a column</small></h2>
-      <div class="pool" id="pool"></div>
-      <div class="bins">
-        <div class="bin" data-bin="s"><h3>Present Simple</h3></div>
-        <div class="bin" data-bin="c"><h3>Present Continuous</h3></div>
-      </div>
-      <div class="row" style="margin-top:6px"><button class="btn" id="sCheck">Check</button><button class="btn ghost" id="sReset">Again</button><span class="result" id="sRes"></span></div>
+  </div>
+  <div class="box pink">
+    <div class="bh">Grammar Doctor <small>find and fix · tap to check</small></div>
+    <div class="bb">
+      <div class="docs" id="docs"></div>
+      <div class="qnav"><button class="arrow" id="dPrev">&#8592;</button><span class="count" id="dCount"></span><button class="arrow" id="dNext">&#8594;</button></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 3 PHOTO -->
-  <section class="pane" id="photo" style="grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)">
-    <div class="box">
-      <h2>Describe the picture <small>8–10 connected sentences</small></h2>
-      <div class="photo"><img src="../maya-english-hub/assets/maya-1d-photo.png" alt="Homework 1D photo"></div>
+<!-- 3 GAMES -->
+<section class="pane" id="games" style="grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)">
+  <div class="box orange">
+    <div class="bh">Floor Is Lava <small>step on the right stone</small><span class="sp"></span><span class="lives" id="lLives"></span><span class="pts" id="lScore">0</span></div>
+    <div class="bb">
+      <div class="lava"><div class="sent" id="lSent"></div><div class="stones" id="lStones"></div></div>
+      <div class="row"><button class="btn" id="lNext" style="background:#ff7a1a">Next</button><span class="result" id="lRes"></span></div>
     </div>
-    <div class="box" style="gap:8px">
-      <div class="timer">
-        <svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" stroke="#e5e9ef"/><circle id="pRing" cx="30" cy="30" r="25" stroke="#2f5d7c" stroke-dasharray="157" stroke-dashoffset="0" transform="rotate(-90 30 30)" stroke-linecap="round"/></svg>
-        <span class="tnum" id="pNum">60</span>
-        <button class="btn" id="pStart">Start 1 minute</button>
-        <button class="btn ghost" id="pReset">Reset</button>
+  </div>
+  <div class="box blue">
+    <div class="bh">Rapid Categories <small>tap only the words that belong</small><span class="sp"></span><span class="pts" id="rScore">0</span></div>
+    <div class="bb">
+      <div class="rc-top"><span class="rc-cat" id="rCat"></span><span class="digital" id="rClock" style="font-size:24px">00:30</span></div>
+      <div class="rcg" id="rGrid"></div>
+      <div class="row"><button class="btn" id="rStart" style="background:#2f6bff">Start</button><span class="result" id="rRes"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 PHOTO -->
+<section class="pane" id="photo" style="grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)">
+  <div class="box teal">
+    <div class="bh">Hotspot <small>tap a point · describe that part</small></div>
+    <div class="bb"><div class="pwrap"><div class="pic" id="pic"><img src="../maya-english-hub/assets/maya-1d-photo.png" alt="Homework 1D picture"></div></div></div>
+  </div>
+  <div class="box purple">
+    <div class="bh">30-Second Talk</div>
+    <div class="bb">
+      <div class="prompt" id="pPrompt">Tap a point on the picture.</div>
+      <div class="ringrow">
+        <svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" stroke="#ece6ff"/><circle id="pRing" cx="30" cy="30" r="25" stroke="#6a4cff" stroke-dasharray="157" stroke-dashoffset="0" transform="rotate(-90 30 30)" stroke-linecap="round"/></svg>
+        <span class="tnum" id="pNum">30</span>
+        <button class="btn" id="pStart" style="background:#6a4cff">Start</button><button class="btn alt" id="pReset">Reset</button>
       </div>
-      <p class="hint">Tap a phrase when Maya uses it.</p>
+      <div class="muted">Tap a phrase when Maya uses it.</div>
       <div class="chips" id="pChips"></div>
-      <h2 style="margin-top:4px">Order <small>open one by one</small></h2>
-      <div class="steps" id="pSteps"></div>
-      <div class="sptext" id="pText">Choose 1–4.</div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 4 VIDEO -->
-  <section class="pane" id="video" style="grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)">
-    <div class="box">
-      <h2>Rob calls Reception <small>English File · watch first</small></h2>
-      <p class="hint">How many times does Rob call Reception?</p>
-      <div style="flex:1;min-height:0;display:flex;align-items:flex-start">
-        <div class="vid"><iframe src="https://www.youtube.com/embed/hq0-y-iYgBI?playsinline=1&rel=0" title="English File · Rob calls Reception" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
-      </div>
+<!-- 5 VIDEO -->
+<section class="pane" id="video" style="grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)">
+  <div class="box blue">
+    <div class="bh">Rob calls Reception <small>English File · watch first</small></div>
+    <div class="bb">
+      <div class="big"><b>Gist:</b> How many times does Rob call Reception?</div>
+      <div style="flex:1;min-height:0;display:flex;align-items:flex-start"><div class="vid"><iframe src="https://www.youtube.com/embed/hq0-y-iYgBI?playsinline=1&rel=0" title="English File · Rob calls Reception" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div></div>
     </div>
-    <div class="box">
-      <h2>Missing word <small>say it, then flip</small></h2>
-      <div class="gaps" id="gaps"></div>
-      <div class="row" style="margin-top:8px"><button class="arrow" id="gPrev">&#8592;</button><span class="count" id="gCount"></span><button class="arrow" id="gNext">&#8594;</button></div>
+  </div>
+  <div class="box pink">
+    <div class="bh">Audio Gap Race<span class="sp"></span><span class="digital" id="gClock" style="font-size:17px;padding:0 8px">00:00</span></div>
+    <div class="bb">
+      <div class="racebar"><i id="gBar"></i></div>
+      <div id="gRows" style="display:flex;flex-direction:column;gap:5px;flex:1;min-height:0"></div>
+      <div class="row"><button class="btn" id="gReset" style="background:#ff3d7f">Race again</button><span class="result" id="gRes"></span></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 5 RECEPTION -->
-  <section class="pane" id="reception" style="grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)">
-    <div class="box">
-      <h2>Say it politely <small>tap to see the natural version</small></h2>
-      <div class="lab" id="lab"></div>
+<!-- 6 RECEPTION -->
+<section class="pane" id="reception" style="grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)">
+  <div class="box green">
+    <div class="bh">Say it politely <small>tap for the natural version</small></div>
+    <div class="bb" id="lab"></div>
+  </div>
+  <div class="box purple">
+    <div class="bh">Mystery Box <small>open a room · 30 seconds · tap the card for the model</small></div>
+    <div class="bb">
+      <div class="boxes" id="mBoxes"></div>
+      <div class="mcard" id="mCard"><div class="in"><div class="face front" id="mFront"><span class="muted">Open a box.</span></div><div class="face back" id="mBack"></div></div></div>
+      <div class="ringrow"><span class="digital" id="mClock" style="font-size:22px">00:30</span><button class="btn" id="mStart" style="background:#6a4cff" disabled>Start 30 s</button></div>
     </div>
-    <div class="box">
-      <h2>Role play <small>guest calls Reception · flip for both lines</small></h2>
-      <div class="rp" id="rp"></div>
-      <div class="row" style="margin-top:8px"><button class="arrow" id="rPrev">&#8592;</button><span class="count" id="rCount"></span><button class="arrow" id="rNext">&#8594;</button></div>
+  </div>
+</section>
+
+<!-- 7 JEOPARDY -->
+<section class="pane" id="jeo" style="grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)">
+  <div class="box purple">
+    <div class="bh">Jeopardy<span class="sp"></span><span class="pts" id="jScore">0</span></div>
+    <div class="bb"><div class="jb" id="jBoard"></div></div>
+  </div>
+  <div class="box orange">
+    <div class="bh">Question <small>tap the card for the answer</small></div>
+    <div class="bb">
+      <div class="jq" id="jQ"><div class="in"><div class="face front" id="jFront">Choose a category and points.</div><div class="face back" id="jBack"></div></div></div>
+      <div class="row"><button class="btn" id="jYes" style="background:#1f9d55" disabled>Correct</button><button class="btn" id="jNo" style="background:#e0364f" disabled>Wrong</button><button class="btn alt" id="jNew">New game</button></div>
+      <div class="row"><span class="muted">Escape Room · finish a column to get a digit</span></div>
+      <div class="lock" id="jLock"></div>
     </div>
-  </section>
+  </div>
+</section>
 </main>
 
 <script>
 'use strict';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const mmss=s=>{const c=Math.max(0,Math.ceil(s));return String(Math.floor(c/60)).padStart(2,'0')+':'+String(c%60).padStart(2,'0')};
 function say(t,rate=.9){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=rate;speechSynthesis.speak(u)}catch(e){}}
+const timers={};function stopT(k){clearInterval(timers[k]);timers[k]=null}
+function countdown(k,secs,onTick,onEnd){stopT(k);const t0=Date.now();timers[k]=setInterval(()=>{const left=secs-(Date.now()-t0)/1000;onTick(Math.max(0,left));if(left<=0){stopT(k);onEnd&&onEnd()}},100)}
 
-/* tabs */
-$$('.tab').forEach(t=>t.onclick=()=>{$$('.tab').forEach(x=>x.classList.toggle('on',x===t));$$('.pane').forEach(p=>p.classList.toggle('on',p.id===t.dataset.p));stopBombs();});
+$$('.tab').forEach(t=>t.onclick=()=>{$$('.tab').forEach(x=>x.classList.toggle('on',x===t));$$('.pane').forEach(p=>p.classList.toggle('on',p.id===t.dataset.p))});
 $('#teacherBtn').onclick=()=>$('#drawer').classList.toggle('on');
 document.addEventListener('click',e=>{if(!e.target.closest('#drawer')&&e.target.id!=='teacherBtn')$('#drawer').classList.remove('on')});
 
-/* ---------- 1 WORDS (from Maya's hub and homework 1D) ---------- */
+/* ===== WORDS (Maya's hub + homework 1D) ===== */
 const SETS={
- people:['People',[
-  ['get on well with','хорошо ладить с','She gets on well with her colleagues.'],
-  ['keep in touch','поддерживать связь','We keep in touch online.'],
-  ['have a lot in common','иметь много общего','They have a lot in common.'],
-  ['relationship','отношения','They are talking about their relationship.'],
-  ['colleague','коллега','I get on well with my colleagues.'],
-  ['confident','уверенный в себе','She looks confident.'],
-  ['outgoing','общительный','He is friendly and outgoing.'],
-  ['get divorced','развестись','']]],
- style:['Clothes',[
-  ['suit someone','идти кому-то','That colour really suits you.'],
-  ['go with','сочетаться с','These shoes go with the jacket.'],
-  ['appearance','внешность','Describe her appearance.'],
-  ['slim','стройный','She is slim and quite tall.'],
-  ['fitted','приталенный','She is wearing a fitted jacket.'],
-  ['oversized','свободного, увеличенного кроя','He likes oversized hoodies.'],
-  ['high-waisted','с высокой талией','These are high-waisted trousers.'],
-  ['hoodie','толстовка с капюшоном',''],
-  ['boots','ботинки',''],
-  ['modern clothes','современная одежда','']]],
- photo:['Photo',[
-  ['in the foreground','на переднем плане','In the foreground, I can see a table.'],
-  ['in the background','на заднем плане','There is a window in the background.'],
-  ['next to','рядом с',''],
-  ['in front of','перед',''],
-  ['behind','позади',''],
-  ['between','между',''],
-  ['on the left','слева',''],
-  ['on the right','справа',''],
-  ['in the middle','посередине',''],
-  ['pose','поза',''],
-  ['serious','серьёзный',''],
-  ['relaxed','расслабленный','']]],
- art:['Remakes',[
-  ['remake','ремейк',''],
-  ['portrait','портрет',''],
-  ['similar','похожий',''],
-  ['different','отличающийся',''],
-  ['hold hands','держаться за руки',''],
-  ['garden fork','садовые вилы',''],
-  ['rooftop garden','сад на крыше',''],
-  ['city skyline','городской пейзаж',''],
-  ['fashion designer','модельер',''],
-  ['symbolize','символизировать','']]]
-};
+ people:['People',[['get on well with','хорошо ладить с','She gets on well with her colleagues.'],['keep in touch','поддерживать связь','We keep in touch online.'],['have a lot in common','иметь много общего','They have a lot in common.'],['relationship','отношения','They are talking about their relationship.'],['colleague','коллега','I get on well with my colleagues.'],['confident','уверенный в себе','She looks confident.'],['outgoing','общительный','He is friendly and outgoing.'],['get divorced','развестись','']]],
+ style:['Clothes',[['suit someone','идти кому-то','That colour really suits you.'],['go with','сочетаться с','These shoes go with the jacket.'],['appearance','внешность','Describe her appearance.'],['slim','стройный','She is slim and quite tall.'],['fitted','приталенный','She is wearing a fitted jacket.'],['oversized','свободного, увеличенного кроя','He likes oversized hoodies.'],['high-waisted','с высокой талией','These are high-waisted trousers.'],['hoodie','толстовка с капюшоном',''],['boots','ботинки',''],['modern clothes','современная одежда','']]],
+ photo:['Photo',[['in the foreground','на переднем плане','In the foreground, I can see a table.'],['in the background','на заднем плане','There is a window in the background.'],['next to','рядом с',''],['in front of','перед',''],['behind','позади',''],['between','между',''],['on the left','слева',''],['on the right','справа',''],['in the middle','посередине',''],['pose','поза',''],['serious','серьёзный',''],['relaxed','расслабленный','']]],
+ art:['Remakes',[['remake','ремейк',''],['portrait','портрет',''],['similar','похожий',''],['different','отличающийся',''],['hold hands','держаться за руки',''],['garden fork','садовые вилы',''],['rooftop garden','сад на крыше',''],['city skyline','городской пейзаж',''],['fashion designer','модельер',''],['symbolize','символизировать','']]]};
 const ALL=Object.values(SETS).flatMap(s=>s[1]);
 let deck=ALL,fi=0,curSet='all';
 function renderSets(){$('#sets').innerHTML=[['all','All']].concat(Object.entries(SETS).map(([k,v])=>[k,v[0]])).map(([k,t])=>`<button class="set${k===curSet?' on':''}" data-s="${k}">${t}</button>`).join('');$$('.set').forEach(b=>b.onclick=()=>{curSet=b.dataset.s;deck=curSet==='all'?ALL:SETS[curSet][1];fi=0;renderSets();renderCard()})}
 function renderCard(){const c=deck[fi];$('#flash').classList.remove('f');$('#fFront').textContent=c[0];$('#fBack').innerHTML=`<div class="ru">${c[1]}</div>${c[2]?`<div class="ex">${c[2]}</div>`:''}`;$('#fCount').textContent=(fi+1)+' / '+deck.length}
 $('#flash').onclick=()=>$('#flash').classList.toggle('f');
-$('#fPrev').onclick=()=>{fi=(fi-1+deck.length)%deck.length;renderCard()};
-$('#fNext').onclick=()=>{fi=(fi+1)%deck.length;renderCard()};
-$('#fSay').onclick=()=>say(deck[fi][0]);
+$('#fPrev').onclick=()=>{fi=(fi-1+deck.length)%deck.length;renderCard()};$('#fNext').onclick=()=>{fi=(fi+1)%deck.length;renderCard()};$('#fSay').onclick=()=>say(deck[fi][0]);
 renderSets();renderCard();
 
-let mScore=0,mSel=null;
-function newMatch(){const pick=shuffle(ALL).slice(0,4);$('#mRes').textContent='';
- $('#mEn').innerHTML=pick.map((p,i)=>`<button class="mi" data-k="${i}" data-side="en">${p[0]}</button>`).join('');
- $('#mRu').innerHTML=shuffle(pick.map((p,i)=>[p,i])).map(([p,i])=>`<button class="mi" data-k="${i}" data-side="ru">${p[1]}</button>`).join('');
- mSel=null;$$('.mi').forEach(b=>b.onclick=()=>pickM(b));}
-function pickM(b){if(b.classList.contains('done'))return;
- if(!mSel||mSel.dataset.side===b.dataset.side){$$('.mi.sel').forEach(x=>x.classList.remove('sel'));mSel=b;b.classList.add('sel');return}
- if(mSel.dataset.k===b.dataset.k){[mSel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done')});mScore++;$('#mScore').textContent=mScore;
-   if($$('.mi.done').length===8)$('#mRes').textContent='All 4 correct.';}
- else{const a=mSel;[a,b].forEach(x=>x.classList.add('bad'));setTimeout(()=>[a,b].forEach(x=>x.classList.remove('bad','sel')),550)}
- mSel=null}
-$('#mNew').onclick=newMatch;newMatch();
+const SPEAK=[['you / usually / what time / get up?','What time do you usually get up?'],['what / you / do / this week?','What are you doing this week?'],['clothes / you / usually wear?','What clothes do you usually wear?'],['who / you / live with?','Who do you live with?']];
+$('#spk').innerHTML=SPEAK.map((s,i)=>`<button class="spb" data-i="${i}">${i+1}</button>`).join('');
+$$('.spb').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,t=$('#spText');if(b.classList.contains('on')&&t.dataset.st==='q'){t.innerHTML=`<b>${SPEAK[i][1]}</b>`;t.dataset.st='a';return}$$('.spb').forEach(x=>x.classList.toggle('on',x===b));t.dataset.st='q';t.innerHTML=`${SPEAK[i][0]} <span class="muted">· tap again</span>`});
 
-const SPEAK=[
- ['you / usually / what time / get up?','What time do you usually get up?'],
- ['what / you / do / this week?','What are you doing this week?'],
- ['clothes / you / usually wear?','What clothes do you usually wear?'],
- ['who / you / live with?','Who do you live with?']];
-$('#speak').innerHTML=SPEAK.map((s,i)=>`<button class="sp" data-i="${i}">${i+1}</button>`).join('');
-$$('.sp').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,s=SPEAK[i];
- if(b.classList.contains('on')&&$('#spText').dataset.i==i&&$('#spText').dataset.st==='q'){$('#spText').innerHTML=`<b>${s[1]}</b>`;$('#spText').dataset.st='a';return}
- $$('.sp').forEach(x=>x.classList.toggle('on',x===b));$('#spText').dataset.i=i;$('#spText').dataset.st='q';$('#spText').innerHTML=`${s[0]} <span class="sec">· tap again to check</span>`});
+/* 60-second challenge */
+let cKey='style',cOn=false,cGot=new Set(),cScore=0;
+function renderCat(){$('#cCat').innerHTML=Object.entries(SETS).map(([k,v])=>`<button data-k="${k}" class="${k===cKey?'on':''}">${v[0]}</button>`).join('');$$('#cCat button').forEach(b=>b.onclick=()=>{if(cOn)return;cKey=b.dataset.k;renderCat();cReset()})}
+function cReset(){stopT('c');cOn=false;cGot=new Set();cScore=0;$('#cScore').textContent=0;$('#cClock').textContent='01:00';$('#cFound').innerHTML='';$('#cIn').value='';$('#cStart').textContent='Start';$('#cStart').disabled=false}
+$('#cStart').onclick=()=>{cReset();cOn=true;$('#cStart').disabled=true;$('#cIn').focus();
+ countdown('c',60,l=>{$('#cClock').textContent=mmss(l)},()=>{cOn=false;$('#cStart').disabled=false;$('#cStart').textContent='Play again';
+  const miss=SETS[cKey][1].map(x=>x[0]).filter(w=>!cGot.has(w));$('#cFound').insertAdjacentHTML('beforeend',miss.map(w=>`<span class="tag m">${w}</span>`).join(''))})};
+$('#cIn').onkeydown=e=>{if(e.key!=='Enter')return;const v=$('#cIn').value.trim().toLowerCase();$('#cIn').value='';if(!v||!cOn)return;
+ const hit=SETS[cKey][1].map(x=>x[0]).find(w=>w.toLowerCase()===v);if(hit&&!cGot.has(hit)){cGot.add(hit);cScore++;$('#cScore').textContent=cScore;$('#cFound').insertAdjacentHTML('beforeend',`<span class="tag y">${hit}</span>`)}else if(!hit){$('#cFound').insertAdjacentHTML('beforeend',`<span class="tag">${v}</span>`)}};
+renderCat();
 
-/* ---------- 2 HOMEWORK 1D · BOMB ---------- */
+/* odd one out */
+let oScore=0;
+function oddRound(){$('#oRes').textContent='';const keys=shuffle(Object.keys(SETS));const main=keys[0],other=keys[1];
+ const three=shuffle(SETS[main][1]).slice(0,3).map(x=>[x[0],main]),one=[shuffle(SETS[other][1])[0][0],other];
+ const items=shuffle([...three,one]);let done=false;
+ $('#odd').innerHTML=items.map(([w,k])=>`<button class="ot" data-k="${k}">${w}</button>`).join('');
+ $$('.ot').forEach(b=>b.onclick=()=>{if(done)return;done=true;const right=b.dataset.k===other;b.classList.add(right?'ok':'no');if(!right)$$('.ot').find(x=>x.dataset.k===other).classList.add('ok');if(right){oScore++;$('#oScore').textContent=oScore}
+  $('#oRes').innerHTML=`Three are <b>${SETS[main][0]}</b>, one is <b>${SETS[other][0]}</b>.`})}
+$('#oNext').onclick=oddRound;oddRound();
+
+/* ===== HOMEWORK 1D: error bomb ===== */
 const Q=[
 {q:'Maya usually ___ in touch with her friends online.',o:['keeps','is keeping','keep','does keep'],a:0},
 {q:'Look at the picture: the woman ___ near the window.',o:['stands','is standing','stand','standing'],a:1},
@@ -379,80 +433,136 @@ const Q=[
 {q:'My sister ___ abroad, so we mostly keep in touch online.',o:['is living','live','lives','living'],a:2},
 {q:'I ___ a comfortable outfit for the trip.',o:['am needing','need','needs','needing'],a:1},
 {q:'Listen! Someone ___ at the door.',o:['knocks','knock','is knocking','are knocking'],a:2}];
-const BT=15;let bPage=0,bOk=0,bDone=0,bTimers=[],bRunning=false,bState=[];
-function stopBombs(){bTimers.forEach(t=>clearInterval(t));bTimers=[];bRunning=false}
-function renderBombs(){stopBombs();const start=bPage*4;bState=[0,1,2,3].map(()=>({left:BT,done:false}));
- $('#bombs').innerHTML=[0,1,2,3].map(k=>{const it=Q[start+k];return `<div class="bc" id="bc${k}"><div class="bq"><b>${start+k+1}.</b> ${it.q.replace('___','<b>_____</b>')}</div><div class="fuse"><i id="fz${k}"></i></div><div class="row" style="justify-content:space-between"><span class="sec" id="bt${k}">${BT} s</span></div><div class="opts">${it.o.map((o,j)=>`<button class="op" data-k="${k}" data-j="${j}">${o}</button>`).join('')}</div></div>`}).join('');
+const BT=15;let bPage=0,bOk=0,bRun=false,bState=[];
+function stopBombs(){[0,1,2,3].forEach(k=>stopT('b'+k));bRun=false}
+function renderBombs(){stopBombs();const s=bPage*4;bState=[0,1,2,3].map(()=>({done:false}));
+ $('#bombs').innerHTML=[0,1,2,3].map(k=>{const it=Q[s+k];return `<div class="bc" id="bc${k}"><div class="bq"><b>${s+k+1}.</b> ${it.q.replace('___','<b>_____</b>')}</div><div class="fuse"><div class="line"><i id="fz${k}"></i></div><span id="bt${k}">15</span></div><div class="opts">${it.o.map((o,j)=>`<button class="op" data-k="${k}" data-j="${j}">${o}</button>`).join('')}</div></div>`}).join('');
  $$('.op').forEach(b=>b.onclick=()=>answerB(+b.dataset.k,+b.dataset.j));
- $('#bPage').textContent=`Cards ${start+1}–${start+4} of 20`;$('#bStart').disabled=false;$('#bStart').textContent='Start';
- $('#bNext').textContent=bPage===4?'Start again':'Next 4';}
-function answerB(k,j){const st=bState[k];if(st.done)return;if(!bRunning){$('#bRes').textContent='Press Start first.';return}
- st.done=true;const it=Q[bPage*4+k];const btns=$$(`#bc${k} .op`);btns[it.a].classList.add('ok');if(j!==it.a)btns[j].classList.add('no');else bOk++;bDone++;$('#bScore').textContent=bOk+' / 20';checkPageEnd()}
-function boom(k){const st=bState[k];if(st.done)return;st.done=true;bDone++;const it=Q[bPage*4+k];$(`#bc${k}`).classList.add('boom');$(`#bc${k}`).insertAdjacentHTML('beforeend','<span class="boomtag">BOOM</span>');$$(`#bc${k} .op`)[it.a].classList.add('ok');checkPageEnd()}
-function checkPageEnd(){if(bState.every(s=>s.done)){stopBombs();$('#bStart').disabled=true;if(bPage===4)$('#bRes').innerHTML=`Result: <b>${bOk} / 20</b>.`}}
-$('#bStart').onclick=()=>{if(bRunning)return;bRunning=true;$('#bStart').disabled=true;$('#bRes').textContent='';
- [0,1,2,3].forEach(k=>{const t0=Date.now();const t=setInterval(()=>{const st=bState[k];if(st.done){clearInterval(t);return}const left=Math.max(0,BT-(Date.now()-t0)/1000);$(`#fz${k}`).style.transform=`scaleX(${left/BT})`;$(`#bt${k}`).textContent=Math.ceil(left)+' s';if(left<=0){clearInterval(t);$(`#bt${k}`).textContent='0 s';boom(k)}},100);bTimers.push(t)})};
-$('#bNext').onclick=()=>{if(bPage===4){bPage=0;bOk=0;bDone=0;$('#bScore').textContent='0 / 20';$('#bRes').textContent=''}else bPage++;renderBombs()};
+ $('#bPage').textContent=`${s+1}–${s+4} / 20`;$('#bStart').disabled=false;$('#bNext').textContent=bPage===4?'Start again':'Next 4'}
+function answerB(k,j){const st=bState[k];if(st.done)return;if(!bRun){$('#bRes').textContent='Light the fuse first.';return}
+ st.done=true;stopT('b'+k);const it=Q[bPage*4+k],btns=$$(`#bc${k} .op`);btns[it.a].classList.add('ok');if(j!==it.a)btns[j].classList.add('no');else bOk++;$('#bScore').textContent=bOk+' / 20';endCheck()}
+function boom(k){const st=bState[k];if(st.done)return;st.done=true;const it=Q[bPage*4+k];$(`#bc${k}`).classList.add('boom');$(`#bc${k}`).insertAdjacentHTML('beforeend','<span class="boomtag">BOOM</span>');$$(`#bc${k} .op`)[it.a].classList.add('ok');endCheck()}
+function endCheck(){if(bState.every(s=>s.done)){bRun=false;if(bPage===4)$('#bRes').innerHTML=`Result: <b>${bOk} / 20</b>`}}
+$('#bStart').onclick=()=>{if(bRun)return;bRun=true;$('#bStart').disabled=true;$('#bRes').textContent='';
+ [0,1,2,3].forEach(k=>countdown('b'+k,BT,l=>{$(`#fz${k}`).style.transform=`scaleX(${l/BT})`;$(`#bt${k}`).textContent=Math.ceil(l)},()=>boom(k)))};
+$('#bNext').onclick=()=>{if(bPage===4){bPage=0;bOk=0;$('#bScore').textContent='0 / 20';$('#bRes').textContent=''}else bPage++;renderBombs()};
 renderBombs();
 
-/* sorting: rule examples from homework 1D */
-const SORT=[
- ['I usually meet my friends after work.','s'],['The Earth moves around the Sun.','s'],['She likes simple clothes.','s'],['He lives in Berlin.','s'],
- ['She is reading a letter now.','c'],['He is staying with friends this week.','c'],['Her English is getting better.','c'],['We are meeting at seven tonight.','c']];
-let sSel=null;
-function renderSort(){$('#sRes').textContent='';$$('.bin .chip').forEach(c=>c.remove());$('#pool').innerHTML=shuffle(SORT).map(([t,a])=>`<span class="chip" draggable="true" data-a="${a}">${t}</span>`).join('');bindChips()}
-function bindChips(){$$('.chip').forEach(c=>{c.onclick=e=>{e.stopPropagation();$$('.chip.sel').forEach(x=>x.classList.remove('sel'));sSel=c;c.classList.add('sel')};c.ondragstart=()=>{sSel=c}})}
-$$('.bin').forEach(b=>{b.onclick=()=>{if(sSel){sSel.classList.remove('sel','ok','no');b.appendChild(sSel);sSel=null}};b.ondragover=e=>{e.preventDefault();b.classList.add('over')};b.ondragleave=()=>b.classList.remove('over');b.ondrop=e=>{e.preventDefault();b.classList.remove('over');if(sSel){sSel.classList.remove('sel','ok','no');b.appendChild(sSel);sSel=null}}});
-$('#pool').onclick=()=>{if(sSel){sSel.classList.remove('sel','ok','no');$('#pool').appendChild(sSel);sSel=null}};
-$('#sCheck').onclick=()=>{let ok=0;$$('.bin').forEach(b=>b.querySelectorAll('.chip').forEach(c=>{const r=c.dataset.a===b.dataset.bin;c.classList.toggle('ok',r);c.classList.toggle('no',!r);if(r)ok++}));const left=$$('#pool .chip').length;$('#sRes').innerHTML=`${ok} / 8 correct`+(left?` · ${left} not sorted`:'')+'. Why? Routine, fact, state – or now, temporary, change, plan?'};
-$('#sReset').onclick=renderSort;renderSort();
+/* grammar doctor (wrong options from the same homework) */
+const DOC=[
+ ['I am needing a comfortable outfit for the trip.','I <u>need</u> a comfortable outfit for the trip.'],
+ ['She is preferring fitted jackets to oversized ones.','She <u>prefers</u> fitted jackets to oversized ones.'],
+ ['My best friend and I are having a lot in common.','My best friend and I <u>have</u> a lot in common.'],
+ ['Look at the picture: the woman stands near the window.','Look at the picture: the woman <u>is standing</u> near the window.'],
+ ['He often is wearing smart clothes to work.','He often <u>wears</u> smart clothes to work.'],
+ ['I am not understanding why he is upset.','I <u>don’t understand</u> why he is upset.'],
+ ['Listen! Someone knocks at the door.','Listen! Someone <u>is knocking</u> at the door.'],
+ ['Her colleague usually is getting on well with everyone.','Her colleague usually <u>gets</u> on well with everyone.'],
+ ['The man in the picture sits in a chair.','The man in the picture <u>is sitting</u> in a chair.']];
+let dp=0;
+function renderDoc(){const p=DOC.slice(dp*3,dp*3+3);$('#docs').innerHTML=p.map(d=>`<div class="fc"><div class="in"><div class="face front"><span class="rx">FIX</span><span>${d[0]}</span></div><div class="face back"><span>${d[1]}</span></div></div></div>`).join('');$$('#docs .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));$('#dCount').textContent=`${dp*3+1}–${dp*3+3} / 9`}
+$('#dPrev').onclick=()=>{dp=(dp+2)%3;renderDoc()};$('#dNext').onclick=()=>{dp=(dp+1)%3;renderDoc()};renderDoc();
 
-/* ---------- 3 PHOTO ---------- */
+/* ===== GAMES: floor is lava (rule examples from homework 1D) ===== */
+const LAVA=[
+ ['I usually ___ my friends after work.',['meet','am meeting','meets'],0],
+ ['The Earth ___ around the Sun.',['moves','is moving','move'],0],
+ ['She ___ simple clothes.',['likes','is liking','like'],0],
+ ['He ___ in Berlin.',['lives','is living','live'],0],
+ ['I ___ the answer.',['know','am knowing','knows'],0],
+ ['She ___ a letter now.',['is reading','reads','read'],0],
+ ['He ___ with friends this week.',['is staying','stays','stay'],0],
+ ['Her English ___ better.',['is getting','gets','get'],0],
+ ['We ___ at seven tonight.',['are meeting','meet','meets'],0],
+ ['You ___ me!',['are always interrupting','always interrupts','always interrupting'],0]];
+let lOrder=[],li=0,lScore=0,lLives=3,lDone=false;
+function lavaStart(){lOrder=shuffle(LAVA);li=0;lScore=0;lLives=3;$('#lScore').textContent=0;lavaQ()}
+function drawLives(){$('#lLives').innerHTML=[0,1,2].map(i=>`<i class="${i<lLives?'':'off'}"></i>`).join('')}
+function lavaQ(){drawLives();$('#lRes').textContent='';lDone=false;$('#lNext').textContent='Next';
+ if(li>=lOrder.length||lLives<=0){$('#lSent').innerHTML=lLives<=0?'<b>Game over.</b> You fell into the lava.':`<b>You crossed the lava!</b> ${lScore} / ${lOrder.length}`;$('#lStones').innerHTML='';$('#lNext').textContent='Play again';lDone=true;return}
+ const [s,opts,a]=lOrder[li];$('#lSent').innerHTML=`<span class="muted">${li+1} / ${lOrder.length}</span><br>${s.replace('___','<b>_____</b>')}`;
+ const sh=shuffle(opts.map((o,i)=>[o,i===a]));$('#lStones').innerHTML=sh.map(([o,r])=>`<button class="stone" data-r="${r?1:0}">${o}</button>`).join('');
+ $$('.stone').forEach(b=>b.onclick=()=>{if(lDone)return;lDone=true;if(b.dataset.r==='1'){b.classList.add('ok');lScore++;$('#lScore').textContent=lScore;$('#lRes').textContent='Safe!'}else{b.classList.add('sink');$$('.stone').find(x=>x.dataset.r==='1').classList.add('ok');lLives--;drawLives();$('#lRes').textContent='Lava! Why is the green one right?'}})}
+$('#lNext').onclick=()=>{if(li>=lOrder.length||lLives<=0){lavaStart();return}if(!lDone)return;li++;lavaQ()};lavaStart();
+
+/* rapid categories */
+let rScore=0,rOn=false,rKey;
+function rRound(){stopT('r');rOn=false;const keys=shuffle(Object.keys(SETS));rKey=keys[0];$('#rCat').textContent=SETS[rKey][0];$('#rClock').textContent='00:30';$('#rRes').textContent='';
+ const good=shuffle(SETS[rKey][1]).slice(0,4).map(x=>[x[0],1]),bad=keys.slice(1).flatMap(k=>shuffle(SETS[k][1]).slice(0,2).map(x=>[x[0],0]));
+ $('#rGrid').innerHTML=shuffle([...good,...bad.slice(0,5)]).map(([w,g])=>`<button class="rt" data-g="${g}">${w}</button>`).join('');
+ $$('.rt').forEach(b=>b.onclick=()=>{if(!rOn||b.classList.contains('ok')||b.classList.contains('no'))return;if(b.dataset.g==='1'){b.classList.add('ok');rScore++}else{b.classList.add('no');rScore=Math.max(0,rScore-1)}$('#rScore').textContent=rScore;if($$('.rt[data-g="1"]').every(x=>x.classList.contains('ok')))rEnd(true)});
+ $('#rStart').textContent='Start';$('#rStart').disabled=false}
+function rEnd(all){stopT('r');rOn=false;$$('.rt[data-g="1"]:not(.ok)').forEach(x=>x.classList.add('miss'));$('#rRes').textContent=all?'All found!':'Time! Yellow = missed.';$('#rStart').textContent='Next round';$('#rStart').disabled=false}
+$('#rStart').onclick=()=>{if($('#rStart').textContent==='Next round'){rRound();return}rOn=true;$('#rStart').disabled=true;countdown('r',30,l=>$('#rClock').textContent=mmss(l),()=>rEnd(false))};
+rRound();
+
+/* ===== PHOTO hotspots ===== */
+const HS=[
+ [32,46,'The woman: where is she? What is she wearing? What is she doing?'],
+ [73,62,'The man: describe his appearance and clothes. What is he doing?'],
+ [69,41,'The cat: where is it? Use on, next to, in front of.'],
+ [52,18,'The background: what can you see in the background?'],
+ [19,80,'The foreground: what can you see in the foreground?'],
+ [93,86,'On the right: what objects can you see?'],
+ [50,55,'The people: how do they feel? Use seems and looks.']];
+$('#pic').insertAdjacentHTML('beforeend',HS.map((h,i)=>`<button class="hs" style="left:${h[0]}%;top:${h[1]}%" data-i="${i}">${i+1}</button>`).join(''));
+$$('.hs').forEach(b=>b.onclick=()=>{b.classList.add('seen');$('#pPrompt').innerHTML=`<b>${+b.dataset.i+1}.</b> ${HS[+b.dataset.i][2]}`;pReset(false)});
 const PCH=['in the foreground','in the background','next to','in front of','on the left','on the right','seems','looks','is wearing','is sitting','is standing'];
-$('#pChips').innerHTML=PCH.map(p=>`<button class="pchip">${p}</button>`).join('');
-$$('.pchip').forEach(b=>b.onclick=()=>b.classList.toggle('used'));
-const PST=[
- 'Say what the picture shows. Say where the people are.',
- 'Describe the woman and the man: appearance and clothes.',
- 'Say what each person is doing. Mention objects and the room.',
- 'Say how the people may feel. Use at least 3 words from 1A–1C.'];
-$('#pSteps').innerHTML=PST.map((s,i)=>`<button class="sp" data-i="${i}">${i+1}</button>`).join('');
-$$('#pSteps .sp').forEach(b=>b.onclick=()=>{$$('#pSteps .sp').forEach(x=>x.classList.toggle('on',x===b));$('#pText').textContent=PST[+b.dataset.i]});
-let pT=null;
-function pReset(){clearInterval(pT);pT=null;$('#pNum').textContent='60';$('#pRing').style.strokeDashoffset=0;$('#pStart').disabled=false;$$('.pchip').forEach(b=>b.classList.remove('used'))}
-$('#pStart').onclick=()=>{if(pT)return;$('#pStart').disabled=true;const t0=Date.now();pT=setInterval(()=>{const left=Math.max(0,60-(Date.now()-t0)/1000);$('#pNum').textContent=Math.ceil(left);$('#pRing').style.strokeDashoffset=157*(1-left/60);if(left<=0){clearInterval(pT);pT=null;$('#pNum').textContent='0';$('#pStart').disabled=false;$('#pStart').textContent='Start again'}},200)};
-$('#pReset').onclick=pReset;
+$('#pChips').innerHTML=PCH.map(p=>`<button class="pchip">${p}</button>`).join('');$$('.pchip').forEach(b=>b.onclick=()=>b.classList.toggle('used'));
+function pReset(chips=true){stopT('p');$('#pNum').textContent='30';$('#pRing').style.strokeDashoffset=0;$('#pStart').disabled=false;if(chips)$$('.pchip').forEach(b=>b.classList.remove('used'))}
+$('#pStart').onclick=()=>{$('#pStart').disabled=true;countdown('p',30,l=>{$('#pNum').textContent=Math.ceil(l);$('#pRing').style.strokeDashoffset=157*(1-l/30)},()=>{$('#pStart').disabled=false;$('#pStart').textContent='Again'})};
+$('#pReset').onclick=()=>{pReset(true);$$('.hs').forEach(b=>b.classList.remove('seen'));$('#pPrompt').textContent='Tap a point on the picture.'};
 
-/* ---------- 4 VIDEO ---------- */
+/* ===== VIDEO: audio gap race ===== */
 const GAPS=[
- ['How can I ___ you?','How can I help you?','help you = offer assistance'],
- ['The air conditioning isn’t ___.','The air conditioning isn’t working.','isn’t working = is not functioning'],
- ['I’ll ___ somebody up to look at it.','I’ll send somebody up to look at it right now.','send somebody up = a staff member comes to the room'],
- ['I ___ a problem with the wi-fi.','I have a problem with the wi-fi.','have a problem with = a standard way to start'],
- ['I can’t ___ a signal.','I can’t get a signal.','get a signal = get a usable connection'],
- ['I’ll ___ you through to IT.','I’ll put you through to IT.','put somebody through = connect a phone call']];
-let gp=0;
-function renderGaps(){const part=GAPS.slice(gp*3,gp*3+3);$('#gaps').innerHTML=part.map(g=>`<div class="gc"><div class="in"><div class="face front">${g[0]}</div><div class="face back"><div class="full">${g[1]}</div><div class="why">${g[2]}</div></div></div></div>`).join('');$$('.gc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));$('#gCount').textContent=`${gp*3+1}–${gp*3+part.length} / ${GAPS.length}`}
-$('#gPrev').onclick=()=>{gp=(gp+1)%2;renderGaps()};$('#gNext').onclick=()=>{gp=(gp+1)%2;renderGaps()};renderGaps();
+ ['How can I ___ you?','help','How can I help you?','offer assistance'],
+ ['The air conditioning isn’t ___.','working','The air conditioning isn’t working.','is not functioning'],
+ ['I’ll ___ somebody up to look at it.','send','I’ll send somebody up to look at it right now.','a staff member comes to the room'],
+ ['I ___ a problem with the wi-fi.','have','I have a problem with the wi-fi.','a standard way to start'],
+ ['I can’t ___ a signal.','get','I can’t get a signal.','get a usable connection'],
+ ['I’ll ___ you through to IT.','put','I’ll put you through to I T.','connect a phone call']];
+let gT0=null,gDone=0;
+function gRender(){stopT('g');gT0=null;gDone=0;$('#gClock').textContent='00:00';$('#gBar').style.width='0';$('#gRes').textContent='';
+ $('#gRows').innerHTML=GAPS.map((g,i)=>`<div><div class="gr"><button class="pl" data-i="${i}">&#9654;</button><span>${g[0].replace('___','<b>____</b>')}</span><input data-i="${i}" autocomplete="off"><button class="ck" data-i="${i}">Check</button><span class="why" id="gw${i}"></span></div></div>`).join('');
+ $$('.gr .pl').forEach(b=>b.onclick=()=>{gStart();say(GAPS[+b.dataset.i][2],.85)});
+ $$('.gr input').forEach(inp=>{inp.onfocus=gStart;inp.onkeydown=e=>{if(e.key==='Enter')gCheck(+inp.dataset.i)}});
+ $$('.gr .ck').forEach(b=>b.onclick=()=>gCheck(+b.dataset.i))}
+function gStart(){if(gT0)return;gT0=Date.now();timers.g=setInterval(()=>{const s=Math.floor((Date.now()-gT0)/1000);$('#gClock').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},250)}
+function gCheck(i){gStart();const inp=$(`.gr input[data-i="${i}"]`);if(inp.classList.contains('ok'))return;const ok=inp.value.trim().toLowerCase()===GAPS[i][1];inp.classList.toggle('ok',ok);inp.classList.toggle('no',!ok);
+ if(ok){inp.disabled=true;gDone++;$('#gw'+i).textContent=GAPS[i][2]+' · '+GAPS[i][3];$('#gBar').style.width=(gDone/GAPS.length*100)+'%';if(gDone===GAPS.length){stopT('g');$('#gRes').innerHTML=`Finished in <b>${$('#gClock').textContent}</b>`}}}
+$('#gReset').onclick=gRender;gRender();
 
-/* ---------- 5 RECEPTION ---------- */
-const NAT=[
- ['My Wi-Fi is broken. Fix it.','There’s a problem with the Wi-Fi. Could you help me, please?'],
- ['Give me towels.','Could you send up some clean towels, please?'],
- ['The air conditioning doesn’t work.','The air conditioning isn’t working.'],
- ['I want IT.','Could you put me through to IT, please?']];
+/* ===== RECEPTION ===== */
+const NAT=[['My Wi-Fi is broken. Fix it.','There’s a problem with the Wi-Fi. Could you help me, please?'],['Give me towels.','Could you send up some clean towels, please?'],['The air conditioning doesn’t work.','The air conditioning isn’t working.'],['I want IT.','Could you put me through to IT, please?']];
 $('#lab').innerHTML=NAT.map((n,i)=>`<div class="lr"><div class="bad">${n[0]}</div><button class="good" data-i="${i}">Your version?</button></div>`).join('');
 $$('#lab .good').forEach(b=>b.onclick=()=>{const s=b.classList.toggle('show');b.textContent=s?NAT[+b.dataset.i][1]:'Your version?'});
-const ROLE=[
- ['408','The Wi-Fi isn’t working.','You have an online work call in 20 minutes.','I’m sorry about that. I’ll put you through to IT right now.'],
- ['215','There are no clean towels.','You want to take a shower before dinner.','Of course. I’ll send some clean towels up right away.'],
- ['614','The air conditioning isn’t working.','The room is very hot.','I’m sorry. I’ll send somebody up to have a look.'],
- ['302','There’s no hot water.','You need to leave in 30 minutes.','I’m sorry about that. I’ll ask maintenance to check it immediately.'],
- ['711','The TV isn’t working.','You want to watch the news.','I’ll send somebody up to check the TV.'],
- ['129','Your key card isn’t working.','You are locked out of your room.','Please come to Reception and I’ll make a new key card for you.']];
-let rp=0;
-function renderRole(){const part=ROLE.slice(rp*4,rp*4+4);$('#rp').innerHTML=part.map(r=>`<div class="rc"><div class="in"><div class="face front"><span class="room">ROOM ${r[0]}</span><span class="prob">${r[1]}</span><span class="sec">${r[2]}</span></div><div class="face back"><span class="room">GUEST</span><span class="g">${r[1].replace('Your key card','My key card')}</span><span class="room">RECEPTION</span><span class="r">${r[3]}</span></div></div></div>`).join('');$$('.rc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));$('#rCount').textContent=`${rp*4+1}–${rp*4+part.length} / ${ROLE.length}`}
-$('#rPrev').onclick=()=>{rp=(rp+1)%2;renderRole()};$('#rNext').onclick=()=>{rp=(rp+1)%2;renderRole()};renderRole();
+const ROLE=[['408','The Wi-Fi isn’t working.','You have an online work call in 20 minutes.','I’m sorry about that. I’ll put you through to IT right now.'],['215','There are no clean towels.','You want to take a shower before dinner.','Of course. I’ll send some clean towels up right away.'],['614','The air conditioning isn’t working.','The room is very hot.','I’m sorry. I’ll send somebody up to have a look.'],['302','There’s no hot water.','You need to leave in 30 minutes.','I’m sorry about that. I’ll ask maintenance to check it immediately.'],['711','The TV isn’t working.','You want to watch the news.','I’ll send somebody up to check the TV.'],['129','My key card isn’t working.','You are locked out of your room.','Please come to Reception and I’ll make a new key card for you.']];
+const BOXORDER=shuffle(ROLE.map((_,i)=>i));let mCur=null;
+$('#mBoxes').innerHTML=BOXORDER.map((r,i)=>`<button class="gift" data-r="${r}"><svg width="26" height="22" viewBox="0 0 26 22"><rect x="2" y="8" width="22" height="13" rx="2" fill="#ffffff33" stroke="#fff" stroke-width="2"/><rect x="1" y="5" width="24" height="5" rx="1.5" fill="#fff"/><rect x="11.5" y="5" width="3" height="16" fill="#ffd84d"/></svg>Box ${i+1}</button>`).join('');
+$$('.gift').forEach(b=>b.onclick=()=>{const r=ROLE[+b.dataset.r];$$('.gift').forEach(x=>x.classList.remove('cur'));b.classList.add('open','cur');mCur=r;stopT('m');$('#mClock').textContent='00:30';$('#mStart').disabled=false;$('#mCard').classList.remove('f');
+ $('#mFront').innerHTML=`<span class="room">ROOM ${r[0]}</span><span class="prob">${r[1]}</span><span class="muted">${r[2]}</span><span class="muted">Call Reception.</span>`;
+ $('#mBack').innerHTML=`<span class="room">GUEST</span><span class="g">${r[1]}</span><span class="room">RECEPTION</span><span class="r">${r[3]}</span>`});
+$('#mCard').onclick=()=>{if(mCur)$('#mCard').classList.toggle('f')};
+$('#mStart').onclick=()=>{$('#mStart').disabled=true;countdown('m',30,l=>$('#mClock').textContent=mmss(l),()=>{$('#mStart').disabled=false})};
+
+/* ===== JEOPARDY + escape code ===== */
+const JEO=[
+ ['Words',[[100,'Translate: поддерживать связь','keep in touch'],[200,'This colour really ___ you.','suits'],[300,'The opposite of fitted clothes','oversized']]],
+ ['Grammar',[[100,'Listen! Someone ___ at the door.','is knocking'],[200,'Fix it: She is preferring fitted jackets.','She prefers fitted jackets.'],[300,'Why Present Simple with know, like, want, need?','They are stative verbs.']]],
+ ['Photo',[[100,'на заднем плане','in the background'],[200,'The man in the picture ___ in a chair.','is sitting'],[300,'Describe the woman in the picture: 3 sentences in 30 seconds.','Open answer']]],
+ ['Hotel',[[100,'The air conditioning isn’t ___.','working'],[200,'I’ll ___ you through to IT.','put'],[300,'Say it politely: Give me towels.','Could you send up some clean towels, please?']]]];
+const CODE=[...String(1000+Math.floor(Math.random()*9000))];
+let jScore=0,jCur=null,jDoneSet=new Set();
+function jRender(){let h=JEO.map(c=>`<div class="jh">${c[0]}</div>`).join('');for(let r=0;r<3;r++)h+=JEO.map((c,ci)=>`<button class="jc" data-c="${ci}" data-r="${r}">${c[1][r][0]}</button>`).join('');$('#jBoard').innerHTML=h;
+ $$('.jc').forEach(b=>b.onclick=()=>{if(b.classList.contains('done'))return;$$('.jc').forEach(x=>x.classList.remove('cur'));b.classList.add('cur');jCur=b;const q=JEO[+b.dataset.c][1][+b.dataset.r];$('#jQ').classList.remove('f');$('#jFront').innerHTML=`<span style="color:#ffd84d">${JEO[+b.dataset.c][0]} · ${q[0]}</span><span>${q[1]}</span>`;$('#jBack').textContent=q[2];$('#jYes').disabled=$('#jNo').disabled=false});
+ $('#jLock').innerHTML=JEO.map((_,i)=>`<span id="jd${i}">_</span>`).join('')}
+$('#jQ').onclick=()=>{if(jCur)$('#jQ').classList.toggle('f')};
+function jMark(ok){if(!jCur)return;const pts=+jCur.textContent;if(ok){jScore+=pts;$('#jScore').textContent=jScore}jCur.classList.remove('cur');jCur.classList.add('done');jDoneSet.add(jCur.dataset.c+'-'+jCur.dataset.r);
+ const c=+jCur.dataset.c;if([0,1,2].every(r=>jDoneSet.has(c+'-'+r)))$('#jd'+c).textContent=CODE[c];jCur=null;$('#jYes').disabled=$('#jNo').disabled=true;
+ if(jDoneSet.size===12){$('#jFront').innerHTML=`<span>Code: <b style="color:#ffd84d">${CODE.join('')}</b></span><span>You escaped! ${jScore} points.</span>`;$('#jQ').classList.remove('f');$('#jBack').textContent=''}}
+$('#jNew').onclick=()=>{jScore=0;jCur=null;jDoneSet=new Set();$('#jScore').textContent=0;$('#jQ').classList.remove('f');$('#jFront').textContent='Choose a category and points.';$('#jBack').textContent='';$('#jYes').disabled=$('#jNo').disabled=true;jRender()};
+$('#jYes').onclick=()=>jMark(true);$('#jNo').onclick=()=>jMark(false);
+jRender();
 </script>
 </body>
 </html>
