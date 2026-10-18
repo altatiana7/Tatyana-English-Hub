@@ -1,6 +1,6 @@
 /* Общее меню разделов: один сайт, одна навигация на всех страницах. */
 (function(){
-  const SECT=[['index.html','Главная','все разделы'],['lesson1.html','Диагностика','9 этапов на уроке'],['home1.html','Домашняя работа','диагностика · домашняя часть'],['lessonw1.html','Занятие 1 · неделя 1','Family and friends'],['write37.html','Письмо 37','структура, вопросы, 89 писем'],['write38.html','Задание 38','структура, данные, 27 тем'],['russia.html','Russia','устная часть и письма о России'],['plan.html','План','для учителя']].filter(s=>window.TEACHER||s[0]!=='plan.html');
+  const SECT=[['index.html','Главная','все разделы'],['lesson1.html','Диагностика','9 этапов на уроке'],['home1.html','Домашняя работа','диагностика · домашняя часть'],['lessonw1.html','Занятие 1 · неделя 1','Family and friends'],['write37.html','Письмо 37','структура, вопросы, 89 писем'],['write38.html','Задание 38','структура, данные, 27 тем'],['russia.html','Russia','устная часть и письма о России'],['strategies.html','Strategies & Traps','аудирование 2, устная 2'],['plan.html','План','для учителя']].filter(s=>window.TEACHER||s[0]!=='plan.html');
   const V='40',bar=document.querySelector('.bar'),home=bar&&bar.querySelector('a.home');if(!home)return;
   const here=(location.pathname.split('/').pop()||'index.html');
   const b=document.createElement('button');b.type='button';b.className='tab menub';b.textContent=(SECT.find(s=>s[0]===here)||SECT[0])[1];b.setAttribute('aria-haspopup','true');b.setAttribute('aria-expanded','false');

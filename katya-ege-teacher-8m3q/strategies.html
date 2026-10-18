@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>КАТЯ ЕГЭ · Strategies &amp; Traps</title>
+<link rel="stylesheet" href="app.css?v=40">
+<style>
+#main{display:flex;flex-direction:column;gap:8px;min-height:0;flex:1;overflow:auto;padding:0 2px}
+.st3{display:grid;grid-template-columns:minmax(230px,1fr) minmax(0,1.6fr) minmax(230px,1fr);gap:10px;min-height:0;flex:1}
+.st3>.panel{display:flex;flex-direction:column;gap:6px;min-height:0;overflow:auto}
+.st3 h3{margin:0 0 2px}
+.sl{margin:0;padding-left:20px;display:grid;gap:5px}
+.sl li{font-size:var(--fs-text,16.5px);line-height:1.42}
+.kr{margin:0;padding-left:18px;display:grid;gap:5px}
+.kr li{font-size:var(--fs-text,16.5px);line-height:1.42}
+.fipi{border-left:4px solid var(--acc);background:#fbf3ef;padding:5px 9px;border-radius:6px;font-size:14px;line-height:1.35}
+.mid{align-items:center}
+.adsel{display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
+.adsel .chip{cursor:pointer}
+.adctx{text-align:center;font-weight:700;max-width:560px}
+.card3{width:min(560px,100%);height:236px;perspective:1400px;cursor:pointer}
+.card3 .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.card3.on .in{transform:rotateY(180deg)}
+.card3 .fc{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid var(--line);border-radius:12px;background:#fff;padding:14px 18px;display:flex;flex-direction:column;justify-content:center;gap:8px;overflow:auto}
+.card3 .fc.f{border-top:5px solid var(--blue)}
+.card3 .fc.b{transform:rotateY(180deg);border-top:5px solid var(--ok)}
+.card3 .ey{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.card3 .stmt{font-size:19px;line-height:1.35;font-weight:700}
+.card3 .aud{font-size:17px;line-height:1.4;font-style:italic;border-left:3px solid var(--blue);padding-left:10px}
+.card3 .big{font-size:22px;line-height:1.3;text-align:center}
+.card3 .ans{font-size:22px;font-weight:800}
+.card3 .why{font-size:17px;line-height:1.4}
+.card3 .tn{display:inline-block;background:var(--warnbg);border:1px solid #e6cf8a;border-radius:6px;padding:1px 8px;font-size:14px;font-weight:700}
+@media(prefers-reduced-motion:reduce){.card3 .in{transition:none}}
+.ctlrow{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+.tfb{display:flex;gap:6px;justify-content:center}
+.tfb .btn.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
+.tfb .btn.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.ring2{position:relative;width:52px;height:52px}
+.ring2 svg{transform:rotate(-90deg)}
+.ring2 span{position:absolute;inset:0;display:grid;place-items:center;font-weight:800}
+.ring2 .t1{stroke:#d9dfeb}.ring2 .t2{stroke:var(--blue);transition:stroke-dashoffset .25s linear}
+.ring2.end .t2{stroke:var(--bad)}
+.cnt{color:var(--muted);font-variant-numeric:tabular-nums}
+@media(max-width:900px){.st3{grid-template-columns:minmax(0,1fr)}}
+@media(max-height:640px){.card3{height:200px}.card3 .stmt{font-size:17.5px}.card3 .aud{font-size:16px}.sl li,.kr li{font-size:15.5px;line-height:1.36}}
+</style>
+<link rel="stylesheet" href="katya.css?v=5">
+</head>
+<body>
+<header class="bar">
+  <a class="home" href="index.html">ЕГЭ 2027 <span>· Strategies &amp; Traps</span></a>
+  <nav class="tabs" id="tabs" aria-label="Sections"></nav>
+</header>
+<main id="main"></main>
+<script>
+const TF=[
+ {s:"Mike’s favourite genre is horror.",a:"I’d prefer to watch a horror film tonight.",ans:"Not stated",trap:"General vs specific",why:"He wants to watch a horror film tonight. That does not make it his favourite genre."},
+ {s:"John dreams of becoming a Java programmer.",a:"All I want to do is to code and write programs, since it’s the only thing that truly excites me.",ans:"Not stated",trap:"General vs specific",why:"Programming in general is mentioned. Java is not."},
+ {s:"Igor hates vacuuming the floor.",a:"I vacuum the floor every day; my brother never helps.",ans:"Not stated",trap:"Fact vs feeling",why:"A fact tells us nothing about his feelings."},
+ {s:"Mary always tips waiters.",a:"The last time I ate out the waiter was super friendly so I thought he deserved an extra pound.",ans:"Not stated",trap:"Limiting words",why:"One case does not prove “always”."},
+ {s:"Greg and Mary live in London.",a:"Greg: In Russia you can easily become a victim of pickpockets in the underground. Mary: Well, no surprise here. London is just the same.",ans:"Not stated",trap:"Guessing beyond the text",why:"Mary knows London. Where they live is never said."},
+ {s:"Anna often works part time in summer.",a:"This summer I am not going to work! All I am planning to do is to travel and enjoy myself.",ans:"Not stated",trap:"Guessing beyond the text",why:"We only hear about this summer, not about other summers."},
+ {s:"Lena loves Harry Potter books.",a:"My brother has read all the books about Harry Potter, although he usually doesn’t like reading at all.",ans:"Not stated",trap:"True about someone else",why:"This is about her brother, not about Lena."},
+ {s:"Nina often went skiing when she was younger.",a:"One year, I wanted to try skiing… we had a few lessons but then I fell over, broke a ski and then I was too afraid to continue.",ans:"False",trap:"The speaker contradicts it",why:"She tried once and gave up, so not “often”."},
+ {s:"Greg is going to give up swimming on his own.",a:"(Greg has decided to take up water polo.) Swimming on my own is great but it can be a bit boring. I need some variety.",ans:"False",trap:"Adding is not giving up",why:"He adds water polo for variety. He is not giving up swimming."},
+ {s:"Mr Johnson’s lecture inspired John to study Physics.",a:"I am planning to major in Physics so I attended Mr Johnson’s lecture. It was absolutely amazing!",ans:"False",trap:"Cause and effect reversed",why:"He chose Physics first and then went to the lecture."},
+ {s:"Dr Smith believes that online education will eventually replace traditional classrooms.",a:"Dr Smith gave a lecture about the rise of online learning.",ans:"Not stated",trap:"Topic is not opinion",why:"The topic of the lecture is given. Her opinion is not."}
+];
+const ADS=[
+ ["Photographer","A professional photographer for you! You are considering getting some professional photos.",[["location of the studio","Where is the studio located?"],["historical costumes","Do you have historical costumes?"],["professional make-up","Do you do professional make-up?"],["the cost of an hour’s work","How much does an hour’s work cost?"]]],
+ ["Botany club","Join our botany club! You are considering going to the botany club.",[["activities","What activities are there in your club?"],["timetable","What is the timetable of the club?"],["minimum age","What is the minimum age to join the club?"],["number of members in the club","How many members are there in the club?"]]],
+ ["Cake","Special cake for any occasion! You are considering ordering a cake from this company.",[["maximum size","What is the maximum size of your cakes?"],["cake fillings","What cake fillings do you have?"],["delivery","Do you deliver cakes?"],["discounts","Do you have any discounts?"]]],
+ ["Cafe job","Join our friendly team! You are considering taking a part-time job at a cafe.",[["minimum age","What is the minimum age for working in your cafe?"],["variety of jobs","What jobs can I apply for?"],["required number of hours per week","How many hours per week do I have to work?"],["salary","What is the salary?"]]],
+ ["Vet clinic","Healthy pets – happy owners! You are considering having a check-up for a pet.",[["working hours","What are the working hours of the clinic?"],["home visits","Are home visits available?"],["exotic pets","Do you treat exotic pets?"],["discounts for regular clients","Are there any discounts for regular clients?"]]],
+ ["Cargo","We will transport anything in the best way possible! You are considering using a cargo transportation company.",[["transportation of plants","Does your company transport plants?"],["types of cars and trucks used","What types of cars and trucks do you use?"],["working hours","What are the working hours of your company?"],["discounts","Are there any discounts?"]]],
+ ["Robot vacuum","To keep your home clean is easy now! You are considering buying a robot vacuum cleaner.",[["colour options","What colours are available?"],["number of features","How many features does it have?"],["maximum working time","What is the maximum working time?"],["cost of delivery","How much does the delivery cost?"]]],
+ ["Check-up","Healthy mind in a healthy body! You are considering doing a medical check-up.",[["specialists available","What specialists are available in your clinic?"],["waiting time for medical tests","What is the waiting time for medical tests?"],["making an appointment online","Can I make an appointment online?"],["full check-up price","How much is the full check-up?"]]],
+ ["Museum","Feast your eyes! You are going to visit a museum of modern art with your friends.",[["transport to the museum","What transport can I use to get to the museum?"],["excursion time","What time do the excursions start?"],["admission fee","What is the admission fee?"],["special exhibitions","Are there any special exhibitions?"]]],
+ ["Quest","Solve a mystery with our quest team! You are considering playing a quest with your friends.",[["programmes available","What programmes are available now?"],["payment options","What payment options do you have?"],["possibility to bring food","Can we bring food to the quest room?"],["discounts for a birthday person","Are there any discounts for a birthday person?"]]],
+ ["Post office","Get in touch in a real way! You are considering sending a postcard to your friend.",[["working hours","What are the working hours of the post office?"],["prices of stamps","How much do stamps cost?"],["post boxes nearby","Are there any post boxes nearby?"],["average time of delivery","What is the average time of delivery?"]]],
+ ["Tour","Travel with us! You are considering booking a tour with your friends.",[["possible dates","What are the possible dates of the tour?"],["duration","How long does the tour last?"],["payment options","What payment options are available?"],["group discounts","Are there any group discounts?"]]]
+];
+const MODS=[
+ {id:"tf",tab:"Listening 2 · True / False / Not stated"},
+ {id:"q",tab:"Speaking 2 · Questions"}
+];
+const $=s=>document.querySelector(s);
+function el(t,c,h){const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e}
+let timer=null;const stopT=()=>{if(timer){clearInterval(timer);timer=null}};
+function tabs(cur){const n=$("#tabs");n.innerHTML="";MODS.forEach(m=>{const b=el("button","tab"+(m.id===cur?" on":""),m.tab);b.type="button";b.onclick=()=>show(m.id);n.append(b)})}
+function list(cls,items){const ol=el(cls==="sl"?"ol":"ul",cls);items.forEach(x=>ol.append(el("li","",x)));return ol}
+function show(id){stopT();tabs(id);const m=$("#main");m.innerHTML="";(id==="tf"?modTF:modQ)(m)}
+
+function modTF(m){
+  m.append(el("div","inst","<b>Listening, task 2.</b> Read the statement and the extract. Decide: True, False or Not stated. Then flip the card to see the trap."));
+  const g=el("div","st3");
+  const L=el("div","panel");L.append(el("h3","","Strategy"),list("sl",[
+   "Read all seven statements before you listen. Underline key words.",
+   "Circle limiting words: <i>always, never, only, every, favourite, the most</i>.",
+   "Statements follow the order of the dialogue.",
+   "<b>True</b> – the text says exactly this.",
+   "<b>False</b> – the text says the opposite.",
+   "<b>Not stated</b> – you can neither confirm nor reject it: the topic is missing, or one detail is missing.",
+   "Use the second listening to check the doubtful ones."]));
+  const C=el("div","panel mid");let i=0,flipped=false;const order=TF.map((_,k)=>k);
+  const draw=()=>{C.innerHTML="";const t=TF[order[i]];
+    const card=el("div","card3"+(flipped?" on":""));
+    card.innerHTML=`<div class="in"><div class="fc f"><span class="ey">Statement</span><div class="stmt">${t.s}</div><span class="ey">You hear</span><div class="aud">${t.a}</div></div><div class="fc b"><span class="ey">Answer</span><div class="ans">${t.ans}</div><div><span class="tn">${t.trap}</span></div><div class="why">${t.why}</div></div></div>`;
+    card.onclick=()=>{flipped=!flipped;card.classList.toggle("on",flipped)};
+    const tf=el("div","tfb");["True","False","Not stated"].forEach(v=>{const b=el("button","btn",v);b.type="button";b.onclick=()=>{tf.querySelectorAll("button").forEach(x=>{x.disabled=true;if(x.textContent===t.ans)x.classList.add("ok")});if(v!==t.ans)b.classList.add("bad");setTimeout(()=>{flipped=true;card.classList.add("on")},450)};tf.append(b)});
+    const row=el("div","ctlrow");
+    const pv=el("button","btn","← Back");pv.type="button";pv.disabled=i===0;pv.onclick=()=>{i--;flipped=false;draw()};
+    const fl=el("button","btn main","Flip the card");fl.type="button";fl.onclick=()=>{flipped=!flipped;card.classList.toggle("on",flipped)};
+    const nx=el("button","btn",i<TF.length-1?"Next →":"Start again");nx.type="button";nx.onclick=()=>{i=i<TF.length-1?i+1:0;flipped=false;draw()};
+    row.append(pv,fl,el("span","cnt",(i+1)+" / "+TF.length),nx);
+    C.append(tf,card,row)};
+  draw();
+  const R=el("div","panel");R.append(el("h3","","Remember"),list("kr",[
+   "A detail of the statement is not in the text → <b>Not stated</b>, even if the topic is the same.",
+   "A fact is not a feeling: “does it every day” ≠ “hates it”.",
+   "True about her brother ≠ true about her.",
+   "One example does not prove <i>always</i> or <i>often</i>.",
+   "Do not guess from real life. Answer only from the text."]),
+   el("div","fipi","<b>FIPI, results 2026:</b> the most common mistake was confusing <i>Not stated</i> and <i>False</i>. Ask: is it said the other way round, or not said at all?"));
+  g.append(L,C,R);m.append(g);
+}
+
+function modQ(m){
+  m.append(el("div","inst","<b>Speaking, task 2.</b> Choose an advert. Press “Start”: 20 seconds for each question. Ask a direct question aloud, then flip the card."));
+  const g=el("div","st3");
+  const L=el("div","panel");L.append(el("h3","","Strategy"),list("sl",[
+   "You have 1.5 minutes to read the advert and the four points.",
+   "Decide for each point: a <i>Wh-</i> question or a <i>Yes/No</i> question.",
+   "Is there something? → <b>Do you have…? Are there any…? Can I…?</b>",
+   "How much, when, where? → <b>How much does… cost? What time do…? Where is…?</b>",
+   "Word order: question word + auxiliary + subject + verb.",
+   "Use the key words of the point. One question per point."]));
+  const C=el("div","panel mid");let gi=0,i=0,flipped=false;
+  const draw=()=>{stopT();C.innerHTML="";const ad=ADS[gi],it=ad[2][i];
+    const sel=el("div","adsel");ADS.forEach((a,k)=>{const b=el("button","chip"+(k===gi?" fill":""),a[0]);b.type="button";b.onclick=()=>{gi=k;i=0;flipped=false;draw()};sel.append(b)});
+    const card=el("div","card3"+(flipped?" on":""));
+    card.innerHTML=`<div class="in"><div class="fc f"><span class="ey">Point ${i+1} of 4 · ask a direct question</span><div class="big">${it[0]}</div></div><div class="fc b"><span class="ey">A possible question</span><div class="big">${it[1]}</div></div></div>`;
+    card.onclick=()=>{flipped=!flipped;card.classList.toggle("on",flipped)};
+    const RR=22,CC=2*Math.PI*RR;const ring=el("div","ring2");ring.innerHTML=`<svg width="52" height="52" viewBox="0 0 52 52"><circle class="t1" cx="26" cy="26" r="${RR}" fill="none" stroke-width="5"/><circle class="t2" cx="26" cy="26" r="${RR}" fill="none" stroke-width="5" stroke-dasharray="${CC}" stroke-dashoffset="0"/></svg><span>20</span>`;
+    const st=el("button","btn main","Start");st.type="button";
+    st.onclick=()=>{if(timer){stopT();st.textContent="Start";return}let left=20;ring.classList.remove("end");st.textContent="Stop";const p=ring.querySelector(".t2"),s=ring.querySelector("span");
+      const tick=()=>{s.textContent=Math.ceil(left);p.style.strokeDashoffset=CC*(1-left/20);if(left<=0){stopT();ring.classList.add("end");s.textContent="0";st.textContent="Start"}};tick();timer=setInterval(()=>{left-=.25;tick()},250)};
+    const row=el("div","ctlrow");
+    const pv=el("button","btn","← Back");pv.type="button";pv.disabled=i===0;pv.onclick=()=>{i--;flipped=false;draw()};
+    const fl=el("button","btn","Flip the card");fl.type="button";fl.onclick=()=>{flipped=!flipped;card.classList.toggle("on",flipped)};
+    const nx=el("button","btn",i<3?"Next →":"Start again");nx.type="button";nx.onclick=()=>{i=i<3?i+1:0;flipped=false;draw()};
+    row.append(ring,st,pv,fl,el("span","cnt",(i+1)+" / 4"),nx);
+    C.append(sel,el("div","adctx",ad[1]),card,row)};
+  draw();
+  const R=el("div","panel");R.append(el("h3","","Common traps"),list("kr",[
+   "No auxiliary: <s>What time the excursions start?</s> → What time <b>do</b> the excursions start?",
+   "Indirect question: <s>Can you tell me where the studio is?</s> → Where is the studio located?",
+   "Statement order: <s>Where the studio is located?</s> → Where <b>is the studio</b> located?",
+   "<s>How much costs the delivery?</s> → How much <b>does</b> the delivery <b>cost</b>?",
+   "<s>Discounts?</s> or <s>You have discounts?</s> → <b>Do you have</b> any discounts?",
+   "A grammar mistake = the question does not count."]));
+  g.append(L,C,R);m.append(g);
+}
+show("tf");
+</script>
+<script src="mode.js?v=1"></script>
+<script src="nav.js?v=42"></script>
+</body>
+</html>
