@@ -169,6 +169,11 @@ main{flex:1;min-height:0;padding:9px 12px}
 .jq .back{transform:rotateY(180deg);background:#fff8dd;border:2px solid #ffd84d;font-size:19px;font-weight:700;color:#14703d}
 .lock{display:flex;gap:6px;justify-content:center}
 .lock span{width:38px;height:44px;border-radius:8px;background:#1b1f4b;color:#ffd84d;font-family:'Courier New',monospace;font-size:26px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.tf{margin-left:auto;border:0;border-radius:999px;background:#fff;color:#3a2a7a;font-weight:700;font-size:13px;padding:3px 11px;box-shadow:0 2px 6px #0002}
+.tfo{position:fixed;inset:0;z-index:30;background:#1b1f4bcc;display:none;padding:10px}
+.tfo.on{display:flex;flex-direction:column}
+.tfo .tfh{display:flex;justify-content:flex-end;padding-bottom:6px}
+.tfo iframe{flex:1;border:0;border-radius:12px;background:#16203a;width:100%}
 /* teacher drawer */
 .drawer{position:fixed;top:46px;right:10px;width:min(440px,92vw);max-height:calc(100vh - 56px);overflow:auto;background:#fffdf7;border:1px solid #e3d6b0;border-radius:12px;box-shadow:0 10px 30px #0003;padding:10px 16px;display:none;z-index:20;font-size:15px}
 .drawer.on{display:block}
@@ -196,6 +201,7 @@ main{flex:1;min-height:0;padding:9px 12px}
 <div class="drawer" id="drawer">
   <h3>Plan · 60 min · after a two-week break</h3>
   <ol>
+    <li><b>Ten Faces.</b> Button in Warm-up: File 1 questions. Button in Reception: guests call with a problem, Maya answers as Reception.</li>
     <li><b>Warm-up (8 min).</b> Quizlet: she says the word and a sentence about herself, then flip. 60-Second Challenge: she names words aloud, you type them. Odd One Out: why is it different? Speaking 1–4.</li>
     <li><b>Homework (12 min).</b> 1D test as bombs: 15 seconds, 4 cards. Grammar Doctor: she finds and fixes the mistake, you flip.</li>
     <li><b>Games (8 min).</b> Floor is Lava for tenses, Rapid Categories for words.</li>
@@ -212,11 +218,12 @@ main{flex:1;min-height:0;padding:9px 12px}
   </ol>
 </div>
 
+<div class="tfo" id="tfo"><div class="tfh"><button class="btn" id="tfClose" style="background:#ff3d7f">Close</button></div><iframe id="tfFrame" title="Ten Faces" allow="autoplay"></iframe></div>
 <main>
 <!-- 1 WARM-UP -->
 <section class="pane on" id="warm" style="grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(0,.9fr)">
   <div class="box pink">
-    <div class="bh">Quizlet Flashcards <small>tap to flip</small></div>
+    <div class="bh">Quizlet Flashcards <small>tap to flip</small><button class="tf" data-ed="0">Ten Faces · Revision</button></div>
     <div class="bb">
       <div class="sets" id="sets"></div>
       <div class="flip" id="flash"><div class="in"><div class="face front" id="fFront"></div><div class="face back" id="fBack"></div></div></div>
@@ -328,7 +335,7 @@ main{flex:1;min-height:0;padding:9px 12px}
 <!-- 6 RECEPTION -->
 <section class="pane" id="reception" style="grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)">
   <div class="box green">
-    <div class="bh">Say it politely <small>tap for the natural version</small></div>
+    <div class="bh">Say it politely <small>tap for the natural version</small><button class="tf" data-ed="1">Ten Faces · Hotel</button></div>
     <div class="bb" id="lab"></div>
   </div>
   <div class="box purple">
@@ -369,6 +376,8 @@ const timers={};function stopT(k){clearInterval(timers[k]);timers[k]=null}
 function countdown(k,secs,onTick,onEnd){stopT(k);const t0=Date.now();timers[k]=setInterval(()=>{const left=secs-(Date.now()-t0)/1000;onTick(Math.max(0,left));if(left<=0){stopT(k);onEnd&&onEnd()}},100)}
 
 $$('.tab').forEach(t=>t.onclick=()=>{$$('.tab').forEach(x=>x.classList.toggle('on',x===t));$$('.pane').forEach(p=>p.classList.toggle('on',p.id===t.dataset.p))});
+$$('.tf').forEach(b=>b.onclick=()=>{$('#tfFrame').src='ten-faces-maya.html?v=20261018c&ed='+b.dataset.ed;$('#tfo').classList.add('on')});
+$('#tfClose').onclick=()=>{$('#tfo').classList.remove('on');$('#tfFrame').src='about:blank'};
 $('#teacherBtn').onclick=()=>$('#drawer').classList.toggle('on');
 document.addEventListener('click',e=>{if(!e.target.closest('#drawer')&&e.target.id!=='teacherBtn')$('#drawer').classList.remove('on')});
 
