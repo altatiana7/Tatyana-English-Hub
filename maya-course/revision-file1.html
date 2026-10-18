@@ -6,19 +6,19 @@
 <title>Maya · Revision File 1</title>
 <link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--ink:#1c2236;--muted:#5d6478;--line:#e1e3ee;--ok:#1f9d55;--okbg:#e3f7ea;--no:#e0364f;--nobg:#ffe8ec;
---pink:linear-gradient(90deg,#ff3d7f,#ff8a4c);--blue:linear-gradient(90deg,#2f6bff,#33c2ff);--green:linear-gradient(90deg,#14a86a,#5fd38d);
---orange:linear-gradient(90deg,#ff7a1a,#ffc53d);--purple:linear-gradient(90deg,#6a4cff,#b06bff);--teal:linear-gradient(90deg,#0aa3a3,#3fd0c9)}
+:root{--ink:#1c2236;--muted:#5d6478;--line:#e1e3ee;--ok:#4f8a5f;--okbg:#e6efe7;--no:#a9443a;--nobg:#f6e7e3;
+--pink:#a9503b;--blue:#3e5c76;--green:#5c7f69;
+--orange:#a8844c;--purple:#6b4e71;--teal:#4f7f7d}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
-body{background:linear-gradient(135deg,#fdf0ff 0%,#eef4ff 50%,#fff4ea 100%);color:var(--ink);font-family:'PT Serif',Georgia,'Times New Roman',serif;font-size:17px;overflow:hidden;display:flex;flex-direction:column}
+body{background:linear-gradient(135deg,#f6f3ed 0%,#f1efea 50%,#f4efe6 100%);color:var(--ink);font-family:'PT Serif',Georgia,'Times New Roman',serif;font-size:17px;overflow:hidden;display:flex;flex-direction:column}
 button{font:inherit;cursor:pointer;color:inherit}
 input{font:inherit}
 /* top bar */
-.bar{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:6px 10px;background:linear-gradient(90deg,#1b1f4b,#3a2a7a)}
+.bar{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:6px 10px;background:#1f2d3d;border-bottom:3px solid #b8955a}
 .bar .name{font-weight:700;font-size:17px;color:#fff;white-space:nowrap;margin-right:4px}
 .tabs{display:flex;gap:5px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
-.tab{border:0;border-radius:9px;padding:6px 11px;font-size:15px;font-weight:700;white-space:nowrap;color:#fff;opacity:.72;background:#ffffff1f}
+.tab{border:0;border-radius:6px;padding:6px 11px;font-size:15px;font-weight:700;white-space:nowrap;color:#fff;opacity:.72;background:#ffffff1f}
 .tab.on{opacity:1;box-shadow:0 2px 8px #0005}
 .tab[data-p=warm].on{background:var(--pink)}.tab[data-p=hw].on{background:var(--orange)}.tab[data-p=games].on{background:var(--green)}
 .tab[data-p=photo].on{background:var(--teal)}.tab[data-p=video].on{background:var(--blue)}.tab[data-p=reception].on{background:var(--purple)}.tab[data-p=jeo].on{background:var(--pink)}
@@ -26,16 +26,16 @@ input{font:inherit}
 main{flex:1;min-height:0;padding:9px 12px}
 .pane{display:none;height:100%;gap:10px}
 .pane.on{display:grid}
-.box{background:#fff;border-radius:14px;box-shadow:0 3px 14px #2b1f6a14;min-height:0;display:flex;flex-direction:column;overflow:hidden}
-.bh{display:flex;align-items:center;gap:8px;padding:6px 12px;color:#fff;font-weight:700;font-size:16px}
+.box{background:#fff;border-radius:10px;border:1px solid #e4ded3;box-shadow:0 2px 8px #1f2d3d0f;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.bh{display:flex;align-items:center;gap:8px;padding:6px 12px;color:#fff;font-weight:700;font-size:16px;letter-spacing:.02em}
 .bh small{font-weight:400;font-size:13px;opacity:.9}
 .bh .sp{flex:1}
 .bh .pts{background:#ffffff33;border-radius:999px;padding:1px 10px;font-size:15px}
 .bh svg{flex:0 0 auto}
 .pink .bh{background:var(--pink)}.blue .bh{background:var(--blue)}.green .bh{background:var(--green)}.orange .bh{background:var(--orange)}.purple .bh{background:var(--purple)}.teal .bh{background:var(--teal)}
 .bb{flex:1;min-height:0;padding:8px 12px;display:flex;flex-direction:column;gap:7px}
-.btn{border:0;border-radius:9px;padding:6px 14px;font-size:15px;font-weight:700;color:#fff;background:#3a2a7a}
-.btn.alt{background:#fff;color:#3a2a7a;border:1px solid #cfc7ee}
+.btn{border:0;border-radius:9px;padding:6px 14px;font-size:15px;font-weight:700;color:#fff;background:#2c3e50}
+.btn.alt{background:#fff;color:#2c3e50;border:1px solid #c9d1da}
 .btn:disabled{opacity:.4;cursor:default}
 .row{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
 .muted{font-size:14px;color:var(--muted)}
@@ -44,86 +44,86 @@ main{flex:1;min-height:0;padding:9px 12px}
 /* quizlet */
 .sets{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
 .set{border:1px solid var(--line);background:#fff;border-radius:999px;padding:2px 9px;font-size:13px}
-.set.on{background:#ff3d7f;border-color:#ff3d7f;color:#fff}
+.set.on{background:#b5523b;border-color:#b5523b;color:#fff}
 .flip{width:100%;height:clamp(110px,24vh,170px);perspective:1000px;cursor:pointer}
 .flip .in,.fc .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
 .flip.f .in,.fc.f .in{transform:rotateY(180deg)}
 .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px}
-.flip .front{background:#fff;border:2px solid #ffd0e0;font-size:26px;font-weight:700;color:#2a1f5c}
-.flip .back{transform:rotateY(180deg);background:#fff6fa;border:2px solid #ff9cc0;flex-direction:column;gap:6px}
+.flip .front{background:#fff;border:2px solid #e9d7ca;font-size:26px;font-weight:700;color:#1f2d3d}
+.flip .back{transform:rotateY(180deg);background:#faf4ef;border:2px solid #d6a68f;flex-direction:column;gap:6px}
 .flip .back .ru{font-size:21px;font-weight:700}
 .flip .back .ex{font-size:16px;font-style:italic;color:#4a4f63}
 .qnav{display:flex;align-items:center;justify-content:center;gap:10px}
 .arrow{width:38px;height:32px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:17px}
 .count{min-width:58px;text-align:center;color:var(--muted);font-size:14px}
 .spk{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
-.spb{border:0;border-radius:8px;padding:5px;font-weight:700;background:#ffe3ee;color:#c2185b}
-.spb.on{background:#ff3d7f;color:#fff}
-.sptext{min-height:38px;padding:6px 9px;border-left:4px solid #ff3d7f;background:#fff6fa;border-radius:6px;font-size:16px}
+.spb{border:0;border-radius:8px;padding:5px;font-weight:700;background:#f2e4da;color:#8f3f2c}
+.spb.on{background:#b5523b;color:#fff}
+.sptext{min-height:38px;padding:6px 9px;border-left:4px solid #b5523b;background:#faf4ef;border-radius:6px;font-size:16px}
 /* 60 sec */
 .clock{display:flex;align-items:center;justify-content:center;gap:10px}
-.digital{font-family:'Courier New',monospace;font-weight:700;font-size:34px;background:#1b1f4b;color:#ffd84d;border-radius:10px;padding:2px 14px;letter-spacing:2px}
+.digital{font-family:'Courier New',monospace;font-weight:700;font-size:34px;background:#1f2d3d;color:#e2c98e;border-radius:10px;padding:2px 14px;letter-spacing:2px}
 .cat{display:flex;gap:4px;flex-wrap:wrap;justify-content:center}
 .cat button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:2px 10px;font-size:14px}
-.cat button.on{background:#2f6bff;border-color:#2f6bff;color:#fff}
-.typein{width:100%;border:2px solid #cfe0ff;border-radius:9px;padding:6px 10px;font-size:17px}
+.cat button.on{background:#3e5c76;border-color:#3e5c76;color:#fff}
+.typein{width:100%;border:2px solid #d3dbe3;border-radius:9px;padding:6px 10px;font-size:17px}
 .found{display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start;flex:1;min-height:0;overflow:auto}
 .tag{border-radius:7px;padding:2px 8px;font-size:15px;background:#eef1f6}
-.tag.y{background:var(--okbg);color:#14703d;font-weight:700}
-.tag.m{background:#fff4d6;color:#8a5a00}
+.tag.y{background:var(--okbg);color:#3c6a4a;font-weight:700}
+.tag.m{background:#f5eedf;color:#7a5a2a}
 /* odd one out */
 .odd{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex:1;min-height:0}
-.ot{border:2px solid #d6f2e3;background:#f7fffa;border-radius:12px;font-size:18px;font-weight:700;padding:6px}
+.ot{border:2px solid #dde6de;background:#f7faf7;border-radius:12px;font-size:18px;font-weight:700;padding:6px}
 .ot.ok{background:var(--okbg);border-color:var(--ok)}.ot.no{background:var(--nobg);border-color:var(--no)}
 /* bomb */
 .bombs{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex:1;min-height:0}
-.bc{border:2px solid #ffe1c2;border-radius:12px;padding:6px 9px;display:flex;flex-direction:column;gap:5px;background:#fffaf4;position:relative;min-height:0}
+.bc{border:2px solid #e8dcc8;border-radius:12px;padding:6px 9px;display:flex;flex-direction:column;gap:5px;background:#fdfaf5;position:relative;min-height:0}
 .bq{font-size:16px;line-height:1.28;padding-right:62px}
-.bq b{color:#e35d00}
+.bq b{color:#8f6630}
 .fuse{display:flex;align-items:center;gap:6px}
 .fuse .line{flex:1;height:7px;border-radius:4px;background:#f1e6da;overflow:hidden}
-.fuse .line i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ff3d3d,#ffb000);transform-origin:left}
-.fuse span{font-size:13px;color:#a05a1a;min-width:28px;text-align:right;font-weight:700}
+.fuse .line i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#b5523b,#b8955a);transform-origin:left}
+.fuse span{font-size:13px;color:#7d5f34;min-width:28px;text-align:right;font-weight:700}
 .opts{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.op{border:1px solid #ecd9c6;background:#fff;border-radius:7px;padding:3px 5px;font-size:15px}
-.op.ok{background:var(--okbg);border-color:var(--ok);color:#14703d;font-weight:700}
+.op{border:1px solid #e3d8c7;background:#fff;border-radius:7px;padding:3px 5px;font-size:15px}
+.op.ok{background:var(--okbg);border-color:var(--ok);color:#3c6a4a;font-weight:700}
 .op.no{background:var(--nobg);border-color:var(--no);color:var(--no)}
-.bc.boom{background:radial-gradient(circle at 80% 20%,#ffd1b0,#ffe9ec 60%);border-color:var(--no);animation:shake .4s}
+.bc.boom{background:radial-gradient(circle at 80% 20%,#eed8c9,#f7eeea 60%);border-color:var(--no);animation:shake .4s}
 .boomtag{position:absolute;right:8px;top:4px;font-weight:700;color:#fff;background:var(--no);border-radius:6px;padding:0 7px;font-size:13px;letter-spacing:.08em}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 /* grammar doctor flip */
 .docs{display:grid;grid-template-rows:repeat(3,1fr);gap:7px;flex:1;min-height:0}
 .fc{perspective:900px;cursor:pointer;min-height:0}
-.fc .front{background:#fff;border:2px solid #ffd2cc;font-size:17px;justify-content:flex-start;text-align:left;gap:10px}
-.fc .front .rx{flex:0 0 auto;background:#ff5a5a;color:#fff;border-radius:6px;padding:1px 7px;font-size:13px;font-weight:700}
-.fc .back{transform:rotateY(180deg);background:var(--okbg);border:2px solid var(--ok);font-size:17px;justify-content:flex-start;text-align:left;color:#14703d;font-weight:700}
+.fc .front{background:#fff;border:2px solid #e8d2c9;font-size:17px;justify-content:flex-start;text-align:left;gap:10px}
+.fc .front .rx{flex:0 0 auto;background:#b5523b;color:#fff;border-radius:6px;padding:1px 7px;font-size:13px;font-weight:700}
+.fc .back{transform:rotateY(180deg);background:var(--okbg);border:2px solid var(--ok);font-size:17px;justify-content:flex-start;text-align:left;color:#3c6a4a;font-weight:700}
 /* lava */
-.lava{flex:1;min-height:0;border-radius:12px;background:linear-gradient(180deg,#ffe9a8 0%,#ff9f43 45%,#ff4d2e 100%);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-around;padding:10px;overflow:hidden}
+.lava{flex:1;min-height:0;border-radius:12px;background:linear-gradient(180deg,#f1e2c4 0%,#d29462 45%,#a9503b 100%);position:relative;display:flex;flex-direction:column;align-items:center;justify-content:space-around;padding:10px;overflow:hidden}
 .lava .sent{background:#ffffffe8;border-radius:10px;padding:8px 16px;font-size:21px;text-align:center;max-width:95%}
 .stones{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .stone{border:0;min-width:120px;padding:10px 14px;border-radius:50% / 40%;background:radial-gradient(circle at 35% 30%,#9aa1ad,#4b505a);color:#fff;font-size:17px;font-weight:700;box-shadow:0 6px 0 #2e3138;transition:transform .5s,opacity .5s}
-.stone.ok{background:radial-gradient(circle at 35% 30%,#7ee2a6,#1f9d55)}
-.stone.sink{transform:translateY(60px) scale(.8);opacity:.25;background:radial-gradient(circle at 35% 30%,#ff8a8a,#c0182f)}
+.stone.ok{background:radial-gradient(circle at 35% 30%,#8fb79a,#4f8a5f)}
+.stone.sink{transform:translateY(60px) scale(.8);opacity:.25;background:radial-gradient(circle at 35% 30%,#c98577,#8b3b2e)}
 .lives{display:flex;gap:4px}
-.lives i{width:14px;height:14px;border-radius:50%;background:#ff3d7f;display:inline-block}
+.lives i{width:14px;height:14px;border-radius:50%;background:#b5523b;display:inline-block}
 .lives i.off{background:#ddd}
 /* rapid categories */
 .rc-top{display:flex;align-items:center;gap:10px;justify-content:center}
-.rc-cat{background:#fff7d6;border:2px solid #ffd84d;border-radius:10px;padding:3px 16px;font-size:20px;font-weight:700}
+.rc-cat{background:#f5eedf;border:2px solid #e2c98e;border-radius:10px;padding:3px 16px;font-size:20px;font-weight:700}
 .rcg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;flex:1;min-height:0}
-.rt{border:2px solid #d9ecff;background:#f5faff;border-radius:10px;font-size:16px;font-weight:700;padding:4px}
-.rt.ok{background:var(--okbg);border-color:var(--ok)}.rt.no{background:var(--nobg);border-color:var(--no)}.rt.miss{background:#fff4d6;border-color:#ffb000}
+.rt{border:2px solid #dde3e9;background:#f6f8fa;border-radius:10px;font-size:16px;font-weight:700;padding:4px}
+.rt.ok{background:var(--okbg);border-color:var(--ok)}.rt.no{background:var(--nobg);border-color:var(--no)}.rt.miss{background:#f5eedf;border-color:#b8955a}
 /* photo hotspots */
 .pwrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
 .pic{position:relative;max-width:100%;max-height:100%;aspect-ratio:546/341;height:100%}
 .pic img{width:100%;height:100%;display:block;border-radius:10px}
-.hs{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:3px solid #fff;background:#ff3d7f;color:#fff;font-weight:700;font-size:14px;box-shadow:0 0 0 4px #ff3d7f55;animation:pulse 1.6s infinite}
-.hs.seen{background:#1f9d55;box-shadow:0 0 0 4px #1f9d5555;animation:none}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 3px #ff3d7f66}50%{box-shadow:0 0 0 10px #ff3d7f00}}
-.prompt{min-height:56px;padding:8px 10px;border-left:4px solid #0aa3a3;background:#effcfb;border-radius:8px;font-size:17px}
+.hs{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:3px solid #fff;background:#b5523b;color:#fff;font-weight:700;font-size:14px;box-shadow:0 0 0 4px #b5523b44;animation:pulse 1.6s infinite}
+.hs.seen{background:#4f8a5f;box-shadow:0 0 0 4px #1f9d5555;animation:none}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px #b5523b55}50%{box-shadow:0 0 0 10px #b5523b00}}
+.prompt{min-height:56px;padding:8px 10px;border-left:4px solid #4f7f7d;background:#f2f7f6;border-radius:8px;font-size:17px}
 .chips{display:flex;flex-wrap:wrap;gap:5px}
-.pchip{border:1px solid #bfeeea;background:#fff;border-radius:999px;padding:3px 10px;font-size:14px}
-.pchip.used{background:#0aa3a3;border-color:#0aa3a3;color:#fff}
+.pchip{border:1px solid #d2e2e0;background:#fff;border-radius:999px;padding:3px 10px;font-size:14px}
+.pchip.used{background:#4f7f7d;border-color:#4f7f7d;color:#fff}
 .ringrow{display:flex;align-items:center;gap:10px}
 .ring{width:56px;height:56px}
 .ring circle{fill:none;stroke-width:6}
@@ -132,44 +132,47 @@ main{flex:1;min-height:0;padding:9px 12px}
 .vid{position:relative;width:100%;aspect-ratio:16/9;max-height:100%;background:#000;border-radius:10px;overflow:hidden}
 .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .gr{display:grid;grid-template-columns:30px 1fr 110px 62px;gap:6px;align-items:center;font-size:16px}
-.gr .pl{width:30px;height:30px;border-radius:50%;border:0;background:#2f6bff;color:#fff;font-size:12px}
-.gr input{border:2px solid #cfe0ff;border-radius:8px;padding:3px 7px;width:100%;font-size:16px}
+.gr .pl{width:30px;height:30px;border-radius:50%;border:0;background:#3e5c76;color:#fff;font-size:12px}
+.gr input{border:2px solid #d3dbe3;border-radius:8px;padding:3px 7px;width:100%;font-size:16px}
 .gr input.ok{border-color:var(--ok);background:var(--okbg)}.gr input.no{border-color:var(--no);background:var(--nobg)}
-.gr .ck{border:0;border-radius:8px;background:#2f6bff;color:#fff;font-weight:700;padding:4px 0;font-size:14px}
-.gr .why{grid-column:2 / 5;font-size:13px;color:#14703d;margin-top:-3px}
-.racebar{height:10px;border-radius:6px;background:#e8eefc;overflow:hidden}
-.racebar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2f6bff,#33c2ff);transition:width .3s}
+.gr .ck{border:0;border-radius:8px;background:#3e5c76;color:#fff;font-weight:700;padding:4px 0;font-size:14px}
+.gr .why{grid-column:2 / 5;font-size:13px;color:#3c6a4a;margin-top:-3px}
+.racebar{height:10px;border-radius:6px;background:#e5eaef;overflow:hidden}
+.racebar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#3e5c76,#6a8aa3);transition:width .3s}
 /* mystery box */
-.boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.gift{border:0;border-radius:12px;background:linear-gradient(135deg,#7b4dff,#d24dff);color:#fff;font-weight:700;padding:6px 4px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 4px 0 #4a2bb0}
-.gift.open{background:#ece6ff;color:#7a6aa8;box-shadow:none}
-.gift.cur{outline:3px solid #ffb000}
+.boxes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.gift{border:0;border-radius:8px;background:linear-gradient(135deg,#6b4e71,#8f7394);color:#fff;font-weight:700;padding:6px 4px;font-size:15px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 3px 0 #4b3650}
+.gift.open{background:#efe9ef;color:#7d6a80;box-shadow:none}
+.gift.cur{outline:3px solid #b8955a}
 .mcard{flex:1;min-height:0;perspective:900px;cursor:pointer}
-.mcard .front{background:#f8f5ff;border:2px solid #d9cdff;flex-direction:column;gap:4px}
-.mcard .back{transform:rotateY(180deg);background:#fff;border:2px solid #b06bff;flex-direction:column;gap:4px;font-size:16px}
+.mcard .front{background:#f8f6f8;border:2px solid #ddd3de;flex-direction:column;gap:4px}
+.mcard .back{transform:rotateY(180deg);background:#fff;border:2px solid #8f7394;flex-direction:column;gap:4px;font-size:16px}
 .mcard.f .in{transform:rotateY(180deg)}
 .mcard .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
-.room{font-size:13px;letter-spacing:.1em;color:#7a6aa8;font-weight:700}
+.room{font-size:13px;letter-spacing:.1em;color:#7d6a80;font-weight:700}
 .prob{font-size:20px;font-weight:700}
-.g{color:#14703d;font-weight:700}.r{color:#5a2bd0}
-.lr{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.lr .bad{border:2px solid #ffd2d8;background:#fff5f6;border-radius:9px;padding:5px 8px;font-size:15px;text-decoration:line-through;text-decoration-color:#e0364f99}
-.lr .good{border:2px dashed #d9cdff;border-radius:9px;padding:5px 8px;font-size:15px;color:var(--muted);text-align:left;background:#fff}
-.lr .good.show{border-style:solid;border-color:var(--ok);background:var(--okbg);color:#14703d;font-weight:700}
+.g{color:#3c6a4a;font-weight:700}.r{color:#6b4e71}
+.lr{display:grid;grid-template-columns:1fr;gap:3px}
+.who-q{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;text-align:center;font-size:20px;font-weight:700;border:1px solid #d3dbe3;border-radius:10px;background:#f6f8fa;padding:10px}
+.mhelp{margin:0;padding-left:20px;font-size:14px;color:#4a4f63}
+.mhelp li{margin:0}
+.lr .bad{border:2px solid #e8d2c9;background:#fbf5f2;border-radius:9px;padding:5px 8px;font-size:15px;text-decoration:line-through;text-decoration-color:#e0364f99}
+.lr .good{border:2px dashed #ddd3de;border-radius:9px;padding:5px 8px;font-size:15px;color:var(--muted);text-align:left;background:#fff}
+.lr .good.show{border-style:solid;border-color:var(--ok);background:var(--okbg);color:#3c6a4a;font-weight:700}
 /* jeopardy */
 .jb{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto 1fr 1fr 1fr;gap:6px;flex:1;min-height:0}
-.jh{background:#1b1f4b;color:#ffd84d;border-radius:8px;text-align:center;font-weight:700;padding:5px 2px;font-size:15px}
-.jc{border:0;border-radius:8px;background:linear-gradient(180deg,#2f4bff,#1d2fb8);color:#ffd84d;font-size:22px;font-weight:700}
+.jh{background:#1f2d3d;color:#e2c98e;border-radius:8px;text-align:center;font-weight:700;padding:5px 2px;font-size:15px}
+.jc{border:0;border-radius:8px;background:linear-gradient(180deg,#34495e,#22313f);color:#e2c98e;font-size:22px;font-weight:700}
 .jc.done{background:#e6e8f5;color:#9aa0b8}
-.jc.cur{outline:3px solid #ffb000}
+.jc.cur{outline:3px solid #b8955a}
 .jq{flex:1;min-height:0;perspective:900px;cursor:pointer}
 .jq .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
 .jq.f .in{transform:rotateY(180deg)}
-.jq .front{background:#1b1f4b;color:#fff;font-size:19px;flex-direction:column;gap:6px}
-.jq .back{transform:rotateY(180deg);background:#fff8dd;border:2px solid #ffd84d;font-size:19px;font-weight:700;color:#14703d}
+.jq .front{background:#1f2d3d;color:#fff;font-size:19px;flex-direction:column;gap:6px}
+.jq .back{transform:rotateY(180deg);background:#f7f1e3;border:2px solid #e2c98e;font-size:19px;font-weight:700;color:#3c6a4a}
 .lock{display:flex;gap:6px;justify-content:center}
-.lock span{width:38px;height:44px;border-radius:8px;background:#1b1f4b;color:#ffd84d;font-family:'Courier New',monospace;font-size:26px;font-weight:700;display:flex;align-items:center;justify-content:center}
-.tf{margin-left:auto;border:0;border-radius:999px;background:#fff;color:#3a2a7a;font-weight:700;font-size:13px;padding:3px 11px;box-shadow:0 2px 6px #0002}
+.lock span{width:38px;height:44px;border-radius:8px;background:#1f2d3d;color:#e2c98e;font-family:'Courier New',monospace;font-size:26px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.tf{margin-left:auto;border:0;border-radius:999px;background:#fff;color:#2c3e50;font-weight:700;font-size:13px;padding:3px 11px;box-shadow:0 2px 6px #0002}
 .tfo{position:fixed;inset:0;z-index:30;background:#1b1f4bcc;display:none;padding:10px}
 .tfo.on{display:flex;flex-direction:column}
 .tfo .tfh{display:flex;justify-content:flex-end;padding-bottom:6px}
@@ -177,7 +180,7 @@ main{flex:1;min-height:0;padding:9px 12px}
 /* teacher drawer */
 .drawer{position:fixed;top:46px;right:10px;width:min(440px,92vw);max-height:calc(100vh - 56px);overflow:auto;background:#fffdf7;border:1px solid #e3d6b0;border-radius:12px;box-shadow:0 10px 30px #0003;padding:10px 16px;display:none;z-index:20;font-size:15px}
 .drawer.on{display:block}
-.drawer h3{margin:4px 0 5px;font-size:16px;color:#8a5a00}
+.drawer h3{margin:4px 0 5px;font-size:16px;color:#7a5a2a}
 .drawer ol{margin:0;padding-left:20px}
 .drawer li{margin-bottom:4px}
 @media (max-height:620px){body{font-size:16px}.bb{padding:6px 10px;gap:5px}.flip .front{font-size:23px}.bq{font-size:15px}.op{font-size:14px;padding:2px 4px}.digital{font-size:28px}.lava .sent{font-size:17px}.stone{padding:7px 12px}main{padding:7px 10px}.jc{font-size:19px}}
@@ -207,7 +210,7 @@ main{flex:1;min-height:0;padding:9px 12px}
     <li><b>Games (8 min).</b> Floor is Lava for tenses, Rapid Categories for words.</li>
     <li><b>Photo (8 min).</b> Open the hotspots one by one, then 30-second talk.</li>
     <li><b>Rob calls (10 min).</b> Watch once: how many times does Rob call Reception? Then Audio Gap Race.</li>
-    <li><b>Reception (10 min).</b> Say it politely, then Mystery Box: she is the guest, you are Reception. Swap.</li>
+    <li><b>Reception (10 min).</b> Who says it? (lines from the book dialogue), Say it politely, then Mystery Box: she opens a box, presses Start and calls you; you answer as Reception; flip to compare. Swap roles.</li>
     <li><b>Jeopardy (5 min).</b> Each finished column opens one digit of the lock.</li>
   </ol>
   <h3>Watch for</h3>
@@ -218,7 +221,7 @@ main{flex:1;min-height:0;padding:9px 12px}
   </ol>
 </div>
 
-<div class="tfo" id="tfo"><div class="tfh"><button class="btn" id="tfClose" style="background:#ff3d7f">Close</button></div><iframe id="tfFrame" title="Ten Faces" allow="autoplay"></iframe></div>
+<div class="tfo" id="tfo"><div class="tfh"><button class="btn" id="tfClose" style="background:#b5523b">Close</button></div><iframe id="tfFrame" title="Ten Faces" allow="autoplay"></iframe></div>
 <main>
 <!-- 1 WARM-UP -->
 <section class="pane on" id="warm" style="grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(0,.9fr)">
@@ -238,7 +241,7 @@ main{flex:1;min-height:0;padding:9px 12px}
       60-Second Challenge<span class="sp"></span><span class="pts" id="cScore">0</span></div>
     <div class="bb">
       <div class="cat" id="cCat"></div>
-      <div class="clock"><span class="digital" id="cClock">01:00</span><button class="btn" id="cStart" style="background:#2f6bff">Start</button></div>
+      <div class="clock"><span class="digital" id="cClock">01:00</span><button class="btn" id="cStart" style="background:#3e5c76">Start</button></div>
       <input class="typein" id="cIn" placeholder="type here… (Enter)" autocomplete="off">
       <div class="found" id="cFound"></div>
     </div>
@@ -248,7 +251,7 @@ main{flex:1;min-height:0;padding:9px 12px}
     <div class="bb">
       <div class="muted">Which one is different? Say why.</div>
       <div class="odd" id="odd"></div>
-      <div class="row"><button class="btn" id="oNext" style="background:#14a86a">Next</button><span class="result" id="oRes"></span></div>
+      <div class="row"><button class="btn" id="oNext" style="background:#5c7f69">Next</button><span class="result" id="oRes"></span></div>
     </div>
   </div>
 </section>
@@ -257,11 +260,11 @@ main{flex:1;min-height:0;padding:9px 12px}
 <section class="pane" id="hw" style="grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)">
   <div class="box orange">
     <div class="bh">
-      <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="10" cy="14" r="7.5" fill="#1b1f4b"/><path d="M14 8l3-3" stroke="#1b1f4b" stroke-width="2.4"/><circle cx="18.5" cy="3.8" r="2" fill="#fff"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="10" cy="14" r="7.5" fill="#1f2d3d"/><path d="M14 8l3-3" stroke="#1f2d3d" stroke-width="2.4"/><circle cx="18.5" cy="3.8" r="2" fill="#fff"/></svg>
       Error Bomb · Homework 1D <small>15 seconds per card</small><span class="sp"></span><span class="pts" id="bScore">0 / 20</span></div>
     <div class="bb">
       <div class="bombs" id="bombs"></div>
-      <div class="row"><button class="btn" id="bStart" style="background:#ff7a1a">Light the fuse</button><button class="btn alt" id="bNext">Next 4</button><span class="muted" id="bPage"></span><span class="result" id="bRes"></span></div>
+      <div class="row"><button class="btn" id="bStart" style="background:#a8844c">Light the fuse</button><button class="btn alt" id="bNext">Next 4</button><span class="muted" id="bPage"></span><span class="result" id="bRes"></span></div>
     </div>
   </div>
   <div class="box pink">
@@ -279,7 +282,7 @@ main{flex:1;min-height:0;padding:9px 12px}
     <div class="bh">Floor Is Lava <small>step on the right stone</small><span class="sp"></span><span class="lives" id="lLives"></span><span class="pts" id="lScore">0</span></div>
     <div class="bb">
       <div class="lava"><div class="sent" id="lSent"></div><div class="stones" id="lStones"></div></div>
-      <div class="row"><button class="btn" id="lNext" style="background:#ff7a1a">Next</button><span class="result" id="lRes"></span></div>
+      <div class="row"><button class="btn" id="lNext" style="background:#a8844c">Next</button><span class="result" id="lRes"></span></div>
     </div>
   </div>
   <div class="box blue">
@@ -287,7 +290,7 @@ main{flex:1;min-height:0;padding:9px 12px}
     <div class="bb">
       <div class="rc-top"><span class="rc-cat" id="rCat"></span><span class="digital" id="rClock" style="font-size:24px">00:30</span></div>
       <div class="rcg" id="rGrid"></div>
-      <div class="row"><button class="btn" id="rStart" style="background:#2f6bff">Start</button><span class="result" id="rRes"></span></div>
+      <div class="row"><button class="btn" id="rStart" style="background:#3e5c76">Start</button><span class="result" id="rRes"></span></div>
     </div>
   </div>
 </section>
@@ -303,9 +306,9 @@ main{flex:1;min-height:0;padding:9px 12px}
     <div class="bb">
       <div class="prompt" id="pPrompt">Tap a point on the picture.</div>
       <div class="ringrow">
-        <svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" stroke="#ece6ff"/><circle id="pRing" cx="30" cy="30" r="25" stroke="#6a4cff" stroke-dasharray="157" stroke-dashoffset="0" transform="rotate(-90 30 30)" stroke-linecap="round"/></svg>
+        <svg class="ring" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" stroke="#efe9ef"/><circle id="pRing" cx="30" cy="30" r="25" stroke="#6b4e71" stroke-dasharray="157" stroke-dashoffset="0" transform="rotate(-90 30 30)" stroke-linecap="round"/></svg>
         <span class="tnum" id="pNum">30</span>
-        <button class="btn" id="pStart" style="background:#6a4cff">Start</button><button class="btn alt" id="pReset">Reset</button>
+        <button class="btn" id="pStart" style="background:#6b4e71">Start</button><button class="btn alt" id="pReset">Reset</button>
       </div>
       <div class="muted">Tap a phrase when Maya uses it.</div>
       <div class="chips" id="pChips"></div>
@@ -327,23 +330,33 @@ main{flex:1;min-height:0;padding:9px 12px}
     <div class="bb">
       <div class="racebar"><i id="gBar"></i></div>
       <div id="gRows" style="display:flex;flex-direction:column;gap:5px;flex:1;min-height:0"></div>
-      <div class="row"><button class="btn" id="gReset" style="background:#ff3d7f">Race again</button><span class="result" id="gRes"></span></div>
+      <div class="row"><button class="arrow" id="gPrev">&#8592;</button><span class="count" id="gPg"></span><button class="arrow" id="gNext">&#8594;</button><button class="btn" id="gReset" style="background:#b5523b">Race again</button><span class="result" id="gRes"></span></div>
     </div>
   </div>
 </section>
 
 <!-- 6 RECEPTION -->
-<section class="pane" id="reception" style="grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)">
+<section class="pane" id="reception" style="grid-template-columns:minmax(0,1fr) minmax(0,.95fr) minmax(0,1.1fr)">
+  <div class="box blue">
+    <div class="bh">Who says it? <small>Guest or Reception</small><span class="sp"></span><span class="pts" id="wScore">0</span></div>
+    <div class="bb">
+      <div class="who-q" id="wQ"></div>
+      <div class="row" style="justify-content:center"><button class="btn" id="wG" style="background:#5c7f69">Guest</button><button class="btn" id="wR" style="background:#3e5c76">Reception</button></div>
+      <div class="result" id="wRes" style="text-align:center"></div>
+      <div class="row" style="margin-top:auto;justify-content:center"><span class="count" id="wCount"></span><button class="btn alt" id="wNext">Next</button></div>
+    </div>
+  </div>
   <div class="box green">
-    <div class="bh">Say it politely <small>tap for the natural version</small><button class="tf" data-ed="1">Ten Faces · Hotel</button></div>
-    <div class="bb" id="lab"></div>
+    <div class="bh">Say it politely<button class="tf" data-ed="1">Ten Faces · Hotel</button></div>
+    <div class="bb"><div id="lab" style="display:flex;flex-direction:column;gap:7px"></div><div style="margin-top:auto;border:1px solid #d2b886;background:#fbf7ee;border-radius:8px;padding:7px 11px;font-size:15px"><b>I’ll</b><br>A There’s a problem with the air conditioning.<br>B I’ll send somebody to look at it.<br><i>I’ll = I will. We use I’ll + verb to offer to do something.</i></div></div>
   </div>
   <div class="box purple">
-    <div class="bh">Mystery Box <small>open a room · 30 seconds · tap the card for the model</small></div>
+    <div class="bh">Mystery Box · Phone call <small>you are the guest</small></div>
     <div class="bb">
+      <ol class="mhelp"><li>Open a box: this is your room and your problem.</li><li>Press Start and call Reception. Begin: <i>Hello, this is room …</i> The teacher is Reception.</li><li>Tap the card to compare with the model. Then swap roles.</li></ol>
       <div class="boxes" id="mBoxes"></div>
-      <div class="mcard" id="mCard"><div class="in"><div class="face front" id="mFront"><span class="muted">Open a box.</span></div><div class="face back" id="mBack"></div></div></div>
-      <div class="ringrow"><span class="digital" id="mClock" style="font-size:22px">00:30</span><button class="btn" id="mStart" style="background:#6a4cff" disabled>Start 30 s</button></div>
+      <div class="mcard" id="mCard"><div class="in"><div class="face front" id="mFront"><span class="muted">Choose a box above.</span></div><div class="face back" id="mBack"></div></div></div>
+      <div class="ringrow"><span class="digital" id="mClock" style="font-size:22px">00:30</span><button class="btn" id="mStart" style="background:#6b4e71" disabled>Start 30 s</button></div>
     </div>
   </div>
 </section>
@@ -358,7 +371,7 @@ main{flex:1;min-height:0;padding:9px 12px}
     <div class="bh">Question <small>tap the card for the answer</small></div>
     <div class="bb">
       <div class="jq" id="jQ"><div class="in"><div class="face front" id="jFront">Choose a category and points.</div><div class="face back" id="jBack"></div></div></div>
-      <div class="row"><button class="btn" id="jYes" style="background:#1f9d55" disabled>Correct</button><button class="btn" id="jNo" style="background:#e0364f" disabled>Wrong</button><button class="btn alt" id="jNew">New game</button></div>
+      <div class="row"><button class="btn" id="jYes" style="background:#4f8a5f" disabled>Correct</button><button class="btn" id="jNo" style="background:#a9443a" disabled>Wrong</button><button class="btn alt" id="jNew">New game</button></div>
       <div class="row"><span class="muted">Escape Room · finish a column to get a digit</span></div>
       <div class="lock" id="jLock"></div>
     </div>
@@ -458,19 +471,11 @@ $('#bNext').onclick=()=>{if(bPage===4){bPage=0;bOk=0;$('#bScore').textContent='0
 renderBombs();
 
 /* grammar doctor (wrong options from the same homework) */
-const DOC=[
- ['I am needing a comfortable outfit for the trip.','I <u>need</u> a comfortable outfit for the trip.'],
- ['She is preferring fitted jackets to oversized ones.','She <u>prefers</u> fitted jackets to oversized ones.'],
- ['My best friend and I are having a lot in common.','My best friend and I <u>have</u> a lot in common.'],
- ['Look at the picture: the woman stands near the window.','Look at the picture: the woman <u>is standing</u> near the window.'],
- ['He often is wearing smart clothes to work.','He often <u>wears</u> smart clothes to work.'],
- ['I am not understanding why he is upset.','I <u>don’t understand</u> why he is upset.'],
- ['Listen! Someone knocks at the door.','Listen! Someone <u>is knocking</u> at the door.'],
- ['Her colleague usually is getting on well with everyone.','Her colleague usually <u>gets</u> on well with everyone.'],
- ['The man in the picture sits in a chair.','The man in the picture <u>is sitting</u> in a chair.']];
+const WRONG=[1,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0];
+const DOC=Q.map((it,k)=>[it.q.replace('___',it.o[WRONG[k]]),it.q.replace('___','<u>'+it.o[it.a]+'</u>')]);
 let dp=0;
-function renderDoc(){const p=DOC.slice(dp*3,dp*3+3);$('#docs').innerHTML=p.map(d=>`<div class="fc"><div class="in"><div class="face front"><span class="rx">FIX</span><span>${d[0]}</span></div><div class="face back"><span>${d[1]}</span></div></div></div>`).join('');$$('#docs .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));$('#dCount').textContent=`${dp*3+1}–${dp*3+3} / 9`}
-$('#dPrev').onclick=()=>{dp=(dp+2)%3;renderDoc()};$('#dNext').onclick=()=>{dp=(dp+1)%3;renderDoc()};renderDoc();
+function renderDoc(){const p=DOC.slice(dp*3,dp*3+3);$('#docs').innerHTML=p.map(d=>`<div class="fc"><div class="in"><div class="face front"><span class="rx">FIX</span><span>${d[0]}</span></div><div class="face back"><span>${d[1]}</span></div></div></div>`).join('');$$('#docs .fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'));$('#dCount').textContent=`${dp*3+1}–${Math.min(dp*3+3,DOC.length)} / ${DOC.length}`}
+const dPages=Math.ceil(DOC.length/3);$('#dPrev').onclick=()=>{dp=(dp+dPages-1)%dPages;renderDoc()};$('#dNext').onclick=()=>{dp=(dp+1)%dPages;renderDoc()};renderDoc();
 
 /* ===== GAMES: floor is lava (rule examples from homework 1D) ===== */
 const LAVA=[
@@ -485,7 +490,8 @@ const LAVA=[
  ['We ___ at seven tonight.',['are meeting','meet','meets'],0],
  ['You ___ me!',['are always interrupting','always interrupts','always interrupting'],0]];
 let lOrder=[],li=0,lScore=0,lLives=3,lDone=false;
-function lavaStart(){lOrder=shuffle(LAVA);li=0;lScore=0;lLives=3;$('#lScore').textContent=0;lavaQ()}
+const LAVA_ALL=LAVA.concat(Q.map(it=>{const w=it.o.filter((o,k)=>k!==it.a);return [it.q,[it.o[it.a],...shuffle(w).slice(0,2)],0]}));
+function lavaStart(){lOrder=shuffle(LAVA_ALL).slice(0,10);li=0;lScore=0;lLives=3;$('#lScore').textContent=0;lavaQ()}
 function drawLives(){$('#lLives').innerHTML=[0,1,2].map(i=>`<i class="${i<lLives?'':'off'}"></i>`).join('')}
 function lavaQ(){drawLives();$('#lRes').textContent='';lDone=false;$('#lNext').textContent='Next';
  if(li>=lOrder.length||lLives<=0){$('#lSent').innerHTML=lLives<=0?'<b>Game over.</b> You fell into the lava.':`<b>You crossed the lava!</b> ${lScore} / ${lOrder.length}`;$('#lStones').innerHTML='';$('#lNext').textContent='Play again';lDone=true;return}
@@ -524,32 +530,44 @@ $('#pReset').onclick=()=>{pReset(true);$$('.hs').forEach(b=>b.classList.remove('
 
 /* ===== VIDEO: audio gap race ===== */
 const GAPS=[
+ ['Hello. This is ___ 613.','room','Hello. This is room 613.','the guest says the room number'],
  ['How can I ___ you?','help','How can I help you?','offer assistance'],
- ['The air conditioning isn’t ___.','working','The air conditioning isn’t working.','is not functioning'],
- ['I’ll ___ somebody up to look at it.','send','I’ll send somebody up to look at it right now.','a staff member comes to the room'],
+ ['There’s a ___ with the air conditioning.','problem','There’s a problem with the air conditioning.','a standard way to start'],
+ ['It isn’t working, and it’s very ___ in my room.','hot','It isn’t working, and it’s very hot in my room.','say why it is a problem'],
+ ['I’m sorry, sir. I’ll ___ somebody up to look at it right now.','send','I’m sorry, sir. I’ll send somebody up to look at it right now.','a staff member comes to the room'],
+ ['Good ___, reception.','evening','Good evening, reception.','the second call'],
+ ['Hello. I’m sorry to ___ you again.','bother','Hello. I’m sorry to bother you again. This is room 613.','polite: the second call'],
  ['I ___ a problem with the wi-fi.','have','I have a problem with the wi-fi.','a standard way to start'],
  ['I can’t ___ a signal.','get','I can’t get a signal.','get a usable connection'],
- ['I’ll ___ you through to IT.','put','I’ll put you through to I T.','connect a phone call']];
-let gT0=null,gDone=0;
+ ['I’m sorry, sir. I’ll ___ you through to IT.','put','I’m sorry, sir. I’ll put you through to I T.','connect a phone call']];
+let gT0=null,gDone=0,gPage=0;
 function gRender(){stopT('g');gT0=null;gDone=0;$('#gClock').textContent='00:00';$('#gBar').style.width='0';$('#gRes').textContent='';
- $('#gRows').innerHTML=GAPS.map((g,i)=>`<div><div class="gr"><button class="pl" data-i="${i}">&#9654;</button><span>${g[0].replace('___','<b>____</b>')}</span><input data-i="${i}" autocomplete="off"><button class="ck" data-i="${i}">Check</button><span class="why" id="gw${i}"></span></div></div>`).join('');
+ $('#gRows').innerHTML=GAPS.map((g,i)=>`<div class="grw" data-pg="${Math.floor(i/5)}"><div class="gr"><button class="pl" data-i="${i}">&#9654;</button><span>${g[0].replace('___','<b>____</b>')}</span><input data-i="${i}" autocomplete="off"><button class="ck" data-i="${i}">Check</button><span class="why" id="gw${i}"></span></div></div>`).join('');
  $$('.gr .pl').forEach(b=>b.onclick=()=>{gStart();say(GAPS[+b.dataset.i][2],.85)});
  $$('.gr input').forEach(inp=>{inp.onfocus=gStart;inp.onkeydown=e=>{if(e.key==='Enter')gCheck(+inp.dataset.i)}});
- $$('.gr .ck').forEach(b=>b.onclick=()=>gCheck(+b.dataset.i))}
+ $$('.gr .ck').forEach(b=>b.onclick=()=>gCheck(+b.dataset.i));gPage=0;gShow()}
+function gShow(){$$('.grw').forEach(r=>r.style.display=+r.dataset.pg===gPage?'':'none');$('#gPg').textContent=`${gPage*5+1}–${gPage*5+5} / ${GAPS.length}`}
 function gStart(){if(gT0)return;gT0=Date.now();timers.g=setInterval(()=>{const s=Math.floor((Date.now()-gT0)/1000);$('#gClock').textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},250)}
 function gCheck(i){gStart();const inp=$(`.gr input[data-i="${i}"]`);if(inp.classList.contains('ok'))return;const ok=inp.value.trim().toLowerCase()===GAPS[i][1];inp.classList.toggle('ok',ok);inp.classList.toggle('no',!ok);
  if(ok){inp.disabled=true;gDone++;$('#gw'+i).textContent=GAPS[i][2]+' · '+GAPS[i][3];$('#gBar').style.width=(gDone/GAPS.length*100)+'%';if(gDone===GAPS.length){stopT('g');$('#gRes').innerHTML=`Finished in <b>${$('#gClock').textContent}</b>`}}}
+$('#gPrev').onclick=$('#gNext').onclick=()=>{gPage=1-gPage;gShow()};
 $('#gReset').onclick=gRender;gRender();
 
 /* ===== RECEPTION ===== */
 const NAT=[['My Wi-Fi is broken. Fix it.','There’s a problem with the Wi-Fi. Could you help me, please?'],['Give me towels.','Could you send up some clean towels, please?'],['The air conditioning doesn’t work.','The air conditioning isn’t working.'],['I want IT.','Could you put me through to IT, please?']];
 $('#lab').innerHTML=NAT.map((n,i)=>`<div class="lr"><div class="bad">${n[0]}</div><button class="good" data-i="${i}">Your version?</button></div>`).join('');
 $$('#lab .good').forEach(b=>b.onclick=()=>{const s=b.classList.toggle('show');b.textContent=s?NAT[+b.dataset.i][1]:'Your version?'});
-const ROLE=[['408','The Wi-Fi isn’t working.','You have an online work call in 20 minutes.','I’m sorry about that. I’ll put you through to IT right now.'],['215','There are no clean towels.','You want to take a shower before dinner.','Of course. I’ll send some clean towels up right away.'],['614','The air conditioning isn’t working.','The room is very hot.','I’m sorry. I’ll send somebody up to have a look.'],['302','There’s no hot water.','You need to leave in 30 minutes.','I’m sorry about that. I’ll ask maintenance to check it immediately.'],['711','The TV isn’t working.','You want to watch the news.','I’ll send somebody up to check the TV.'],['129','My key card isn’t working.','You are locked out of your room.','Please come to Reception and I’ll make a new key card for you.']];
+const ROLE=[['408','The Wi-Fi isn’t working.','You have an online work call in 20 minutes.','I’m sorry about that. I’ll put you through to IT right now.'],['215','There are no clean towels.','You want to take a shower before dinner.','Of course. I’ll send some clean towels up right away.'],['614','The air conditioning isn’t working.','The room is very hot.','I’m sorry. I’ll send somebody up to have a look.'],['302','There’s no hot water.','You need to leave in 30 minutes.','I’m sorry about that. I’ll ask maintenance to check it immediately.'],['711','The TV isn’t working.','You want to watch the news.','I’ll send somebody up to check the TV.'],['129','My key card isn’t working.','You are locked out of your room.','Please come to Reception and I’ll make a new key card for you.'],['613','There’s a problem with the air conditioning. It isn’t working.','It’s very hot in your room.','I’m sorry, sir. I’ll send somebody up to look at it right now.'],['613 · again','I have a problem with the wi-fi. I can’t get a signal.','You called Reception before. Say sorry to bother them again.','I’m sorry, sir. I’ll put you through to IT.']];
+const WHO=[['Hello, reception.','R'],['Hello. This is room 613.','G'],['How can I help you?','R'],['There’s a problem with the air conditioning. It isn’t working, and it’s very hot in my room.','G'],['I’m sorry, sir. I’ll send somebody up to look at it right now.','R'],['Thank you.','G'],['Good evening, reception.','R'],['Hello. I’m sorry to bother you again. This is room 613.','G'],['I have a problem with the wi-fi. I can’t get a signal.','G'],['I’m sorry, sir. I’ll put you through to IT.','R'],['Could you send up some clean towels, please?','G'],['Could you put me through to IT, please?','G']];
+let wOrd=shuffle(WHO),wi=0,wScore=0,wDone=false;
+function wShow(){if(wi>=wOrd.length){$('#wQ').innerHTML=`Done: ${wScore} / ${wOrd.length}`;$('#wRes').textContent='';$('#wNext').textContent='Again';return}wDone=false;$('#wQ').textContent=wOrd[wi][0];$('#wRes').textContent='';$('#wCount').textContent=`${wi+1} / ${wOrd.length}`;$('#wNext').textContent='Next'}
+function wAns(a){if(wDone||wi>=wOrd.length)return;wDone=true;const ok=a===wOrd[wi][1];if(ok){wScore++;$('#wScore').textContent=wScore}$('#wRes').innerHTML=(ok?'<b style="color:#3c6a4a">Right.</b> ':'<b style="color:#a9443a">No.</b> ')+(wOrd[wi][1]==='G'?'The guest says it.':'Reception says it.')}
+$('#wG').onclick=()=>wAns('G');$('#wR').onclick=()=>wAns('R');
+$('#wNext').onclick=()=>{if(wi>=wOrd.length){wOrd=shuffle(WHO);wi=0;wScore=0;$('#wScore').textContent=0}else wi++;wShow()};wShow();
 const BOXORDER=shuffle(ROLE.map((_,i)=>i));let mCur=null;
-$('#mBoxes').innerHTML=BOXORDER.map((r,i)=>`<button class="gift" data-r="${r}"><svg width="26" height="22" viewBox="0 0 26 22"><rect x="2" y="8" width="22" height="13" rx="2" fill="#ffffff33" stroke="#fff" stroke-width="2"/><rect x="1" y="5" width="24" height="5" rx="1.5" fill="#fff"/><rect x="11.5" y="5" width="3" height="16" fill="#ffd84d"/></svg>Box ${i+1}</button>`).join('');
+$('#mBoxes').innerHTML=BOXORDER.map((r,i)=>`<button class="gift" data-r="${r}"><svg width="26" height="22" viewBox="0 0 26 22"><rect x="2" y="8" width="22" height="13" rx="2" fill="#ffffff33" stroke="#fff" stroke-width="2"/><rect x="1" y="5" width="24" height="5" rx="1.5" fill="#fff"/><rect x="11.5" y="5" width="3" height="16" fill="#e2c98e"/></svg>Box ${i+1}</button>`).join('');
 $$('.gift').forEach(b=>b.onclick=()=>{const r=ROLE[+b.dataset.r];$$('.gift').forEach(x=>x.classList.remove('cur'));b.classList.add('open','cur');mCur=r;stopT('m');$('#mClock').textContent='00:30';$('#mStart').disabled=false;$('#mCard').classList.remove('f');
- $('#mFront').innerHTML=`<span class="room">ROOM ${r[0]}</span><span class="prob">${r[1]}</span><span class="muted">${r[2]}</span><span class="muted">Call Reception.</span>`;
+ $('#mFront').innerHTML=`<span class="room">ROOM ${r[0]}</span><span class="prob">${r[1]}</span><span class="muted">${r[2]}</span><span class="muted">Press Start and call Reception.</span>`;
  $('#mBack').innerHTML=`<span class="room">GUEST</span><span class="g">${r[1]}</span><span class="room">RECEPTION</span><span class="r">${r[3]}</span>`});
 $('#mCard').onclick=()=>{if(mCur)$('#mCard').classList.toggle('f')};
 $('#mStart').onclick=()=>{$('#mStart').disabled=true;countdown('m',30,l=>$('#mClock').textContent=mmss(l),()=>{$('#mStart').disabled=false})};
@@ -563,12 +581,12 @@ const JEO=[
 const CODE=[...String(1000+Math.floor(Math.random()*9000))];
 let jScore=0,jCur=null,jDoneSet=new Set();
 function jRender(){let h=JEO.map(c=>`<div class="jh">${c[0]}</div>`).join('');for(let r=0;r<3;r++)h+=JEO.map((c,ci)=>`<button class="jc" data-c="${ci}" data-r="${r}">${c[1][r][0]}</button>`).join('');$('#jBoard').innerHTML=h;
- $$('.jc').forEach(b=>b.onclick=()=>{if(b.classList.contains('done'))return;$$('.jc').forEach(x=>x.classList.remove('cur'));b.classList.add('cur');jCur=b;const q=JEO[+b.dataset.c][1][+b.dataset.r];$('#jQ').classList.remove('f');$('#jFront').innerHTML=`<span style="color:#ffd84d">${JEO[+b.dataset.c][0]} · ${q[0]}</span><span>${q[1]}</span>`;$('#jBack').textContent=q[2];$('#jYes').disabled=$('#jNo').disabled=false});
+ $$('.jc').forEach(b=>b.onclick=()=>{if(b.classList.contains('done'))return;$$('.jc').forEach(x=>x.classList.remove('cur'));b.classList.add('cur');jCur=b;const q=JEO[+b.dataset.c][1][+b.dataset.r];$('#jQ').classList.remove('f');$('#jFront').innerHTML=`<span style="color:#e2c98e">${JEO[+b.dataset.c][0]} · ${q[0]}</span><span>${q[1]}</span>`;$('#jBack').textContent=q[2];$('#jYes').disabled=$('#jNo').disabled=false});
  $('#jLock').innerHTML=JEO.map((_,i)=>`<span id="jd${i}">_</span>`).join('')}
 $('#jQ').onclick=()=>{if(jCur)$('#jQ').classList.toggle('f')};
 function jMark(ok){if(!jCur)return;const pts=+jCur.textContent;if(ok){jScore+=pts;$('#jScore').textContent=jScore}jCur.classList.remove('cur');jCur.classList.add('done');jDoneSet.add(jCur.dataset.c+'-'+jCur.dataset.r);
  const c=+jCur.dataset.c;if([0,1,2].every(r=>jDoneSet.has(c+'-'+r)))$('#jd'+c).textContent=CODE[c];jCur=null;$('#jYes').disabled=$('#jNo').disabled=true;
- if(jDoneSet.size===12){$('#jFront').innerHTML=`<span>Code: <b style="color:#ffd84d">${CODE.join('')}</b></span><span>You escaped! ${jScore} points.</span>`;$('#jQ').classList.remove('f');$('#jBack').textContent=''}}
+ if(jDoneSet.size===12){$('#jFront').innerHTML=`<span>Code: <b style="color:#e2c98e">${CODE.join('')}</b></span><span>You escaped! ${jScore} points.</span>`;$('#jQ').classList.remove('f');$('#jBack').textContent=''}}
 $('#jNew').onclick=()=>{jScore=0;jCur=null;jDoneSet=new Set();$('#jScore').textContent=0;$('#jQ').classList.remove('f');$('#jFront').textContent='Choose a category and points.';$('#jBack').textContent='';$('#jYes').disabled=$('#jNo').disabled=true;jRender()};
 $('#jYes').onclick=()=>jMark(true);$('#jNo').onclick=()=>jMark(false);
 jRender();
