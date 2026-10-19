@@ -447,9 +447,9 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
 
       
 <section id="reviewLab" class="screen" aria-label="Get Started revision lab">
- <div class="rl-head"><h2>Get Started · Verb & Reading Lab</h2><p>Learn it → say it → remember it → write it. 20 irregular verbs + -ed pronunciation.</p><div><span class="rl-pill" id="rlSaved">Progress saved on this device</span><span class="rl-pill" id="rlStats"></span></div></div>
+ <div class="rl-head"><h2>Get Started · Verb & Reading Lab</h2><p>Learn it → say it → remember it → write it. 20 irregular verbs + <strong>-ed pronunciation</strong>.</p><div><span class="rl-pill" id="rlSaved">Progress saved on this device</span><span class="rl-pill" id="rlStats"></span></div></div>
  <div class="rl-steps" role="group" aria-label="Learning stages">
- <button type="button" data-rl-tab="learn">1 Learn</button><button type="button" data-rl-tab="recall">2 Remember</button><button type="button" data-rl-tab="type">3 Type</button><button type="button" data-rl-tab="sounds">4 Read -ed</button><button type="button" data-rl-tab="challenge">5 Final test</button><button type="button" data-rl-tab="errors">My mistakes</button>
+ <button type="button" data-rl-tab="learn">1 Learn</button><button type="button" data-rl-tab="recall">2 Remember</button><button type="button" data-rl-tab="type">3 Type</button><button type="button" data-rl-tab="sounds">🌸 4 -ED Reading</button><button type="button" data-rl-tab="challenge">5 Final test</button><button type="button" data-rl-tab="errors">My mistakes</button>
  </div><div class="rl-progress"><div id="rlBar"></div></div><div id="rlStage" class="rl-stage" aria-live="polite"></div>
 </section>\n<section id="irregular" class="screen">
         <div class="section-head">
@@ -1024,7 +1024,8 @@ const el=document.getElementById('reviewLab'), stage=document.getElementById('rl
 if(!el||!stage)return;
 const key='gg4-getstarted-revision-v1';
 let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
-const state={tab:'learn',index:0,reveal:false,showResult:false,attempts:saved.attempts||{},mistakes:saved.mistakes||{},soundIndex:0,soundScore:0,challengeScore:0,challengeIndex:0,challengeItems:[],soundItems:[],soundFinished:false,typedCorrect:0};
+const openEdDirect=new URLSearchParams(location.search).get('open')==='ed'||location.hash==='#ed-lab';
+const state={tab:openEdDirect?'sounds':'learn',index:0,reveal:false,showResult:false,attempts:saved.attempts||{},mistakes:saved.mistakes||{},soundIndex:0,soundScore:0,challengeScore:0,challengeIndex:0,challengeItems:[],soundItems:[],soundFinished:false,typedCorrect:0};
 const clean=t=>String(t||'').trim().toLowerCase().replace(/\s+/g,' ').replace(/[’]/g,"'");
 const escape=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const reorder=a=>[...a].sort(()=>Math.random()-.5);
