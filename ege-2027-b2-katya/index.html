@@ -89,8 +89,9 @@ a.bc.now{background:#e8f5f2;border-color:#2c7f78}a.bc.now:hover{background:#dcef
 .fsbox{position:fixed;inset:0!important;z-index:100;background:#fff;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:hidden}@media(max-width:650px){.fsbox{inset:9px;border-radius:10px}}
 .fsbox iframe{width:100%;height:100%;border:0;display:block}
 
+.sec.xoff{opacity:.45;cursor:not-allowed;filter:grayscale(.6)}.sec.xoff:hover{background:#fff}
 </style>
-<link rel="stylesheet" href="katya.css?v=5">
+<link rel="stylesheet" href="katya.css?v=7">
 </head>
 <body>
 <header class="bar"><a class="home" href="index.html">ЕГЭ 2027 · К <span>· английский</span></a></header>
@@ -101,7 +102,7 @@ a.bc.now{background:#e8f5f2;border-color:#2c7f78}a.bc.now:hover{background:#dcef
     <button type="button" class="sec" style="--c:#c28a12" data-p="hw"><b>Домашняя работа</b><span>Задания к следующему занятию</span></button>
     <button type="button" class="sec" style="--c:#2c7f78" data-p="blocks"><b>Тематические блоки</b><span>17 тем ФИПИ, по 3 занятия на тему</span></button>
     <button type="button" class="sec" style="--c:#4a4f8f" data-p="lessons"><b>Занятия</b><span>Уроки по неделям: тема блока и задания ЕГЭ</span></button>
-    <button type="button" class="sec" style="--c:#8f4d7c" data-p="tools"><b>Тренажёры</b><span>Strategies &amp; Traps, письмо 37, задание 38, Russia</span></button>
+    <button type="button" class="sec xoff" style="--c:#8f4d7c" data-p="tools" disabled title="Пока закрыто"><b>Тренажёры</b><span>Пока закрыто</span></button>
     <button type="button" class="sec tonly" style="--c:#d62f7f" data-p="check"><b>Проверка домашки</b><span>Код от Кати: ответы и баллы</span></button>
   </div>
 
@@ -167,10 +168,10 @@ a.bc.now{background:#e8f5f2;border-color:#2c7f78}a.bc.now:hover{background:#dcef
   <section class="pane" id="p-tools" hidden>
     <h2>Тренажёры</h2>
     <div class="lsn">
-      <a class="lc" style="--c:#a8802a" href="strategies.html?v=1"><b>Strategies &amp; Traps</b><span>Listening 2: True / False / Not stated. Speaking 2: questions with a 20-second timer.</span></a>
-      <a class="lc" style="--c:#2c7f78" href="write37.html?v=40"><b>Письмо 37</b><span>Структура, разбор вопросов, ответы, свои вопросы, 89 писем.</span></a>
-      <a class="lc" style="--c:#b0683a" href="write38.html?v=40"><b>Задание 38</b><span>Структура и клише, чтение данных, проблема и вывод, 27 тем.</span></a>
-      <a class="lc" style="--c:#8f4d7c" href="russia.html?v=40"><b>Russia</b><span>Устная часть о России: 4 задания, интервью со звуком. 35 писем.</span></a>
+      <a class="lc xlock" tabindex="-1" style="--c:#a8802a" href="strategies.html?v=1"><b>Strategies &amp; Traps</b><span>Listening 2: True / False / Not stated. Speaking 2: questions with a 20-second timer.</span></a>
+      <a class="lc xlock" tabindex="-1" style="--c:#2c7f78" href="write37.html?v=40"><b>Письмо 37</b><span>Структура, разбор вопросов, ответы, свои вопросы, 89 писем.</span></a>
+      <a class="lc xlock" tabindex="-1" style="--c:#b0683a" href="write38.html?v=40"><b>Задание 38</b><span>Структура и клише, чтение данных, проблема и вывод, 27 тем.</span></a>
+      <a class="lc xlock" tabindex="-1" style="--c:#8f4d7c" href="russia.html?v=40"><b>Russia</b><span>Устная часть о России: 4 задания, интервью со звуком. 35 писем.</span></a>
       <a class="lc tonly" style="--c:#4a4f8f" href="plan.html?v=41"><b>План</b><span>9 месяцев и недели, конспект, критерии ФИПИ.</span></a>
     </div>
   </section>

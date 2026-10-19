@@ -5,7 +5,8 @@
   const here=(location.pathname.split('/').pop()||'index.html');
   const b=document.createElement('button');b.type='button';b.className='tab menub';b.textContent=(SECT.find(s=>s[0]===here)||SECT[0])[1];b.setAttribute('aria-haspopup','true');b.setAttribute('aria-expanded','false');
   const m=document.createElement('nav');m.className='sitemenu';m.hidden=true;m.setAttribute('aria-label','Разделы сайта');
-  SECT.forEach(s=>{const a=document.createElement('a');a.href=s[0]+'?v='+V;a.className=s[0]===here?'on':'';a.innerHTML='<b>'+s[1]+'</b><span>'+s[2]+'</span>';m.append(a);});
+  const OFF=window.TEACHER?[]:['write37.html','write38.html','russia.html','strategies.html'];/* тренажёры у Кати пока закрыты */
+  SECT.forEach(s=>{if(OFF.indexOf(s[0])>=0)return;const a=document.createElement('a');a.href=s[0]+'?v='+V;a.className=s[0]===here?'on':'';a.innerHTML='<b>'+s[1]+'</b><span>'+s[2]+'</span>';m.append(a);});
   /* кнопка «На главную» на каждой странице и в каждом задании: сам логотип стал кнопкой со стрелкой */
   if(here!=='index.html'){home.href='index.html?v='+V;home.title='На главную';home.classList.add('homebtn');home.innerHTML='<em class="harr">←</em>Главная';
     const hs=document.createElement('style');hs.textContent='.bar a.home.homebtn{border:1.5px solid #c9d3e6;border-radius:12px;padding:6px 10px 6px 8px;background:#fff;gap:5px;font-size:16px}.bar a.home.homebtn::before{display:none}.bar a.home.homebtn:hover{background:#edf4ff}.bar a.home .harr{font-style:normal;font-weight:900;font-size:19px;color:#2855d9;margin-right:2px}';document.head.append(hs);}
