@@ -4,7 +4,7 @@
 <meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Kate · Homework · BBC Words</title>
+<title>Kate · Homework · Lesson 5 Words</title>
 <style>
 :root{--ink:#223d3c;--navy:#155e61;--muted:#66756f;--line:#dfe6e0;--bg:#f5f5f0;--accent:#c57e67;--soft:#f2f5ef}
 *{box-sizing:border-box}
@@ -18,7 +18,7 @@ header h1{font-size:20px;letter-spacing:-.03em;margin:0;font-weight:800;color:va
 header p{font-size:13px;color:var(--muted);margin:1px 0 0;white-space:nowrap}
 .grow{flex:1}
 .pill{font-size:13px;font-weight:800;letter-spacing:.04em;border-radius:6px;background:#e4eee8;color:var(--navy);padding:6px 9px;white-space:nowrap}
-main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(10px,1.2vw,16px);padding:clamp(10px,1.8vh,18px) clamp(12px,1.6vw,24px);min-height:0}
+main{display:grid;grid-template-columns:minmax(0,760px);justify-content:center;gap:clamp(10px,1.2vw,16px);padding:clamp(10px,1.8vh,18px) clamp(12px,1.6vw,24px);min-height:0}
 .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:clamp(10px,1.8vh,16px) clamp(12px,1.2vw,18px);display:flex;flex-direction:column;gap:clamp(8px,1.4vh,12px);min-height:0;min-width:0}
 .card.tint{background:#fbf6f1}
 .head{display:flex;align-items:center;gap:10px;padding-bottom:clamp(5px,1vh,9px);border-bottom:1px solid var(--line)}
@@ -48,35 +48,34 @@ main{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp
 .txt strong{color:var(--navy)}
 .small{font-size:15px;line-height:1.35;color:var(--muted)}
 a{color:var(--navy)}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1px solid #d5e0d7;background:var(--soft);color:var(--navy);border-radius:8px;padding:7px 12px;font-size:15px;font-weight:700}
+.seg button.on{background:var(--navy);border-color:var(--navy);color:#fff}
 @media(max-width:820px){body{overflow:auto}.app{height:auto;min-height:100dvh;grid-template-rows:auto 1fr}header{flex-wrap:wrap;padding:8px 12px}main{grid-template-columns:1fr}header p{display:none}}
 </style>
 </head>
 <body>
 <div class="app">
 <header>
-  <div><h1>HOMEWORK · LESSON 5</h1><p>Words from BBC 6 Minute English: Social media and teenage health</p></div>
+  <div><h1>HOMEWORK · LESSON 5</h1><p>Words from the lesson and the BBC video</p></div>
   <span class="grow"></span>
-  <span class="pill">6 WORDS</span>
+  <span class="pill" id="total">18 WORDS</span>
 </header>
 <main>
   <div class="card">
-    <div class="head"><div><p class="eyebrow">QUIZLET · BBC WORDS</p><h2>Social media and teenage health</h2></div><button class="btn light" type="button" id="shuffle">Shuffle</button></div>
+    <div class="head"><div><p class="eyebrow">QUIZLET</p><div class="seg" id="sets" style="margin-top:4px"></div></div><button class="btn light" type="button" id="shuffle">Shuffle</button></div>
     <div class="cardwrap">
       <div class="fc" id="fc" tabindex="0" role="button" aria-label="Flip the card"><div class="fc-in"><div class="fc-face fc-front"><strong id="word"></strong><small>CLICK TO FLIP</small></div><div class="fc-face fc-back"><div class="m" id="mean"></div><div class="e" id="ex"></div><div class="r" id="ru"></div></div></div></div>
       <div class="fcnav"><button class="btn light" type="button" id="prev">←</button><span class="cnt" id="cnt"></span><button class="btn light" type="button" id="next">→</button></div>
       <div class="note">Say the word, guess the meaning, then flip.</div>
     </div>
   </div>
-  <div class="card tint">
-    <div class="head"><div><p class="eyebrow">ALSO FOR HOMEWORK</p><h2>After lesson 5</h2></div></div>
-    <div class="task"><b class="k">WRITING · 180–220 WORDS</b><div class="txt"><strong>Online reputation has become more important than real character. To what extent do you agree?</strong></div><div class="small">Use five collocations, two inversion structures and one passive reporting structure.</div></div>
-    <div class="task"><b class="k">VOICE MESSAGE · 90 SECONDS</b><div class="txt">Can people grow beyond their past mistakes, or does the internet make forgiveness impossible?</div><div class="small">Optional: finish listening to BBC <a href="https://www.bbc.co.uk/learningenglish/features/6-minute-english/ep-190718" target="_blank" rel="noopener">Is Shame Always Bad?</a></div></div>
-  </div>
 </main>
 </div>
 <script>
 const $=id=>document.getElementById(id);
-const CARDS=[
+const ATT=[['crave validation','to strongly desire approval from other people','Some users crave validation through likes.','жаждать одобрения'],['seek attention','to try to make other people notice you','He often posts to seek attention.','искать внимания'],['curate an online persona','to carefully control how you appear online','She curates an online persona that looks effortless.','создавать онлайн-образ'],['be under public scrutiny','to be watched and judged by many people','The creator is under public scrutiny.','быть под пристальным вниманием'],['face a backlash','to experience a strong negative public reaction','The brand faced a backlash.','столкнуться с волной критики'],['be held accountable','to be required to accept responsibility','Influencers should be held accountable for misleading claims.','нести ответственность'],['cross the line','to behave in a way that is unacceptable','The joke crossed the line.','перейти границу'],["damage someone's reputation",'to make people think less well of someone','A rumour can damage a reputation.','испортить репутацию'],['digital footprint','the record of your activity on the internet','Her digital footprint followed her into adulthood.','цифровой след'],['virtue signalling','publicly displaying moral views mainly to gain approval','Critics accused the brand of virtue signalling.','демонстрация моральности напоказ'],['jump on the bandwagon','to join a trend because it has become popular','Many people jumped on the bandwagon.','присоединиться к тренду'],['blow something out of proportion','to make an issue appear more serious than it is','The media blew the incident out of proportion.','раздувать проблему']];
+const BBC=[
  ['adolescent','a young person between childhood and adulthood, roughly 10 to 19 years old','An adolescent is someone aged ten to nineteen.','подросток'],
  ['be fed content','to be shown content automatically by a platform, without searching for it','Teenagers are being fed content in a way that is addictive.','получать «подсовываемый» контент'],
  ['algorithm','a set of rules and calculations that chooses and personalises what a user sees','Algorithms prioritise and personalise the content a user sees.','алгоритм'],
@@ -84,7 +83,10 @@ const CARDS=[
  ['onus','a responsibility or duty that falls on someone','The onus has been put on parents to find solutions.','ответственность, обязанность'],
  ['a losing battle','a struggle you cannot win','It’s a losing battle because it’s their entire social network.','заведомо проигранная борьба']
 ];
-let order=CARDS.map((_,i)=>i),i=0;
+const SETS=[['Attention words · 12',ATT],['BBC words · 6',BBC],['All · 18',ATT.concat(BBC)]];
+let CARDS=ATT,order,i;
+function setDeck(k){CARDS=SETS[k][1];order=CARDS.map((_,j)=>j);i=0;[...$('sets').children].forEach((b,j)=>b.classList.toggle('on',j===k));render()}
+SETS.forEach((st,k)=>{const b=document.createElement('button');b.type='button';b.textContent=st[0];b.onclick=()=>setDeck(k);$('sets').appendChild(b)});
 function render(){const c=CARDS[order[i]];$('fc').classList.remove('flipped');$('word').textContent=c[0];$('mean').textContent=c[1];$('ex').textContent=c[2];$('ru').textContent=c[3];$('cnt').textContent=(i+1)+' / '+CARDS.length}
 $('fc').onclick=()=>$('fc').classList.toggle('flipped');
 $('fc').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('fc').classList.toggle('flipped')}};
@@ -92,7 +94,7 @@ $('prev').onclick=()=>{i=(i+CARDS.length-1)%CARDS.length;render()};
 $('next').onclick=()=>{i=(i+1)%CARDS.length;render()};
 $('shuffle').onclick=()=>{order=order.slice().sort(()=>Math.random()-.5);i=0;render()};
 document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')$('next').click();if(e.key==='ArrowLeft')$('prev').click()});
-render();
+setDeck(0);
 </script>
 </body>
 </html>
