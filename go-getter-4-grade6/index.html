@@ -366,7 +366,7 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
 <div class="app home-mode">
   <div class="topbar">
     <div class="topbar-inner">
-      <div class="brand">GO GETTER <b>4</b> <span>GRADE 6</span></div><button id="backScreen" class="top-control" hidden>Back</button><button class="top-control" data-go="home">Home</button><button class="top-control" data-go="lesson">Activities</button><button id="fullscreen" class="top-control">Full screen</button>
+      <div class="brand">GO GETTER <b>4</b> <span>GRADE 6</span></div><button id="backScreen" class="top-control" hidden>Back</button><button class="top-control" data-go="home">Home</button><button class="top-control" data-go="reviewLab">🌸 -ED Lab</button><button class="top-control" data-go="lesson">Activities</button><button id="fullscreen" class="top-control">Full screen</button>
       <div class="progress-wrap" aria-label="Lesson progress"><div id="progress" class="progress"></div></div>
       <div id="score" class="score">0 pts</div>
     </div>
@@ -885,6 +885,8 @@ html,body{width:100%!important;height:100%!important;margin:0!important;overflow
     root.querySelector('main').scrollTo({top:0,behavior:'instant'});
   }
   root.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+  const directOpen=new URLSearchParams(location.search).get('open');
+  if(directOpen==='ed'||location.hash==='#ed-lab')go('reviewLab',false);
   root.getElementById('resetLesson').addEventListener('click',()=>location.reload());
 
 
