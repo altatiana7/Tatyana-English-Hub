@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
 <title>Teacher's Hub ЕГЭ</title>
-<link rel="stylesheet" href="app.css?v=60">
+<link rel="stylesheet" href="app.css?v=61">
 <style>
 .hub2{max-width:none;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:10px;padding:8px 4px;flex:1;min-height:0}
 .hub2 h1{font-size:30px;font-weight:900;margin:4px 0 0;text-align:center}
@@ -108,20 +108,45 @@ a.bc.now{background:#e8f5f2;border-color:#2c7f78}a.bc.now:hover{background:#dcef
 .gs.hw.on{background:#fff1c9;border-color:#d8b44a;color:#6d5500}.gs.cl.on{background:#dff0ea;border-color:#7fb8a8;color:#1b5b53}
 @media (max-width:900px){.g2{grid-template-columns:1fr}.gcol{max-height:none}}
 </style>
-<link rel="stylesheet" href="katya.css?v=5">
+<link rel="stylesheet" href="katya.css?v=6">
+<style>
+/* узкая верхняя панель и плотный гайдлайн */
+body{padding:4px 8px!important}
+body>.bar{min-height:34px!important;padding:2px 10px!important;margin:0 auto 4px!important;border-radius:12px!important}
+.bar a.home::before{width:26px!important;height:26px!important;border-radius:8px!important;font-size:10px!important}
+main:has(> .hub2){padding:0!important}
+.hub2{gap:6px!important;padding:0!important}
+.secb{display:flex!important;gap:6px!important}.secb>.sec{flex:1 1 auto}
+.sec{flex-direction:row!important;align-items:center;justify-content:center;padding:5px 8px!important;border-top-width:3px!important;border-radius:10px!important;box-shadow:none!important;min-width:0}
+.sec b{font-size:14.5px!important;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sec span{display:none!important}
+.pane{padding:6px 10px!important;gap:5px!important;border-radius:12px!important}
+.pane h2{font-size:16px!important}
+#p-guide h2 span{font-size:13px!important}
+.gtop{padding:3px 10px!important;font-size:14px!important;border-radius:9px!important}
+.g2{margin-top:2px!important;gap:8px!important}
+.gcol{max-height:calc(100vh - 150px)!important;border-top-width:3px!important;border-radius:10px!important}
+.gh{padding:4px 10px!important}.gh b{font-size:15.5px!important}.gh span{font-size:13px!important}
+.gscr{padding:4px 6px 6px!important;gap:3px!important}
+.gg{margin:4px 2px 0!important}
+.gr{padding:2px 8px!important;border-radius:8px!important}
+.gr a b{font-size:14.5px!important;line-height:1.25}.gr a span{font-size:12.5px!important;line-height:1.25}
+.gs{padding:2px 7px!important}
+@media (max-width:900px){.gcol{max-height:none!important}}
+</style>
 </head>
 <body>
 <header class="bar"><a class="home" href="index.html">Teacher's Hub ЕГЭ <span>· Катя и Рита</span></a></header>
 <main>
 <div class="hub2">
   <div class="secb" id="secb">
-    <button type="button" class="sec" style="--c:#b0683a" data-p="diag"><b>Диагностика</b><span>Входная диагностика: 9 этапов на занятии</span></button>
-    <button type="button" class="sec" style="--c:#c28a12" data-p="hw"><b>Домашняя работа</b><span>Задания к следующему занятию</span></button>
-    <button type="button" class="sec" style="--c:#2c7f78" data-p="blocks"><b>Тематические блоки</b><span>17 тем ФИПИ, по 3 занятия на тему</span></button>
-    <button type="button" class="sec" style="--c:#3f6b4f" data-p="lessons"><b>Занятия</b><span>Уроки по неделям: тема блока и задания ЕГЭ</span></button>
-    <button type="button" class="sec" style="--c:#a0742c" data-p="tools"><b>Тренажёры</b><span>Письмо 37, задание 38, Russia</span></button>
-    <button type="button" class="sec tonly" style="--c:#227066" data-p="guide"><b>Гайдлайн · Катя</b><span>Что задано на дом и что – на уроке</span></button>
-    <button type="button" class="sec tonly" style="--c:#d62f7f" data-p="check"><b>Проверка домашки</b><span>Код от Кати: ответы и баллы</span></button>
+    <button type="button" class="sec" style="--c:#b0683a" data-p="diag" title="Входная диагностика: 9 этапов на занятии"><b>Диагностика</b><span>Входная диагностика: 9 этапов на занятии</span></button>
+    <button type="button" class="sec" style="--c:#c28a12" data-p="hw" title="Задания к следующему занятию"><b>Домашняя работа</b><span>Задания к следующему занятию</span></button>
+    <button type="button" class="sec" style="--c:#2c7f78" data-p="blocks" title="17 тем ФИПИ, по 3 занятия на тему"><b>Тематические блоки</b><span>17 тем ФИПИ, по 3 занятия на тему</span></button>
+    <button type="button" class="sec" style="--c:#3f6b4f" data-p="lessons" title="Уроки по неделям: тема блока и задания ЕГЭ"><b>Занятия</b><span>Уроки по неделям: тема блока и задания ЕГЭ</span></button>
+    <button type="button" class="sec" style="--c:#a0742c" data-p="tools" title="Письмо 37, задание 38, Russia"><b>Тренажёры</b><span>Письмо 37, задание 38, Russia</span></button>
+    <button type="button" class="sec tonly" style="--c:#227066" data-p="guide" title="Что задано на дом и что – на уроке"><b>Гайдлайн · Катя</b><span>Что задано на дом и что – на уроке</span></button>
+    <button type="button" class="sec tonly" style="--c:#d62f7f" data-p="check" title="Код от Кати: ответы и баллы"><b>Проверка домашки</b><span>Код от Кати: ответы и баллы</span></button>
   </div>
 
   <section class="dash" id="dash">
@@ -206,6 +231,6 @@ a.bc.now{background:#e8f5f2;border-color:#2c7f78}a.bc.now:hover{background:#dcef
 <script src="nav.js?v=41"></script>
 <script src="blocks.js?v=60"></script>
 <script src="hub.js?v=99"></script>
-<script src="guide.js?v=1"></script>
+<script src="guide.js?v=2"></script>
 </body>
 </html>
