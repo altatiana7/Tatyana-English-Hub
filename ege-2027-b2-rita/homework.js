@@ -27,7 +27,7 @@ window.HW={
     't2-1':'Task 2 · questions · advert 1','t2-2':'Task 2 · questions · advert 2',
     iv1:'Task 3 · interview · set 1',iv2:'Task 3 · interview · set 2',iv3:'Task 3 · interview · set 3',
     't4-1':'Task 4 · photos','t4-2':'Monologue · your best friend'};
-  const P={lesson1:'Diagnostic test',home1:'Diagnostic · home part',write37:'Letter 37 · trainer',write38:'Essay 38 · trainer',russia:'Russia · speaking'};
+  const P={lesson1:'Diagnostic test',home1:'Diagnostic · home part',write37:'Letter 37 · trainer',write38:'Essay 38 · trainer'};
   /* открыто ли задание: id вида 'block1:g2' или страница 'write37' */
   HW.has=id=>HW.items.indexOf(id)>=0;
   /* открыта ли страница хоть одним заданием */
