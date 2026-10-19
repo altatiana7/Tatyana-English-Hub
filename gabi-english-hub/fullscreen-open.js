@@ -52,6 +52,15 @@
       if (frame.dataset.src && (p === hubPath() || p === hubPath() + 'index.html')) { close(); return; }
       /* tasks open from their own start, never from where they stopped */
       try { w.scrollTo(0, 0); } catch(e) {}
+      /* if the browser refused full screen on the first click, switch it on
+         at the first tap inside the task */
+      var d = w.document;
+      if (!d.__gfsHooked) {
+        d.__gfsHooked = true;
+        var again = function(){ if (layer.classList.contains('on') && !isFull()) goFull(); };
+        d.addEventListener('pointerdown', again, true);
+        d.addEventListener('keydown', function(e){ if (e.key !== 'Escape') again(); }, true);
+      }
     } catch(e) {}
   }
   function open(url){
