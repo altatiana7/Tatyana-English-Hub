@@ -299,18 +299,18 @@ document.getElementById('homeBtn').onclick=()=>{
 };
 
 function openLesson(n,i){
-  if(n===1 && i===2){ location.href='lesson3.html?v=20261007-c'; return; }
-  if(n===1 && i===3){ location.href='lesson4.html?v=20261007-d'; return; }
-  if(n===1 && i===4){ location.href='lesson5.html?v=20261009-a'; return; }
-  if(n===1 && i===5){ location.href='writing-email.html?v=20261009-a'; return; }
-  if(n===1 && i===6){ location.href='revision-unit1.html?v=20261007-d'; return; }
+  if(n===1 && i===2){ gabiOpenTask('lesson3.html?v=20261007-c'); return; }
+  if(n===1 && i===3){ gabiOpenTask('lesson4.html?v=20261007-d'); return; }
+  if(n===1 && i===4){ gabiOpenTask('lesson5.html?v=20261009-a'); return; }
+  if(n===1 && i===5){ gabiOpenTask('writing-email.html?v=20261009-a'); return; }
+  if(n===1 && i===6){ gabiOpenTask('revision-unit1.html?v=20261007-d'); return; }
   if(n===1){
-    location.href='gabi-life-stages.html?lesson='+(i+1)+'&v=20261001-clean-layout-v9';
+    gabiOpenTask('gabi-life-stages.html?lesson='+(i+1)+'&v=20261001-clean-layout-v9');
     return;
   }
-  if(n===2 && i===0){ location.href='unit2-lesson1.html?v=20261014-b'; return; }
-  if(n===2 && i===1){ location.href='unit2-lesson2.html?v=20261015-d'; return; }
-  if(n===2 && i===2){ location.href='unit2-lesson3.html?v=20261014-b'; return; }
+  if(n===2 && i===0){ gabiOpenTask('unit2-lesson1.html?v=20261014-b'); return; }
+  if(n===2 && i===1){ gabiOpenTask('unit2-lesson2.html?v=20261015-d'); return; }
+  if(n===2 && i===2){ gabiOpenTask('unit2-lesson3.html?v=20261014-b'); return; }
   const m=modules[n-1];
   document.getElementById('crumb').textContent='MODULE '+n+' · '+m.title.toUpperCase();
   document.getElementById('lessonHeading').textContent=m.lessons[i].title;
@@ -374,5 +374,6 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
   }
 })();
 </script>
+<script src="fullscreen-open.js?v=20261019-a"></script>
 </body>
 </html>
