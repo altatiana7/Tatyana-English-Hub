@@ -114,6 +114,27 @@ main{position:relative;min-height:0}
 .sheet{background:#fff;border-radius:14px;max-width:820px;width:100%;padding:18px 20px;display:grid;gap:12px;box-shadow:0 12px 40px #0003}
 .sheet .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 a{color:var(--navy)}
+/* tap gaps */
+.tapbank{display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:#fff;border:1px dashed #d9c3a8;border-radius:10px}
+.tapbank button{border:0;background:#f6e7c4;color:#5a4410;border-radius:18px;padding:6px 12px;font-size:15px;font-weight:700;box-shadow:0 2px 0 #e2cc98}
+.tapbank button:hover:not(:disabled){transform:translateY(-1px)}
+.tapbank button.used{visibility:hidden}
+.tapbank button.no{background:#f8cfc6;color:#7a2a1b;animation:shake .35s}
+.tapline{display:flex;gap:10px;align-items:baseline;background:#fff;border:1px solid #e3e9e3;border-radius:10px;padding:7px 11px;font-size:16px;line-height:1.5;transition:box-shadow .2s}
+.tapline .n{font-weight:800;color:var(--accent);font-size:13px}
+.tapline.live{border-color:var(--navy);box-shadow:0 0 0 3px #d8e9e5}
+.tapline.ok{background:#f1f9f3}
+.slot{display:inline-block;min-width:90px;border-bottom:2px dashed #a9c8bb;font-style:normal}
+.slot.filled{border:0;background:#c9ecd5;color:#17442b;font-weight:700;border-radius:6px;padding:0 6px;animation:pop .3s}
+@keyframes pop{0%{transform:scale(.7)}100%{transform:none}}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* error hunter */
+.huntbox{flex:1;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #e3e9e3;border-radius:12px;padding:16px}
+.hunt{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+.hunt button{border:1px solid #d7e3da;background:#f7f8f4;border-radius:8px;padding:7px 11px;font-size:clamp(17px,2.9vh,20px);font-weight:650}
+.hunt button:hover{border-color:#8ba89a}
+.hunt button.hit{background:#f8cfc6;border-color:#c2452f;color:#7a2a1b;text-decoration:line-through}
+.hunt button.miss{animation:shake .35s;background:#eef0ec}
 /* bomb */
 .bombbar{display:flex;align-items:center;gap:10px}
 .bombbar .ring{width:46px;height:46px}
@@ -432,15 +453,20 @@ function matchRender(){
 }
 function gapRender(){
   const r=$('pr');r.innerHTML='';const pages=Math.ceil(GAPS.length/4);
-  const set=GAPS.slice(gPage*4,gPage*4+4);
-  $('prPill').textContent=(gPage+1)+' / '+pages+' · '+gPts+' pts';
-  r.appendChild(el('div','bank',shuffle(set.map(x=>x[1])).map(x=>'<span>'+x+'</span>').join('')));
-  const ins=set.map((x,k)=>{const d=el('div','gapline','<div>'+(gPage*4+k+1)+'. '+x[0]+'</div>');const inp=el('input');inp.autocomplete='off';inp.placeholder='Expression';d.appendChild(inp);r.appendChild(d);return inp});
-  const rw=el('div','row');
-  const chk=btn('btn','Check',()=>{let n=0;ins.forEach((inp,k)=>{const ok=norm(inp.value)===norm(set[k][1]);inp.className=ok?'good':'bad';if(ok)n++});gPts+=n;chk.disabled=true;ans.hidden=false;$('prPill').textContent=(gPage+1)+' / '+pages+' · '+gPts+' pts'});
-  const ans=btn('btn light','Answers',()=>ins.forEach((inp,k)=>{inp.value=set[k][1];inp.className='good'}));ans.hidden=true;
-  rw.append(chk,ans,el('span','grow'),gPage<pages-1?btn('btn light','Next 4 →',()=>{gPage++;gapRender()}):btn('btn light','Start again',()=>{gPage=0;gPts=0;gapRender()}));
-  r.appendChild(rw);
+  const set=GAPS.slice(gPage*4,gPage*4+4);let act=0;
+  const pill=()=>$('prPill').textContent=(gPage+1)+' / '+pages+' · '+gPts+' pts';pill();
+  r.appendChild(el('div','note','Tap the phrase that fits the glowing sentence.'));
+  const bank=el('div','tapbank');
+  const lines=set.map((x,k)=>{const d=el('div','tapline','<span class="n">'+(gPage*4+k+1)+'</span><span>'+x[0].replace('___','<i class="slot">&nbsp;</i>')+'</span>');r.appendChild(d);return d});
+  const mark=()=>lines.forEach((d,k)=>d.classList.toggle('live',k===act));mark();
+  shuffle(set.map(x=>x[1])).forEach(w=>bank.appendChild(btn('',w,e=>{
+    if(act>=set.length)return;const b=e.currentTarget;
+    if(w===set[act][1]){gPts++;const sl=lines[act].querySelector('.slot');sl.textContent=w;sl.classList.add('filled');lines[act].classList.add('ok');b.classList.add('used');b.disabled=true;act++;mark();pill();
+      if(act===set.length)done.hidden=false}
+    else{b.classList.add('no');setTimeout(()=>b.classList.remove('no'),450)}})));
+  r.insertBefore(bank,lines[0]);
+  const done=el('div','row');done.hidden=true;done.append(el('span','note grow','<b>Page complete.</b>'),gPage<pages-1?btn('btn','Next 4 →',()=>{gPage++;gapRender()}):btn('btn light','Start again',()=>{gPage=0;gPts=0;gapRender()}));
+  r.appendChild(done);
 }
 
 /* ---------- 08 forbidden word ---------- */
@@ -517,21 +543,34 @@ function gramRender(i){if(i!==undefined&&i!==gTab){gTab=i;gPg=0}const g=GRAM[gTa
   rr.append(el('span','grow'));const rw=rr;rw.append(btn('btn light','←',()=>{gPg=(gPg+pages-1)%pages;gramRender()}),el('span','note',(gPg+1)+' / '+pages),btn('btn light','→',()=>{gPg=(gPg+1)%pages;gramRender()}));}
 
 /* ---------- 12 grammar doctor ---------- */
-const GD=[['Never I have seen such a backlash.','Never have I seen such a backlash.'],['The app is said to collecting personal data.','The app is said to be collecting personal data.'],['Only when she deleted the app she realised how addicted she was.','Only when she deleted the app did she realise how addicted she was.'],["If he had thought before posting, he won't be in trouble now.","If he had thought before posting, he wouldn't be in trouble now."],['The star is believed to have buy fake followers.','The star is believed to have bought fake followers.'],['Hardly had she posted the photo than the comments started.','Hardly had she posted the photo when the comments started.'],['Rarely people consider their digital footprint.','Rarely do people consider their digital footprint.'],['She is believed to deleted the original post.','She is believed to have deleted the original post.'],['Not only social media can build careers, but it can also destroy them.','Not only can social media build careers, but it can also destroy them.'],['Had she knew about the backlash, she would not have posted it.','Had she known about the backlash, she would not have posted it.']];
+const GD=[
+ ['Rarely people consider their digital footprint.',1,'Rarely do people consider their digital footprint.'],
+ ['She is believed to deleted the original post.',4,'She is believed to have deleted the original post.'],
+ ['Not only social media can build careers, but it can also destroy them.',4,'Not only can social media build careers, but it can also destroy them.'],
+ ['Had she knew about the backlash, she would not have posted it.',2,'Had she known about the backlash, she would not have posted it.'],
+ ['Never I have seen such a backlash.',1,'Never have I seen such a backlash.'],
+ ['The app is said to collecting personal data.',5,'The app is said to be collecting personal data.'],
+ ['Only when she deleted the app she realised how addicted she was.',5,'Only when she deleted the app did she realise how addicted she was.'],
+ ["If he had thought before posting, he won't be in trouble now.",6,"If he had thought before posting, he wouldn't be in trouble now."],
+ ['The star is believed to have buy fake followers.',6,'The star is believed to have bought fake followers.'],
+ ['Hardly had she posted the photo than the comments started.',6,'Hardly had she posted the photo when the comments started.']
+];
 let gdI,gdPts,gdMiss;
 function gdReset(){gdI=0;gdPts=0;gdMiss=[];gdRender()}
 function gdRender(){
   const r=$('gd');r.innerHTML='';
-  if(gdI>=GD.length){$('gdPill').textContent=gdPts+' pts';r.appendChild(el('div','big',gdPts+' / '+GD.length));const l=el('div','list');l.appendChild(el('div','',gdMiss.length?'Look again: '+gdMiss.map(m=>'<b>'+m+'</b>').join('<br>'):'<b>No mistakes.</b>'));l.appendChild(el('div','','Explain why the structure changes.'));r.appendChild(l);const rw=el('div','row');rw.appendChild(btn('btn light','Play again',gdReset));r.appendChild(rw);return}
+  if(gdI>=GD.length){$('gdPill').textContent=gdPts+' pts';r.appendChild(el('div','big',gdPts+' / '+GD.length));const l=el('div','list');l.appendChild(el('div','',gdMiss.length?'Look again:<br>'+gdMiss.map(m=>'<b>'+m+'</b>').join('<br>'):'<b>No mistakes.</b>'));r.appendChild(l);const rw=el('div','row');rw.appendChild(btn('btn light','Play again',gdReset));r.appendChild(rw);return}
   const g=GD[gdI];$('gdPill').textContent=(gdI+1)+' / '+GD.length+' · '+gdPts+' pts';
-  r.append(el('div','meter','<i style="width:'+(gdI/GD.length*100)+'%"></i>'),el('div','note','This sentence is ill. Type the cure.'),el('div','q','“'+g[0]+'”'));
-  const inp=el('input');inp.placeholder='Type the corrected sentence';inp.autocomplete='off';
-  const t=el('div','task');t.appendChild(inp);r.appendChild(t);
-  const fb=el('div','fb','<span class="note"> </span>');
+  r.append(el('div','meter','<i style="width:'+(gdI/GD.length*100)+'%"></i>'),el('div','note','This sentence is ill. Tap the word that causes the problem, then say the cure aloud.'));
+  const words=el('div','hunt');let done=false,first=true;
+  const cure=el('div','ans','<b>Cure:</b> '+g[2]);cure.hidden=true;
   const next=btn('btn',gdI===GD.length-1?'See result':'Next',()=>{gdI++;gdRender()});next.hidden=true;
-  const chk=btn('btn','Check',()=>{const ok=norm(inp.value)===norm(g[1]);inp.className=ok?'good':'bad';if(ok)gdPts++;else gdMiss.push(g[1]);fb.firstChild.innerHTML=(ok?'<b>Correct.</b> ':'<b>Correct version:</b> ')+g[1];chk.hidden=true;next.hidden=false;inp.disabled=true;$('gdPill').textContent=(gdI+1)+' / '+GD.length+' · '+gdPts+' pts';next.focus()});
-  inp.onkeydown=e=>{if(e.key==='Enter'&&!chk.hidden)chk.click()};
-  fb.append(chk,next);r.appendChild(fb);
+  g[0].split(' ').forEach((w,k)=>words.appendChild(btn('',w,e=>{
+    if(done)return;const b=e.currentTarget;
+    if(k===g[1]){b.classList.add('hit');done=true;if(first)gdPts++;else gdMiss.push(g[2]);cure.hidden=false;next.hidden=false;$('gdPill').textContent=(gdI+1)+' / '+GD.length+' · '+gdPts+' pts'}
+    else{first=false;b.classList.add('miss');setTimeout(()=>b.classList.remove('miss'),450)}})));
+  const box=el('div','huntbox');box.appendChild(words);r.append(box,cure);
+  const rw=el('div','row');rw.append(el('span','note grow','First tap right = 1 point.'),next);r.appendChild(rw);
 }
 
 /* ---------- 13 price of being seen ---------- */
