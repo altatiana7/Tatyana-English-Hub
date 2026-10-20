@@ -350,8 +350,8 @@ function bAnswer(k,choice){
 function bombRender(lastK,exploded){
   const r=$('bomb');r.innerHTML='';
   const total=Math.ceil(BOMB.length/BPER);
-  $('bombPill').textContent=(bPage+1)+' / '+total+' · '+bPts+' pts';
   const from=bPage*BPER,to=Math.min(BOMB.length,from+BPER);
+  $('bombPill').textContent=(from+1)+(to-from>1?'–'+to:'')+' / '+BOMB.length+' · '+bPts+' pts';
   const bar=el('div','bombbar');
   bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="bRing" cx="50" cy="50" r="45" stroke-dasharray="'+BC+'" stroke-dashoffset="'+(BC*(1-bT/15))+'"/></svg><span id="bNum">'+bT+'</span>'));
   const allDone=Object.keys(bDone).length===BOMB.length;
