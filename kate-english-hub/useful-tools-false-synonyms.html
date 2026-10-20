@@ -58,10 +58,10 @@ function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Ma
 function selectGroup(g){group=g;data=g==='A'?A:B;document.getElementById('groupTitle').textContent='Группа '+g+' · '+data.length+' слов';show('menu')}
 function goHome(){show('home')}
 function backMenu(){if(group){document.getElementById('groupTitle').textContent='Группа '+group+' · '+data.length+' слов';show('menu')}else show('home')}
-function speak(t){if('speechSynthesis'in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}
+function speak(t){if(window.CardAudio)CardAudio.say(t)}
 
 function startLearn(){idx=0;flipped=false;show('learn');renderCard()}
-function renderCard(){const w=data[idx];document.getElementById('learnCount').textContent=(idx+1)+' / '+data.length;document.getElementById('learnProgress').style.width=((idx+1)/data.length*100)+'%';document.getElementById('flash').innerHTML=flipped?'<div><div class="ru">'+w.ru+'</div><div class="ex">'+w.ex+'</div><button class="audio" onclick="event.stopPropagation();speak('+JSON.stringify(w.en)+')">🔊 '+w.en+'</button></div>':'<div><div class="tiny">Нажми карточку, чтобы увидеть перевод</div><div class="word">'+w.en+'</div><button class="audio" onclick="event.stopPropagation();speak('+JSON.stringify(w.en)+')">🔊 Прослушать слово</button></div>'}
+function renderCard(){const w=data[idx];document.getElementById('learnCount').textContent=(idx+1)+' / '+data.length;document.getElementById('learnProgress').style.width=((idx+1)/data.length*100)+'%';document.getElementById('flash').innerHTML=flipped?'<div><div class="ru">'+w.ru+'</div><div class="ex">'+w.ex+'</div><button class="audio" onclick="event.stopPropagation();speak('+JSON.stringify(w.en)+')">Listen: '+w.en+'</button></div>':'<div><div class="tiny">Нажми карточку, чтобы увидеть перевод</div><div class="word">'+w.en+'</div><button class="audio" onclick="event.stopPropagation();speak('+JSON.stringify(w.en)+')">Listen</button></div>'}
 function flipCard(){flipped=!flipped;renderCard()}function nextCard(){if(idx<data.length-1){idx++;flipped=false;renderCard()}}function prevCard(){if(idx>0){idx--;flipped=false;renderCard()}}
 
 function mkQuestion(pool){const s=shuffle(pool);const w=s[0];const opts=shuffle([w.ru,...s.slice(1,4).map(x=>x.ru)]);return{w,opts,ans:w.ru}}
@@ -84,5 +84,6 @@ function renderFinalQ(){document.getElementById('quizCount').textContent='Фин
 function answerFinal(i){const btns=[...document.querySelectorAll('#quizBox .opt')];btns.forEach(b=>b.disabled=true);const ok=current.opts[i]===current.ans;if(ok){btns[i].classList.add('correct');score++}else{btns[i].classList.add('wrong');btns[current.opts.indexOf(current.ans)].classList.add('correct')}setTimeout(()=>{qi++;if(qi>=20)return finish(score,20);current=mkQuestion(data);renderFinalQ()},1000)}
 function finish(s,t){document.getElementById('resultScore').textContent=s+' / '+t;document.getElementById('resultText').textContent=Math.round(s/t*100)+'%';show('results')}
 </script>
+<script src="../card-audio.js?v=1"></script>
 </body>
 </html>

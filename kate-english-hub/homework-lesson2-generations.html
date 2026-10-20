@@ -241,5 +241,6 @@ document.querySelectorAll('.q').forEach(q=>q.querySelectorAll('.opt').forEach(b=
 function checkAll(){let score=0,total=0;document.querySelectorAll('.q').forEach(q=>{total++;const chosen=[...q.querySelectorAll('.opt')].find(x=>x.dataset.chosen==='1');q.querySelectorAll('.opt').forEach(x=>x.classList.remove('correct','wrong'));if(chosen){chosen.classList.remove('selected');if(chosen.dataset.v===q.dataset.answer){chosen.classList.add('correct');score++}else chosen.classList.add('wrong')}});document.getElementById('result').textContent='Score: '+score+' / '+total+(score===total?' · Excellent!':' · Review and try again.')}
 function resetAll(){document.querySelectorAll('.opt').forEach(x=>{x.classList.remove('selected','correct','wrong');x.dataset.chosen='0'});document.getElementById('result').textContent='Choose one answer for each question.'}
 </script>
+<script src="../card-audio.js?v=1"></script>
 </body>
 </html>

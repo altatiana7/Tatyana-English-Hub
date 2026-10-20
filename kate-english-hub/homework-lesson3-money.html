@@ -194,15 +194,13 @@ function drawCards(back){
   const list=W.filter(w=>w.set===deck),w=list[ci];
   screen.innerHTML='<div class="top"><h2>Flashcards</h2><p>Say the meaning first, then turn the card to check.</p><div class="decks"><button type="button" class="deck'+(deck==='m'?' on':'')+'" data-d="m">Money words · 8</button><button type="button" class="deck'+(deck==='p'?' on':'')+'" data-d="p">Phrasal verbs · 10</button></div></div>'+
   '<div class="main"><div class="flip"><div class="flip-in'+(back?' back':'')+'" id="card"><div class="face f"><div class="term">'+esc(w.t)+'</div><div class="tap">Tap to turn the card</div></div><div class="face b"><div class="term">'+esc(w.t)+'</div><div class="rus">'+esc(w.ru)+'</div><div class="def">'+esc(w.def)+'</div><div class="ex">'+esc(w.ex)+'</div>'+(w.note?'<div class="note">'+esc(w.note)+'</div>':'')+'</div></div></div>'+
-  '<div class="cnav"><button type="button" class="btn ghost" id="cPrev">← Back</button><button type="button" class="btn ghost" id="cSay">Listen</button><button type="button" class="btn" id="cFlip">Turn the card</button><span class="count">'+(ci+1)+' / '+list.length+'</span><button type="button" class="btn ghost" id="cNext">Next →</button><button type="button" class="btn" id="cGo">'+nextLabel()+'</button></div></div>';
+  '<div class="cnav"><button type="button" class="btn ghost" id="cPrev">← Back</button><button type="button" class="btn" id="cFlip">Turn the card</button><span class="count">'+(ci+1)+' / '+list.length+'</span><button type="button" class="btn ghost" id="cNext">Next →</button><button type="button" class="btn" id="cGo">'+nextLabel()+'</button></div></div>';
   screen.querySelectorAll('.deck').forEach(b=>b.onclick=()=>{deck=b.dataset.d;ci=0;drawCards(false)});
   const flip=()=>$('card').classList.toggle('back');
   $('card').onclick=flip;$('cFlip').onclick=flip;
   $('cPrev').onclick=()=>{ci=(ci-1+list.length)%list.length;drawCards(false)};
   $('cNext').onclick=()=>{ci=(ci+1)%list.length;if(ci===0&&deck==='m'){deck='p'}drawCards(false)};
   $('cGo').onclick=()=>{done.cards=true;go(1)};
-  if(!('speechSynthesis' in window))$('cSay').style.display='none';
-  $('cSay').onclick=()=>{try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w.t.replace(/[()]/g,'')+'. '+w.ex);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}catch(e){}};
 }
 
 /* ---------- 2 + 3 choice quizzes ---------- */
@@ -306,5 +304,6 @@ function finishWrite(){
 $('resetAll').onclick=()=>{done={};results={};answers=WRITE.map(()=>'');deck='m';go(0)};
 go(0);
 </script>
+<script src="../card-audio.js?v=1"></script>
 </body>
 </html>

@@ -128,7 +128,7 @@ function quizlet(box,st,n,face,back,sayTxt){
   const bar=el('div','qzbar');bar.innerHTML='<i style="width:'+((st.i+1)/n*100)+'%"></i>';
   const card=el('div','qzcard'+(st.flip[k]?' flipped':'')),inner=el('div','qzin');
   inner.append(el('div','qzface qzfront','<span class="qzk">'+f[0]+'</span>'+f[1]),el('div','qzface qzback','<span class="qzk">'+b[0]+'</span>'+b[1]));card.append(inner);
-  const snd=el('button','qzsnd','<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');snd.type='button';snd.title='Listen';snd.onclick=e=>{e.stopPropagation();const t=sayTxt(k,!!st.flip[k]);if(t)say(t);};if(sayTxt(k,false)||sayTxt(k,true))card.append(snd);
+  const snd=el('button','qzsnd','<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');snd.type='button';snd.title='Listen';snd.onclick=e=>{e.stopPropagation();const t=sayTxt(k,!!st.flip[k]);if(t){if(window.CardAudio)CardAudio.say(t);else say(t);}};if(sayTxt(k,false)||sayTxt(k,true))card.append(snd);
   const flip=()=>{st.flip[k]=!st.flip[k];card.classList.toggle('flipped',!!st.flip[k]);};
   card.onclick=e=>{if(e.target.closest('[contenteditable],button'))return;flip();};
   const move=d=>{stopSay();st.i=(st.i+d+n)%n;st.flip={};drawLeft();};

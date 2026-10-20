@@ -1,0 +1,39 @@
+name: Card audio
+
+# Records natural-voice audio for word cards (card-audio/texts.json -> card-audio/*.mp3).
+# After it commits, "Deploy GitHub Pages" runs automatically (workflow_run).
+on:
+  push:
+    branches: ["main"]
+    paths: ["card-audio/texts.json", "tools/card_audio_tts.py"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: card-audio
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install voice
+        run: pip install edge-tts
+      - name: Record missing audio
+        run: python tools/card_audio_tts.py
+      - name: Commit recordings
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git add card-audio/*.mp3 || true
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -m "Card audio: natural-voice recordings"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
