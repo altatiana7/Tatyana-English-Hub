@@ -292,6 +292,13 @@ html.teacher-mode #teacherRoot{display:grid!important}
 #teacherRoot .t-covernotes{top:90.3%;height:5.8%;font-size:0}
 #teacherRoot .t-view{z-index:10}
 #teacherRoot .t-top{background:#f4e9e2;color:#352323;border-bottom:1px solid #dfc2b8}
+/* lesson opens on the whole screen: no top bar, small floating buttons */
+#teacherRoot .t-view{position:fixed!important;inset:0!important}
+#teacherRoot .t-view.on{grid-template-rows:minmax(0,1fr)!important}
+#teacherRoot .t-top{position:fixed;right:8px;left:auto;bottom:8px;top:auto;z-index:12;background:transparent!important;border:0!important;padding:0!important;gap:6px;height:auto}
+#teacherRoot .t-top .t-title{display:none}
+#teacherRoot .t-top .t-back,#teacherRoot .t-top .t-notesbtn{margin:0;opacity:.45;font-size:11px;padding:5px 9px;background:#5f4a44!important;color:#fff!important}
+#teacherRoot .t-top .t-back:hover,#teacherRoot .t-top .t-notesbtn:hover{opacity:1}
 #teacherRoot .t-back,#teacherRoot .t-notesbtn,#teacherRoot .t-save{background:#c99186;color:#fff}
 #teacherRoot .t-title{font-size:14px}
 #teacherRoot .t-notes{z-index:12;width:min(440px,92vw);color:#352323;border-color:#dfc2b8}
@@ -413,6 +420,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
       document.getElementById('tNoteText').value=localStorage.getItem('katya_teacher_'+l.id)||'';
       document.getElementById('tNotes').classList.remove('on');
       document.getElementById('tView').classList.add('on');document.getElementById('tRightLessons').style.display='none';
+      try{if(!document.fullscreenElement&&root.requestFullscreen)root.requestFullscreen().catch(()=>{})}catch(e){}
       const fr=document.getElementById('tFrame'), ph=document.getElementById('tPlaceholder');
       if(l.url){ph.classList.remove('on');fr.style.display='block';fr.src=l.url}
       else{fr.src='about:blank';fr.style.display='none';document.getElementById('tPhTitle').textContent=course[mi].module+' · '+l.title;ph.classList.add('on')}

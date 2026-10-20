@@ -19,7 +19,7 @@ button:disabled{cursor:default}
 header{display:flex;align-items:center;gap:12px;padding:0 18px;background:#fff;border-bottom:1px solid var(--line)}
 header h1{font-size:20px;letter-spacing:-.03em;margin:0;font-weight:800;color:var(--navy);white-space:nowrap}
 header p{font-size:13px;color:var(--muted);margin:1px 0 0;white-space:nowrap}
-.tabs{display:flex;gap:6px;flex:1;justify-content:center;min-width:0}
+.tabs{display:flex;gap:6px;flex:1;justify-content:center;min-width:0;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
 .tab{border:1px solid #d5e0d7;background:var(--soft);color:var(--navy);border-radius:20px;padding:8px 13px;font-size:15px;font-weight:700;white-space:nowrap}
 .tab small{font-size:12px;opacity:.6;margin-right:5px;font-weight:700}
 .tab.on{background:var(--navy);border-color:var(--navy);color:#fff}
@@ -89,7 +89,8 @@ main{position:relative;min-height:0}
 .fc-back{background:#fff;border:2px solid var(--navy);transform:rotateY(180deg)}
 .fc-back .m{font-size:clamp(16px,2.7vh,18px);font-weight:700;line-height:1.3}
 .fc-back .e{font-size:clamp(15px,2.5vh,17px);font-style:italic;color:#3d5654;line-height:1.3}
-.fc-back .r{font-size:14px;color:var(--muted)}
+.fc-back .ru{font-size:clamp(20px,3.4vh,24px);font-weight:800;color:var(--accent)}
+.fc-back .m{font-weight:600!important;color:#3d5654}
 .fcnav{display:flex;align-items:center;justify-content:center;gap:8px}
 .fcnav .cnt{min-width:64px;text-align:center;font-weight:800;color:var(--navy)}
 /* video */
@@ -113,6 +114,34 @@ main{position:relative;min-height:0}
 .sheet{background:#fff;border-radius:14px;max-width:820px;width:100%;padding:18px 20px;display:grid;gap:12px;box-shadow:0 12px 40px #0003}
 .sheet .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 a{color:var(--navy)}
+/* bomb */
+.bombbar{display:flex;align-items:center;gap:10px}
+.bombbar .ring{width:46px;height:46px}
+.bombbar .ring span{font-size:17px}
+#bomb{gap:6px}#prTabs button{padding:5px 9px;font-size:14px}
+.bombbar .ring .p{stroke:#c2452f}
+.bomb-item{border:1px solid #e3e9e3;border-radius:9px;padding:5px 9px;display:flex;flex-direction:column;gap:4px;background:#fff}
+.bomb-item.live{border-color:#c2452f;box-shadow:0 0 0 2px #f3c9bf}
+.bomb-item.done{opacity:.85}
+.bomb-item .txt{font-size:15px;line-height:1.3}
+.bomb-item .pick{gap:4px}.bomb-item .pick button{font-size:14px;padding:3px 8px}
+.pick button.right{background:#c9ecd5;border-color:#2f8f57;color:#17442b}
+.pick button.wrong{background:#f8cfc6;border-color:#c2452f;color:#7a2a1b}
+.boom{animation:boom .6s}
+@keyframes boom{0%{background:#ffb199;transform:scale(1.02)}100%{background:#fff;transform:none}}
+.bang{font-weight:800;color:#c2452f}
+/* match */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.match button{border:1px solid #d7e3da;background:#f7f8f4;border-radius:8px;padding:8px 10px;font-size:16px;font-weight:650;text-align:left;line-height:1.25}
+.match button.sel{background:#dcebe6;border-color:var(--navy)}
+.match button.ok{background:#c9ecd5;border-color:#2f8f57;color:#17442b;opacity:.75}
+.match button.no{background:#f8cfc6;border-color:#c2452f}
+.bank{display:flex;flex-wrap:wrap;gap:6px}
+.bank span{background:#f6e7c4;color:#5a4410;border-radius:6px;padding:3px 8px;font-size:15px;font-weight:700}
+.gapline{font-size:16px;line-height:1.35;display:flex;flex-direction:column;gap:4px}
+.gapline input{padding:6px 9px;border:1px solid #c8d6cd;border-radius:7px;font-size:16px;width:100%}
+.gapline input.good{border-color:#2f8f57;background:#eef8f1}
+.gapline input.bad{border-color:#c2452f;background:#fdf1ee}
 @media(max-width:1500px){header p{display:none}}
 @media(max-width:1250px){header h1{font-size:18px}.tab{padding:8px 10px;font-size:14px}.tab small{display:none}}
 @media(max-height:620px){.app{grid-template-rows:48px minmax(0,1fr)}header p{display:none}.fc{max-height:200px}}
@@ -123,7 +152,6 @@ a{color:var(--navy)}
 <div class="app">
 <header>
   <a class="navbtn" href="index.html?teacher=tatiana-katya" target="_top">HUB</a>
-  <div><h1>THE ATTENTION TRAP</h1><p>Lesson 5 · from money and status to being seen</p></div>
   <div class="tabs" id="tabs"></div>
   <button class="navbtn hw" id="hwBtn" type="button">HOMEWORK</button>
   <button class="navbtn" id="prev" type="button">BACK</button>
@@ -133,12 +161,7 @@ a{color:var(--navy)}
 
 <section class="screen s3" data-name="Revision">
   <div class="card"><div class="head"><div><p class="eyebrow">01 / QUICK FIRE</p><h2>Money &amp; generations</h2></div><span class="pill" id="qfPill"></span></div><div class="body" id="qf"></div></div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">02 / HOMEWORK CHECK</p><h2>Conditionals</h2></div></div>
-    <div class="body">
-      <div class="task"><div class="txt">If I’d started saving earlier, I ___ (have) more money now.</div><input id="cond1" placeholder="Type the missing words" autocomplete="off"><div class="row"><button class="btn" type="button" data-check="cond1" data-answer="would have">Check</button><span class="note" id="cond1fb"></span></div></div>
-      <div class="task"><div class="txt">Make it a mixed conditional:<br><b>She spent too much money, so she is in debt now.</b></div><div class="row"><span class="note grow">Say it aloud first.</span><button class="btn light" type="button" data-show="cond2a">Answer</button></div><div class="ans" id="cond2a" hidden>If she hadn’t spent so much money, she wouldn’t be in debt now.</div></div>
-    </div>
-  </div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">02 / HOMEWORK CHECK · BOMB</p><h2>Mixed conditionals</h2></div><span class="pill" id="bombPill"></span></div><div class="body" id="bomb"></div></div>
   <div class="card"><div class="head"><div><p class="eyebrow">03 / TALK</p><div class="seg" id="talkTabs" style="margin-top:3px"></div></div></div><div class="body" id="talk"></div></div>
 </section>
 
@@ -164,19 +187,11 @@ a{color:var(--navy)}
 <section class="screen s3" data-name="Vocabulary">
   <div class="card"><div class="head"><div><p class="eyebrow">06 / QUIZLET</p><h2>Attention words</h2></div><button class="btn light" type="button" id="fcShuffle">Shuffle</button></div>
     <div class="body" style="overflow:hidden">
-      <div class="fc" id="fc" tabindex="0" role="button" aria-label="Flip the card"><div class="fc-in"><div class="fc-face fc-front"><strong id="fcWord"></strong><small>CLICK TO FLIP</small></div><div class="fc-face fc-back"><div class="m" id="fcMean"></div><div class="e" id="fcEx"></div><div class="r" id="fcRu"></div></div></div></div>
+      <div class="fc" id="fc" tabindex="0" role="button" aria-label="Flip the card"><div class="fc-in"><div class="fc-face fc-front"><strong id="fcWord"></strong><small>CLICK TO FLIP</small></div><div class="fc-face fc-back"><div class="ru" id="fcRu"></div><div class="m" id="fcMean"></div><div class="e" id="fcEx"></div></div></div></div>
       <div class="fcnav"><button class="btn light" type="button" id="fcPrev">←</button><span class="cnt" id="fcCnt"></span><button class="btn light" type="button" id="fcNext">→</button></div>
     </div>
   </div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">07 / PRACTICE</p><h2>Use the language</h2></div><span class="pill" id="gapPill">0 / 3</span></div>
-    <div class="body">
-      <div class="task"><div class="txt">1. She regularly posts selfies because she wants to ___.</div><input data-gap="seek attention" autocomplete="off" placeholder="Expression"></div>
-      <div class="task"><div class="txt">2. The creator had to ___ after the controversial post.</div><input data-gap="face a backlash" autocomplete="off" placeholder="Expression"></div>
-      <div class="task"><div class="txt">3. The company should ___ for manipulating consumers.</div><input data-gap="be held accountable" autocomplete="off" placeholder="Expression"></div>
-      <div class="row"><button class="btn" type="button" id="gapCheck">Check</button><button class="btn light" type="button" id="gapAns">Answers</button></div>
-      <div class="prompt"><b>Say it:</b> the difference between seeking recognition and craving validation. Use three expressions.</div>
-    </div>
-  </div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">07 / PRACTICE</p><div class="seg" id="prTabs" style="margin-top:3px"></div></div><span class="pill" id="prPill"></span></div><div class="body" id="pr"></div></div>
   <div class="card"><div class="head"><div><p class="eyebrow">08 / GAME</p><h2>Forbidden word</h2></div><span class="pill" id="fwPill"></span></div><div class="body" id="fw"></div></div>
 </section>
 
@@ -228,6 +243,7 @@ function go(i){
   $('next').textContent=cur===screens.length-1?'START AGAIN':'NEXT';
   if(cur!==3)videoReset();
   if(cur!==5)ctStop();
+  if(cur!==0&&bTimer){bStop();bombRender()}
 }
 $('prev').onclick=()=>go(cur-1);
 $('next').onclick=()=>{if(cur===screens.length-1){resetAll();go(0)}else go(cur+1)};
@@ -282,12 +298,51 @@ const QF=[
 ];
 let qfStart=makeQuiz('qf','qfPill',QF,['Explain two of your answers aloud.']);
 
-/* ---------- 02 homework check ---------- */
-document.querySelectorAll('[data-check]').forEach(b=>b.onclick=()=>{
-  const inp=$(b.dataset.check),ok=norm(inp.value)===b.dataset.answer;
-  inp.className=ok?'good':'bad';$(b.dataset.check+'fb').textContent=ok?'Correct.':'Answer: '+b.dataset.answer;
-});
-document.querySelectorAll('[data-show]').forEach(b=>b.onclick=()=>{const a=$(b.dataset.show);a.hidden=!a.hidden;b.textContent=a.hidden?'Answer':'Hide'});
+/* ---------- 02 homework check: bomb (mixed conditionals from lesson 3) ---------- */
+const BOMB=[
+ {s:'If I had saved more last year, I ___ so stressed about money now.',o:["wouldn't be","wouldn't have been","won't be"],a:"wouldn't be"},
+ {s:'If she were more careful with money, she ___ that huge loan last year.',o:["wouldn't take","wouldn't have taken","hadn't taken"],a:"wouldn't have taken"},
+ {s:'If he hadn’t quit his side hustle, he ___ more disposable income now.',o:['would have','would have had','will have'],a:'would have'},
+ {s:'If I weren’t so impulsive, I ___ those trainers yesterday.',o:["wouldn't buy","wouldn't have bought","hadn't bought"],a:"wouldn't have bought"},
+ {s:'If they had avoided credit cards at university, they ___ so much money now.',o:["wouldn't owe","wouldn't have owed","don't owe"],a:"wouldn't owe"},
+ {s:'If Maya were better at budgeting, she ___ more before her trip.',o:['would save','would have saved','had saved'],a:'would have saved'}
+];
+const BC=2*Math.PI*45,BPER=3;let bPage,bLive,bT,bTimer,bPts,bDone,bBoom;
+function bStop(){if(bTimer){clearInterval(bTimer);bTimer=null}}
+function bombReset(){bStop();bPage=0;bPts=0;bBoom=0;bDone={};bLive=-1;bT=15;bombRender()}
+function bRing(){const n=$('bNum'),g=$('bRing');if(n)n.textContent=bT;if(g)g.setAttribute('stroke-dashoffset',BC*(1-bT/15))}
+function bNextLive(){const from=bPage*BPER,to=Math.min(BOMB.length,from+BPER);bLive=-1;for(let k=from;k<to;k++)if(!(k in bDone)){bLive=k;break}bT=15;if(bLive<0)bStop()}
+function bAnswer(k,choice){
+  bDone[k]=choice;const ok=choice===BOMB[k].a;if(ok)bPts++;
+  if(choice===null){bBoom++;}
+  bNextLive();bombRender(k,choice===null);
+}
+function bombRender(lastK,exploded){
+  const r=$('bomb');r.innerHTML='';
+  const total=Math.ceil(BOMB.length/BPER);
+  $('bombPill').textContent=(bPage+1)+' / '+total+' · '+bPts+' pts';
+  const from=bPage*BPER,to=Math.min(BOMB.length,from+BPER);
+  const bar=el('div','bombbar');
+  bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="bRing" cx="50" cy="50" r="45" stroke-dasharray="'+BC+'" stroke-dashoffset="'+(BC*(1-bT/15))+'"/></svg><span id="bNum">'+bT+'</span>'));
+  const allDone=Object.keys(bDone).length===BOMB.length;
+  const pageDone=[...Array(to-from)].every((_,j)=>(from+j) in bDone);
+  if(!bTimer&&!pageDone){bar.appendChild(btn('btn','Light the fuse',()=>{bNextLive();bTimer=setInterval(()=>{bT--;bRing();if(bT<=0){const k=bLive;if(k>=0)bAnswer(k,null)}},1000);bombRender()}))}
+  else if(bTimer)bar.appendChild(el('span','note grow','15 seconds per sentence. Choose before it explodes.'));
+  if(pageDone&&!allDone)bar.appendChild(btn('btn','Next 3 →',()=>{bStop();bPage++;bT=15;bLive=-1;bombRender()}));
+  if(allDone){bar.appendChild(el('span','note grow','<b>'+bPts+' / '+BOMB.length+'</b> · explosions: '+bBoom));bar.appendChild(btn('btn light','Play again',bombReset))}
+  r.appendChild(bar);
+  for(let k=from;k<to;k++){
+    const it=BOMB[k],d=el('div','bomb-item'+(k===bLive&&bTimer?' live':'')+((k in bDone)?' done':''));
+    if(k===lastK&&exploded)d.classList.add('boom');
+    d.appendChild(el('div','txt',(k+1)+'. '+it.s));
+    const p=el('div','pick');
+    it.o.forEach(o=>{const b=btn('',o,()=>{if(!bTimer||k!==bLive)return;bAnswer(k,o)});
+      if(k in bDone){b.disabled=true;if(o===it.a)b.classList.add('right');else if(o===bDone[k])b.classList.add('wrong')}
+      p.appendChild(b)});
+    if((k in bDone)&&bDone[k]===null)p.appendChild(el('span','bang','BOOM!'));
+    d.appendChild(p);r.appendChild(d);
+  }
+}
 
 /* ---------- 03 talk ---------- */
 const TALK=[
@@ -320,11 +375,47 @@ $('fcPrev').onclick=()=>{fcI=(fcI+CARDS.length-1)%CARDS.length;fcRender()};
 $('fcNext').onclick=()=>{fcI=(fcI+1)%CARDS.length;fcRender()};
 $('fcShuffle').onclick=()=>{fcOrder=shuffle(fcOrder);fcI=0;fcRender()};
 
-/* ---------- 07 gap fill ---------- */
-const gaps=[...document.querySelectorAll('[data-gap]')];
-$('gapCheck').onclick=()=>{let n=0;gaps.forEach(g=>{const ok=norm(g.value)===g.dataset.gap;g.className=ok?'good':(g.value.trim()?'bad':'');if(ok)n++});$('gapPill').textContent=n+' / 3'};
-$('gapAns').onclick=()=>{gaps.forEach(g=>{g.value=g.dataset.gap;g.className='good'});$('gapPill').textContent='answers'};
-function gapReset(){gaps.forEach(g=>{g.value='';g.className=''});$('gapPill').textContent='0 / 3'}
+/* ---------- 07 practice: match · gaps · translate · speak ---------- */
+const GAPS=[
+ ['Some users ___ through likes.','crave validation'],['He often posts to ___.','seek attention'],['She ___ that looks effortless.','curates an online persona'],['The creator is ___.','under public scrutiny'],
+ ['The brand ___ after the post.','faced a backlash'],['Influencers should ___ for misleading claims.','be held accountable'],['The joke ___.','crossed the line'],['A rumour can ___.','damage a reputation'],
+ ['Her ___ followed her into adulthood.','digital footprint'],['Critics accused the brand of ___.','virtue signalling'],['Many people ___.','jumped on the bandwagon'],['The media ___.','blew the incident out of proportion']
+];
+let prTab=0,mPage,mSel,mOk,gPage,gPts;
+function prReset(){mPage=0;gPage=0;gPts=0;segTabs('prTabs',['Match','Gaps','Translate','Speak'],prRender)}
+function prRender(i){prTab=i;const r=$('pr');r.innerHTML='';$('prPill').textContent='';
+  if(i===0)matchRender();else if(i===1)gapRender();else if(i===2){const box=el('div');box.id='trq';box.style.cssText='display:flex;flex-direction:column;gap:8px;flex:1;min-height:0';r.appendChild(box);
+    makeQuiz('trq','prPill',shuffle(CARDS).slice(0,8).map(c=>{const w=shuffle(CARDS.filter(x=>x!==c)).slice(0,2).map(x=>x[0]);return{q:'<span>'+c[3]+'</span>',o:[c[0],...w],e:'<i>'+c[2]+'</i>'}}),['Make your own sentence with two of the words.'])}
+  else{r.appendChild(el('div','prompt','<b>Say it:</b> the difference between <b>seeking recognition</b> and <b>craving validation</b>. Use three expressions.'));
+    const l=el('div','list');['Have you ever seen someone <b>face a backlash</b> online? Was it fair?','When does a joke <b>cross the line</b>?','Should influencers <b>be held accountable</b> for what they advertise?','What does your <b>digital footprint</b> say about you?'].forEach(x=>l.appendChild(el('div','',x)));r.appendChild(l)}
+}
+function matchRender(){
+  const r=$('pr');r.innerHTML='';const pages=Math.ceil(CARDS.length/4);
+  const set=CARDS.slice(mPage*4,mPage*4+4);mSel=null;mOk=0;
+  $('prPill').textContent=(mPage+1)+' / '+pages;
+  r.appendChild(el('div','note','Tap an English phrase, then its translation.'));
+  const g=el('div','match');const L=set.map(c=>c[0]),R=shuffle(set.map(c=>c[3]));
+  const lb=L.map(t=>btn('',t,()=>{if(lb.find(x=>x.textContent===t).classList.contains('ok'))return;lb.forEach(x=>x.classList.toggle('sel',x.textContent===t));mSel=t}));
+  const rb=R.map(t=>btn('',t,e=>{if(!mSel||e.target.classList.contains('ok'))return;const c=set.find(x=>x[0]===mSel);const b=lb.find(x=>x.textContent===mSel);
+    if(c[3]===t){b.classList.remove('sel');b.classList.add('ok');e.target.classList.add('ok');mSel=null;mOk++;if(mOk===set.length)done.hidden=false}
+    else{e.target.classList.add('no');setTimeout(()=>e.target.classList.remove('no'),500)}}));
+  for(let k=0;k<set.length;k++){g.append(lb[k],rb[k])}
+  r.appendChild(g);
+  const done=el('div','row');done.hidden=true;done.append(el('span','note grow','<b>All matched.</b>'),mPage<pages-1?btn('btn','Next 4 →',()=>{mPage++;matchRender()}):btn('btn light','Start again',()=>{mPage=0;matchRender()}));
+  r.appendChild(done);
+}
+function gapRender(){
+  const r=$('pr');r.innerHTML='';const pages=Math.ceil(GAPS.length/4);
+  const set=GAPS.slice(gPage*4,gPage*4+4);
+  $('prPill').textContent=(gPage+1)+' / '+pages+' · '+gPts+' pts';
+  r.appendChild(el('div','bank',shuffle(set.map(x=>x[1])).map(x=>'<span>'+x+'</span>').join('')));
+  const ins=set.map((x,k)=>{const d=el('div','gapline','<div>'+(gPage*4+k+1)+'. '+x[0]+'</div>');const inp=el('input');inp.autocomplete='off';inp.placeholder='Expression';d.appendChild(inp);r.appendChild(d);return inp});
+  const rw=el('div','row');
+  const chk=btn('btn','Check',()=>{let n=0;ins.forEach((inp,k)=>{const ok=norm(inp.value)===norm(set[k][1]);inp.className=ok?'good':'bad';if(ok)n++});gPts+=n;chk.disabled=true;ans.hidden=false;$('prPill').textContent=(gPage+1)+' / '+pages+' · '+gPts+' pts'});
+  const ans=btn('btn light','Answers',()=>ins.forEach((inp,k)=>{inp.value=set[k][1];inp.className='good'}));ans.hidden=true;
+  rw.append(chk,ans,el('span','grow'),gPage<pages-1?btn('btn light','Next 4 →',()=>{gPage++;gapRender()}):btn('btn light','Start again',()=>{gPage=0;gPts=0;gapRender()}));
+  r.appendChild(rw);
+}
 
 /* ---------- 08 forbidden word ---------- */
 const FW=[['social comparison','compare · others · social media','Judging your own life against what you see other people doing.'],['digital footprint','internet · record · online','The traces of information your actions leave on digital services.'],['crave validation','approval · likes · want','To strongly seek confirmation that other people value you.'],['cancel culture','cancel · famous · boycott','The collective public withdrawal of support after perceived wrongdoing.']];
@@ -428,11 +519,10 @@ function ctRender(){
 /* ---------- reset: every time from the start ---------- */
 function resetAll(){
   qfStart();
-  document.querySelectorAll('#cond1').forEach(x=>{x.value='';x.className=''});$('cond1fb').textContent='';
-  document.querySelectorAll('[data-show]').forEach(b=>{$(b.dataset.show).hidden=true;b.textContent='Answer'});
+  bombReset();
   segTabs('talkTabs',TALK.map(t=>t.h),i=>{const t=TALK[i],r=$('talk');r.innerHTML='';r.appendChild(el('div','chips',t.chips.map(c=>'<span>'+c+'</span>').join('')));const l=el('div','list');t.q.forEach(x=>l.appendChild(el('div','',x)));r.appendChild(l)});
   stereoInit();document.querySelectorAll('#side button').forEach(x=>x.classList.remove('sel'));
-  fcReset();gapReset();fwReset();videoReset();
+  fcReset();prReset();fwReset();videoReset();
   segTabs('afterTabs',['Check','Talk'],afterRender);
   segTabs('gramTabs',GRAM.map(g=>g.h),gramRender);
   gdReset();segTabs('priceTabs',['Cancel culture','Public image'],priceRender);ctReset();
