@@ -316,6 +316,8 @@ html.teacher-mode #teacherRoot{display:grid!important}
 #teacherRoot .t-right-lessons small{font:800 10px Arial,sans-serif;color:#a06f68;letter-spacing:.09em}
 #teacherRoot .t-right-lessons strong{font:700 18px Georgia,serif;line-height:1.25}
 #teacherRoot .t-right-lessons span{font:12px Arial,sans-serif;color:#75645e}
+#teacherRoot .t-right-lessons{gap:8px}#teacherRoot .t-right-lessons button{padding:10px 16px;gap:4px}#teacherRoot .t-right-lessons strong{font-size:17px}
+#teacherRoot #tSeries{background:rgba(21,94,97,.92);border-color:#155e61;color:#fff}#teacherRoot #tSeries small{color:#f2c8b7}#teacherRoot #tSeries span{color:#d9ebe6}#teacherRoot #tSeries:hover{background:#155e61}
 @media(max-width:760px){#teacherRoot .t-right-lessons{top:23%;right:10px;width:45vw}#teacherRoot .t-right-lessons button{padding:10px}#teacherRoot .t-right-lessons strong{font-size:14px}#teacherRoot .t-right-lessons span{display:none}}
 </style>
 <script>
@@ -334,7 +336,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
         <button class="t-home" id="tHome">Home</button>
         <div id="tModules"></div><button class="t-covernotes" id="tCoverNotes" aria-label="Teacher Notes">Teacher Notes</button>
       </aside>
-      <main class="t-work"><div class="t-right-lessons" id="tRightLessons"><div class="t-right-label">KATYA · LESSONS</div><button id="tPrevLesson" type="button"><small>PREVIOUS LESSON</small><strong>Gen Z & Money</strong><span>Generations · Money · Conditionals →</span></button><button id="tCurrentLesson" type="button"><small>TODAY'S LESSON</small><strong>Are We Addicted to Being Seen?</strong><span>The Attention Trap · B2+ →</span></button></div><button class="t-board-fullscreen" id="tBoardFullscreen">На весь экран</button>
+      <main class="t-work"><div class="t-right-lessons" id="tRightLessons"><div class="t-right-label">KATYA · LESSONS</div><button id="tSeries" type="button"><small>NEW SERIES · MODULE 2</small><strong>Status Update</strong><span>5 lessons · Generations · Money · Likes →</span></button><button id="tPrevLesson" type="button"><small>PREVIOUS LESSON</small><strong>Gen Z & Money</strong><span>Generations · Money · Conditionals →</span></button><button id="tCurrentLesson" type="button"><small>TODAY'S LESSON</small><strong>Are We Addicted to Being Seen?</strong><span>The Attention Trap · B2+ →</span></button></div><button class="t-board-fullscreen" id="tBoardFullscreen">На весь экран</button>
         <section class="t-cover"><img class="t-art" id="tArt" alt="Katya English Hub — Small steps. Big progress."></section><section class="t-module-dialog" id="tModuleDialog" role="dialog" aria-modal="true" aria-labelledby="tModuleTitle" hidden><h2 id="tModuleTitle"></h2><p>Материалы этого модуля пока не добавлены.</p><button id="tModuleClose">Назад</button></section>
         <section class="t-view" id="tView">
           <div class="t-top">
@@ -385,6 +387,8 @@ html.teacher-mode #teacherRoot{display:grid!important}
       ]}))
     ];
 
+    const SERIES={id:'status-update',title:'Status Update · series',url:'series-status-update.html?v=20261020'};
+    document.getElementById('tSeries').onclick=()=>openLesson(1,SERIES);
     document.getElementById('tCurrentLesson').onclick=()=>openLesson(0,course[0].lessons[3]);
     document.getElementById('tPrevLesson').onclick=()=>openLesson(0,{id:'genz-money',title:'Gen Z & Money',url:'lesson3-money-generations.html'});
     let current='';
@@ -396,7 +400,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
       mb.setAttribute('aria-label',m.module);
       mb.style.top=([18.5,42.5,48.8,55.1,61.4,67.7,74,80.3][mi])+'%';
       const list=document.createElement('div');list.className='t-lessons'+(mi===0?' open':'');
-      mb.onclick=()=>{if(mi===0){document.getElementById('tModuleDialog').hidden=true;return;}document.getElementById('tModuleTitle').textContent=m.module;document.getElementById('tModuleDialog').hidden=false;document.getElementById('tModuleClose').focus()};
+      mb.onclick=()=>{if(mi===1){openLesson(1,SERIES);return;}if(mi===0){document.getElementById('tModuleDialog').hidden=true;return;}document.getElementById('tModuleTitle').textContent=m.module;document.getElementById('tModuleDialog').hidden=false;document.getElementById('tModuleClose').focus()};
       m.lessons.forEach(l=>{
         const b=document.createElement('button');
         b.className='t-lesson'+(!l.url?' empty':'');
