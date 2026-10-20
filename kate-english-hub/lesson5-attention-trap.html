@@ -170,9 +170,9 @@ a{color:var(--navy)}
     <div class="body">
       <p class="txt"><b>Then: status through possessions?</b><br>Cars, brands, expensive clothes, property, financial stability.</p>
       <p class="txt"><b>Now: status through visibility?</b><br>Followers, likes, viral attention, online reputation and a curated persona.</p>
-      <div class="step"><b>SPOT THE STEREOTYPE · WHICH CLAIM IS FAIR?</b></div>
+      <div class="row"><div class="step grow"><b>SPOT THE STEREOTYPE · WHICH CLAIM IS FAIR?</b></div><span class="pill" id="stPill"></span></div>
       <div class="opts" id="stereo"></div>
-      <div class="note" id="stereoFb">Avoid assuming every person in a generation behaves alike.</div>
+      <div class="note row" id="stereoFb"></div>
     </div>
   </div>
   <div class="card tint"><div class="head"><div><p class="eyebrow">05 / LEAD-IN</p><h2>Are we addicted to being seen?</h2></div></div>
@@ -294,6 +294,11 @@ const QF=[
  {q:'If I had saved more, I ___ financially secure now.',o:['would be','would have been','will be'],e:'Past cause, present result: mixed conditional.'},
  {q:'Which claim avoids stereotypes?',o:['Some Gen Zers may prefer digital payments.','All Gen Zers overspend.','Gen Z never uses cash.'],e:'<i>some … may</i> keeps the claim careful.'},
  {q:'To rack up debt means…',o:['to accumulate money owed','to pay off everything','to receive a raise'],e:'Debt builds up bit by bit.'},
+ {q:'To make ends meet means…',o:['to have just enough money to live on','to save a fortune','to borrow from friends'],e:'<i>make ends meet</i> = cover your basic costs.'},
+ {q:'Someone who is frugal…',o:['spends money carefully','spends a lot on luxuries','never saves anything'],e:'<i>frugal</i> = careful with money.'},
+ {q:'I ___ out £200 for concert tickets — far too much!',o:['shelled','splurged','racked'],e:'<i>shell out</i> = pay a lot, often unwillingly.'},
+ {q:'She always ___ on designer clothes after payday.',o:['splurges','shells','makes ends'],e:'<i>splurge on</i> = spend a lot on something you enjoy.'},
+ {q:'Compared ___ their parents, many young adults rent rather than own.',o:['with','than','as'],e:'<i>compared with/to</i>, never “compared than”.'},
  {q:'Unlike Millennials, Gen Z ___ more likely to encounter short-form media while growing up.',o:['may be','has','was always'],e:'<i>may be more likely to</i> is a hedged comparison.'}
 ];
 let qfStart=makeQuiz('qf','qfPill',QF,['Explain two of your answers aloud.']);
@@ -305,7 +310,11 @@ const BOMB=[
  {s:'If he hadn’t quit his side hustle, he ___ more disposable income now.',o:['would have','would have had','will have'],a:'would have'},
  {s:'If I weren’t so impulsive, I ___ those trainers yesterday.',o:["wouldn't buy","wouldn't have bought","hadn't bought"],a:"wouldn't have bought"},
  {s:'If they had avoided credit cards at university, they ___ so much money now.',o:["wouldn't owe","wouldn't have owed","don't owe"],a:"wouldn't owe"},
- {s:'If Maya were better at budgeting, she ___ more before her trip.',o:['would save','would have saved','had saved'],a:'would have saved'}
+ {s:'If Maya were better at budgeting, she ___ more before her trip.',o:['would save','would have saved','had saved'],a:'would have saved'},
+ {s:'If I had invested ten years ago, I ___ rich now.',o:['would be','would have been','will be'],a:'would be'},
+ {s:'If she weren’t so generous, she ___ him the money last month.',o:["wouldn't have lent","wouldn't lend","won't lend"],a:"wouldn't have lent"},
+ {s:'If we had bought that flat in 2015, we ___ rent today.',o:["wouldn't be paying","wouldn't have paid","won't pay"],a:"wouldn't be paying"},
+ {s:'If he were better with money, he ___ bankrupt two years ago.',o:["wouldn't have gone","wouldn't go","won't go"],a:"wouldn't have gone"}
 ];
 const BC=2*Math.PI*45,BPER=3;let bPage,bLive,bT,bTimer,bPts,bDone,bBoom;
 function bStop(){if(bTimer){clearInterval(bTimer);bTimer=null}}
@@ -354,13 +363,30 @@ segTabs('talkTabs',TALK.map(t=>t.h),i=>{const t=TALK[i],r=$('talk');r.innerHTML=
   const l=el('div','list');t.q.forEach(x=>l.appendChild(el('div','',x)));r.appendChild(l)});
 
 /* ---------- 04 stereotype ---------- */
-function stereoInit(){
-  const r=$('stereo');r.innerHTML='';$('stereoFb').textContent='Avoid assuming every person in a generation behaves alike.';
-  const right='Some Gen Z users may seek recognition online, though motivations vary.';
-  ['All Gen Z users post to show off.',right,'Older generations never care about status.'].forEach(t=>{
-    r.appendChild(btn('opt',t,e=>{[...r.children].forEach(x=>{x.disabled=true;if(x.textContent===right)x.classList.add('right')});
-      if(t!==right)e.target.classList.add('wrong');
-      $('stereoFb').innerHTML=t===right?'<b>Correct:</b> a carefully qualified claim.':'<b>Not this one:</b> it overgeneralises a whole generation.'}))});
+const STEREO=[
+ ['All Gen Z users post to show off.','Some Gen Z users may seek recognition online, though motivations vary.','Older generations never care about status.'],
+ ['All Millennials are bad with money.','Some Millennials may have found it harder to buy property.','Millennials never save.'],
+ ['Boomers hate technology.','Many older people tend to use fewer social apps than teenagers.','No older person uses TikTok.'],
+ ['Gen Z cannot concentrate on anything.','Some studies suggest short videos may affect attention spans.','Every teenager is addicted to their phone.'],
+ ['Influencers are all fake.','Some influencers may present an edited version of their lives.','Influencers never tell the truth.'],
+ ['Young people only care about likes.','Likes can matter to some young people, though for different reasons.','Nobody under 25 posts just for fun.'],
+ ['Rich people are always happy.','Money may reduce stress, but it does not guarantee happiness.','Poor people are never happy.'],
+ ['Everyone who posts selfies is vain.','People post selfies for a range of different reasons.','Selfies are always a cry for attention.'],
+ ['Older generations were never interested in status.','Status symbols have changed over time, from cars to followers.','Only Gen Z cares about status.'],
+ ['Social media ruins every relationship.','Social media can affect relationships in both positive and negative ways.','Online friends are never real friends.']
+];
+let stI,stPts;
+function stereoInit(){stI=0;stPts=0;stereoRender()}
+function stereoRender(){
+  const r=$('stereo'),fb=$('stereoFb');r.innerHTML='';
+  if(stI>=STEREO.length){fb.innerHTML='<b>'+stPts+' / '+STEREO.length+'</b> fair claims spotted. ';fb.appendChild(btn('btn light','Play again',stereoInit));$('stPill').textContent='DONE';return}
+  $('stPill').textContent=(stI+1)+' / '+STEREO.length+' · '+stPts+' pts';
+  const set=STEREO[stI],right=set[1];fb.textContent='Avoid assuming every person in a generation behaves alike.';
+  shuffle(set).forEach(t=>r.appendChild(btn('opt',t,e=>{[...r.children].forEach(x=>{x.disabled=true;if(x.textContent===right)x.classList.add('right')});
+    if(t!==right)e.target.classList.add('wrong');else stPts++;
+    fb.innerHTML=t===right?'<b>Correct:</b> a carefully qualified claim. ':'<b>Not this one:</b> it overgeneralises. ';
+    $('stPill').textContent=(stI+1)+' / '+STEREO.length+' · '+stPts+' pts';
+    fb.appendChild(btn('btn',stI===STEREO.length-1?'See result':'Next',()=>{stI++;stereoRender()}))})));
 }
 document.querySelectorAll('#side button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#side button').forEach(x=>x.classList.toggle('sel',x===b))});
 
@@ -385,7 +411,7 @@ let prTab=0,mPage,mSel,mOk,gPage,gPts;
 function prReset(){mPage=0;gPage=0;gPts=0;segTabs('prTabs',['Match','Gaps','Translate','Speak'],prRender)}
 function prRender(i){prTab=i;const r=$('pr');r.innerHTML='';$('prPill').textContent='';
   if(i===0)matchRender();else if(i===1)gapRender();else if(i===2){const box=el('div');box.id='trq';box.style.cssText='display:flex;flex-direction:column;gap:8px;flex:1;min-height:0';r.appendChild(box);
-    makeQuiz('trq','prPill',shuffle(CARDS).slice(0,8).map(c=>{const w=shuffle(CARDS.filter(x=>x!==c)).slice(0,2).map(x=>x[0]);return{q:'<span>'+c[3]+'</span>',o:[c[0],...w],e:'<i>'+c[2]+'</i>'}}),['Make your own sentence with two of the words.'])}
+    makeQuiz('trq','prPill',shuffle(CARDS).map(c=>{const w=shuffle(CARDS.filter(x=>x!==c)).slice(0,2).map(x=>x[0]);return{q:'<span>'+c[3]+'</span>',o:[c[0],...w],e:'<i>'+c[2]+'</i>'}}),['Make your own sentence with two of the words.'])}
   else{r.appendChild(el('div','prompt','<b>Say it:</b> the difference between <b>seeking recognition</b> and <b>craving validation</b>. Use three expressions.'));
     const l=el('div','list');['Have you ever seen someone <b>face a backlash</b> online? Was it fair?','When does a joke <b>cross the line</b>?','Should influencers <b>be held accountable</b> for what they advertise?','What does your <b>digital footprint</b> say about you?'].forEach(x=>l.appendChild(el('div','',x)));r.appendChild(l)}
 }
@@ -418,7 +444,7 @@ function gapRender(){
 }
 
 /* ---------- 08 forbidden word ---------- */
-const FW=[['social comparison','compare · others · social media','Judging your own life against what you see other people doing.'],['digital footprint','internet · record · online','The traces of information your actions leave on digital services.'],['crave validation','approval · likes · want','To strongly seek confirmation that other people value you.'],['cancel culture','cancel · famous · boycott','The collective public withdrawal of support after perceived wrongdoing.']];
+const FW=[['seek attention','notice · look at me · want','To try to make other people notice you.'],['virtue signalling','moral · show · good','Publicly displaying moral views mainly to gain approval.'],['jump on the bandwagon','trend · popular · join','To join a trend because it has become popular.'],['face a backlash','angry · reaction · criticism','To experience a strong negative public reaction.'],['cross the line','unacceptable · too far · limit','To behave in a way that is unacceptable.'],['curate an online persona','profile · image · fake','To carefully control how you appear online.'],['social comparison','compare · others · social media','Judging your own life against what you see other people doing.'],['digital footprint','internet · record · online','The traces of information your actions leave on digital services.'],['crave validation','approval · likes · want','To strongly seek confirmation that other people value you.'],['cancel culture','cancel · famous · boycott','The collective public withdrawal of support after perceived wrongdoing.']];
 let fwI,fwPts;
 function fwReset(){fwI=0;fwPts=0;fwRender()}
 function fwRender(){
@@ -453,18 +479,45 @@ function afterRender(i){
 
 /* ---------- 11 grammar lab ---------- */
 const GRAM=[
- {h:'Inversion',ex:['<b>Rarely do</b> people consider their digital footprint.','<b>Not only can</b> social media build a career, but it can also destroy one.','<b>Only after</b> the scandal went viral <b>did</b> she apologise.'],task:'People rarely think about the consequences of their online behaviour.',start:'Rarely…',ans:'Rarely do people think about the consequences of their online behaviour.'},
- {h:'Passive reporting',ex:['People believe that she deleted the post. → She <b>is believed to have deleted</b> the post.'],task:'People say the creator has lost several sponsors.',start:'The creator is said…',ans:'The creator is said to have lost several sponsors.'},
- {h:'Conditionals',ex:['<b>Had she known</b> the consequences, would she have posted it?'],task:'Answer the question with a full conditional sentence.',label:'ANSWER IN A FULL SENTENCE',ans:null}
+ {h:'Inversion',ex:['<b>Rarely do</b> people consider their digital footprint.','<b>Only after</b> the scandal went viral <b>did</b> she apologise.'],tasks:[
+  ['People rarely think about the consequences of their online behaviour.','Rarely…','Rarely do people think about the consequences of their online behaviour.'],
+  ['I have never seen so many people share one video.','Never…','Never have I seen so many people share one video.'],
+  ['She apologised only after the post went viral.','Only after…','Only after the post went viral did she apologise.'],
+  ['Social media can build a career, and it can also destroy one.','Not only…','Not only can social media build a career, but it can also destroy one.'],
+  ['He had hardly posted the photo when the comments started.','Hardly…','Hardly had he posted the photo when the comments started.'],
+  ['We seldom question what we see online.','Seldom…','Seldom do we question what we see online.'],
+  ['You should not share your password under any circumstances.','Under no circumstances…','Under no circumstances should you share your password.'],
+  ['She realised how much time she spent online only when she deleted the app.','Only when…','Only when she deleted the app did she realise how much time she spent online.'],
+  ['The brand did not respond until the next day.','Not until…','Not until the next day did the brand respond.'],
+  ['I had no sooner logged in than I saw the news.','No sooner…','No sooner had I logged in than I saw the news.']]},
+ {h:'Passive reporting',ex:['People believe that she deleted the post. → She <b>is believed to have deleted</b> the post.','Experts think teens spend hours online. → Teens <b>are thought to spend</b> hours online.'],tasks:[
+  ['People say the creator has lost several sponsors.','The creator is said…','The creator is said to have lost several sponsors.'],
+  ['People believe that she deleted the post.','She is believed…','She is believed to have deleted the post.'],
+  ['Experts think that teenagers spend six hours a day online.','Teenagers are thought…','Teenagers are thought to spend six hours a day online.'],
+  ['People report that the app is collecting personal data.','The app is reported…','The app is reported to be collecting personal data.'],
+  ['People know that the company paid influencers.','The company is known…','The company is known to have paid influencers.'],
+  ['People expect that the brand will apologise.','The brand is expected…','The brand is expected to apologise.'],
+  ['People say that the video has been viewed ten million times.','The video is said…','The video is said to have been viewed ten million times.'],
+  ['People consider him one of the most influential creators.','He is considered…','He is considered to be one of the most influential creators.'],
+  ['People allege that the star bought fake followers.','The star is alleged…','The star is alleged to have bought fake followers.'],
+  ['People think that the trend started in South Korea.','The trend is thought…','The trend is thought to have started in South Korea.']]},
+ {h:'Conditionals',ex:['<b>Had she known</b> the consequences, <b>would she have posted</b> it?'],label:'ANSWER IN A FULL SENTENCE',tasks:[
+  ['Had she known the consequences, would she have posted it?'],['If you couldn’t post about a holiday, would you still go?'],['If social media disappeared tomorrow, what would you miss most?'],
+  ['If you had grown up without a smartphone, how would your life be different now?'],['What would you have done if a friend had posted an embarrassing photo of you?'],['If you were an influencer, what would you never advertise?'],
+  ['Would you delete an old post if a company asked you to?'],['If you hadn’t started using social media, would you be happier now?'],['If your post went viral overnight, how would you feel?'],['If schools banned phones, would students concentrate better?']]}
 ];
-function gramRender(i){const g=GRAM[i],r=$('gram');r.innerHTML='';
-  const l=el('div','list');g.ex.forEach(x=>l.appendChild(el('div','',x)));r.appendChild(l);
-  const t=el('div','task','<div class="step"><b>'+(g.label||'REWRITE · START WITH “'+g.start.toUpperCase()+'”')+'</b></div><div class="txt">'+g.task+'</div>');
-  if(g.ans){const a=el('div','ans',g.ans);a.hidden=true;const rw=el('div','row');rw.append(el('span','note grow','Say it, then check.'),btn('btn light','Answer',e=>{a.hidden=!a.hidden;e.target.textContent=a.hidden?'Answer':'Hide'}));t.append(rw,a)}
-  r.appendChild(t)}
+let gTab=0,gPg=0,gRule=false;const GPER=3;
+function gramRender(i){if(i!==undefined&&i!==gTab){gTab=i;gPg=0}const g=GRAM[gTab],r=$('gram');r.innerHTML='';
+  const l=el('div','list');g.ex.forEach(x=>l.appendChild(el('div','',x)));l.hidden=!gRule;const rr=el('div','row');rr.appendChild(btn('btn light',gRule?'Hide rule':'Rule',()=>{gRule=!gRule;gramRender()}));r.append(rr,l);
+  const pages=Math.ceil(g.tasks.length/GPER);
+  g.tasks.slice(gPg*GPER,gPg*GPER+GPER).forEach((tk,k)=>{
+    const t=el('div','task','<div class="step"><b>'+(gPg*GPER+k+1)+' · '+(g.label||'REWRITE · START WITH “'+tk[1].toUpperCase()+'”')+'</b></div><div class="txt">'+tk[0]+'</div>');
+    if(tk[2]){const a=el('div','ans',tk[2]);a.hidden=true;t.querySelector('.step').style.display='flex';t.querySelector('.step b').style.flex='1';t.querySelector('.step').appendChild(btn('link','Answer',e=>{a.hidden=!a.hidden;e.target.textContent=a.hidden?'Answer':'Hide'}));t.appendChild(a)}
+    r.appendChild(t)});
+  rr.append(el('span','grow'));const rw=rr;rw.append(btn('btn light','←',()=>{gPg=(gPg+pages-1)%pages;gramRender()}),el('span','note',(gPg+1)+' / '+pages),btn('btn light','→',()=>{gPg=(gPg+1)%pages;gramRender()}));}
 
 /* ---------- 12 grammar doctor ---------- */
-const GD=[['Rarely people consider their digital footprint.','Rarely do people consider their digital footprint.'],['She is believed to deleted the original post.','She is believed to have deleted the original post.'],['Not only social media can build careers, but it can also destroy them.','Not only can social media build careers, but it can also destroy them.'],['Had she knew about the backlash, she would not have posted it.','Had she known about the backlash, she would not have posted it.']];
+const GD=[['Never I have seen such a backlash.','Never have I seen such a backlash.'],['The app is said to collecting personal data.','The app is said to be collecting personal data.'],['Only when she deleted the app she realised how addicted she was.','Only when she deleted the app did she realise how addicted she was.'],["If he had thought before posting, he won't be in trouble now.","If he had thought before posting, he wouldn't be in trouble now."],['The star is believed to have buy fake followers.','The star is believed to have bought fake followers.'],['Hardly had she posted the photo than the comments started.','Hardly had she posted the photo when the comments started.'],['Rarely people consider their digital footprint.','Rarely do people consider their digital footprint.'],['She is believed to deleted the original post.','She is believed to have deleted the original post.'],['Not only social media can build careers, but it can also destroy them.','Not only can social media build careers, but it can also destroy them.'],['Had she knew about the backlash, she would not have posted it.','Had she known about the backlash, she would not have posted it.']];
 let gdI,gdPts,gdMiss;
 function gdReset(){gdI=0;gdPts=0;gdMiss=[];gdRender()}
 function gdRender(){
@@ -524,7 +577,7 @@ function resetAll(){
   stereoInit();document.querySelectorAll('#side button').forEach(x=>x.classList.remove('sel'));
   fcReset();prReset();fwReset();videoReset();
   segTabs('afterTabs',['Check','Talk'],afterRender);
-  segTabs('gramTabs',GRAM.map(g=>g.h),gramRender);
+  gTab=-1;segTabs('gramTabs',GRAM.map(g=>g.h),gramRender);
   gdReset();segTabs('priceTabs',['Cancel culture','Public image'],priceRender);ctReset();
   $('hw').hidden=true;
 }
