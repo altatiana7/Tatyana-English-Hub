@@ -7,114 +7,148 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&display=swap">
 <style>
-/* Лист КИМ ЕГЭ: белая бумага на сером столе, Times, номера в квадратах, варианты «1) … 4)», клетка «Ответ». */
 :root{
-  --desk:#e4e5e8; --paper:#fff; --ink:#000; --muted:#3f3f3f; --soft:#8a8a8a; --hair:#c4c4c4; --fill:#efefef;
-  --ok:#1b6a37; --ok-soft:#e2f0e6; --bad:#b30000; --bad-soft:#f9e3e3;
-  --f:"Times New Roman",Tinos,"Liberation Serif",Times,serif;
+  --bg1:#fdf6f8; --bg2:#f1f4fd;
+  --ink:#3a3550; --muted:#6f6a85; --line:#e3dcef;
+  --rose:#f6d3dd; --rose-d:#c9647f;
+  --mint:#d3efe3; --mint-d:#3f9472;
+  --lav:#e1dbf5; --lav-d:#6f5fb3;
+  --peach:#fbe2cc; --peach-d:#c27a3c;
+  --sky:#d6e8f7; --sky-d:#3f7bb0;
+  --ok:#2f8a5f; --ok-soft:#dcf2e6; --bad:#c2445f; --bad-soft:#fbe0e6;
+  --f:Tinos,"Times New Roman","Liberation Serif",Times,serif;
   color-scheme:light;
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
-body{background:var(--desk);color:var(--ink);font-family:var(--f);font-size:19px;line-height:1.4;display:flex;flex-direction:column;overflow:hidden}
-button{font-family:var(--f);font-size:inherit;color:var(--ink);cursor:pointer}
-button:focus-visible{outline:2px dashed var(--ink);outline-offset:2px}
-h2{font-family:var(--f);margin:0}
+body{font-family:var(--f);color:var(--ink);background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;flex-direction:column;overflow:hidden;font-size:19px;line-height:1.35}
+button{font-family:var(--f);color:inherit;cursor:pointer}
+button:focus-visible{outline:2px dashed var(--lav-d);outline-offset:2px}
 
-.top{flex:none;display:flex;align-items:center;gap:12px;min-height:46px;background:var(--paper);border-bottom:3px double var(--ink);
-  padding:0 max(10px,env(safe-area-inset-right,0px)) 0 max(10px,env(safe-area-inset-left,0px))}
-.home{border:1.5px solid var(--ink);background:var(--paper);border-radius:0;padding:3px 12px;font-weight:700;font-size:16px;color:var(--ink);text-decoration:none}
-.home:hover{background:var(--fill)}
-.kim{display:flex;flex-direction:column;line-height:1.15;min-width:0}
-.kim .k1{font-size:15px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
-.kim .k2{font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.score{margin-left:auto;font-size:17px;font-weight:700;white-space:nowrap}
+.top{flex:none;display:flex;align-items:center;gap:12px;height:48px;padding:0 12px;background:rgba(255,255,255,.75);border-bottom:1px solid var(--line)}
+.home{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 14px;font-weight:700;font-size:16px;color:var(--ink);text-decoration:none}
+.home:hover{background:var(--lav)}
+.ttl{font-size:20px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ttl span{color:var(--muted);font-weight:400;font-size:16px;margin-left:8px}
 
-main{flex:1;min-height:0;overflow:auto;padding:10px max(8px,env(safe-area-inset-left,0px))}
-.sheet{max-width:1180px;margin:0 auto;background:var(--paper);border:1px solid var(--hair);box-shadow:0 1px 4px rgba(0,0,0,.12);padding:12px 18px 14px;display:grid;gap:10px}
+.wrap{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:10px 12px 12px}
+.left{min-height:0;overflow:auto;display:flex;flex-direction:column;gap:10px}
 
-.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.tabs{display:flex}
-.tab{border:1px solid var(--ink);background:var(--paper);border-radius:0;padding:3px 12px;font-size:16px;margin-left:-1px}
-.tab.on{background:var(--ink);color:var(--paper);font-weight:700}
-.btn{border:1.5px solid var(--ink);background:var(--paper);border-radius:0;padding:4px 14px;font-weight:700;font-size:16px}
-.btn:hover:not(:disabled){background:var(--fill)}
-.btn.primary{background:var(--ink);color:var(--paper)}
-.btn:disabled{opacity:.35;cursor:default}
-.progress{display:flex;flex-wrap:wrap;gap:2px;margin-left:auto}
-.progress span{width:17px;height:17px;border:1px solid var(--ink);font-size:10px;display:grid;place-items:center;background:var(--paper);cursor:pointer}
-.progress span.cur{outline:2px solid var(--ink);outline-offset:1px}
-.progress span.ok{background:var(--ok-soft);border-color:var(--ok)}
-.progress span.bad{background:var(--bad-soft);border-color:var(--bad)}
+.rule{background:#fff;border:2px solid var(--lav-d);border-radius:16px;padding:10px 14px 12px;box-shadow:0 4px 14px rgba(111,95,179,.12)}
+.rule h2{margin:0 0 8px;font-size:18px;letter-spacing:.06em;text-transform:uppercase;color:var(--lav-d)}
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.r{border-radius:12px;padding:8px 10px;font-size:16.5px;line-height:1.3}
+.r b{font-size:18px}
+.r i{display:block;color:var(--muted);margin-top:3px}
+.r1{background:var(--sky)} .r2{background:var(--rose)} .r3{background:var(--mint)} .r4{background:var(--peach)}
 
-.instr{border:1.5px solid var(--ink);padding:5px 12px;font-size:17px;display:flex;gap:10px;align-items:baseline}
-.instr b{white-space:nowrap}
+.secs{background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 12px;display:grid;gap:8px}
+.secs h2{margin:0;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sec{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid var(--line);background:#faf8ff;border-radius:12px;padding:8px 12px;font-size:18px;transition:transform .12s,background .12s}
+.sec:hover{transform:translateX(3px);background:var(--lav)}
+.sec.on{background:var(--lav);border-color:var(--lav-d);box-shadow:inset 4px 0 0 var(--lav-d)}
+.sec .n{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:700;color:#fff}
+.sec:nth-of-type(1) .n{background:var(--sky-d)} .sec:nth-of-type(2) .n{background:var(--rose-d)} .sec:nth-of-type(3) .n{background:var(--mint-d)}
+.sec .t{flex:1}
+.sec .t small{display:block;color:var(--muted);font-size:15px}
+.sec .best{font-weight:700;font-size:16px;color:var(--lav-d)}
 
-.rules{border:1.5px solid var(--ink);padding:8px 14px;display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;font-size:17px;line-height:1.35}
-.rules p{margin:0}
-.rules i{color:var(--muted)}
+/* Игровая панель — правая половина */
+.game{min-height:0;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 6px 22px rgba(58,53,80,.08);display:flex;flex-direction:column;overflow:hidden}
+.ghead{flex:none;display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:#fcfbff}
+.ghead .gname{font-weight:700;font-size:18px}
+.dots{display:flex;gap:4px;flex-wrap:wrap;flex:1;justify-content:center}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dots i.cur{background:var(--lav-d);transform:scale(1.25)}
+.dots i.ok{background:var(--ok)} .dots i.bad{background:var(--bad)}
+.pts{font-weight:700;background:var(--lav);border-radius:999px;padding:3px 12px;font-size:17px;white-space:nowrap}
+.tm{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;font-size:14px}
+.tm.on{background:var(--peach);border-color:var(--peach-d)}
+.tbar{flex:none;height:6px;background:#f2eff8}
+.tbar div{height:100%;width:100%;background:linear-gradient(90deg,var(--mint-d),var(--peach-d));transform-origin:left}
 
-.rows{display:grid;gap:8px}
-.row{border:1px solid var(--hair);padding:8px 12px 8px 8px;display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;box-shadow:0 1px 2px rgba(0,0,0,.07)}
-.num{width:30px;height:30px;border:1.5px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:17px}
-.s{font-size:20px}
-.slot{display:inline-block;min-width:90px;border-bottom:1.5px solid var(--ink);text-align:center;padding:0 4px;font-weight:700}
+.stage{flex:1;min-height:0;position:relative;padding:14px;display:flex;flex-direction:column;gap:12px;overflow:auto}
+.card{flex:none;background:linear-gradient(135deg,#fff,#f7f3ff);border:1px solid var(--line);border-radius:18px;padding:18px 20px;text-align:center;box-shadow:0 3px 10px rgba(111,95,179,.08)}
+.card .qn{font-size:15px;color:var(--muted);letter-spacing:.05em;margin-bottom:6px}
+.card .q{font-size:25px;line-height:1.35}
+.slot{display:inline-block;min-width:110px;border-bottom:2px solid var(--lav-d);padding:0 6px;font-weight:700}
 .slot.ok{color:var(--ok);border-color:var(--ok)} .slot.bad{color:var(--bad);border-color:var(--bad)}
-.line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:5px}
-.opt{border:1px solid var(--ink);background:var(--paper);border-radius:0;padding:2px 12px;font-size:19px;min-height:34px}
-.opt:hover:not(:disabled){background:var(--fill)}
-.opt:disabled{cursor:default}
-.opt.ok{background:var(--ok-soft);border:2px solid var(--ok);color:var(--ok);font-weight:700}
-.opt.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad);text-decoration:line-through}
-.otv{display:flex;align-items:center;gap:6px;font-size:16px;margin-left:8px}
-.cell{width:32px;height:34px;border:1.5px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:20px}
-.cell.ok{color:var(--ok);border-color:var(--ok)} .cell.bad{color:var(--bad);border-color:var(--bad)}
-.fb{font-size:16px;line-height:1.3;margin-top:4px}
-.fb.ok{color:var(--ok)} .fb.bad{color:var(--bad)}
+.in{animation:slideIn .35s ease}
+@keyframes slideIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
 
-.foot{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.foot .pg{font-style:italic;color:var(--muted);font-size:16px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{display:flex;align-items:center;gap:12px;border:none;border-radius:14px;padding:14px 16px;font-size:22px;font-weight:700;min-height:64px;text-align:left;transition:transform .1s,box-shadow .1s,opacity .2s;box-shadow:0 3px 0 rgba(0,0,0,.08)}
+.tile:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 5px 0 rgba(0,0,0,.08)}
+.tile:disabled{cursor:default}
+.tile svg{flex:none;width:26px;height:26px}
+.c0{background:var(--rose);color:#7a2c43} .c0 svg{fill:var(--rose-d)}
+.c1{background:var(--sky);color:#24496b} .c1 svg{fill:var(--sky-d)}
+.c2{background:var(--peach);color:#6e4219} .c2 svg{fill:var(--peach-d)}
+.c3{background:var(--mint);color:#1f5a41} .c3 svg{fill:var(--mint-d)}
+.tile.dim{opacity:.35}
+.tile.ok{outline:3px solid var(--ok);opacity:1}
+.tile.bad{outline:3px solid var(--bad);text-decoration:line-through}
 
-.result{text-align:center;padding:18px;display:grid;gap:10px;justify-items:center}
-.result .big{font-size:40px;font-weight:700}
-.result .mark{border:1.5px solid var(--ink);padding:6px 20px;font-size:22px;font-weight:700}
-.result ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:900px}
-.result li{border:1px solid var(--bad);color:var(--bad);padding:1px 8px;font-size:16px;cursor:pointer}
+.fb{border-radius:14px;padding:10px 14px;font-size:18px;display:flex;align-items:center;gap:12px}
+.fb.ok{background:var(--ok-soft);color:#1d5c3e} .fb.bad{background:var(--bad-soft);color:#86283d}
+.fb b{white-space:nowrap}
+.fb .nx{margin-left:auto;flex:none;border:none;background:var(--lav-d);color:#fff;border-radius:999px;padding:7px 18px;font-size:17px;font-weight:700}
+.fb .nx:hover{filter:brightness(1.08)}
 
-@media (max-width:760px){.rules{grid-template-columns:1fr}.kim .k2{display:none}.progress{margin-left:0}}
+.welcome,.res{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;color:var(--muted)}
+.welcome .big{font-size:26px;color:var(--ink);font-weight:700}
+.res .big{font-size:52px;font-weight:700;color:var(--lav-d)}
+.res .mark{font-size:22px;color:var(--ink);background:var(--lav);border-radius:999px;padding:6px 20px}
+.res .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.pill{border:none;border-radius:999px;padding:9px 20px;font-size:18px;font-weight:700;background:var(--lav-d);color:#fff}
+.pill.alt{background:#fff;color:var(--lav-d);border:1.5px solid var(--lav-d)}
+.miss{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:90%}
+.miss span{background:var(--bad-soft);color:var(--bad);border-radius:8px;padding:2px 9px;font-size:16px}
+
+@media (max-width:900px){
+  body{overflow:auto}
+  .wrap{grid-template-columns:1fr;flex:none}
+  .game{min-height:520px}
+  .rgrid{grid-template-columns:1fr}
+  .tiles{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
 <header class="top">
   <a class="home" href="index.html">&larr; Hub</a>
-  <div class="kim"><span class="k1">UNIFIED STATE EXAM (EGE) · ENGLISH</span><span class="k2">Grammar · Though / although / however / in spite of / despite · 40 tasks</span></div>
-  <span class="score" id="score">0 / 40</span>
+  <div class="ttl">Though · Although · However · Despite · In spite of<span>ЕГЭ · грамматика · 40 заданий</span></div>
 </header>
-<main>
-  <div class="sheet" id="sheet">
-    <div class="bar">
-      <div class="tabs" id="tabs"></div>
-      <button class="btn" id="rulesBtn" type="button">Правило</button>
-      <div class="progress" id="prog"></div>
+
+<div class="wrap">
+  <aside class="left">
+    <section class="rule" aria-label="Правило">
+      <h2>Правило</h2>
+      <div class="rgrid">
+        <div class="r r1"><b>Although / Though</b> + предложение (подлежащее + сказуемое).<i>Although it was raining, we went for a walk.</i></div>
+        <div class="r r2"><b>Despite / In spite of</b> + существительное / герундий (-ing).<i>Despite the rain, we went for a walk. In spite of being tired, she continued working.</i></div>
+        <div class="r r3"><b>However</b> — «однако», вводит новое противопоставление, выделяется запятой.<i>The hotel had great reviews. However, our room was not clean.</i></div>
+        <div class="r r4"><b>Though</b> в конце предложения = «но / однако».<i>I don't really like seafood. I tried the grilled salmon, though.</i></div>
+      </div>
+    </section>
+    <section class="secs" id="secs" aria-label="Секции"><h2>Тренировка</h2></section>
+  </aside>
+
+  <section class="game" aria-label="Тренировка">
+    <div class="ghead">
+      <span class="gname" id="gname">Тренировка</span>
+      <div class="dots" id="dots"></div>
+      <button class="tm on" id="tm" type="button" title="Таймер 20 секунд">Таймер 20 с</button>
+      <span class="pts" id="pts">0</span>
     </div>
-    <div class="rules" id="rules" hidden>
-      <p><b>Although / Though</b> + предложение (подлежащее + сказуемое).<br><i>Although it was raining, we went for a walk.</i></p>
-      <p><b>Despite / In spite of</b> + существительное / герундий (-ing).<br><i>Despite the rain, we went for a walk. In spite of being tired, she continued working.</i></p>
-      <p><b>However</b> — «однако», вводит новое противопоставление, выделяется запятой.<br><i>The hotel had great reviews. However, our room was not clean.</i></p>
-      <p><b>Though</b> в конце предложения = «но / однако».<br><i>I don't really like seafood. I tried the grilled salmon, though.</i></p>
+    <div class="tbar"><div id="tbar"></div></div>
+    <div class="stage" id="stage">
+      <div class="welcome"><div class="big">Выберите секцию слева</div><div>Карточки сменяются одна за другой: нажмите вариант ответа.</div></div>
     </div>
-    <div class="instr" id="instr"></div>
-    <div class="rows" id="rows"></div>
-    <div class="foot">
-      <button class="btn" id="prev" type="button">&larr; Назад</button>
-      <span class="pg" id="pg"></span>
-      <button class="btn primary" id="next" type="button">Далее &rarr;</button>
-    </div>
-  </div>
-</main>
+  </section>
+</div>
 
 <script>
-/* Задания — по листу teachers_treasure_chest (40 шт.), опечатки листа исправлены. c — индекс верного варианта. */
 const Q = [
  {q:"___ the heavy rain, the soccer match continued until the final whistle.",o:["Although","In spite of"],c:1,r:"Дальше существительное (the heavy rain) → In spite of."},
  {q:"She passed the driving test, ___ she had only practiced for a week.",o:["although","despite"],c:0,r:"Дальше полное предложение (she had only practiced) → although."},
@@ -164,66 +198,77 @@ const SECTIONS=[
   {name:"Section 2",from:10,to:20,ins:"Choose the correct option: 1, 2 or 3."},
   {name:"Section 3",from:20,to:40,ins:"Choose the correct option: 1, 2, 3 or 4."}
 ];
-const PER=4, PAGES=Math.ceil(Q.length/PER);
-const ans=new Array(Q.length).fill(null);   // всегда с начала: ничего не сохраняем
-let page=0;
-
 const $=id=>document.getElementById(id);
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
-const sectOf=i=>SECTIONS.findIndex(s=>i>=s.from&&i<s.to);
+const SHAPES=['<svg viewBox="0 0 24 24"><path d="M12 3 22 21H2z"/></svg>','<svg viewBox="0 0 24 24"><path d="M12 2 22 12 12 22 2 12z"/></svg>','<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>','<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>'];
+const SUB=['2 варианта','3 варианта','4 варианта'];
+const best=SECTIONS.map(()=>null);          // только в памяти страницы: всегда с начала
+const TIME=20;
+let sec=-1,order=[],pos=0,res=[],score=0,locked=false,timerOn=true,tStart=0,raf=0;
 
-function render(){
-  if(page>=PAGES){return final();}
-  const from=page*PER, to=Math.min(from+PER,Q.length), sec=SECTIONS[sectOf(from)];
-  $('tabs').innerHTML=SECTIONS.map((s,k)=>`<button class="tab${k===sectOf(from)?' on':''}" data-p="${Math.floor(s.from/PER)}">${s.name}</button>`).join('');
-  $('instr').innerHTML=`<b>${sec.name}.</b><span>${sec.ins}</span>`;
-  let h='';
-  for(let i=from;i<to;i++){
-    const t=Q[i], a=ans[i], done=a!==null, ok=done&&a===t.c;
-    const fill=done?`<span class="slot ${ok?'ok':'bad'}">${esc(t.o[t.c])}</span>`:`<span class="slot">&nbsp;</span>`;
-    h+=`<div class="row"><div class="num">${i+1}</div><div>
-      <div class="s">${esc(t.q).replace('___',fill)}</div>
-      <div class="line">${t.o.map((o,k)=>`<button class="opt${done&&k===t.c?' ok':''}${done&&k===a&&a!==t.c?' bad':''}" data-i="${i}" data-k="${k}" ${done?'disabled':''}>${k+1}) ${esc(o)}</button>`).join('')}
-        <span class="otv">Ответ: <span class="cell${done?(ok?' ok':' bad'):''}">${done?a+1:''}</span></span></div>
-      ${done?`<div class="fb ${ok?'ok':'bad'}">${ok?'Верно.':'Неверно, правильно: '+(t.c+1)+') '+esc(t.o[t.c])+'.'} ${esc(t.r)}</div>`:''}
-    </div></div>`;
-  }
-  $('rows').innerHTML=h;
-  $('pg').textContent=`Задания ${from+1}–${to} из ${Q.length}`;
-  $('prev').disabled=page===0;
-  $('next').textContent=page===PAGES-1?'Результат →':'Далее →';
-  progress(from,to);
+function drawSecs(){
+  $('secs').innerHTML='<h2>Тренировка</h2>'+SECTIONS.map((s,k)=>`<button class="sec${k===sec?' on':''}" data-s="${k}" type="button"><span class="n">${k+1}</span><span class="t">${s.name} · задания ${s.from+1}–${s.to}<small>${SUB[k]}</small></span>${best[k]!==null?`<span class="best">${best[k]}/${s.to-s.from}</span>`:''}</button>`).join('');
 }
-function progress(from,to){
-  $('prog').innerHTML=Q.map((t,i)=>`<span data-p="${Math.floor(i/PER)}" class="${ans[i]===null?'':ans[i]===t.c?'ok':'bad'}${i>=from&&i<to?' cur':''}">${i+1}</span>`).join('');
-  const n=ans.filter((a,i)=>a!==null&&a===Q[i].c).length;
-  $('score').textContent=`${n} / ${Q.length}`;
+function start(k){
+  sec=k;const s=SECTIONS[k];
+  order=[];for(let i=s.from;i<s.to;i++)order.push(i);
+  pos=0;res=[];score=0;$('gname').textContent=s.name;drawSecs();show();
 }
-function final(){
-  const n=ans.filter((a,i)=>a===Q[i].c).length, p=n/Q.length;
-  const mark=p>=.9?'5 — отлично':p>=.75?'4 — хорошо':p>=.5?'3 — повторить правило':'2 — повторить правило';
-  const wrong=Q.map((t,i)=>ans[i]===t.c?null:i).filter(x=>x!==null);
-  $('instr').innerHTML='<b>Result.</b><span>Нажмите на номер, чтобы вернуться к заданию.</span>';
-  $('rows').innerHTML=`<div class="result"><div class="big">${n} / ${Q.length}</div><div class="mark">${mark}</div>
-    ${wrong.length?`<div>Ошибки и пропуски:</div><ul>${wrong.map(i=>`<li data-p="${Math.floor(i/PER)}">${i+1}</li>`).join('')}</ul>`:''}
-    <button class="btn primary" id="again" type="button">Пройти заново</button></div>`;
-  $('pg').textContent='';$('prev').disabled=false;$('next').textContent='Сначала';
-  $('tabs').querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
-  progress(-1,-1);
-  $('again').onclick=restart;
+function dots(){$('dots').innerHTML=order.map((_,j)=>`<i class="${res[j]===true?'ok':res[j]===false?'bad':''}${j===pos?' cur':''}"></i>`).join('');$('pts').textContent=score;}
+function show(){
+  if(pos>=order.length)return finish();
+  locked=false;const i=order[pos],t=Q[i];
+  $('stage').innerHTML=`<div class="card in"><div class="qn">Задание ${i+1} · ${pos+1} из ${order.length}</div><div class="q">${esc(t.q).replace('___','<span class="slot" id="slot">&nbsp;</span>')}</div></div>
+   <div class="tiles in">${t.o.map((o,k)=>`<button class="tile c${k}" data-k="${k}" type="button">${SHAPES[k]}<span>${esc(o)}</span></button>`).join('')}</div>
+   <div id="fbox"></div>`;
+  dots();runTimer();
 }
-function restart(){ans.fill(null);page=0;render();}
-
+function runTimer(){
+  cancelAnimationFrame(raf);const bar=$('tbar');
+  if(!timerOn){bar.style.transform='scaleX(1)';return;}
+  tStart=performance.now();
+  const tick=now=>{const left=1-(now-tStart)/(TIME*1000);
+    bar.style.transform=`scaleX(${Math.max(0,left)})`;
+    if(left<=0){answer(-1);return;} raf=requestAnimationFrame(tick);};
+  raf=requestAnimationFrame(tick);
+}
+function answer(k){
+  if(locked)return;locked=true;cancelAnimationFrame(raf);
+  const i=order[pos],t=Q[i],ok=k===t.c;
+  if(ok){const bonus=timerOn?Math.round(500+500*Math.max(0,1-(performance.now()-tStart)/(TIME*1000))):1000;score+=bonus;}
+  res[pos]=ok;
+  document.querySelectorAll('.tile').forEach(b=>{const kk=+b.dataset.k;b.disabled=true;
+    if(kk===t.c)b.classList.add('ok');else if(kk===k)b.classList.add('bad');else b.classList.add('dim');});
+  const sl=$('slot');sl.textContent=t.o[t.c];sl.classList.add(ok?'ok':'bad');
+  const head=ok?'Верно!':k<0?'Время вышло.':'Неверно.';
+  $('fbox').innerHTML=`<div class="fb ${ok?'ok':'bad'} in"><b>${head}</b><span>${esc(t.r)}</span><button class="nx" id="nx" type="button">${pos===order.length-1?'Итог':'Дальше'} &rarr;</button></div>`;
+  $('nx').onclick=next;dots();
+}
+function next(){pos++;show();}
+function finish(){
+  cancelAnimationFrame(raf);$('tbar').style.transform='scaleX(1)';
+  const n=res.filter(x=>x).length,tot=order.length,p=n/tot;
+  best[sec]=Math.max(best[sec]??0,n);drawSecs();
+  const mark=p>=.9?'Отлично!':p>=.75?'Хорошо!':'Повторим правило';
+  const miss=order.filter((_,j)=>!res[j]).map(i=>i+1);
+  pos=order.length;dots();
+  $('stage').innerHTML=`<div class="res in"><div class="big">${n} / ${tot}</div><div class="mark">${mark} · ${score} очков</div>
+    ${miss.length?`<div>Ошибки: </div><div class="miss">${miss.map(x=>`<span>${x}</span>`).join('')}</div>`:''}
+    <div class="row"><button class="pill alt" type="button" id="again">Ещё раз</button>${sec<SECTIONS.length-1?`<button class="pill" type="button" id="nsec">${SECTIONS[sec+1].name} &rarr;</button>`:''}</div></div>`;
+  $('again').onclick=()=>start(sec);
+  if($('nsec'))$('nsec').onclick=()=>start(sec+1);
+}
 document.addEventListener('click',e=>{
-  const b=e.target.closest('.opt');
-  if(b&&!b.disabled){ans[+b.dataset.i]=+b.dataset.k;render();return;}
-  const p=e.target.closest('[data-p]');
-  if(p){page=+p.dataset.p;render();$('sheet').scrollIntoView({block:'start'});}
+  const s=e.target.closest('.sec');if(s){start(+s.dataset.s);return;}
+  const t=e.target.closest('.tile');if(t&&!t.disabled)answer(+t.dataset.k);
 });
-$('prev').onclick=()=>{if(page>=PAGES)page=PAGES-1;else if(page>0)page--;render();};
-$('next').onclick=()=>{if(page>=PAGES){restart();return;}page++;render();};
-$('rulesBtn').onclick=()=>{const r=$('rules');r.hidden=!r.hidden;$('rulesBtn').textContent=r.hidden?'Правило':'Скрыть правило';};
-render();
+document.addEventListener('keydown',e=>{
+  if(sec<0)return;
+  if(!locked&&/^[1-4]$/.test(e.key)){const b=document.querySelector(`.tile[data-k="${e.key-1}"]`);if(b)answer(+e.key-1);}
+  else if(locked&&(e.key==='Enter'||e.key===' ')&&$('nx')){e.preventDefault();next();}
+});
+$('tm').onclick=()=>{timerOn=!timerOn;$('tm').classList.toggle('on',timerOn);$('tm').textContent=timerOn?'Таймер 20 с':'Без таймера';if(sec>=0&&!locked&&pos<order.length)runTimer();};
+drawSecs();
 </script>
 </body>
 </html>
