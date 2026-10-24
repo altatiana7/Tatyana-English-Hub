@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Though · Although · However</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Лист КИМ ЕГЭ: белая бумага на сером столе, Times, номера в квадратах, варианты «1) … 4)», клетка «Ответ». */
+:root{
+  --desk:#e4e5e8; --paper:#fff; --ink:#000; --muted:#3f3f3f; --soft:#8a8a8a; --hair:#c4c4c4; --fill:#efefef;
+  --ok:#1b6a37; --ok-soft:#e2f0e6; --bad:#b30000; --bad-soft:#f9e3e3;
+  --f:"Times New Roman",Tinos,"Liberation Serif",Times,serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--desk);color:var(--ink);font-family:var(--f);font-size:19px;line-height:1.4;display:flex;flex-direction:column;overflow:hidden}
+button{font-family:var(--f);font-size:inherit;color:var(--ink);cursor:pointer}
+button:focus-visible{outline:2px dashed var(--ink);outline-offset:2px}
+h2{font-family:var(--f);margin:0}
+
+.top{flex:none;display:flex;align-items:center;gap:12px;min-height:46px;background:var(--paper);border-bottom:3px double var(--ink);
+  padding:0 max(10px,env(safe-area-inset-right,0px)) 0 max(10px,env(safe-area-inset-left,0px))}
+.home{border:1.5px solid var(--ink);background:var(--paper);border-radius:0;padding:3px 12px;font-weight:700;font-size:16px;color:var(--ink);text-decoration:none}
+.home:hover{background:var(--fill)}
+.kim{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+.kim .k1{font-size:15px;font-weight:700;letter-spacing:.02em;white-space:nowrap}
+.kim .k2{font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.score{margin-left:auto;font-size:17px;font-weight:700;white-space:nowrap}
+
+main{flex:1;min-height:0;overflow:auto;padding:10px max(8px,env(safe-area-inset-left,0px))}
+.sheet{max-width:1180px;margin:0 auto;background:var(--paper);border:1px solid var(--hair);box-shadow:0 1px 4px rgba(0,0,0,.12);padding:12px 18px 14px;display:grid;gap:10px}
+
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tabs{display:flex}
+.tab{border:1px solid var(--ink);background:var(--paper);border-radius:0;padding:3px 12px;font-size:16px;margin-left:-1px}
+.tab.on{background:var(--ink);color:var(--paper);font-weight:700}
+.btn{border:1.5px solid var(--ink);background:var(--paper);border-radius:0;padding:4px 14px;font-weight:700;font-size:16px}
+.btn:hover:not(:disabled){background:var(--fill)}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn:disabled{opacity:.35;cursor:default}
+.progress{display:flex;flex-wrap:wrap;gap:2px;margin-left:auto}
+.progress span{width:17px;height:17px;border:1px solid var(--ink);font-size:10px;display:grid;place-items:center;background:var(--paper);cursor:pointer}
+.progress span.cur{outline:2px solid var(--ink);outline-offset:1px}
+.progress span.ok{background:var(--ok-soft);border-color:var(--ok)}
+.progress span.bad{background:var(--bad-soft);border-color:var(--bad)}
+
+.instr{border:1.5px solid var(--ink);padding:5px 12px;font-size:17px;display:flex;gap:10px;align-items:baseline}
+.instr b{white-space:nowrap}
+
+.rules{border:1.5px solid var(--ink);padding:8px 14px;display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;font-size:17px;line-height:1.35}
+.rules p{margin:0}
+.rules i{color:var(--muted)}
+
+.rows{display:grid;gap:8px}
+.row{border:1px solid var(--hair);padding:8px 12px 8px 8px;display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;box-shadow:0 1px 2px rgba(0,0,0,.07)}
+.num{width:30px;height:30px;border:1.5px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:17px}
+.s{font-size:20px}
+.slot{display:inline-block;min-width:90px;border-bottom:1.5px solid var(--ink);text-align:center;padding:0 4px;font-weight:700}
+.slot.ok{color:var(--ok);border-color:var(--ok)} .slot.bad{color:var(--bad);border-color:var(--bad)}
+.line{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:5px}
+.opt{border:1px solid var(--ink);background:var(--paper);border-radius:0;padding:2px 12px;font-size:19px;min-height:34px}
+.opt:hover:not(:disabled){background:var(--fill)}
+.opt:disabled{cursor:default}
+.opt.ok{background:var(--ok-soft);border:2px solid var(--ok);color:var(--ok);font-weight:700}
+.opt.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.otv{display:flex;align-items:center;gap:6px;font-size:16px;margin-left:8px}
+.cell{width:32px;height:34px;border:1.5px solid var(--ink);display:grid;place-items:center;font-weight:700;font-size:20px}
+.cell.ok{color:var(--ok);border-color:var(--ok)} .cell.bad{color:var(--bad);border-color:var(--bad)}
+.fb{font-size:16px;line-height:1.3;margin-top:4px}
+.fb.ok{color:var(--ok)} .fb.bad{color:var(--bad)}
+
+.foot{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.foot .pg{font-style:italic;color:var(--muted);font-size:16px}
+
+.result{text-align:center;padding:18px;display:grid;gap:10px;justify-items:center}
+.result .big{font-size:40px;font-weight:700}
+.result .mark{border:1.5px solid var(--ink);padding:6px 20px;font-size:22px;font-weight:700}
+.result ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:900px}
+.result li{border:1px solid var(--bad);color:var(--bad);padding:1px 8px;font-size:16px;cursor:pointer}
+
+@media (max-width:760px){.rules{grid-template-columns:1fr}.kim .k2{display:none}.progress{margin-left:0}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="home" href="index.html">&larr; Hub</a>
+  <div class="kim"><span class="k1">UNIFIED STATE EXAM (EGE) · ENGLISH</span><span class="k2">Grammar · Though / although / however / in spite of / despite · 40 tasks</span></div>
+  <span class="score" id="score">0 / 40</span>
+</header>
+<main>
+  <div class="sheet" id="sheet">
+    <div class="bar">
+      <div class="tabs" id="tabs"></div>
+      <button class="btn" id="rulesBtn" type="button">Правило</button>
+      <div class="progress" id="prog"></div>
+    </div>
+    <div class="rules" id="rules" hidden>
+      <p><b>Although / Though</b> + предложение (подлежащее + сказуемое).<br><i>Although it was raining, we went for a walk.</i></p>
+      <p><b>Despite / In spite of</b> + существительное / герундий (-ing).<br><i>Despite the rain, we went for a walk. In spite of being tired, she continued working.</i></p>
+      <p><b>However</b> — «однако», вводит новое противопоставление, выделяется запятой.<br><i>The hotel had great reviews. However, our room was not clean.</i></p>
+      <p><b>Though</b> в конце предложения = «но / однако».<br><i>I don't really like seafood. I tried the grilled salmon, though.</i></p>
+    </div>
+    <div class="instr" id="instr"></div>
+    <div class="rows" id="rows"></div>
+    <div class="foot">
+      <button class="btn" id="prev" type="button">&larr; Назад</button>
+      <span class="pg" id="pg"></span>
+      <button class="btn primary" id="next" type="button">Далее &rarr;</button>
+    </div>
+  </div>
+</main>
+
+<script>
+/* Задания — по листу teachers_treasure_chest (40 шт.), опечатки листа исправлены. c — индекс верного варианта. */
+const Q = [
+ {q:"___ the heavy rain, the soccer match continued until the final whistle.",o:["Although","In spite of"],c:1,r:"Дальше существительное (the heavy rain) → In spite of."},
+ {q:"She passed the driving test, ___ she had only practiced for a week.",o:["although","despite"],c:0,r:"Дальше полное предложение (she had only practiced) → although."},
+ {q:"The tablet was quite expensive. ___, it stopped working after three months.",o:["However","Despite"],c:0,r:"Новое предложение, «однако» → However."},
+ {q:"___ being exhausted after the hike, Liam helped cook dinner.",o:["Although","In spite of"],c:1,r:"Дальше герундий (being) → In spite of."},
+ {q:"I don't really like seafood. I tried the grilled salmon, ___.",o:["though","despite"],c:0,r:"Though в конце предложения = «но / однако»."},
+ {q:"___ he didn't study much, he managed to get an A on the test.",o:["Although","Despite"],c:0,r:"Дальше полное предложение (he didn't study) → Although."},
+ {q:"They decided to buy the house ___ the small backyard.",o:["despite","although"],c:0,r:"Дальше существительное (the small backyard) → despite."},
+ {q:"The hotel had great reviews. ___, our room was not clean.",o:["Although","However"],c:1,r:"Новое предложение, «однако» → However."},
+ {q:"___ her fear of heights, Sarah went skydiving last weekend.",o:["In spite of","Though"],c:0,r:"Дальше именная группа (her fear of heights) → In spite of."},
+ {q:"We went to the beach ___ the water was freezing.",o:["although","in spite of"],c:0,r:"Дальше полное предложение (the water was freezing) → although."},
+
+ {q:"___ arriving at the terminal early, they missed their flight.",o:["Although","Despite","However"],c:1,r:"Дальше герундий (arriving) → Despite."},
+ {q:"He loves living in the city center, ___, the rent is getting higher every year.",o:["Although","In spite of","However"],c:2,r:"Пропуск выделен запятыми, «однако» → However."},
+ {q:"___ she had no formal training in design, her portfolio was outstanding.",o:["Though","Despite","In spite of"],c:0,r:"Дальше полное предложение (she had no formal training) → Though."},
+ {q:"The restaurant was completely booked. We managed to get a table outside, ___.",o:["despite","though","in spite of"],c:1,r:"Though в конце предложения = «но / однако»."},
+ {q:"___ the fact that it was an old car, it was extremely reliable.",o:["Despite","Although","However"],c:0,r:"the fact that … — именная конструкция → Despite."},
+ {q:"David didn't get the promotion ___ working eighty hours a week.",o:["although","In spite of","however"],c:1,r:"Дальше герундий (working) → in spite of."},
+ {q:"The new phone has an incredible camera. ___, the battery life is quite disappointing.",o:["However","Although","In spite of"],c:0,r:"Новое предложение, «однако» → However."},
+ {q:"___ she was feeling sick, she attended the entire conference.",o:["Despite","In spite of","Although"],c:2,r:"Дальше полное предложение (she was feeling sick) → Although."},
+ {q:"They lost the championship match ___ playing much better than the other team.",o:["despite","although","however"],c:0,r:"Дальше герундий (playing) → despite."},
+ {q:"The movie received poor ratings from critics. It was a massive box office hit, ___.",o:["though","in spite of","despite"],c:0,r:"Though в конце предложения = «но / однако»."},
+
+ {q:"___ the warnings from the coast guard, several surfers went out into the storm.",o:["Although","In spite of","Though","However"],c:1,r:"Дальше именная группа (the warnings) → In spite of."},
+ {q:"We planned an outdoor wedding, ___, the sudden thunderstorm forced us indoors.",o:["Despite","In spite of","Although","However"],c:3,r:"Пропуск выделен запятыми, «однако» → However. Although не подходит по смыслу: свадьбу планировали не «несмотря на» грозу."},
+ {q:"___ the instructions were written in three languages, nobody understood them.",o:["Although","Despite","In spite of","However"],c:0,r:"Дальше полное предложение (the instructions were written) → Although."},
+ {q:"The coat was stylish and warm. It was rather heavy, ___.",o:["although","in spite of","though","despite"],c:2,r:"Though в конце предложения = «но / однако»."},
+ {q:"___ having lived in Tokyo for five years, he couldn't speak fluent Japanese.",o:["Although","Though","Despite","However"],c:2,r:"Дальше герундий (having lived) → Despite."},
+ {q:"I enjoyed the novel, ___, I felt that the final chapter was rushed.",o:["Although","However","in spite of","Despite"],c:1,r:"Пропуск выделен запятыми, «однако» → However."},
+ {q:"___ all her hard work and preparation, she failed the entrance examination.",o:["Although","in spite of","Though","However"],c:1,r:"Дальше именная группа (all her hard work) → in spite of."},
+ {q:"He didn't complain once, ___ he had walked over seventy miles with a heavy backpack.",o:["Although","despite","in spite of","however"],c:0,r:"Дальше полное предложение (he had walked) → although."},
+ {q:"The museum charged an expensive entry fee. It was definitely worth visiting, ___.",o:["in spite of","though","despite","although"],c:1,r:"Though в конце предложения = «но / однако»."},
+ {q:"___ his severe ankle injury, the captain refused to leave the field.",o:["Although","Though","in spite of","However"],c:2,r:"Дальше именная группа (his severe ankle injury) → in spite of."},
+ {q:"Many employees preferred working from home. ___, the CEO demanded a full return to the office.",o:["However","Although","In spite of","Despite"],c:0,r:"Новое предложение, «однако» → However."},
+ {q:"___ it was already past midnight, the streets of the city were packed with tourists.",o:["In spite of","Despite","Though","However"],c:2,r:"Дальше полное предложение (it was already past midnight) → Though."},
+ {q:"She managed to finish the marathon ___ suffering from severe dehydration.",o:["although","though","despite","however"],c:2,r:"Дальше герундий (suffering) → despite."},
+ {q:"The laptop is lightweight and sleek, ___, it lacks sufficient USB ports for daily use.",o:["in spite of","However","Although","Despite"],c:1,r:"Пропуск выделен запятыми, «однако» → However."},
+ {q:"___ the noise coming from the construction site next door, the baby slept soundly.",o:["Although","in spite of","Though","However"],c:1,r:"Дальше именная группа (the noise) → in spite of."},
+ {q:"He rarely reads fiction books. He finished that 600-page fantasy novel in two days, ___.",o:["though","despite","in spite of","although"],c:0,r:"Though в конце предложения = «но / однако»."},
+ {q:"___ she had set several reminders on her phone, she forgot the appointment.",o:["Despite","Although","in spite of","However"],c:1,r:"Дальше полное предложение (she had set) → Although."},
+ {q:"The team secured funding for the project ___ the tight economic climate.",o:["despite","although","though","however"],c:0,r:"Дальше именная группа (the tight economic climate) → despite."},
+ {q:"The flight was delayed for six hours. ___, the airline offered no compensation or vouchers.",o:["Although","Despite","in spite of","However"],c:3,r:"Новое предложение, «однако» → However."},
+ {q:"___ having no prior experience in sales, Marcus became the top-selling agent.",o:["in spite of","Although","Though","However"],c:0,r:"Дальше герундий (having) → in spite of."}
+];
+const SECTIONS=[
+  {name:"Section 1",from:0,to:10,ins:"Choose the correct option: 1 or 2."},
+  {name:"Section 2",from:10,to:20,ins:"Choose the correct option: 1, 2 or 3."},
+  {name:"Section 3",from:20,to:40,ins:"Choose the correct option: 1, 2, 3 or 4."}
+];
+const PER=4, PAGES=Math.ceil(Q.length/PER);
+const ans=new Array(Q.length).fill(null);   // всегда с начала: ничего не сохраняем
+let page=0;
+
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const sectOf=i=>SECTIONS.findIndex(s=>i>=s.from&&i<s.to);
+
+function render(){
+  if(page>=PAGES){return final();}
+  const from=page*PER, to=Math.min(from+PER,Q.length), sec=SECTIONS[sectOf(from)];
+  $('tabs').innerHTML=SECTIONS.map((s,k)=>`<button class="tab${k===sectOf(from)?' on':''}" data-p="${Math.floor(s.from/PER)}">${s.name}</button>`).join('');
+  $('instr').innerHTML=`<b>${sec.name}.</b><span>${sec.ins}</span>`;
+  let h='';
+  for(let i=from;i<to;i++){
+    const t=Q[i], a=ans[i], done=a!==null, ok=done&&a===t.c;
+    const fill=done?`<span class="slot ${ok?'ok':'bad'}">${esc(t.o[t.c])}</span>`:`<span class="slot">&nbsp;</span>`;
+    h+=`<div class="row"><div class="num">${i+1}</div><div>
+      <div class="s">${esc(t.q).replace('___',fill)}</div>
+      <div class="line">${t.o.map((o,k)=>`<button class="opt${done&&k===t.c?' ok':''}${done&&k===a&&a!==t.c?' bad':''}" data-i="${i}" data-k="${k}" ${done?'disabled':''}>${k+1}) ${esc(o)}</button>`).join('')}
+        <span class="otv">Ответ: <span class="cell${done?(ok?' ok':' bad'):''}">${done?a+1:''}</span></span></div>
+      ${done?`<div class="fb ${ok?'ok':'bad'}">${ok?'Верно.':'Неверно, правильно: '+(t.c+1)+') '+esc(t.o[t.c])+'.'} ${esc(t.r)}</div>`:''}
+    </div></div>`;
+  }
+  $('rows').innerHTML=h;
+  $('pg').textContent=`Задания ${from+1}–${to} из ${Q.length}`;
+  $('prev').disabled=page===0;
+  $('next').textContent=page===PAGES-1?'Результат →':'Далее →';
+  progress(from,to);
+}
+function progress(from,to){
+  $('prog').innerHTML=Q.map((t,i)=>`<span data-p="${Math.floor(i/PER)}" class="${ans[i]===null?'':ans[i]===t.c?'ok':'bad'}${i>=from&&i<to?' cur':''}">${i+1}</span>`).join('');
+  const n=ans.filter((a,i)=>a!==null&&a===Q[i].c).length;
+  $('score').textContent=`${n} / ${Q.length}`;
+}
+function final(){
+  const n=ans.filter((a,i)=>a===Q[i].c).length, p=n/Q.length;
+  const mark=p>=.9?'5 — отлично':p>=.75?'4 — хорошо':p>=.5?'3 — повторить правило':'2 — повторить правило';
+  const wrong=Q.map((t,i)=>ans[i]===t.c?null:i).filter(x=>x!==null);
+  $('instr').innerHTML='<b>Result.</b><span>Нажмите на номер, чтобы вернуться к заданию.</span>';
+  $('rows').innerHTML=`<div class="result"><div class="big">${n} / ${Q.length}</div><div class="mark">${mark}</div>
+    ${wrong.length?`<div>Ошибки и пропуски:</div><ul>${wrong.map(i=>`<li data-p="${Math.floor(i/PER)}">${i+1}</li>`).join('')}</ul>`:''}
+    <button class="btn primary" id="again" type="button">Пройти заново</button></div>`;
+  $('pg').textContent='';$('prev').disabled=false;$('next').textContent='Сначала';
+  $('tabs').querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
+  progress(-1,-1);
+  $('again').onclick=restart;
+}
+function restart(){ans.fill(null);page=0;render();}
+
+document.addEventListener('click',e=>{
+  const b=e.target.closest('.opt');
+  if(b&&!b.disabled){ans[+b.dataset.i]=+b.dataset.k;render();return;}
+  const p=e.target.closest('[data-p]');
+  if(p){page=+p.dataset.p;render();$('sheet').scrollIntoView({block:'start'});}
+});
+$('prev').onclick=()=>{if(page>=PAGES)page=PAGES-1;else if(page>0)page--;render();};
+$('next').onclick=()=>{if(page>=PAGES){restart();return;}page++;render();};
+$('rulesBtn').onclick=()=>{const r=$('rules');r.hidden=!r.hidden;$('rulesBtn').textContent=r.hidden?'Правило':'Скрыть правило';};
+render();
+</script>
+</body>
+</html>
