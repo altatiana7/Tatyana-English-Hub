@@ -10,7 +10,7 @@
     const has=HW.items.length>0;
     /* быстрые ссылки на урок */
     const LW=[['lessonw1.html?v=74#w','Words','lessonw1:words'],['lessonw1.html?v=74#c','Collocations','lessonw1:colls'],['lessonw1.html?v=74#h','Error hunter','lessonw1:hunt'],['lessonw1.html?v=74#m','Match','lessonw1:match'],['lessonw1.html?v=74#t1','Task 1','lessonw1:t1-1'],['lessonw1.html?v=74#t2','Task 2','lessonw1:t2-1'],['lessonw1.html?v=74#t3','Task 3','lessonw1:iv1'],['lessonw1.html?v=74#t4','Task 4','lessonw1:t4-1'],['family-quizlet.html?v=68','Topic Practice','',0],['extra-family.html?v=57','Words & Vocabulary','',1]];
-    const LB=[['lesson1.html?v=93#5','Listening · 1–9','',1],['lesson1.html?v=94#8','Reading · 11','',1],['lesson1.html?v=93#6','Grammar · 19–24','',1],['lesson1.html?v=94#6','Word Formation · 25–29','',1],['lesson1.html?v=94#7','Vocabulary · 30–36','',1],['write37.html?v=57','Writing · 37','',1],['write38.html?v=57','Writing · 38','',1]];
+    const LB=[['lesson1.html?v=93#5','Listening · 1–9','',1],['lesson1.html?v=94#8','Reading · 11','',1],['lesson1.html?v=93#6','Grammar · 19–24','',1],['lesson1.html?v=94#6','Word Formation · 25–29','',1],['lesson1.html?v=94#7','Vocabulary · 30–36','',1],['write37.html?v=60','Writing · 37','',1],['write38.html?v=57','Writing · 38','',1]];
     function lk(href,text,hwPfx,xtra){
       const a=document.createElement('a');a.textContent=text;
       const open=(TCH||!xtra)&&(!has||HW.items.some(x=>x===hwPfx||x.indexOf(hwPfx)===0));if(xtra&&!TCH)a.title='Открывает учитель';
