@@ -5,13 +5,30 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
 <title>Nikita · Is Modern Education Preparing Us for Real Life?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0c2235;--navy2:#173a55;--paper:#f4f0e8;--ink:#17212b;--muted:#5d6975;--gold:#a8763f;--red:#a3362f;--redbg:#fbe9e7;--green:#23705c;--greenbg:#e4f3ee;--line:rgba(12,34,53,.16)}
+:root{--tint:#e8eef5;--navy:#1d3554;--navy2:#29476b;--paper:#f4f1ea;--ink:#17212b;--muted:#5d6975;--gold:#a8763f;--red:#a3362f;--redbg:#fbe9e7;--green:#23705c;--greenbg:#e4f3ee;--line:rgba(12,34,53,.16)}
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;font-family:Inter,"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink);font-size:18px}
 body{overflow:hidden}
 button{font:inherit;cursor:pointer}
-.bar{height:50px;background:linear-gradient(90deg,#091c2d,#14354f);color:#fff;display:flex;align-items:center;gap:8px;padding:0 12px}
+.bar{height:58px;background:var(--paper);display:flex;align-items:stretch;border-bottom:1px solid var(--line)}
+.path{display:flex;flex:1;min-width:0}
+.st{--c:#1d3a5c;background:var(--c);color:#fff;display:flex;align-items:center;gap:9px;padding:0 24px 0 28px;margin-right:-13px;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%,16px 50%);cursor:pointer;flex:0 1 auto;min-width:0;filter:saturate(.8) brightness(.97);transition:filter .2s}
+.st:first-child{clip-path:polygon(0 0,calc(100% - 16px) 0,100% 50%,calc(100% - 16px) 100%,0 100%);padding-left:14px}
+.st:last-child{margin-right:0}
+.st:hover{filter:none}
+.st.on{flex:1 0 auto;filter:none;padding-right:30px}
+.st svg{width:30px;height:30px;flex:none}
+.stt{font-family:"Fira Sans",Inter,sans-serif;font-weight:700;font-size:15.5px;line-height:1.08;max-width:112px}
+.st.on .stt{max-width:none;white-space:nowrap;font-size:17px}
+.stt small{display:block;font-weight:400;font-size:12.5px;opacity:.88;margin-top:2px}
+.stabs{display:flex;gap:4px;margin-left:10px;min-width:0}
+.stabs button{border:1px solid rgba(255,255,255,.32);background:rgba(255,255,255,.12);color:#fff;border-radius:8px;padding:5px 10px;font-size:14.5px;font-weight:700;white-space:nowrap}
+.stabs button:hover{background:rgba(255,255,255,.26)}
+.stabs button.on{background:#fff;color:var(--c);border-color:#fff}
+.utils{display:flex;gap:6px;align-items:center;padding:0 10px 0 16px}
 .brand{background:none;border:0;color:#fff;font-family:Georgia,serif;font-weight:700;font-size:19px;padding:0 4px;white-space:nowrap}
 .blocks{display:flex;background:rgba(255,255,255,.1);border-radius:10px;padding:3px;gap:3px}
 .blocks button{border:0;background:transparent;color:#d9e3ea;border-radius:8px;padding:5px 10px;font-weight:800;font-size:15px;white-space:nowrap}
@@ -20,12 +37,13 @@ button{font:inherit;cursor:pointer}
 .tabs button{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#fff;border-radius:9px;padding:6px 10px;font-size:15px;font-weight:700;white-space:nowrap}
 .tabs button:hover{background:rgba(255,255,255,.18)}
 .tabs button.on{background:#fff;color:var(--navy)}
-.util{border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;border-radius:9px;padding:6px 10px;font-size:15px;font-weight:700;white-space:nowrap;text-decoration:none}
-.util:hover{background:rgba(255,255,255,.16)}
-.stage{height:calc(100vh - 50px);overflow:hidden;position:relative}
+.util{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:9px;padding:6px 10px;font-size:15px;font-weight:700;white-space:nowrap;text-decoration:none}
+.util:hover{background:var(--tint)}
+.stage{height:calc(100vh - 58px);overflow:hidden;position:relative}
 .scr{height:100%;padding:11px 22px 9px;display:flex;flex-direction:column;max-width:1320px;margin:0 auto}
 .head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-bottom:8px}
-h2{font-family:Georgia,serif;font-size:25px;color:var(--navy);margin:0;line-height:1.15}
+h2{font-family:"Fira Sans",Inter,sans-serif;font-weight:800;font-size:26px;color:var(--navy);margin:0;line-height:1.12}
+h2::before{content:"";display:inline-block;width:6px;height:21px;border-radius:3px;background:var(--gold);margin-right:10px;vertical-align:-2px}
 .sub{color:var(--muted);font-size:16.5px;margin:3px 0 0}
 .hr{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .body{flex:1;min-height:0;display:flex;flex-direction:column}
@@ -39,7 +57,7 @@ h2{font-family:Georgia,serif;font-size:25px;color:var(--navy);margin:0;line-heig
 .btn.gold{background:var(--gold)}
 .btn.sm{padding:6px 12px;font-size:15px}
 .btn:disabled{opacity:.4;cursor:default}
-.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:10px 14px;min-height:0}
+.card{background:var(--tint);border:1px solid var(--line);border-radius:15px;padding:10px 14px;min-height:0}
 .label{font-size:14px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
 .score{font-weight:800;font-size:17px;color:var(--navy)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
@@ -145,8 +163,8 @@ b.v{color:var(--green)} b.x{color:var(--red)}
 /* jeopardy */
 .jboard{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:1;min-height:0}
 .jcol{display:grid;grid-template-rows:auto repeat(5,1fr);gap:6px;min-height:0}
-.jcol h3{margin:0;text-align:center;font-size:16px;color:#fff;background:var(--navy);border-radius:10px;padding:6px 4px}
-.jt{border:0;border-radius:10px;background:linear-gradient(135deg,#1d4b6e,#0c2235);color:#e3bc90;font-family:Georgia,serif;font-size:24px;font-weight:700;min-height:0}
+.jcol h3{margin:0;text-align:center;font-size:16px;color:#fff;background:var(--navy);font-family:"Fira Sans",Inter,sans-serif;border-radius:10px;padding:6px 4px}
+.jt{border:0;border-radius:10px;background:var(--gold);color:#fff;font-family:"Fira Sans",Inter,sans-serif;font-size:24px;font-weight:700;min-height:0}
 .jt:hover:not(:disabled){filter:brightness(1.25)}
 .jt:disabled{cursor:default}
 .jt.won{background:var(--greenbg);color:var(--green)}
@@ -161,7 +179,7 @@ b.v{color:var(--green)} b.x{color:var(--red)}
 .pane{display:flex;flex-direction:column;min-height:0;gap:5px}
 .ph{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .ph .score{font-size:15.5px}
-.pn{display:inline-flex;width:22px;height:22px;border-radius:6px;background:var(--gold);color:#fff;align-items:center;justify-content:center;font-size:13px;margin-right:7px;letter-spacing:0}
+.pn{display:inline-flex;width:23px;height:23px;border-radius:50%;background:var(--gold);color:#fff;align-items:center;justify-content:center;font-size:13px;margin-right:7px;letter-spacing:0}
 .pb{flex:1;min-height:0}
 .plane .zoneP{cursor:pointer;fill:transparent;stroke:transparent}
 .plane .zoneP:hover{fill:#e3bc9055}
@@ -192,8 +210,8 @@ b.v{color:var(--green)} b.x{color:var(--red)}
 .inl .row{display:flex;flex-wrap:wrap;align-items:center;gap:3px 10px}.inl .opts{margin-top:0!important}
 .tbtn{border:1px dashed var(--gold);background:#fffaf2;color:#6f431f;border-radius:9px;padding:6px 11px;font-size:15px;font-weight:700;margin:4px 0 8px}
 /* drawers */
-.drawer{position:absolute;top:0;right:0;bottom:0;width:min(440px,92vw);background:#fff;border-left:1px solid var(--line);box-shadow:-14px 0 40px rgba(12,34,53,.18);padding:16px 18px;overflow:auto;transform:translateX(105%);transition:transform .25s;z-index:20}
-.drawer.on{transform:none}
+.drawer{visibility:hidden;position:absolute;top:0;right:0;bottom:0;width:min(440px,92vw);background:#fff;border-left:1px solid var(--line);box-shadow:-14px 0 40px rgba(12,34,53,.18);padding:16px 18px;overflow:auto;transform:translateX(105%);transition:transform .25s;z-index:20}
+.drawer.on{transform:none;visibility:visible}
 .drawer h3{margin:0 0 8px;font-family:Georgia,serif;color:var(--navy);font-size:21px}
 .drawer p,.drawer li{font-size:16.5px;line-height:1.45;margin:0 0 8px}
 .drawer ul{padding-left:20px;margin:0 0 8px}
@@ -203,18 +221,36 @@ table.g{border-collapse:collapse;width:100%;font-size:16px}
 table.g td{border-bottom:1px solid var(--line);padding:6px 4px;vertical-align:top;line-height:1.35}
 table.g td:first-child{font-weight:800;color:var(--red);white-space:nowrap;padding-right:10px}
 @media(max-height:620px){.sidewrap .tok{font-size:14px;padding:3px 8px}.sidewrap .tok small{font-size:12px;line-height:1.18}.sidewrap>.pool{gap:5px}.tok{font-size:14.5px;padding:3px 8px}.scr{padding:7px 20px 6px}h2{font-size:22px}.sub{font-size:15px}.head{margin-bottom:6px}.rq{font-size:17px}.row{padding:5px 11px}.rows{gap:5px}.foot{margin-top:6px;min-height:38px}.btn{padding:7px 14px;font-size:16px}.read{font-size:14.4px;line-height:1.38;padding:7px 13px}.read p{margin:0 0 4px}.timer{font-size:36px}.fq{font-size:16px}.fa{font-size:14.5px}.mc{font-size:15.5px}.tok{font-size:15px;padding:4px 9px}.mt{font-size:15px;padding:4px 10px}.hunt{font-size:16px;line-height:1.65}.chip{font-size:14.5px;padding:3px 10px}.opt{font-size:15.5px;padding:3px 10px}.tick{font-size:15px;padding:4px 9px}}
-@media(max-width:1280px){.tabs button{padding:6px 8px}.blocks button{padding:5px 8px}.bar{gap:6px}}
+@media(max-width:1300px){.stabs button{padding:5px 7px;font-size:14px}.st{padding:0 20px 0 24px}.st.on .stt small{display:none}.st:not(.on) svg{display:none}.st:not(.on) .stt{font-size:14.5px}}
+/* illusion of choice */
+.doors{border-radius:14px;background:url('./media/illusion-doors.jpg') center/cover;flex:none;aspect-ratio:520/382}
+#ioc>div{display:flex;flex-direction:column;flex:1;min-height:0}#ioc .zone{min-height:150px}
+.defn .face.b{background:#fdf1cf}
+.iv{display:flex;flex-direction:column;gap:7px;min-height:0;flex:1}
+.ivsel{display:flex;gap:4px;flex-wrap:wrap}
+.ivsel button{width:32px;height:30px;border:1px solid var(--line);background:#fff;border-radius:8px;font-weight:800;font-size:14.5px;color:var(--navy)}
+.ivsel button.on{background:var(--gold);border-color:var(--gold);color:#fff}
+.ivcard{flex:1;min-height:250px;max-height:340px}
+.ivcard .face{align-items:center;text-align:center;border-radius:16px;box-shadow:0 6px 18px rgba(12,34,53,.07)}
+.ivcard .face.b{background:#fff;padding:16px 40px}
+.ivq{font-family:"Fira Sans",Inter,sans-serif;font-size:24px;font-weight:600;color:var(--navy);line-height:1.35}
+.ivno{font-family:"Fira Sans",Inter,sans-serif;font-weight:800;color:var(--gold);font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.ring{position:relative;width:104px;height:104px;margin:8px 0;border:0;background:none;padding:0}
+.ring svg{width:104px;height:104px;transform:rotate(-90deg)}
+.ring b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:"Fira Sans",Inter,sans-serif;font-size:30px;color:var(--navy)}
+.ring.end b{color:var(--red)}
+.ivctl{display:flex;gap:6px}
+.ivnav{display:flex;justify-content:center;gap:8px}
+.quote{font-family:"Fira Sans",Inter,sans-serif;font-size:22px;font-weight:600;line-height:1.3;color:var(--navy)}
+.imgov img{max-width:100%;max-height:calc(100vh - 80px);border-radius:12px;display:block;box-shadow:0 20px 50px #0006}
 @media(max-height:620px){.pb .row{padding:3px 9px!important}.pb .rq{font-size:15px!important}.pb .opt{padding:1px 9px}.pb .rows{gap:4px}.pb .rows>.row .opts{margin-top:2px}.match{gap:4px 10px}.qz .qname{font-size:21px}}
 @media(max-width:900px){body{overflow:auto}.bar{height:auto;flex-wrap:wrap;padding:8px}.tabs{flex-wrap:wrap}.stage{height:auto;overflow:visible}.scr{height:auto}.grid,.jboard,.match,.fgrid{grid-template-columns:1fr!important}}
 </style>
 </head>
 <body>
 <div class="bar">
-  <button class="brand" id="brand" title="Back to the start">Education</button>
-  <div class="blocks" id="blocks"><button data-b="0">Block 1</button><button data-b="1">Block 2</button></div>
-  <div class="tabs" id="tabs"></div>
-  <button class="util" id="tBtn">Notes</button>
-  <a class="util" href="./">Course</a>
+  <nav class="path" id="path" aria-label="Lesson stages"></nav>
+  <div class="utils"><button class="util" id="tBtn">Notes</button><a class="util" href="./">Course</a></div>
 </div>
 <div class="stage" id="stage">
   <section class="scr" id="scr"></section>
@@ -232,6 +268,7 @@ table.g td:first-child{font-weight:800;color:var(--red);white-space:nowrap;paddi
     <p style="margin-top:10px"><b>Important:</b> <i>could have</i> can also express a missed opportunity: <i>Schools could have offered more practical projects.</i></p>
   </aside>
 </div>
+<script src="../card-audio.js?v=1"></script>
 <script>
 'use strict';
 const $=(s,r=document)=>r.querySelector(s);
@@ -427,6 +464,38 @@ const INV_REWRITE=[
  {q:'The course was boring, and it was expensive too. → Not only ___ boring, but it was also expensive.',o:['was the course','the course was','did the course be'],e:'With be, invert the verb itself: was the course.'}
 ];
 
+/* ---------- Illusion of Choice (from the infographic) ---------- */
+const IOC_DEF='The illusion of choice is a cognitive bias where we think we have many different options, but in reality the options are limited, similar, or controlled by others.';
+const IOC_ZONES=[{id:'why',name:'Why it happens'},{id:'ex',name:'Real-life examples'},{id:'how',name:'How to overcome it'}];
+const IOC_SORT=[
+ ['why','Our brain prefers easy choices.','Simplifies decision-making'],
+ ['why','Options are presented to look different.','Influence and framing'],
+ ['why','We are guided toward certain outcomes.','Marketing and social pressure'],
+ ['why','We focus on surface differences, not real substance.','Mental shortcuts'],
+ ['ex','Different brands, similar ingredients.','Products'],
+ ['ex','Different plans, similar core features.','Subscriptions'],
+ ['ex','Different titles, same expectations.','Jobs'],
+ ['ex','Different names, similar policies.','Politics'],
+ ['how','Compare the actual substance.','Look beyond the labels'],
+ ['how','Consider who is presenting the choices, and why.','Ask who benefits'],
+ ['how','Look for data and alternative perspectives.','Seek independent information'],
+ ['how','Slow down and question your first impression.','Be aware of your biases']
+];
+const IOC_QUOTE='True freedom comes not from having more options, but from understanding the real ones.';
+const IOC_TALK=[
+ 'Three doors: fifty per cent off today only, best value, and most popular. Which door would you open, and why?',
+ 'Look at the three labels on the doors. Which of them puts the most pressure on you, and how?',
+ 'Coca-Cola, Pepsi or a supermarket cola: is there a real difference, or only a difference in the label?',
+ 'Basic, Standard or Premium: how do companies use three subscription plans to guide you towards one of them?',
+ 'Two job offers have different titles, but a similar salary and similar tasks. What would really help you choose?',
+ 'Can an election offer an illusion of choice? What would voters need to compare, apart from the names?',
+ 'Our brain prefers easy choices. Is that always a bad thing? When does a mental shortcut help us?',
+ 'Ask who benefits. Think of a shop, an app or a website: who designed your options, and why?',
+ 'Which of the four steps to overcome the illusion of choice do you already use? Which one is the hardest?',
+ 'Does school give students a real choice of what to study, or only an illusion of choice?',
+ 'True freedom comes not from having more options, but from understanding the real ones. Do you agree?'
+];
+
 /* ================= shell ================= */
 const scr=$('#scr');
 let blk=0,cur=0,timers=[],page={};
@@ -438,18 +507,31 @@ function openRef(){closeDrawers();$('#ref').classList.add('on')}
 $('#tBtn').onclick=()=>{const d=$('#notes'),on=d.classList.contains('on');closeDrawers();if(!on)d.classList.add('on')};
 $('#invBody').innerHTML=`<h3>Inversion</h3><p><b>The rule.</b> Put a negative or limiting word first, and the auxiliary comes before the subject, as in a question: <b>Rarely</b> <u>do</u> schools teach… No auxiliary? Add <b>do / does / did</b>.</p><p><b>Why we use it</b></p><ul>${INV_WHY.map(w=>`<li><b>${w[0]}:</b> ${w[1]}</li>`).join('')}</ul><table class="g">${INV_RULES.map(r=>`<tr><td style="white-space:normal">${r[0]}</td><td><i>${r[1]}</i></td></tr>`).join('')}</table><button class="tbtn" id="invRuBtn">Для учителя: зачем нужна инверсия (по-русски)</button><div class="rus" id="invRu" hidden>${INV_RU}</div>`;
 $('#invRuBtn').onclick=()=>{const d=$('#invRu');d.hidden=!d.hidden;if(!d.hidden)d.scrollIntoView({behavior:'smooth',block:'start'})};
-$('#brand').onclick=()=>show(0,0);
-$$('#blocks button').forEach(b=>b.onclick=()=>show(+b.dataset.b,0));
-function show(b,i,p){blk=b;cur=i;clearTimers();closeDrawers();deckKey=null;try{speechSynthesis.cancel()}catch(e){}page[b+'-'+i]=p||0;
+const ICONS={
+ cap:'<svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16 6 1 13l15 7 12-5.6V22h2v-8.5L31 13z"/><path d="M8 17.5V23c0 2 3.6 4 8 4s8-2 8-4v-5.5l-8 3.8z"/></svg>',
+ head:'<svg viewBox="0 0 32 32" fill="none" stroke="#fff" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M12 29v-5c-3-2-5-5.5-5-9.5C7 8.5 11.5 4 17.5 4S28 8.5 28 14c0 1.3-.4 2.4-1 3.4l2 4.1h-3V25c0 1.4-1 2.4-2.4 2.4H20V29"/><path d="M15.4 17.5v-1.3a4.1 4.1 0 1 1 4.2 0v1.3zM15.8 20.5h3.4"/></svg>',
+ brain:'<svg viewBox="0 0 32 32" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 6.5v20M16 7c-1-2-4-2.5-5.5-1S8 8 8.5 10C6 10.5 5 13 6.2 15 4.5 16.5 5 19.5 7 20.5 6.5 23 8.5 25.5 11 25c1 2 4 2.5 5 1M16 7c1-2 4-2.5 5.5-1s2.5 2 2 4c2.5.5 3.5 3 2.3 5 1.7 1.5 1.2 4.5-.8 5.5.5 2.5-1.5 5-4 4.5-1 2-4 2.5-5 1"/><path d="M11 12.2c1.5 0 2.6 1 2.6 2.6M21 12.2c-1.5 0-2.6 1-2.6 2.6M10.6 19.6c1.5-.5 3 0 3.5 1.5M21.4 19.6c-1.5-.5-3 0-3.5 1.5"/></svg>',
+ sign:'<svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><rect x="14.8" y="3" width="2.4" height="26" rx="1"/><path d="M6 6.5h17l4 3.6-4 3.6H6z"/><path d="M26 15.8H9l-4 3.6 4 3.6h17z"/></svg>'};
+const STAGES=[
+ {t:'Modern Education',s:'Learning for a complex world',c:'#1f3d61',tint:'#e8eef5',ic:'cap',b:0,from:0,to:4},
+ {t:'Critical Thinking',s:'Question. Analyse. Look deeper.',c:'#2d6b3c',tint:'#e8f1e9',ic:'head',b:0,from:5,to:8},
+ {t:'Cognitive Biases',s:'Our mind takes shortcuts.',c:'#a5372e',tint:'#f9e8e5',ic:'brain',b:1,from:0,to:3},
+ {t:'The Illusion of Choice',s:'It feels like freedom.',c:'#b37a1b',tint:'#fbf1db',ic:'sign',b:1,from:4,to:5}];
+const stageOf=(b,i)=>STAGES.findIndex(s=>s.b===b&&i>=s.from&&i<=s.to);
+function drawPath(){const si=stageOf(blk,cur),S=STAGES[si];
+  document.body.style.setProperty('--gold',S.c);document.body.style.setProperty('--tint',S.tint);
+  $('#path').innerHTML=STAGES.map((s,k)=>{const on=k===si;const tabs=on?`<span class="stabs">${LESSON[s.b].slice(s.from,s.to+1).map((t,j)=>`<button class="${s.from+j===cur?'on':''}" data-i="${s.from+j}">${t.tab}</button>`).join('')}</span>`:'';
+    return `<div class="st ${on?'on':''}" style="--c:${s.c}" data-s="${k}" title="${s.t}: ${s.s}">${ICONS[s.ic]}<span class="stt">${s.t}${on?`<small>${s.s}</small>`:''}</span>${tabs}</div>`}).join('');
+  $$('#path .st').forEach(el=>el.onclick=()=>{const s=STAGES[+el.dataset.s];show(s.b,s.from)});
+  $$('#path .stabs button').forEach(x=>x.onclick=e=>{e.stopPropagation();show(blk,+x.dataset.i)})}
+function show(b,i,p){blk=b;cur=i;clearTimers();closeDrawers();deckKey=null;try{CardAudio.stop()}catch(e){}const ov=$('.overlay');if(ov)ov.remove();page[b+'-'+i]=p||0;
   const L=LESSON[b];
-  $$('#blocks button').forEach(x=>x.classList.toggle('on',+x.dataset.b===b));
-  $('#tabs').innerHTML=L.map((s,j)=>`<button class="${j===i?'on':''}" data-i="${j}">${s.tab}</button>`).join('');
-  $$('#tabs button').forEach(x=>x.onclick=()=>show(blk,+x.dataset.i));
+  drawPath();
   L[i].render();
   $('#notesBody').innerHTML=`<h3>${L[i].tab}: teacher notes</h3>${L[i].notes}`;}
 function nextBtn(){const L=LESSON[blk];
   if(cur<L.length-1)return `<button class="btn gold" onclick="show(${blk},${cur+1})">${L[cur+1].tab} →</button>`;
-  if(blk===0)return `<button class="btn gold" onclick="show(1,0)">Block 2 →</button>`;
+  if(blk===0)return `<button class="btn gold" onclick="show(1,0)">${LESSON[1][0].tab} →</button>`;
   return `<button class="btn ghost" onclick="show(0,0)">Back to the start</button>`}
 /* pages inside one tab */
 function pager(n,label){const k=blk+'-'+cur,p=page[k]||0;
@@ -462,7 +544,8 @@ function frame(title,sub,body,o={}){
   <div class="foot">${o.left||'<span></span>'}<span class="mid">${o.mid||''}</span>${o.next||nextBtn()}</div>`;}
 
 /* ================= widgets ================= */
-function say(t){try{if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.9;const v=speechSynthesis.getVoices().find(x=>/en-GB/i.test(x.lang));if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}
+/* natural recorded voice (card-audio), never browser speech */
+function say(t,btn,done){try{CardAudio.say(t,btn,done)}catch(e){}}
 function flipWire(root){$$('.flip',root).forEach(f=>f.onclick=e=>{if(e.target.closest('button'))return;f.classList.toggle('f')})}
 /* Quizlet-style deck: one big card, flip, arrows, Know / Still learning, shuffle. Keys: Space flips, arrows move. */
 let deckKey=null;
@@ -480,7 +563,7 @@ function qdeck(root,n,o){let order=[...Array(n).keys()],pos=0,fl=false,know=new 
       <div class="qbar"><div class="qnav"><button class="btn ghost sm" data-q="prev" ${pos?'':'disabled'} aria-label="Previous">←</button><span class="cnt">${pos+1} / ${order.length}</span><button class="btn ghost sm" data-q="next" aria-label="Next">→</button></div>
       <div class="qk"><button class="btn ghost sm learn" data-q="learn">Still learning</button><button class="btn ghost sm know" data-q="know">Know it</button></div><button class="btn ghost sm" data-q="shuf">Shuffle</button></div></div>`;
     const card=$('.qcard',root);card.onclick=e=>{if(e.target.closest('button'))return;fl=!fl;card.classList.toggle('f',fl)};
-    $$('[data-q=say]',root).forEach(b=>b.onclick=e=>{e.stopPropagation();say(o.speak(i))});
+    $$('[data-q=say]',root).forEach(b=>b.onclick=e=>{e.stopPropagation();say(o.speak(i),b)});
     $('[data-q=prev]',root).onclick=()=>go(-1);$('[data-q=next]',root).onclick=()=>go(1);
     $('[data-q=know]',root).onclick=()=>mark(1);$('[data-q=learn]',root).onclick=()=>mark(0);
     $('[data-q=shuf]',root).onclick=()=>{order=shuffle(order);pos=0;fl=false;draw()};
@@ -582,6 +665,32 @@ function timerWidget(el,secs){let left=secs,run=null;
     $('[data-a=rs]',el).onclick=()=>{if(run){clearInterval(run);run=null}left=secs;draw()}};
   draw();return {set(s){if(run){clearInterval(run);run=null}secs=s;left=s;draw()}}}
 function ticks(el,items){const on={};const draw=()=>{el.innerHTML=items.map((t,i)=>`<button class="tick ${on[i]?'on':''}" data-t="${i}">${t}</button>`).join('');$$('[data-t]',el).forEach(b=>b.onclick=()=>{on[b.dataset.t]=!on[b.dataset.t];draw()})};draw()}
+
+/* interview card: the question only sounds; text on the back; 40-second ring */
+function interview(root,qs){const R=46,LEN=2*Math.PI*R;let i=0,fl=false,left=40,run=false;
+  const ring=()=>{const r=$('.ring',root);if(!r)return;$('circle.fg',r).style.strokeDashoffset=LEN*(1-left/40);$('b',r).textContent=left;r.classList.toggle('end',left===0)};
+  every(1000,()=>{if(run&&left>0){left--;if(!left)run=false;ring()}});
+  const reset=()=>{run=false;left=40};
+  function draw(){
+    root.innerHTML=`<div class="iv"><div class="ivsel">${qs.map((_,k)=>`<button class="${k===i?'on':''}" data-n="${k}">${k+1}</button>`).join('')}</div>
+     <div class="flip ivcard ${fl?'f':''}"><div class="in">
+      <div class="face a"><div class="ivno">Question ${i+1} / ${qs.length} · listen</div>
+       <button class="ring" title="Start / pause the timer"><svg viewBox="0 0 104 104"><circle cx="52" cy="52" r="${R}" fill="none" stroke="#e6e1d6" stroke-width="8"/><circle class="fg" cx="52" cy="52" r="${R}" fill="none" stroke="var(--gold)" stroke-width="8" stroke-linecap="round" stroke-dasharray="${LEN}" stroke-dashoffset="0"/></svg><b>40</b></button>
+       <div class="ivctl"><button class="btn gold sm" data-a="play">Play</button><button class="btn ghost sm" data-a="replay">Replay</button><button class="btn ghost sm" data-a="stop">Stop</button></div></div>
+      <div class="face b"><div class="ivno" style="margin-bottom:6px">Question ${i+1}</div><div class="ivq">${esc(qs[i])}</div></div></div></div>
+     <div class="ivnav"><button class="btn ghost sm" data-a="prev" ${i?'':'disabled'}>← Back</button><button class="btn sm" data-a="flip">Flip the card</button><button class="btn ghost sm" data-a="next" ${i<qs.length-1?'':'disabled'}>Next →</button></div></div>`;
+    ring();
+    const go=k=>{try{CardAudio.stop()}catch(e){}i=k;fl=false;reset();draw()};
+    $$('.ivsel button',root).forEach(b=>b.onclick=()=>go(+b.dataset.n));
+    $('[data-a=prev]',root).onclick=()=>go(i-1);$('[data-a=next]',root).onclick=()=>go(i+1);
+    $('[data-a=flip]',root).onclick=()=>{fl=!fl;$('.ivcard',root).classList.toggle('f',fl)};
+    const play=b=>{reset();ring();say(qs[i],b,()=>{run=true})};
+    $('[data-a=play]',root).onclick=e=>play(e.currentTarget);
+    $('[data-a=replay]',root).onclick=e=>play($('[data-a=play]',root));
+    $('[data-a=stop]',root).onclick=()=>{try{CardAudio.stop()}catch(e){}run=false};
+    $('.ring',root).onclick=()=>{if(left===0)left=40;run=!run;ring()}}
+  draw()}
+function showImage(src,alt){const o=document.createElement('div');o.className='overlay imgov';o.innerHTML=`<img src="${src}" alt="${esc(alt)}">`;o.onclick=()=>o.remove();$('#stage').appendChild(o)}
 
 /* ================= screens ================= */
 const pane=(n,t,id,sc)=>`<div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">${n}</span>${t}</span>${sc?`<span class="score" id="${sc}"></span>`:''}</div><div id="${id}" class="pb"></div></div>`;
@@ -701,7 +810,31 @@ const LESSON=[[
    <div class="card stack"><div class="label">Build your answer</div><div id="st" class="stack" style="gap:5px"></div></div>
    <div class="card stack"><div class="label">Linking expressions</div><div class="chips">${SYN_LINK.map(c=>`<span class="chip">${c}</span>`).join('')}</div><div id="tm" style="margin-top:auto"></div></div>
    <div class="card stack" style="background:#fff8ee"><div class="label">Homework · C1-style essay</div><div style="font-size:16px;line-height:1.4"><b>220–260 words.</b> Some people believe that success depends mainly on individual effort, while others argue that opportunities and circumstances play a greater role. Discuss both views and give your own opinion.</div><div id="hw" class="stack" style="gap:4px"></div></div></div>`);
-  ticks($('#st'),SYN_STEPS.map(s=>`<b>${s[0]}</b>&nbsp;· ${s[1]}`));timerWidget($('#tm'),180);ticks($('#hw'),['Three modal perfects','Survivorship bias, named or explained','Five collocations from the lesson','A counterargument and a qualified conclusion'])}}
+  ticks($('#st'),SYN_STEPS.map(s=>`<b>${s[0]}</b>&nbsp;· ${s[1]}`));timerWidget($('#tm'),180);ticks($('#hw'),['Three modal perfects','Survivorship bias, named or explained','Five collocations from the lesson','A counterargument and a qualified conclusion'])}},
+/* ---------- THE ILLUSION OF CHOICE ---------- */
+{tab:'Choice',notes:N('“Three doors, three labels. Is this a real choice?”','10 минут. Переход от Synthesis: там мы видели, как выборка искажает выводы; теперь — как подача вариантов искажает сам выбор. 1) Фото с дверями: Никита выбирает дверь и объясняет, ничего не читая. 2) Карточка «What is it?»: сначала его версия, потом переворот — определение с инфографики. 3) Sorting: 12 фраз с инфографики разложить по трём колонкам (нажать фразу, потом колонку, или перетащить). Неверно — красная рамка, можно переложить. После каждой колонки — пример из его жизни.','<p><b>Ответы.</b> Why: easy choices, presented to look different, guided toward outcomes, surface differences. Examples: brands, plans, titles, names. How: substance, who is presenting, data, slow down.</p>'),
+ render(){const toks=IOC_SORT.map((t,k)=>({id:'c'+k,z:t[0],html:esc(t[1])}));
+  frame('What is the Illusion of Choice?','Choose a door first. Then flip the card and sort the twelve phrases from the infographic.',`<div class="grid" style="grid-template-columns:.62fr 1.38fr">
+   <div class="stack"><div class="doors" role="img" aria-label="A young man looking at three doors labelled Option A, Option B and Option C"></div>
+    <div class="flip defn" style="flex:1;min-height:120px"><div class="in"><div class="face a"><div class="label">Card · what is it?</div><div class="fq">What is the illusion of choice? Say what you think first.</div><div class="tap">click to flip</div></div><div class="face b"><div class="fa" style="font-size:16.5px">${IOC_DEF}</div></div></div></div></div>
+   <div class="pane">${''}<div class="ph"><span class="label" style="margin:0"><span class="pn">1</span>Sort it · tap a phrase, then a column</span><span class="score" id="ioS"></span></div><div id="ioc" class="pb" style="display:flex;flex-direction:column"></div></div></div>`,
+   {right:`<button class="btn ghost sm" onclick="showImage('./media/illusion-of-choice.jpg','Infographic: the illusion of choice')">Infographic</button>`});
+  flipWire(scr);
+  const S=sorter($('#ioc'),toks,IOC_ZONES,(t,z)=>t.z===z);
+  const upd=()=>{const ok=toks.filter(t=>S.place[t.id]===t.z).length;const el=$('#ioS');if(el)el.textContent=`Correct ${ok} / ${toks.length}`};every(400,upd);upd()}},
+{tab:'Talk',notes:N('“Now it’s your turn: listen to each question and answer in forty seconds.”','12 минут. Слева интервью: Play — вопрос звучит естественным голосом, после него сам стартует круговой таймер на 40 секунд (нажатие на круг — пауза/старт). Текст вопроса — на обороте, «Flip the card», если Никита не расслышал. Номера сверху — выбрать любой вопрос. Справа итоговая мысль инфографики: Agree / Partly / Disagree и защита позиции с фразами урока. В конце кнопка Infographic — вся инфографика целиком как итог урока.'),
+ render(){let pick=null;
+  frame('Think critically. Choose consciously.','Listen to the question, then answer in forty seconds. Finish with the big idea on the right.',`<div class="grid" style="grid-template-columns:1.15fr 1fr">
+   <div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">1</span>Interview · ${IOC_TALK.length} questions</span></div><div id="iv" class="pb" style="display:flex;flex-direction:column"></div></div>
+   <div class="pane"><div class="ph"><span class="label" style="margin:0"><span class="pn">2</span>The big idea</span></div>
+    <div class="card stack" style="flex:1"><div class="quote">“${IOC_QUOTE}”</div><div class="seg" id="qv">${['Agree','Partly','Disagree'].map(k=>`<button data-k="${k}">${k}</button>`).join('')}</div>
+     <div class="label" style="margin-top:6px">Useful language</div><div class="chips">${LEAD_LANG.concat(SYN_LINK.slice(0,4).map(x=>[x,''])).map((l,k)=>`<button class="chip" data-l="${k}">${l[0]}</button>`).join('')}</div>
+     <div class="label" style="margin-top:auto">Think critically · choose consciously · be an informed adult learner</div></div></div></div>`,
+   {right:`<button class="btn ghost sm" onclick="showImage('./media/illusion-of-choice.jpg','Infographic: the illusion of choice')">Infographic</button>`});
+  interview($('#iv'),IOC_TALK);
+  $$('#qv button').forEach(b=>b.onclick=()=>{pick=b.dataset.k;$$('#qv button').forEach(x=>x.classList.toggle('on',x===b))});
+  const LL=LEAD_LANG.concat(SYN_LINK.slice(0,4).map(x=>[x,'']));
+  $$('[data-l]').forEach(b=>b.onclick=()=>{const l=LL[b.dataset.l];if(!l[1])return;b.textContent=b.textContent===l[0]?l[1]:l[0];b.classList.toggle('ru')})}}
 ]];
 
 function plane(pick){const P=(n,d)=>`<path class="zoneP ${pick===n?'pick':''}" data-n="${n}" d="${d}"/>`;

@@ -19,6 +19,7 @@ const PAGES = {
   'ege-teachers-hub/family-lesson13.html': `cardData.map(c=>c[0])`,
   'ege-teachers-hub/extra-family.html': `C.flatMap(c=>[c[0],c[2]])`,
   'ege-teachers-hub/lessonw1.html': `WORDS.flatMap(w=>[w[0],w[1]+'. '+w[2]]).concat(COLL.map(c=>c[0]),HUNT.map(h=>h[1]))`,
+  'teacher-nikita-7f3a92/education.html': `DEGREES.map((d,i)=>DK.deg.speak(i)).concat(VOCAB.map(v=>v[0]),VWORDS.map(v=>v[0]),BIASV.map(v=>v[0]),IOC_TALK)`,
   'ege-teachers-hub/pamyatki.html': `SECTIONS.flatMap(s=>(s.cards||[]).filter(c=>!c.frac).flatMap(c=>[c.f,c.b,c.ex]))`,
 };
 
