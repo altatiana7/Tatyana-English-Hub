@@ -1192,14 +1192,6 @@ const SECTIONS=[
    {n:'Важно помнить', type:'flip', items:FRACTION_RULES.map(r=>({f:r[0],b:r[1]})).concat(FRACTION_EXAMPLES.map(e=>({f:e[0],b:e[1]+'<br><i>'+e[2]+'</i>'}))), frac:true},
    {n:'Бомба', type:'bomb', items:fracChoice},
   ]},
- {id:'space', title:'Ракетостроение', tag:'устная часть · 38', img:'pamyatki-img/space.jpg',
-  cards:SPACE_VOCAB.map(v=>({f:v[0],b:v[1],ex:v[2]})),
-  acts:[
-   {n:'Vocabulary', type:'match', pairs:SPACE_VOCAB.map(v=>[v[0],v[1]])},
-   {n:'Заполни пропуск', type:'choice', items:SPACE_GAPS},
-   {n:'Moon или Mars', type:'sort', bins:['The Moon','Mars'], items:SPACE_SORT, per:8},
-   {n:'Museums · Importance', type:'flip', items:SPACE_FLIP.map(x=>({f:x[0],b:x[1]}))},
-  ]},
  {id:'email', title:'Вопросы к письму', tag:'задание 37', img:'pamyatki-img/email.jpg',
   cards:EMAIL.map(e=>({img:e.img,f:e.s,fs:e.t,b:e.q.map((q,i)=>(i+1)+'. '+esc(q)).join('<br>'),raw:true})),
   acts:[
