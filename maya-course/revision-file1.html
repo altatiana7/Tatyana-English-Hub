@@ -190,6 +190,10 @@ main{flex:1;min-height:0;padding:9px 12px}
 .tfo .tfh{display:flex;justify-content:flex-end;padding-bottom:6px}
 .tfo iframe{flex:1;border:0;border-radius:12px;background:#16203a;width:100%}
 /* talk show */
+.you{display:none;flex-direction:column;gap:8px;flex:1;min-height:0}.you.on{display:flex}
+.younav{display:flex;align-items:center;justify-content:center;gap:12px}.younav .count{color:#e2c98e;font-size:17px;font-weight:700}.younav .arrow{color:#1c2236}.younav .arrow:disabled{opacity:.35}
+.youtext{flex:1;min-height:0;overflow:auto;background:#fbf7ee;color:#1c2236;border-radius:8px;padding:9px 12px;font-size:16px;line-height:1.45}.youtext:empty{display:none}.youtext p{margin:0 0 6px}
+#tYouBtn.on{outline:2px solid #e2c98e}
 .studio{background:#1f2d3d;color:#f3ede2;border:1px solid #1f2d3d}
 .studio .bb{gap:8px}
 .guests{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -550,7 +554,12 @@ main{flex:1;min-height:0;padding:9px 12px}
           <div class="guest" id="gHost"><img src="ten-faces/nathan.jpg" alt="Host"><span><b>Nathan</b> · host</span></div>
           <div class="guest" id="gStar"><img src="ten-faces/emma.jpg" alt="Guest"><span><b>Emma Lane</b> · actress</span></div>
         </div>
-        <div class="row"><button class="btn" id="tPlay" style="background:#b8955a">Play</button><button class="btn alt" id="tStop">Stop</button><button class="btn alt" id="tScript">Script</button></div>
+        <div class="row"><button class="btn" id="tPlay" style="background:#b8955a">Play</button><button class="btn alt" id="tStop">Stop</button><button class="btn alt" id="tScript">Script</button><button class="btn" id="tYouBtn" style="background:#3f6e8c">Your turn</button></div>
+        <div class="you" id="tYou">
+          <div class="younav"><button class="arrow" id="yPrev">&#8592;</button><span class="count" id="yCount"></span><button class="arrow" id="yNext">&#8594;</button></div>
+          <div class="row"><button class="btn" id="yAsk" style="background:#b8955a">Nathan asks</button><button class="btn" id="yCmp" style="background:#3c7a5c">Compare</button></div>
+          <div class="youtext" id="yText"></div>
+        </div>
         <div class="muted" id="tNow" style="color:#c9d1da">Gist: how many times does Emma call Reception?</div>
         <div class="script" id="tText"></div>
       </div>
@@ -788,6 +797,14 @@ function tSay(){if(!tOn||tIdx>=TALK.length){tOn=false;$('#gHost').classList.remo
  play(t,VO[w],()=>{tIdx++;setTimeout(tSay,300)})}
 $('#tPlay').onclick=()=>{if(tIdx>=TALK.length)tIdx=0;tOn=true;$('#tPlay').textContent='Playing';tSay()};
 $('#tStop').onclick=()=>{tOn=false;stopAudio();$('#tPlay').textContent='Continue';$('#tNow').textContent='Paused';$('#gHost').classList.remove('on');$('#gStar').classList.remove('on')};
+/* Your turn: Nathan asks, Maya answers, compare with Emma */
+const YQ=[];for(let i=0;i+1<TALK.length;i+=2)YQ.push([TALK[i][1],TALK[i+1][1]]);let yI=0;
+function yLight(w){$('#gHost').classList.toggle('on',w==='H');$('#gStar').classList.toggle('on',w==='S')}
+function yRender(){stopAudio();yLight('');$('#yCount').textContent=(yI+1)+' / '+YQ.length;$('#yText').innerHTML='';$('#yPrev').disabled=yI===0;$('#yNext').disabled=yI===YQ.length-1}
+$('#tYouBtn').onclick=()=>{tOn=false;stopAudio();yLight('');const on=$('#tYou').classList.toggle('on');$('#tYouBtn').classList.toggle('on',on);$('#tText').classList.remove('on');$('.guests').style.display='';$('#tScript').textContent='Script';$('#tPlay').style.display=$('#tStop').style.display=$('#tScript').style.display=on?'none':'';$('#tNow').style.display=on?'none':'';$('#tYouBtn').textContent=on?'Whole show':'Your turn';if(on)yRender()};
+$('#yAsk').onclick=()=>{yLight('H');play(YQ[yI][0],VO.H,()=>yLight(''),$('#yAsk'))};
+$('#yCmp').onclick=()=>{$('#yText').innerHTML='<p><b>Nathan:</b> '+YQ[yI][0]+'</p><p><b>Emma:</b> '+YQ[yI][1]+'</p>';yLight('S');play(YQ[yI][1],VO.S,()=>yLight(''),$('#yCmp'))};
+$('#yPrev').onclick=()=>{if(yI>0){yI--;yRender()}};$('#yNext').onclick=()=>{if(yI<YQ.length-1){yI++;yRender()}};
 $('#tText').innerHTML=TALK.map(([w,t])=>`<p><b>${w==='H'?'Nathan':'Emma'}:</b> ${t}</p>`).join('');
 $('#tScript').onclick=()=>{const on=$('#tText').classList.toggle('on');$('.guests').style.display=on?'none':'';$('#tScript').textContent=on?'Hide script':'Script'};
 const TF=[
