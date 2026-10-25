@@ -2103,6 +2103,7 @@ const SECTIONS=[
 ];
 
 /* ====== хаб ====== */
+const ONLY=((location.search.match(/[?&]only=([^&]+)/)||[])[1]||'').split(',').filter(Boolean);
 const app=$('#app');
 let cleanups=[];
 function clean(){cleanups.forEach(f=>f());cleanups=[]}
@@ -2115,7 +2116,7 @@ function hub(){
    <div class="hub-head"><div class="title-card"><span class="tape"></span><h1>Памятки ЕГЭ</h1><p>Английский язык · карточки, игры, проверка</p></div>
    <div class="legend"><span style="--c:var(--n-yellow)">30–36</span><span style="--c:var(--n-lilac)">19–29</span><span style="--c:var(--n-pink)">письмо 37–38</span><span style="--c:var(--n-mint)">устная часть</span></div>
    <button class="btn" id="teach">Для учителя</button></div>
-   <div class="tiles">${SECTIONS.map((s,i)=>`<button class="tile" data-id="${s.id}" style="--c:${col(s.tag)};--r:${rot(i)}deg"><span class="pin" style="--pc:${pins[i%5]}"></span>
+   <div class="tiles">${SECTIONS.filter(s=>!ONLY.length||ONLY.includes(s.id)).map((s,i)=>`<button class="tile" data-id="${s.id}" style="--c:${col(s.tag)};--r:${rot(i)}deg"><span class="pin" style="--pc:${pins[i%5]}"></span>
      <h2>${esc(s.title)}</h2><div><div class="tag">${esc(s.tag)}</div><div class="meta">${s.cards.length} карточек · ${s.acts.length} игр</div></div></button>`).join('')}
      <button class="tile" id="teach2" style="--c:var(--kraft);--r:1.6deg"><span class="pin" style="--pc:#2f6fd1"></span><h2>Маршрутная карта</h2><div><div class="tag">для учителя</div><div class="meta">план по месяцам</div></div></button>
    </div></div>`;
