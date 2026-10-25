@@ -2120,7 +2120,8 @@ function hub(){
      <button class="tile" id="teach2" style="--c:var(--kraft);--r:1.6deg"><span class="pin" style="--pc:#2f6fd1"></span><h2>Маршрутная карта</h2><div><div class="tag">для учителя</div><div class="meta">план по месяцам</div></div></button>
    </div></div>`;
   app.querySelectorAll('.tile[data-id]').forEach(b=>b.onclick=()=>openSec(b.dataset.id));
-  $('#teach').onclick=$('#teach2').onclick=teacher;
+  if(/[?&]student=1/.test(location.search)){$('#teach').remove();$('#teach2').remove();const th=$('#tohub');if(th)th.remove()}
+  else $('#teach').onclick=$('#teach2').onclick=teacher;
 }
 
 /* ====== раздел ====== */
