@@ -1,6 +1,6 @@
 /* Тренажёр письма (задание 37): структура → разбор вопросов → ответы → свои вопросы → письмо целиком.
    Игровые шаги каждый раз начинаются с нуля; сохраняется только черновик письма. */
-const L=window.W37,main=$('#main'),tabs=$('#tabs'),NAMES=['Ученица Р'],KEY='ege27r-w37';
+const L=window.W37,main=$('#main'),tabs=$('#tabs'),NAMES=['Ученица К'],KEY='ege27r-w37';
 let who=0;try{who=+localStorage.getItem(KEY+'-who')||0;}catch(e){}
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const TYPES={
@@ -133,7 +133,7 @@ function letter(){
   ta.oninput=()=>{try{localStorage.setItem(dkey(),ta.value);}catch(e){}paint();};paint();
   b.append(ta);stage.append(a,b,c);main.append(stage);
   const nav=el('div','navrow'),msg=el('span','note');
-  nav.append(btn('Скопировать для учителя',()=>{const t='Письмо 37 · '+NAMES[who]+' · №'+(ST.cur+1)+' '+x.topic+' ('+x.name+') · '+words(ta.value)+' слов\n\n'+ta.value;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{msg.textContent='Скопировано – вставь в сообщение учителю.';}).catch(()=>{msg.textContent='Не получилось скопировать: выдели текст и скопируй вручную.';});},'main'),
+  nav.append(btn('Отправить учителю на проверку',()=>{const t='Письмо 37 · '+NAMES[who]+' · №'+(ST.cur+1)+' '+x.topic+' ('+x.name+') · '+words(ta.value)+' слов\n\n'+ta.value;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{msg.textContent='Скопировано – вставь в сообщение учителю.';}).catch(()=>{msg.textContent='Не получилось скопировать: выдели текст и скопируй вручную.';});},'main'),
     btn('Образец письма',()=>{const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,'Образец · составлен для сайта'),el('pre','model',ED.t('lt.'+x.id+'-'+x.name+'.model',x.model)),btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}),
     btn('Карта самопроверки',()=>{const ov=el('div','overlay'),t=el('div','teach');t.append(el('h4',null,'Карта самопроверки · то, что не видит автоматическая проверка'));CARD.forEach(c=>{const l=el('label','ck'),i=el('input');i.type='checkbox';l.append(i,el('div',null,c));t.append(l);});t.append(btn('Закрыть',()=>ov.remove(),'sm'));ov.append(t);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);}),
     btn('Очистить черновик',()=>{ta.value='';try{localStorage.removeItem(dkey());}catch(e){}paint();},'sm'),msg);main.append(nav);

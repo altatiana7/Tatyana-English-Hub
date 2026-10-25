@@ -1,5 +1,5 @@
 /* Тренажёр задания 38: структура и клише → чтение данных → проблема и вывод → текст целиком. */
-const T=window.W38,main=$('#main'),tabs=$('#tabs'),NAMES=['Ученица Р'],KEY='ege27r-w38';
+const T=window.W38,main=$('#main'),tabs=$('#tabs'),NAMES=['Ученица К'],KEY='ege27r-w38';
 let who=0;try{who=+localStorage.getItem(KEY+'-who')||0;}catch(e){}
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const ST={cur:0,kind:1,par:0,qs:null,qi:0,pick:null,score:0,showP:false};let cur=0;
@@ -99,7 +99,7 @@ function writeStep(){
   const paint=()=>{c.innerHTML='';checks(ta.value,x).forEach(r=>c.append(el('span','ckp'+(r[1]?' ok':''),(r[1]?'✓ ':'')+r[0]+(r[2]?' · '+r[2]:''))));};
   ta.oninput=()=>{try{localStorage.setItem(dk,ta.value);}catch(e){}paint();};paint();b.append(ta,c);stage.append(a,b);main.append(stage);
   const nav=el('div','navrow'),msg=el('span','note');
-  nav.append(btn('Скопировать для учителя',()=>{const t='Задание 38.'+ST.kind+' · '+NAMES[who]+' · №'+x.id+' '+x.topic+' · '+words(ta.value)+' слов\n\n'+ta.value;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{msg.textContent='Скопировано.';}).catch(()=>{msg.textContent='Не получилось скопировать.';});},'main'),
+  nav.append(btn('Отправить учителю на проверку',()=>{const t='Задание 38.'+ST.kind+' · '+NAMES[who]+' · №'+x.id+' '+x.topic+' · '+words(ta.value)+' слов\n\n'+ta.value;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>{msg.textContent='Скопировано.';}).catch(()=>{msg.textContent='Не получилось скопировать.';});},'main'),
     btn('Карта самопроверки',()=>{const d=el('div');CARD.forEach(k=>{const l=el('label','ck'),i=el('input');i.type='checkbox';l.append(i,el('div',null,k));d.append(l);});overlay('Карта самопроверки · то, что не видит автоматическая проверка',d);}),
     btn('Образец',()=>{const s=sample(x);overlay('Образец · составлен для сайта · '+words(s)+' слов',el('pre','model',ED.t('w38.'+ST.kind+'.'+x.topic,s)));}),
     btn('Очистить черновик',()=>{ta.value='';try{localStorage.removeItem(dk);}catch(e){}paint();},'sm'),msg);main.append(nav);
