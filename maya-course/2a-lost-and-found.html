@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maya · 2A Lost… and found?</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c2236;--muted:#5d6478;--line:#e1e3ee;--ok:#4f8a5f;--okbg:#e6efe7;--no:#a9443a;--nobg:#f6e7e3;
+--pink:#a9503b;--blue:#3e5c76;--green:#5c7f69;--orange:#a8844c;--purple:#6b4e71;--teal:#4f7f7d;--gold:#b8955a}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:linear-gradient(135deg,#f6f3ed 0%,#f1efea 50%,#f4efe6 100%);color:var(--ink);font-family:'PT Serif',Georgia,'Times New Roman',serif;font-size:17px;overflow:hidden;display:flex;flex-direction:column}
+button{font:inherit;cursor:pointer;color:inherit}
+.bar{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:6px 10px;background:#1f2d3d;border-bottom:3px solid var(--gold)}
+.bar .name{font-weight:700;font-size:17px;color:#fff;white-space:nowrap;margin-right:4px}
+.steps{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+.st{border:0;border-radius:6px;padding:5px 9px;font-size:14px;font-weight:700;white-space:nowrap;color:#fff;opacity:.6;background:#ffffff1a}
+.st.on{opacity:1;background:var(--gold)}.st.done{opacity:.85}
+.tbtn{border:1px solid #ffffff66;background:transparent;color:#fff;border-radius:9px;padding:6px 11px;font-size:14px;white-space:nowrap}
+main{flex:1;min-height:0;padding:9px 12px}
+.stage{display:none;height:100%;flex-direction:column;gap:7px}.stage.on{display:flex}
+.grid{flex:1;min-height:0;display:grid;gap:10px}
+.box{background:#fff;border-radius:10px;border:1px solid #e4ded3;box-shadow:0 2px 8px #1f2d3d0f;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+.bh{display:flex;align-items:center;gap:8px;padding:6px 12px;color:#fff;font-weight:700;font-size:16px;letter-spacing:.02em}
+.bh .sp{flex:1}.bh .pts{background:#ffffff33;border-radius:999px;padding:1px 10px;font-size:15px}
+.pink .bh{background:var(--pink)}.blue .bh{background:var(--blue)}.green .bh{background:var(--green)}.orange .bh{background:var(--orange)}.purple .bh{background:var(--purple)}.teal .bh{background:var(--teal)}.gold .bh{background:var(--gold)}
+.bb{flex:1;min-height:0;padding:8px 12px;display:flex;flex-direction:column;gap:7px}
+.btn{border:0;border-radius:9px;padding:6px 14px;font-size:15px;font-weight:700;color:#fff;background:#2c3e50}
+.btn.alt{background:#fff;color:#2c3e50;border:1px solid #c9d1da}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.hide{display:none!important}
+/* quizlet */
+.qz{flex:1;min-height:0;perspective:1100px;cursor:pointer}
+.qz .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.qz.f .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px}
+.qz .front{background:#f3efe8;border:2px solid #e9d7ca;padding:6px;overflow:hidden}
+.qz .front img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;display:block}
+.qz .back{transform:rotateY(180deg);background:#faf4ef;border:2px solid #d6a68f;flex-direction:column;gap:8px}
+.qz .back .en{font-size:26px;font-weight:700;color:#1f2d3d;line-height:1.2}
+.qz .back .ru{font-size:19px;color:#7a3f2e}
+.qz .back .ex{font-size:17px;font-style:italic;color:#4a4f63}
+.qnav{display:flex;align-items:center;justify-content:center;gap:10px}
+.arrow{width:40px;height:32px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:17px;color:#1c2236}
+.arrow:disabled{opacity:.35;cursor:default}
+.count{min-width:58px;text-align:center;color:var(--muted);font-size:15px}
+/* speaking under buttons */
+.spk{display:flex;gap:6px;flex-wrap:wrap}
+.spb{border:0;border-radius:8px;padding:4px 10px;font-size:15px;font-weight:700;background:#e8edf2;color:#3e5c76}
+.spb.on{background:#3e5c76;color:#fff}
+.sptext{padding:8px 11px;border-left:4px solid #3e5c76;background:#f3f6f9;border-radius:6px;font-size:19px;line-height:1.4}
+.sptext:empty{display:none}
+.ans{background:var(--okbg);border-radius:8px;padding:8px 11px;font-size:17px;line-height:1.5;color:#2f5a3c}
+.big{font-size:21px;line-height:1.35}
+/* story */
+.story{flex:1;min-height:0;overflow:auto;font-size:18px;line-height:1.6;background:#fbf8f2;border-radius:10px;padding:10px 14px}
+.story p{margin:0 0 9px}
+.story.blur p{filter:blur(7px);user-select:none}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid #d9c8a6;background:#fbf6ea;border-radius:999px;padding:3px 12px;font-size:16px;color:#7a5a2a}
+/* mcq */
+.mcq{display:flex;flex-direction:column;gap:7px;flex:1;min-height:0}
+.mi{border:1px solid #e4ded3;border-radius:9px;padding:6px 10px;background:#fff;display:flex;flex-direction:column;gap:5px}
+.mi .s{font-size:17px;line-height:1.3}
+.mi .s b{color:#8f6630}
+.mi .o{display:flex;gap:6px;flex-wrap:wrap}
+.mi .o button{border:1px solid #cfc6b6;background:#fff;border-radius:7px;padding:3px 12px;font-size:16px}
+.mi .o button.ok{background:var(--okbg);border-color:var(--ok);color:#3c6a4a;font-weight:700}
+.mi .o button.no{background:var(--nobg);border-color:var(--no);color:var(--no)}
+.mi.done .o button:not(.ok):not(.no){opacity:.75}
+.mcols{display:grid;grid-template-columns:1fr 1fr;gap:7px;flex:1;min-height:0;align-content:start}
+/* flip lines */
+.flines{display:flex;flex-direction:column;gap:7px;flex:1;min-height:0}
+.fc{perspective:900px;cursor:pointer;flex:1;min-height:48px;max-height:86px}
+.fc .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.fc.f .in{transform:rotateY(180deg)}
+.fc .front{background:#fff;border:2px solid #e8d2c9;font-size:18px;justify-content:flex-start;text-align:left;gap:10px}
+.fc .front .rx{flex:0 0 auto;background:#a9503b;color:#fff;border-radius:6px;padding:1px 8px;font-size:14px;font-weight:700}
+.fc .back{transform:rotateY(180deg);background:var(--okbg);border:2px solid var(--ok);font-size:18px;justify-content:flex-start;text-align:left;color:#3c6a4a;font-weight:700}
+/* verbs */
+.verbs{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:6px;flex:1;min-height:0}
+.vt{perspective:700px;cursor:pointer;min-height:0}
+.vt .in{position:relative;width:100%;height:100%;transition:transform .4s;transform-style:preserve-3d}
+.vt.f .in{transform:rotateY(180deg)}
+.vt .front{background:#fff;border:2px solid #dfe4ea;font-size:19px;font-weight:700;padding:4px;border-radius:10px}
+.vt .back{transform:rotateY(180deg);background:#eef3f8;border:2px solid #3e5c76;font-size:19px;font-weight:700;color:#3e5c76;padding:4px;border-radius:10px}
+/* audio */
+.studio{background:#1f2d3d;color:#f3ede2;border:1px solid #1f2d3d}
+.studio .bb{gap:10px}
+.showtitle{font-size:19px;font-weight:700;color:#e2c98e}
+audio{width:100%}
+/* timer */
+.digital{font-family:'Courier New',monospace;font-weight:700;font-size:30px;background:#1f2d3d;color:#e2c98e;border-radius:10px;padding:2px 14px;letter-spacing:2px}
+/* bridge */
+.bridge{flex:0 0 auto;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e4ded3;border-left:4px solid var(--gold);border-radius:8px;padding:5px 10px}
+.bridge .lbl{font-size:12px;letter-spacing:.1em;color:#a8844c;font-weight:700}
+.bridge .q{flex:1;font-size:16px;font-style:italic}
+.bridge .nx{border:0;border-radius:8px;background:#1f2d3d;color:#fff;font-weight:700;padding:6px 14px;font-size:15px;white-space:nowrap}
+/* drawer + modal */
+.drawer{position:fixed;top:46px;right:10px;width:min(460px,92vw);max-height:calc(100vh - 56px);overflow:auto;background:#fffdf7;border:1px solid #e3d6b0;border-radius:12px;box-shadow:0 10px 30px #0003;padding:10px 16px;display:none;z-index:20;font-size:15px}
+.drawer.on{display:block}
+.drawer h3{margin:6px 0 5px;font-size:16px;color:#7a5a2a}
+.drawer ol{margin:0;padding-left:20px}.drawer li{margin-bottom:5px}
+.drawer .nm button{border:1px solid #d9c8a6;background:#fff;border-radius:7px;padding:2px 10px;margin-right:4px}
+.drawer .nm button.on{background:#a8844c;color:#fff;border-color:#a8844c}
+.modal{position:fixed;inset:0;background:#1f2d3d99;display:none;align-items:center;justify-content:center;z-index:30;padding:14px}
+.modal.on{display:flex}
+.mbox{background:#fff;border-radius:12px;max-width:900px;width:100%;max-height:100%;overflow:auto;padding:12px 18px}
+.mbox h2{margin:2px 0 8px;font-size:22px}
+table.rules{border-collapse:collapse;width:100%;font-size:17px}
+table.rules th,table.rules td{border:1px solid #e1e3ee;padding:5px 9px;text-align:left}
+table.rules th{background:#3e5c76;color:#fff}
+table.rules td:first-child{font-weight:700;background:#f3f6f9}
+.watch{margin:9px 0 2px;padding:8px 12px;background:#faf4ef;border-left:4px solid #a9503b;border-radius:6px;font-size:17px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="name">Maya · 2A Lost… and found?</div>
+  <nav class="steps" id="steps"></nav>
+  <button class="tbtn" id="teacherBtn">Teacher</button>
+</div>
+
+<div class="drawer" id="drawer">
+  <h3>Plan · 60 min</h3>
+  <ol>
+    <li><b>1 Back (15 min).</b> Hotel Quizlet: she says the phrase from the photo, then flip. Can Maya remember Emma's problems <i>without</i> seeing the vocabulary? Then the hotel phrases game and the two Past Simple starters.</li>
+    <li><b>2 Lost… (7 min).</b> Emma at the airport: predict (passport / phone / tickets / money? What should Emma do?), then reveal. Holiday Quizlet: say the phrase, flip, make a Past Simple sentence.</li>
+    <li><b>3 Mountain (12 min).</b> Teacher-made retelling of the textbook story. Read, then <i>Hide text</i>: she corrects the false statements from memory, then flip.</li>
+    <li><b>4 Marta (15 min).</b> Track 2.1, original textbook audio. First listen: gist. Pause after “I couldn’t find my ID card” for a prediction. Pause after “my flight to Lyon left without me”: what should Marta do? Second listen: 8 questions.</li>
+    <li><b>5 Past Simple (11 min).</b> Regular or irregular? Flip the verbs, then Rules. Error cards: she corrects orally, then flip. Final 90 seconds: at least three past verbs and one negative sentence.</li>
+  </ol>
+  <h3>Name in the mountain story</h3>
+  <div class="nm">4th edition: <button data-nm="Ryan">Ryan</button> 5th edition: <button data-nm="Stuart" class="on">Stuart</button></div>
+  <h3>Watch for</h3>
+  <ol>
+    <li><i>didn’t found</i> → didn’t find; <i>Did she went</i> → Did she go.</li>
+    <li><i>didn’t could</i> → couldn’t.</li>
+    <li><i>They was</i> → They were.</li>
+  </ol>
+</div>
+
+<div class="modal" id="rules"><div class="mbox">
+  <div class="row" style="justify-content:space-between"><h2>Past Simple</h2><button class="btn alt" id="rulesClose">Close</button></div>
+  <table class="rules">
+    <tr><th></th><th>Positive</th><th>Negative</th><th>Question</th></tr>
+    <tr><td>regular</td><td>She arrived.</td><td>She didn’t arrive.</td><td>Did she arrive?</td></tr>
+    <tr><td>irregular</td><td>I went.</td><td>I didn’t go.</td><td>Did you go?</td></tr>
+    <tr><td>be</td><td>I was tired. / They were helpful.</td><td>I wasn’t at home.</td><td>Were you tired?</td></tr>
+    <tr><td>could</td><td>I could see the top.</td><td>I couldn’t find it.</td><td>Could you help?</td></tr>
+  </table>
+  <div class="watch"><b>Watch out!</b><br>After <i>did / didn’t</i> → base verb: <b>didn’t find</b> (not <s>didn’t found</s>), <b>Did</b> Marta <b>go</b>? (not <s>Did Marta went</s>)<br><i>could</i> has no <i>did</i>: <b>couldn’t find</b> (not <s>didn’t could</s>)<br><i>be</i>: I / he / she / it <b>was</b>, you / we / they <b>were</b></div>
+</div></div>
+
+<main>
+<!-- 1 BACK -->
+<section class="stage on" data-s="1">
+  <div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,.85fr) minmax(0,1.1fr)">
+    <div class="box pink">
+      <div class="bh">Quizlet · Hotel problems</div>
+      <div class="bb" id="qzHotel"></div>
+    </div>
+    <div class="box blue">
+      <div class="bh">Speaking · Emma's hotel</div>
+      <div class="bb">
+        <div class="spk" data-spk="s1"></div>
+        <div class="sptext" id="s1"></div>
+        <div class="row"><button class="btn" id="recapBtn" style="background:#3e5c76">Answer</button></div>
+        <div class="ans hide" id="recap">1. The air conditioning wasn’t working.<br>2. She couldn’t get a wi-fi signal.<br>3. There weren’t any clean towels.<br><b>called · helped · wasn’t · couldn’t</b></div>
+      </div>
+    </div>
+    <div class="box green">
+      <div class="bh">Hotel phrases<span class="sp"></span><span class="pts" id="hScore">0</span></div>
+      <div class="bb">
+        <div class="mcq" id="hq"></div>
+        <div class="qnav"><button class="arrow" id="hPrev">&#8592;</button><span class="count" id="hCount"></span><button class="arrow" id="hNext">&#8594;</button><button class="btn alt" id="hAgain">Again</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">Emma finally checked out of the hotel. What happened next?</span><button class="nx" data-go="2">Lost… &#8594;</button></div>
+</section>
+
+<!-- 2 LOST -->
+<section class="stage" data-s="2">
+  <div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+    <div class="box orange">
+      <div class="bh">One more problem…</div>
+      <div class="bb">
+        <div class="story" style="flex:0 0 auto"><p>Emma left the hotel at 8 a.m. She got into a taxi and went to the airport. She opened her bag at check-in…</p><p><b>“Oh no! Where is my __________?”</b></p></div>
+        <div class="chips"><span class="chip">passport?</span><span class="chip">phone?</span><span class="chip">tickets?</span><span class="chip">money?</span></div>
+        <div class="big">What should Emma do?</div>
+        <div class="row"><button class="btn" id="bridgeBtn" style="background:#a8844c">What happened?</button></div>
+        <div class="ans hide" id="bridgeAns">Emma couldn’t find her passport. Luckily, it was in a different pocket of her bag. She found it and caught her flight.</div>
+      </div>
+    </div>
+    <div class="box pink">
+      <div class="bh">Quizlet · Holiday problems</div>
+      <div class="bb" id="qzTravel"></div>
+    </div>
+  </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">Now meet people whose travel problems were much more serious.</span><button class="nx" data-go="3">Mountain &#8594;</button></div>
+</section>
+
+<!-- 3 MOUNTAIN -->
+<section class="stage" data-s="3">
+  <div class="grid" style="grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)">
+    <div class="box teal">
+      <div class="bh">Lost phone in the mountains<span class="sp"></span><button class="btn alt" id="hideStory" style="padding:2px 12px;font-size:14px">Hide text</button></div>
+      <div class="bb">
+        <div class="story" id="story">
+          <p>Last year, <span class="nm">Stuart</span> went on holiday with friends. They went up a mountain. It took about two hours to reach the top. They had lunch, enjoyed the amazing view, and took photos.</p>
+          <p>When they got back to their car, he couldn't find his phone. He thought he'd left it at the top. He and his friends walked all the way up again, but couldn't find it.</p>
+          <p>It got colder. He took his jacket out of his bag — and found the phone in his jacket pocket! His friends were kind about it, but he felt really stupid.</p>
+        </div>
+      </div>
+    </div>
+    <div class="box pink">
+      <div class="bh">True story? Correct it</div>
+      <div class="bb">
+        <div class="flines" id="facts"></div>
+        <div class="qnav"><button class="arrow" id="fPrev">&#8592;</button><span class="count" id="fCount"></span><button class="arrow" id="fNext">&#8594;</button></div>
+        <div class="spk" data-spk="s3"></div>
+        <div class="sptext" id="s3"></div>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">He found his phone. Marta lost something too — at the airport.</span><button class="nx" data-go="4">Marta &#8594;</button></div>
+</section>
+
+<!-- 4 MARTA -->
+<section class="stage" data-s="4">
+  <div class="grid" style="grid-template-columns:minmax(0,.8fr) minmax(0,1.3fr)">
+    <div class="box studio">
+      <div class="bh" style="background:var(--gold)">Marta's story · 2.1</div>
+      <div class="bb">
+        <div class="showtitle">What did she lose? Did she find it?</div>
+        <audio id="audio" controls preload="metadata" src="media/2a-marta-track-2-1.mp3"></audio>
+        <div class="row"><button class="btn" id="gistBtn" style="background:var(--gold)">Answer</button></div>
+        <div class="ans hide" id="gist">She lost her ID card. No, it was never found.</div>
+      </div>
+    </div>
+    <div class="box green">
+      <div class="bh">Second listen<span class="sp"></span><span class="pts" id="lScore">0</span></div>
+      <div class="bb">
+        <div class="mcols" id="lq"></div>
+        <div class="qnav"><button class="arrow" id="lPrev">&#8592;</button><span class="count" id="lCount"></span><button class="arrow" id="lNext">&#8594;</button><button class="btn alt" id="lAgain">Again</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span class="lbl">NEXT</span><span class="q">called, arrived, wanted, went, took, couldn’t… Which are regular and which are irregular?</span><button class="nx" data-go="5">Past Simple &#8594;</button></div>
+</section>
+
+<!-- 5 PAST SIMPLE -->
+<section class="stage" data-s="5">
+  <div class="grid" style="grid-template-columns:minmax(0,1fr) minmax(0,1.1fr) minmax(0,.8fr)">
+    <div class="box blue">
+      <div class="bh">Past forms<span class="sp"></span><button class="btn alt" id="rulesBtn" style="padding:2px 12px;font-size:14px">Rules</button></div>
+      <div class="bb"><div class="verbs" id="verbs"></div></div>
+    </div>
+    <div class="box pink">
+      <div class="bh">What is wrong?</div>
+      <div class="bb"><div class="flines" id="errs"></div></div>
+    </div>
+    <div class="box purple">
+      <div class="bh">90 seconds</div>
+      <div class="bb">
+        <div class="big"><b>Tell me about a time when something went wrong on a trip.</b></div>
+        <div class="sptext" style="border-left-color:#6b4e71;background:#f8f6f8;font-size:17px">three past verbs · one negative sentence</div>
+        <div class="row" style="margin-top:auto"><span class="digital" id="clock">01:30</span><button class="btn" id="tStart" style="background:#6b4e71">Start</button><button class="btn alt" id="tReset">Reset</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<script>
+'use strict';
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const IMG='media/2a/';
+const HOTEL=[
+ ['h-aircon','The air conditioning isn’t working.','Кондиционер не работает.','The air conditioning wasn’t working.'],
+ ['h-reception','call reception','позвонить на ресепшен','Emma called Reception three times.'],
+ ['h-signal','get a signal','поймать сигнал','She couldn’t get a wi-fi signal.'],
+ ['h-sendup','send somebody up','прислать кого-то в номер','They sent somebody up to look at it.'],
+ ['h-it','put somebody through to IT','соединить с техподдержкой','The receptionist put her through to IT.'],
+ ['h-keycard','a key card','ключ-карта','My key card didn’t open the door.'],
+ ['h-towels','clean towels','чистые полотенца','There weren’t any clean towels.'],
+ ['h-bother','I’m sorry to bother you.','Извините за беспокойство.','I’m sorry to bother you again.']];
+const TRAVEL=[
+ ['t-passport','lose your passport','потерять паспорт','I lost my passport at the airport.'],
+ ['t-phone','find your phone','найти телефон','He found his phone in his jacket pocket.'],
+ ['t-lookfor','look for something','искать что-либо','They looked for the phone for half an hour.'],
+ ['t-leave','leave something behind','забыть что-либо','I left my cap behind at the gate.'],
+ ['t-miss','miss a flight','опоздать на рейс','Marta missed her flight to Lyon.'],
+ ['t-book','book a flight','забронировать авиабилет','She booked a flight online.'],
+ ['t-direct','a direct flight','прямой рейс','There were no cheap direct flights.'],
+ ['t-boarding','a boarding pass','посадочный талон','I showed my boarding pass at the gate.'],
+ ['t-id','an ID card','удостоверение личности','Marta couldn’t find her ID card.'],
+ ['t-connecting','a connecting flight','рейс с пересадкой','She took a connecting flight in Brussels.'],
+ ['t-arrive','arrive at the airport','прибыть в аэропорт','We arrived at the airport at 8 a.m.'],
+ ['t-security','go through security','пройти контроль безопасности','We went through security quickly.'],
+ ['t-climb','climb a mountain','подняться на гору','They climbed a mountain on holiday.'],
+ ['t-top','get to the top','добраться до вершины','It took two hours to get to the top.'],
+ ['t-photos','take photos','фотографировать','They took photos of the amazing view.'],
+ ['t-goback','go back','вернуться','They went back up to look for the phone.']];
+
+/* ---------- Quizlet ---------- */
+const QZ={};
+function quizlet(id,data){
+ const root=$('#'+id);root.innerHTML='<div class="qz"><div class="in"><div class="face front"><img alt=""></div><div class="face back"><div class="en"></div><div class="ru"></div><div class="ex"></div></div></div></div><div class="qnav"><button class="arrow" data-a="-1">&#8592;</button><span class="count"></span><button class="arrow" data-a="1">&#8594;</button></div>';
+ const card=root.querySelector('.qz'),img=root.querySelector('img');let i=0;
+ data.forEach(d=>{const p=new Image();p.src=IMG+d[0]+'.webp'});
+ function show(){const was=card.classList.contains('f');card.classList.remove('f');const d=data[i];img.src=IMG+d[0]+'.webp';setTimeout(()=>{root.querySelector('.en').textContent=d[1];root.querySelector('.ru').textContent=d[2];root.querySelector('.ex').textContent=d[3]},was?250:0);root.querySelector('.count').textContent=(i+1)+' / '+data.length}
+ card.onclick=()=>card.classList.toggle('f');
+ const step=d=>{i=(i+d+data.length)%data.length;show()};
+ root.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>step(+b.dataset.a));
+ QZ[id]={step,flip:()=>card.classList.toggle('f')};show();
+}
+quizlet('qzHotel',HOTEL);quizlet('qzTravel',TRAVEL);
+
+/* ---------- speaking under buttons ---------- */
+const SPK={
+ s1:['What were Emma’s three problems in the hotel?','“I called Reception because…”','“I went to the airport, but…”'],
+ s3:['Was the second climb worth it?','Have you ever lost something and found it in an obvious place?']};
+$$('[data-spk]').forEach(box=>{const k=box.dataset.spk,list=SPK[k],out=$('#'+k);
+ box.innerHTML=list.map((t,i)=>`<button class="spb" data-i="${i}">Speaking ${i+1}</button>`).join('');
+ box.querySelectorAll('.spb').forEach(b=>b.onclick=()=>{const on=!b.classList.contains('on');box.querySelectorAll('.spb').forEach(x=>x.classList.remove('on'));out.textContent='';if(on){b.classList.add('on');out.textContent=list[+b.dataset.i]}})});
+function toggle(btn,id){$(btn).onclick=()=>$(id).classList.toggle('hide')}
+toggle('#recapBtn','#recap');toggle('#bridgeBtn','#bridgeAns');toggle('#gistBtn','#gist');
+
+/* ---------- multiple choice game ---------- */
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function mcq(cfg){
+ let page=0,score=0,done={},opts=[];
+ const pages=Math.ceil(cfg.data.length/cfg.per);
+ function init(){page=0;score=0;done={};opts=cfg.data.map(q=>shuffle(q[1].map((t,k)=>[t,k])));render()}
+ function render(){
+  const root=$(cfg.root);
+  root.innerHTML=cfg.data.slice(page*cfg.per,page*cfg.per+cfg.per).map((q,k)=>{const i=page*cfg.per+k,d=done[i];
+   return `<div class="mi${d!==undefined?' done':''}"><div class="s"><b>${i+1}.</b> ${q[0].replace('___','<b>_____</b>')}</div><div class="o">${opts[i].map(([t,j])=>`<button data-i="${i}" data-j="${j}" class="${d!==undefined?(j===q[2]?'ok':j===d?'no':''):''}">${t}</button>`).join('')}</div></div>`}).join('');
+  root.querySelectorAll('button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,j=+b.dataset.j;if(done[i]!==undefined)return;done[i]=j;if(j===cfg.data[i][2])score++;render()});
+  $(cfg.score).textContent=score+' / '+cfg.data.length;
+  const from=page*cfg.per+1,to=Math.min(cfg.data.length,(page+1)*cfg.per);$(cfg.count).textContent=from+'–'+to+' / '+cfg.data.length;
+  $(cfg.prev).disabled=page===0;$(cfg.next).disabled=page===pages-1}
+ $(cfg.prev).onclick=()=>{if(page>0){page--;render()}};$(cfg.next).onclick=()=>{if(page<pages-1){page++;render()}};$(cfg.again).onclick=init;init();
+}
+mcq({root:'#hq',score:'#hScore',count:'#hCount',prev:'#hPrev',next:'#hNext',again:'#hAgain',per:4,data:[
+ ['The air conditioning isn’t ___.',['working','work','worked'],0],
+ ['I’ll ___ somebody up to look at it.',['send','put','call'],0],
+ ['I can’t ___ a signal.',['get','take','make'],0],
+ ['I’ll ___ you through to IT.',['put','send','get'],0],
+ ['There aren’t any clean ___.',['towels','signals','flights'],0],
+ ['I’m sorry to ___ you again.',['bother','bothering','bothered'],0],
+ ['I called ___ three times.',['Reception','the towels','the key card'],0],
+ ['The receptionist ___ very helpful.',['was','were','did'],0],
+ ['My ___ card didn’t open the door.',['key','boarding','ID'],0],
+ ['Emma ___ Reception again.',['called','calls','call'],0]]});
+mcq({root:'#lq',score:'#lScore',count:'#lCount',prev:'#lPrev',next:'#lNext',again:'#lAgain',per:4,data:[
+ ['Where was Marta living at the time?',['Dublin','Madrid','Brussels'],0],
+ ['Where did she want to go for her holiday?',['Paris','Lyon','Madrid'],1],
+ ['Why did she change planes in Brussels?',['She wanted to visit friends','There were no cheap direct flights','She lost her luggage'],1],
+ ['What couldn’t she find at the gate?',['Her ID card','Her phone','Her passport'],0],
+ ['How long did she wait in a small room?',['About ten minutes','More than an hour','Three days'],1],
+ ['How did she feel?',['Excited','Relaxed','Very stressed and unhappy'],2],
+ ['Where did the policeman say she had to go?',['France','Ireland','Spain'],2],
+ ['Did she have her planned holiday?',['Yes','No'],1]]});
+
+/* ---------- flip lines ---------- */
+const FACTS=[['He went with his family.','He went with friends.'],['They went cycling.','They climbed a mountain.'],['It took three hours to get to the top.','It took about two hours.'],['They had a snack at the top.','They had lunch at the top.'],['The view wasn’t very good.','The view was amazing.'],['He couldn’t find his camera.','He couldn’t find his phone.'],['He went back with only one friend.','All his friends went back up with him.'],['They spent an hour searching.','They spent about half an hour looking.'],['It started getting warmer.','It got colder.'],['He found his phone in his bag.','It was in his jacket pocket.'],['His friends were angry.','His friends were kind about it.']];
+let fp=0;const FPER=4,FPAGES=Math.ceil(FACTS.length/FPER);
+function flipHTML(a,b,n){return `<div class="fc"><div class="in"><div class="face front"><span class="rx">${n}</span><span>${a}</span></div><div class="face back"><span>${b}</span></div></div></div>`}
+function bindFlip(root){root.querySelectorAll('.fc').forEach(c=>c.onclick=()=>c.classList.toggle('f'))}
+function factsRender(){const r=$('#facts');r.innerHTML=FACTS.slice(fp*FPER,fp*FPER+FPER).map((f,k)=>flipHTML(f[0],f[1],fp*FPER+k+1)).join('');bindFlip(r);$('#fCount').textContent=(fp+1)+' / '+FPAGES;$('#fPrev').disabled=fp===0;$('#fNext').disabled=fp===FPAGES-1}
+$('#fPrev').onclick=()=>{if(fp>0){fp--;factsRender()}};$('#fNext').onclick=()=>{if(fp<FPAGES-1){fp++;factsRender()}};factsRender();
+const ERRS=[['I didn’t <b>found</b> my phone.','I didn’t <b>find</b> my phone.'],['<b>Did</b> Marta <b>went</b> to France?','Did Marta <b>go</b> to France?'],['They <b>was</b> really helpful.','They <b>were</b> really helpful.'],['She <b>didn’t could</b> find her ID.','She <b>couldn’t</b> find her ID.']];
+$('#errs').innerHTML=ERRS.map((e,i)=>flipHTML(e[0],e[1],i+1)).join('');bindFlip($('#errs'));
+$$('#errs .fc').forEach(c=>c.style.maxHeight='none');
+
+/* ---------- verbs ---------- */
+const VERBS=[['go','went'],['climb','climbed'],['be','was / were'],['take','took'],['have','had'],['can','could'],['sit','sat'],['get','got'],['want','wanted'],['think','thought'],['decide','decided'],['say','said'],['spend','spent'],['start','started'],['feel','felt']];
+$('#verbs').innerHTML=VERBS.map(([a,b])=>`<div class="vt"><div class="in"><div class="face front">${a}</div><div class="face back">${b}</div></div></div>`).join('');
+$$('.vt').forEach(c=>c.onclick=()=>c.classList.toggle('f'));
+$('#rulesBtn').onclick=()=>$('#rules').classList.add('on');$('#rulesClose').onclick=()=>$('#rules').classList.remove('on');
+$('#rules').onclick=e=>{if(e.target.id==='rules')$('#rules').classList.remove('on')};
+
+/* ---------- story ---------- */
+$('#hideStory').onclick=()=>{const on=$('#story').classList.toggle('blur');$('#hideStory').textContent=on?'Show text':'Hide text'};
+$$('.drawer [data-nm]').forEach(b=>b.onclick=()=>{$$('.drawer [data-nm]').forEach(x=>x.classList.toggle('on',x===b));$$('#story .nm').forEach(s=>s.textContent=b.dataset.nm)});
+
+/* ---------- timer ---------- */
+let tLeft=90,tId=null;
+function tShow(){$('#clock').textContent='0'+Math.floor(tLeft/60)+':'+String(tLeft%60).padStart(2,'0')}
+function tStop(){clearInterval(tId);tId=null;$('#tStart').textContent='Start'}
+$('#tStart').onclick=()=>{if(tId){tStop();return}if(tLeft===0)tLeft=90;$('#tStart').textContent='Pause';tId=setInterval(()=>{tLeft--;tShow();if(tLeft<=0)tStop()},1000)};
+$('#tReset').onclick=()=>{tStop();tLeft=90;tShow()};tShow();
+
+/* ---------- stages ---------- */
+const ST=['1 Back','2 Lost…','3 Mountain','4 Marta','5 Past Simple'];let cur=1;
+$('#steps').innerHTML=ST.map((t,i)=>`<button class="st${i===0?' on':''}" data-go="${i+1}">${t}</button>`).join('');
+function go(n){cur=n;$('#audio').pause();tStop();$$('.stage').forEach(s=>s.classList.toggle('on',+s.dataset.s===n));$$('.st').forEach(b=>{b.classList.toggle('on',+b.dataset.go===n);b.classList.toggle('done',+b.dataset.go<n)});$('#drawer').classList.remove('on')}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(+b.dataset.go)});
+$('#teacherBtn').onclick=()=>$('#drawer').classList.toggle('on');
+document.addEventListener('click',e=>{if(!e.target.closest('#drawer')&&e.target.id!=='teacherBtn')$('#drawer').classList.remove('on')});
+document.addEventListener('keydown',e=>{const q=cur===1?QZ.qzHotel:cur===2?QZ.qzTravel:null;if(!q)return;if(e.key==='ArrowRight')q.step(1);else if(e.key==='ArrowLeft')q.step(-1);else if(e.key===' '){e.preventDefault();q.flip()}});
+</script>
+</body>
+</html>
