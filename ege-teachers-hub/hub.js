@@ -31,7 +31,7 @@
     LB.forEach(x=>qk.append(lk(x[0],x[1],x[2],x[3])));
     /* тренажёры: вынесены с внутренней страницы прямо на панель (только на сайте учителя) */
     if(TCH){
-      const LT=[['ege-30-36.html?v=2','Задания 30–36'],['concession.html?v=2','Though · However · Despite'],['pamyatki.html?v=2','Памятки ЕГЭ'],['lexika.html?v=2','Лексика ЕГЭ'],['russia.html?v=41','Russia'],['plan.html?v=40','План']];
+      const LT=[['ege-30-36.html?v=2','Задания 30–36'],['concession.html?v=2','Though · However · Despite'],['pamyatki.html?v=3','Памятки ЕГЭ'],['lexika.html?v=2','Лексика ЕГЭ'],['russia.html?v=41','Russia'],['plan.html?v=40','План']];
       const ql3=document.createElement('span');ql3.className='ql';ql3.textContent='Тренажёры';qk.append(ql3);
       LT.forEach(x=>{const a=document.createElement('a');a.href=x[0];a.textContent=x[1];a.className='tr';qk.append(a);});
     }

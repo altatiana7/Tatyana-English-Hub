@@ -1963,9 +1963,9 @@ const SECTIONS=[
  {id:'lexis', title:'Лексика 30–36', tag:'задания 30–36', img:null,
   cards:LEX.flatMap(g=>g.w.map(e=>({f:e[0],b:e[1],ex:e[2]+(e[3]?'<br><i>'+esc(e[3])+'</i>':''),raw:true,group:g.g}))), groups:LEX.map(g=>g.g),
   acts:[
-   {n:'Сочетания в предложениях', type:'choice', items:LEX_SENT, groups:LEXG},
-   {n:'Ловушки', type:'choice', items:LEX_TRAPS, groups:LEXG},
-   {n:'Доктор Грамматика', type:'doctor', items:LEX_ALL, groups:LEXG},
+   {n:'Сочетания в предложениях', type:'choice', items:LEX_SENT, groups:LEXG, all:true},
+   {n:'Ловушки', type:'choice', items:LEX_TRAPS, groups:LEXG, all:true},
+   {n:'Доктор Грамматика', type:'doctor', items:LEX_ALL, groups:LEXG, all:true},
    {n:'Короткие сочетания', type:'choice', items:LEXQ, groups:LEXG},
    {n:'Правила-ловушки', type:'flip', items:LEX.filter(g=>g.trap).map(g=>({f:g.g,b:g.trap})), lead:'Чем отличаются? Скажи вслух и переверни.'},
    {n:'Speed Game', type:'bomb', items:LEX_ALL},
@@ -2065,8 +2065,8 @@ const SECTIONS=[
   acts:[
    {n:'Выбери слово', type:'choice', items:FS_Q},
    {n:'Matching', type:'match', byGroup:FALSE_SYN.map(g=>g.map(([w,m])=>[w,m]))},
-   {n:'В предложениях', type:'choice', items:FS_SENT},
-   {n:'Доктор Грамматика', type:'doctor', items:FS_SENT},
+   {n:'В предложениях', type:'choice', items:FS_SENT, all:true},
+   {n:'Доктор Грамматика', type:'doctor', items:FS_SENT, all:true},
    {n:'Speed Game', type:'bomb', items:FS_Q},
   ]},
  {id:'refer', title:'Реферирование местоимений', tag:'письмо 37–38 · устная', imgs:["pamyatki-img/refer1.jpg", "pamyatki-img/refer2.jpg"],
@@ -2188,7 +2188,7 @@ function fit(el,per,render,min=2){
   if(window.innerWidth<=1050) return;
   while(n>min && el.scrollHeight>el.clientHeight+2){n--;render(n)}
 }
-function head(a,score){return `<div class="ptitle"><h3>${esc(a.n)}</h3>${a.groups?`<select class="gsel" aria-label="Группа слов"><option value="">Все группы</option>${a.groups.filter(g=>a.items.some(i=>i.group===g)).map(g=>`<option${a._g===g?' selected':''}>${esc(g)}</option>`).join('')}</select>`:''}<span class="score">${score||''}</span></div>${a.lead?`<div class="note">${esc(a.lead)}</div>`:''}`}
+function head(a,score){return `<div class="ptitle"><h3>${esc(a.n)}</h3>${a.groups?`<select class="gsel" aria-label="Группа слов"><option value="">Все группы (${a.items.length})</option>${a.groups.filter(g=>a.items.some(i=>i.group===g)).map(g=>`<option value="${esc(g)}"${a._g===g?' selected':''}>${esc(g)} (${a.items.filter(i=>i.group===g).length})</option>`).join('')}</select>`:''}<span class="score">${score||''}</span></div>${a.lead?`<div class="note">${esc(a.lead)}</div>`:''}`}
 function result(el,txt,again){
   el.innerHTML=`<div class="res"><div class="big">${txt}</div><button class="btn pri">Ещё раз</button></div>`;
   el.querySelector('button').onclick=again;
@@ -2212,7 +2212,7 @@ function choice(el,a){
   let items, right, done;
   const start=()=>{
     const src=a._g?a.items.filter(i=>i.group===a._g):a.items; a._restart=start;
-    items=shuffle(src).slice(0,src.length>40?20:src.length); right=0; done=new Set();
+    items=shuffle(src).slice(0,a.all||src.length<=40?src.length:20); right=0; done=new Set();
     a._score=()=>`верно: ${right} из ${items.length}`;
     paged(el,a,items,4,(box,chunk,off)=>{
       chunk.forEach((it,k)=>{
@@ -2344,7 +2344,7 @@ function doctor(el,a){
   let items,cured,misdiag;
   const start=()=>{
     const src=a._g?a.items.filter(i=>i.group===a._g):a.items; a._restart=start;
-    items=shuffle(src).slice(0,Math.min(12,src.length)).map(it=>{
+    items=shuffle(src).slice(0,a.all?src.length:Math.min(12,src.length)).map(it=>{
       const wrongs=it.opts.filter(o=>norm(o)!==norm(it.a));
       const sick=wrongs.length>0&&Math.random()<0.72;
       return Object.assign({},it,{sick,bad:sick?shuffle(wrongs)[0]:null});
