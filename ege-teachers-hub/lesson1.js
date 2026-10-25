@@ -261,7 +261,7 @@ function resultsStudent(){
   head(SENT?'Работа отправлена учителю. Ответы и баллы покажет учитель.':'Нажмите «Сохранить ответы» в каждом письменном задании, затем отправьте работу учителю. Отправить можно один раз.');
   const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
   a.append(el('h3',null,'Что сделано'));SEC.forEach(([k,l])=>a.append(el('div','rrow','<span>'+l+'</span><span class="note">'+(S[k].done?'ответы сохранены':'не сохранено')+'</span><b>'+(S[k].done?'✓':'—')+'</b>')));
-  b.append(el('h3',null,'Как отправить'),el('p',null,'1. Нажмите «Отправить учителю на проверку».<br>2. Код скопируется сам – вставьте его в чат с учителем и отправьте.'),el('p','note','Устную часть учитель оценивает на занятии.'));
+  b.append(el('h3',null,'Как отправить'),el('p',null,'Нажмите «Отправить учителю на проверку» – работа сразу уйдёт учителю. Ничего копировать и пересылать не нужно.'),el('p','note','Устную часть учитель оценивает на занятии.'));
   res.append(a,b);main.append(res);
   const nav=el('div','navrow');nav.append(KS.button('lesson1',()=>{const d=JSON.parse(JSON.stringify(S));return d;},o=>{SENT=o;['g','w','v','r','l'].forEach(k=>S[k].done=true);redraw();}));
   const h=el('a','btn sp','Домашняя работа →');h.href='home1.html';nav.append(h);main.append(nav);

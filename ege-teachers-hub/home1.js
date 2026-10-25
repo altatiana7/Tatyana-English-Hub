@@ -177,7 +177,7 @@ function reportStudent(){
   head(S.sent?'Работа отправлена учителю. Ответы и баллы покажет учитель.':'Проверьте, всё ли сделано, и отправьте работу учителю. Отправить можно один раз: после отправки ответы изменить нельзя.');
   const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
   a.append(el('h3',null,'Что сделано'));STEPS.slice(0,8).forEach(s=>a.append(el('div','rrow','<span>'+s.label+'</span><span class="note">'+(isDone(s.id)?'готово':'не закончено')+'</span><b>'+(isDone(s.id)?'✓':'—')+'</b>')));
-  b.append(el('h3',null,'Как отправить'),el('p',null,'1. Нажмите «Отправить учителю на проверку».<br>2. Код скопируется сам – вставьте его в чат с учителем и отправьте.'),el('p','note','В код попадают все ответы и оба письменных текста.'));
+  b.append(el('h3',null,'Как отправить'),el('p',null,'Нажмите «Отправить учителю на проверку» – работа сразу уйдёт учителю. Ничего копировать и пересылать не нужно.'),el('p','note','Учитель получит все ответы и оба письменных текста.'));
   res.append(a,b);main.append(res);
   const nav=el('div','navrow');nav.append(KS.button('home1',()=>{const d=JSON.parse(JSON.stringify(S));delete d.sent;delete d.checked;return d;},o=>{SENT=o;S.sent=true;redraw();}));main.append(nav);
 }

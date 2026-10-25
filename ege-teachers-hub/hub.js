@@ -77,11 +77,38 @@
 
     setTimeout(()=>{try{f.focus();}catch(e){}},50);}
 
-  /* сайт учителя: проверка домашки по коду */
+  /* сайт учителя: проверка домашки – работы Кати приходят из базы сами */
+  const PAGE={home1:'home1.html?v=41',lesson1:'lesson1.html?v=94#9',lessonw1:'lessonw1.html?v=74'};
+  function openWork(page,data){const P=PAGE[page];if(!P)throw new Error('Неизвестная работа: '+page);
+    sessionStorage.setItem('katya-review',JSON.stringify({page:page,data:data}));open(P);}
+  let seen={};try{seen=JSON.parse(localStorage.getItem('katya-seen')||'{}');}catch(e){}
+  const saveSeen=()=>{try{localStorage.setItem('katya-seen',JSON.stringify(seen));}catch(e){}};
+  const badge=n=>{const b=document.getElementById('chknew');if(b){b.textContent=n;b.hidden=!n;}};
+  async function loadChecks(ask){
+    const msg=document.getElementById('chkmsg'),box=document.getElementById('chklist');if(!box)return;
+    if(ask)msg.textContent='Загрузка…';
+    let res;try{res=await KS.list(ask);}catch(e){if(ask)msg.textContent='Не удалось загрузить работы. Проверьте интернет и нажмите «Обновить».';return;}
+    if(res.need){if(ask||res.bad)msg.textContent=res.bad?'Неверный пароль. Нажмите «Обновить» и введите его ещё раз.':'Нажмите «Обновить» и один раз введите пароль учителя (тот же, что для работ Арины).';return;}
+    const rows=res.rows;badge(rows.filter(r=>!seen[r.id]).length);
+    msg.textContent=rows.length?'Сдано работ: '+rows.length+'. Нажмите на работу – откроются ответы Кати: верно – зелёным, неверно – красным, баллы – на вкладке итогов.':'Катя пока ничего не отправила.';
+    box.innerHTML='';
+    rows.forEach(r=>{const it=document.createElement('div');it.className='chki'+(seen[r.id]?'':' new');
+      const when=new Date(r.at).toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+      it.innerHTML='<div><b></b><span>отправлено '+when+'</span></div>';it.querySelector('b').textContent=r.title;
+      const b=document.createElement('button');b.type='button';b.className='btn main';b.textContent='Открыть';
+      b.onclick=()=>{try{seen[r.id]=1;saveSeen();openWork(r.page,Object.assign({_at:when},r.data));loadChecks(false);}catch(e){msg.textContent=e.message;}};
+      it.append(b);box.append(it);});
+  }
+  if(TCH&&document.getElementById('chklist')){
+    document.getElementById('chkload').onclick=()=>loadChecks(true);
+    const t=document.querySelector('.sec[data-p="check"]');if(t)t.addEventListener('click',()=>{if(t.classList.contains('on'))loadChecks(true);});
+    loadChecks(false);
+    document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')loadChecks(false);});
+  }
+  /* старые работы, присланные кодом */
   const cb=document.getElementById('chkbtn');
   if(cb)cb.onclick=async()=>{const m=document.getElementById('chkmsg');try{const o=await KS.unpack(document.getElementById('chkcode').value);
-      const P={home1:'home1.html?v=41',lesson1:'lesson1.html?v=94#9',lessonw1:'lessonw1.html?v=74'}[o.page];if(!P)throw new Error('Неизвестная работа: '+o.page);
-      sessionStorage.setItem('katya-review',JSON.stringify({page:o.page,data:o.data}));m.textContent='Открыта работа от '+(o.data._at||'')+'.';open(P);}
+      openWork(o.page,o.data);m.textContent='Открыта работа от '+(o.data._at||'')+'.';}
     catch(e){m.textContent='Не получилось открыть код: '+e.message;}};
   window.addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='ege-home')close();});
   document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('main a[href], .sitemenu a[href]');if(!a)return;
