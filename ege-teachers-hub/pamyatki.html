@@ -157,12 +157,23 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
 .sc:nth-child(3n+1){transform:rotate(-1.5deg)}.sc:nth-child(3n){transform:rotate(1.2deg);background:var(--n-pink)}.sc:nth-child(4n){background:var(--n-blue)}
 .sc.sel{outline:3px solid var(--accent)}
 .sc.placed{background:var(--good-soft)!important;cursor:default;font-size:15px;transform:none}
-/* memory */
-.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;flex:1;min-height:0}
-.mt{border:none;background:var(--n-lilac);font-size:15px;line-height:1.2;padding:4px;min-height:52px;display:grid;place-items:center;text-align:center;box-shadow:0 1px 3px rgba(60,35,10,.3)}
-.mt:nth-child(odd){background:var(--n-peach)}
-.mt.open{background:#fff!important}
-.mt.done{background:var(--good-soft)!important;cursor:default}
+/* доктор грамматика */
+.pat .prow{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.pat .pnum{font-family:var(--f-display);font-size:15px;color:var(--accent)}
+.pat .pst{font-size:15px;color:var(--muted)}
+.pat.cured{border-left-color:var(--good)!important;background:rgba(232,247,238,.85)}
+.pat.lost{border-left-color:var(--bad)!important}
+.pat.cured .pst{color:var(--good);font-weight:700}.pat.lost .pst{color:var(--bad);font-weight:700}
+.tk{border:none;background:transparent;font:inherit;color:inherit;padding:0 2px;margin:0;border-bottom:2px dotted rgba(110,80,50,.35);cursor:pointer}
+.tk:hover:not(:disabled){background:var(--n-yellow)}
+.tk:disabled{cursor:default;border-bottom-color:transparent}
+.tk.sick{background:var(--bad-soft);outline:2px dashed var(--bad)}
+.tk.no{background:var(--bad-soft);outline:2px solid var(--bad)}
+.heal{background:var(--good-soft);padding:0 4px;outline:2px solid var(--good)}
+.opt.well{background:var(--n-mint)!important}
+.drow{align-items:center}.rx{font-size:15px;color:var(--muted);margin-right:2px}
+.expl{color:var(--ink)!important;font-style:italic}
+.gsel{margin-right:auto;max-width:60%;min-width:0;font-family:var(--f-body);font-size:14px;padding:2px 4px;border:none;border-radius:3px;background:var(--paper);color:var(--ink);box-shadow:var(--shadow)}
 /* сборка предложения */
 .ord{display:flex;flex-direction:column;gap:6px}
 .line{min-height:40px;border-bottom:2px solid rgba(110,80,50,.35);display:flex;flex-wrap:wrap;gap:5px;padding:4px 0}
@@ -172,9 +183,9 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
 .tin.ok{background:var(--good-soft);border-color:var(--good)}.tin.no{background:var(--bad-soft);border-color:var(--bad)}
 .seqdone{margin:0;padding-left:24px;display:flex;flex-direction:column;gap:3px;font-size:17px}
 .seqdone li{background:var(--good-soft);padding:2px 8px}
-/* бомба */
+/* speed game */
 .bomb{display:flex;flex-direction:column;gap:12px;align-items:center;text-align:center;flex:1;justify-content:center}
-.bomb .ball{width:92px;height:92px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5b4c45,#1f1916 70%);color:#fff;display:grid;place-items:center;font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;position:relative;box-shadow:var(--shadow)}
+.bomb .ball{width:92px;height:92px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;position:relative;box-shadow:var(--shadow)}
 .bomb .fuse{width:100%;max-width:340px;height:8px;background:rgba(110,80,50,.2);overflow:hidden}
 .bomb .fuse i{display:block;height:100%;background:linear-gradient(90deg,#e8a33d,var(--accent));transition:width 1s linear}
 .bomb .q{font-size:21px}
@@ -1007,6 +1018,818 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const fr=s=>esc(s).replace(/(\d+)\/(\d+)/g,'<span class="fr"><sup>$1</sup><sub>$2</sub></span>');
 const norm=s=>String(s).toLowerCase().replace(/[’']/g,"'").replace(/\s+/g,' ').trim();
 
+/* ====== 30–36: предложения на сочетания и ловушки ======
+   Формат: {правильный|неверный|неверный}; после « // » — пояснение, которое появляется после ответа */
+const LEX_S = {
+ 'fail':[
+  "She {failed|missed|lost|lacked} to notice the most important clue.",
+  "He {failed|missed|lost|lacked} his driving test and had to take it again.",
+  "I {missed|lost|failed|lacked} the bus this morning and was late for work.",
+  "We will really {miss|lose|lack|fail} you when you move abroad.",
+  "Don't {miss|lose|fail|lack} this chance — it may never come again.",
+  "I {lost|missed|failed|lacked} my keys somewhere in the park.",
+  "Our team {lost|missed|failed|lacked} the final 2–0.",
+  "He is clever, but he {lacks|misses|loses|fails} experience.",
+  "He didn't get the job for {lack|loss|miss|failure} of experience.",
+  "Try not to {lose|miss|fail|lack} your temper in front of the class.",
+  "Don't {lose|miss|fail|lack} sight of your main goal.",
+  "She was ill and {missed|lost|failed|lacked} two weeks of school.",
+  "The plan {failed|missed|lost|lacked} because nobody followed the instructions."],
+ 'achieve':[
+  "Hard work is the only way to {achieve|manage|succeed|complete} real success.",
+  "Despite the heavy traffic, we {managed|achieved|succeeded|fulfilled} to get there on time.",
+  "He {succeeded|managed|achieved|completed} in passing all his exams.",
+  "She has finally {fulfilled|managed|succeeded|completed} her childhood dream of becoming a pilot.",
+  "Please {complete|achieve|succeed|manage} the application form in black ink.",
+  "Students who {complete|fulfil|succeed|manage} the course receive a certificate.",
+  "A good leader always {fulfils|manages|succeeds|achieves} his promises.",
+  "I didn't think he would {manage|succeed|achieve|fulfil} to fix the car, but he did.",
+  "Few start-ups {succeed|achieve|complete|fulfil} without good marketing.",
+  "The company {achieved|succeeded|managed|fulfilled} record profits last year.",
+  "Every citizen should {fulfil|succeed|manage|achieve} their duty to vote.",
+  "The builders {completed|succeeded|fulfilled|achieved} the new bridge ahead of schedule."],
+ 'receive':[
+  "I {received|required|realised|revised} a letter from the university yesterday.",
+  "This job {requires|receives|realises|revises} a lot of patience.",
+  "Suddenly I {realised|received|required|revised} that I had left my passport at home.",
+  "She spent the whole weekend {revising|realising|requiring|receiving} for her history exam.",
+  "He worked hard to {realise|receive|require|revise} his dream of opening a restaurant.",
+  "All passengers are {required|received|realised|revised} to show their tickets.",
+  "The film {received|required|realised|revised} excellent reviews from critics.",
+  "Did you {realise|revise|require|receive} how late it was?",
+  "How much time does the task {require|realise|revise|receive}?",
+  "The author had to {revise|realise|require|receive} the text after the editor's comments."],
+ 'remember':[
+  "Please {remind|remember|recall|review} me to buy some milk.",
+  "Do you {remember|remind|resemble|remain} meeting her at the conference?",
+  "This song always {reminds|remembers|recalls|repeats} me of my school years.",
+  "I can't {recall|remind|resemble|remain} the name of the hotel.",
+  "Before the test, {review|remind|resemble|remain} your notes carefully.",
+  "Could you {repeat|remind|remain|review} the question, please? I didn't hear it.",
+  "She strongly {resembles|reminds|remembers|remains} her grandmother in appearance.",
+  "Please {remain|remind|repeat|resemble} seated until the plane stops.",
+  "The old friends sat by the fire, {reminiscing|reminding|remaining|resembling} about their school days.",
+  "Prices have {remained|reminded|resembled|reviewed} unchanged for three years.",
+  "The journalist {reviewed|reminded|remained|resembled} the new film for a magazine.",
+  "The teacher asked us to {repeat|remind|resemble|remain} the new words after her."],
+ 'ensure':[
+  "The teacher must {ensure|assure|insure|confirm} that every student understands the task.",
+  "I {assure|ensure|insure|confirm} you that everything will be fine.",
+  "Have you {insured|ensured|assured|confirmed} your house against fire?",
+  "Please {confirm|assure|insure|ensure} your booking by email.",
+  "The new rules are designed to {ensure|assure|insure|confirm} passenger safety.",
+  "The doctor {assured|ensured|insured|confirmed} the patient that the operation was safe.",
+  "The results {confirmed|assured|insured|ensured} our theory.",
+  "It is wise to {insure|ensure|assure|confirm} your luggage before a long trip."],
+ 'convince':[
+  "She {persuaded|convinced} her parents to let her go to the concert.",
+  "The lawyer {convinced|persuaded} the jury of his client's innocence.",
+  "I finally {persuaded|convinced} my brother to stop eating fast food.",
+  "Are you {convinced|persuaded} that this is the right decision?",
+  "Advertising tries to {persuade|convince} people to buy things they don't need.",
+  "Nothing could {convince|persuade} him of her honesty."],
+ 'insist':[
+  "He {insisted|persisted|assisted} on paying for dinner.",
+  "If the pain {persists|insists|assists}, see a doctor.",
+  "Volunteers {assisted|insisted|persisted} the police in the search.",
+  "She {persisted|insisted|assisted} in her efforts despite many failures.",
+  "My parents {insisted|persisted|assisted} that I finish school first.",
+  "The nurse {assisted|insisted|persisted} the surgeon during the operation.",
+  "The bad weather {persisted|insisted|assisted} for the whole week."],
+ 'offer':[
+  "He {offered|suggested|proposed} to carry my suitcase.",
+  "She {suggested|offered} going to the cinema.",
+  "The waiter {offered|suggested|proposed} us a table by the window.",
+  "The minister {proposed|offered} a new law on education.",
+  "Can I {offer|suggest|propose} you a cup of tea?",
+  "My friend {suggested|offered} that we should meet at six.",
+  "At the meeting, the director {proposed|offered} cutting costs by ten per cent.",
+  "They {offered|suggested|proposed} him a well-paid job in London."],
+ 'advise':[
+  "The doctor {advised|provided} me to stay in bed for a few days.",
+  "I can {recommend|provide|advise} this restaurant — the food is excellent.",
+  "The hotel {provides|recommends|advises} guests with free breakfast.",
+  "Experts {recommend|provide} drinking two litres of water a day.",
+  "The school {provides|advises|recommends} all students with textbooks.",
+  "She works as a lawyer, {advising|providing} companies on tax issues.",
+  "Parents should {provide|advise|recommend} a safe home for their children."],
+ 'supply':[
+  "The farm {supplies|submits|supposes} local shops with fresh milk.",
+  "All essays must be {submitted|supplied|supposed} by Friday.",
+  "I {suppose|supply|submit} you're right.",
+  "You are {supposed|supplied|submitted} to wear a seat belt.",
+  "She {submitted|supplied|supposed} her application online.",
+  "Who {supplies|submits|supposes} the school with computers?"],
+ 'say':[
+  "Could you {tell|say|speak|talk} me the way to the station?",
+  "She {said|told|spoke|talked} that she was tired.",
+  "Do you {speak|talk|say|tell} French?",
+  "We {talked|said|told} about our plans for hours.",
+  "Always {tell|say|speak|talk} the truth.",
+  "He {said|told|spoke|talked} goodbye and left.",
+  "Can I {speak|say|tell} to the manager, please?",
+  "My grandmother loves {telling|saying|speaking|talking} stories.",
+  "Don't {say|tell|speak|talk} a word to anyone!",
+  "Stop {talking|saying|telling} and listen to me!",
+  "The children were {told|said|spoken|talked} to wait outside."],
+ 'forgive':[
+  "Please {forgive|apologise} me for being late.",
+  "You should {apologise|forgive|excuse} to your sister.",
+  "{Excuse|Apologise|Sorry} me, is this seat taken?",
+  "I'm really {sorry|excused|apologised} about the noise last night.",
+  "She will never {forgive|apologise} him for lying to her.",
+  "He {apologised|forgave|excused} for his rude behaviour.",
+  "I'm {sorry|forgiven|excused} to hear that you've been ill.",
+  "Nothing can {excuse|apologise|sorry} such rude behaviour."],
+ 'fond':[
+  "My grandfather is very {fond|eager|keen|sharp} of classical music.",
+  "She is {eager|fond|sharp} to start her new job.",
+  "He's very {keen|fond|eager|sharp} on football.",
+  "Be careful — this knife is very {sharp|keen|fond|eager}.",
+  "I felt a {sharp|fond|eager} pain in my knee.",
+  "The children were {eager|fond|sharp} to hear the end of the story.",
+  "Over the years we became very {fond|keen|eager} of each other."],
+ 'pleased':[
+  "Did you {enjoy|please|satisfy|delight} the party?",
+  "We would be {delighted|enjoyed|satisfied} to accept your invitation.",
+  "I really {enjoy|am pleased|satisfy} working with children.",
+  "The customers were not {satisfied|enjoyed} with the quality of the food.",
+  "{Pleased|Enjoyed|Satisfied} to meet you!",
+  "She was {delighted|enjoyed} with her birthday present."],
+ 'merely':[
+  "It was {merely|rarely|nearly|hardly} a suggestion, not an order.",
+  "She {rarely|merely|nearly|around} makes mistakes — she's very careful.",
+  "I've {nearly|merely|rarely|around} finished — give me five minutes.",
+  "I could {hardly|nearly|merely|around} hear him because of the noise.",
+  "We arrived at {around|rarely|hardly} six o'clock.",
+  "She {nearly|hardly|merely} fell off her bike.",
+  "We {rarely|nearly|around} eat out — maybe twice a year.",
+  "He {hardly|hard} ever goes out at the weekend."],
+ 'circumstance':[
+  "Under the {circumstances|consequences|affairs|accidents}, we had to cancel the trip.",
+  "Smoking can have serious {consequences|circumstances|affairs|accidents} for your health.",
+  "He works for the Ministry of Foreign {Affairs|Circumstances|Consequences|Accidents}.",
+  "She was badly injured in a car {accident|affair|consequence|circumstance}.",
+  "As a {consequence|circumstance|accident|affair} of the storm, all flights were cancelled.",
+  "How I spend my money is my own {affair|accident|consequence|circumstance}.",
+  "I met him by {accident|affair|circumstance|consequence} at the airport."],
+ 'occasion':[
+  "We only use the best plates on special {occasions|situations|events}.",
+  "The country is in a very difficult economic {situation|occasion|event}.",
+  "The Olympic Games are the biggest sporting {event|occasion|situation} in the world.",
+  "I've met him on several {occasions|situations|events}.",
+  "What would you do in this {situation|occasion}?",
+  "The concert was the main {event|situation} of the festival."],
+ 'motive':[
+  "The police still don't know the {motive|intention|purpose} for the crime.",
+  "What's the {purpose|motive|intention|reason} of your visit?",
+  "There is no {reason|purpose|intention|motive} to panic.",
+  "I have no {intention|reason|purpose|motive} of selling my car.",
+  "The {reason|purpose|intention} why I called is to invite you to dinner.",
+  "He broke the vase on {purpose|reason|intention|motive}.",
+  "She went to London with the {intention|reason|motive} of finding a job."],
+ 'affect':[
+  "Lack of sleep can {affect|effect} your concentration.",
+  "The new law had little {effect|affect} on crime.",
+  "Social media has a huge {impact|affect} on teenagers.",
+  "Her parents had a strong {influence|affect} on her choice of career.",
+  "The medicine had an immediate {effect|affect}.",
+  "How will the strike {affect|effect} the economy?",
+  "Don't let other people {influence|effect} your decisions."],
+ 'involve':[
+  "The price {includes|contains|involves|belongs} breakfast and dinner.",
+  "This drink {contains|involves|belongs} a lot of sugar.",
+  "The job {involves|contains|belongs} a lot of travelling.",
+  "Who does this bag {belong|contain|include|involve} to?",
+  "I don't want to get {involved|included|contained|belonged} in their argument.",
+  "The box {contained|involved|belonged} old letters and photos.",
+  "The list {includes|belongs|involves} several famous writers."],
+ 'convenient':[
+  "Is Monday a {convenient|comfortable|competent|compassionate} time for the meeting?",
+  "These shoes are really {comfortable|convenient|competent|compassionate} — I can walk in them all day.",
+  "We need a {competent|convenient|comfortable|compassionate} engineer to fix the system.",
+  "Nurses should be kind and {compassionate|convenient|comfortable} towards patients.",
+  "The hotel is in a very {convenient|comfortable} location near the station.",
+  "I don't feel {comfortable|convenient} speaking in public.",
+  "She is highly {competent|compassionate|convenient} in her field."],
+ 'outlook':[
+  "In my {opinion|outlook|attitude|belief}, the film was too long.",
+  "She has a positive {outlook|opinion|point|belief} on life.",
+  "I see your {point|opinion|outlook|attitude}, but I disagree.",
+  "His {attitude|outlook|point|belief} towards his work has changed.",
+  "She has a strong {belief|attitude|outlook|point} in the power of education.",
+  "What's your {opinion|attitude|outlook} of the new manager?",
+  "From my {point|opinion|attitude} of view, it's a mistake.",
+  "You made a very good {point|opinion|attitude} in the discussion."],
+ 'fee':[
+  "The university has raised its tuition {fees|fares|prices|wages}.",
+  "How much is the bus {fare|fee|price|salary}?",
+  "The {price|fare|fee|wage} of petrol has gone up again.",
+  "Teachers receive their {salary|fare|fee|price} at the end of each month.",
+  "The minimum hourly {wage|salary|fare|fee} is going to rise.",
+  "The first {payment|fare|wage} is due on 1 March.",
+  "There's no entrance {fee|fare|salary|wage} for children.",
+  "Taxi {fares|fees|salaries} are higher at night."],
+ 'buy':[
+  "How much did you {pay|charge|cost|sell} for these shoes?",
+  "The hotel {charged|paid|cost|bought} us £20 for parking.",
+  "This jacket {cost|charged|paid|sold} me a fortune.",
+  "Tickets can be {purchased|charged|paid|cost} online.",
+  "He {sold|bought|paid|charged} his old car to a neighbour.",
+  "Who's going to {pay|charge|cost} the bill?",
+  "I {bought|paid|charged|cost} a present for my mum.",
+  "They {charge|cost|pay} €5 for a cup of coffee here."],
+ 'lend':[
+  "Can you {lend|borrow|rent|hire} me £10 until Friday?",
+  "I {borrowed|lent|hired|rented} a book from the library.",
+  "We {rented|borrowed|lent} a flat near the sea for the summer.",
+  "The company plans to {hire|rent|borrow|lend} new staff.",
+  "We {hired|borrowed|lent} a car at the airport.",
+  "He never returns the money he {borrows|lends|rents}."],
+ 'bring':[
+  "{Take|Bring|Deliver} your umbrella with you when you go out.",
+  "Can you {bring|take|deliver} me a glass of water when you come back?",
+  "She was {carrying|fetching|delivering} a heavy bag.",
+  "The parcel will be {delivered|carried|fetched} tomorrow morning.",
+  "The dog ran to {fetch|deliver|carry} the ball.",
+  "Please {take|bring} these books back to the library.",
+  "Could you {get|carry|deliver} me some bread from the shop?",
+  "Don't forget to {bring|take} your passport when you come here tomorrow."],
+ 'lay':[
+  "Don't {lie|lay} on the wet grass.",
+  "She {laid|lay|lied} the baby gently on the bed.",
+  "Yesterday I {lay|laid|lied} in bed until ten.",
+  "Please {lay|lie} the table for dinner.",
+  "She was {brought up|grown up} by her grandparents.",
+  "I {grew up|brought up} in a small village near Kazan.",
+  "Hens {lay|lie} eggs.",
+  "The book is {lying|laying} on the table.",
+  "When I {grow up|bring up}, I want to be a doctor.",
+  "They {brought up|grew up} three children."],
+ 'look':[
+  "{Look|See|Watch|View} at this photo!",
+  "I can't {see|look|watch} anything without my glasses.",
+  "We {watched|looked|saw} the children playing in the garden for an hour.",
+  "Many people {view|watch|look} the internet as a threat.",
+  "I {saw|watched|looked} an old friend in the street yesterday.",
+  "She {looked|saw|watched} out of the window.",
+  "I {watched|looked} TV all evening."],
+ 'examine':[
+  "The doctor {examined|spotted|observed} the patient carefully.",
+  "Scientists {observed|spotted|examined} the behaviour of the birds for months.",
+  "Can you {spot|examine|observe} the mistake in this sentence?",
+  "The police {examined|spotted|observed} the evidence closely.",
+  "I {spotted|examined|observed} my friend in the crowd."],
+ 'stare':[
+  "It's rude to {stare|glance|peer} at people.",
+  "She {glanced|stared|gazed|peered} at her watch and hurried out.",
+  "They {gazed|glared|peered|glanced} at the stars for hours.",
+  "He {peered|glanced|gazed} into the dark room, trying to see something.",
+  "The teacher {glared|gazed|glanced} angrily at the noisy pupils.",
+  "He {gazed|glared|peered} lovingly into her eyes."],
+ 'nod':[
+  "He {nodded|bowed|bent} in agreement.",
+  "The actors {bowed|nodded|bent} to the audience.",
+  "{Bend|Bow|Nod} your knees when you lift something heavy.",
+  "She {bent|bowed|nodded} down to pick up the coin.",
+  "The trees {bent|nodded} in the strong wind."],
+ 'gesture':[
+  "Sending flowers was a kind {gesture|signal|movement|sign}.",
+  "A cough can be a {sign|gesture|movement|signal} of a serious illness.",
+  "Don't make any sudden {movements|signs|signals}.",
+  "There's no mobile phone {signal|sign|gesture|movement} here.",
+  "The road {sign|signal|gesture} says the speed limit is 60.",
+  "The referee gave the {signal|gesture|movement} to start the match."],
+ 'similar':[
+  "Your bag is {similar|like|alike|familiar} to mine.",
+  "She looks just {like|alike|similar|familiar} her mother.",
+  "The two sisters look {alike|like|the same as}.",
+  "My phone is {the same as|alike|similar} yours.",
+  "I love big cities {such as|like as|similar|alike} London and Paris.",
+  "His face looks {familiar|similar|alike|like} — have we met before?",
+  "Are you {familiar|similar|alike} with this software?"],
+ 'single':[
+  "I'd like to book a {single|only|lonely|alone} room for two nights.",
+  "He's the {only|lonely|alone} person who knows the answer.",
+  "She felt {lonely|only|single|vacant} after moving to a new city.",
+  "My grandfather lives {alone|lonely|only|single} in a big house.",
+  "There are no {vacant|lonely|alone|only} seats on the train.",
+  "Not a {single|only|lonely} person came to the meeting.",
+  "She is an {only|single|alone} child."],
+ 'clear':[
+  "Write your answer on a {blank|clear|vacant|unfilled} sheet of paper.",
+  "The explanation was very {clear|blank|vacant|unfilled}.",
+  "The position of head teacher is still {vacant|blank|clear}.",
+  "Several boxes in the form were left {unfilled|vacant|clear}.",
+  "My mind went {blank|vacant|unfilled|clear} during the exam.",
+  "On a {clear|blank|vacant} day you can see the mountains."],
+ 'used to':[
+  "I {used to|am used to|got used to} play tennis, but I stopped last year.",
+  "She {is used to|used to} getting up early — she's a farmer.",
+  "It took me months to {get used to|used to} driving on the left.",
+  "{Keep|Hold} trying — you'll get it right!",
+  "She {held|kept} the baby in her arms.",
+  "Don't worry, you'll soon {get used to|use to} the noise.",
+  "When I was a child, I {used to|was used to} hate vegetables."],
+ 'learn':[
+  "My mother {taught|learnt|studied} me to swim.",
+  "I'm {studying|teaching} medicine at university.",
+  "She {learnt|taught|studied} to drive at eighteen.",
+  "He {teaches|learns|studies} history at a secondary school.",
+  "Scientists are {studying|teaching|learning} the effects of climate change.",
+  "It's never too late to {learn|teach} a new language."],
+ 'close':[
+  "Our house is {close to|nearby|next} the river.",
+  "There's a {nearby|near|close|next to} café where we can have lunch.",
+  "Can I sit {next to|nearby|close} you?",
+  "We live {near|nearby to|close} the station.",
+  "Is there a cash machine {nearby|near to|next to}?",
+  "The school is {close to|close|nearby} the park."],
+ 'arrive':[
+  "We {arrived|reached|got|entered} in London at midnight.",
+  "She {entered|arrived|got|came} the room without knocking.",
+  "We {reached|arrived|got|came} the top of the mountain at noon.",
+  "What time did you {get|enter|appear} home last night?",
+  "Please {come|appear|enter} to my office after the lesson.",
+  "A strange man {appeared|reached|entered} in the doorway.",
+  "He {appears|comes|arrives} to be very tired."],
+ 'track':[
+  "Trains are delayed because of a problem on the {track|road|path|way}.",
+  "Be careful when you cross the {road|path|track|way}.",
+  "A narrow {path|road|way} led through the forest.",
+  "Excuse me, could you tell me the {way|road|path|track} to the museum?",
+  "There are many {ways|paths|roads} of learning a language.",
+  "She chose a different career {path|road|track}.",
+  "I left my bag on the bus on the {way|road|path} home."],
+ 'trip':[
+  "He's away on a business {trip|travel|tour|journey}.",
+  "Air {travel|trip|journey|tour} has become much cheaper.",
+  "The {journey|travel|tour} from Moscow to Vladivostok takes a week by train.",
+  "We went on a guided {tour|travel|journey} of the castle.",
+  "{Travel|Trip|Journey} broadens the mind.",
+  "We made a day {trip|travel} to the seaside."],
+ 'cruise':[
+  "They went on a Mediterranean {cruise|voyage|excursion} for their honeymoon.",
+  "The Titanic sank on its first {voyage|cruise|excursion} across the Atlantic.",
+  "The school organised an {excursion|voyage|cruise} to the history museum.",
+  "A {voyage|excursion|cruise} to Mars would take about seven months.",
+  "During the cruise we went on a short {excursion|voyage} to an island."],
+ 'many':[
+  "How {much|many} time do we have?",
+  "There aren't {many|much} students in the class today.",
+  "He has {few|little|a little} friends, so he often feels lonely.",
+  "There is {little|few|a few} hope that the plan will work.",
+  "Could I have {a little|a few|few} milk in my tea, please?",
+  "I've got {a few|a little|little} questions to ask you.",
+  "We made {little|few|a few} progress last week, so we need to work harder.",
+  "I need {a few|a little} minutes to think.",
+  "Don't worry, we still have {a little|a few|few} money left.",
+  "How {many|much} people came to the party?"],
+ 'amount':[
+  "A large {amount|number} of money was stolen.",
+  "An increasing {number|amount} of people work from home.",
+  "Add a small {quantity|number|figure} of salt.",
+  "Sales {figures|groups|amounts} for May were very good.",
+  "A {group|figure|amount} of tourists was waiting outside the museum.",
+  "The {number|amount} of cars on the roads is growing.",
+  "The official unemployment {figure|group|quantity} was published yesterday."],
+ 'calculate':[
+  "Can you {calculate|measure|quantify} the total cost of the trip?",
+  "The nurse {measured|calculated|quantified} my height and weight.",
+  "Use a ruler to {measure|calculate|quantify} the length of the line.",
+  "Engineers {calculated|measured} that the bridge could hold 40 tonnes.",
+  "It is hard to {quantify|calculate} happiness in numbers."],
+ 'accept':[
+  "Everyone came {except|accept|beside} John.",
+  "She decided to {accept|except} the job offer.",
+  "Come and sit {beside|besides|except} me.",
+  "{Besides|Beside|Except} English, she speaks German and Italian.",
+  "Let's walk {instead of|besides|except} taking the bus.",
+  "I don't like coffee, so I'll have tea {instead|besides|except}.",
+  "I like all vegetables {except for|beside for|accept for} onions."],
+ 'despite':[
+  "{Despite|Although|However} the rain, we went for a walk.",
+  "{Although|Despite|However} it was raining, we went for a walk.",
+  "The plan was risky. {However|Although|Despite}, it worked.",
+  "The road was closed; {therefore|moreover|however}, we turned back.",
+  "The flat is cheap. {Moreover|Therefore|Although}, it's close to the station.",
+  "She passed the exam {despite|although} not studying very hard.",
+  "He was tired; {nevertheless|therefore|although}, he kept working."],
+ 'thanks to':[
+  "{Thanks to|Along with|As well} your help, we finished on time.",
+  "I went to the concert {along with|thanks to|as well} my classmates.",
+  "She sings and plays the guitar {as well|along with|thanks to}.",
+  "{Thanks to|Along with} modern technology, we can work from anywhere.",
+  "The teacher, {along with|thanks to} her students, planted trees in the park."],
+ 'find':[
+  "I can't {find|discover|invent|open} my glasses anywhere.",
+  "Alexander Fleming {discovered|invented|found|opened} penicillin in 1928.",
+  "Who {invented|discovered|found|opened} the telephone?",
+  "I'd like to {open|discover|invent|find} a bank account.",
+  "Scientists have {discovered|invented|opened} a new species of frog.",
+  "Did you {find|invent|open} the right answer?"],
+ 'analyse':[
+  "We need to {analyse|explore} the data before we draw conclusions.",
+  "The children loved {exploring|analysing} the old castle.",
+  "Let's {explore|analyse} new possibilities for the business.",
+  "The lab {analysed|explored} the blood samples."],
+ 'seek':[
+  "If the problem continues, {seek|search|look} professional advice.",
+  "I'm {looking|seeking|asking} for my keys.",
+  "The police {searched|looked|sought|asked} the house but found nothing.",
+  "Don't be afraid to {ask|search|look} for help.",
+  "She {asked|searched|looked} me about my plans.",
+  "Young people often {seek|search|ask} to change the world."],
+ 'divide':[
+  "The cake was {divided|shared|separated} into eight equal pieces.",
+  "I {share|divide|split|separate} a flat with two friends.",
+  "Let's {split|separate} the bill — you pay half and I pay half.",
+  "The river {separates|shares|splits} the old town from the new one.",
+  "Please {share|divide} your ideas with the group.",
+  "Twenty {divided|split|shared} by four is five."],
+ 'spread':[
+  "News {spreads|extends|expands|covers} fast on social media.",
+  "The teacher agreed to {extend|spread|expand|cover} the deadline by a week.",
+  "Snow {covered|spread|extended|expanded} the hills.",
+  "The company plans to {expand|spread|cover} into Asia.",
+  "The textbook {covers|spreads|expands|extends} all the topics for the exam.",
+  "Metals {expand|spread|cover} when heated.",
+  "The disease {spread|extended|covered} quickly across the country."],
+ 'lengthen':[
+  "Can you {lengthen|prolong|double} this dress a little?",
+  "Regular exercise may {prolong|continue|double} your life.",
+  "The price of bread has {doubled|lengthened|prolonged}, from 50 to 100 roubles.",
+  "Please {continue|prolong|lengthen} reading from page 10.",
+  "The population {increased|lengthened|prolonged} by five per cent.",
+  "Don't {prolong|lengthen} the agony — just tell me the result!"],
+ 'rise':[
+  "The sun {rises|raises|arises} in the east.",
+  "{Raise|Rise|Arise} your hand if you know the answer.",
+  "A serious problem {arose|rose|raised} during the meeting.",
+  "Prices have {risen|raised|arisen} sharply this year.",
+  "They {heaved|rose|arose} the heavy box onto the lorry.",
+  "Farmers in this region {grow|rise|arise} wheat.",
+  "The government plans to {raise|rise|arise} taxes.",
+  "Children {grow|raise|rise} up so fast!"],
+ 'worry':[
+  "Don't {worry|bother|trouble} about the exam — you'll pass.",
+  "Sorry to {bother|worry} you, but could you help me?",
+  "He didn't even {bother|worry|trouble} to say goodbye.",
+  "Parents always {worry|bother|trouble} about their children.",
+  "May I {trouble|worry} you for the salt?"],
+ 'adopt':[
+  "The school decided to {adopt|accept|admit|agree} a new approach to teaching.",
+  "She {accepted|adopted|admitted|agreed} the invitation with pleasure.",
+  "He {admitted|accepted|adopted|agreed} breaking the window.",
+  "I completely {agree|accept|admit|adopt} with you.",
+  "They {adopted|accepted} a little girl from a children's home.",
+  "We finally {agreed|accepted} on a date for the meeting."],
+ 'adore':[
+  "I {admire|adore|appreciate} her for her courage.",
+  "I really {appreciate|admire|adore} your help.",
+  "The children {adore|appreciate} their grandmother.",
+  "We'd {appreciate|admire} it if you could reply soon.",
+  "Tourists stopped to {admire|appreciate} the view."],
+ 'loved':[
+  "He was a highly {respected|loved|fancied} scientist.",
+  "Pushkin is a much-{loved|fancied} poet in Russia."],
+ 'agenda':[
+  "What's the first item on the {agenda|curriculum|course}?",
+  "Music should be part of the school {curriculum|agenda|plan}.",
+  "She's taking an online {course|curriculum|agenda} in photography.",
+  "We need a detailed {plan|agenda|curriculum} of action.",
+  "The {agenda|course|curriculum} for tomorrow's meeting has been sent to everyone."],
+ 'district':[
+  "They live in a quiet residential {district|region|part}.",
+  "The Moscow {region|part} is larger than some European countries.",
+  "This is an important {part|area|region|district} of the project.",
+  "Parking is not allowed in this {area|part|region}."]
+};
+
+const LEX_T = {
+ 'fail':[
+  "She {missed|lost} the train by two minutes. // miss — не успеть, пропустить",
+  "I can't find my phone — I think I {lost|missed} it on the bus. // lose — потерять вещь",
+  "He failed {to call|calling} his mother on her birthday. // fail to do",
+  "The book {lacks|lacks of} a clear structure. // lack как глагол — без of",
+  "There is a serious lack {of|in} qualified teachers. // a lack of — существительное с of",
+  "I really {miss|lose} my old friends from school. // miss — скучать"],
+ 'achieve':[
+  "She succeeded {in getting|to get} a place at university. // succeed in doing",
+  "He managed {to finish|finishing} the project before the deadline. // manage to do",
+  "They {managed|succeeded} to escape from the burning building. // manage to do, но succeed in doing",
+  "I finally {achieved|succeeded} my aim. // achieve + цель; succeed — без дополнения или in",
+  "We {completed|achieved} the task in two hours. // complete — довести до конца"],
+ 'receive':[
+  "Students are required {to wear|wearing} a uniform. // be required to do",
+  "I need to {revise|repeat} for my maths test tomorrow. // revise — повторять материал к экзамену",
+  "She {realised|received} her dream of travelling round the world. // realise a dream — воплотить"],
+ 'remember':[
+  "Remember {to lock|locking} the door when you leave. // remember to do — не забыть сделать",
+  "I clearly remember {seeing|to see} him at the party last year. // remember doing — помнить, что было",
+  "She reminded me {to call|calling} the dentist. // remind someone to do",
+  "You remind me {of|about} my brother. // remind of — напоминать сходством",
+  "He resembles {his father|to his father} in many ways. // resemble — без предлога",
+  "Can you remind {me|to me} about the meeting? // remind someone — без to"],
+ 'ensure':[
+  "She assured {me that|that} the problem was solved. // assure + человек + that",
+  "The test results confirmed {that|me that} he was healthy. // confirm that — без адресата",
+  "Wear a helmet to {ensure|assure} your safety. // ensure — обеспечить",
+  "The car is insured {against|from} theft. // be insured against"],
+ 'convince':[
+  "He convinced me {of|in} his honesty. // convince of",
+  "She persuaded him {to apply|applying} for the job. // persuade to do",
+  "I'm {convinced|persuaded} that he's lying. // convince — поверить; persuade — сделать"],
+ 'insist':[
+  "She insisted {on going|to go} alone. // insist on doing",
+  "He persisted {in asking|to ask} the same question. // persist in doing",
+  "Our staff will assist you {with|in} your luggage. // assist with something"],
+ 'offer':[
+  "She suggested {taking|to take} a taxi. // suggest doing",
+  "He suggested {that we leave|us to leave} early. // suggest that…, не suggest sb to do",
+  "They offered {to help|helping} us. // offer to do",
+  "I suggested {a new idea to my boss|my boss a new idea}. // suggest sth to sb",
+  "Can you suggest {a good hotel|me a good hotel}? // suggest — без косвенного дополнения"],
+ 'advise':[
+  "They provided us {with|by} food and water. // provide sb with sth",
+  "I'd advise you {to book|booking} in advance. // advise sb to do",
+  "The guide recommended {visiting|to visit} the old town. // recommend doing",
+  "Can you give me some {advice|advices}? // advice — неисчисляемое"],
+ 'supply':[
+  "You were supposed {to be|being} here an hour ago. // be supposed to do",
+  "The company supplies hospitals {with|by} medicine. // supply sb with sth",
+  "Please submit your essay {by|until} Friday. // by — к сроку"],
+ 'say':[
+  "She told {me|to me} the news. // tell + адресат без to",
+  "He said {to me|me} that he was busy. // say to someone",
+  "I'm {telling|saying} you the truth! // tell the truth",
+  "Let's {talk|say} about it later. // talk about",
+  "He {said|told} that he would be late. // say that — без адресата",
+  "Can you {tell|say} me what happened? // tell me",
+  "She speaks {English|in English} fluently. // speak English — без in"],
+ 'forgive':[
+  "He {apologised to|apologised} the teacher for being late. // apologise to someone",
+  "She forgave him {for breaking|to break} her phone. // forgive sb for doing",
+  "I'm sorry {for|of} the delay. // sorry for / about",
+  "He apologised {for|of} his mistake. // apologise for"],
+ 'fond':[
+  "She is fond {of|on} animals. // fond of",
+  "He is keen {on playing|to playing} chess. // keen on doing / keen to do",
+  "They were eager {to learn|for learning} more. // eager to do"],
+ 'pleased':[
+  "I enjoy {reading|to read} detective stories. // enjoy doing",
+  "She was delighted {with|of} her present. // delighted with",
+  "Did you {enjoy yourself|enjoy} on holiday? // enjoy требует дополнения: enjoy yourself",
+  "The boss was pleased {with|of} our work. // pleased with",
+  "We were satisfied {with|by} the results. // satisfied with"],
+ 'merely':[
+  "He works very {hard|hardly} — he's always busy. // hard — усердно",
+  "I {hardly|hard} know him — we've met only once. // hardly — едва, почти не",
+  "{Hardly|Nearly} anyone came — the room was empty. // hardly anyone — почти никто"],
+ 'circumstance':[
+  "I deleted the file {by accident|by an accident}. // by accident — случайно",
+  "Under no {circumstances|circumstance} should you open this door. // under no circumstances — во мн. ч."],
+ 'occasion':[
+  "I've been there {on|in} several occasions. // on an occasion"],
+ 'motive':[
+  "He broke the vase {on purpose|by purpose}. // on purpose — нарочно",
+  "The reason {for|of} the delay was bad weather. // reason for",
+  "What's the purpose {of|for} this meeting? // the purpose of"],
+ 'affect':[
+  "Pollution {affects|affects on} our health. // affect — без on",
+  "It had a positive effect {on|to} the team. // effect on",
+  "TV has a big influence {on|to} children. // influence on",
+  "The changes will not {affect|effect} you. // affect — глагол, effect — существительное"],
+ 'involve':[
+  "This phone belongs {to me|me}. // belong to",
+  "She was involved {in|on} a car accident. // be involved in",
+  "The tour {includes|includes in} a visit to the castle. // include — без предлога"],
+ 'convenient':[
+  "Would it be {convenient|comfortable} for you to call later? // convenient — удобный по времени",
+  "Is five o'clock convenient {for|to} you? // convenient for someone",
+  "He is competent {in|on} financial matters. // competent in"],
+ 'outlook':[
+  "{In my opinion|To my opinion}, the plan won't work. // in my opinion",
+  "What's your opinion {on|in} this issue? // opinion on / about",
+  "Her attitude {to|for} school is very serious. // attitude to / towards",
+  "From my {point of view|opinion of view}, it's unfair. // point of view"],
+ 'buy':[
+  "I {paid for|paid} the tickets by card. // pay for something",
+  "The repairs cost {us|to us} a lot of money. // cost someone",
+  "The shop charged me {for|of} delivery. // charge sb for",
+  "He sold his bike {to|for} a friend. // sell to someone",
+  "She bought a gift {for|to} her sister. // buy for someone"],
+ 'lend':[
+  "Could you {lend me|borrow me} your pen? // lend — дать; borrow — взять",
+  "She borrowed some money {from|to} her brother. // borrow from",
+  "He lent his laptop {to|from} a friend. // lend to",
+  "Can I {borrow|lend} your umbrella? // borrow — взять у кого-то"],
+ 'bring':[
+  "Take it {with you|with yourself}. // take with you",
+  "{Bring|Take} me the newspaper, please — it's on the kitchen table. // bring — к говорящему",
+  "The postman {delivered|brought} the parcel to the wrong address. // deliver — доставить адресату"],
+ 'lay':[
+  "He {lay|laid} down on the sofa and fell asleep. // lie – lay – lain: лежать",
+  "She {laid|lay} the book on the desk. // lay – laid – laid: положить",
+  "I was {brought up|grown up} in Siberia. // be brought up — быть воспитанным",
+  "The chicken {laid|lay} an egg this morning. // lay eggs"],
+ 'look':[
+  "{Look at|Look} the board, please. // look at",
+  "I {watched|saw} the match from start to finish. // watch — следить за процессом",
+  "I {saw|watched} a strange light in the sky for a second. // see — увидеть, заметить",
+  "She views the job {as|like} a challenge. // view as"],
+ 'examine':[
+  "I {spotted|examined} a mistake as soon as I opened the book. // spot — быстро заметить"],
+ 'stare':[
+  "He glanced {at|on} his phone. // glance at",
+  "Why are you staring {at|on} me? // stare at"],
+ 'nod':[
+  "She nodded {in|with} agreement. // nod in agreement"],
+ 'gesture':[
+  "That's a good {sign|gesture} — the patient is getting better. // sign — признак"],
+ 'similar':[
+  "This painting is similar {to|with} the one in the museum. // similar to",
+  "Are you familiar {with|of} this program? // familiar with",
+  "The twins are very {alike|like}. // alike — после глагола",
+  "My answer is the same {as|like} yours. // the same as",
+  "He looks {like|as} a film star. // look like"],
+ 'single':[
+  "He was a {lonely|alone} old man. // alone не ставим перед существительным",
+  "I like being {alone|lonely} sometimes — it helps me think. // alone — без других людей"],
+ 'clear':[
+  "The instructions were {clear|blank|vacant} and easy to follow. // clear — ясный"],
+ 'used to':[
+  "I'm not used to {living|live} in a big city. // be used to doing",
+  "We used {to live|to living} in Moscow. // used to do — раньше",
+  "You'll soon get used {to working|to work} nights. // get used to doing",
+  "Keep {trying|to try} — don't give up! // keep doing",
+  "{Did you use to|Did you used to} play the piano? // did you use to — без d"],
+ 'learn':[
+  "{Teach|Learn} me English, please! // teach someone — учить кого-то",
+  "She learnt {to swim|swim} at the age of five. // learn to do",
+  "He's studying {for|to} his exams. // study for exams"],
+ 'close':[
+  "The hotel is close {to|from} the city centre. // close to",
+  "We live {near|near of} the park. // near — без предлога",
+  "There's a café {nearby|near}. // nearby — в конце, без дополнения"],
+ 'arrive':[
+  "We arrived {at|to} the airport two hours early. // arrive at — место",
+  "They arrived {in|at} Paris in the morning. // arrive in — город, страна",
+  "We reached {the hotel|to the hotel} late at night. // reach — без предлога",
+  "She entered {the room|into the room} quietly. // enter — без предлога",
+  "What time did you get {home|to home}? // get home — без to",
+  "We got {to|at} the station just in time. // get to"],
+ 'track':[
+  "Is this the way {to|for} the station? // the way to",
+  "There must be another way {of doing|to doing} this. // a way of doing / to do"],
+ 'trip':[
+  "{Have a good trip|Have a good travel}! // travel — неисчисляемое",
+  "We went {on|in} a guided tour. // go on a tour",
+  "How was your {journey|travel} to work today? // journey — путь из А в Б"],
+ 'cruise':[
+  "We went {on|in} an excursion to the castle. // go on an excursion"],
+ 'many':[
+  "I have {a few|few} close friends, so I'm never bored. // a few — немного, достаточно",
+  "There's {little|a little} time left — hurry up! // little — почти нет",
+  "I don't have {much|many} money. // much + неисчисляемое",
+  "{Many|Much} people believe it. // many + исчисляемое"],
+ 'amount':[
+  "The amount of {traffic|cars} in the city has doubled. // amount + неисчисляемое",
+  "A growing number of {students|student} study online. // a number of + мн. ч."],
+ 'accept':[
+  "Everyone passed {except|besides} Tom — he failed. // except — исключая",
+  "{Besides|Beside} being clever, she's very kind. // besides — кроме того",
+  "We had pizza {instead of|instead} pasta. // instead of + существительное"],
+ 'despite':[
+  "{Despite|Despite of} the bad weather, the match went ahead. // despite — без of",
+  "{In spite of|In spite} the noise, I fell asleep. // in spite of",
+  "Although {it was cold|the cold weather}, we swam in the sea. // although + полное предложение",
+  "Despite {feeling|she felt} ill, she went to work. // despite + doing",
+  "{Although|Despite} he was tired, he finished the report. // although + подлежащее и сказуемое"],
+ 'thanks to':[
+  "She speaks French {as well as|as well} Spanish. // as well as + дополнение",
+  "I'll come {as well|as well as}. // as well — в конце"],
+ 'find':[
+  "Edison {invented|discovered} the light bulb. // invent — создать новое",
+  "Columbus {discovered|invented} America in 1492. // discover — обнаружить существующее"],
+ 'seek':[
+  "He {searched for|searched} his passport everywhere. // search for — искать что-то",
+  "She asked {for|about} help. // ask for — попросить",
+  "I'm looking {for|after} a new job. // look for — искать"],
+ 'divide':[
+  "She shared her lunch {with|to} me. // share with",
+  "Divide the class {into|on} two teams. // divide into",
+  "It's hard to separate fact {from|of} fiction. // separate from"],
+ 'spread':[
+  "The company expanded {into|in} new markets. // expand into"],
+ 'lengthen':[
+  "Sales increased {by|on} 20 per cent. // increase by — на",
+  "Prices increased {to|till} 300 roubles. // increase to — до",
+  "Please continue {reading|read} — you're doing well. // continue doing / to do"],
+ 'rise':[
+  "The price {rose|raised} by 10 per cent. // rise — сам; raise — кто-то",
+  "They {raised|rose} prices again. // raise something",
+  "Problems {arose|arised} when the computers crashed. // arise – arose – arisen"],
+ 'worry':[
+  "Don't worry {about|of} me. // worry about"],
+ 'adopt':[
+  "He admitted {stealing|to steal} the money. // admit doing",
+  "I agree {with|to} you completely. // agree with someone",
+  "We agreed {on|with} a plan. // agree on something",
+  "She agreed {to help|helping} us. // agree to do"],
+ 'adore':[
+  "I admire her {for|of} her courage. // admire someone for",
+  "I'd appreciate {it if you|if you} called me back. // appreciate it if…",
+  "I appreciate {your help|for your help}. // appreciate — без for"]
+};
+
+/* ====== ложные синонимы: предложения ====== */
+const FS_S = [
+ "Over 200 people {attended|admitted|accepted|approved} the conference.",
+ "He {admitted|attended|accepted|approved} that he had made a mistake.",
+ "She {accepted|attended|admitted|approved} the gift with a smile.",
+ "My parents don't {approve|attend|admit|accept} of my new hairstyle.",
+ "The clown {amused|attracted|appealed} the children with his funny tricks.",
+ "Bright flowers {attract|amuse|amaze|appeal} bees.",
+ "Her talent {amazed|appealed|amused} everyone — nobody expected it.",
+ "This kind of music doesn't {appeal|attract|amuse|amaze} to me.",
+ "There is an {exception|exchange|excellence|example} to every rule.",
+ "We went to Spain on a student {exchange|exception|excellence|example}.",
+ "The school is famous for its academic {excellence|exception|exchange|example}.",
+ "Can you give me an {example|exception|exchange|excellence} of a phrasal verb?",
+ "The suspect finally {confessed|convinced|considered|concerned} to the crime.",
+ "She {convinced|confessed|considered} me that she was right.",
+ "I {consider|confess|convince|concern} him to be the best teacher in the school.",
+ "Parents are {concerned|confessed|considered} about their children's safety.",
+ "I {wonder|wander|warn|waste} why she didn't call.",
+ "We {wandered|wondered|warned|wasted} around the old town for hours.",
+ "The teacher {warned|wondered|wandered|wasted} us not to be late.",
+ "Don't {waste|warn|wander|wonder} your time on social media.",
+ "Animals must {adapt|adopt|admit|assume} to changes in their environment.",
+ "She refused to {admit|adapt|adopt|assume} that she was wrong.",
+ "The company has {adopted|admitted|assumed} a new strategy.",
+ "I {assume|adopt|adapt|admit} you've already had lunch.",
+ "The council {approved|agreed|allowed} the plans for the new park.",
+ "I {agree|approve|allow|accept} with every word you said.",
+ "My parents {allow|agree|approve|accept} me to stay out until ten.",
+ "Please {accept|allow|agree|approve} my apologies.",
+ "We are {considering|confirming|convincing|concerning} moving to the country.",
+ "Please {confirm|consider|convince|concern} your reservation by phone.",
+ "It took hours to {convince|confirm|consider|concern} him that we were right.",
+ "The rising crime rate {concerns|considers|confirms|convinces} many residents.",
+ "He {pretended|prevented|preserved|predicted} to be asleep.",
+ "The rain {prevented|pretended|preserved|predicted} us from going out.",
+ "We must {preserve|prevent|pretend|predict} old buildings for future generations.",
+ "Nobody can {predict|preserve|prevent|pretend} the future.",
+ "Students {prepare|propose|persuade} for exams for months.",
+ "He {proposed|prepared|persuaded} a new plan to the board.",
+ "She {persuaded|proposed|prepared} me to join the club.",
+ "Reading every day will {improve|impress|influence|interest} your vocabulary.",
+ "The candidate {impressed|improved|interested} the interviewers with her answers.",
+ "Music has a great {influence|interest|improvement} on our mood.",
+ "Are you {interested|influenced|impressed} in history?",
+ "He {insisted|installed|involved|invaded} on paying the bill.",
+ "We need to {install|insist|involve|invade} new software.",
+ "The project {involves|installs|insists|invades} a lot of research.",
+ "The army {invaded|installed|involved|insisted} the neighbouring country.",
+ "Don't be {deceived|developed|defended|demanded} by his friendly smile.",
+ "The company is {developing|deceiving|defending|demanding} a new app.",
+ "Soldiers {defend|deceive|develop|demand} their country.",
+ "The workers {demanded|defended|deceived|developed} higher wages.",
+ "The cat {disappeared|departed|digressed|distracted} and was never seen again.",
+ "The train {departs|disappears|digresses|distracts} from platform 3.",
+ "The lecturer often {digresses|disappears|distracts} from the main topic.",
+ "Loud music {distracts|digresses|departs|disappears} me from my work.",
+ "The earthquake caused terrible {destruction|demonstration|departure|determination}.",
+ "Thousands of people took part in the {demonstration|destruction|departure|determination}.",
+ "Please arrive at the airport two hours before {departure|destruction|demonstration|determination}.",
+ "She succeeded through hard work and {determination|demonstration|destruction|departure}.",
+ "Please {submit|suggest|supply|suppose} your homework by Monday.",
+ "She {suggested|submitted|supplied|supposed} going to the beach.",
+ "The company {supplies|suggests|submits|supposes} schools with books.",
+ "I {suppose|suggest|supply|submit} you're tired after the trip.",
+ "Did you {receive|regard|require|request} my email?",
+ "He is {regarded|received|required|requested} as one of the best writers of his time.",
+ "This job {requires|receives|regards|requests} good computer skills.",
+ "Passengers are {requested|regarded|received} not to smoke.",
+ "He strongly {resembles|regains|remains|respects} his uncle in appearance.",
+ "After a short rest, she {regained|resembled|remained|respected} her strength.",
+ "Please {remain|regain|resemble|respect} in your seats.",
+ "Students should {respect|remain|resemble|regain} their teachers.",
+ "The two sides managed to {resolve|remove|realise|recognise} the conflict.",
+ "Please {remove|resolve|realise|recognise} your shoes before entering.",
+ "I didn't {realise|recognise|resolve|remove} it was so late.",
+ "I {recognised|realised|resolved|removed} her voice immediately.",
+ "I {regret|reveal|register|remind} not studying harder at school.",
+ "The survey {revealed|regretted|registered|reminded} some surprising facts.",
+ "You must {register|reveal|regret|remind} for the course by Friday.",
+ "This photo {reminds|reveals|regrets|registers} me of our holiday.",
+ "You can always {rely|recall|refer|reply} on me.",
+ "I can't {recall|rely|refer|reply} where I put my keys.",
+ "Please {refer|rely|recall|reply} to page 25 for more information.",
+ "She didn't {reply|refer|rely|recall} to my message."
+];
+
 /* ====== генерация заданий ====== */
 const prefixWords=[];
 for(const [p,d] of Object.entries(PREFIXES)) for(const [w,ru] of d.w){
@@ -1036,6 +1859,20 @@ function lexQuiz(){
   return out;
 }
 const LEXQ=lexQuiz();
+/* предложения: {верно|неверно|…} // пояснение */
+function parseS(arr,group){
+  return arr.map(line=>{
+    const [txt,expl]=line.split(' // ');
+    const m=txt.match(/\{([^}]*)\}/); const opts=m[1].split('|');
+    return {q:txt.replace(m[0],'___'), a:opts[0], opts:shuffle(opts), group, after:expl||''};
+  });
+}
+const lexKey=g=>g.g.split(' / ')[0];
+const LEXG=LEX.map(g=>g.g);
+const LEX_SENT=LEX.flatMap(g=>parseS(LEX_S[lexKey(g)]||[],g.g));
+const LEX_TRAPS=LEX.flatMap(g=>parseS(LEX_T[lexKey(g)]||[],g.g));
+const LEX_ALL=LEX_SENT.concat(LEX_TRAPS);
+const FS_SENT=parseS(FS_S);
 const tenseNames=TENSES.map(t=>t[0]);
 const tenseChoice=TENSES.map(t=>({q:t[3], opts:shuffle([t[0],...shuffle(tenseNames.filter(n=>n!==t[0])).slice(0,3)]), a:t[0]}));
 const fracChoice=FRACTIONS.concat(FRACTION_EXAMPLES).map(f=>{
@@ -1108,7 +1945,7 @@ const SECTIONS=[
    {n:'Выбор', type:'choice', items:ART_CHOICE.map(x=>({q:x[0],opts:x[1],a:x[2]}))},
    {n:'Error hunter', type:'flip', items:ART_ERRORS.map(x=>({f:x[0],b:x[1]})), lead:'Найди ошибку и переверни карточку.'},
    {n:'THE или Ø', type:'sort', bins:['THE','Ø'], items:ART_SORT, per:8},
-   {n:'Бомба', type:'bomb', items:ART_CHOICE.map(x=>({q:x[0],opts:x[1],a:x[2]}))},
+   {n:'Speed Game', type:'bomb', items:ART_CHOICE.map(x=>({q:x[0],opts:x[1],a:x[2]}))},
   ]},
  {id:'tenses', title:'Как выбрать время', tag:'задания 19–24', img:'pamyatki-img/tenses.jpg',
   cards:TENSES.map(t=>({f:t[0],b:t[1],ex:t[2]+'<br><b>'+esc(t[3])+'</b>',raw:true})),
@@ -1121,23 +1958,25 @@ const SECTIONS=[
      {f:'2. WHAT KIND OF ACTION?',b:'Fact / Habit → Simple<br>Process → Continuous<br>Result → Perfect<br>Duration → Perfect Continuous'},
      {f:'3. CHECK TIME MARKERS',b:'указатели времени'},
      {f:'Perfect Continuous',b:'действие началось в прошлом и длится до сих пор (или к определённому моменту)'}]},
-   {n:'Бомба', type:'bomb', items:tenseChoice},
+   {n:'Speed Game', type:'bomb', items:tenseChoice},
   ]},
  {id:'lexis', title:'Лексика 30–36', tag:'задания 30–36', img:null,
   cards:LEX.flatMap(g=>g.w.map(e=>({f:e[0],b:e[1],ex:e[2]+(e[3]?'<br><i>'+esc(e[3])+'</i>':''),raw:true,group:g.g}))), groups:LEX.map(g=>g.g),
   acts:[
-   {n:'Сочетания', type:'choice', items:LEXQ, groupBy:'group'},
-   {n:'Ловушки', type:'flip', items:LEX.filter(g=>g.trap).map(g=>({f:g.g,b:g.trap})), lead:'Чем отличаются? Скажи вслух и переверни.'},
-   {n:'Memory', type:'memory', pairs:LEX.flatMap(g=>g.w.map(e=>[e[0],e[1]]))},
-   {n:'Бомба', type:'bomb', items:LEXQ},
+   {n:'Сочетания в предложениях', type:'choice', items:LEX_SENT, groups:LEXG},
+   {n:'Ловушки', type:'choice', items:LEX_TRAPS, groups:LEXG},
+   {n:'Доктор Грамматика', type:'doctor', items:LEX_ALL, groups:LEXG},
+   {n:'Короткие сочетания', type:'choice', items:LEXQ, groups:LEXG},
+   {n:'Правила-ловушки', type:'flip', items:LEX.filter(g=>g.trap).map(g=>({f:g.g,b:g.trap})), lead:'Чем отличаются? Скажи вслух и переверни.'},
+   {n:'Speed Game', type:'bomb', items:LEX_ALL},
   ]},
  {id:'prefixes', title:'Отрицательные приставки', tag:'задания 25–29', img:'pamyatki-img/prefixes.jpg',
   cards:prefixWords.map(x=>({f:x.w,b:x.ru,ex:x.group+' · '+PREFIXES[x.group].m})),
   acts:[
    {n:'Добавь приставку', type:'choice', items:prefixChoice},
    {n:'Sorting', type:'sort', rounds:[['in-','im-','il-','ir-'],['un-','dis-','non-','mis-'],['a- / an-','de-','counter-','mis-']], items:prefixWords, per:8},
-   {n:'Memory', type:'memory', pairs:prefixWords.map(x=>[x.w,x.ru])},
-   {n:'Бомба', type:'bomb', items:prefixChoice},
+   {n:'Доктор Грамматика', type:'doctor', items:prefixChoice, hints:true},
+   {n:'Speed Game', type:'bomb', items:prefixChoice},
   ]},
  {id:'fractions', title:'Чтение дробей', tag:'числа · проценты', img:'pamyatki-img/fractions.jpg',
   cards:FRACTIONS.concat(FRACTION_EXAMPLES).map(f=>({f:f[0],b:f[1],ex:f[2],frac:true})),
@@ -1145,22 +1984,22 @@ const SECTIONS=[
    {n:'Matching', type:'match', pairs:FRACTIONS.map(f=>[f[0],f[1]]), frac:true},
    {n:'Как прочитать?', type:'choice', items:fracChoice},
    {n:'Важно помнить', type:'flip', items:FRACTION_RULES.map(r=>({f:r[0],b:r[1]})).concat(FRACTION_EXAMPLES.map(e=>({f:e[0],b:e[1]+'<br><i>'+e[2]+'</i>'}))), frac:true},
-   {n:'Бомба', type:'bomb', items:fracChoice},
+   {n:'Speed Game', type:'bomb', items:fracChoice},
   ]},
  {id:'email', title:'Вопросы к письму', tag:'задание 37', img:'pamyatki-img/email.jpg',
   cards:EMAIL.map(e=>({img:e.img,f:e.s,fs:e.t,b:e.q.map((q,i)=>(i+1)+'. '+esc(q)).join('<br>'),raw:true})),
   acts:[
    {n:'Собери вопрос', type:'order', items:EMAIL.flatMap(e=>e.q)},
    {n:'О чём вопрос?', type:'match', pairs:EMAIL.flatMap(e=>e.q.filter(q=>q!=='Is it big?').map(q=>[q,e.topic]))},
-   {n:'Бомба', type:'bomb', items:EMAIL.flatMap(e=>e.q.filter(q=>q!=='Is it big?').map(q=>({q, opts:shuffle([e.topic,...shuffle(EMAIL.filter(x=>x!==e).map(x=>x.topic)).slice(0,3)]), a:e.topic})))},
+   {n:'Speed Game', type:'bomb', items:EMAIL.flatMap(e=>e.q.filter(q=>q!=='Is it big?').map(q=>({q, opts:shuffle([e.topic,...shuffle(EMAIL.filter(x=>x!==e).map(x=>x.topic)).slice(0,3)]), a:e.topic})))},
   ]},
  {id:'confusing', title:'Confusing words', tag:'задания 30–36', thumb:'accident / incident<br>rise / raise',
   cards:CONFUSING.flatMap(g=>g.w.map(([w,e])=>({f:w,b:e,ex:cwExample(g,w)||'',group:g.g}))), groups:CONFUSING.map(g=>g.g),
   acts:[
    {n:'Выбери слово', type:'choice', items:CW_Q},
    {n:'Значение', type:'match', byGroup:CONFUSING.map(g=>g.w.filter(x=>x[1]).map(([w,e])=>[w,shortMean(e)]))},
-   {n:'Memory', type:'memory', pairs:CONFUSING.flatMap(g=>g.w.filter(x=>x[1]).map(([w,e])=>[w,shortMean(e)]))},
-   {n:'Бомба', type:'bomb', items:CW_Q},
+   {n:'Доктор Грамматика', type:'doctor', items:CW_Q},
+   {n:'Speed Game', type:'bomb', items:CW_Q},
   ]},
  {id:'phrasal', title:'Фразовые глаголы', tag:'задания 30–36', thumb:'get along with<br>put up with', imgs:['pamyatki-img/phrasal1.jpg','pamyatki-img/phrasal2.jpg','pamyatki-img/phrasal3.jpg','pamyatki-img/phrasal4.jpg'].concat(["pamyatki-img/phr21.jpg", "pamyatki-img/phr22.jpg", "pamyatki-img/phr23.jpg", "pamyatki-img/phr24.jpg", "pamyatki-img/phr25.jpg", "pamyatki-img/phr26.jpg", "pamyatki-img/phr27.jpg", "pamyatki-img/phr28.jpg", "pamyatki-img/phr29.jpg", "pamyatki-img/phr210.jpg"]).concat(["pamyatki-img/phr31.jpg"]),
   cards:PHR_ALL.map(p=>({f:p[1],b:p[2],group:p[0]})), groups:[...new Set(PHR_ALL.map(p=>p[0]))].sort(),
@@ -1170,16 +2009,16 @@ const SECTIONS=[
    {n:'Matching', type:'match', byGroup:Object.values(PHR_ALL.reduce((o,p)=>{(o[p[0]]=o[p[0]]||[]).push([p[1],shortMean(p[2])]);return o},{}))},
    {n:'По предлогу', type:'sort', rounds:[PARTS1,PARTS2], items:PH_SORT, per:8, phr:true},
    {n:'Впиши глагол', type:'type', items:PH_T},
-   {n:'Memory', type:'memory', pairs:PHR_ALL.map(p=>[p[1],shortMean(p[2])])},
-   {n:'Бомба', type:'bomb', items:PH_Q.concat(PH_TR)},
+   {n:'Доктор Грамматика', type:'doctor', items:PH_Q, hints:true},
+   {n:'Speed Game', type:'bomb', items:PH_Q.concat(PH_TR)},
   ]},
  {id:'colloc', title:'Устойчивые выражения', tag:'задания 30–36', thumb:'make a decision<br>keep a secret', imgs:['pamyatki-img/colloc1.jpg'],
   cards:COLLOC.map(c=>({f:c[1],b:c[2],group:c[0]})), groups:[...new Set(COLLOC.map(c=>c[0]))],
   acts:[
    {n:'Какой глагол?', type:'choice', items:CO_Q},
    {n:'make · do · take · keep', type:'sort', bins:['make','do','take','keep'], items:COLLOC.filter(c=>['make','do','take','keep'].includes(c[0])).map(c=>[blankVerb(c[1],c[0]).replace(/^to ___ /,'').replace(/ ?\/? ?to ___ /g,' / '),c[0]]), per:8},
-   {n:'Memory', type:'memory', pairs:COLLOC.map(c=>[c[1].replace(/^to /,''),shortMean(c[2])])},
-   {n:'Бомба', type:'bomb', items:CO_Q},
+   {n:'Доктор Грамматика', type:'doctor', items:CO_Q, hints:true},
+   {n:'Speed Game', type:'bomb', items:CO_Q},
   ]},
  {id:'wordform', title:'Словообразование', tag:'задания 25–29', thumb:'happy → happiness<br>care → careful',
   cards:WORDFORM.map(w=>({f:w[1],fs:'→ '+w[3],b:w[2],ex:w[0].replace(/ \(.*\)/,'')+' · '+w[3],group:w[0]})), groups:[...new Set(WORDFORM.map(w=>w[0]))],
@@ -1188,7 +2027,7 @@ const SECTIONS=[
    {n:'Какой суффикс?', type:'choice', items:WF_Q},
    {n:'in- или un-?', type:'sort', bins:['in-','un-'], items:INUN, per:8},
    {n:'Слова ФИПИ', type:'sort', bins:['Существительное','Прилагательное','Наречие','Глагол'], items:FIPI, per:8},
-   {n:'Бомба', type:'bomb', items:WF_Q},
+   {n:'Speed Game', type:'bomb', items:WF_Q},
   ]},
  {id:'speak1', title:'Устная часть 1: имена и даты', tag:'устная часть · задание 1', imgs:["pamyatki-img/speak1.jpg"],
   cards:SPK_NAMES.map(n=>({f:n[0],b:n[1],ex:n[2],group:n[2]==='город'?'Cities':'Geographical names'})).concat(SPK_DATES.map(d=>({f:d[0],b:d[1],group:'Dates'}))), groups:['Cities','Geographical names','Dates'],
@@ -1196,7 +2035,7 @@ const SECTIONS=[
    {n:'Транскрипция', type:'match', pairs:SPK_NAMES.map(n=>[n[0],n[1]])},
    {n:'Как прочитать дату?', type:'choice', items:SPK_Q},
    {n:'Годы и правила', type:'flip', items:SPK_YEARS.map(y=>({f:y[0],b:y[1]})).concat(SPK_RULES.map(r=>({f:r[0],b:r[1]})))},
-   {n:'Бомба', type:'bomb', items:SPK_B},
+   {n:'Speed Game', type:'bomb', items:SPK_B},
   ]},
  {id:'whereas', title:'Whereas', tag:'задание 38 · устная 4', imgs:["pamyatki-img/whereas.jpg"],
   cards:WHEREAS.map(w=>({f:w[1],fs:w[0],b:'whereas '+w[2]})),
@@ -1204,7 +2043,7 @@ const SECTIONS=[
    {n:'Option A + Option B', type:'match', pairs:WHEREAS.map(w=>[w[1],w[2]])},
    {n:'Закончи предложение', type:'choice', items:WH_Q, min:1},
    {n:'Правила', type:'flip', items:WHEREAS_RULES.map(r=>({f:r[0],b:r[1]}))},
-   {n:'Бомба', type:'bomb', items:WH_Q},
+   {n:'Speed Game', type:'bomb', items:WH_Q},
   ]},
  {id:'task38', title:'Задание 38 без черновика', tag:'задание 38', imgs:["pamyatki-img/task38.jpg"],
   cards:T38_STEPS.map((s,i)=>({f:'Шаг '+(i+1),fs:'Что делаем?',b:s[2],ex:s[3]})),
@@ -1212,22 +2051,23 @@ const SECTIONS=[
    {n:'Порядок шагов', type:'seq', rounds:[{t:'Расставь шаги по порядку',items:T38_STEPS.map(s=>s[2])},{t:'Схема П4',items:['Проблема','Почему это плохо','Решение']}]},
    {n:'Черновик или чистовик?', type:'sort', bins:['Черновик','Чистовик','Не делаем'], items:T38_SORT, per:8},
    {n:'Советы', type:'flip', items:T38_TIPS.map(t=>({f:t[0],b:t[1]}))},
-   {n:'Бомба', type:'bomb', items:T38_STEPS.map((s,i)=>({q:'Шаг '+(i+1)+': что делаем?',opts:shuffle([...new Set(T38_STEPS.map(x=>x[2]))]).slice(0,0).concat(shuffle([s[2],...shuffle(T38_STEPS.filter(x=>x[2]!==s[2]).map(x=>x[2])).slice(0,3)])),a:s[2]}))},
+   {n:'Speed Game', type:'bomb', items:T38_STEPS.map((s,i)=>({q:'Шаг '+(i+1)+': что делаем?',opts:shuffle([...new Set(T38_STEPS.map(x=>x[2]))]).slice(0,0).concat(shuffle([s[2],...shuffle(T38_STEPS.filter(x=>x[2]!==s[2]).map(x=>x[2])).slice(0,3)])),a:s[2]}))},
   ]},
  {id:'howto', title:'How to encourage teenagers', tag:'устная часть · 38', imgs:["pamyatki-img/howto1.jpg", "pamyatki-img/howto2.jpg"],
   cards:HOWTO.map((h,i)=>({f:'How to encourage teenagers to '+h[1]+'?',b:h[0],group:h[0]})), groups:['A2','B1/B2'],
   acts:[
    {n:'Собери вопрос', type:'order', items:HOWTO.map(h=>'How to encourage teenagers to '+h[1]+'?')},
    {n:'Закончи вопрос', type:'choice', items:HT_Q},
-   {n:'Бомба', type:'bomb', items:HT_Q},
+   {n:'Speed Game', type:'bomb', items:HT_Q},
   ]},
  {id:'falsesyn', title:'Ложные синонимы', tag:'задания 30–36', imgs:["pamyatki-img/falsesyn1.jpg", "pamyatki-img/falsesyn2.jpg"],
   cards:FALSE_SYN.flatMap(g=>g.map(([w,m])=>({f:w,b:m,group:g.map(x=>x[0].split(' ')[0]).join(' / ')}))), groups:FALSE_SYN.map(g=>g.map(x=>x[0].split(' ')[0]).join(' / ')),
   acts:[
    {n:'Выбери слово', type:'choice', items:FS_Q},
    {n:'Matching', type:'match', byGroup:FALSE_SYN.map(g=>g.map(([w,m])=>[w,m]))},
-   {n:'Memory', type:'memory', pairs:FALSE_SYN.flatMap(g=>g.map(([w,m])=>[w,m]))},
-   {n:'Бомба', type:'bomb', items:FS_Q},
+   {n:'В предложениях', type:'choice', items:FS_SENT},
+   {n:'Доктор Грамматика', type:'doctor', items:FS_SENT},
+   {n:'Speed Game', type:'bomb', items:FS_Q},
   ]},
  {id:'refer', title:'Реферирование местоимений', tag:'письмо 37–38 · устная', imgs:["pamyatki-img/refer1.jpg", "pamyatki-img/refer2.jpg"],
   cards:REF_RULES.map(r=>({f:r[0],b:r[1],ex:r[2]})),
@@ -1235,22 +2075,22 @@ const SECTIONS=[
    {n:'Choose the pronoun', type:'choice', items:REF_EX.map(x=>({q:x[0],opts:x[1],a:x[2]}))},
    {n:'IT или THEY', type:'sort', bins:['IT','THEY'], items:REF_SORT, per:8},
    {n:'Правила', type:'flip', items:REF_RULES.map(r=>({f:r[0],b:r[2]}))},
-   {n:'Бомба', type:'bomb', items:REF_EX.map(x=>({q:x[0],opts:x[1],a:x[2]}))},
+   {n:'Speed Game', type:'bomb', items:REF_EX.map(x=>({q:x[0],opts:x[1],a:x[2]}))},
   ]},
  {id:'shib', title:'Полезный файл 30–36', tag:'задания 30–36', imgs:["pamyatki-img/shib1.jpg", "pamyatki-img/shib2.jpg", "pamyatki-img/shib3.jpg", "pamyatki-img/shib4.jpg", "pamyatki-img/shib5.jpg", "pamyatki-img/shib6.jpg", "pamyatki-img/shib7.jpg", "pamyatki-img/shib8.jpg"],
   cards:SHIB.flatMap(g=>g.w.map(e=>({f:e[0],b:e[1],ex:e[2].replace('___',e[3]||e[0]),group:g.g}))), groups:SHIB.map(g=>g.g),
   acts:[
    {n:'Выбери слово', type:'choice', items:SHIB_Q},
    {n:'Значение', type:'match', byGroup:SHIB.map(g=>g.w.map(e=>[e[0],shortMean(e[1])]))},
-   {n:'Memory', type:'memory', pairs:SHIB.flatMap(g=>g.w.map(e=>[e[0],shortMean(e[1])]))},
-   {n:'Бомба', type:'bomb', items:SHIB_Q},
+   {n:'Доктор Грамматика', type:'doctor', items:SHIB_Q},
+   {n:'Speed Game', type:'bomb', items:SHIB_Q},
   ]},
  {id:'punct', title:'Пунктуация ЕГЭ', tag:'письмо 37–38', imgs:["pamyatki-img/punct1.jpg", "pamyatki-img/punct2.jpg"],
   cards:PUNCT_RULES.map(r=>({f:r[0],b:r[1],ex:r[2]})),
   acts:[
    {n:'Нужна ли запятая?', type:'sort', bins:['Запятая нужна','Запятая не нужна'], items:PUNCT_SORT, per:8},
    {n:'Error hunter', type:'flip', items:PUNCT_ERR.map(x=>({f:x[0],b:x[1]})), lead:'Найди ошибку и переверни карточку.'},
-   {n:'Бомба', type:'bomb', items:PUNCT_SORT.map(x=>({q:x[0],opts:['Запятая нужна','Запятая не нужна'],a:x[1]}))},
+   {n:'Speed Game', type:'bomb', items:PUNCT_SORT.map(x=>({q:x[0],opts:['Запятая нужна','Запятая не нужна'],a:x[1]}))},
   ]},
  {id:'linkers', title:'Вводные слова и фразы', tag:'письмо 37–38', imgs:["pamyatki-img/linkers1.jpg"],
   cards:LINKERS.map(l=>({f:l[0],b:l[2],ex:l[3],group:l[1]})), groups:['Контраст','Следствие'],
@@ -1258,7 +2098,7 @@ const SECTIONS=[
    {n:'Вставь слово', type:'choice', items:LK_Q},
    {n:'Контраст или следствие', type:'sort', bins:['Контраст','Следствие'], items:LINKERS.map(l=>[l[0],l[1]]), per:10},
    {n:'Значение', type:'match', pairs:LINKERS.map(l=>[l[0],l[2].replace(/ \(.*\)/,'')])},
-   {n:'Бомба', type:'bomb', items:LK_Q},
+   {n:'Speed Game', type:'bomb', items:LK_Q},
   ]},
 ];
 
@@ -1340,7 +2180,7 @@ function quizlet(p,s){
 
 /* ====== активности ====== */
 function mount(el,a,panel){
-  ({gaps,choice,flip,match,sort,memory,order,bomb,seq,type:typeIn})[a.type](el,a,panel);
+  ({gaps,choice,flip,match,sort,doctor,order,bomb,seq,type:typeIn})[a.type](el,a,panel);
 }
 function fit(el,per,render,min=2){
   // уменьшаем число пунктов на странице, пока панель не вмещает всё без прокрутки
@@ -1348,7 +2188,7 @@ function fit(el,per,render,min=2){
   if(window.innerWidth<=1050) return;
   while(n>min && el.scrollHeight>el.clientHeight+2){n--;render(n)}
 }
-function head(a,score){return `<div class="ptitle"><h3>${esc(a.n)}</h3><span class="score">${score||''}</span></div>${a.lead?`<div class="note">${esc(a.lead)}</div>`:''}`}
+function head(a,score){return `<div class="ptitle"><h3>${esc(a.n)}</h3>${a.groups?`<select class="gsel" aria-label="Группа слов"><option value="">Все группы</option>${a.groups.filter(g=>a.items.some(i=>i.group===g)).map(g=>`<option${a._g===g?' selected':''}>${esc(g)}</option>`).join('')}</select>`:''}<span class="score">${score||''}</span></div>${a.lead?`<div class="note">${esc(a.lead)}</div>`:''}`}
 function result(el,txt,again){
   el.innerHTML=`<div class="res"><div class="big">${txt}</div><button class="btn pri">Ещё раз</button></div>`;
   el.querySelector('button').onclick=again;
@@ -1361,6 +2201,7 @@ function paged(el,a,items,per,renderItems,onDone){
     const chunk=items.slice(page*n,page*n+n);
     el.innerHTML=head(a,a._score?a._score():'')+`<div class="items"></div><div class="pager"><button class="btn sm pv">‹</button><span>${page+1} / ${pages}</span><button class="btn sm nx">${page===pages-1?'Итог':'›'}</button></div>`;
     renderItems(el.querySelector('.items'),chunk,page*n);
+    const gs=el.querySelector('.gsel'); if(gs) gs.onchange=()=>{a._g=gs.value; a._restart&&a._restart()};
     el.querySelector('.pv').onclick=()=>{if(page>0){page--;draw()}};
     el.querySelector('.nx').onclick=()=>{if(page<pages-1){page++;draw()}else onDone()};
   };
@@ -1370,7 +2211,8 @@ function paged(el,a,items,per,renderItems,onDone){
 function choice(el,a){
   let items, right, done;
   const start=()=>{
-    items=shuffle(a.items).slice(0,a.items.length>40?20:a.items.length); right=0; done=new Set();
+    const src=a._g?a.items.filter(i=>i.group===a._g):a.items; a._restart=start;
+    items=shuffle(src).slice(0,src.length>40?20:src.length); right=0; done=new Set();
     a._score=()=>`верно: ${right} из ${items.length}`;
     paged(el,a,items,4,(box,chunk,off)=>{
       chunk.forEach((it,k)=>{
@@ -1383,7 +2225,7 @@ function choice(el,a){
           const ok=norm(b.textContent)===norm(it.a);
           if(ok){right++}else b.classList.add('no');
           d.querySelectorAll('.opt').forEach(x=>{if(norm(x.textContent)===norm(it.a))x.classList.add('ok');x.disabled=true});
-          if(it.after){const h=document.createElement('div');h.className='hintq';h.textContent='→ '+it.after;d.appendChild(h)}
+          if(it.after){const h=document.createElement('div');h.className='hintq expl';h.textContent='→ '+it.after;d.appendChild(h)}
           el.querySelector('.score').textContent=a._score();
         });
         box.appendChild(d);
@@ -1497,22 +2339,69 @@ function sort(el,a){
   start();
 }
 
-function memory(el,a){
-  let moves,timer;
+function doctor(el,a){
+  // Доктор Грамматика: найди «больное» слово, затем выбери лекарство
+  let items,cured,misdiag;
   const start=()=>{
-    moves=0; const pick=shuffle(a.pairs).slice(0,6);
-    const tiles=shuffle(pick.flatMap((p,i)=>[{t:p[0],k:i},{t:p[1],k:i}]));
-    el.innerHTML=head(a,'ходов: 0')+`<div class="mem">${tiles.map((t,i)=>`<button class="mt" data-i="${i}"></button>`).join('')}</div>`;
-    let open=[],found=0;
-    el.querySelectorAll('.mt').forEach(b=>b.onclick=()=>{
-      if(open.length===2||b.classList.contains('open')||b.classList.contains('done'))return;
-      const t=tiles[+b.dataset.i]; b.classList.add('open'); b.textContent=t.t; open.push([b,t]);
-      if(open.length===2){moves++;el.querySelector('.score').textContent='ходов: '+moves;
-        const [[b1,t1],[b2,t2]]=open;
-        if(t1.k===t2.k){b1.classList.add('done');b2.classList.add('done');open=[];found++;if(found===6)timer=setTimeout(()=>result(el,`Готово за ${moves} ходов`,start),700)}
-        else timer=setTimeout(()=>{[b1,b2].forEach(x=>{x.classList.remove('open');x.textContent=''});open=[]},900)}
+    const src=a._g?a.items.filter(i=>i.group===a._g):a.items; a._restart=start;
+    items=shuffle(src).slice(0,Math.min(12,src.length)).map(it=>{
+      const wrongs=it.opts.filter(o=>norm(o)!==norm(it.a));
+      const sick=wrongs.length>0&&Math.random()<0.72;
+      return Object.assign({},it,{sick,bad:sick?shuffle(wrongs)[0]:null});
     });
+    cured=0; misdiag=0;
+    a._score=()=>`вылечено: ${cured} из ${items.length}`;
+    paged(el,a,items,4,(box,chunk,off)=>chunk.forEach((it,k)=>box.appendChild(patient(it,off+k+1))),
+      ()=>result(el,`Вылечено: ${cured} из ${items.length}<div class="note" style="font-family:var(--f-body);font-size:17px;margin-top:6px">неверных диагнозов: ${misdiag}</div>`,start));
   };
+  const words=(q,fill)=>{
+    const t=q.replace(/___/g,'\u0001'+fill+'\u0002').split(/\s+/).filter(Boolean); let inside=false;
+    return t.map(w=>{const has=w.includes('\u0001')||w.includes('\u0002')||inside;
+      if(w.includes('\u0001'))inside=true; if(w.includes('\u0002'))inside=false;
+      return {w:w.replace(/[\u0001\u0002]/g,''),err:has}});
+  };
+  const healed=(it,cls)=>esc(it.q).replace(/___/g,`<b class="${cls}">${esc(it.a)}</b>`);
+  function patient(it,num){
+    const d=document.createElement('div'); d.className='it pat'+(it._st?' '+it._st:'');
+    const ws=words(it.q,it.sick?it.bad:it.a);
+    d.innerHTML=`<div class="prow"><span class="pnum">Пациент ${num}</span><span class="pst">${it._msg||'Поставь диагноз'}</span></div>
+      <div class="q">${it._html||ws.map((x,i)=>`<button class="tk" data-i="${i}">${esc(x.w)}</button>`).join(' ')}</div>
+      ${it.hint&&a.hints?`<div class="hintq">${esc(it.hint)}</div>`:''}
+      <div class="opts drow">${it._done||it._cure?'':'<button class="opt well">Здоров</button>'}</div>`;
+    if(it.q.length>70) d.querySelector('.q').style.fontSize='17px';
+    const st=(msg,cls)=>{it._msg=msg;d.querySelector('.pst').textContent=msg;if(cls){it._st=cls;d.classList.add(cls)}};
+    const score=()=>{const sc=el.querySelector('.score');if(sc)sc.textContent=a._score()};
+    const finish=()=>{it._done=true;it._html=d.querySelector('.q').innerHTML;d.querySelectorAll('.tk').forEach(x=>x.disabled=true);it._cure=false};
+    const showCure=ok=>{
+      it._cure=true; it._diag=ok;
+      d.querySelectorAll('.tk').forEach((x,i)=>{x.disabled=true;if(ws[i].err)x.classList.add('sick')});
+      const row=d.querySelector('.drow');
+      row.innerHTML='<span class="rx">Лекарство:</span>'+shuffle(it.opts).map(o=>`<button class="opt">${esc(o)}</button>`).join('');
+      row.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+        if(it._done)return;
+        const good=norm(b.textContent)===norm(it.a);
+        row.querySelectorAll('.opt').forEach(x=>{x.disabled=true;if(norm(x.textContent)===norm(it.a))x.classList.add('ok')});
+        if(good){ if(it._diag){cured++;st('Вылечен','cured')} else st('Лекарство верное, но диагноз был неточным','half'); d.querySelector('.q').innerHTML=healed(it,'heal'); }
+        else { b.classList.add('no'); st('Осложнение — правильно: '+it.a,'lost'); d.querySelector('.q').innerHTML=healed(it,'heal'); }
+        if(it.after){const h=document.createElement('div');h.className='hintq expl';h.textContent='→ '+it.after;d.appendChild(h)}
+        finish(); score();
+      });
+    };
+    if(it._done){d.querySelectorAll('.tk').forEach(x=>x.disabled=true);return d}
+    if(it._cure){showCure(it._diag);return d}
+    d.querySelectorAll('.tk').forEach(b=>b.onclick=()=>{
+      const x=ws[+b.dataset.i];
+      if(!it.sick){misdiag++;b.classList.add('no');st('Ошибка: пациент был здоров','lost');d.querySelector('.q').innerHTML=healed(it,'heal');d.querySelector('.drow').innerHTML='';finish();score();return}
+      if(x.err){st('Диагноз верный — выбери лекарство');showCure(true)}
+      else{misdiag++;b.classList.add('no');st('Не то слово. Больное слово выделено — выбери лекарство');showCure(false)}
+      score();
+    });
+    d.querySelector('.well').onclick=()=>{
+      if(!it.sick){cured++;st('Здоров — диагноз верный','cured');d.querySelector('.drow').innerHTML='';finish();score();return}
+      misdiag++; st('Пациент болен! Больное слово выделено — выбери лекарство'); showCure(false); score();
+    };
+    return d;
+  }
   start();
 }
 
@@ -1579,18 +2468,18 @@ function bomb(el,a,panel){
   let items,qi,score,boom,iv;
   const stop=()=>{clearInterval(iv)};
   panel._cl=stop;
-  const intro=()=>{stop();el.innerHTML=head(a)+`<div class="bomb"><div class="ball">15</div><div class="q">10 вопросов. На каждый 15 секунд.<br>Не успел или ошибся — взрыв.</div><button class="btn pri" id="go">Старт</button></div>`;el.querySelector('#go').onclick=start};
+  const intro=()=>{stop();el.innerHTML=head(a)+`<div class="bomb"><div class="ball">15</div><div class="q">10 вопросов. На каждый — 15 секунд.<br>Отвечай быстро и точно.</div><button class="btn pri" id="go">Старт</button></div>`;el.querySelector('#go').onclick=start};
   const start=()=>{items=shuffle(a.items).slice(0,10);qi=0;score=0;boom=0;ask()};
   const ask=()=>{
-    stop(); if(qi>=items.length){result(el,`Обезврежено: ${score} из ${items.length}`,start);return}
+    stop(); if(qi>=items.length){result(el,`Верно: ${score} из ${items.length}`,start);return}
     const it=items[qi]; let t=15, answered=false;
-    el.innerHTML=head(a,`${qi+1} / ${items.length} · обезврежено: ${score} · взрывов: ${boom}`)+`<div class="bomb"><div class="ball">15</div><div class="fuse"><i style="width:100%"></i></div><div class="q">${it.html?fr(it.q):esc(it.q)}</div>${it.hint?`<div class="hintq note">${esc(it.hint)}</div>`:''}<div class="opts" style="justify-content:center">${it.opts.map(o=>`<button class="opt">${esc(o)}</button>`).join('')}</div><div class="nextb" style="min-height:38px"></div></div>`;
+    el.innerHTML=head(a,`${qi+1} / ${items.length} · верно: ${score} · ошибок: ${boom}`)+`<div class="bomb"><div class="ball">15</div><div class="fuse"><i style="width:100%"></i></div><div class="q">${it.html?fr(it.q):esc(it.q)}</div>${it.hint?`<div class="hintq note">${esc(it.hint)}</div>`:''}<div class="opts" style="justify-content:center">${it.opts.map(o=>`<button class="opt">${esc(o)}</button>`).join('')}</div><div class="nextb" style="min-height:38px"></div></div>`;
     const ball=el.querySelector('.ball'), fuse=el.querySelector('.fuse i');
     const finish=ok=>{answered=true;stop();
       el.querySelectorAll('.opt').forEach(x=>{if(norm(x.textContent)===norm(it.a))x.classList.add('ok');x.disabled=true});
       if(ok){score++;ball.textContent='✓';ball.style.background='var(--good)'}
-      else{boom++;ball.textContent='БУМ';ball.style.fontSize='24px';ball.classList.add('boom');}
-      el.querySelector('.score').textContent=`${qi+1} / ${items.length} · обезврежено: ${score} · взрывов: ${boom}`;
+      else{boom++;ball.textContent=t<=0?'время':'нет';ball.style.fontSize='22px';ball.classList.add('boom');}
+      el.querySelector('.score').textContent=`${qi+1} / ${items.length} · верно: ${score} · ошибок: ${boom}`;
       const nb=el.querySelector('.nextb');nb.innerHTML=`<button class="btn pri">${qi<items.length-1?'Следующий вопрос':'Итог'}</button>`;nb.firstChild.onclick=()=>{qi++;ask()};
     };
     el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(answered)return;const ok=norm(b.textContent)===norm(it.a);if(!ok)b.classList.add('no');finish(ok)});
