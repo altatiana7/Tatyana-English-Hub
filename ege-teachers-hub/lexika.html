@@ -1,0 +1,808 @@
+<!doctype html><html><head><meta charset=utf8><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>Лексика ЕГЭ по блокам</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: тетрадный лист в клетку; компактная верхняя панель с блоками, ниже — карточка Quizlet слева и задания под вкладками справа */
+:root{
+  color-scheme: light;
+  --paper:#f5f8f7; --grid:#e3ecea; --ink:#1d2b2a; --muted:#5d6f6c;
+  --teal:#13806f; --teal-soft:#dff1ed; --pink:#c93d6e; --pink-soft:#fbe6ee;
+  --card:#ffffff; --line:#d3e0dd; --ok:#1f8a4c; --ok-soft:#e1f4e8; --bad:#c2384a; --bad-soft:#fbe4e7;
+  --display:"Playfair Display", Georgia, "Times New Roman", serif;
+  --body:"PT Serif", Georgia, "Times New Roman", serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:26px 26px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.45;
+  padding-left:max(10px, env(safe-area-inset-left, 0px)); padding-right:max(10px, env(safe-area-inset-right, 0px));
+}
+@media (max-width:600px){ body{ padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); } }
+button{font-family:var(--body); font-size:inherit; color:inherit; cursor:pointer}
+button:focus-visible{outline:3px solid var(--teal); outline-offset:2px}
+
+.top{display:flex; align-items:center; gap:14px; padding-block:10px 8px; max-width:1320px; margin:0 auto; flex-wrap:wrap}
+.tohub{flex:none;font-weight:700;font-size:.9rem;color:var(--ink);text-decoration:none;background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:5px 11px}
+.tohub:hover{border-color:var(--teal)}
+.brand{font-family:var(--display); font-size:1.35rem; font-weight:700; white-space:nowrap}
+.brand span{color:var(--pink)}
+.chips{display:flex; gap:6px; overflow-x:auto; flex:1; min-width:0; padding-bottom:4px; scrollbar-width:thin}
+.chip{flex:none; border:1.5px solid var(--line); background:var(--card); border-radius:999px; padding:5px 12px; font-size:.9rem; white-space:nowrap}
+.chip b{color:var(--teal); margin-right:4px}
+.chip.on{background:var(--teal); border-color:var(--teal); color:#fff}
+.chip.on b{color:#fff}
+
+.stage{max-width:1320px; margin:0 auto; display:grid; grid-template-columns:minmax(0,440px) minmax(0,1fr); gap:20px; padding-block:6px 20px}
+@media (max-width:900px){ .stage{grid-template-columns:1fr} }
+
+.head h1{font-family:var(--display); font-size:1.7rem; margin:0; line-height:1.15; text-wrap:balance}
+.head .meta{color:var(--muted); font-size:.92rem; margin-top:3px}
+.head .meta em{color:var(--pink); font-style:normal}
+
+/* Quizlet */
+.ql{margin-top:12px}
+.ql-top{display:flex; justify-content:space-between; align-items:center; font-size:.9rem; color:var(--muted); margin-bottom:6px}
+.ql-top .seg{display:flex; border:1.5px solid var(--line); border-radius:8px; overflow:hidden; background:var(--card)}
+.ql-top .seg button{border:0; background:none; padding:3px 10px; font-size:.85rem}
+.ql-top .seg button.on{background:var(--teal-soft); color:var(--teal); font-weight:700}
+.card{perspective:1200px; height:260px; cursor:pointer}
+.card-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d}
+.card.flip .card-in{transform:rotateY(180deg)}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; background:var(--card); border:1.5px solid var(--line); border-radius:14px; box-shadow:0 6px 18px rgba(19,60,55,.08); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px 26px; text-align:center}
+.face.back{transform:rotateY(180deg); border-color:var(--teal)}
+.face .term{font-size:1.75rem; font-weight:700; line-height:1.2; text-wrap:balance}
+.face .tr{font-size:1.4rem; color:var(--teal); font-weight:700; text-wrap:balance}
+.face .ex{margin-top:12px; font-style:italic; color:var(--ink); font-size:1.02rem; max-width:34ch}
+.face .hint{position:absolute; bottom:9px; font-size:.78rem; color:var(--muted)}
+.ql-nav{display:flex; align-items:center; justify-content:center; gap:12px; margin-top:10px}
+.round{width:44px; height:44px; border-radius:50%; border:1.5px solid var(--line); background:var(--card); font-size:1.3rem; line-height:1}
+.round:hover{border-color:var(--teal); color:var(--teal)}
+.count{min-width:70px; text-align:center; font-variant-numeric:tabular-nums; font-weight:700}
+.ql-tools{display:flex; justify-content:center; gap:8px; margin-top:8px}
+.btn{border:1.5px solid var(--line); background:var(--card); border-radius:8px; padding:5px 12px; font-size:.9rem}
+.btn:hover{border-color:var(--teal)}
+.btn.main{background:var(--teal); border-color:var(--teal); color:#fff}
+
+/* Панель заданий */
+.panel{background:var(--card); border:1.5px solid var(--line); border-radius:14px; display:flex; flex-direction:column; min-width:0; min-height:420px}
+.tabs{display:flex; border-bottom:1.5px solid var(--line); overflow-x:auto}
+.tab{flex:1; border:0; background:none; padding:11px 10px; font-weight:700; color:var(--muted); border-bottom:3px solid transparent; white-space:nowrap}
+.tab.on{color:var(--pink); border-bottom-color:var(--pink)}
+.tab small{font-weight:400; font-variant-numeric:tabular-nums}
+.pbody{padding:14px 16px; flex:1; min-width:0}
+.task{display:flex; justify-content:space-between; align-items:baseline; gap:10px; margin-bottom:10px; flex-wrap:wrap}
+.task h3{margin:0; font-size:1.05rem}
+.task .score{font-variant-numeric:tabular-nums; color:var(--teal); font-weight:700}
+
+/* matching */
+.match{display:grid; grid-template-columns:1fr 1fr; gap:8px 14px}
+.match .col{display:flex; flex-direction:column; gap:7px; min-width:0}
+.tile{border:1.5px solid var(--line); background:#fbfdfc; border-radius:9px; padding:7px 10px; text-align:left; font-size:.98rem; transition:background .2s, border-color .2s}
+.tile:hover{border-color:var(--teal)}
+.tile.sel{border-color:var(--teal); background:var(--teal-soft)}
+.tile.done{border-color:var(--ok); background:var(--ok-soft); color:var(--ok); cursor:default}
+.tile.err{animation:shake .35s; border-color:var(--bad); background:var(--bad-soft)}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+/* facts */
+.facts{display:grid; grid-template-columns:1fr; gap:9px}
+.fact{perspective:900px; min-height:78px}
+.fact-in{position:relative; transition:transform .45s; transform-style:preserve-3d; display:grid}
+.fact.flip .fact-in{transform:rotateX(180deg)}
+.fact .f{grid-area:1/1; backface-visibility:hidden; -webkit-backface-visibility:hidden; border:1.5px solid var(--line); border-radius:10px; padding:9px 12px; display:flex; align-items:center; gap:12px; background:#fbfdfc}
+.fact .f.b{transform:rotateX(180deg); cursor:pointer}
+.fact .f.b.ok{background:var(--ok-soft); border-color:var(--ok)}
+.fact .f.b.no{background:var(--bad-soft); border-color:var(--bad)}
+.fact .txt{flex:1; min-width:0}
+.fact .tf{display:flex; gap:6px; flex:none}
+.tf button{border:1.5px solid var(--line); background:var(--card); border-radius:8px; padding:4px 10px; font-size:.9rem}
+.tf button:hover{border-color:var(--teal)}
+.verdict{font-weight:700}
+.f.b.ok .verdict{color:var(--ok)} .f.b.no .verdict{color:var(--bad)}
+.pager{display:flex; justify-content:center; align-items:center; gap:10px; margin-top:10px}
+
+/* text */
+.textbox{font-size:1.06rem; line-height:2.05}
+.textbox h4{font-family:var(--display); font-size:1.15rem; margin:0 0 4px}
+.opt{display:inline-flex; gap:4px; vertical-align:baseline}
+.opt button{border:1.5px dashed var(--teal); background:var(--teal-soft); border-radius:7px; padding:0 8px; font-size:.98rem; line-height:1.6}
+.opt button.x{text-decoration:line-through; border-color:var(--bad); background:var(--bad-soft); color:var(--bad)}
+.gap-ok{background:var(--ok-soft); color:var(--ok); font-weight:700; border-radius:6px; padding:1px 6px}
+
+/* pronunciation */
+.pron{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px}
+@media (max-width:600px){ .pron{grid-template-columns:1fr} .match{gap:6px 8px} }
+.pr{border:1.5px solid var(--line); border-radius:10px; padding:8px 11px; background:#fbfdfc}
+.pr .w{font-weight:700; font-size:1.08rem}
+.pr .ipa{color:var(--muted); font-size:.95rem; margin-left:6px}
+.pr .opts{display:flex; flex-wrap:wrap; gap:5px; margin-top:5px}
+.pr .opts button{border:1.5px solid var(--line); background:var(--card); border-radius:7px; padding:2px 8px; font-size:.92rem}
+.pr .opts button:hover{border-color:var(--pink)}
+.pr .opts button.x{border-color:var(--bad); background:var(--bad-soft); color:var(--bad)}
+.pr.done{border-color:var(--ok); background:var(--ok-soft)}
+.pr.done .ru{color:var(--ok); font-weight:700}
+.note{font-size:.85rem; color:var(--muted); margin-top:10px}
+@media (prefers-reduced-motion:reduce){ .card-in,.fact-in{transition:none} .tile.err{animation:none} }
+</style>
+
+<header class="top">
+  <a class="tohub" href="index.html" title="На главную">&larr; Teacher&#39;s Hub</a>
+  <div class="brand">ЕГЭ <span>·</span> Лексика</div>
+  <nav class="chips" id="chips" aria-label="Блоки"></nav>
+</header>
+
+<main class="stage">
+  <section>
+    <div class="head">
+      <h1 id="bTitle"></h1>
+      <div class="meta" id="bMeta"></div>
+    </div>
+    <div class="ql">
+      <div class="ql-top">
+        <span>Карточки · нажми, чтобы перевернуть</span>
+        <div class="seg"><button id="dirEn" class="on">EN → RU</button><button id="dirRu">RU → EN</button></div>
+      </div>
+      <div class="card" id="card" role="button" tabindex="0" aria-label="Перевернуть карточку">
+        <div class="card-in">
+          <div class="face front"><div class="term" id="cFront"></div><div class="hint">перевернуть</div></div>
+          <div class="face back"><div class="tr" id="cBack"></div><div class="ex" id="cEx"></div></div>
+        </div>
+      </div>
+      <div class="ql-nav">
+        <button class="round" id="prev" aria-label="Назад">‹</button>
+        <div class="count" id="count"></div>
+        <button class="round" id="next" aria-label="Вперёд">›</button>
+      </div>
+      <div class="ql-tools">
+        <button class="btn" id="shuffle">Перемешать</button>
+        <button class="btn" id="restart">С начала</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-t="col">Коллокации <small id="s-col"></small></button>
+      <button class="tab" data-t="facts">Важное <small id="s-facts"></small></button>
+      <button class="tab" data-t="text">Текст <small id="s-text"></small></button>
+      <button class="tab" data-t="pron">Произношение <small id="s-pron"></small></button>
+    </div>
+    <div class="pbody" id="pbody"></div>
+  </section>
+</main>
+
+<script>
+const B = [
+{t:"Семья и домашние обязанности", short:"Семья", src:"ФИПИ: повседневная жизнь семьи · памятка Household chores",
+cards:[
+["household chores","домашние обязанности","We share the household chores in our family."],
+["do the washing-up","мыть посуду","It's my turn to do the washing-up tonight."],
+["do the laundry","стирать вещи","Mum does the laundry on Sundays."],
+["hang out the washing","развешивать бельё","Can you hang out the washing, please?"],
+["iron clothes","гладить одежду","I can't stand ironing clothes."],
+["vacuum the floor","пылесосить пол","Dad vacuums the floor every Saturday."],
+["take out the rubbish","выносить мусор","My brother takes out the rubbish."],
+["make the bed","заправлять кровать","I make my bed every morning."],
+["set the table","накрывать на стол","Could you set the table for dinner?"],
+["share the chores","делить обязанности","We share the chores because it's fair."],
+["take turns doing sth","делать что-то по очереди","We take turns cooking dinner."],
+["be responsible for","отвечать за","I'm responsible for feeding the pet."],
+["get on well with","ладить с","I get on well with my parents."],
+["generation gap","конфликт поколений","There is no real generation gap in our family."]],
+col:[["do","the laundry"],["make","the bed"],["take out","the rubbish"],["set","the table"],["iron","clothes"],["water","the plants"],["feed","the pet"],["hang out","the washing"],["change","the bed linen"],["dust","the furniture"]],
+facts:[
+["Do the washing-up и wash the dishes значат одно и то же.",true,"Оба — «мыть посуду»."],
+["После I can't stand нужен инфинитив: I can't stand to cook.",false,"Правильно: I can't stand cooking (-ing)."],
+["I don't mind cooking = я не против готовить.",true,""],
+["Заправлять кровать — make the bed, а не do the bed.",true,""],
+["Do the shopping — ходить за покупками.",true,""],
+["Housework — исчисляемое: two houseworks.",false,"Housework неисчисляемое: a lot of housework."],
+["Take turns doing something — делать по очереди.",true,""],
+["Be responsible for + -ing: responsible for cleaning.",true,""],
+["Rubbish — британский вариант, garbage / trash — американский.",true,""],
+["Get on well with = ссориться.",false,"Get on well with = хорошо ладить."]],
+text:{title:"Our family routine", s:[
+"In many families, household {chores|works} are shared between all members.",
+"My parents believe that it {teaches|learns} children responsibility.",
+"Every evening I {do|make} the washing-up after dinner.",
+"My younger brother is responsible for {taking|take} out the rubbish.",
+"On Saturdays we take turns {vacuuming|to vacuuming} the floor.",
+"I don't mind {cooking|to cook}, but I can't stand ironing.",
+"My sister always {makes|does} her bed in the morning.",
+"Mum usually {does|makes} the shopping on her way home.",
+"Sharing the chores {helps|help} us avoid arguments.",
+"As a result, our home stays clean and {tidy|tidily}."]},
+pron:[["vacuum","/ˈvæk.juːm/","ВЭ-кьюм"],["laundry","/ˈlɔːn.dri/","ЛОН-дри"],["furniture","/ˈfɜː.nɪ.tʃə/","ФЁ-ни-чэ"],["responsible","/rɪˈspɒn.sə.bl/","ри-СПОН-сэ-бл"],["relative","/ˈrel.ə.tɪv/","РЕ-лэ-тив"],["generation","/ˌdʒen.əˈreɪ.ʃən/","дже-нэ-РЕЙ-шн"],["argument","/ˈɑːɡ.jə.mənt/","А-гью-мэнт"],["independent","/ˌɪn.dɪˈpen.dənt/","ин-ди-ПЕН-дэнт"],["household","/ˈhaʊs.həʊld/","ХАУС-холд"],["rubbish","/ˈrʌb.ɪʃ/","РА-биш"]]},
+
+{t:"Внешность и характер", short:"Внешность", src:"ФИПИ: внешность и характеристика человека",
+cards:[
+["good-looking","привлекательный","Her brother is tall and good-looking."],
+["well-built","крепкого телосложения","He is well-built because he does sport."],
+["of medium height","среднего роста","She is of medium height."],
+["curly hair","кудрявые волосы","He has short curly hair."],
+["freckles","веснушки","She has freckles on her nose."],
+["take after","быть похожим (на родственника)","I take after my father."],
+["reliable","надёжный","A good friend should be reliable."],
+["easy-going","покладистый, лёгкий в общении","Tom is easy-going and never argues."],
+["generous","щедрый","My grandma is very generous."],
+["stubborn","упрямый","He is too stubborn to admit he's wrong."],
+["sociable","общительный","Sociable people make friends easily."],
+["self-confident","уверенный в себе","She became more self-confident at university."],
+["hard-working","трудолюбивый","Hard-working students usually succeed."],
+["sense of humour","чувство юмора","He has a great sense of humour."]],
+col:[["sense of","humour"],["lose","your temper"],["keep","your word"],["take","after your father"],["get on","well with others"],["stand up","for yourself"],["look","your age"],["be in","your early twenties"],["pay attention","to appearance"],["make","a good impression"]],
+facts:[
+["Hair — неисчисляемое: She has long dark hair.",true,"Hairs — только об отдельных волосках."],
+["Sympathetic значит «симпатичный».",false,"Sympathetic = сочувствующий; симпатичный = attractive, nice-looking."],
+["Sensible значит «чувствительный».",false,"Sensible = благоразумный; чувствительный = sensitive."],
+["Порядок прилагательных: long straight dark hair (длина → форма → цвет).",true,""],
+["Take after = быть похожим на родственника.",true,""],
+["Easy-going значит «грубый».",false,"Easy-going = покладистый, спокойный."],
+["He is in his early twenties = ему примерно 20–23.",true,""],
+["Lazy — антоним hard-working.",true,""],
+["Reliable образовано от rely + -able.",true,"Rely → reliable, reliability."],
+["Character и personality — синонимы в теме о человеке.",true,""]],
+text:{title:"My best friend", s:[
+"My best friend Anna is {of|with} medium height.",
+"She has long straight dark {hair|hairs}.",
+"People say she takes {after|on} her mother.",
+"Anna is very {sociable|social}, so she makes friends easily.",
+"She is also extremely {reliable|reliably}: she always keeps her word.",
+"Sometimes she can be a bit {stubborn|stubbornly}.",
+"However, she never {loses|misses} her temper.",
+"She has a great sense of {humour|fun}.",
+"Everyone knows how {generous|generously} she is.",
+"She is the kind of person you can always rely {on|in}."]},
+pron:[["character","/ˈkær.ək.tə/","КЭ-рэк-тэ"],["generous","/ˈdʒen.ər.əs/","ДЖЕ-нэ-рэс"],["reliable","/rɪˈlaɪ.ə.bl/","ри-ЛАЙ-э-бл"],["sociable","/ˈsəʊ.ʃə.bl/","СОУ-шэ-бл"],["personality","/ˌpɜː.sənˈæl.ə.ti/","пё-сэ-НЭ-лэ-ти"],["ambitious","/æmˈbɪʃ.əs/","эм-БИ-шэс"],["appearance","/əˈpɪə.rəns/","э-ПИ-рэнс"],["confident","/ˈkɒn.fɪ.dənt/","КОН-фи-дэнт"],["curious","/ˈkjʊə.ri.əs/","КЬЮ-ри-эс"],["stubborn","/ˈstʌb.ən/","СТА-бэн"]]},
+
+{t:"Здоровье и здоровый образ жизни", short:"Здоровье", src:"ФИПИ: здоровье и забота о нём",
+cards:[
+["a healthy lifestyle","здоровый образ жизни","She leads a healthy lifestyle."],
+["a balanced diet","сбалансированное питание","A balanced diet includes vegetables and fruit."],
+["junk food","вредная еда, фастфуд","Teenagers eat too much junk food."],
+["keep fit","поддерживать форму","I swim twice a week to keep fit."],
+["work out","тренироваться","He works out at the gym."],
+["get enough sleep","высыпаться","Students rarely get enough sleep."],
+["bad habits","вредные привычки","It's never too late to give up bad habits."],
+["give up","бросить (привычку)","My uncle gave up smoking last year."],
+["catch a cold","простудиться","I caught a cold after the rain."],
+["recover from","выздороветь после","She recovered from flu quickly."],
+["see a doctor","обратиться к врачу","You should see a doctor."],
+["prescription","рецепт врача","The doctor wrote me a prescription."],
+["get rid of","избавиться от","Sport helps you get rid of stress."]],
+col:[["keep","fit"],["follow","a balanced diet"],["give up","bad habits"],["catch","a cold"],["take","medicine"],["get","enough sleep"],["do","sport"],["see","a doctor"],["have","a check-up"],["recover","from an illness"]],
+facts:[
+["Advice — неисчисляемое: a piece of advice.",true,""],
+["Лекарство «пьют» по-английски: drink medicine.",false,"Правильно: take medicine."],
+["Keep fit = быть в форме.",true,""],
+["Junk food — полезная еда.",false,"Junk food — вредная еда, фастфуд."],
+["Recover from = выздороветь после.",true,""],
+["Get rid of = избавиться от.",true,""],
+["Diet значит только «диета для похудения».",false,"Diet — это и любой рацион: a balanced diet."],
+["Go to the doctor's = пойти к врачу (в приёмную).",true,""],
+["Prescription — рецепт врача, recipe — кулинарный рецепт.",true,""],
+["Health — неисчисляемое: good health.",true,""]],
+text:{title:"Healthy habits", s:[
+"More and more teenagers try to {lead|carry} a healthy lifestyle.",
+"Doctors recommend following a {balanced|balancing} diet.",
+"It is important to get {enough|much} sleep.",
+"Regular exercise helps people keep {fit|fitness}.",
+"Unfortunately, many young people eat too much {junk|rubbish} food.",
+"It is never too late to give {up|out} bad habits.",
+"If you are ill, you should {take|drink} medicine.",
+"It usually takes a week to recover {from|after} flu.",
+"My doctor gave me a useful piece of {advice|advices}.",
+"In my opinion, health is more important {than|then} money."]},
+pron:[["healthy","/ˈhel.θi/","ХЕЛ-си"],["vegetables","/ˈvedʒ.tə.blz/","ВЕДЖ-тэ-блз"],["exercise","/ˈek.sə.saɪz/","ЭК-сэ-сайз"],["nutrition","/njuːˈtrɪʃ.ən/","нью-ТРИ-шн"],["allergy","/ˈæl.ə.dʒi/","Э-лэ-джи"],["medicine","/ˈmed.sən/","МЕД-сн"],["prescription","/prɪˈskrɪp.ʃən/","при-СКРИП-шн"],["recover","/rɪˈkʌv.ə/","ри-КА-вэ"],["muscle","/ˈmʌs.əl/","МА-сл"],["immune","/ɪˈmjuːn/","и-МЬЮН"]]},
+
+{t:"Образование и выбор профессии", short:"Образование", src:"ФИПИ: школьное образование, выбор профессии",
+cards:[
+["compulsory","обязательный","Education is compulsory until the age of 16."],
+["state school","государственная школа","I go to a state school."],
+["take an exam","сдавать экзамен","I'm taking my exam in June."],
+["pass an exam","сдать экзамен (успешно)","She passed all her exams."],
+["fail an exam","провалить экзамен","He failed his driving test."],
+["higher education","высшее образование","Higher education can be expensive."],
+["apply to university","подать документы в вуз","I want to apply to university in Moscow."],
+["tuition fees","плата за обучение","Tuition fees are high in the UK."],
+["gap year","год перерыва после школы","Some school leavers take a gap year."],
+["career","карьера","She wants a career in medicine."],
+["job opportunities","возможности трудоустройства","IT offers many job opportunities."],
+["graduate from","окончить (учебное заведение)","He graduated from university in 2020."],
+["gain experience","получить опыт","Volunteering helps you gain experience."]],
+col:[["take","an exam"],["get","good marks"],["enter","a university"],["attend","classes"],["do","homework"],["make","progress"],["miss","lessons"],["apply","for a job"],["earn","a living"],["choose","a career"]],
+facts:[
+["Pass an exam — сдать успешно, take an exam — сдавать.",true,""],
+["Fail an exam = провалить экзамен.",true,""],
+["Career и carrier произносятся одинаково.",false,"Career /kəˈrɪə/ — ударение на второй слог; carrier /ˈkær.i.ə/."],
+["Graduate from university — нужен предлог from.",true,""],
+["Knowledge — исчисляемое: knowledges.",false,"Knowledge неисчисляемое."],
+["Делать домашнее задание — do homework.",true,""],
+["Gap year — год перерыва между школой и вузом.",true,""],
+["Tuition fees — плата за обучение.",true,""],
+["Прогрессировать — do progress.",false,"Правильно: make progress."],
+["Primary school в Британии — для детей 11–16 лет.",false,"Primary school — примерно 5–11 лет; дальше secondary school."]],
+text:{title:"Choosing a career", s:[
+"Choosing a career is one of the most important {decisions|solutions} in life.",
+"Many students start preparing for exams {in|at} advance.",
+"I hope I will {pass|take} all my exams successfully.",
+"My sister wants to {apply|ask} to a university in Moscow.",
+"Higher education can be expensive because of tuition {fees|prices}.",
+"Some school leavers take a gap {year|time} to travel.",
+"It helps them gain {experience|experiences} and think about the future.",
+"Teachers say it is important to {make|do} progress every day.",
+"They also say I should {do|make} my homework more carefully.",
+"After I graduate {from|of} school, I want to study IT."]},
+pron:[["career","/kəˈrɪə/","кэ-РИ-э"],["university","/ˌjuː.nɪˈvɜː.sə.ti/","ю-ни-ВЁ-сэ-ти"],["education","/ˌedʒ.uˈkeɪ.ʃən/","е-джу-КЕЙ-шн"],["certificate","/səˈtɪf.ɪ.kət/","сэ-ТИ-фи-кэт"],["colleague","/ˈkɒl.iːɡ/","КО-лиг"],["knowledge","/ˈnɒl.ɪdʒ/","НО-лидж"],["technology","/tekˈnɒl.ə.dʒi/","тэк-НО-лэ-джи"],["experience","/ɪkˈspɪə.ri.əns/","ик-СПИ-ри-энс"],["biology","/baɪˈɒl.ə.dʒi/","бай-О-лэ-джи"],["profession","/prəˈfeʃ.ən/","прэ-ФЕ-шн"]]},
+
+{t:"Досуг, спорт, экстремальные виды", short:"Экстрим-спорт", src:"ФИПИ: досуг молодёжи, спорт · памятка «Экстремальные виды спорта»",
+cards:[
+["extreme sports","экстремальные виды спорта","Extreme sports involve a high level of risk."],
+["get an adrenaline rush","получить выброс адреналина","People skydive to get an adrenaline rush."],
+["push your limits","расширять свои границы","Rock climbing helps you push your limits."],
+["take calculated risks","идти на обдуманные риски","Good athletes take calculated risks."],
+["step out of your comfort zone","выйти из зоны комфорта","Try to step out of your comfort zone."],
+["overcome your fears","преодолевать страхи","Surfing helped me overcome my fears."],
+["build confidence","развивать уверенность","Sport builds confidence."],
+["safety equipment","защитное снаряжение","Always use safety equipment."],
+["thrilling","захватывающий","It was a thrilling experience."],
+["breathtaking","захватывающий дух","The view was breathtaking."],
+["rock climbing","скалолазание","Rock climbing is popular in the Urals."],
+["skydiving","прыжки с парашютом","Skydiving can be expensive."],
+["bungee jumping","банджи-джампинг","I'd never try bungee jumping."],
+["high risk of injury","высокий риск травмы","There is a high risk of injury."]],
+col:[["push","your limits"],["take","calculated risks"],["get","an adrenaline rush"],["step out","of your comfort zone"],["overcome","your fears"],["build","confidence"],["set","a goal"],["stay","focused"],["improve","your skills"],["enjoy","the sense of freedom"]],
+facts:[
+["Extreme sports involve a high level of risk, physical effort and adrenaline.",true,""],
+["Breathtaking = захватывающий дух.",true,""],
+["Skydiving = прыжки с парашютом.",true,""],
+["Take calculated risks = рисковать безрассудно.",false,"Calculated risks — обдуманные риски."],
+["Be addicted to (в памятке) = быть увлечённым.",true,""],
+["Минус: may be dangerous without proper training.",true,""],
+["Kayaking = скалолазание.",false,"Kayaking — каякинг; скалолазание — rock climbing."],
+["После be good at — форма -ing: good at surfing.",true,""],
+["Extreme sports cannot help to overcome fears.",false,"Наоборот: they help to overcome fears."],
+["Go + -ing для видов спорта: go surfing, go skydiving.",true,""]],
+text:{title:"Why extreme sports?", s:[
+"Extreme sports are becoming more popular {among|between} teenagers.",
+"People do them to get an adrenaline {rush|run}.",
+"Rock climbing helps you push your {limits|borders}.",
+"Of course, you should always use safety {equipment|equipments}.",
+"It is important to take {calculated|calculating} risks.",
+"Many athletes say it helps them {overcome|overtake} their fears.",
+"Last summer I {went|did} surfing for the first time.",
+"The views from the top were absolutely {breathtaking|breathless}.",
+"However, extreme sports can be {expensive|expansive}.",
+"Without proper training they may be {dangerous|danger}."]},
+pron:[["adrenaline","/əˈdren.əl.ɪn/","э-ДРЕ-нэ-лин"],["equipment","/ɪˈkwɪp.mənt/","и-КВИП-мэнт"],["injury","/ˈɪn.dʒər.i/","ИН-джэ-ри"],["thrilling","/ˈθrɪl.ɪŋ/","СРИ-линг"],["extreme","/ɪkˈstriːm/","ик-СТРИМ"],["challenge","/ˈtʃæl.ɪndʒ/","ЧЭ-линдж"],["confidence","/ˈkɒn.fɪ.dəns/","КОН-фи-дэнс"],["freedom","/ˈfriː.dəm/","ФРИ-дэм"],["athlete","/ˈæθ.liːt/","ЭС-лит"],["kayaking","/ˈkaɪ.æk.ɪŋ/","КАЙ-э-кинг"]]},
+
+{t:"Покупки", short:"Покупки", src:"ФИПИ: покупки",
+cards:[
+["bargain","выгодная покупка","These boots were a real bargain."],
+["discount","скидка","Students get a 10% discount."],
+["the sales","распродажа","I bought it in the sales."],
+["receipt","чек","Keep the receipt in case you return it."],
+["refund","возврат денег","I asked for a refund."],
+["try on","примерять","Can I try on this jacket?"],
+["fit","подходить по размеру","These jeans don't fit me."],
+["suit","идти, быть к лицу","Blue really suits you."],
+["afford","позволить себе","I can't afford a new phone."],
+["delivery","доставка","Delivery is free."],
+["customer","покупатель","The customer is always right."],
+["pay by card","платить картой","Can I pay by card?"],
+["change","сдача","Here is your change."]],
+col:[["pay","by card"],["try","on clothes"],["get","a refund"],["go","window-shopping"],["make","a purchase"],["be on","sale"],["place","an order"],["keep","the receipt"],["compare","prices"],["afford","a new phone"]],
+facts:[
+["В receipt буква p не читается.",true,"/rɪˈsiːt/"],
+["It suits you — о цвете и стиле; it fits you — о размере.",true,""],
+["Can't afford = не могу себе позволить.",true,""],
+["Bargain значит только «торговаться».",false,"Bargain — это и выгодная покупка."],
+["Money — исчисляемое: two moneys.",false,"Money неисчисляемое: much money."],
+["Shop assistant — продавец в магазине.",true,""],
+["In the sales — со скидкой на распродаже.",true,""],
+["Spend money on something — с предлогом on.",true,""],
+["Change может значить «сдача».",true,""],
+["Customer = таможня.",false,"Customer — покупатель; таможня — customs."]],
+text:{title:"Shopping online", s:[
+"Nowadays more and more people prefer {shopping|to shopping} online.",
+"It is convenient because you can compare {prices|values} quickly.",
+"However, you can't try {on|in} clothes before buying them.",
+"Last month I ordered a jacket, but it didn't {fit|suit} me: it was too small.",
+"So I sent it back and got a {refund|reward}.",
+"Shops usually ask you to keep the {receipt|recipe}.",
+"During the sales you can find real {bargains|budgets}.",
+"Teenagers often spend too much money {on|for} clothes.",
+"I can't {afford|allow} expensive brands.",
+"That's why I always look for a {discount|discard}."]},
+pron:[["receipt","/rɪˈsiːt/","ри-СИТ"],["discount","/ˈdɪs.kaʊnt/","ДИС-каунт"],["purchase","/ˈpɜː.tʃəs/","ПЁ-чэс"],["customer","/ˈkʌs.tə.mə/","КАС-тэ-мэ"],["delivery","/dɪˈlɪv.ər.i/","ди-ЛИ-вэ-ри"],["advertisement","/ədˈvɜː.tɪs.mənt/","эд-ВЁ-тис-мэнт"],["afford","/əˈfɔːd/","э-ФОД"],["cashier","/kæˈʃɪə/","кэ-ШИ-э"],["jewellery","/ˈdʒuː.əl.ri/","ДЖУ-эл-ри"],["catalogue","/ˈkæt.əl.ɒɡ/","КЭ-тэ-лог"]]},
+
+{t:"Путешествия и экотуризм", short:"Экотуризм", src:"ФИПИ: туризм, виды отдыха · памятка «Экотуризм»",
+cards:[
+["ecotourism","экотуризм","Ecotourism protects the environment."],
+["wildlife conservation","защита дикой природы","Wildlife conservation is a global task."],
+["national park","национальный парк","We visited a national park in Altai."],
+["sustainable travel","устойчивый туризм","Sustainable travel doesn't harm nature."],
+["local communities","местные сообщества","Ecotourism benefits local communities."],
+["natural habitat","природная среда обитания","Animals need their natural habitats."],
+["reduce waste","сокращать количество отходов","Tourists should reduce waste."],
+["carbon footprint","углеродный след","Trains reduce our carbon footprint."],
+["single-use plastic","одноразовый пластик","Avoid single-use plastic."],
+["raise environmental awareness","повышать экологическую осведомлённость","Schools raise environmental awareness."],
+["eco-friendly accommodation","экологичное жильё","We stayed in eco-friendly accommodation."],
+["travel responsibly","путешествовать ответственно","Everyone should travel responsibly."],
+["book in advance","бронировать заранее","Book your tickets in advance."]],
+col:[["protect","the environment"],["preserve","natural habitats"],["respect","local traditions"],["support","local businesses"],["reduce","our carbon footprint"],["avoid","single-use plastic"],["raise","environmental awareness"],["use","public transport"],["save","water and energy"],["follow","wildlife rules"]],
+facts:[
+["Ecotourism — responsible travel to natural areas that protects the environment and benefits local communities.",true,""],
+["Carbon footprint — углеродный след.",true,""],
+["Eco-friendly travel — это частные самолёты.",false,"Use public transport."],
+["Leave only footprints — девиз ответственного туризма.",true,""],
+["Single-use plastic — многоразовый пластик.",false,"Single-use — одноразовый."],
+["Travel обычно не употребляется с a: a journey / a trip.",true,""],
+["Voyage — морское путешествие.",true,""],
+["Accommodation в британском английском неисчисляемое.",true,""],
+["Wildlife — дикая природа.",true,""],
+["Book in advance — бронировать в последний момент.",false,"In advance — заранее."]],
+text:{title:"Travelling green", s:[
+"Ecotourism is responsible travel to {natural|nature} areas.",
+"It protects the environment and {benefits|benefit} local communities.",
+"Eco-tourists try to reduce their carbon {footprint|footstep}.",
+"They prefer to stay in eco-friendly {accommodation|residence}.",
+"They use public {transport|traffic} instead of cars.",
+"They avoid {single-use|single-used} plastic.",
+"Tourists should respect local {traditions|traditional}.",
+"It is also important to support local {businesses|busyness}.",
+"Travelling responsibly helps to {raise|rise} environmental awareness.",
+"Remember: take only memories, leave only {footprints|fingerprints}."]},
+pron:[["ecotourism","/ˈiː.kəʊˌtʊə.rɪ.zəm/","И-коу-ту-ри-зм"],["environment","/ɪnˈvaɪ.rən.mənt/","ин-ВАЙ-рэн-мэнт"],["sustainable","/səˈsteɪ.nə.bl/","сэ-СТЕЙ-нэ-бл"],["habitat","/ˈhæb.ɪ.tæt/","ХЭ-би-тэт"],["conservation","/ˌkɒn.səˈveɪ.ʃən/","кон-сэ-ВЕЙ-шн"],["accommodation","/əˌkɒm.əˈdeɪ.ʃən/","э-ко-мэ-ДЕЙ-шн"],["souvenir","/ˌsuː.vəˈnɪə/","су-вэ-НИ-э"],["itinerary","/aɪˈtɪn.ər.ər.i/","ай-ТИ-нэ-рэ-ри"],["destination","/ˌdes.tɪˈneɪ.ʃən/","дес-ти-НЕЙ-шн"],["wildlife","/ˈwaɪld.laɪf/","УАЙЛД-лайф"]]},
+
+{t:"Город и деревня, экология", short:"Деревня", src:"ФИПИ: экология, жизнь в городе и сельской местности · памятка Life in the countryside",
+cards:[
+["rural area","сельская местность","They live in a rural area."],
+["urban area","городская территория","Most people live in urban areas."],
+["peaceful atmosphere","спокойная атмосфера","I love the peaceful atmosphere of villages."],
+["close-knit community","сплочённое сообщество","Villages have close-knit communities."],
+["farmland","сельхозугодья","The village is surrounded by farmland."],
+["livestock","домашний скот","Farmers keep livestock."],
+["slower pace of life","более спокойный ритм жизни","I enjoy a slower pace of life."],
+["the hustle and bustle","городская суета","They escaped the hustle and bustle."],
+["grow your own food","выращивать свою еду","My grandparents grow their own food."],
+["limited public transport","ограниченный общественный транспорт","Limited public transport is a big problem."],
+["fewer job opportunities","меньше возможностей для работы","Young people leave because of fewer job opportunities."],
+["peace and quiet","тишина и спокойствие","I go to the country for peace and quiet."],
+["be surrounded by nature","быть окружённым природой","The house is surrounded by nature."]],
+col:[["live","in a rural area"],["enjoy","a slower pace of life"],["grow","your own food"],["work","on a farm"],["be surrounded","by nature"],["escape","the hustle and bustle"],["maintain","local traditions"],["have","a strong sense of community"],["breathe","fresh air"],["commute","to work"]],
+facts:[
+["Плюсы деревни: peace and quiet, clean air.",true,""],
+["Rural значит «городской».",false,"Rural — сельский; городской — urban."],
+["Минус деревни: fewer job opportunities.",true,""],
+["Livestock — домашний скот.",true,""],
+["Close-knit community — разобщённое сообщество.",false,"Close-knit — сплочённое."],
+["Hustle and bustle — городская суета.",true,""],
+["В деревне обычно больше развлечений, чем в городе.",false,"Минус: less entertainment."],
+["Farmland — сельскохозяйственные угодья.",true,""],
+["Long distances — минус жизни в деревне.",true,""],
+["Countryside — с артиклем the: in the countryside.",true,""]],
+text:{title:"Life in the countryside", s:[
+"Life in the countryside means living in a {rural|urban} area.",
+"Many people move there to escape the hustle and {bustle|hassle}.",
+"They enjoy a slower {pace|speed} of life.",
+"The air is fresh and the landscapes are {beautiful|beautifully}.",
+"Villagers often grow {their|they} own food.",
+"Rural communities are usually {close-knit|close-knitted}.",
+"However, there are fewer job {opportunities|opportunity}.",
+"Public transport is often {limited|limiting}.",
+"There is also {less|fewer} entertainment than in cities.",
+"Still, I would like to live {in|on} the countryside one day."]},
+pron:[["countryside","/ˈkʌn.tri.saɪd/","КАН-три-сайд"],["atmosphere","/ˈæt.mə.sfɪə/","ЭТ-мэс-фи-э"],["community","/kəˈmjuː.nə.ti/","кэ-МЬЮ-нэ-ти"],["landscape","/ˈlænd.skeɪp/","ЛЭНД-скейп"],["agriculture","/ˈæɡ.rɪ.kʌl.tʃə/","Э-гри-кал-чэ"],["entertainment","/ˌen.təˈteɪn.mənt/","эн-тэ-ТЕЙН-мэнт"],["village","/ˈvɪl.ɪdʒ/","ВИ-лидж"],["peaceful","/ˈpiːs.fəl/","ПИС-фл"],["tradition","/trəˈdɪʃ.ən/","трэ-ДИ-шн"],["distance","/ˈdɪs.təns/","ДИС-тэнс"]]},
+
+{t:"Технологии и СМИ", short:"Технологии", src:"ФИПИ: технический прогресс, средства коммуникации",
+cards:[
+["device","устройство","This device is easy to use."],
+["gadget","гаджет","Teenagers can't live without gadgets."],
+["social networks","социальные сети","She spends hours on social networks."],
+["screen time","экранное время","Try to reduce your screen time."],
+["be addicted to","зависеть от","Some teens are addicted to their phones."],
+["download","скачивать","I downloaded a new app."],
+["upload","загружать, выкладывать","He uploaded a video."],
+["search engine","поисковая система","Use a search engine to find facts."],
+["keep in touch","поддерживать связь","We keep in touch online."],
+["cyberbullying","травля в интернете","Cyberbullying is a serious problem."],
+["fake news","фейковые новости","Fake news spreads quickly."],
+["invention","изобретение","The Internet is a great invention."],
+["artificial intelligence","искусственный интеллект","Artificial intelligence is changing our lives."],
+["privacy","частная жизнь, конфиденциальность","Protect your privacy online."]],
+col:[["keep","in touch"],["surf","the Internet"],["post","a photo"],["download","an app"],["charge","your phone"],["spread","fake news"],["protect","your privacy"],["send","a message"],["reduce","screen time"],["make","a video call"]],
+facts:[
+["Information — неисчисляемое: much information.",true,""],
+["Invent — изобрести новое, discover — открыть существующее.",true,""],
+["Download = выкладывать в сеть.",false,"Download — скачивать; выкладывать — upload."],
+["Search engine — поисковая система.",true,""],
+["Gadget и device — близкие по смыслу слова.",true,""],
+["Be addicted to + -ing: addicted to playing games.",true,""],
+["Fake news + глагол в единственном числе: fake news is…",true,""],
+["Artificial intelligence сокращают как AI.",true,""],
+["Cyberbullying — кибермошенничество.",false,"Cyberbullying — травля в интернете."],
+["Keep in touch = потерять связь.",false,"Keep in touch — поддерживать связь."]],
+text:{title:"Living online", s:[
+"Modern technology has changed the way we {communicate|communicating}.",
+"Teenagers spend hours on social {networks|nets}.",
+"Gadgets help us keep in {touch|connection} with friends.",
+"However, some young people become {addicted|addictive} to their phones.",
+"We should check information before we {share|sharing} it.",
+"Unfortunately, fake news {spreads|spread} very quickly.",
+"It is important to protect your {privacy|private} online.",
+"Cyberbullying is a serious {problem|problems} for many schoolchildren.",
+"Artificial intelligence is one of the most important {inventions|discoveries} of our time.",
+"In my view, gadgets make our life {easier|easily}."]},
+pron:[["device","/dɪˈvaɪs/","ди-ВАЙС"],["Internet","/ˈɪn.tə.net/","ИН-тэ-нет"],["digital","/ˈdɪdʒ.ɪ.təl/","ДИ-джи-тл"],["artificial","/ˌɑː.tɪˈfɪʃ.əl/","а-ти-ФИ-шл"],["intelligence","/ɪnˈtel.ɪ.dʒəns/","ин-ТЕ-ли-джэнс"],["addicted","/əˈdɪk.tɪd/","э-ДИК-тид"],["privacy","/ˈprɪv.ə.si/","ПРИ-вэ-си"],["computer","/kəmˈpjuː.tə/","кэм-ПЬЮ-тэ"],["invention","/ɪnˈven.ʃən/","ин-ВЕН-шн"],["algorithm","/ˈæl.ɡə.rɪ.ðəm/","ЭЛ-гэ-ри-зм"]]},
+
+{t:"Страны изучаемого языка", short:"UK и USA", src:"ФИПИ: страна изучаемого языка — география, столицы, достопримечательности",
+cards:[
+["the United Kingdom","Соединённое Королевство","The UK consists of four countries."],
+["Great Britain","Великобритания (остров)","Great Britain includes England, Scotland and Wales."],
+["the Houses of Parliament","здание Парламента","The Houses of Parliament stand on the Thames."],
+["monarchy","монархия","Britain is a constitutional monarchy."],
+["landmark","достопримечательность, ориентир","Tower Bridge is a famous landmark."],
+["sights","достопримечательности","We saw all the sights of London."],
+["go sightseeing","осматривать достопримечательности","Let's go sightseeing tomorrow."],
+["the Statue of Liberty","Статуя Свободы","The Statue of Liberty was a gift from France."],
+["state","штат; государство","Texas is a large state."],
+["currency","валюта","The currency of the UK is the pound."],
+["population","население","London has a huge population."],
+["official language","официальный язык","English is the official language."],
+["the capital","столица","Edinburgh is the capital of Scotland."]],
+col:[["consist","of four countries"],["be situated","on the British Isles"],["be washed","by the seas"],["attract","millions of tourists"],["go","sightseeing"],["be famous","for its landmarks"],["the head","of state"],["the official","language"],["the national","anthem"],["be divided","into 50 states"]],
+facts:[
+["The UK consists of England, Scotland, Wales and Northern Ireland.",true,""],
+["Great Britain includes Northern Ireland.",false,"Great Britain = England, Scotland, Wales."],
+["The capital of Scotland is Edinburgh.",true,""],
+["The capital of Wales is Cardiff.",true,""],
+["The USA consists of 50 states.",true,""],
+["Washington, D.C. is the capital of the USA.",true,""],
+["The capital of Australia is Sydney.",false,"Столица — Canberra."],
+["Big Ben — официальное название всей башни.",false,"Big Ben — колокол; башня — Elizabeth Tower."],
+["The Statue of Liberty was a gift from France.",true,""],
+["The United Kingdom, the United States — с артиклем the.",true,""]],
+text:{title:"English-speaking countries", s:[
+"The United Kingdom {consists|consist} of four countries.",
+"It is situated {on|at} the British Isles.",
+"London, the capital, {attracts|attract} millions of tourists every year.",
+"Visitors can go {sightseeing|sightsee} and visit famous museums.",
+"The British Museum is one of the {oldest|eldest} museums in the world.",
+"The USA is divided {into|on} fifty states.",
+"{The|A} Statue of Liberty was a gift from France.",
+"New York is the {largest|most large} city in the USA.",
+"English is the official language in many {countries|country}.",
+"Learning about other cultures helps us {understand|understanding} the world."]},
+pron:[["Edinburgh","/ˈed.ɪn.bər.ə/","Э-дин-брэ"],["Leicester","/ˈles.tə/","ЛЕС-тэ"],["parliament","/ˈpɑː.lə.mənt/","ПА-лэ-мэнт"],["Washington","/ˈwɒʃ.ɪŋ.tən/","УО-шинг-тэн"],["Australia","/ɒˈstreɪ.li.ə/","о-СТРЕЙ-ли-э"],["Canada","/ˈkæn.ə.də/","КЭ-нэ-дэ"],["monarchy","/ˈmɒn.ə.ki/","МО-нэ-ки"],["Greenwich","/ˈɡren.ɪtʃ/","ГРЕ-нич"],["Commonwealth","/ˈkɒm.ən.welθ/","КО-мэн-уэлс"],["Birmingham","/ˈbɜː.mɪŋ.əm/","БЁ-минг-эм"]]},
+
+{t:"Вводные слова и связки", short:"Связки", src:"ЕГЭ: задания 30–36 и развёрнутая часть · памятка «Вводные слова»",
+cards:[
+["however","однако (между предложениями)","I was tired. However, I continued."],
+["although","хотя (+ S + V)","Although it was late, we went home."],
+["even though","несмотря на то, что (+ S + V)","Even though she was tired, she worked."],
+["despite","несмотря на (+ noun / V-ing)","Despite the rain, we went out."],
+["in spite of","несмотря на (+ noun / V-ing)","In spite of the weather, we went out."],
+["nevertheless","тем не менее","It was difficult. Nevertheless, we did it."],
+["therefore","поэтому","She didn't study. Therefore, she failed."],
+["as a result","в результате","It was raining. As a result, we stayed home."],
+["consequently","следовательно","He was late. Consequently, he missed the train."],
+["moreover","более того","It's cheap. Moreover, it's comfortable."],
+["furthermore","кроме того","Furthermore, it's close to the centre."],
+["besides","кроме того, к тому же","I'm tired. Besides, it's late."],
+["otherwise","иначе","Hurry up. Otherwise, we'll be late."],
+["instead / instead of","вместо этого / вместо (+ V-ing)","Instead of studying, he watched TV."],
+["for instance","например","For instance, she studied abroad."]],
+col:[["however","однако"],["although","хотя + S + V"],["despite","несмотря на + noun"],["therefore","поэтому"],["moreover","более того"],["otherwise","иначе"],["instead of","вместо + V-ing"],["as a result","в результате"],["in fact","на самом деле"],["for instance","например"]],
+facts:[
+["However ставится между предложениями, с запятой после него.",true,""],
+["Despite + S + V: despite it was raining.",false,"Despite + noun / V-ing: despite the rain."],
+["Although / though / even though + S + V.",true,""],
+["In spite of = despite.",true,""],
+["Therefore выражает добавление.",false,"Therefore — результат (поэтому)."],
+["Moreover и furthermore — добавление.",true,""],
+["Instead of + V-ing.",true,""],
+["Otherwise = иначе.",true,""],
+["Consequently = следовательно.",true,""],
+["Правильно: despite of the rain.",false,"Despite — без of; in spite of — с of."]],
+text:{title:"Choose the linker", s:[
+"I was tired. {However|Although}, I continued.",
+"{Although|Despite} it was late, we went home.",
+"{Despite|Although} the rain, we went out.",
+"In spite {of|for} the weather, we went out.",
+"It was difficult. {Nevertheless|Therefore}, we did it.",
+"She didn't study. {Therefore|Moreover}, she failed.",
+"It's cheap. {Moreover|Otherwise}, it's comfortable.",
+"Hurry up. {Otherwise|Instead}, we'll be late.",
+"I didn't go. {Instead|Instead of}, I stayed home.",
+"Instead of {studying|study}, he watched TV."]},
+pron:[["although","/ɔːlˈðəʊ/","ол-ЗОУ"],["however","/haʊˈev.ə/","хау-Э-вэ"],["moreover","/mɔːrˈəʊ.və/","мор-ОУ-вэ"],["furthermore","/ˌfɜː.ðəˈmɔː/","фё-зэ-МО"],["consequently","/ˈkɒn.sɪ.kwənt.li/","КОН-си-квэнт-ли"],["nevertheless","/ˌnev.ə.ðəˈles/","не-вэ-зэ-ЛЕС"],["therefore","/ˈðeə.fɔː/","ЗЭ-фо"],["otherwise","/ˈʌð.ə.waɪz/","А-зэ-уайз"],["despite","/dɪˈspaɪt/","ди-СПАЙТ"],["instead","/ɪnˈsted/","ин-СТЕД"]]},
+
+{t:"Кавычки и пунктуация", short:"Кавычки", src:"Памятка «Кавычки в английском»",
+cards:[
+["quotation marks","кавычки","Put the words in quotation marks."],
+["direct speech","прямая речь","She said, “I'm tired.”"],
+["double quotation marks","двойные кавычки","Americans use double quotation marks."],
+["single quotation marks","одинарные кавычки","The British often use single quotation marks."],
+["comma","запятая","“I'm tired,” she said."],
+["full stop (BrE) / period (AmE)","точка","Americans put the period inside the quotes."],
+["question mark","вопросительный знак","He asked, “Are you ready?”"],
+["exclamation mark","восклицательный знак","She shouted, “Stop!”"],
+["italics","курсив","I'm reading The Hobbit (курсивом)."],
+["title","название","Song titles go in quotation marks."],
+["quotation","цитата","Start your essay with a quotation."],
+["inside / outside","внутри / снаружи","The comma goes inside the quotes."]],
+col:[["comma","запятая"],["full stop","точка (BrE)"],["period","точка (AmE)"],["question mark","вопросительный знак"],["exclamation mark","восклицательный знак"],["quotation marks","кавычки"],["italics","курсив"],["apostrophe","апостроф"],["colon","двоеточие"],["semicolon","точка с запятой"]],
+facts:[
+["В американском английском запятые и точки ставятся внутри двойных кавычек.",true,"She said, “I'm tired.”"],
+["В британском английском знаки всегда ставятся внутри кавычек.",false,"Только если относятся к цитате; иначе — снаружи."],
+["He asked, “Are you ready?” — ? внутри, это часть цитаты.",true,""],
+["Did she say “yes”? — ? снаружи, вопрос относится ко всему предложению.",true,""],
+["Американский вариант: двойные кавычки снаружи, одинарные внутри.",true,"“She said, ‘Come here.’”"],
+["Британский вариант: одинарные снаружи, двойные внутри.",true,"‘She said, “Come here.”’"],
+["Названия песен, рассказов и статей — в кавычках.",true,"I love “Cinnamon Girl.”"],
+["Названия книг и фильмов обычно пишут в кавычках.",false,"Обычно курсивом: The Hobbit, Inception."],
+["AmE: “I'm tired,” she said. — запятая внутри кавычек.",true,""],
+["Восклицательный знак всегда ставится снаружи кавычек.",false,"Внутри, если он часть цитаты: “Stop!”"]],
+text:{title:"Choose the correct punctuation (AmE)", s:[
+"She said, {“I'm tired.”|“I'm tired”.}",
+"{“I'm tired,” she said.|“I'm tired”, she said.}",
+"He asked, {“Are you ready?”|“Are you ready”?}",
+"Did she say {“yes”?|“yes?”}",
+"She shouted, {“Stop!”|“Stop”!}",
+"I love the song {“Cinnamon Girl.”|<i>Cinnamon Girl</i>.}",
+"He read the story {“The Tell-Tale Heart.”|<i>The Tell-Tale Heart</i>.}",
+"I'm reading {<i>The Hobbit</i>.|“The Hobbit.”}",
+"We watched {<i>Inception</i>|“Inception”} yesterday.",
+"{“She said, ‘Come here.’”|‘She said, “Come here.”’}"]},
+pron:[["quotation","/kwəʊˈteɪ.ʃən/","квоу-ТЕЙ-шн"],["punctuation","/ˌpʌŋk.tʃuˈeɪ.ʃən/","пан-кчу-ЕЙ-шн"],["apostrophe","/əˈpɒs.trə.fi/","э-ПОС-трэ-фи"],["exclamation","/ˌek.skləˈmeɪ.ʃən/","эк-склэ-МЕЙ-шн"],["italics","/ɪˈtæl.ɪks/","и-ТЭ-ликс"],["parentheses","/pəˈren.θə.siːz/","пэ-РЕН-сэ-сиз"],["semicolon","/ˌsem.iˈkəʊ.lən/","се-ми-КОУ-лэн"],["question","/ˈkwes.tʃən/","КВЕС-чэн"],["hyphen","/ˈhaɪ.fən/","ХАЙ-фн"],["colon","/ˈkəʊ.lən/","КОУ-лэн"]]}
+];
+
+const $ = id => document.getElementById(id);
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+let bi=0, order=[], ci=0, dir="en", tab="col", state={};
+
+function chips(){
+  $("chips").innerHTML = B.map((b,i)=>`<button class="chip${i===bi?" on":""}" data-i="${i}"><b>${i+1}</b>${b.short}</button>`).join("");
+  $("chips").querySelectorAll(".chip").forEach(c=>c.onclick=()=>pick(+c.dataset.i));
+}
+function pick(i){
+  bi=i; const b=B[i];
+  $("bTitle").textContent=b.t;
+  $("bMeta").innerHTML=`<em>Блок ${i+1}</em> · ${b.src}`;
+  order=b.cards.map((_,k)=>k); ci=0;
+  state={col:{done:0}, facts:{page:0, ans:{}, right:0}, text:{right:0, done:0}, pron:{right:0, done:0}};
+  chips(); showCard(false); renderTab(); scores();
+  document.querySelector(".chip.on")?.scrollIntoView({block:"nearest", inline:"center"});
+}
+
+/* Quizlet */
+function showCard(keepFlip){
+  const b=B[bi], c=b.cards[order[ci]], card=$("card"), inner=card.querySelector(".card-in");
+  if(!keepFlip){ inner.style.transition="none"; card.classList.remove("flip"); void inner.offsetWidth; inner.style.transition=""; }
+  $("cFront").textContent = dir==="en"?c[0]:c[1];
+  $("cBack").textContent = dir==="en"?c[1]:c[0];
+  $("cEx").textContent = c[2]||"";
+  $("count").textContent = `${ci+1} / ${order.length}`;
+}
+$("card").onclick=()=>$("card").classList.toggle("flip");
+$("card").onkeydown=e=>{ if(e.key===" "||e.key==="Enter"){e.preventDefault(); $("card").classList.toggle("flip");} };
+$("prev").onclick=()=>{ ci=(ci-1+order.length)%order.length; showCard(false); };
+$("next").onclick=()=>{ ci=(ci+1)%order.length; showCard(false); };
+$("shuffle").onclick=()=>{ order=shuffle(order); ci=0; showCard(false); };
+$("restart").onclick=()=>{ order=B[bi].cards.map((_,k)=>k); ci=0; showCard(false); };
+$("dirEn").onclick=()=>{ dir="en"; $("dirEn").classList.add("on"); $("dirRu").classList.remove("on"); showCard(false); };
+$("dirRu").onclick=()=>{ dir="ru"; $("dirRu").classList.add("on"); $("dirEn").classList.remove("on"); showCard(false); };
+document.addEventListener("keydown",e=>{
+  if(e.target.closest("button")) return;
+  if(e.key==="ArrowRight") $("next").click();
+  if(e.key==="ArrowLeft") $("prev").click();
+});
+
+/* Tabs */
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
+  tab=t.dataset.t; document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===t)); renderTab();
+});
+function scores(){
+  const b=B[bi];
+  $("s-col").textContent=`${state.col.done}/${b.col.length}`;
+  $("s-facts").textContent=`${Object.keys(state.facts.ans).length}/${b.facts.length}`;
+  $("s-text").textContent=`${state.text.done}/${b.text.s.length}`;
+  $("s-pron").textContent=`${state.pron.done}/${b.pron.length}`;
+}
+function renderTab(){ ({col:renderCol, facts:renderFacts, text:renderText, pron:renderPron})[tab](); }
+
+/* Matching */
+function renderCol(){
+  const b=B[bi], P=$("pbody"); state.col.done=0; scores();
+  const L=shuffle(b.col.map((p,i)=>({i,v:p[0]}))), R=shuffle(b.col.map((p,i)=>({i,v:p[1]})));
+  P.innerHTML=`<div class="task"><h3>Соедини слова в устойчивые сочетания</h3><span class="score" id="colScore">0 / ${b.col.length}</span></div>
+  <div class="match"><div class="col" id="mL">${L.map(x=>`<button class="tile" data-i="${x.i}">${esc(x.v)}</button>`).join("")}</div>
+  <div class="col" id="mR">${R.map(x=>`<button class="tile" data-i="${x.i}">${esc(x.v)}</button>`).join("")}</div></div>
+  <div class="pager"><button class="btn" id="colAgain">Заново</button></div>`;
+  let sel=null;
+  P.querySelectorAll("#mL .tile").forEach(t=>t.onclick=()=>{ if(t.classList.contains("done"))return; P.querySelectorAll("#mL .tile").forEach(x=>x.classList.remove("sel")); t.classList.add("sel"); sel=t; });
+  P.querySelectorAll("#mR .tile").forEach(t=>t.onclick=()=>{
+    if(t.classList.contains("done")||!sel) return;
+    const ok = b.col[+sel.dataset.i][1]===b.col[+t.dataset.i][1];
+    if(ok){ sel.classList.remove("sel"); sel.classList.add("done"); t.classList.add("done"); sel=null; state.col.done++; $("colScore").textContent=`${state.col.done} / ${b.col.length}`; scores(); }
+    else { [sel,t].forEach(x=>{x.classList.remove("err"); void x.offsetWidth; x.classList.add("err");}); }
+  });
+  $("colAgain").onclick=renderCol;
+}
+
+/* Facts: true / false flip cards */
+function renderFacts(){
+  const b=B[bi], P=$("pbody"), per=5, pages=Math.ceil(b.facts.length/per), st=state.facts;
+  const start=st.page*per, items=b.facts.slice(start,start+per);
+  P.innerHTML=`<div class="task"><h3>Верно или неверно?</h3><span class="score">Верных ответов: ${st.right} / ${Object.keys(st.ans).length}</span></div>
+  <div class="facts">${items.map((f,k)=>{const i=start+k, a=st.ans[i]; const good = a!==undefined && a===f[1];
+    return `<div class="fact${a!==undefined?" flip":""}" data-i="${i}"><div class="fact-in">
+      <div class="f"><span class="txt">${esc(f[0])}</span><span class="tf"><button data-v="1">Верно</button><button data-v="0">Неверно</button></span></div>
+      <div class="f b ${good?"ok":"no"}" title="Нажми, чтобы увидеть утверждение"><span class="txt"><span class="verdict">${good?"Правильно!":"Ошибка."}</span> Это ${f[1]?"верно":"неверно"}. ${esc(f[2]||"")}</span></div>
+    </div></div>`;}).join("")}</div>
+  <div class="pager"><button class="round" id="fPrev" aria-label="Назад">‹</button><span class="count">${st.page+1} / ${pages}</span><button class="round" id="fNext" aria-label="Вперёд">›</button></div>`;
+  P.querySelectorAll(".fact").forEach(el=>{
+    const i=+el.dataset.i;
+    el.querySelectorAll(".tf button").forEach(btn=>btn.onclick=()=>{
+      if(st.ans[i]!==undefined) return;
+      st.ans[i]=btn.dataset.v==="1"; if(st.ans[i]===b.facts[i][1]) st.right++;
+      scores(); renderFacts();
+    });
+    el.querySelector(".f.b").onclick=()=>el.classList.toggle("flip");
+  });
+  $("fPrev").onclick=()=>{ st.page=(st.page-1+pages)%pages; renderFacts(); };
+  $("fNext").onclick=()=>{ st.page=(st.page+1)%pages; renderFacts(); };
+}
+
+/* Text with tap-gaps */
+function renderText(){
+  const b=B[bi], P=$("pbody"); state.text={right:0, done:0}; scores();
+  const html=b.text.s.map((s,i)=>s.replace(/\{([^}]*)\}/,(m,g)=>{ const o=g.split("|"); return `<span class="opt" data-i="${i}">${shuffle(o.map((v,k)=>({v,k}))).map(x=>`<button data-k="${x.k}">${x.v}</button>`).join("")}</span>`; })).join(" ");
+  P.innerHTML=`<div class="task"><h3>Прочитай текст и выбери верное слово</h3><span class="score" id="tScore">0 ошибок · 0 / ${b.text.s.length}</span></div>
+  <div class="textbox"><h4>${b.text.title}</h4>${html}</div>
+  <div class="pager"><button class="btn" id="tAgain">Заново</button></div>`;
+  let errs=0;
+  P.querySelectorAll(".opt").forEach(g=>g.querySelectorAll("button").forEach(btn=>btn.onclick=()=>{
+    if(btn.dataset.k==="0"){ const s=document.createElement("span"); s.className="gap-ok"; s.innerHTML=btn.innerHTML; g.replaceWith(s); state.text.done++; }
+    else { if(!btn.classList.contains("x")) errs++; btn.classList.add("x"); }
+    $("tScore").textContent=`${errs} ${errs===1?"ошибка":(errs>1&&errs<5?"ошибки":"ошибок")} · ${state.text.done} / ${b.text.s.length}`; scores();
+  }));
+  $("tAgain").onclick=renderText;
+}
+
+/* Pronunciation: choose the stressed syllable */
+function stressVariants(ru){
+  const syl=ru.split("-"), up=s=>s===s.toUpperCase()&&/[А-ЯЁ]/.test(s);
+  const si=syl.findIndex(up);
+  const make=k=>syl.map((s,j)=>j===k?s.toUpperCase():s.toLowerCase()).join("-");
+  const idx=[...Array(syl.length).keys()].filter(k=>k!==si).sort((a,b)=>Math.abs(a-si)-Math.abs(b-si)).slice(0,2);
+  return shuffle([{v:make(si),ok:true}, ...idx.map(k=>({v:make(k),ok:false}))]);
+}
+function renderPron(){
+  const b=B[bi], P=$("pbody"); state.pron={right:0, done:0}; scores();
+  P.innerHTML=`<div class="task"><h3>Где ударение? Выбери верный вариант</h3><span class="score" id="pScore">0 / ${b.pron.length}</span></div>
+  <div class="pron">${b.pron.map((p,i)=>`<div class="pr" data-i="${i}"><span class="w">${esc(p[0])}</span><span class="ipa" hidden>${p[1]}</span>
+    <div class="opts">${stressVariants(p[2]).map(o=>`<button data-ok="${o.ok?1:0}">${o.v}</button>`).join("")}</div></div>`).join("")}</div>
+  <div class="note">Заглавными буквами — ударный слог. После верного ответа появится транскрипция.</div>
+  <div class="pager"><button class="btn" id="pAgain">Заново</button></div>`;
+  P.querySelectorAll(".pr").forEach(row=>row.querySelectorAll(".opts button").forEach(btn=>btn.onclick=()=>{
+    if(row.classList.contains("done")) return;
+    if(btn.dataset.ok==="1"){ row.classList.add("done"); row.querySelector(".ipa").hidden=false; row.querySelector(".opts").innerHTML=`<span class="ru">${btn.textContent}</span>`; state.pron.done++; $("pScore").textContent=`${state.pron.done} / ${b.pron.length}`; scores(); }
+    else btn.classList.add("x");
+  }));
+  $("pAgain").onclick=renderPron;
+}
+
+pick(0);
+</script>
+
+</body></html>
