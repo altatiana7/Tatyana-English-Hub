@@ -154,12 +154,16 @@ talk:{view(a,s){const c=a.cards[s.i],n=a.cards.length,secs=c.secs||a.secs||40,le
   if(d.back!==undefined||d.fwd!==undefined){hush();clearInterval(tick);s.run=false;s.left=null;s.flip=false;s.played=false;if(!a.keepChips)s.used={};s.i=d.back!==undefined?s.i-1:(s.i+1)%a.cards.length;return redrawAct()}}},
 map:{view(a,s){return `<div class="map"><div class="hub">${esc(a.centre)}</div><div class="branches">${a.branches.map((b,i)=>`<label><b>${esc(b.label)}</b>${Array.from({length:b.n||2},(_,k)=>`<input data-map="${i}_${k}" value="${esc(s.val[i+'_'+k]||'')}" placeholder="${esc((b.ph||[])[k]||'key words')}" autocomplete="off">`).join('')}</label>`).join('')}</div></div><p class="muted">Key words only, no sentences. The plan stays next to you on the writing step.</p>`},
  input(a,s,t){if(t.dataset.map!==undefined){s.val[t.dataset.map]=t.value;SHARED.map=s.val;SHARED.mapDef=a}}},
-write:{view(a,s){return `${a.to?`<div class="mailHead compose"><div><b>To: ${esc(a.to)}</b><span>${esc(a.subject||'')}</span></div></div>`:''}<div class="write"><textarea data-text data-auto placeholder="${esc(a.ph||'Write here')}" spellcheck="false">${esc(s.text)}</textarea><div class="wside"><b id="wc"></b><ul id="chk"></ul>${a.submit?`<button class="main" data-send>${s.code?'Copy the code again':'Submit to teacher'}</button><span class="muted" id="sentMsg">${s.code?(s.shared?'Choose your teacher in the list.':'Code copied. Paste it in your chat with your teacher.'):''}</span>${s.code?`<input type="hidden" data-code value="${esc(s.code)}">`:''}`:`<button class="ghost" data-copy>Copy the text</button><span id="copied" class="muted"></span>`}</div></div>`},
+write:{view(a,s){if(a.submit)clearOutdatedCode(reportAct(),s);return `${a.to?`<div class="mailHead compose"><div><b>To: ${esc(a.to)}</b><span>${esc(a.subject||'')}</span></div></div>`:''}<div class="write"><textarea data-text data-auto placeholder="${esc(a.ph||'Write here')}" spellcheck="false">${esc(s.text)}</textarea><div class="wside"><b id="wc"></b><ul id="chk"></ul>${a.submit?`<button class="main" data-send ${s.copyState==='copying'?'disabled':''}>${s.code?'Copy the code again':'Submit to teacher'}</button><span class="muted" id="sentMsg" aria-live="polite">${esc(codeMessage(s))}</span>${s.code?(s.copyState==='failed'?`<input readonly class="codeBox" data-code value="${esc(s.code)}" aria-label="Homework code">`:`<input type="hidden" data-code value="${esc(s.code)}">`):''}`:`<button class="ghost" data-copy>Copy the text</button><span id="copied" class="muted" aria-live="polite"></span>`}</div></div>`},
  after(a,s){const t=s.text,n=words(t);const wc=$('#wc');if(!wc)return;wc.textContent=n+' words'+(a.min?' · aim for '+a.min+'–'+a.max:'');wc.className=a.min&&n>=a.min&&n<=a.max?'ok':'';
   $('#chk').innerHTML=a.checks.map(c=>`<li class="${c.test(t)?'ok':''}">${esc(c.label)}</li>`).join('')},
- input(a,s,t){if(t.dataset.text!==undefined){s.text=t.value;this.after(a,s)}},
- click(a,s,d){if(d.send!==undefined){const rep=(CFG.steps.find(x=>x.act&&x.act.type==='report')||{}).act||{};return sendCode(rep,s,()=>{redrawAct();ACT.write.after(a,s)})}
-  if(d.copy!==undefined){const done=()=>{const c=$('#copied');if(c)c.textContent='Copied.'};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(s.text).then(done,()=>{});else{const ta=$('[data-text]');ta.select();try{document.execCommand('copy');done()}catch(e){}}}}}
+ input(a,s,t){if(t.dataset.text!==undefined){s.text=t.value;const box=t.closest('.write'),copied=box&&$('#copied',box);if(copied)copied.textContent='';
+  if(a.submit&&s.copyState){s.copyAttempt=(s.copyAttempt||0)+1;s.copyStamp='';s.copyState='';s.code='';s.shared=false;const msg=$('#sentMsg',box),btn=$('[data-send]',box),code=$('[data-code]',box);if(msg)msg.textContent='';if(btn){btn.disabled=false;btn.textContent='Submit to teacher'}if(code)code.remove()}
+  this.after(a,s)}},
+ click(a,s,d){if(d.send!==undefined)return sendCode(reportAct(),s,()=>{redrawAct();ACT.write.after(a,s)})
+  if(d.copy!==undefined){const ta=$('[data-text]'),c=$('#copied'),text=s.text;if(c)c.textContent='';const current=()=>ta&&c&&ta.isConnected&&c.isConnected&&s.text===text;
+   const done=()=>{if(current())c.textContent='Copied.'},manual=()=>{if(current()){c.textContent='Could not copy automatically. Select the text and copy it manually (Ctrl+C / Cmd+C or long-press and Copy), then paste it.';ta.focus();ta.select()}};
+   try{if(navigator.clipboard&&typeof navigator.clipboard.writeText==='function')Promise.resolve(navigator.clipboard.writeText(text)).then(done,manual);else{ta.focus();ta.select();document.execCommand('copy')===true?done():manual()}}catch(e){manual()}}}}
 };
 ACT.total={view(a,s){let sum=0,max=0,all=true;const rows=a.parts.map(p=>{const st=ST[p.step],ac=CFG.steps[p.step].act;let got=0,done=false;
    if(ac.type==='gaps'){done=!!st.checked;got=ac.items.filter((it,i)=>judge(it,(st.val||{})[i])===true).length*(p.half?.5:1)}
@@ -200,14 +204,29 @@ function reportTodo(){const L=[];flatActs().forEach(({ac,s,no})=>{if(!ac)return;
   if(ac.type==='gaps')ok=ac.items.every((_,k)=>(s.val||{})[k])&&(ac.free||!!s.checked);else if(ac.type==='quiz')ok=!!s.done;else if(ac.type==='write')ok=!!s.text&&(!ac.min||words(s.text)>=ac.min);else if(ac.type==='map')ok=Object.values(s.val||SHARED.map||{}).filter(Boolean).length>=ac.branches.length;else if(ac.type==='talk')ok=Object.keys(s.spoke||{}).length>=ac.cards.length;
   else if(ac.type==='sort')ok=!!s.checked;else if(ac.type==='hunt')ok=Object.keys(s.hit||{}).length===ac.items.length;else if(ac.type==='memory')ok=Object.keys(s.done||{}).length===ac.pairs.length;else if(ac.type==='match')ok=!!s.pairs&&Object.keys(s.pairs).length===ac.items.length;
   if(!ok&&!L.includes(no))L.push(no)});return L}
-function sendCode(a,s,fin){reportCode(a).then(code=>{s.code=code;s.shared=false;
-  const copy=()=>{if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(code).catch(()=>{});return Promise.resolve()};
-  copy().then(()=>{let touch=false;try{touch=matchMedia('(pointer:coarse)').matches}catch(e){}if(touch&&navigator.share){s.shared=true;navigator.share({text:code}).catch(()=>{s.shared=false;fin()})}fin()})})}
-ACT.report={view(a,s){const todo=reportTodo();
+function reportAct(){return (CFG.steps.find(x=>x.act&&x.act.type==='report')||{}).act||{}}
+/* A copied code applies only to the version of the work it contains. */
+function reportSnapshot(a){const r=reportData(a);return JSON.stringify([r.assignment,r.steps])}
+function clearOutdatedCode(a,s){if(s.copyStamp&&s.copyStamp!==reportSnapshot(a)){s.copyAttempt=(s.copyAttempt||0)+1;s.copyStamp='';s.copyState='';s.code='';s.shared=false}}
+function codeMessage(s){if(s.copyState==='copying')return 'Preparing your code…';
+ if(s.copyState==='error')return 'Could not prepare the homework code. Please try again.';
+ if(s.copyState==='failed')return 'Could not copy automatically. Select the code below and copy it manually (Ctrl+C / Cmd+C or long-press and Copy), then paste it in your chat with your teacher.';
+ if(s.copyState==='copied')return s.shared?'Code copied. Choose your teacher in the share menu, or paste it in your chat.':'Code copied. Paste it in your chat with your teacher.';return ''}
+async function sendCode(a,s,fin){if(s.copyState==='copying')return;
+ const step=cur,actIndex=AK,attempt=(s.copyAttempt||0)+1,stamp=reportSnapshot(a);s.copyAttempt=attempt;s.copyStamp=stamp;s.copyState='copying';s.shared=false;s.code='';
+ const current=()=>s.copyAttempt===attempt&&s.copyStamp===stamp&&reportSnapshot(a)===stamp;
+ const refresh=()=>{if(!current()||cur!==step)return;const previous=AK;AK=actIndex;fin();
+  if(s.copyState==='failed'){const root=CFG.steps[cur].acts?$('#act-'+actIndex):$('#act'),field=root&&$('[data-code]',root);if(field){field.focus();field.select()}}AK=previous};
+ refresh();let code;try{code=await reportCode(a)}catch(e){if(current()){s.copyState='error';refresh()}return}if(!current())return;s.code=code;
+ try{if(!navigator.clipboard||typeof navigator.clipboard.writeText!=='function')throw new Error('Clipboard unavailable');await navigator.clipboard.writeText(code);if(!current())return;s.copyState='copied'}
+ catch(e){if(!current())return;s.copyState='failed'}
+ let sharing;try{if(matchMedia('(pointer:coarse)').matches&&typeof navigator.share==='function'){s.shared=true;sharing=Promise.resolve(navigator.share({text:code}))}}catch(e){s.shared=false}
+ refresh();if(sharing)try{await sharing}catch(e){}finally{if(current()){s.shared=false;refresh()}}}
+ACT.report={view(a,s){clearOutdatedCode(a,s);const todo=reportTodo();
   return `<div class="write send"><textarea readonly data-report spellcheck="false">${esc(reportText(a))}</textarea><div class="wside">
    ${todo.length?`<b class="todo">Not finished: step${todo.length>1?'s':''} ${todo.join(', ')}</b><span class="muted">You can go back and finish, or send it as it is.</span>`:`<b class="ok">Everything is done.</b>`}
-   <button class="main" data-send data-auto>${s.code?'Copy the code again':'Send to teacher'}</button>
-   ${s.code?`<span class="muted" id="sentMsg">${s.shared?'Choose your teacher in the list.':'Your homework code is copied. Open your chat with your teacher, paste it (Ctrl + V) and send.'}</span><input readonly class="codeBox" data-code value="${esc(s.code)}" aria-label="Homework code">`:`<span class="muted">This makes a homework code for your teacher.</span>`}</div></div>`},
+   <button class="main" data-send data-auto ${s.copyState==='copying'?'disabled':''}>${s.code?'Copy the code again':'Send to teacher'}</button>
+   ${s.copyState?`<span class="muted" id="sentMsg" aria-live="polite">${esc(codeMessage(s))}</span>${s.code?`<input readonly class="codeBox" data-code value="${esc(s.code)}" aria-label="Homework code">`:''}`:`<span class="muted">This makes a homework code for your teacher.</span>`}</div></div>`},
  click(a,s,d){if(d.send!==undefined)sendCode(a,s,redrawAct)}};
 
 ACT.explain={view(a,s){const n=a.items.length;
