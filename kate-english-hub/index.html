@@ -486,6 +486,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
         <button onclick="openHomeworkLesson(3)"><span>Lesson 3 · Music & Study</span><span>›</span></button>
         <button onclick="openHomeworkLesson('money')"><span>Gen Z &amp; Money · Words</span><span>›</span></button>
         <button onclick="openHomeworkLesson('bbc5')"><span>Lesson 5 · BBC + Words</span><span>›</span></button>
+        <button onclick="openHomeworkLesson('grammar11')" style="border:2px solid #a7d5c9;background:#effaf6"><span>11 · Grammar Lab · Test <b class="hw-badge">NEW</b></span><span>›</span></button>
         <button onclick="openHomeworkLesson('phone')" style="border:2px solid #efc12c;background:#fffbea"><span>Smartphones · Words <b class="hw-badge">NEW</b></span><span>›</span></button>
       </div>
     </div>
@@ -663,7 +664,11 @@ function openHomeworkLesson(lesson){
   document.body.classList.add('lesson-open');
   view.classList.add('on');
   view.setAttribute('aria-hidden','false');
-  if(lesson===2){
+  if(lesson==='grammar11'){
+    title.textContent='Homework · 11 / Grammar Lab';
+    frame.removeAttribute('srcdoc');
+    frame.src='homework-grammar-lab-11.html?v=20261027';
+  }else if(lesson===2){
     title.textContent='Homework · Lesson 2 — Generations';
     frame.removeAttribute('srcdoc');
     frame.src='homework-lesson2-generations.html';
