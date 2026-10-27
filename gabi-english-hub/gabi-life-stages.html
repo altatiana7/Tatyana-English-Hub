@@ -141,7 +141,7 @@ body::after{
         <figcaption>Sharenting · family life in the digital age</figcaption>
       </figure>
     </div>
-  </div><div class="pane" id="rcomp">
+  </div></div><div class="pane" id="rcomp">
   <h2>Sharenting · Evidence Hunt</h2>
   <div class="shareEvidence">
     <article><b>1</b><p>What are the toddler’s parents doing?</p><div class="shareChoice" data-answer="filming and posting"><button>ignoring him</button><button>filming and posting</button><button>calling a doctor</button></div></article>
@@ -558,7 +558,7 @@ v:{a:[
 ['respect privacy','уважать личное пространство · respect a teenager’s privacy'],
 ['ask for permission','спрашивать разрешение · ask for permission before posting']
 ],i:0,b:false}
-};function rd(k){let d=decks[k],x=d.a[d.i];document.getElementById(k+'Face').innerHTML=d.b?x[1]+'<br><small>'+x[0]+'</small>':x[0]+'<br><small>tap to flip</small>';document.getElementById(k+'Count').textContent=(d.i+1)+' / '+d.a.length}function flip(k){decks[k].b=!decks[k].b;rd(k)}function next(k){let d=decks[k];d.i=(d.i+1)%d.a.length;d.b=false;rd(k)}function prev(k){let d=decks[k];d.i=(d.i-1+d.a.length)%d.a.length;d.b=false;rd(k)}rd('f');rd('v');document.querySelectorAll('#read .tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#read .tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('#read .pane').forEach(x=>x.classList.remove('on'));const pane=document.getElementById(b.dataset.p);if(pane)pane.classList.add('on')});const parts=window.SHARE_AUDIO_PARTS||[];if(parts.length)shareAudio.src='data:audio/ogg;base64,'+parts.join('');document.querySelectorAll('#read .shareChoice button').forEach(function(b){
+};function rd(k){let d=decks[k],x=d.a[d.i],face=document.getElementById(k+'Face'),count=document.getElementById(k+'Count');if(!face||!count)return;face.innerHTML=d.b?x[1]+'<br><small>'+x[0]+'</small>':x[0]+'<br><small>tap to flip</small>';count.textContent=(d.i+1)+' / '+d.a.length}function flip(k){decks[k].b=!decks[k].b;rd(k)}function next(k){let d=decks[k];d.i=(d.i+1)%d.a.length;d.b=false;rd(k)}function prev(k){let d=decks[k];d.i=(d.i-1+d.a.length)%d.a.length;d.b=false;rd(k)}rd('f');rd('v');document.querySelectorAll('#read .tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#read .tabs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.querySelectorAll('#read .pane').forEach(x=>x.classList.remove('on'));const pane=document.getElementById(b.dataset.p);if(pane)pane.classList.add('on')});const parts=window.SHARE_AUDIO_PARTS||[];if(parts.length)shareAudio.src='data:audio/ogg;base64,'+parts.join('');document.querySelectorAll('#read .shareChoice button').forEach(function(b){
   b.onclick=function(){
     var box=b.parentElement;
     box.querySelectorAll('button').forEach(function(x){x.classList.remove('correct','wrong')});
