@@ -515,7 +515,17 @@ const GRAM=[
   ['You should not share your password under any circumstances.','Under no circumstances…','Under no circumstances should you share your password.'],
   ['She realised how much time she spent online only when she deleted the app.','Only when…','Only when she deleted the app did she realise how much time she spent online.'],
   ['The brand did not respond until the next day.','Not until…','Not until the next day did the brand respond.'],
-  ['I had no sooner logged in than I saw the news.','No sooner…','No sooner had I logged in than I saw the news.']]},
+  ['I had no sooner logged in than I saw the news.','No sooner…','No sooner had I logged in than I saw the news.'],
+  ['She had hardly been paid when she splurged on a new phone.','Hardly…','Hardly had she been paid when she splurged on a new phone.'],
+  ['I have never shelled out so much money on a concert ticket.','Never…','Never have I shelled out so much money on a concert ticket.'],
+  ['Teenagers rarely realise how quickly they can rack up debt online.','Rarely…','Rarely do teenagers realise how quickly they can rack up debt online.'],
+  ['He understood how much he had spent only after he checked his banking app.','Only after…','Only after he checked his banking app did he understand how much he had spent.'],
+  ['Influencers crave validation, and they also need money from sponsors.','Not only…','Not only do influencers crave validation, but they also need money from sponsors.'],
+  ['You should not lend money to strangers online under any circumstances.','Under no circumstances…','Under no circumstances should you lend money to strangers online.'],
+  ['She did not start a side hustle until she lost her job.','Not until…','Not until she lost her job did she start a side hustle.'],
+  ['The K-pop star had no sooner posted the photo than he faced a backlash.','No sooner…','No sooner had the K-pop star posted the photo than he faced a backlash.'],
+  ['We seldom think about our digital footprint when we shop online.','Seldom…','Seldom do we think about our digital footprint when we shop online.'],
+  ['She realised the online shop had ripped her off only when the parcel arrived.','Only when…','Only when the parcel arrived did she realise the online shop had ripped her off.']]},
  {h:'Passive reporting',ex:['People believe that she deleted the post. → She <b>is believed to have deleted</b> the post.','Experts think teens spend hours online. → Teens <b>are thought to spend</b> hours online.'],tasks:[
   ['People say the creator has lost several sponsors.','The creator is said…','The creator is said to have lost several sponsors.'],
   ['People believe that she deleted the post.','She is believed…','She is believed to have deleted the post.'],
@@ -526,11 +536,24 @@ const GRAM=[
   ['People say that the video has been viewed ten million times.','The video is said…','The video is said to have been viewed ten million times.'],
   ['People consider him one of the most influential creators.','He is considered…','He is considered to be one of the most influential creators.'],
   ['People allege that the star bought fake followers.','The star is alleged…','The star is alleged to have bought fake followers.'],
-  ['People think that the trend started in South Korea.','The trend is thought…','The trend is thought to have started in South Korea.']]},
+  ['People think that the trend started in South Korea.','The trend is thought…','The trend is thought to have started in South Korea.'],
+  ['People say the influencer has racked up huge debts.','The influencer is said…','The influencer is said to have racked up huge debts.'],
+  ['People believe that many young people struggle to make ends meet.','Many young people are believed…','Many young people are believed to struggle to make ends meet.'],
+  ['People report that the actor is curating a new online persona.','The actor is reported…','The actor is reported to be curating a new online persona.'],
+  ['People think that fans shelled out millions on the tour merchandise.','Fans are thought…','Fans are thought to have shelled out millions on the tour merchandise.'],
+  ['People know that the company has been held accountable before.','The company is known…','The company is known to have been held accountable before.'],
+  ['People expect that the new K-drama will break streaming records.','The new K-drama is expected…','The new K-drama is expected to break streaming records.'],
+  ['People say that the singer crossed the line in her last video.','The singer is said…','The singer is said to have crossed the line in her last video.'],
+  ['People allege that the brand paid for fake reviews.','The brand is alleged…','The brand is alleged to have paid for fake reviews.'],
+  ['People believe that teenagers are cutting back on eating out.','Teenagers are believed…','Teenagers are believed to be cutting back on eating out.'],
+  ['People report that the idol has been under public scrutiny for months.','The idol is reported…','The idol is reported to have been under public scrutiny for months.']]},
  {h:'Conditionals',ex:['<b>Had she known</b> the consequences, <b>would she have posted</b> it?'],label:'ANSWER IN A FULL SENTENCE',tasks:[
   ['Had she known the consequences, would she have posted it?'],['If you couldn’t post about a holiday, would you still go?'],['If social media disappeared tomorrow, what would you miss most?'],
   ['If you had grown up without a smartphone, how would your life be different now?'],['What would you have done if a friend had posted an embarrassing photo of you?'],['If you were an influencer, what would you never advertise?'],
-  ['Would you delete an old post if a company asked you to?'],['If you hadn’t started using social media, would you be happier now?'],['If your post went viral overnight, how would you feel?'],['If schools banned phones, would students concentrate better?']]}
+  ['Would you delete an old post if a company asked you to?'],['If you hadn’t started using social media, would you be happier now?'],['If your post went viral overnight, how would you feel?'],['If schools banned phones, would students concentrate better?'],
+  ['If you had a side hustle, what would you do?'],['If you had saved all the money you spent on apps, what could you buy now?'],['If your favourite K-drama actor faced a backlash, would you still support him?'],
+  ['Had you grown up in Seoul, would you use social media differently?'],['If you won a million roubles, would you splurge or save?'],['If one of your posts damaged someone’s reputation, what would you do?'],
+  ['If you had been a student in the 1990s, how would you have made ends meet?'],['Would you shell out for a premium subscription if you couldn’t watch dramas for free?'],['If influencers were held accountable for adverts, would you trust them more?'],['If you hadn’t jumped on a trend, would you have felt left out?']]}
 ];
 let gTab=0,gPg=0,gRule=false;const GPER=3;
 function gramRender(i){if(i!==undefined&&i!==gTab){gTab=i;gPg=0}const g=GRAM[gTab],r=$('gram');r.innerHTML='';
