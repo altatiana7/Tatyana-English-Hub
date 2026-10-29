@@ -78,7 +78,7 @@
     setTimeout(()=>{try{f.focus();}catch(e){}},50);}
 
   /* сайт учителя: проверка домашки – работы Кати приходят из базы сами */
-  const PAGE={home1:'home1.html?v=41',lesson1:'lesson1.html?v=94#9',lessonw1:'lessonw1.html?v=74'};
+  const PAGE={mock1:'mock1.html?v=1',home1:'home1.html?v=41',lesson1:'lesson1.html?v=94#9',lessonw1:'lessonw1.html?v=74'};
   function openWork(page,data){const P=PAGE[page];if(!P)throw new Error('Неизвестная работа: '+page);
     sessionStorage.setItem('katya-review',JSON.stringify({page:page,data:data}));open(P);}
   let seen={};try{seen=JSON.parse(localStorage.getItem('katya-seen')||'{}');}catch(e){}

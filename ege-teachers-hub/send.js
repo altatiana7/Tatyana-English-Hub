@@ -6,7 +6,7 @@ window.KS=(function(){
   const T=!!window.TEACHER,PFX='katya-ege:';
   const DB='https://lzxcmrlubhjfdhtqvqzt.supabase.co',KEY='sb_publishable_PmyZRwzWne8lqprej4XJQA_XiujtjEI';
   const H={'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'};
-  const TITLE={home1:'Диагностика · домашняя часть',lesson1:'Диагностика · тест',lessonw1:'Занятие 1 · Error hunter и Match'};
+  const TITLE={mock1:'Пробник ЕГЭ 2027 · Вариант 1',home1:'Диагностика · домашняя часть',lesson1:'Диагностика · тест',lessonw1:'Занятие 1 · Error hunter и Match'};
   const now=()=>new Date().toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
 
   /* ---------- отправка в базу ---------- */
