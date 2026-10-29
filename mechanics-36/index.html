@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><script>(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("../my-hub.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>36 Mechanics · ESL</title>
+<style>
+:root{--ink:#22233a;--muted:#6b6d82;--bg:#f4f1f8;--line:#e5e1ee;--navy:#1f3b78;--ok:#2f8f57;--bad:#c2452f}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid #7a4fd1;outline-offset:2px}
+[hidden]{display:none!important}
+.wrap{max-width:1600px;margin:0 auto;padding:10px 14px 14px;display:flex;flex-direction:column;gap:8px}
+.top{display:flex;align-items:center;gap:14px;background:linear-gradient(90deg,#fde7f0,#e9e4fb 45%,#e3f0fb);border-radius:14px;padding:8px 16px}
+.top .badge{background:#22205a;color:#fff;font-weight:900;font-size:clamp(18px,2.4vw,26px);letter-spacing:.02em;padding:6px 16px;border-radius:10px;transform:skew(-6deg)}
+.top h1{margin:0;font-size:clamp(18px,2.2vw,26px);color:#22205a;letter-spacing:-.02em}
+.top p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.top .grow{flex:1}
+.top a{font-size:13px;font-weight:800;color:#22205a;text-decoration:none;border:1px solid #cfc8ea;background:#fff;border-radius:8px;padding:7px 12px}
+.sec{border-radius:14px;padding:0 8px 8px;background:#fff;box-shadow:0 4px 14px rgba(40,30,80,.06)}
+.sec h2{margin:0 -8px 8px;padding:6px 14px;border-radius:14px 14px 0 0;color:#fff;font-size:clamp(15px,1.5vw,19px);letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.sec h2 small{font-weight:600;opacity:.9;font-size:13px}
+.grid{display:grid;gap:7px}
+.g8{grid-template-columns:repeat(8,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{border:0;border-radius:11px;padding:7px 10px;text-align:left;display:flex;flex-direction:column;gap:2px;min-height:78px;background:var(--tbg);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.12);transition:transform .12s}
+.tile:hover{transform:translateY(-2px)}
+.tile .n{font-size:12px;font-weight:900;opacity:.85;letter-spacing:.06em}
+.tile b{font-size:15px;line-height:1.15}
+.tile span{font-size:12px;line-height:1.3;opacity:.92}
+.tile i{display:none}
+.s1 h2{background:linear-gradient(90deg,#e2456a,#f2795c)}.s1 .tile{--tbg:linear-gradient(160deg,#e2456a,#f07a5f)}
+.s2 h2{background:linear-gradient(90deg,#2f74d0,#4aa6ea)}.s2 .tile{--tbg:linear-gradient(160deg,#2f74d0,#4aa6ea)}
+.s3 h2{background:linear-gradient(90deg,#2a9b62,#4fc085)}.s3 .tile{--tbg:linear-gradient(160deg,#2a9b62,#52c088)}
+.s4 h2{background:linear-gradient(90deg,#ef8a1f,#f6b347)}.s4 .tile{--tbg:linear-gradient(160deg,#ec8420,#f4ad44)}
+.s5 h2{background:linear-gradient(90deg,#7a4fd1,#a274e6)}.s5 .tile{--tbg:linear-gradient(160deg,#7a4fd1,#a073e4)}
+.s6 h2{background:linear-gradient(90deg,#d9497f,#ef72a6)}.s6 .tile{--tbg:linear-gradient(160deg,#d9497f,#ee70a4)}
+.how{background:#fff;border-radius:14px;padding:10px 14px;box-shadow:0 4px 14px rgba(40,30,80,.06);font-size:14px;line-height:1.45}
+.how b{color:#22205a}
+.how ol{margin:4px 0 0;padding-left:20px}
+/* player */
+.ov{position:fixed;inset:0;background:rgba(25,20,50,.45);display:flex;align-items:flex-start;justify-content:center;padding:4vh 14px;z-index:50}
+.pl{width:min(1000px,100%);height:min(640px,92vh);background:#fff;border-radius:16px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.pl header{display:flex;align-items:center;gap:10px;padding:10px 16px;color:#fff;background:var(--hd)}
+.pl header h3{margin:0;font-size:20px;flex:1}
+.pl header small{display:block;font-size:12px;opacity:.9;font-weight:600}
+.pl header button{border:0;background:rgba(255,255,255,.92);color:#22205a;border-radius:8px;padding:7px 12px;font-weight:800;font-size:13px}
+.pl .use{padding:7px 16px;background:#faf8fd;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+.pl .use b{color:var(--ink)}
+.stage{flex:1;min-height:0;padding:12px 18px;display:flex;flex-direction:column;gap:10px;overflow:auto}
+/* shared demo ui */
+.serif,.q,.fc .w,.two button,.three button,.txt{font-family:Georgia,"Times New Roman",serif}
+.q{font-size:clamp(19px,3.2vh,24px);line-height:1.35;text-align:center;font-weight:700}
+.note{font-size:15px;color:var(--muted);line-height:1.4;text-align:center}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.row.c{justify-content:center}
+.grow{flex:1}
+.btn{border:1px solid #22205a;background:#22205a;color:#fff;border-radius:9px;padding:9px 16px;font-size:15px;font-weight:800}
+.btn.l{background:#f1eff8;border-color:#ddd8ee;color:#22205a}
+.btn:disabled{opacity:.4}
+.big{font-size:clamp(30px,6vh,46px);font-weight:900;color:#22205a;text-align:center}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.two button,.three button,.tiles button{border:1px solid #dcd8e8;background:#f8f7fb;border-radius:10px;padding:12px 10px;font-size:18px;font-weight:700}
+.two button:hover:not(:disabled),.three button:hover:not(:disabled),.tiles button:hover:not(:disabled){background:#efedf7}
+.right{background:#cfe9d8!important;border-color:var(--ok)!important;color:#17442b!important}
+.wrong{background:#f5d3ca!important;border-color:var(--bad)!important;color:#7a2a1b!important}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tiles.c4{grid-template-columns:repeat(4,1fr)}
+.tiles button{font-family:Georgia,serif;font-size:17px}
+.ringw{display:flex;align-items:center;gap:10px;justify-content:center}
+.ring{width:70px;height:70px;position:relative;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:9}.ring .t{stroke:#ebe8f3}.ring .p{stroke:#e2456a;stroke-linecap:round;transition:stroke-dashoffset .25s linear}
+.ring span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#22205a}
+.flip{perspective:1200px;height:220px;width:min(560px,100%);margin:0 auto;cursor:pointer}
+.flip-in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px 18px;gap:8px}
+.face.f{background:#eef0fb;border:2px solid #c9cdee}
+.face.b{background:#fff;border:2px solid #22205a;transform:rotateY(180deg)}
+.face .w{font-size:26px;font-weight:800;color:#22205a}
+.face .m{font-size:17px;line-height:1.35}
+.face small{font-size:12px;letter-spacing:.1em;font-weight:800;color:var(--muted)}
+.audio{display:flex;gap:8px;justify-content:center}
+.wave{height:34px;display:flex;align-items:center;gap:3px;justify-content:center}
+.wave i{width:4px;border-radius:3px;background:#4aa6ea;height:30%}
+.wave.on i{animation:wv .9s ease-in-out infinite}
+.wave i:nth-child(2n){animation-delay:.15s}.wave i:nth-child(3n){animation-delay:.3s}
+@keyframes wv{50%{height:100%}}
+.pill{display:inline-block;background:#f1eff8;color:#22205a;border-radius:7px;padding:4px 9px;font-size:13px;font-weight:800}
+.slots{display:flex;gap:6px;justify-content:center}
+.slots span{width:44px;height:50px;border-radius:8px;border:2px solid #ddd8ee;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#22205a;background:#fff}
+.bank{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.bank button{width:46px;height:46px;border-radius:10px;border:1px solid #ddd8ee;background:#f8f7fb;font-size:20px;font-weight:900}
+.bank button.used{visibility:hidden}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mem button{min-height:62px;border-radius:10px;border:1px solid #cfe3d7;background:#e3f1e8;color:transparent;font-weight:800;font-size:15px}
+.mem button.o{background:#fff;color:var(--ink)}.mem button.d{background:#cfe9d8;color:#17442b}
+.maze{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.maze div{height:44px;border-radius:8px;background:#e3f1e8;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#2a9b62}
+.maze div.me{background:#2a9b62;color:#fff}.maze div.goal{background:#f6d77a;color:#6a4b00}
+.mb{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.mb button{aspect-ratio:1.2;border:0;border-radius:12px;color:#fff;font-size:24px;font-weight:900;position:relative;overflow:hidden}
+.mb button:before{content:"";position:absolute;left:44%;top:0;bottom:0;width:12%;background:rgba(255,255,255,.45)}
+.mb button:after{content:"";position:absolute;top:40%;left:0;right:0;height:12%;background:rgba(255,255,255,.45)}
+.mb button span{position:relative;z-index:1}.mb button.x{opacity:.3}
+.box{background:#faf8fd;border:2px dashed #ddd8ee;border-radius:12px;padding:14px;text-align:center}
+.wheel{position:relative;width:220px;height:220px;margin:0 auto}
+.wheel svg{width:100%;height:100%;transition:transform 3s cubic-bezier(.17,.67,.15,1)}
+.wheel .pin{position:absolute;top:-6px;left:50%;transform:translateX(-50%);border-left:10px solid transparent;border-right:10px solid transparent;border-top:18px solid #22205a;z-index:2}
+.wheel .hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:#fff;border:2px solid #22205a;font-weight:900;color:#22205a;z-index:2}
+.ban{display:flex;gap:6px;justify-content:center}.ban span{background:#f6e3dd;color:#7a4232;border-radius:6px;padding:4px 10px;font-weight:800;text-decoration:line-through}
+.fipi{display:flex;flex-direction:column;gap:2px;font-family:Georgia,serif;font-size:18px;line-height:1.5}
+.fipi .r{display:grid;grid-template-columns:26px 1fr 110px;gap:8px;border-bottom:1px dashed #eee;padding:4px 0}
+.fipi .r .k{text-align:right;font:800 13px Inter,Arial,sans-serif;letter-spacing:.08em;color:#ef8a1f}
+.fipi .r .no{font:800 13px Inter,Arial,sans-serif;color:#ef8a1f}
+.gap{display:inline-block;min-width:100px;border:0;border-bottom:2px dashed #f0b56a;background:#fff6ea;color:transparent;font-family:Georgia,serif;font-size:inherit;padding:0 6px}
+.gap.s{color:#17442b;background:#d9eee0;border-bottom-color:var(--ok);font-weight:700}
+.hunt{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.hunt button{border:1px solid #ddd8ee;background:#f8f7fb;border-radius:8px;padding:8px 12px;font-family:Georgia,serif;font-size:20px;font-weight:700}
+.hunt button.hit{background:#f5d3ca;border-color:var(--bad);text-decoration:line-through}
+.stones{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px;border-radius:16px;background:linear-gradient(180deg,#ffb38a,#f06a3a)}
+.stones button{border:0;border-radius:40px;padding:14px;font-family:Georgia,serif;font-size:20px;font-weight:800;background:#e8e6e2;box-shadow:0 5px 0 #a9a39a}
+.jp{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.jp .cat{background:#22205a;color:#fff;border-radius:8px;padding:8px;text-align:center;font-weight:900;font-size:13px}
+.jp button{border:0;border-radius:8px;background:linear-gradient(180deg,#3b4fc4,#2a3a9c);color:#ffd96a;font-size:22px;font-weight:900;height:58px}
+.jp button.u{background:#e4e3ef;color:#a5a3bb}
+.track{display:flex;flex-direction:column;gap:8px;background:#3a3f4a;border-radius:12px;padding:10px}
+.lane{position:relative;height:40px;background:repeating-linear-gradient(90deg,#4b515e 0 30px,#454a56 30px 60px);border-radius:8px}
+.lane .car{position:absolute;top:4px;height:32px;padding:0 10px;border-radius:16px;display:flex;align-items:center;font-weight:900;font-size:13px;color:#fff;transition:left .4s}
+.lane .fin{position:absolute;right:6px;top:0;bottom:0;width:14px;background:repeating-linear-gradient(180deg,#fff 0 8px,#111 8px 16px);border-radius:3px}
+.locks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.locks div{background:#3a3f4a;color:#fff;border-radius:10px;padding:8px;text-align:center}.locks div b{display:block;font-size:28px}.locks div.o{background:var(--ok)}
+.pics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pics button{border:3px solid transparent;border-radius:12px;padding:0;overflow:hidden;height:230px;background:#eee}
+.pics img{width:100%;height:100%;object-fit:cover;display:block}
+.pics button.right{border-color:var(--ok)!important}.pics button.wrong{border-color:var(--bad)!important;opacity:.6}
+.hot{position:relative;width:min(640px,100%);margin:0 auto;border-radius:12px;overflow:hidden;cursor:crosshair}
+.hot img{width:100%;display:block}
+.hot .dot{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px rgba(0,0,0,.3)}
+.hot .dot.ok{background:#2f8f57}.hot .dot.no{background:#c2452f}
+.sd{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sd .txt{background:#faf8fd;border-radius:12px;padding:12px 14px;font-size:18px;line-height:1.7}
+.sd .txt button{border:0;background:none;padding:0 1px;font:inherit;border-radius:4px}
+.sd .txt button.f{background:#cfe9d8}.sd .txt button.x{background:#f5d3ca}
+.reveal{position:relative;width:min(380px,100%);height:330px;margin:0 auto;border-radius:12px;overflow:hidden}
+.reveal img{width:100%;height:100%;object-fit:cover;display:block}
+.reveal .cov{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr)}
+.reveal .cov button{border:1px solid rgba(255,255,255,.4);background:linear-gradient(160deg,#d9497f,#ee70a4);color:#fff;font-size:20px;font-weight:900}
+.reveal .cov button.g{visibility:hidden}
+@media(max-width:1100px){.g8{grid-template-columns:repeat(4,minmax(0,1fr))}.duo{grid-template-columns:1fr}}
+@media(max-width:620px){.g8,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.pics button{height:150px}.sd{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><div class="badge">ALL-IN-ONE</div><div><h1>36 интерактивных механик для ESL-уроков</h1><p>Нажмите на механику — откроется рабочий пример. Для урока назовите номер — встрою с вашим материалом.</p></div><span class="grow"></span><a href="../my-hub.html">← My Hub</a></div>
+  <section class="sec s1"><h2>1–8 · Быстрые минутные игры <small>Warm-up &amp; Revision</small></h2><div class="grid g8" id="g1"></div></section>
+  <section class="sec s2"><h2>9–16 · Аудирование <small>Listening · естественный голос</small></h2><div class="grid g8" id="g2"></div></section>
+  <section class="sec s3"><h2>17–24 · Лексика <small>Vocabulary</small></h2><div class="grid g8" id="g3"></div></section>
+  <div class="duo">
+    <section class="sec s4"><h2>25–28 · Грамматика <small>Grammar</small></h2><div class="grid g4" id="g4"></div></section>
+    <section class="sec s5"><h2>29–32 · Игры для доски <small>Board games</small></h2><div class="grid g4" id="g5"></div></section>
+  </div>
+  <div class="duo">
+    <section class="sec s6"><h2>33–36 · Визуальные и говорение <small>Speaking &amp; Visual</small></h2><div class="grid g4" id="g6"></div></section>
+    <div class="how"><b>Как использовать</b><ol><li>Выберите цель урока: лексика, грамматика, аудирование…</li><li>Подберите механики по номерам, например 16, 22, 28.</li><li>Напишите номера — я встрою их в урок с вашим материалом, без печатания, с переворотом карточек и в стиле урока.</li></ol></div>
+  </div>
+</div>
+
+<div class="ov" id="ov" hidden><div class="pl" id="pl"><header><div style="flex:1"><small id="plN"></small><h3 id="plT"></h3></div><button type="button" id="plRestart">Заново</button><button type="button" id="plClose">Закрыть ✕</button></header><div class="use" id="plUse"></div><div class="stage" id="st"></div></div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!==undefined)e.innerHTML=h;return e};
+const B=(c,h,f)=>{const b=el('button',c,h);b.type='button';b.onclick=f;return b};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const C=2*Math.PI*45;
+let T=[];function clr(){T.forEach(x=>{clearInterval(x);clearTimeout(x)});T=[];hush()}
+function ring(n){const w=el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" cx="50" cy="50" r="45" style="stroke-dasharray:'+C+';stroke-dashoffset:0"/></svg><span>'+n+'</span>');
+  w.set=(left,tot)=>{w.querySelector('.p').style.strokeDashoffset=C*(1-left/tot);w.querySelector('span').textContent=left};return w}
+function countdown(r,sec,onEnd){let l=sec;r.set(l,sec);const id=setInterval(()=>{l--;r.set(Math.max(0,l),sec);if(l<=0){clearInterval(id);onEnd&&onEnd()}},1000);T.push(id);return()=>clearInterval(id)}
+const say=(t,done)=>{try{if(window.CardAudio){CardAudio.say(t,null,done);return}}catch(e){}done&&setTimeout(done,800)};
+const hush=()=>{try{window.CardAudio&&CardAudio.stop()}catch(e){}};
+function wave(){const w=el('div','wave');for(let i=0;i<16;i++)w.appendChild(el('i'));return w}
+function done(st,score,again){st.append(el('div','big',score),el('div','note','Готово! Механика работает с любым вашим материалом.'));const r=el('div','row c');r.appendChild(B('btn','Ещё раз',again));st.appendChild(r)}
+function mcq(st,items,opts){/* generic one-question-at-a-time */let i=0,pts=0;opts=opts||{};
+  (function nx(){clr();st.innerHTML='';if(i>=items.length){done(st,pts+' / '+items.length,()=>{i=0;pts=0;nx()});return}
+    const it=items[i];st.appendChild(el('div','row','<span class="pill">'+(i+1)+' / '+items.length+'</span><span class="grow"></span><span class="pill">'+pts+' pts</span>'));
+    let rg;if(opts.sec){rg=ring(opts.sec);const w=el('div','ringw');w.appendChild(rg);st.appendChild(w)}
+    if(opts.pre)opts.pre(st,it);if(it.q)st.appendChild(el('div','q',it.q));
+    const g=el('div',opts.cls||(it.o.length===3?'three':'two'));let fin=false;const next=B('btn','Дальше →',()=>{i++;nx()});next.hidden=true;
+    const end=k=>{if(fin)return;fin=true;clr();[...g.children].forEach((b,j)=>{b.disabled=true;if(j===it.a)b.classList.add('right');else if(j===k)b.classList.add('wrong')});if(k===it.a)pts++;if(it.why)st.insertBefore(el('div','note',it.why),next.parentNode);next.hidden=false};
+    it.o.forEach((o,k)=>g.appendChild(B('',o,()=>end(k))));st.appendChild(g);const r=el('div','row');r.append(el('span','grow'),next);st.appendChild(r);
+    if(rg)countdown(rg,opts.sec,()=>end(-1))})()}
+
+/* ================= 36 mechanics ================= */
+const M=[
+/* 1 */['60-Second Challenge','Назови как можно больше слов за минуту','Разминка: тема урока, быстрая активация лексики',st=>{let n=0;const topics=['TRAVEL','MONEY','SOCIAL MEDIA','JOBS'];let k=0;
+  (function show(){clr();st.innerHTML='';n=0;st.appendChild(el('div','q','Name as many words about <u>'+topics[k%4]+'</u> as you can!'));const rg=ring(60);const w=el('div','ringw');w.appendChild(rg);st.appendChild(w);rg.set(60,60);
+   const cnt=el('div','big','0');st.appendChild(cnt);const r=el('div','row c');const plus=B('btn','+1 слово',()=>{n++;cnt.textContent=n});plus.disabled=true;
+   r.append(B('btn l','Старт 60 с',e=>{e.currentTarget.disabled=true;plus.disabled=false;countdown(rg,60,()=>{plus.disabled=true;cnt.textContent=n+' words!'})}),plus,B('btn l','Другая тема',()=>{k++;show()}));st.append(r,el('div','note','Ученик называет слова устно, учитель нажимает «+1».'))})()}],
+/* 2 */['Word Rush','Собери слово из букв, пока идёт таймер','Орфография и новые слова; без печатания — нажатием на буквы',st=>{const W=['TRAVEL','ALBUM','IDOL','DEBUT','FANDOM'];let i=0,pts=0;
+  (function nx(){clr();st.innerHTML='';if(i>=W.length){done(st,pts+' / '+W.length,()=>{i=0;pts=0;nx()});return}
+   const w=W[i],hint=['a journey to another place','a collection of songs','a famous singer fans love','the first performance','all the fans of a star'][i];let got='';
+   const rg=ring(25);const rw=el('div','ringw');rw.appendChild(rg);st.append(el('div','row','<span class="pill">'+(i+1)+' / '+W.length+'</span>'),rw,el('div','note','Clue: '+hint));
+   const sl=el('div','slots');w.split('').forEach(()=>sl.appendChild(el('span','','')));st.appendChild(sl);const bank=el('div','bank');
+   const fin=ok=>{clr();if(ok)pts++;[...sl.children].forEach((s,j)=>s.textContent=w[j]);bank.innerHTML='';const r=el('div','row c');r.appendChild(B('btn',ok?'Верно! Дальше →':'Время! Дальше →',()=>{i++;nx()}));st.appendChild(r)};
+   shuffle((w+'XQ').split('')).forEach(ch=>bank.appendChild(B('',ch,e=>{const b=e.currentTarget;if(ch===w[got.length]){b.classList.add('used');sl.children[got.length].textContent=ch;got+=ch;if(got===w)fin(true)}else{b.animate([{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'none'}],250)}})));
+   st.appendChild(bank);countdown(rg,25,()=>fin(false))})()}],
+/* 3 */['Odd One Out','Что лишнее? Нажми на лишнее слово','Лексика по группам; объяснить выбор устно',st=>mcq(st,[{q:'Which one is different?',o:['apple','banana','car','orange'],a:2,why:'car — the others are fruit.'},{q:'Which one is different?',o:['teacher','pilot','doctor','holiday'],a:3,why:'holiday — the others are jobs.'},{q:'Which one is different?',o:['splurge','save up','shell out','spend a fortune'],a:1,why:'save up — the others mean spending a lot.'},{q:'Which one is different?',o:['Seoul','Busan','Tokyo','Incheon'],a:2,why:'Tokyo — the others are in Korea.'},{q:'Which one is different?',o:['backlash','criticism','support','outrage'],a:2,why:'support — the others are negative.'}])],
+/* 4 */['Rapid Categories','Найди все слова категории за 40 секунд','Повторение лексики по темам',st=>{const R=[['JOBS',['teacher','pilot','doctor','driver','nurse','lawyer'],['coffee','city','camera']],['TRAVEL',['luggage','passport','flight','hostel','sightseeing','souvenir'],['salary','homework','printer']]];let k=0;
+  (function nx(){clr();st.innerHTML='';const [cat,yes,no]=R[k%2];let f=0,m=0;st.appendChild(el('div','q','Tap all the words for: <u>'+cat+'</u>'));const rg=ring(40);const w=el('div','ringw');w.appendChild(rg);st.appendChild(w);
+   const g=el('div','tiles');const end=()=>{clr();[...g.children].forEach(b=>{b.disabled=true;if(yes.includes(b.textContent))b.classList.add('right')});st.appendChild(el('div','note','Found '+f+' / '+yes.length+' · mistakes: '+m));const r=el('div','row c');r.appendChild(B('btn','Другая категория',()=>{k++;nx()}));st.appendChild(r)};
+   shuffle(yes.concat(no)).forEach(x=>g.appendChild(B('',x,e=>{const b=e.currentTarget;b.disabled=true;if(yes.includes(x)){b.classList.add('right');f++;if(f===yes.length)end()}else{b.classList.add('wrong');m++}})));st.appendChild(g);countdown(rg,40,end)})()}],
+/* 5 */['Last Word Standing','Слова на букву по очереди — кто последний?','Командная разминка: ученик против учителя',st=>{const L='CSTBMPRDF'.split('');let turn=0;
+  (function nx(){clr();st.innerHTML='';const letter=L[Math.floor(Math.random()*L.length)];const used=[];let cur=0;st.appendChild(el('div','big',letter));st.appendChild(el('div','note','Say a word that starts with this letter. 10 seconds per turn. No repeats!'));
+   const who=el('div','q','');const rg=ring(10);const w=el('div','ringw');w.appendChild(rg);st.append(who,w);let stop=null;
+   const go=()=>{stop&&stop();who.textContent=(cur%2?'Teacher':'Student')+'’s turn';stop=countdown(rg,10,()=>{who.textContent=(cur%2?'Student':'Teacher')+' wins! ('+used.length+' words)';sb.disabled=true})};
+   const sb=B('btn','Сказал(а) слово ✓',()=>{used.push(1);cur++;go()});const r=el('div','row c');r.append(B('btn l','Старт',e=>{e.currentTarget.disabled=true;go()}),sb,B('btn l','Новая буква',nx));st.appendChild(r)})()}],
+/* 6 */['Beat the Clock','Выбери форму, пока не вышло время','Грамматика на скорость — Speed Game',st=>mcq(st,[{q:'I ___ to school every day.',o:['go','goes','going','went'],a:0},{q:'She ___ to Seoul last summer.',o:['go','goes','went','going'],a:2},{q:'They are ___ to the concert now.',o:['go','going','went','goes'],a:1},{q:'He ___ K-dramas every evening.',o:['watch','watches','watching','watched'],a:1},{q:'We have ___ this film twice.',o:['see','saw','seen','seeing'],a:2}],{sec:10})],
+/* 7 */['3-2-1 Challenge','3 слова · 2 предложения · 1 вывод','Устная мини-презентация по теме',st=>{const tp=['friendship','money','social media','travel','school'];let k=0;
+  (function nx(){clr();st.innerHTML='';st.appendChild(el('div','q','Topic: <u>'+tp[k%tp.length]+'</u>'));['<b>3</b> words about the topic','<b>2</b> sentences with examples','<b>1</b> conclusion: “All in all, …”'].forEach(x=>{const r=el('div','row c');const b=B('btn l',x.replace(/<[^>]+>/g,''),e=>e.currentTarget.classList.toggle('right'));r.appendChild(b);st.appendChild(r)});
+   const rg=ring(60);const w=el('div','ringw');w.appendChild(rg);st.appendChild(w);rg.set(60,60);const r=el('div','row c');r.append(B('btn','Старт 60 с',e=>{e.currentTarget.disabled=true;countdown(rg,60)}),B('btn l','Другая тема',()=>{k++;nx()}));st.appendChild(r)})()}],
+/* 8 */['Quick Fire','Ответ за 5 секунд','Быстрые вопросы для разогрева',st=>{const Q=['Tea or coffee?','Your favourite season?','Summer or winter holidays?','City or countryside?','One word about today?','Books or films?'];let i=0;
+  (function nx(){clr();st.innerHTML='';if(i>=Q.length){done(st,Q.length+' answers',()=>{i=0;nx()});return}st.appendChild(el('div','row','<span class="pill">'+(i+1)+' / '+Q.length+'</span>'));st.appendChild(el('div','q',Q[i]));const rg=ring(5);const w=el('div','ringw');w.appendChild(rg);st.appendChild(w);const r=el('div','row c');r.appendChild(B('btn','Дальше →',()=>{i++;nx()}));st.appendChild(r);countdown(rg,5,()=>{T.push(setTimeout(()=>{i++;nx()},600))})})()}],
+/* 9 */['Listen & Tap','Услышь слово — нажми на него','Аудирование слов, произношение',st=>{const W=['passport','suitcase','camera','ticket','island','museum'];let i=0,pts=0,order=shuffle(W);
+  (function nx(){clr();st.innerHTML='';if(i>=order.length){done(st,pts+' / '+order.length,()=>{i=0;pts=0;order=shuffle(W);nx()});return}const w=order[i];const wv=wave();
+   const play=()=>{wv.classList.add('on');say(w,()=>wv.classList.remove('on'))};st.append(el('div','row','<span class="pill">'+(i+1)+' / '+order.length+'</span>'),wv);const a=el('div','audio');a.append(B('btn','▶ Слушать',play),B('btn l','Ещё раз',play));st.appendChild(a);
+   const g=el('div','tiles');let fin=false;W.forEach(x=>g.appendChild(B('',x,e=>{if(fin)return;fin=true;if(x===w){pts++;e.currentTarget.classList.add('right')}else{e.currentTarget.classList.add('wrong');[...g.children].find(b=>b.textContent===w).classList.add('right')}T.push(setTimeout(()=>{i++;nx()},900))})));st.appendChild(g);play()})()}],
+/* 10 */['Audio Bingo','Слушай и закрывай клетки — собери линию','Аудирование лексики в игровой форме',st=>{const W=['airport','hotel','beach','museum','ticket','market','castle','bridge','river'];let grid,called,marks;
+  (function nx(){clr();st.innerHTML='';grid=shuffle(W);called=shuffle(W);marks=new Set();let c=-1;const wv=wave();const info=el('div','note','Press “Next word”, listen and find it on your card.');
+   const g=el('div','tiles');grid.forEach((x,k)=>g.appendChild(B('',x,e=>{if(c<0||marks.has(k))return;if(x===called[c]){marks.add(k);e.currentTarget.classList.add('right');if(bingo())info.innerHTML='<b>BINGO!</b>'}else e.currentTarget.classList.add('wrong'),setTimeout(()=>e.currentTarget&&e.currentTarget.classList.remove('wrong'),500)})));
+   const bingo=()=>[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].some(l=>l.every(k=>marks.has(k)));
+   const a=el('div','audio');a.append(B('btn','▶ Next word',()=>{if(c<called.length-1){c++;wv.classList.add('on');say(called[c],()=>wv.classList.remove('on'))}}),B('btn l','Repeat',()=>{if(c>=0){wv.classList.add('on');say(called[c],()=>wv.classList.remove('on'))}}),B('btn l','New card',nx));st.append(wv,a,g,info)})()}],
+/* 11 */['Listen & Order','Расставь события в порядке, как услышал','Аудирование последовательности',st=>{const S=['First, we checked in at the airport.','Then we flew to Seoul.','After that, we visited a palace.','Finally, we went shopping in Myeongdong.'];
+  (function nx(){clr();st.innerHTML='';const wv=wave();const pos=[];st.append(wv,el('div','note','Listen to the story. Tap the sentences in the order you hear them.'));
+   const a=el('div','audio');a.appendChild(B('btn','▶ Listen',()=>{wv.classList.add('on');CardAudio?CardAudio.sayList(S,null,()=>wv.classList.remove('on')):0}));st.appendChild(a);
+   const g=el('div','');g.style.cssText='display:grid;gap:7px';shuffle(S).forEach(s=>{const b=B('btn l',s,e=>{if(pos.includes(s))return;pos.push(s);const ok=S[pos.length-1]===s;e.currentTarget.classList.add(ok?'right':'wrong');e.currentTarget.textContent=pos.length+'. '+s;if(pos.length===S.length){const r=el('div','row c');r.appendChild(B('btn','Ещё раз',nx));st.appendChild(r)}});b.style.cssText='font-family:Georgia,serif;font-size:17px;text-align:left';g.appendChild(b)});st.appendChild(g)})()}],
+/* 12 */['Who Said It?','Чьи это слова: фаната, агентства или звезды?','Аудирование + понимание позиции говорящего',st=>{const Q=[['I promise to show more maturity.',2],['We will not comment on private matters.',1],['Do you not get enough love from your fans?',0],['I bought ten albums to get one photocard.',0],['Our artists need time to focus on their work.',1],['I am sorry if I disappointed you.',2]];
+  mcq(st,Q.map(x=>({q:'',o:['A fan','The agency','The star'],a:x[1],t:x[0]})),{pre:(s,it)=>{const wv=wave();const p=()=>{wv.classList.add('on');say(it.t,()=>wv.classList.remove('on'))};const a=el('div','audio');a.append(B('btn','▶ Listen',p),B('btn l','Show text',e=>{e.currentTarget.textContent='“'+it.t+'”'}));s.append(wv,a);p()}})}],
+/* 13 */['Audio Gap Race','Услышь предложение — выбери пропущенное слово','Аудирование деталей на время',st=>{const Q=[['She has lived in Spain for five years.','She ___ lived in Spain for five years.',['has','had','is','was'],0],['We are flying to Seoul next week.','We are ___ to Seoul next week.',['driving','flying','sailing','going'],1],['The tickets sold out in ten minutes.','The tickets sold out in ___ minutes.',['two','five','ten','twenty'],2],['He has never been abroad.','He has ___ been abroad.',['always','often','ever','never'],3]];
+  mcq(st,Q.map(x=>({q:x[1],o:x[2],a:x[3],t:x[0]})),{sec:15,pre:(s,it)=>{const wv=wave();const p=()=>{wv.classList.add('on');say(it.t,()=>wv.classList.remove('on'))};const a=el('div','audio');a.append(B('btn','▶ Listen',p));s.append(wv,a);p()}})}],
+/* 14 */['Stop the Audio','Нажми STOP, когда услышишь нужную информацию','Аудирование конкретной информации',st=>{const S=['Our trip starts in Seoul.','On the first day we visit a royal palace.','The train to Busan leaves at nine fifteen.','In Busan we will stay near the beach.','The trip costs eight hundred dollars.'];const Q=[['Stop when you hear the TIME of the train.',2],['Stop when you hear the PRICE.',4],['Stop when you hear WHERE we will stay.',3]];let k=0;
+  (function nx(){clr();st.innerHTML='';if(k>=Q.length){done(st,'3 / 3',()=>{k=0;nx()});return}let cur=-1,run=false;const wv=wave();const fb=el('div','note','');st.append(el('div','q',Q[k][0]),wv);
+   const playFrom=i=>{if(!run||i>=S.length){wv.classList.remove('on');return}cur=i;say(S[i],()=>{T.push(setTimeout(()=>playFrom(i+1),350))})};
+   const a=el('div','audio');const stop=B('btn','STOP',()=>{if(!run)return;run=false;hush();wv.classList.remove('on');const ok=cur===Q[k][1];fb.innerHTML=(ok?'<b>Right!</b> ':'<b>Not that one.</b> ')+'You heard: “'+S[cur]+'”';const r=el('div','row c');r.appendChild(B('btn','Дальше →',()=>{k++;nx()}));st.appendChild(r)});stop.style.background='#c2452f';stop.style.borderColor='#c2452f';
+   a.append(B('btn l','▶ Play',()=>{if(run)return;run=true;wv.classList.add('on');playFrom(0)}),stop);st.append(a,fb)})()}],
+/* 15 */['Audio Mystery','Где это происходит? Угадай по описанию','Аудирование общего смысла',st=>{const Q=[['Please fasten your seatbelts. We are landing in twenty minutes.',['on a plane','in a café','at a concert'],0],['The lights went down and thousands of fans started to sing.',['in a hospital','at a concert','in a library'],1],['Could I have the bill, please? The soup was delicious.',['at a bank','at a school','in a restaurant'],2],['Please be quiet. Students are reading and studying here.',['in a library','at a stadium','at a party'],0]];
+  mcq(st,Q.map(x=>({q:'What situation is it?',o:x[1],a:x[2],t:x[0]})),{pre:(s,it)=>{const wv=wave();const p=()=>{wv.classList.add('on');say(it.t,()=>wv.classList.remove('on'))};const a=el('div','audio');a.append(B('btn','▶ Listen',p));s.append(wv,a);p()}})}],
+/* 16 */['Secret Question','Вопрос только звучит — 40 секунд на ответ','Устная часть, интервью (как ЕГЭ задание 3)',st=>{const Q=['What do you usually do at the weekend?','Would you like to visit South Korea? Why?','What makes a good friend?','How much time do you spend online every day?','What would you do if you won a lot of money?'];let i=0;
+  (function nx(){clr();st.innerHTML='';const c=el('div','flip','<div class="flip-in"><div class="face f"><small>LISTEN · 40 SECONDS</small><div class="w">Question '+(i+1)+'</div></div><div class="face b"><small>THE QUESTION WAS</small><div class="m serif"></div></div></div>');c.querySelector('.m').textContent=Q[i];
+   const rg=ring(40);rg.set(40,40);const w=el('div','ringw');let stop=null;const play=()=>{stop&&stop();clr();rg.set(40,40);say(Q[i],()=>{stop=countdown(rg,40)})};
+   w.append(rg,B('btn','Play ▶',play),B('btn l','Replay',play),B('btn l','Stop',()=>{hush();stop&&stop()}));
+   const r=el('div','row');r.append(B('btn l','← Назад',()=>{i=(i+Q.length-1)%Q.length;nx()}),el('span','grow'),B('btn l','Перевернуть',()=>c.classList.toggle('on')),el('span','grow'),B('btn l','Вперёд →',()=>{i=(i+1)%Q.length;nx()}));st.append(c,w,r)})()}],
+/* 17 */['Quizlet Flashcards','Слово → переворот: значение и пример','Вся новая лексика урока',st=>{const W=[['opportunity','a chance to do something','This trip is a great opportunity to practise English.'],['journey','travelling from one place to another','The journey to Busan takes three hours.'],['souvenir','something you buy to remember a place','I bought a fan as a souvenir.'],['crowded','full of people','The subway is crowded in the morning.'],['affordable','not too expensive','The hostel was clean and affordable.']];let i=0;
+  (function nx(){st.innerHTML='';const c=el('div','flip','<div class="flip-in"><div class="face f"><div class="w"></div><small>CLICK TO FLIP</small></div><div class="face b"><div class="m"></div><div class="m serif" style="font-style:italic"></div></div></div>');c.querySelector('.w').textContent=W[i][0];const m=c.querySelectorAll('.face.b .m');m[0].textContent=W[i][1];m[1].textContent=W[i][2];c.onclick=()=>c.classList.toggle('on');
+   const r=el('div','row c');r.append(B('btn l','←',()=>{i=(i+W.length-1)%W.length;nx()}),el('span','pill',(i+1)+' / '+W.length),B('btn l','Listen',()=>say(W[i][0])),B('btn l','→',()=>{i=(i+1)%W.length;nx()}));st.append(c,r)})()}],
+/* 18 */['Memory Match','Найди пары: слово — перевод','Закрепление лексики',st=>{const P=[['travel','путешествовать'],['journey','поездка'],['luggage','багаж'],['flight','рейс'],['ticket','билет'],['abroad','за границей']];
+  (function nx(){st.innerHTML='';let open=[],d=0,lock=false,tries=0;const g=el('div','mem');shuffle(P.flatMap((p,i)=>[[i,p[0]],[i,p[1]]])).forEach(t=>{const b=B('',t[1],()=>{if(lock||b.classList.contains('o'))return;b.classList.add('o');open.push([b,t[0]]);if(open.length===2){tries++;const [x,y]=open;if(x[1]===y[1]){x[0].classList.add('d');y[0].classList.add('d');d++;open=[];if(d===P.length){info.textContent='All pairs in '+tries+' tries!'}}else{lock=true;setTimeout(()=>{x[0].classList.remove('o');y[0].classList.remove('o');open=[];lock=false},800)}}});g.appendChild(b)});const info=el('div','note','Open two cards. Find the word and its translation.');const r=el('div','row c');r.appendChild(B('btn l','Перемешать',nx));st.append(g,info,r)})()}],
+/* 19 */['Vocabulary Maze','Выбирай правильный путь — дойди до сокровища','Коллокации и устойчивые выражения',st=>{const S=[['make',['a decision','homework'],0],['do',['a mistake','the shopping'],1],['take',['a photo','a noise'],0],['go',['abroad','a trip'],0],['spend',['money','a promise'],0],['catch',['a flight','a ticket'],0]];
+  (function nx(){st.innerHTML='';let p=0;const maze=el('div','maze');const draw=()=>{maze.innerHTML='';for(let k=0;k<=S.length;k++)maze.appendChild(el('div',k===p?'me':(k===S.length?'goal':''),k===S.length?'GOAL':(k===p?'YOU':String(k+1))))};
+   const box=el('div','');const ask=()=>{draw();box.innerHTML='';if(p>=S.length){box.append(el('div','big','Treasure found!'));const r=el('div','row c');r.appendChild(B('btn','Ещё раз',nx));box.appendChild(r);return}
+    const s=S[p];box.appendChild(el('div','q','Which way? <u>'+s[0]+'</u> + …'));const g=el('div','two');s[1].forEach((o,k)=>g.appendChild(B('',o,e=>{if(k===s[2]){e.currentTarget.classList.add('right');setTimeout(()=>{p++;ask()},500)}else{e.currentTarget.classList.add('wrong');e.currentTarget.disabled=true}})));box.appendChild(g)};st.append(maze,box);ask()})()}],
+/* 20 */['Auction','Купи правильное предложение! BUY или PASS','Грамматика: ученик «покупает» верные предложения',st=>{const L=[['This house is too expensive.',true],['She don’t like coffee.',false],['I have been to Seoul twice.',true],['If I will have time, I will call you.',false],['Rarely do fans buy only one album.',true],['He is said to has left.',false]];
+  (function nx(){st.innerHTML='';let i=0,money=1000;const box=el('div','');st.appendChild(box);const draw=()=>{box.innerHTML='';box.appendChild(el('div','row','<span class="pill">Lot '+Math.min(i+1,L.length)+' / '+L.length+'</span><span class="grow"></span><span class="pill">Budget: $'+money+'</span>'));
+    if(i>=L.length){box.appendChild(el('div','big','$'+money));const r=el('div','row c');r.appendChild(B('btn','Ещё раз',nx));box.appendChild(r);return}
+    box.appendChild(el('div','q','“'+L[i][0]+'”'));const r=el('div','row c');[100,200,300].forEach(v=>r.appendChild(B('btn','BUY $'+v,()=>{money+=L[i][1]?v:-v;fb(L[i][1]?'Correct sentence — you win $'+v+'!':'Wrong sentence — you lose $'+v+'.')})));r.appendChild(B('btn l','PASS',()=>fb(L[i][1]?'It was correct — you missed it!':'Good pass — it was wrong.')));box.appendChild(r)};
+   const fb=t=>{box.lastChild.remove();box.appendChild(el('div','note',t));const r=el('div','row c');r.appendChild(B('btn','Next lot →',()=>{i++;draw()}));box.appendChild(r)};draw()})()}],
+/* 21 */['Mystery Box','Открой коробку — внутри задание или сюрприз','Говорение, бонусы и сюрпризы',st=>{const Tk=['Describe your best holiday in 30 seconds.','BONUS! +2 points.','Name five things you take on a trip.','Ask your teacher a question.','Would you rather fly or go by train? Why?','SWAP! Your teacher answers this time.','Tell us about a place you want to visit.','Explain the word “souvenir”.','Finish: “If I could travel anywhere…”','Say three adjectives about your city.'];const col=['#e2456a','#2f74d0','#2a9b62','#ef8a1f','#7a4fd1','#d9497f','#1f8fa0','#c0841f','#3b63c4','#a24fd1'];
+  (function nx(){st.innerHTML='';const ord=shuffle(Tk);const g=el('div','mb');const box=el('div','box q','Choose a box!');Tk.forEach((_,k)=>{const b=B('','<span>'+(k+1)+'</span>',()=>{if(b.classList.contains('x'))return;b.classList.add('x');box.textContent=ord[k]});b.style.background=col[k];g.appendChild(b)});const r=el('div','row c');r.appendChild(B('btn l','Закрыть все',nx));st.append(g,box,r)})()}],
+/* 22 */['Wheel Challenge','Крути колесо — говори на выпавшую тему','Говорение на случайную тему',st=>{const W=['Food','Travel','Education','Culture','Hobbies','Money'];const col=['#f7d7df','#d7e6f7','#d8efe2','#fbe6cc','#e6dcf6','#f7d9e6'];let rot=0;
+  (function nx(){st.innerHTML='';const n=W.length;let s='<svg viewBox="0 0 100 100">';W.forEach((w,i)=>{const a0=i/n*2*Math.PI-Math.PI/2,a1=(i+1)/n*2*Math.PI-Math.PI/2,am=(a0+a1)/2;s+='<path d="M50 50 L'+(50+50*Math.cos(a0))+' '+(50+50*Math.sin(a0))+' A50 50 0 0 1 '+(50+50*Math.cos(a1))+' '+(50+50*Math.sin(a1))+' Z" fill="'+col[i]+'" stroke="#fff"/><text x="'+(50+33*Math.cos(am))+'" y="'+(50+33*Math.sin(am))+'" font-size="7" font-weight="800" fill="#22205a" text-anchor="middle" dominant-baseline="middle" font-family="Arial" transform="rotate('+(am*180/Math.PI+90)+' '+(50+33*Math.cos(am))+' '+(50+33*Math.sin(am))+')">'+w+'</text>'});s+='</svg>';
+   const wh=el('div','wheel','<div class="pin"></div>'+s);const out=el('div','q','Spin the wheel!');wh.appendChild(B('hub','SPIN',()=>{const k=Math.floor(Math.random()*n),seg=360/n;rot=rot-(rot%360)+1800+(360-(k*seg+seg/2));wh.querySelector('svg').style.transform='rotate('+rot+'deg)';T.push(setTimeout(()=>{out.innerHTML='Talk about <u>'+W[k]+'</u> for 30 seconds!'},3100))}));st.append(wh,out)})()}],
+/* 23 */['Forbidden Word','Объясни слово без запрещённых слов','Перефразирование, говорение',st=>{const F=[['famous',['actor','singer','music']],['holiday',['summer','rest','trip']],['phone',['call','mobile','screen']],['friend',['best','person','love']],['money',['pay','buy','dollar']]];let i=0,p=0;
+  (function nx(){st.innerHTML='';if(i>=F.length){done(st,p+' / '+F.length,()=>{i=0;p=0;nx()});return}st.append(el('div','row','<span class="pill">'+(i+1)+' / '+F.length+'</span>'),el('div','big serif',F[i][0]),el('div','note','Explain it without these words:'));const b=el('div','ban');F[i][1].forEach(x=>b.appendChild(el('span','',x)));st.appendChild(b);const r=el('div','row c');r.append(B('btn l','Сказал запрещённое',()=>{i++;nx()}),B('btn','Объяснил! +1',()=>{p++;i++;nx()}));st.appendChild(r)})()}],
+/* 24 */['What’s Missing?','Запомни слова — какое исчезло?','Память и лексика',st=>{const W=['apple','camera','globe','phone','backpack','guitar','umbrella','ticket'];
+  (function nx(){clr();st.innerHTML='';const set=shuffle(W).slice(0,6);const miss=set[Math.floor(Math.random()*6)];const g=el('div','tiles');set.forEach(x=>g.appendChild(B('',x,()=>{})));const rg=ring(5);const w=el('div','ringw');w.appendChild(rg);st.append(el('div','note','Remember the words! 5 seconds.'),w,g);
+   countdown(rg,5,()=>{g.innerHTML='';set.forEach(x=>g.appendChild(B('',x===miss?'?':x,()=>{})));st.firstChild.textContent='Which word is missing?';const opts=shuffle([miss].concat(shuffle(W.filter(x=>!set.includes(x))).slice(0,2)));const o=el('div','three');opts.forEach(x=>o.appendChild(B('',x,e=>{[...o.children].forEach(b=>{b.disabled=true;if(b.textContent===miss)b.classList.add('right')});if(x!==miss)e.currentTarget.classList.add('wrong');const r=el('div','row c');r.appendChild(B('btn','Ещё раз',nx));st.appendChild(r)})));st.appendChild(o)})})()}],
+/* 25 */['Gap Fill','Текст с пропусками, как в ЕГЭ — ответ по нажатию','Грамматика и словообразование (19–29)',st=>{const R=[['If I','more time, I would travel the world.','HAVE','had'],['Last year we','to South Korea for the first time.','GO','went'],['The palace','in the fourteenth century.','BUILD','was built'],['It was the most','trip of my life.','EXCITE','exciting'],['I have never seen such a','city before.','BEAUTY','beautiful']];
+  st.innerHTML='';st.appendChild(el('div','note','Read the text. Change the word on the right so that it fits. Tap a gap to check.'));const f=el('div','fipi');R.forEach((x,i)=>{const r=el('div','r');r.appendChild(el('span','no',String(i+1)));const l=el('div','');l.append(document.createTextNode(x[0]+' '),B('gap',x[3],e=>e.currentTarget.classList.toggle('s')),document.createTextNode(' '+x[1]));r.append(l,el('span','k',x[2]));f.appendChild(r)});st.appendChild(f)}],
+/* 26 */['Grammar Doctor','Найди и «вылечи» ошибку','Поиск ошибок, разбор грамматики',st=>{const G=[['She don’t like coffee.','don’t','She doesn’t like coffee.'],['I have went to Seoul.','went','I have been to Seoul.'],['He is more taller than me.','more','He is taller than me.'],['If I will see him, I will tell him.','will','If I see him, I will tell him.'],['We was at the concert yesterday.','was','We were at the concert yesterday.']];let i=0,p=0;
+  (function nx(){st.innerHTML='';if(i>=G.length){done(st,p+' / '+G.length,()=>{i=0;p=0;nx()});return}const g=G[i];let first=true,fin=false;st.append(el('div','row','<span class="pill">'+(i+1)+' / '+G.length+'</span>'),el('div','note','Tap the word that causes the problem.'));const h=el('div','hunt');
+   g[0].split(' ').forEach((w,k)=>h.appendChild(B('',w,e=>{if(fin)return;if(w.replace(/[.,]/g,'')===g[1]&&g[0].split(' ').findIndex(x=>x.replace(/[.,]/g,'')===g[1])===k){fin=true;e.currentTarget.classList.add('hit');if(first)p++;st.appendChild(el('div','q','Cure: '+g[2]));const r=el('div','row c');r.appendChild(B('btn','Дальше →',()=>{i++;nx()}));st.appendChild(r)}else{first=false;e.currentTarget.animate([{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'none'}],250)}})));st.appendChild(h)})()}],
+/* 27 */['Transformation','Перефразируй с ключевым словом — ответ на обороте','Трансформации, как в экзамене',st=>{const X=[['She started learning English in 2018.','FOR','She has been learning English for … years.'],['It’s a pity I can’t go to the concert.','WISH','I wish I could go to the concert.'],['People say he is very rich.','SAID','He is said to be very rich.'],['I didn’t know, so I didn’t call you.','HAD','If I had known, I would have called you.'],['We rarely see such crowds.','DO','Rarely do we see such crowds.']];let i=0;
+  (function nx(){st.innerHTML='';const c=el('div','flip','<div class="flip-in"><div class="face f"><small>REWRITE WITH THE KEY WORD</small><div class="m serif"></div><div class="w"></div></div><div class="face b"><small>ANSWER</small><div class="m serif"></div></div></div>');const m=c.querySelectorAll('.m');m[0].textContent=X[i][0];c.querySelector('.w').textContent=X[i][1];m[1].textContent=X[i][2];c.onclick=()=>c.classList.toggle('on');
+   const r=el('div','row c');r.append(B('btn l','←',()=>{i=(i+X.length-1)%X.length;nx()}),el('span','pill',(i+1)+' / '+X.length),B('btn l','Перевернуть',()=>c.classList.toggle('on')),B('btn l','→',()=>{i=(i+1)%X.length;nx()}));st.append(c,r,el('div','note','Ученик говорит ответ устно, потом переворачиваем карточку.'))})()}],
+/* 28 */['Speed Game · Error Hunt','Верно или ошибка? 20 секунд на решение','Грамматика на скорость (вместо «Error Bomb»)',st=>mcq(st,[{q:'She has <u>went</u> to Paris.',o:['Correct','Mistake'],a:1,why:'She has <b>gone</b> to Paris.'},{q:'I <u>have lived</u> here since 2020.',o:['Correct','Mistake'],a:0},{q:'If I <u>would have</u> money, I’d buy it.',o:['Correct','Mistake'],a:1,why:'If I <b>had</b> money…'},{q:'Rarely <u>do</u> we watch TV.',o:['Correct','Mistake'],a:0},{q:'He is said <u>to be</u> very kind.',o:['Correct','Mistake'],a:0}],{sec:20})],
+/* 29 */['Floor Is Lava','Прыгай на правильный камень — не упади в лаву','Грамматика или понимание текста, 3 варианта',st=>mcq(st,[{q:'Yesterday I ___ to the cinema.',o:['go','goes','went'],a:2},{q:'She usually ___ to school by bus.',o:['go','goes','went'],a:1},{q:'They ___ to Seoul next month.',o:['are going','went','goes'],a:0},{q:'Have you ever ___ abroad?',o:['be','been','was'],a:1},{q:'If it rains, we ___ at home.',o:['stay','will stay','stayed'],a:1}].map(x=>x),{cls:'stones',pre:(s)=>{s.appendChild(el('div','note','Choose the safe stone! Wrong stone = lava.'))}})],
+/* 30 */['Jeopardy','Категории и баллы — игра ученик против учителя','Повторение темы в конце урока',st=>{const D=[['Vocabulary',[['A trip by plane','a flight'],['Bags you take on a trip','luggage'],['Something to remember a place','a souvenir']]],['Grammar',[['Past of “go”','went'],['She ___ (be) to Seoul twice.','has been'],['If I ___ (have) time, I would go.','had']]],['Korea',[['Capital of South Korea','Seoul'],['Korean TV series','K-dramas'],['Second biggest city','Busan']]]];
+  (function nx(){st.innerHTML='';let used=new Set(),a=0,b=0;const draw=()=>{st.innerHTML='';const g=el('div','jp');D.forEach(c=>g.appendChild(el('div','cat',c[0])));for(let v=0;v<3;v++)D.forEach((c,ci)=>{const id=ci+'-'+v;g.appendChild(B(used.has(id)?'u':'',String((v+1)*100),()=>{if(used.has(id))return;used.add(id);ask(ci,v)}))});st.append(g,el('div','row c','<span class="pill">Student: '+a+'</span><span class="pill">Teacher: '+b+'</span>'))};
+   const ask=(ci,v)=>{st.innerHTML='';const q=D[ci][1][v],pts=(v+1)*100;const c=el('div','flip','<div class="flip-in"><div class="face f"><small>'+D[ci][0]+' · '+pts+'</small><div class="w" style="font-size:22px"></div></div><div class="face b"><small>ANSWER</small><div class="w"></div></div></div>');c.querySelectorAll('.w')[0].textContent=q[0];c.querySelectorAll('.w')[1].textContent=q[1];c.onclick=()=>c.classList.toggle('on');
+    const r=el('div','row c');r.append(B('btn l','Перевернуть',()=>c.classList.toggle('on')),B('btn','Student +'+pts,()=>{a+=pts;draw()}),B('btn','Teacher +'+pts,()=>{b+=pts;draw()}),B('btn l','Никто',draw));st.append(c,r)};draw()})()}],
+/* 31 */['Race Track','Каждый верный ответ двигает твою машину','Соревнование на скорость, повторение',st=>{const Q=[['She ___ to Seoul last year.',['went','goes'],0],['I have ___ this film.',['saw','seen'],1],['If I ___ rich, I’d travel.',['were','am'],0],['Rarely ___ we meet.',['do','are'],0],['He is said ___ rich.',['being','to be'],1],['They ___ watching TV now.',['are','is'],0]];
+  (function nx(){st.innerHTML='';let i=0,me=0,cpu=0;const tr=el('div','track');const mk=(c,n)=>{const l=el('div','lane','<div class="fin"></div>');const car=el('div','car',n);car.style.background=c;car.style.left='4px';l.appendChild(car);tr.appendChild(l);return car};const c1=mk('#e2456a','STUDENT'),c2=mk('#2f74d0','TEACHER');
+   const box=el('div','');st.append(tr,box);const mv=()=>{c1.style.left=(4+me/Q.length*78)+'%';c2.style.left=(4+cpu/Q.length*78)+'%'};
+   const ask=()=>{box.innerHTML='';if(i>=Q.length){box.appendChild(el('div','big',me>=cpu?'Student wins!':'Teacher wins!'));const r=el('div','row c');r.appendChild(B('btn','Ещё раз',nx));box.appendChild(r);return}const q=Q[i];box.appendChild(el('div','q',q[0]));const g=el('div','two');q[1].forEach((o,k)=>g.appendChild(B('',o,e=>{[...g.children].forEach(b=>b.disabled=true);if(k===q[2]){me++;e.currentTarget.classList.add('right')}else{cpu++;e.currentTarget.classList.add('wrong')}mv();T.push(setTimeout(()=>{i++;ask()},700))})));box.appendChild(g);box.appendChild(el('div','note','Right answer → your car moves. Wrong → the teacher’s car moves.'))};ask()})()}],
+/* 32 */['Escape Room','Реши задания — получи цифры кода','Финальная игра урока',st=>{const R=[['Plural of “child”?',['childs','children'],1,'4'],['Past of “buy”?',['bought','buyed'],0,'7'],['Opposite of “cheap”?',['expensive','poor'],0,'2']];
+  (function nx(){st.innerHTML='';let l=0;const lk=el('div','locks');const box=el('div','');st.append(lk,box);const draw=()=>{lk.innerHTML='';R.forEach((r,k)=>lk.appendChild(el('div',k<l?'o':'','LOCK '+(k+1)+'<b>'+(k<l?r[3]:'?')+'</b>')));box.innerHTML='';
+    if(l>=R.length){box.append(el('div','big','CODE 472 — ESCAPED!'));const r=el('div','row c');r.appendChild(B('btn','Ещё раз',nx));box.appendChild(r);return}const q=R[l];box.appendChild(el('div','q',q[0]));const g=el('div','two');q[1].forEach((o,k)=>g.appendChild(B('',o,e=>{if(k===q[2]){e.currentTarget.classList.add('right');T.push(setTimeout(()=>{l++;draw()},500))}else{e.currentTarget.classList.add('wrong');e.currentTarget.disabled=true}})));box.appendChild(g)};draw()})()}],
+/* 33 */['Image Choice','Какая фотография подходит к предложению?','Визуальная опора: лексика, описание фото',st=>{const P='../gabi-english-hub/assets/';const Q=[['A young man is learning to drive.',['driving','graduation','wedding'],0],['A couple has just got married.',['family','wedding','senior'],1],['He has just finished university.',['teen','driving','graduation'],2],['A family is having a picnic outdoors.',['family','schoolchild','young-adult'],0]];let i=0,p=0;
+  (function nx(){st.innerHTML='';if(i>=Q.length){done(st,p+' / '+Q.length,()=>{i=0;p=0;nx()});return}const q=Q[i];st.append(el('div','row','<span class="pill">'+(i+1)+' / '+Q.length+'</span>'),el('div','q',q[0]));const g=el('div','pics');let fin=false;
+   q[1].forEach((f,k)=>{const b=B('','<img alt="" src="'+P+f+'.jpg">',()=>{if(fin)return;fin=true;if(k===q[2])p++;[...g.children].forEach((x,j)=>{if(j===q[2])x.classList.add('right');else if(j===k)x.classList.add('wrong')});T.push(setTimeout(()=>{i++;nx()},1000))});g.appendChild(b)});st.appendChild(g)})()}],
+/* 34 */['Hotspot','Нажми на нужное место на фотографии','Лексика по фото: предметы, детали',st=>{const Z=[['the glasses',30,27,7],['the watch',76,47,6],['the steering wheel',82,66,10],['the window',50,36,9],['the sun visor',72,13,8]];let i=0,p=0;
+  (function nx(){st.innerHTML='';if(i>=Z.length){done(st,p+' / '+Z.length,()=>{i=0;p=0;nx()});return}const z=Z[i];st.appendChild(el('div','q','Tap <u>'+z[0]+'</u> ('+(i+1)+' / '+Z.length+')'));const h=el('div','hot','<img alt="" src="../gabi-english-hub/assets/driving.jpg">');let fin=false;
+   h.onclick=e=>{if(fin)return;const r=h.getBoundingClientRect();const x=(e.clientX-r.left)/r.width*100,y=(e.clientY-r.top)/r.height*100;const ok=Math.hypot(x-z[1],(y-z[2])*0.667)<z[3]*1.3;const d=el('div','dot '+(ok?'ok':'no'));d.style.left=x+'%';d.style.top=y+'%';h.appendChild(d);
+    if(ok){fin=true;p++;T.push(setTimeout(()=>{i++;nx()},700))}else{const c=el('div','dot ok');c.style.left=z[1]+'%';c.style.top=z[2]+'%';h.appendChild(c);fin=true;T.push(setTimeout(()=>{i++;nx()},1100))}};st.appendChild(h)})()}],
+/* 35 */['Spot the Difference','Найди 4 отличия между двумя текстами','Внимательное чтение, детали',st=>{const A='Last summer Anna flew to Seoul with her sister . They stayed in a small hotel near the river and visited three palaces . On Sunday they went to a concert .';const Bt='Last winter Anna flew to Seoul with her brother . They stayed in a small hostel near the river and visited three palaces . On Saturday they went to a concert .';
+  (function nx(){st.innerHTML='';const a=A.split(' '),b=Bt.split(' ');let f=0;const tot=a.filter((w,k)=>w!==b[k]).length;st.appendChild(el('div','note','Text B has '+tot+' differences. Tap them in text B.'));const sd=el('div','sd');const ta=el('div','txt','<b style="font-family:Inter">A</b><br>'+A.replace(/ \./g,'.'));const tb=el('div','txt','<b style="font-family:Inter">B</b><br>');
+   b.forEach((w,k)=>{if(w==='.'){tb.lastChild.textContent+='.';return}const x=B('',w,()=>{if(x.dataset.d)return;x.dataset.d=1;if(w!==a[k]){x.classList.add('f');f++;info.textContent='Found '+f+' / '+tot+(f===tot?' — well done!':'')}else x.classList.add('x')});tb.append(x,document.createTextNode(' '))});const info=el('div','q','Found 0 / '+tot);sd.append(ta,tb);st.append(sd,info)})()}],
+/* 36 */['Picture Reveal · 30-Second Talk','Открывай фото по кусочку — опиши за 30 секунд','Описание фото (ЕГЭ задание 4)',st=>{(function nx(){clr();st.innerHTML='';const rv=el('div','reveal','<img alt="" src="../gabi-english-hub/assets/graduation.jpg">');const cov=el('div','cov');for(let k=0;k<12;k++)cov.appendChild(B('',String(k+1),e=>{e.currentTarget.classList.add('g')}));rv.appendChild(cov);
+   const rg=ring(30);rg.set(30,30);const w=el('div','ringw');w.append(rg,B('btn','Открыть всё',()=>[...cov.children].forEach(b=>b.classList.add('g'))),B('btn','Старт 30 с',e=>{e.currentTarget.disabled=true;countdown(rg,30)}),B('btn l','Заново',nx));st.append(el('div','note','Guess what is in the photo. Then describe it for 30 seconds: who, where, what is happening?'),rv,w)})()}]
+];
+
+/* ---------- render catalog ---------- */
+const GR=[[0,8,'g1'],[8,16,'g2'],[16,24,'g3'],[24,28,'g4'],[28,32,'g5'],[32,36,'g6']];
+const HD=['linear-gradient(90deg,#e2456a,#f2795c)','linear-gradient(90deg,#2f74d0,#4aa6ea)','linear-gradient(90deg,#2a9b62,#4fc085)','linear-gradient(90deg,#ef8a1f,#f6b347)','linear-gradient(90deg,#7a4fd1,#a274e6)','linear-gradient(90deg,#d9497f,#ef72a6)'];
+let curM=-1;
+GR.forEach(([a,b,id],gi)=>{for(let i=a;i<b;i++){const m=M[i];$(id).appendChild(B('tile','<span class="n">'+(i+1)+'</span><b>'+m[0]+'</b><span>'+m[1]+'</span><i>▶ ОТКРЫТЬ</i>',()=>openM(i,gi)))}});
+function openM(i,gi){curM=i;clr();$('pl').style.setProperty('--hd',HD[gi]);$('plN').textContent='МЕХАНИКА '+(i+1);$('plT').textContent=M[i][0];$('plUse').innerHTML='<b>Для чего:</b> '+M[i][2];$('ov').hidden=false;const st=$('st');st.innerHTML='';M[i][3](st)}
+$('plClose').onclick=()=>{clr();$('ov').hidden=true};
+$('plRestart').onclick=()=>{if(curM>=0){const g=GR.findIndex(([a,b])=>curM>=a&&curM<b);openM(curM,g)}};
+$('ov').onclick=e=>{if(e.target.id==='ov'){clr();$('ov').hidden=true}};
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('ov').hidden){clr();$('ov').hidden=true}});
+</script>
+<script src="../card-audio.js?v=1"></script>
+</body>
+</html>
