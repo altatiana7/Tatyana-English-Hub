@@ -163,6 +163,23 @@ a{color:var(--navy)}
 .gapline input{padding:6px 9px;border:1px solid #c8d6cd;border-radius:7px;font-size:16px;width:100%}
 .gapline input.good{border-color:#2f8f57;background:#eef8f1}
 .gapline input.bad{border-color:#c2452f;background:#fdf1ee}
+/* true or false · seoul */
+.tf{perspective:1200px;flex:1;min-height:150px;max-height:340px}
+.tf-in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.tf.flipped .tf-in{transform:rotateY(180deg)}
+.tf-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:14px 18px;gap:8px}
+.tf-front{background:#eaf2ee;border:2px solid #a9c8bb}
+.tf-front .st{font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,3.3vh,24px);line-height:1.35;color:var(--ink)}
+.tf-front small,.tf-back small{font-size:12px;color:var(--muted);letter-spacing:.1em;font-weight:800}
+.tf-back{background:#fff;border:2px solid var(--navy);transform:rotateY(180deg)}
+.tf-back .vd{font-size:clamp(20px,3.4vh,24px);font-weight:800;letter-spacing:.04em}
+.tf-back .vd.t{color:#2f7a4c}.tf-back .vd.f{color:#b0503b}
+.tf-back .fact{font-size:clamp(16px,2.7vh,19px);line-height:1.4;color:#3d5654}
+.tfbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tfbtns button{border:1px solid #c9d8cf;border-radius:10px;padding:clamp(10px,2vh,16px);font-size:clamp(17px,2.9vh,20px);font-weight:800;letter-spacing:.06em}
+.tfbtns .yes{background:#e3efe7;color:#24553a}.tfbtns .no{background:#f6e8e2;color:#7a4232}
+.tfbtns button:hover:not(:disabled){filter:brightness(.97)}
+.tfbtns button.right{box-shadow:inset 0 0 0 2px #2f8f57}.tfbtns button.wrong{box-shadow:inset 0 0 0 2px #c2452f}
 @media(max-width:1500px){header p{display:none}}
 @media(max-width:1250px){header h1{font-size:18px}.tab{padding:8px 10px;font-size:14px}.tab small{display:none}}
 @media(max-height:620px){.app{grid-template-rows:48px minmax(0,1fr)}header p{display:none}.fc{max-height:200px}}
@@ -216,6 +233,15 @@ a{color:var(--navy)}
   <div class="card"><div class="head"><div><p class="eyebrow">08 / GAME</p><h2>Forbidden word</h2></div><span class="pill" id="fwPill"></span></div><div class="body" id="fw"></div></div>
 </section>
 
+<section class="screen s2a" data-name="Seoul">
+  <div class="card"><div class="head"><div><p class="eyebrow">08B / WARM-UP VIDEO</p><h2>Seoul’s “do nothing” contest</h2></div><a class="link" href="https://www.youtube.com/watch?v=RIMOKjroJbI" target="_blank" rel="noopener">YouTube</a></div>
+    <div class="prompt"><b>Before you watch:</b> people in Seoul compete to do… absolutely nothing. Guess the rules.</div>
+    <div class="media" id="seoulMedia"></div>
+    <div class="body" id="seoulQ" style="flex:0 0 auto"></div>
+  </div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">08C / GAME</p><h2>True or false? Seoul edition</h2></div><span class="pill" id="tfPill"></span></div><div class="body" id="tf"></div></div>
+</section>
+
 <section class="screen s2a" data-name="Listening">
   <div class="card"><div class="head"><div><p class="eyebrow">09 / BBC LISTENING</p><h2>Social media and teenage health</h2></div></div>
     <div class="prompt"><b>Before:</b> Who is responsible for young people’s relationship with social media?</div>
@@ -262,8 +288,9 @@ function go(i){
   [...$('tabs').children].forEach((c,k)=>c.classList.toggle('on',k===cur));
   $('prev').disabled=cur===0;
   $('next').textContent=cur===screens.length-1?'START AGAIN':'NEXT';
-  if(cur!==3)videoReset();
-  if(cur!==5)ctStop();
+  if(cur!==3)seoulVideoReset();
+  if(cur!==4)videoReset();
+  if(cur!==6)ctStop();
   if(cur!==0&&bTimer){bStop();bombRender()}
 }
 $('prev').onclick=()=>go(cur-1);
@@ -631,13 +658,49 @@ function ctRender(){
   r.appendChild(rw);
 }
 
+
+/* ---------- 08b/08c Seoul warm-up ---------- */
+const SYT='RIMOKjroJbI';
+function seoulVideoReset(){const m=$('seoulMedia');m.innerHTML='<img alt="" src="https://i.ytimg.com/vi/'+SYT+'/hqdefault.jpg">';m.appendChild(btn('btn play','Watch ▶',()=>{m.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+SYT+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="AP: Space-out competition in Seoul"></iframe>'}))}
+const SEOULQ=[['How long do the contestants have to sit still?','90 minutes — no talking, no phones, no moving.'],['How do the judges know who is the calmest?','A heart-rate monitor: the steadiest heart rate wins.'],['Why do people want to take part?','To escape stress and burnout — and simply to rest.']];
+function seoulQRender(){const r=$('seoulQ');r.innerHTML='';SEOULQ.forEach((q,i)=>{const t=el('div','task','<div class="step" style="display:flex;align-items:center"><b style="flex:1;margin:0;font-size:16px;letter-spacing:0;color:var(--ink);font-weight:650">'+(i+1)+' · '+q[0]+'</b></div>');const a=el('div','ans',q[1]);a.hidden=true;t.querySelector('.step').appendChild(btn('link','Answer',e=>{a.hidden=!a.hidden;e.target.textContent=a.hidden?'Answer':'Hide'}));t.appendChild(a);r.appendChild(t)})}
+const TF=[
+ ['From March 2026, phones are banned during lessons in all South Korean schools — by law.',true,'True. The law covers primary, middle and high schools. Phones are allowed only for learning or emergencies.'],
+ ['A 2025 survey in Seoul found that only 1 in 10 young people are at risk of smartphone overdependence.',false,'False. It is almost 4 in 10 (39.8%).'],
+ ['In that survey, high school students had the highest “high-risk” share of all age groups.',true,'True. 13.1% of high school students were in the high-risk group.'],
+ ['Korea has state-funded camps where teenagers live without their phones for two to four weeks.',true,'True. Phones are taken away on arrival. One girl said that after five days she realised she could live without hers.'],
+ ['At these camps, teens play video games all day to “use up” their addiction.',false,'False. They do art classes, play board games and volunteer at a centre for elderly people.'],
+ ['Seoul holds a contest where you win by doing absolutely nothing for 90 minutes.',true,'True. It is the Han River “Space-Out” competition — no phones, no talking, no moving.'],
+ ['In the Space-Out contest, the winner is chosen only by the audience.',false,'False. Heart-rate monitors decide: the calmest heart rate wins. The audience gives only an extra “artistic” score.'],
+ ['So many people apply for the Space-Out contest that there are about 35 applicants for each place.',true,'True. Only 80 teams of up to three people get in.'],
+ ['Naver, Korea’s biggest web portal, closed comments under celebrity news because of online hate.',true,'True. It happened in 2020 to protect stars from malicious comments.'],
+ ['When aespa’s Karina revealed she was dating an actor, all her fans congratulated her.',false,'False. She faced a backlash: one fan even sent a truck with a digital billboard to her agency. She posted a handwritten apology.'],
+ ['In the Netflix K-drama “Celebrity”, influencers rank each other by the number of followers.',true,'True. The higher your follower count, the more power you have — and rivals attack each other with fake news.'],
+ ['Teenagers check their phones about 20 times a day.',false,'False. A 2023 Common Sense Media study found that teens aged 13+ pick up their phones over 100 times a day.'],
+ ['More than half of teens aged 11–17 get at least 237 notifications a day.',true,'True — and about a quarter of them arrive during school hours.'],
+ ['Australia banned social media for under-16s, and about 4.7 million accounts were closed.',true,'True. The ban started on 10 December 2025 and covers TikTok, Instagram, YouTube, Snapchat and others.']
+];
+let tfI,tfPts,tfDone;
+function tfReset(){tfI=0;tfPts=0;tfDone=false;tfRender()}
+function tfRender(){const r=$('tf');r.innerHTML='';
+  if(tfI>=TF.length){$('tfPill').textContent=tfPts+' / '+TF.length;r.appendChild(el('div','big',tfPts+' / '+TF.length));
+    const l=el('div','list');['Which fact surprised you most? Why?','Should Russian schools ban phones in class like Korea?','Would you enter the Space-Out contest? Could you win?'].forEach(x=>l.appendChild(el('div','',x)));r.appendChild(l);
+    const rw=el('div','row');rw.appendChild(btn('btn light','Play again',tfReset));r.appendChild(rw);return}
+  const t=TF[tfI];tfDone=false;$('tfPill').textContent=(tfI+1)+' / '+TF.length+' · '+tfPts+' pts';
+  r.appendChild(el('div','meter','<i style="width:'+(tfI/TF.length*100)+'%"></i>'));
+  const card=el('div','tf','<div class="tf-in"><div class="tf-face tf-front"><small>TRUE OR FALSE?</small><div class="st"></div></div><div class="tf-face tf-back"><div class="vd '+(t[1]?'t':'f')+'">'+(t[1]?'TRUE':'FALSE')+'</div><div class="fact"></div></div></div>');
+  card.querySelector('.st').textContent=t[0];card.querySelector('.fact').textContent=t[2].replace(/^(True|False)[.\s—–-]*/,'');r.appendChild(card);
+  const b=el('div','tfbtns');const next=btn('btn',tfI===TF.length-1?'See result':'Next →',()=>{tfI++;tfRender()});next.hidden=true;
+  [['TRUE',true,'yes'],['FALSE',false,'no']].forEach(([lab,val,cls])=>b.appendChild(btn(cls,lab,e=>{if(tfDone)return;tfDone=true;const ok=val===t[1];if(ok)tfPts++;e.currentTarget.classList.add(ok?'right':'wrong');[...b.children].forEach(x=>x.disabled=true);card.classList.add('flipped');next.hidden=false;$('tfPill').textContent=(tfI+1)+' / '+TF.length+' · '+tfPts+' pts'})));
+  r.appendChild(b);const rw=el('div','row');rw.append(el('span','note grow','Guess first — then flip the card.'),next);r.appendChild(rw);
+}
 /* ---------- reset: every time from the start ---------- */
 function resetAll(){
   qfStart();
   bombReset();
   segTabs('talkTabs',TALK.map(t=>t.h),i=>{const t=TALK[i],r=$('talk');r.innerHTML='';r.appendChild(el('div','chips',t.chips.map(c=>'<span>'+c+'</span>').join('')));const l=el('div','list');t.q.forEach(x=>l.appendChild(el('div','',x)));r.appendChild(l)});
   stereoInit();document.querySelectorAll('#side button').forEach(x=>x.classList.remove('sel'));
-  fcReset();prReset();fwReset();videoReset();
+  fcReset();prReset();fwReset();videoReset();seoulVideoReset();seoulQRender();tfReset();
   segTabs('afterTabs',['Check','Talk'],afterRender);
   gTab=-1;segTabs('gramTabs',GRAM.map(g=>g.h),gramRender);
   gdReset();segTabs('priceTabs',['Cancel culture','Public image'],priceRender);ctReset();
