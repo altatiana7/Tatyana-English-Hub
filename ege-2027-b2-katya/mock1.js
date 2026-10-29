@@ -78,9 +78,7 @@ const M={
 
 const STEPS=[
  {id:'l3',label:'Аудирование 3–9',min:0,draw:lis3},
- {id:'r10',label:'Чтение 10',min:8,draw:read10},{id:'r11',label:'Чтение 11',min:8,draw:read11},{id:'r12',label:'Чтение 12–18',min:15,draw:read12},
- {id:'g',label:'Грамматика 19–24',min:0,draw:()=>gaps('g')},{id:'wf',label:'Словообразование 25–29',min:0,draw:()=>gaps('wf')},{id:'v',label:'Лексика 30–36',min:0,draw:voc},
- {id:'w37',label:'Письмо 37',min:20,draw:()=>writing(37)},{id:'w38',label:'Эссе 38',min:40,draw:()=>writing(38)},
+ /* 29.10: Кате задано только аудирование 3–9; остальные части варианта (чтение, 19–36, 37, 38) были на уроке */
  {id:'rep',label:T?'Отчёт':'Отправить',min:0,draw:report}];
 const cnt=o=>Object.keys(o).filter(k=>o[k]!=null&&o[k]!=='').length;
 const NEED={l3:7,r10:7,r11:6,r12:7,g:6,wf:5,v:7};
@@ -189,22 +187,21 @@ function writing(n){const key='w'+n,L=LIM[n];
 
 /* ---------- Отчёт / отправка ---------- */
 const right=(sel,key)=>key.filter((a,k)=>sel[k]===a).length;
-function scores(){return [['Аудирование 3–9',right(S.l3,M.l3.a),7],['Чтение 10',right(S.r10,M.r10.a),7],['Чтение 11',right(S.r11,M.r11.a),6],['Чтение 12–18',right(S.r12,M.r12.a),7],
-  ['Грамматика 19–24',M.g.items.filter((x,i)=>gOk('g',i)).length,6],['Словообразование 25–29',M.wf.items.filter((x,i)=>gOk('wf',i)).length,5],['Лексика 30–36',right(S.v,M.v.a),7]];}
+function scores(){return [['Аудирование 3–9',right(S.l3,M.l3.a),7]];}
 function report(){
   if(!T){head(S.sent?'Работа отправлена учителю. Ответы и баллы покажет учитель.':'Проверьте, всё ли сделано, и отправьте работу учителю. Отправить можно один раз: после отправки ответы изменить нельзя.');
     const res=el('div','res'),a=el('div','panel'),b=el('div','panel');a.append(el('h3',null,'Что сделано'));
     STEPS.slice(0,-1).forEach(s=>a.append(el('div','rrow','<span>'+s.label+'</span><span class="note">'+(isDone(s.id)?'готово':'не закончено')+'</span><b>'+(isDone(s.id)?'✓':'—')+'</b>')));
-    b.append(el('h3',null,'Как отправить'),el('p',null,'Нажмите «Отправить учителю на проверку» – работа сразу уйдёт учителю. Ничего копировать и пересылать не нужно.'),el('p','note','Учитель получит все ответы, письмо 37 и эссе 38.'));
+    b.append(el('h3',null,'Как отправить'),el('p',null,'Нажмите «Отправить учителю на проверку» – работа сразу уйдёт учителю. Ничего копировать и пересылать не нужно.'),el('p','note','Учитель получит все ответы.'));
     res.append(a,b);main.append(res);const nav=el('div','navrow');
     nav.append(KS.button(PG,()=>{const d=JSON.parse(JSON.stringify(S));delete d.sent;delete d.checked;return d;},o=>{SENT=o;S.sent=true;redraw();}));main.append(nav);return;}
   if(RV)main.append(KS.reviewBar(RV));
-  head(RV?'Работа Кати проверена автоматически. Письмо 37 и эссе 38 оцените по критериям ФИПИ.':S.checked?'Работа проверена.':'Нажмите «Проверить работу», чтобы увидеть верные и неверные ответы.');
+  head(RV?'Работа Кати проверена автоматически.':S.checked?'Работа проверена.':'Нажмите «Проверить работу», чтобы увидеть верные и неверные ответы.');
   const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
   if(S.checked){const r=scores();a.append(el('h3',null,'Верно · автоматическая проверка'));r.forEach(x=>{const p=x[1]/x[2];a.append(el('div','rrow','<span>'+x[0]+'</span><div class="meter"><i class="'+(p<.7?'low':p<.86?'mid':'high')+'" style="width:'+p*100+'%"></i></div><b>'+x[1]+' / '+x[2]+'</b>'));});
-    a.append(el('div','rrow','<span class="total">Итого</span><span class="note">без письма</span><b class="total">'+r.reduce((s,x)=>s+x[1],0)+' / 45</b>'));}
+    a.append(el('div','rrow','<span class="total">Итого</span><span class="note"></span><b class="total">'+r.reduce((s,x)=>s+x[1],0)+' / 7</b>'));}
   else{a.append(el('h3',null,'Что сделано'));STEPS.slice(0,-1).forEach(s=>a.append(el('div','rrow','<span>'+s.label+'</span><b>'+(isDone(s.id)?'✓':'—')+'</b>')));}
-  b.append(el('h3',null,'Письменная часть'),el('p',null,'Задание 37: <b>'+words(S.w37)+'</b> слов (нужно 100–140).<br>Задание 38 ('+E38[S.c38].title+'): <b>'+words(S.w38)+'</b> слов (нужно 200–250).'),el('p','note','Ошибки видны на вкладках: зелёным – верно, красным – неверно, после стрелки – правильный ответ.'));
+  b.append(el('h3',null,'Ответы'),el('p','note','Ошибки видны на вкладках: зелёным – верно, красным – неверно, после стрелки – правильный ответ.'));
   res.append(a,b);main.append(res);
   const nav=el('div','navrow');if(!S.checked)nav.append(btn('Проверить работу',()=>{S.checked=true;save();redraw();},'acc'));
   if(!RV){const clr=btn('Очистить всё',()=>{if(clr.dataset.sure){try{localStorage.removeItem(KEY);}catch(e){}S=blank();go(0);}else{clr.dataset.sure=1;clr.textContent='Точно очистить? Нажмите ещё раз';}},'sm sp');nav.append(clr);}
