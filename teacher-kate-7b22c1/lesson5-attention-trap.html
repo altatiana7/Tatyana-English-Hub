@@ -184,6 +184,26 @@ a{color:var(--navy)}
 @media(max-width:1250px){header h1{font-size:18px}.tab{padding:8px 10px;font-size:14px}.tab small{display:none}}
 @media(max-height:620px){.app{grid-template-rows:48px minmax(0,1fr)}header p{display:none}.fc{max-height:200px}}
 @media(max-width:820px){body{overflow:auto}.app{height:auto;min-height:100dvh;grid-template-rows:auto 1fr}header{flex-wrap:wrap;padding:8px 12px}.screen{position:static}.s3,.s2,.s2a,.sheet .cols{grid-template-columns:1fr}.card{min-height:320px}.tabs{order:3;flex-basis:100%;justify-content:flex-start;overflow:auto}}
+/* ---------- bright theme (36 mechanics style) ---------- */
+body{background:#f3f1f7}
+.card{padding-top:0;overflow:hidden;border:0;box-shadow:0 6px 18px rgba(40,30,80,.08)}
+.card .head{margin:0 calc(-1 * clamp(12px,1.2vw,18px));padding:clamp(7px,1.3vh,10px) clamp(12px,1.2vw,18px);border-bottom:0;background:var(--hd);color:#fff}
+.card .head .eyebrow{color:rgba(255,255,255,.85)}
+.card .head h2{color:#fff}
+.card .head .pill{background:rgba(255,255,255,.92);color:#2a2340}
+.card .head .seg button{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.4);color:#fff}
+.card .head .seg button.on{background:#fff;border-color:#fff;color:#2a2340}
+.card .head .btn.light{background:rgba(255,255,255,.92);border-color:transparent;color:#2a2340}
+.card .head .link{color:#fff}
+.screen:nth-of-type(1){--hd:linear-gradient(90deg,#e2456a,#f2795c)}
+.screen:nth-of-type(2){--hd:linear-gradient(90deg,#2a9b62,#4fc085)}
+.screen:nth-of-type(3){--hd:linear-gradient(90deg,#2f74d0,#4aa6ea)}
+.screen:nth-of-type(4){--hd:linear-gradient(90deg,#d9497f,#ef72a6)}
+.screen:nth-of-type(5){--hd:linear-gradient(90deg,#ef8a1f,#f6b347)}
+.screen:nth-of-type(6){--hd:linear-gradient(90deg,#7a4fd1,#a274e6)}
+.screen:nth-of-type(7){--hd:linear-gradient(90deg,#1f3b78,#3b63c4)}
+.tab.on{background:linear-gradient(90deg,#7a4fd1,#e2456a);border-color:transparent}
+.card.tint{background:#fffaf6}
 </style>
 </head>
 <body>
@@ -199,7 +219,7 @@ a{color:var(--navy)}
 
 <section class="screen s3" data-name="Revision">
   <div class="card"><div class="head"><div><p class="eyebrow">01 / QUICK FIRE</p><h2>Money &amp; generations</h2></div><span class="pill" id="qfPill"></span></div><div class="body" id="qf"></div></div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">02 / HOMEWORK CHECK · BOMB</p><h2>Mixed conditionals</h2></div><span class="pill" id="bombPill"></span></div><div class="body" id="bomb"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">02 / HOMEWORK CHECK · SPEED GAME</p><h2>Mixed conditionals</h2></div><span class="pill" id="bombPill"></span></div><div class="body" id="bomb"></div></div>
   <div class="card"><div class="head"><div><p class="eyebrow">03 / TALK</p><div class="seg" id="talkTabs" style="margin-top:3px"></div></div></div><div class="body" id="talk"></div></div>
 </section>
 
@@ -383,10 +403,10 @@ function bombRender(lastK,exploded){
   bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="bRing" cx="50" cy="50" r="45" stroke-dasharray="'+BC+'" stroke-dashoffset="'+(BC*(1-bT/15))+'"/></svg><span id="bNum">'+bT+'</span>'));
   const allDone=Object.keys(bDone).length===BOMB.length;
   const pageDone=[...Array(to-from)].every((_,j)=>(from+j) in bDone);
-  if(!bTimer&&!pageDone){bar.appendChild(btn('btn','Light the fuse',()=>{bNextLive();bTimer=setInterval(()=>{bT--;bRing();if(bT<=0){const k=bLive;if(k>=0)bAnswer(k,null)}},1000);bombRender()}))}
+  if(!bTimer&&!pageDone){bar.appendChild(btn('btn','Start',()=>{bNextLive();bTimer=setInterval(()=>{bT--;bRing();if(bT<=0){const k=bLive;if(k>=0)bAnswer(k,null)}},1000);bombRender()}))}
   else if(bTimer)bar.appendChild(el('span','note grow','15 seconds per sentence. Choose before it explodes.'));
   if(pageDone&&!allDone)bar.appendChild(btn('btn','Next 3 →',()=>{bStop();bPage++;bT=15;bLive=-1;bombRender()}));
-  if(allDone){bar.appendChild(el('span','note grow','<b>'+bPts+' / '+BOMB.length+'</b> · explosions: '+bBoom));bar.appendChild(btn('btn light','Play again',bombReset))}
+  if(allDone){bar.appendChild(el('span','note grow','<b>'+bPts+' / '+BOMB.length+'</b> · time-outs: '+bBoom));bar.appendChild(btn('btn light','Play again',bombReset))}
   r.appendChild(bar);
   for(let k=from;k<to;k++){
     const it=BOMB[k],d=el('div','bomb-item'+(k===bLive&&bTimer?' live':'')+((k in bDone)?' done':''));
@@ -396,7 +416,7 @@ function bombRender(lastK,exploded){
     it.o.forEach(o=>{const b=btn('',o,()=>{if(!bTimer||k!==bLive)return;bAnswer(k,o)});
       if(k in bDone){b.disabled=true;if(o===it.a)b.classList.add('right');else if(o===bDone[k])b.classList.add('wrong')}
       p.appendChild(b)});
-    if((k in bDone)&&bDone[k]===null)p.appendChild(el('span','bang','BOOM!'));
+    if((k in bDone)&&bDone[k]===null)p.appendChild(el('span','bang','TIME!'));
     d.appendChild(p);r.appendChild(d);
   }
 }

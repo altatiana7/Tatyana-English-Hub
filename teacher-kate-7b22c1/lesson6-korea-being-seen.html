@@ -206,7 +206,7 @@ a{color:var(--navy)}
 .nums button.on{background:var(--navy);border-color:var(--navy);color:#fff}
 /* quick fire */
 .qf2{flex:1;display:flex;flex-direction:column;justify-content:center;gap:10px;min-height:0}
-.qf2 .lab{font-size:12px;letter-spacing:.12em;font-weight:800;color:var(--muted);text-align:center}
+.lab,.qf2 .lab{font-size:12px;letter-spacing:.12em;font-weight:800;color:var(--muted);text-align:center}
 .or{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}
 .or div{background:#fff;border:1px solid #dbe5dd;border-radius:12px;padding:clamp(12px,2.6vh,20px) 10px;text-align:center;font-family:Georgia,serif;font-size:clamp(18px,3vh,22px);font-weight:700;color:var(--ink)}
 .or b{font-size:13px;color:var(--accent);letter-spacing:.1em}
@@ -281,6 +281,62 @@ a{color:var(--navy)}
 .s321 div{display:flex;gap:10px;align-items:center;background:#f3f6f1;border-radius:8px;padding:7px 10px;font-size:15px;line-height:1.3}
 .s321 b{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex:none;font-size:14px}
 .wbank{display:flex;flex-wrap:wrap;gap:5px}.wbank span{background:#f6e7c4;color:#5a4410;border-radius:6px;padding:2px 8px;font-size:14px;font-weight:700}
+/* mystery box */
+.mbgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.mbgrid button{aspect-ratio:1.15;border:0;border-radius:12px;color:#fff;font-size:clamp(20px,3.6vh,28px);font-weight:800;position:relative;overflow:hidden;box-shadow:0 4px 0 rgba(0,0,0,.14)}
+.mbgrid button:before{content:"";position:absolute;left:44%;top:0;bottom:0;width:12%;background:rgba(255,255,255,.45)}
+.mbgrid button:after{content:"";position:absolute;top:40%;left:0;right:0;height:12%;background:rgba(255,255,255,.45)}
+.mbgrid button span{position:relative;z-index:1}
+.mbgrid button.opened{opacity:.35;box-shadow:none}
+.mbtask{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;background:#fff;border:2px dashed #e0c7a8;border-radius:12px;padding:12px 16px;min-height:0}
+.mbtask .topic{font-size:clamp(18px,3vh,22px)}
+/* odd one out */
+.odd{flex:1;display:flex;flex-direction:column;gap:9px;justify-content:center;min-height:0}
+/* jeopardy */
+.jp{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;flex:1;min-height:0}
+.jp .cat{background:#1f3b78;color:#fff;border-radius:8px;padding:7px 4px;text-align:center;font-size:13px;font-weight:800;letter-spacing:.05em}
+.jp button{border:0;border-radius:8px;background:linear-gradient(180deg,#2f58b5,#244a9c);color:#ffd96a;font-size:clamp(18px,3.2vh,24px);font-weight:800;min-height:clamp(40px,8vh,64px);box-shadow:0 3px 0 #18336f}
+.jp button.used{background:#dfe5f1;color:#9aa6bf;box-shadow:none}
+.score{display:flex;gap:8px;align-items:center}
+.score span{background:#eef2fa;border-radius:8px;padding:6px 10px;font-weight:800;color:#1f3b78;font-size:15px}
+.jq{perspective:1200px;flex:1;min-height:130px;max-height:260px}
+.jq-in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.jq.flipped .jq-in{transform:rotateY(180deg)}
+.jq-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px 16px;gap:8px}
+.jq-front{background:linear-gradient(180deg,#2f58b5,#244a9c);color:#fff}
+.jq-front small{color:#ffd96a;font-weight:800;letter-spacing:.1em;font-size:13px}
+.jq-front .topic{color:#fff}
+.jq-back{background:#fff;border:2px solid #2f58b5;transform:rotateY(180deg)}
+.jq-back .topic{color:#1f3b78}
+/* escape room */
+.locks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.locks div{border-radius:10px;padding:8px 4px;text-align:center;background:#3a3f4a;color:#fff;display:flex;flex-direction:column;gap:2px}
+.locks div small{font-size:11px;letter-spacing:.1em;font-weight:800;opacity:.75}
+.locks div b{font-size:clamp(22px,4vh,30px)}
+.locks div.open{background:#2f8f57}
+.locks div.cur{box-shadow:0 0 0 3px #f0b84a}
+.door{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}
+.door .code{font-size:clamp(34px,7vh,52px);font-weight:800;letter-spacing:.3em;color:#2f8f57}
+/* ---------- bright theme (36 mechanics style) ---------- */
+body{background:#f3f1f7}
+.card{padding-top:0;overflow:hidden;border:0;box-shadow:0 6px 18px rgba(40,30,80,.08)}
+.card .head{margin:0 calc(-1 * clamp(12px,1.2vw,18px));padding:clamp(7px,1.3vh,10px) clamp(12px,1.2vw,18px);border-bottom:0;background:var(--hd);color:#fff}
+.card .head .eyebrow{color:rgba(255,255,255,.85)}
+.card .head h2{color:#fff}
+.card .head .pill{background:rgba(255,255,255,.92);color:#2a2340}
+.card .head .seg button{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.4);color:#fff}
+.card .head .seg button.on{background:#fff;border-color:#fff;color:#2a2340}
+.card .head .btn.light{background:rgba(255,255,255,.92);border-color:transparent;color:#2a2340}
+.card .head .link{color:#fff}
+.screen:nth-of-type(1){--hd:linear-gradient(90deg,#e2456a,#f2795c)}
+.screen:nth-of-type(2){--hd:linear-gradient(90deg,#2a9b62,#4fc085)}
+.screen:nth-of-type(3){--hd:linear-gradient(90deg,#2f74d0,#4aa6ea)}
+.screen:nth-of-type(4){--hd:linear-gradient(90deg,#d9497f,#ef72a6)}
+.screen:nth-of-type(5){--hd:linear-gradient(90deg,#ef8a1f,#f6b347)}
+.screen:nth-of-type(6){--hd:linear-gradient(90deg,#7a4fd1,#a274e6)}
+.screen:nth-of-type(7){--hd:linear-gradient(90deg,#1f3b78,#3b63c4)}
+.tab.on{background:linear-gradient(90deg,#7a4fd1,#e2456a);border-color:transparent}
+.card.tint{background:#fffaf6}
 .tnote{position:fixed;right:14px;top:62px;z-index:30}
 .tnote .panel{position:absolute;right:0;top:0;width:min(420px,90vw);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #0002;padding:12px 14px;font-size:14px;line-height:1.45}
 .tnote .panel b{color:var(--navy)}
@@ -307,7 +363,7 @@ a{color:var(--navy)}
       <div class="row"><button class="btn light" type="button" id="ivPrev">← Back</button><span class="grow"></span><button class="btn light" type="button" id="ivFlip">Flip the card</button><span class="grow"></span><button class="btn light" type="button" id="ivNext">Forward →</button></div>
     </div>
   </div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">02 / QUICK FIRE</p><h2>This or that? 5 seconds</h2></div><span class="pill" id="qfPill"></span></div><div class="body" id="qf"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">02 / QUICK FIRE · MYSTERY BOX</p><div class="seg" id="wTabs" style="margin-top:3px"></div></div><span class="pill" id="qfPill"></span></div><div class="body" id="qf"></div></div>
 </section>
 
 <section class="screen s3" data-name="Vocabulary">
@@ -317,7 +373,7 @@ a{color:var(--navy)}
       <div class="fcnav"><button class="btn light" type="button" id="fcPrev">←</button><span class="cnt" id="fcCnt"></span><button class="btn light" type="button" id="fcNext">→</button></div>
     </div>
   </div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">04 / MEMORY MATCH</p><h2>Word ↔ meaning</h2></div><span class="pill" id="memPill"></span></div><div class="body" id="mem"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">04 / MEMORY MATCH · ODD ONE OUT</p><div class="seg" id="mTabs" style="margin-top:3px"></div></div><span class="pill" id="memPill"></span></div><div class="body" id="mem"></div></div>
   <div class="card"><div class="head"><div><p class="eyebrow">05 / GAME</p><h2>Forbidden word</h2></div><span class="pill" id="fwPill"></span></div><div class="body" id="fw"></div></div>
 </section>
 
@@ -347,13 +403,19 @@ a{color:var(--navy)}
   <div class="card"><div class="head"><div><p class="eyebrow">13 / WHEEL CHALLENGE · 3–2–1</p><h2>Spin and speak</h2></div><span class="pill" id="whPill">60 s</span></div><div class="body" id="wh"></div></div>
 </section>
 
+<section class="screen s2" data-name="Revision">
+  <div class="card"><div class="head"><div><p class="eyebrow">14 / JEOPARDY</p><h2>Kate vs Teacher</h2></div><span class="pill" id="jpPill"></span></div><div class="body" id="jp"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">15 / ESCAPE ROOM</p><h2>Open 4 locks to get the code</h2></div><span class="pill" id="erPill"></span></div><div class="body" id="er"></div></div>
+</section>
+
 </main>
 </div>
 
 <div class="tnote"><div class="panel" id="tnPanel" hidden>
   <b>Lesson 6 · Korea: the price of being seen</b> (B2, 60 min)<br>
-  1 Warm-up 7 min · 2 Vocabulary 10 min · 3 Video 10 min · 4 Reading 12 min · 5 Grammar 12 min · 6 Debate 9 min.<br>
+  1 Warm-up 7 min · 2 Vocabulary 10 min · 3 Video 10 min · 4 Reading 12 min · 5 Grammar 12 min · 6 Debate 9 min · 7 Revision games — reserve or next lesson.<br>
   <b>Sources:</b> CNN video “Inside a K-pop trainee program” (2025); CNN news, April 2024 (Karina &amp; Lee Jae-wook); Korea JoongAng Daily, Feb 2022 (subway birthday ads); Digital Music News, Aug 2023 (photocards).<br>
+  <b>Revision:</b> Jeopardy (Kate vs Teacher) and Escape Room — code 2024.<br>
   <b>Grammar:</b> inversion, passive reporting, conditionals — revision of Lesson 5.<br>
   <b>Note:</b> answers to the gaps open when you tap them.
 </div></div>
@@ -629,10 +691,67 @@ function whSpin(){whStop();const n=WH.length,k=Math.floor(Math.random()*n);const
   setTimeout(()=>{const rr=$('whRight');rr.innerHTML='';rr.append(el('div','lab','STATEMENT '+(k+1)),el('div','topic',WH[k]));let l=60;const bar=el('div','sgbar');bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="whRing" cx="50" cy="50" r="45"/></svg><span id="whSec">60</span>'));
     bar.appendChild(btn('btn','Start 60 s',()=>{whStop();l=60;ring('whRing',1,'60','whSec');whT=setInterval(()=>{l--;ring('whRing',l/60,String(l),'whSec');$('whPill').textContent=l+' s';if(l<=0)whStop()},1000)}));rr.appendChild(bar);ring('whRing',1,'60','whSec')},3300)}
 
+/* ---------- 02b mystery box ---------- */
+const MB=['Name three K-dramas and say which one you would recommend.','Describe your perfect day in Seoul in 30 seconds.','Explain what a fandom is — as if you were talking to your grandmother.','Say three things you would never buy as a fan, and why.','Give two reasons why K-pop is popular in Russia.','Tell a short story about a time you were a big fan of something.','BONUS! You get 2 points — no task this time.','SWAP! Ask your teacher a question about fame.','Would you rather be a famous idol or a famous actor? Why?','Finish the sentence: “If I were a K-pop star, I would never…”'];
+const MBCOL=['#e2456a','#2f74d0','#2a9b62','#ef8a1f','#7a4fd1','#d9497f','#1f8fa0','#c0841f','#3b63c4','#a24fd1'];
+let mbOrder,mbOpened;
+function mbReset(){mbOrder=shuffle(MB.map((_,i)=>i));mbOpened=new Set();mbRender(-1)}
+function mbRender(k){const r=$('qf');r.innerHTML='';$('qfPill').textContent=mbOpened.size+' / 10 opened';
+  const g=el('div','mbgrid');MB.forEach((_,i)=>{const b=btn(mbOpened.has(i)?'opened':'','<span>'+(i+1)+'</span>',()=>{if(mbOpened.has(i))return;mbOpened.add(i);mbRender(i)});b.style.background=MBCOL[i];g.appendChild(b)});r.appendChild(g);
+  const t=el('div','mbtask');if(k<0){t.append(el('div','topic','Choose a box!'),el('div','note','Every box hides a speaking task. Some hide a surprise.'))}else{t.append(el('div','lab','BOX '+(k+1)),el('div','topic',MB[mbOrder[k]]))}r.appendChild(t);
+  if(mbOpened.size===10){const rw=el('div','row');rw.appendChild(btn('btn light','Close all boxes',mbReset));r.appendChild(rw)}}
+function wRender(i){qfStop();if(i===0)qfReset();else mbReset()}
+
+/* ---------- 04b odd one out ---------- */
+const OD=[[['fandom','fan club','community','billboard'],3,'The others are groups of people.'],[['trainee','debut','practice','apology'],3,'The others are about becoming a star.'],[['merch','photocard','album','agency'],3,'The others are things fans buy.'],[['crowdfund','donate','raise money','criticise'],3,'The others are about giving money.'],[['backlash','criticism','outrage','support'],3,'The others are negative reactions.'],[['go public','reveal','announce','hide'],3,'The others mean “let people know”.'],[['spend a fortune','splurge','save up','shell out'],2,'The others mean spending a lot.'],[['Seoul','Busan','Incheon','Tokyo'],3,'The others are cities in South Korea.'],[['idol','actor','singer','viewer'],3,'The others are performers.'],[['under pressure','stressed','anxious','relaxed'],3,'The others describe stress.']];
+let odI,odPts;
+function odReset(){odI=0;odPts=0;odRender()}
+function odRender(){const r=$('mem');r.innerHTML='';
+  if(odI>=OD.length){$('memPill').textContent='DONE';r.append(el('div','big',odPts+' / '+OD.length),el('div','note','Explain one of your answers aloud.'));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',odReset));r.appendChild(rw);return}
+  const o=OD[odI];$('memPill').textContent=(odI+1)+' / '+OD.length+' · '+odPts+' pts';
+  const w=el('div','odd');w.appendChild(el('div','q','<span style="width:100%;text-align:center">Which one is different?</span>'));
+  const two=el('div','two');let done=false;const fb=el('div','note','');const next=btn('btn',odI===OD.length-1?'See result':'Next →',()=>{odI++;odRender()});next.hidden=true;
+  o[0].forEach((x,k)=>two.appendChild(btn('',x,e=>{if(done)return;done=true;if(k===o[1])odPts++;[...two.children].forEach((b,j)=>{b.disabled=true;if(j===o[1])b.classList.add('right');else if(j===k)b.classList.add('wrong')});fb.innerHTML='<b>'+o[0][o[1]]+'</b> — '+o[2];next.hidden=false;$('memPill').textContent=(odI+1)+' / '+OD.length+' · '+odPts+' pts'})));
+  w.append(two,fb);const rw=el('div','row');rw.append(el('span','grow'),next);w.appendChild(rw);r.appendChild(w)}
+function mRender(i){if(i===0)memReset();else odReset()}
+
+/* ---------- 14 jeopardy ---------- */
+const JP=[['WORDS',[['A young person training to become a K-pop star','trainee'],['To collect money from many people for one project','crowdfund'],['A one-sided feeling of closeness to a star you have never met','a parasocial relationship'],['To cause a strong negative public reaction','to spark a backlash']]],
+ ['GRAMMAR',[['Rarely ___ fans buy only one album.','do'],['She is said ___ (post) a handwritten letter.','to have posted'],['Had she ___ (know) about the backlash, she would have waited.','known'],['Correct it: “Only when the price rose fans moved the advert.”','Only when the price rose did fans move the advert.']]],
+ ['THE TEXT',[['What did the angry fan send to Karina’s agency?','a truck with an electronic billboard'],['How did Karina apologise?','in a handwritten letter on Instagram'],['How long after going public did the couple split up?','about five weeks'],['What reason did Lee’s agency give for the break-up?','He wanted to focus on his work.']]],
+ ['KOREA FACTS',[['Since March 2026, what is banned during lessons in Korean schools?','phones'],['How long does the Space-Out contest last?','90 minutes'],['Why do fans buy many copies of the same album?','Photocards are put into albums at random.'],['About how much can a birthday advert at Samsung station cost?','about 7 million won']]]];
+let jpUsed,jpA,jpB;
+function jpReset(){jpUsed=new Set();jpA=0;jpB=0;jpBoard()}
+function jpScore(){return el('div','score','<span>Kate: '+jpA+'</span><span>Teacher: '+jpB+'</span>')}
+function jpBoard(){const r=$('jp');r.innerHTML='';$('jpPill').textContent=jpUsed.size+' / 16';
+  const g=el('div','jp');JP.forEach(c=>g.appendChild(el('div','cat',c[0])));
+  for(let v=0;v<4;v++)JP.forEach((c,ci)=>{const id=ci+'-'+v;g.appendChild(btn(jpUsed.has(id)?'used':'',String((v+1)*100),()=>{if(jpUsed.has(id))return;jpQ(ci,v)}))});
+  r.append(g,jpScore());const rw=el('div','row');rw.append(el('span','note grow','Choose a category and a price. Answer aloud, then flip.'),btn('btn light','New game',jpReset));r.appendChild(rw)}
+function jpQ(ci,v){const r=$('jp');r.innerHTML='';const q=JP[ci][1][v],pts=(v+1)*100;jpUsed.add(ci+'-'+v);$('jpPill').textContent=JP[ci][0]+' · '+pts;
+  const c=el('div','jq','<div class="jq-in"><div class="jq-face jq-front"><small>'+JP[ci][0]+' · '+pts+'</small><div class="topic"></div></div><div class="jq-face jq-back"><small>ANSWER</small><div class="topic"></div></div></div>');
+  c.querySelector('.jq-front .topic').textContent=q[0];c.querySelector('.jq-back .topic').textContent=q[1];r.appendChild(c);
+  const rw=el('div','row');rw.append(btn('btn light','Flip',()=>c.classList.toggle('flipped')),el('span','grow'),btn('btn','Kate +'+pts,()=>{jpA+=pts;jpBoard()}),btn('btn','Teacher +'+pts,()=>{jpB+=pts;jpBoard()}),btn('btn light','Nobody',jpBoard));r.append(rw,jpScore())}
+
+/* ---------- 15 escape room ---------- */
+const ER=[['WORDS',[['Only a few trainees ever ___ their debut.',['make','do','take','give'],0],['The couple went ___ with their relationship.',['out','open','public','clear'],2],['The fans ___ a giant billboard.',['crowded','crowdfunded','funded up','donated off'],1]]],
+ ['GRAMMAR',[['Never before ___ fans spent so much on albums.',['has','did','were','have'],3],['The idol is believed ___ an actor.',['to be dating','dating','to dated','dates'],0],['If I ___ rich, I would fly to Seoul tomorrow.',['am','will be','were','had been'],2]]],
+ ['THE TEXT',[['What did Karina promise her fans?',['to leave the group','to show more maturity','to stop dating','to quit Instagram'],1],['Who supported the couple?',['the agency','nobody','some fans','a TV channel'],2],['What did the billboard warn about?',['falling album sales','higher ticket prices','a new group','bad weather'],0]]],
+ ['KOREA',[['Where do fans often put birthday adverts for idols?',['on the moon','in the subway','in schools','in hospitals'],1],['Who checked K-pop agencies in 2023?',['the police','the fans','BTS','Korea’s competition watchdog'],3],['What does a Space-Out winner need?',['the calmest heart rate','the most followers','the best dance','the loudest voice'],0]]]];
+const CODE=['2','0','2','4'];
+let erL,erQ,erMiss;
+function erReset(){erL=0;erQ=0;erMiss=0;erRender()}
+function erRender(){const r=$('er');r.innerHTML='';
+  const lk=el('div','locks');ER.forEach((l,i)=>lk.appendChild(el('div',(i<erL?'open':'')+(i===erL?' cur':''),'<small>LOCK '+(i+1)+' · '+l[0]+'</small><b>'+(i<erL?CODE[i]:'?')+'</b>')));r.appendChild(lk);
+  if(erL>=ER.length){$('erPill').textContent='ESCAPED';const d=el('div','door');d.append(el('div','lab','THE DOOR IS OPEN'),el('div','code',CODE.join('')),el('div','note','2024 — the year of Karina’s story. Mistakes: '+erMiss+'.'));r.appendChild(d);const rw=el('div','row');rw.appendChild(btn('btn light','Lock the room again',erReset));r.appendChild(rw);return}
+  const q=ER[erL][1][erQ];$('erPill').textContent='Lock '+(erL+1)+' · '+(erQ+1)+' / 3';
+  const w=el('div','sg');w.appendChild(el('div','q','<span style="width:100%;text-align:center">'+q[0].replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')+'</span>'));
+  const two=el('div','two');q[1].forEach((o,k)=>two.appendChild(btn('',o,e=>{if(k===q[2]){e.currentTarget.classList.add('right');[...two.children].forEach(b=>b.disabled=true);setTimeout(()=>{erQ++;if(erQ>=3){erQ=0;erL++}erRender()},650)}else{erMiss++;const b=e.currentTarget;b.classList.add('wrong');b.disabled=true}})));
+  w.appendChild(two);w.appendChild(el('div','note','Three right answers open a lock and show one digit of the code.'));r.appendChild(w)}
+
 /* ---------- reset: every time from the start ---------- */
 function resetAll(){
-  ivI=0;ivRender();qfReset();fcReset();memReset();fwReset();videoReset();pPg=0;vqI=0;segTabs('vTabs',['Predict','30-second talk'],vRender);
-  rdShown=false;rdRender();lvReset();ruleOn=false;$('ruleBtn').textContent='Rule';fipiRender();segTabs('gTabs',['Grammar doctor','Speed Game'],gRender);auReset();whReset();$('tnPanel').hidden=true;
+  ivI=0;ivRender();segTabs('wTabs',['Quick Fire','Mystery Box'],wRender);fcReset();segTabs('mTabs',['Memory','Odd One Out'],mRender);fwReset();videoReset();pPg=0;vqI=0;segTabs('vTabs',['Predict','30-second talk'],vRender);
+  rdShown=false;rdRender();lvReset();ruleOn=false;$('ruleBtn').textContent='Rule';fipiRender();segTabs('gTabs',['Grammar doctor','Speed Game'],gRender);auReset();whReset();jpReset();erReset();$('tnPanel').hidden=true;
 }
 resetAll();go(0);
 </script>
