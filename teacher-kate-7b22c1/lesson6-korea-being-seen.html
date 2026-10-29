@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Kate · Lesson 6 · Korea: The Price of Being Seen</title>
+<style>
+
+:root{--ink:#223d3c;--navy:#155e61;--muted:#66756f;--line:#dfe6e0;--bg:#f5f5f0;--ok:#e0f2e5;--okb:#7bb390;--okt:#214c35;--accent:#c57e67;--soft:#f2f5ef}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Inter,Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg)}
+body{overflow:hidden}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;transition:background .15s,border-color .15s}
+button:focus-visible,input:focus-visible{outline:3px solid #50a49c;outline-offset:2px}
+button:disabled{cursor:default}
+[hidden]{display:none!important}
+.app{height:100dvh;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:54px minmax(0,1fr)}
+header{display:flex;align-items:center;gap:12px;padding:0 18px;background:#fff;border-bottom:1px solid var(--line)}
+header h1{font-size:20px;letter-spacing:-.03em;margin:0;font-weight:800;color:var(--navy);white-space:nowrap}
+header p{font-size:13px;color:var(--muted);margin:1px 0 0;white-space:nowrap}
+.tabs{display:flex;gap:6px;flex:1;justify-content:center;min-width:0;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tab{border:1px solid #d5e0d7;background:var(--soft);color:var(--navy);border-radius:20px;padding:8px 13px;font-size:15px;font-weight:700;white-space:nowrap}
+.tab small{font-size:12px;opacity:.6;margin-right:5px;font-weight:700}
+.tab.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.navbtn{border:1px solid #d5e0d7;border-radius:8px;background:var(--soft);color:var(--navy);padding:9px 13px;font-size:13px;font-weight:800;letter-spacing:.04em;white-space:nowrap;text-decoration:none}
+.navbtn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.navbtn.hw{background:#fbf1e8;border-color:#e6cdbb;color:#7a4b39}
+.navbtn:disabled{opacity:.35}
+main{position:relative;min-height:0}
+.screen{position:absolute;inset:0;display:none;padding:clamp(10px,1.8vh,18px) clamp(12px,1.6vw,24px);gap:clamp(10px,1.2vw,16px);min-height:0}
+.screen.on{display:grid}
+.s3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.s2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.s2a{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:clamp(10px,1.8vh,16px) clamp(12px,1.2vw,18px);display:flex;flex-direction:column;gap:clamp(6px,1.2vh,11px);min-height:0;min-width:0}
+.card.tint{background:#fbf6f1}
+.head{display:flex;align-items:center;gap:10px;padding-bottom:clamp(5px,1vh,9px);border-bottom:1px solid var(--line)}
+.head>div:first-child{flex:1;min-width:0}
+.eyebrow{font-size:12px;letter-spacing:.13em;font-weight:800;color:var(--accent);margin:0}
+.head h2{font-size:clamp(18px,2.9vh,21px);letter-spacing:-.03em;margin:1px 0 0;font-weight:750}
+.pill{font-size:13px;font-weight:800;letter-spacing:.04em;border-radius:6px;background:#e4eee8;color:var(--navy);padding:6px 9px;white-space:nowrap}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;gap:clamp(6px,1.2vh,10px);overflow:hidden auto;scrollbar-width:thin}
+.q{font-size:clamp(18px,3vh,21px);font-weight:650;line-height:1.32;letter-spacing:-.01em;flex:1;display:flex;align-items:center;min-height:0}
+.opts{display:grid;gap:clamp(4px,.9vh,7px)}
+.opt{border:1px solid #d7e3da;background:#f7f8f4;border-radius:8px;padding:clamp(6px,1.3vh,10px) 12px;font-size:clamp(16px,2.6vh,18px);text-align:left;line-height:1.25}
+.opt:hover:not(:disabled){border-color:#8ba89a;background:#eef3ee}
+.opt.right{background:#c9ecd5;border-color:#2f8f57;box-shadow:inset 0 0 0 1px #2f8f57;color:#17442b;font-weight:700}
+.opt.wrong{background:#f8cfc6;border-color:#c2452f;box-shadow:inset 0 0 0 1px #c2452f;color:#7a2a1b;font-weight:700}
+.fb{display:flex;align-items:center;gap:10px;min-height:clamp(40px,7vh,48px)}
+.fb span{flex:1;font-size:16px;line-height:1.3}
+.btn{border:1px solid var(--navy);border-radius:8px;background:var(--navy);color:#fff;padding:9px 14px;font-size:15px;font-weight:800;white-space:nowrap}
+.btn.light{background:var(--soft);border-color:#d5e0d7;color:var(--navy)}
+.btn:disabled{opacity:.4}
+.row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.grow{flex:1}
+.meter{height:7px;border-radius:5px;background:#e6ece6;overflow:hidden;flex-shrink:0}
+.meter i{display:block;height:100%;background:var(--navy);transition:width .25s}
+.big{font-size:clamp(30px,6vh,42px);font-weight:800;color:var(--navy);letter-spacing:-.03em;line-height:1.05}
+.note{font-size:16px;line-height:1.35;color:var(--muted)}
+.list{display:grid;gap:6px;align-content:start;font-size:clamp(16px,2.6vh,18px);line-height:1.35}
+.list div{background:#f3f6f1;border-radius:8px;padding:7px 10px}
+.list div b{color:var(--navy)}
+.prompt{background:#e9efdf;border-left:3px solid #92ab71;border-radius:5px;padding:8px 12px;font-size:16px;line-height:1.4}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{border:1px solid #d5e0d7;background:var(--soft);color:var(--navy);border-radius:8px;padding:7px 12px;font-size:15px;font-weight:700}
+.seg button.on,.pick button.sel{background:var(--navy);border-color:var(--navy);color:#fff}
+.pick{display:flex;gap:6px;flex-wrap:wrap}
+.pick button{border:1px solid #d7e3da;background:#f7f8f4;border-radius:7px;padding:clamp(5px,1vh,8px) 11px;font-size:16px;font-weight:650;text-align:left}
+.step b{display:block;font-size:12px;letter-spacing:.1em;color:var(--accent);margin-bottom:4px}
+.txt{font-size:clamp(16px,2.7vh,18px);line-height:1.45;margin:0}
+.txt b{color:var(--navy)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{background:#f6e7c4;color:#5a4410;border-radius:6px;padding:3px 9px;font-size:16px;font-weight:700}
+.task{border:1px solid #e3e9e3;border-radius:9px;padding:clamp(7px,1.3vh,11px) 12px;display:flex;flex-direction:column;gap:7px}
+.task input{width:100%;padding:8px 10px;border:1px solid #c8d6cd;border-radius:7px;font-size:17px;background:#fff}
+.task input.good{border-color:#2f8f57;background:#eef8f1}
+.task input.bad{border-color:#c2452f;background:#fdf1ee}
+.ans{font-size:16px;line-height:1.35;background:#e0f2e5;color:#17442b;border-radius:7px;padding:7px 10px}
+.link{border:0;background:none;color:var(--navy);text-decoration:underline;font-size:14px;padding:0}
+/* quizlet card */
+.fc{perspective:1200px;flex:1;min-height:150px;max-height:260px;cursor:pointer}
+.fc-in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.fc.flipped .fc-in{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px 16px;gap:8px}
+.fc-front{background:#eaf2ee;border:2px solid #a9c8bb}
+.fc-front strong{font-size:clamp(22px,4vh,27px);color:var(--navy);letter-spacing:-.02em}
+.fc-front small{font-size:13px;color:var(--muted);letter-spacing:.08em;font-weight:700}
+.fc-back{background:#fff;border:2px solid var(--navy);transform:rotateY(180deg)}
+.fc-back .m{font-size:clamp(16px,2.7vh,18px);font-weight:700;line-height:1.3}
+.fc-back .e{font-size:clamp(15px,2.5vh,17px);font-style:italic;color:#3d5654;line-height:1.3}
+.fc-back .ru{font-size:clamp(20px,3.4vh,24px);font-weight:800;color:var(--accent)}
+.fc-back .m{font-weight:600!important;color:#3d5654}
+.fcnav{display:flex;align-items:center;justify-content:center;gap:8px}
+.fcnav .cnt{min-width:64px;text-align:center;font-weight:800;color:var(--navy)}
+/* video */
+.media{flex:1;min-height:0;background:#12302f;border-radius:10px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}
+.media img{width:100%;height:100%;object-fit:cover;opacity:.75}
+.media iframe{width:100%;height:100%;border:0}
+.media .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;color:var(--navy);border-color:#fff;font-size:17px;padding:11px 18px}
+/* timer */
+.timer{display:flex;align-items:center;gap:12px}
+.ring{width:clamp(70px,14vh,96px);height:clamp(70px,14vh,96px);position:relative;flex-shrink:0}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:9}
+.ring .t{stroke:#e6ece6}
+.ring .p{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .25s linear}
+.ring span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(22px,4.4vh,30px);font-weight:800;color:var(--navy)}
+.pts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.pts button{border:1px solid #d7e3da;background:#f7f8f4;border-radius:7px;padding:7px 4px;font-size:14px;font-weight:700;line-height:1.2}
+.pts button.sel{background:var(--ok);border-color:var(--okb);color:var(--okt)}
+/* homework overlay */
+.overlay{position:fixed;inset:0;background:#0e2a2955;display:flex;align-items:center;justify-content:center;z-index:20;padding:16px}
+.sheet{background:#fff;border-radius:14px;max-width:820px;width:100%;padding:18px 20px;display:grid;gap:12px;box-shadow:0 12px 40px #0003}
+.sheet .cols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+a{color:var(--navy)}
+/* tap gaps */
+.tapbank{display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:#fff;border:1px dashed #d9c3a8;border-radius:10px}
+.tapbank button{border:0;background:#f6e7c4;color:#5a4410;border-radius:18px;padding:6px 12px;font-size:15px;font-weight:700;box-shadow:0 2px 0 #e2cc98}
+.tapbank button:hover:not(:disabled){transform:translateY(-1px)}
+.tapbank button.used{visibility:hidden}
+.tapbank button.no{background:#f8cfc6;color:#7a2a1b;animation:shake .35s}
+.tapline{display:flex;gap:10px;align-items:baseline;background:#fff;border:1px solid #e3e9e3;border-radius:10px;padding:7px 11px;font-size:16px;line-height:1.5;transition:box-shadow .2s}
+.tapline .n{font-weight:800;color:var(--accent);font-size:13px}
+.tapline.live{border-color:var(--navy);box-shadow:0 0 0 3px #d8e9e5}
+.tapline.ok{background:#f1f9f3}
+.slot{display:inline-block;min-width:90px;border-bottom:2px dashed #a9c8bb;font-style:normal}
+.slot.filled{border:0;background:#c9ecd5;color:#17442b;font-weight:700;border-radius:6px;padding:0 6px;animation:pop .3s}
+@keyframes pop{0%{transform:scale(.7)}100%{transform:none}}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* error hunter */
+.huntbox{flex:1;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #e3e9e3;border-radius:12px;padding:16px}
+.hunt{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+.hunt button{border:1px solid #d7e3da;background:#f7f8f4;border-radius:8px;padding:7px 11px;font-size:clamp(17px,2.9vh,20px);font-weight:650}
+.hunt button:hover{border-color:#8ba89a}
+.hunt button.hit{background:#f8cfc6;border-color:#c2452f;color:#7a2a1b;text-decoration:line-through}
+.hunt button.miss{animation:shake .35s;background:#eef0ec}
+/* bomb */
+.bombbar{display:flex;align-items:center;gap:10px}
+.bombbar .ring{width:46px;height:46px}
+.bombbar .ring span{font-size:17px}
+#bomb{gap:6px}#prTabs button{padding:5px 9px;font-size:14px}
+.bombbar .ring .p{stroke:#c2452f}
+.bomb-item{border:1px solid #e3e9e3;border-radius:9px;padding:5px 9px;display:flex;flex-direction:column;gap:4px;background:#fff}
+.bomb-item.live{border-color:#c2452f;box-shadow:0 0 0 2px #f3c9bf}
+.bomb-item.done{opacity:.85}
+.bomb-item .txt{font-size:15px;line-height:1.3}
+.bomb-item .pick{gap:4px}.bomb-item .pick button{font-size:14px;padding:3px 8px}
+.pick button.right{background:#c9ecd5;border-color:#2f8f57;color:#17442b}
+.pick button.wrong{background:#f8cfc6;border-color:#c2452f;color:#7a2a1b}
+.boom{animation:boom .6s}
+@keyframes boom{0%{background:#ffb199;transform:scale(1.02)}100%{background:#fff;transform:none}}
+.bang{font-weight:800;color:#c2452f}
+/* match */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.match button{border:1px solid #d7e3da;background:#f7f8f4;border-radius:8px;padding:8px 10px;font-size:16px;font-weight:650;text-align:left;line-height:1.25}
+.match button.sel{background:#dcebe6;border-color:var(--navy)}
+.match button.ok{background:#c9ecd5;border-color:#2f8f57;color:#17442b;opacity:.75}
+.match button.no{background:#f8cfc6;border-color:#c2452f}
+.bank{display:flex;flex-wrap:wrap;gap:6px}
+.bank span{background:#f6e7c4;color:#5a4410;border-radius:6px;padding:3px 8px;font-size:15px;font-weight:700}
+.gapline{font-size:16px;line-height:1.35;display:flex;flex-direction:column;gap:4px}
+.gapline input{padding:6px 9px;border:1px solid #c8d6cd;border-radius:7px;font-size:16px;width:100%}
+.gapline input.good{border-color:#2f8f57;background:#eef8f1}
+.gapline input.bad{border-color:#c2452f;background:#fdf1ee}
+/* true or false · seoul */
+.tf{perspective:1200px;flex:1;min-height:150px;max-height:340px}
+.tf-in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.tf.flipped .tf-in{transform:rotateY(180deg)}
+.tf-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:14px 18px;gap:8px}
+.tf-front{background:#eaf2ee;border:2px solid #a9c8bb}
+.tf-front .st{font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,3.3vh,24px);line-height:1.35;color:var(--ink)}
+.tf-front small,.tf-back small{font-size:12px;color:var(--muted);letter-spacing:.1em;font-weight:800}
+.tf-back{background:#fff;border:2px solid var(--navy);transform:rotateY(180deg)}
+.tf-back .vd{font-size:clamp(20px,3.4vh,24px);font-weight:800;letter-spacing:.04em}
+.tf-back .vd.t{color:#2f7a4c}.tf-back .vd.f{color:#b0503b}
+.tf-back .fact{font-size:clamp(16px,2.7vh,19px);line-height:1.4;color:#3d5654}
+.tfbtns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tfbtns button{border:1px solid #c9d8cf;border-radius:10px;padding:clamp(10px,2vh,16px);font-size:clamp(17px,2.9vh,20px);font-weight:800;letter-spacing:.06em}
+.tfbtns .yes{background:#e3efe7;color:#24553a}.tfbtns .no{background:#f6e8e2;color:#7a4232}
+.tfbtns button:hover:not(:disabled){filter:brightness(.97)}
+.tfbtns button.right{box-shadow:inset 0 0 0 2px #2f8f57}.tfbtns button.wrong{box-shadow:inset 0 0 0 2px #c2452f}
+@media(max-width:1500px){header p{display:none}}
+@media(max-width:1250px){header h1{font-size:18px}.tab{padding:8px 10px;font-size:14px}.tab small{display:none}}
+@media(max-height:620px){.app{grid-template-rows:48px minmax(0,1fr)}header p{display:none}.fc{max-height:200px}}
+@media(max-width:820px){body{overflow:auto}.app{height:auto;min-height:100dvh;grid-template-rows:auto 1fr}header{flex-wrap:wrap;padding:8px 12px}.screen{position:static}.s3,.s2,.s2a,.sheet .cols{grid-template-columns:1fr}.card{min-height:320px}.tabs{order:3;flex-basis:100%;justify-content:flex-start;overflow:auto}}
+
+/* ---------- lesson 6 additions ---------- */
+.serif{font-family:Georgia,"Times New Roman",serif}
+.q,.txt,.list,.st,.reading p,.fipi .line{font-family:Georgia,"Times New Roman",serif}
+/* interview card */
+.iv{perspective:1200px;flex:1;min-height:120px;max-height:230px}
+.iv-in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.iv.flipped .iv-in{transform:rotateY(180deg)}
+.iv-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px 16px;gap:8px}
+.iv-front{background:#eaf2ee;border:2px solid #a9c8bb}
+.iv-front .n{font-size:clamp(30px,6vh,44px);font-weight:800;color:var(--navy);letter-spacing:-.03em}
+.iv-front small,.iv-back small{font-size:12px;color:var(--muted);letter-spacing:.1em;font-weight:800}
+.iv-back{background:#fff;border:2px solid var(--navy);transform:rotateY(180deg)}
+.iv-back .t{font-family:Georgia,serif;font-size:clamp(18px,3vh,22px);line-height:1.35}
+.ivbar{display:flex;align-items:center;gap:10px}
+.ivbar .ring{width:62px;height:62px}.ivbar .ring span{font-size:20px}
+.nums{display:flex;gap:4px;flex-wrap:wrap}
+.nums button{width:30px;height:28px;border:1px solid #d5e0d7;background:var(--soft);color:var(--navy);border-radius:6px;font-size:13px;font-weight:800;padding:0}
+.nums button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+/* quick fire */
+.qf2{flex:1;display:flex;flex-direction:column;justify-content:center;gap:10px;min-height:0}
+.qf2 .lab{font-size:12px;letter-spacing:.12em;font-weight:800;color:var(--muted);text-align:center}
+.or{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center}
+.or div{background:#fff;border:1px solid #dbe5dd;border-radius:12px;padding:clamp(12px,2.6vh,20px) 10px;text-align:center;font-family:Georgia,serif;font-size:clamp(18px,3vh,22px);font-weight:700;color:var(--ink)}
+.or b{font-size:13px;color:var(--accent);letter-spacing:.1em}
+/* memory */
+.mem{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;flex:1;min-height:0;align-content:start}
+.mem button{border:1px solid #d7e3da;background:#e6efe9;color:transparent;border-radius:8px;min-height:clamp(38px,7.2vh,56px);font-size:13px;font-weight:700;line-height:1.15;padding:3px 4px;transition:background .2s}
+.mem button.open{background:#fff;color:var(--ink);border-color:#a9c8bb}
+.mem button.ru.open{color:#8a4b38}
+.mem button.done{background:#d9eee0;color:#24553a;border-color:#9ccaae;cursor:default}
+.mem button.no{background:#f8dcd5;color:#7a2a1b}
+/* forbidden */
+.fbw{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#fff;border:1px solid #e3e9e3;border-radius:12px;padding:12px}
+.fbw strong{font-size:clamp(22px,4vh,28px);color:var(--navy);font-family:Georgia,serif}
+.fbw .ban{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.fbw .ban span{background:#f6e8e2;color:#7a4232;border-radius:6px;padding:4px 10px;font-size:15px;font-weight:700;text-decoration:line-through}
+/* reading */
+.reading{flex:1;min-height:0;overflow:auto;background:#fffdf9;border:1px solid #eadfd2;border-radius:10px;padding:12px 16px}
+.reading p{font-size:clamp(16px,2.6vh,18px);line-height:1.55;margin:0 0 9px}
+.reading .src{font-family:Inter,Arial,sans-serif;font-size:12px;color:var(--muted)}
+.cover{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#f3f6f1;border-radius:10px;text-align:center;padding:16px}
+/* floor is lava */
+.lava{flex:1;display:flex;flex-direction:column;gap:10px;min-height:0;justify-content:center}
+.lava .st{font-size:clamp(18px,3vh,21px);line-height:1.38;text-align:center;background:#fff;border:1px solid #e3e9e3;border-radius:12px;padding:14px}
+.stones{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;border-radius:14px;background:linear-gradient(180deg,#f7e4d8,#f1d2c1)}
+.stones button{border:0;border-radius:40px;padding:clamp(12px,2.2vh,16px);font-size:clamp(16px,2.7vh,19px);font-weight:800;letter-spacing:.06em;background:#e8ebe6;color:#3f4b46;box-shadow:0 4px 0 #c9cfc7}
+.stones button.right{background:#cfe9d8;color:#1f5236;box-shadow:0 4px 0 #9ccaae}
+.stones button.wrong{background:#f2b8a6;color:#7a2a1b;box-shadow:0 4px 0 #d98a73;animation:shake .35s}
+.lives{font-size:14px;font-weight:800;color:#b0503b;letter-spacing:.05em}
+/* fipi text */
+.fipi{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:0;background:#fff;border:1px solid #e3e9e3;border-radius:10px;padding:4px 12px}
+.fipi .row2{display:grid;grid-template-columns:22px minmax(0,1fr) 96px;gap:8px;align-items:baseline;padding:1px 0;border-bottom:1px dashed #edf0ec}
+.fipi .row2:last-child{border-bottom:0}
+.fipi .no{font-weight:800;color:var(--accent);font-size:13px}
+.fipi .line{font-size:clamp(13px,2.05vh,16px);line-height:1.3}
+.fipi .kw{font-size:13px;font-weight:800;letter-spacing:.08em;color:var(--navy);text-align:right}
+.gap{display:inline-block;min-width:96px;border:0;border-bottom:2px dashed #a9c8bb;background:#f4f8f5;border-radius:4px 4px 0 0;padding:0 6px;font-family:Georgia,serif;font-size:inherit;color:transparent;cursor:pointer}
+.gap.show{color:#17442b;background:#d9eee0;border-bottom-color:#2f8f57;font-weight:700}
+/* speed game */
+.sg{flex:1;display:flex;flex-direction:column;gap:9px;justify-content:center;min-height:0}
+.sg .q{flex:0 0 auto;justify-content:center;text-align:center}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.two button{border:1px solid #d7e3da;background:#f7f8f4;border-radius:10px;padding:clamp(9px,1.8vh,13px) 10px;font-size:clamp(16px,2.6vh,18px);font-weight:700;font-family:Georgia,serif}
+.two button:hover:not(:disabled){background:#eef3ee}
+.two button.right{background:#cfe9d8;border-color:#2f8f57;color:#17442b}
+.two button.wrong{background:#f5d3ca;border-color:#c2452f;color:#7a2a1b}
+.sgbar{display:flex;align-items:center;gap:10px}.sgbar .ring{width:48px;height:48px}.sgbar .ring span{font-size:17px}
+/* auction */
+.lot{perspective:1200px;flex:1;min-height:140px;max-height:250px}
+.lot-in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.lot.flipped .lot-in{transform:rotateY(180deg)}
+.lot-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px 18px;gap:8px}
+.lot-front{background:linear-gradient(180deg,#fffaf3,#f6eadb);border:2px solid #e0c7a8}
+.lot-front .lotn{font-size:12px;letter-spacing:.14em;font-weight:800;color:#a06f4e}
+.lot-front .what{font-family:Georgia,serif;font-size:clamp(18px,3.1vh,23px);line-height:1.32;color:#3a2a20}
+.lot-front .price{font-size:clamp(20px,3.6vh,26px);font-weight:800;color:#155e61}
+.lot-back{background:#fff;border:2px solid var(--navy);transform:rotateY(180deg)}
+.lot-back .vd{font-size:13px;letter-spacing:.12em;font-weight:800;color:var(--accent)}
+.lot-back .fact{font-family:Georgia,serif;font-size:clamp(16px,2.7vh,19px);line-height:1.4;color:#3d5654}
+.lot-back .ask{font-size:15px;font-weight:700;color:var(--navy)}
+.bp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bp button{border:1px solid #c9d8cf;border-radius:10px;padding:clamp(10px,2vh,14px);font-size:clamp(16px,2.8vh,19px);font-weight:800;letter-spacing:.08em}
+.bp .buy{background:#e3efe7;color:#24553a}.bp .pass{background:#f3ece4;color:#6d5240}
+.bp button:disabled{opacity:.55}
+/* wheel */
+.wheelwrap{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:14px;align-items:center;flex:1;min-height:0}
+.wheel{position:relative;width:100%;aspect-ratio:1;max-width:190px}
+.wheel svg{width:100%;height:100%;transition:transform 3.2s cubic-bezier(.17,.67,.15,1)}
+.wheel .pin{position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:18px solid var(--navy);z-index:2}
+.wheel .hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;background:#fff;border:2px solid var(--navy);color:var(--navy);font-weight:800;font-size:13px;letter-spacing:.06em;z-index:2}
+.topic{font-family:Georgia,serif;font-size:clamp(18px,3vh,22px);line-height:1.35;font-weight:700;color:var(--ink)}
+.s321{display:grid;gap:6px}
+.s321 div{display:flex;gap:10px;align-items:center;background:#f3f6f1;border-radius:8px;padding:7px 10px;font-size:15px;line-height:1.3}
+.s321 b{width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;display:inline-flex;align-items:center;justify-content:center;flex:none;font-size:14px}
+.wbank{display:flex;flex-wrap:wrap;gap:5px}.wbank span{background:#f6e7c4;color:#5a4410;border-radius:6px;padding:2px 8px;font-size:14px;font-weight:700}
+.tnote{position:fixed;right:14px;top:62px;z-index:30}
+.tnote .panel{position:absolute;right:0;top:0;width:min(420px,90vw);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #0002;padding:12px 14px;font-size:14px;line-height:1.45}
+.tnote .panel b{color:var(--navy)}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <a class="navbtn" href="index.html" target="_top">HUB</a>
+  <div class="tabs" id="tabs"></div>
+  <button class="navbtn" id="tnBtn" type="button">TEACHER</button>
+  <button class="navbtn" id="prev" type="button">BACK</button>
+  <button class="navbtn primary" id="next" type="button">NEXT</button>
+</header>
+<main>
+
+<section class="screen s2" data-name="Warm-up">
+  <div class="card"><div class="head"><div><p class="eyebrow">01 / INTERVIEW · SECRET QUESTION</p><h2>Fans, fame and Korea</h2></div><span class="pill" id="ivPill"></span></div>
+    <div class="body" style="overflow:hidden">
+      <div class="nums" id="ivNums"></div>
+      <div class="iv" id="iv"><div class="iv-in"><div class="iv-face iv-front"><small>LISTEN · 40 SECONDS TO ANSWER</small><div class="n" id="ivN"></div></div><div class="iv-face iv-back"><small>THE QUESTION WAS</small><div class="t" id="ivT"></div></div></div></div>
+      <div class="ivbar"><div class="ring"><svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="ivRing" cx="50" cy="50" r="45"/></svg><span id="ivSec">40</span></div>
+        <div class="row grow"><button class="btn" type="button" id="ivPlay">Play ▶</button><button class="btn light" type="button" id="ivReplay">Replay</button><button class="btn light" type="button" id="ivStop">Stop</button></div></div>
+      <div class="row"><button class="btn light" type="button" id="ivPrev">← Back</button><span class="grow"></span><button class="btn light" type="button" id="ivFlip">Flip the card</button><span class="grow"></span><button class="btn light" type="button" id="ivNext">Forward →</button></div>
+    </div>
+  </div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">02 / QUICK FIRE</p><h2>This or that? 5 seconds</h2></div><span class="pill" id="qfPill"></span></div><div class="body" id="qf"></div></div>
+</section>
+
+<section class="screen s3" data-name="Vocabulary">
+  <div class="card"><div class="head"><div><p class="eyebrow">03 / QUIZLET</p><h2>Fandom words</h2></div><button class="btn light" type="button" id="fcShuffle">Shuffle</button></div>
+    <div class="body" style="overflow:hidden">
+      <div class="fc" id="fc" tabindex="0" role="button" aria-label="Flip the card"><div class="fc-in"><div class="fc-face fc-front"><strong id="fcWord"></strong><small>CLICK TO FLIP</small></div><div class="fc-face fc-back"><div class="ru" id="fcRu"></div><div class="m" id="fcMean"></div><div class="e" id="fcEx"></div></div></div></div>
+      <div class="fcnav"><button class="btn light" type="button" id="fcPrev">←</button><span class="cnt" id="fcCnt"></span><button class="btn light" type="button" id="fcNext">→</button></div>
+    </div>
+  </div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">04 / MEMORY MATCH</p><h2>Word ↔ meaning</h2></div><span class="pill" id="memPill"></span></div><div class="body" id="mem"></div></div>
+  <div class="card"><div class="head"><div><p class="eyebrow">05 / GAME</p><h2>Forbidden word</h2></div><span class="pill" id="fwPill"></span></div><div class="body" id="fw"></div></div>
+</section>
+
+<section class="screen s2a" data-name="Video">
+  <div class="card"><div class="head"><div><p class="eyebrow">06 / CNN VIDEO</p><h2>Inside a K-pop trainee programme</h2></div></div>
+    <div class="prompt"><b>Before you watch:</b> trainees in Seoul train for years. Only a few ever make their debut. What do you think their day looks like?</div>
+    <div class="media" id="media"></div>
+    <div class="note">While you watch: what do trainees do, what do they give up, and how do they feel?</div>
+  </div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">07 / AFTER WATCHING</p><div class="seg" id="vTabs" style="margin-top:3px"></div></div><span class="pill" id="vPill"></span></div><div class="body" id="vbody"></div></div>
+</section>
+
+<section class="screen s2" data-name="Reading">
+  <div class="card"><div class="head"><div><p class="eyebrow">08 / READING · CNN NEWS</p><h2>The love story fans didn’t want</h2></div><button class="btn light" type="button" id="rdBtn">Show the text</button></div>
+    <div class="body" id="rd" style="overflow:hidden"></div>
+  </div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">09 / FLOOR IS LAVA</p><h2>True or false? Jump to the safe stone</h2></div><span class="pill" id="lvPill"></span></div><div class="body" id="lv"></div></div>
+</section>
+
+<section class="screen s2" data-name="Grammar">
+  <div class="card"><div class="head"><div><p class="eyebrow">10 / GRAMMAR · ЕГЭ FORMAT</p><h2>Fans and money</h2></div><button class="btn light" type="button" id="ruleBtn">Rule</button></div><div class="body" id="fipi"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">11 / GAME</p><div class="seg" id="gTabs" style="margin-top:3px"></div></div><span class="pill" id="gPill"></span></div><div class="body" id="gbody"></div></div>
+</section>
+
+<section class="screen s2" data-name="Debate">
+  <div class="card tint"><div class="head"><div><p class="eyebrow">12 / AUCTION</p><h2>Buy or pass? Would you pay for it?</h2></div><span class="pill" id="auPill"></span></div><div class="body" id="au"></div></div>
+  <div class="card"><div class="head"><div><p class="eyebrow">13 / WHEEL CHALLENGE · 3–2–1</p><h2>Spin and speak</h2></div><span class="pill" id="whPill">60 s</span></div><div class="body" id="wh"></div></div>
+</section>
+
+</main>
+</div>
+
+<div class="tnote"><div class="panel" id="tnPanel" hidden>
+  <b>Lesson 6 · Korea: the price of being seen</b> (B2, 60 min)<br>
+  1 Warm-up 7 min · 2 Vocabulary 10 min · 3 Video 10 min · 4 Reading 12 min · 5 Grammar 12 min · 6 Debate 9 min.<br>
+  <b>Sources:</b> CNN video “Inside a K-pop trainee program” (2025); CNN news, April 2024 (Karina &amp; Lee Jae-wook); Korea JoongAng Daily, Feb 2022 (subway birthday ads); Digital Music News, Aug 2023 (photocards).<br>
+  <b>Grammar:</b> inversion, passive reporting, conditionals — revision of Lesson 5.<br>
+  <b>Note:</b> answers to the gaps open when you tap them.
+</div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;return e};
+const btn=(cls,html,fn)=>{const b=el('button',cls,html);b.type='button';b.onclick=fn;return b};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const CIRC=2*Math.PI*45;
+function ring(id,frac,label,lid){const r=$(id);if(r){r.style.strokeDasharray=CIRC;r.style.strokeDashoffset=CIRC*(1-frac)}if(lid)$(lid).textContent=label}
+function segTabs(id,names,fn){const s=$(id);s.innerHTML='';names.forEach((n,i)=>s.appendChild(btn(i?'':'on',n,()=>{[...s.children].forEach((c,k)=>c.classList.toggle('on',k===i));fn(i)})));fn(0)}
+const say=(t,done)=>{try{if(window.CardAudio){CardAudio.say(t,null,done);return}}catch(e){}};
+const hush=()=>{try{window.CardAudio&&CardAudio.stop()}catch(e){}};
+let timers=[];const clearTimers=()=>{timers.forEach(t=>clearInterval(t));timers=[]};
+
+/* ---------- navigation ---------- */
+const screens=[...document.querySelectorAll('.screen')];let cur=0;
+screens.forEach((s,i)=>$('tabs').appendChild(btn('tab','<small>0'+(i+1)+'</small>'+s.dataset.name,()=>go(i))));
+function go(i){
+  cur=Math.max(0,Math.min(screens.length-1,i));
+  screens.forEach((s,k)=>s.classList.toggle('on',k===cur));
+  [...$('tabs').children].forEach((c,k)=>c.classList.toggle('on',k===cur));
+  $('prev').disabled=cur===0;
+  $('next').textContent=cur===screens.length-1?'START AGAIN':'NEXT';
+  hush();ivStopTimer();qfStop();sgStop();whStop();vtStop();
+  if(cur!==2)videoReset();
+}
+$('prev').onclick=()=>go(cur-1);
+$('next').onclick=()=>{if(cur===screens.length-1){resetAll();go(0)}else go(cur+1)};
+$('tnBtn').onclick=()=>{$('tnPanel').hidden=!$('tnPanel').hidden};
+
+/* ---------- 01 interview ---------- */
+const IV=[
+ 'Why do you think K-dramas have become so popular all over the world?',
+ 'Would you like to be famous? Why or why not?',
+ 'Is it fair that some K-pop idols are not allowed to date?',
+ 'Have you ever spent too much money on something connected with a star or a show?',
+ 'Should fans have a say in their idols’ private lives?',
+ 'What would you do if your favourite actor faced a backlash online?',
+ 'Do you think social media makes fans feel closer to celebrities?',
+ 'Would you crowdfund a birthday advert for your favourite star?',
+ 'What is the difference between a loyal fan and an obsessive fan?',
+ 'If you could spend a week in Seoul, what would you do?'
+];
+let ivI=0,ivT=null,ivLeft=40;
+function ivRender(){$('iv').classList.remove('flipped');$('ivN').textContent='Question '+(ivI+1);$('ivT').textContent=IV[ivI];$('ivPill').textContent=(ivI+1)+' / '+IV.length;
+  [...$('ivNums').children].forEach((b,k)=>b.classList.toggle('on',k===ivI));ivStopTimer();ivLeft=40;ring('ivRing',1,'40','ivSec')}
+function ivStopTimer(){if(ivT){clearInterval(ivT);ivT=null}}
+function ivStartTimer(){ivStopTimer();ivLeft=40;ring('ivRing',1,'40','ivSec');ivT=setInterval(()=>{ivLeft--;ring('ivRing',ivLeft/40,String(ivLeft),'ivSec');if(ivLeft<=0)ivStopTimer()},1000)}
+function ivPlay(){ivStopTimer();ring('ivRing',1,'40','ivSec');say(IV[ivI],ivStartTimer)}
+IV.forEach((_,k)=>$('ivNums').appendChild(btn('',String(k+1),()=>{hush();ivI=k;ivRender()})));
+$('ivPlay').onclick=ivPlay;$('ivReplay').onclick=ivPlay;$('ivStop').onclick=()=>{hush();ivStopTimer()};
+$('ivFlip').onclick=()=>$('iv').classList.toggle('flipped');
+$('ivPrev').onclick=()=>{hush();ivI=(ivI+IV.length-1)%IV.length;ivRender()};
+$('ivNext').onclick=()=>{hush();ivI=(ivI+1)%IV.length;ivRender()};
+
+/* ---------- 02 quick fire ---------- */
+const QF=[['K-dramas','K-pop'],['Seoul','Busan'],['Real friends','More followers'],['Famous','Rich'],['A concert ticket','Ten albums'],['Likes','Comments'],['Romance drama','Thriller drama'],['Idol','Actor'],['Save','Splurge'],['Fan meeting','Front-row seat']];
+let qfI,qfT=null,qfLeft;
+function qfStop(){if(qfT){clearInterval(qfT);qfT=null}}
+function qfReset(){qfStop();qfI=0;qfRender(false)}
+function qfRender(run){const r=$('qf');r.innerHTML='';qfStop();
+  if(qfI>=QF.length){$('qfPill').textContent='DONE';r.append(el('div','big','10 / 10'),el('div','note','Now choose one answer and explain it in two sentences.'));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',qfReset));r.appendChild(rw);return}
+  $('qfPill').textContent=(qfI+1)+' / '+QF.length;
+  const w=el('div','qf2');w.appendChild(el('div','lab','CHOOSE ONE AND SAY WHY'));
+  const o=el('div','or');o.append(el('div','',QF[qfI][0]),el('b','','OR'),el('div','',QF[qfI][1]));w.appendChild(o);
+  const bar=el('div','sgbar');bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="qfRing" cx="50" cy="50" r="45"/></svg><span id="qfSec">5</span>'));
+  bar.appendChild(el('span','note grow','Answer before the time runs out!'));
+  bar.appendChild(btn('btn',run?'Next →':'Start',()=>{qfI+=run?1:0;qfRender(true)}));w.appendChild(bar);r.appendChild(w);
+  ring('qfRing',1,'5','qfSec');
+  if(run){qfLeft=5;qfT=setInterval(()=>{qfLeft--;ring('qfRing',qfLeft/5,String(Math.max(0,qfLeft)),'qfSec');if(qfLeft<=0){qfStop();qfI++;setTimeout(()=>{if(cur===0)qfRender(true)},700)}},1000)}
+}
+
+/* ---------- 03 quizlet ---------- */
+const CARDS=[
+ ['fandom','all the fans of a star or a group, seen as a community','Her fandom raised money for a birthday advert in the subway.','фанатское сообщество'],
+ ['trainee','a young person training to become a K-pop star','Trainees practise singing and dancing for years.','стажёр (будущий айдол)'],
+ ['make your debut','to perform in public for the first time','Only a few trainees ever make their debut.','дебютировать'],
+ ['go public','to let everyone know about something private','The couple went public with their relationship.','объявить открыто'],
+ ['spark a backlash','to cause a strong negative public reaction','The news sparked a backlash among some fans.','вызвать волну критики'],
+ ['parasocial relationship','a one-sided feeling of closeness to a star you have never met','Many fans have a parasocial relationship with their idol.','односторонняя «связь» со звездой'],
+ ['merch','products with a star’s name or image on them','Fans spend a lot of money on merch.','атрибутика, мерч'],
+ ['collectible','an object that people collect and that can be valuable','Photocards have become popular collectibles.','предмет коллекционирования'],
+ ['crowdfund','to collect money from many people for one project','The fans crowdfunded a giant billboard.','собирать деньги вскладчину'],
+ ['spend a fortune on','to spend a very large amount of money on something','Some fans spend a fortune on albums.','потратить целое состояние'],
+ ['be under pressure','to feel that people expect a lot from you','Idols are under constant pressure to look perfect.','быть под давлением'],
+ ['issue a public apology','to say sorry officially, so that everyone can see it','She issued a handwritten public apology.','принести публичные извинения']
+];
+let fcOrder=CARDS.map((_,i)=>i),fcI=0;
+function fcShow(){const c=CARDS[fcOrder[fcI]];$('fc').classList.remove('flipped');$('fcWord').textContent=c[0];$('fcRu').textContent=c[3];$('fcMean').textContent=c[1];$('fcEx').textContent=c[2];$('fcCnt').textContent=(fcI+1)+' / '+CARDS.length}
+function fcReset(){fcOrder=CARDS.map((_,i)=>i);fcI=0;fcShow()}
+$('fc').onclick=()=>$('fc').classList.toggle('flipped');
+$('fcPrev').onclick=()=>{fcI=(fcI+CARDS.length-1)%CARDS.length;fcShow()};
+$('fcNext').onclick=()=>{fcI=(fcI+1)%CARDS.length;fcShow()};
+$('fcShuffle').onclick=()=>{fcOrder=shuffle(fcOrder);fcI=0;fcShow()};
+
+/* ---------- 04 memory ---------- */
+let memOpen=[],memDone=0,memTries=0,memLock=false;
+function memReset(){const r=$('mem');r.innerHTML='';memOpen=[];memDone=0;memTries=0;memLock=false;
+  const pairs=CARDS.slice(0,10);const tiles=shuffle(pairs.flatMap((c,i)=>[[i,c[0],''],[i,c[3],'ru']]));
+  const g=el('div','mem');tiles.forEach(t=>{const b=btn(t[2],t[1],()=>memTap(b,t[0]));b.dataset.p=t[0];g.appendChild(b)});
+  r.append(g,el('div','note','Find the word and its Russian meaning. Say the word aloud in a sentence!'));memPill()}
+function memPill(){$('memPill').textContent=memDone===10?'DONE · '+memTries+' tries':memDone+' / 10'}
+function memTap(b,p){if(memLock||b.classList.contains('open')||b.classList.contains('done'))return;b.classList.add('open');memOpen.push(b);
+  if(memOpen.length===2){memTries++;const [a,c]=memOpen;if(a.dataset.p===c.dataset.p){a.classList.add('done');c.classList.add('done');memOpen=[];memDone++;memPill()}
+    else{memLock=true;a.classList.add('no');c.classList.add('no');setTimeout(()=>{a.classList.remove('open','no');c.classList.remove('open','no');memOpen=[];memLock=false},850)}}}
+
+/* ---------- 05 forbidden word ---------- */
+const FW=[['fandom',['fans','group','community']],['trainee','young','learn','star'],['make your debut',['first','time','perform']],['go public',['secret','tell','everyone']],['spark a backlash',['angry','negative','reaction']],['parasocial relationship',['one-sided','know','close']],['merch',['buy','T-shirt','products']],['collectible',['collect','valuable','card']],['crowdfund',['money','people','together']],['spend a fortune on',['money','expensive','lot']],['be under pressure',['stress','expect','hard']],['issue a public apology',['sorry','letter','everyone']]].map(x=>Array.isArray(x[1])?x:[x[0],x.slice(1)]);
+let fwI,fwPts;
+function fwReset(){fwI=0;fwPts=0;fwRender()}
+function fwRender(){const r=$('fw');r.innerHTML='';
+  if(fwI>=FW.length){$('fwPill').textContent='DONE';r.append(el('div','big',fwPts+' / '+FW.length),el('div','note','Words explained without the forbidden words.'));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',fwReset));r.appendChild(rw);return}
+  $('fwPill').textContent=(fwI+1)+' / '+FW.length+' · '+fwPts+' pts';
+  const w=el('div','fbw');w.append(el('strong','',FW[fwI][0]),el('div','note','Explain it without these words:'));const ban=el('div','ban');FW[fwI][1].forEach(x=>ban.appendChild(el('span','',x)));w.appendChild(ban);r.appendChild(w);
+  const rw=el('div','row');rw.append(btn('btn light','Said a forbidden word',()=>{fwI++;fwRender()}),el('span','grow'),btn('btn','Explained! +1',()=>{fwPts++;fwI++;fwRender()}));r.appendChild(rw)}
+
+/* ---------- 06/07 video ---------- */
+const YT='kPqATkmvEWU';
+function videoReset(){const m=$('media');m.innerHTML='<img alt="" src="https://i.ytimg.com/vi/'+YT+'/hqdefault.jpg">';m.appendChild(btn('btn play','Watch ▶',()=>{m.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+YT+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="CNN: Inside a K-pop trainee program"></iframe>'}))}
+const PRED=['Trainees practise for many hours every day.','They can use their phones whenever they want.','They have regular tests in front of teachers.','They live together in dorms.','They can easily combine training with school.','Most trainees become famous in the end.','They have to follow strict rules about their appearance.','Their families pay nothing for the training.','They can have a boyfriend or girlfriend.','They feel under a lot of pressure.'];
+const VQ=['What surprised you most about the trainees’ life?','What do trainees give up to make their debut?','Would you join a trainee programme at 14? Why or why not?','Is the pressure worth it if only a few trainees succeed?','How is a trainee’s life similar to preparing for exams?','Who benefits most from the system: the trainees, the agencies or the fans?','Should there be an age limit for trainees?','If you were a trainee, what would be the hardest rule for you?','How do you think trainees feel when they fail a test?','Would you still love K-pop if you knew everything about the training?'];
+let vtT=null;function vtStop(){if(vtT){clearInterval(vtT);vtT=null}}
+let pPg=0,vqI=0;
+function vRender(i){const r=$('vbody');r.innerHTML='';vtStop();
+  if(i===0){$('vPill').textContent='Predict & check';r.appendChild(el('div','note','Before: tap <b>likely</b> or <b>unlikely</b>. After watching, say which guesses were right.'));
+    PRED.slice(pPg*4,pPg*4+4).forEach((p,k)=>{const t=el('div','task','<div class="txt">'+(pPg*4+k+1)+'. '+p+'</div>');const pk=el('div','pick');['likely','unlikely'].forEach(x=>pk.appendChild(btn('',x,e=>{[...pk.children].forEach(c=>c.classList.remove('sel'));e.currentTarget.classList.add('sel')})));t.appendChild(pk);r.appendChild(t)});
+    const pages=Math.ceil(PRED.length/4);const rw=el('div','row');rw.append(el('span','grow'),btn('btn light','←',()=>{pPg=(pPg+pages-1)%pages;vRender(0)}),el('span','note',(pPg+1)+' / '+pages),btn('btn light','→',()=>{pPg=(pPg+1)%pages;vRender(0)}));r.appendChild(rw)}
+  else{$('vPill').textContent=(vqI+1)+' / '+VQ.length;
+    const w=el('div','qf2');w.appendChild(el('div','lab','30-SECOND TALK'));w.appendChild(el('div','q','<span style="width:100%;text-align:center">'+VQ[vqI]+'</span>'));
+    const bar=el('div','sgbar');bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="vRing" cx="50" cy="50" r="45"/></svg><span id="vSec">30</span>'));
+    bar.append(btn('btn','Start 30 s',()=>{vtStop();let l=30;ring('vRing',1,'30','vSec');vtT=setInterval(()=>{l--;ring('vRing',l/30,String(l),'vSec');if(l<=0)vtStop()},1000)}),el('span','grow'),btn('btn light','←',()=>{vqI=(vqI+VQ.length-1)%VQ.length;vRender(1)}),btn('btn light','→',()=>{vqI=(vqI+1)%VQ.length;vRender(1)}));
+    w.appendChild(bar);r.appendChild(w);ring('vRing',1,'30','vSec')}}
+
+/* ---------- 08 reading ---------- */
+const TEXT=['In February 2024, Karina, a member of the K-pop group aespa, and the actor Lee Jae-wook went public with their relationship. For most people this would be ordinary news, but in the K-pop world it sparked a backlash.',
+ 'Some fans claimed that the relationship had “ruined” her career. One fan even sent a truck with an electronic billboard to her agency in Seoul. The message on the screen asked: “Do you not get enough love from your fans?” It also warned that album sales would fall and concert seats would be empty.',
+ 'Soon afterwards, Karina posted a handwritten letter on Instagram. She apologised to her fans and promised to “show more maturity”. Not all fans were angry, however: some supported the couple and criticised the backlash.',
+ 'About five weeks after going public, the couple split up. Lee’s agency said that he had ended the relationship to focus on his work. Neither side mentioned the controversy, but many fans blamed the backlash for the break-up.',
+ 'For years, K-pop labels have limited their idols’ public dating. Many fans feel very close to their idols, although they have never met them — and some behave as if the star belongs to them.'];
+let rdShown=false;
+function rdRender(){const r=$('rd');r.innerHTML='';$('rdBtn').textContent=rdShown?'Hide the text':'Show the text';
+  if(!rdShown){const c=el('div','cover');c.append(el('div','q','<span style="width:100%;text-align:center">A K-pop star apologises… for falling in love.</span>'),el('div','note','Predict: why would a star need to say sorry for a relationship?'),btn('btn','Show the text',()=>{rdShown=true;rdRender()}));r.appendChild(c);return}
+  const t=el('div','reading');TEXT.forEach(p=>t.appendChild(el('p','',p)));t.appendChild(el('p','src','Adapted from CNN news, April 2024.'));r.appendChild(t)}
+$('rdBtn').onclick=()=>{rdShown=!rdShown;rdRender()};
+
+/* ---------- 09 floor is lava ---------- */
+const LV=[['Karina and Lee Jae-wook kept their relationship secret.',false],['All fans were happy about the news.',false],['A fan sent a truck with a digital screen to her agency.',true],['The message asked whether she got enough love from her fans.',true],['Karina apologised in a video on YouTube.',false],['She promised to show more maturity.',true],['The couple stayed together for five months after going public.',false],['Lee’s agency said he wanted to focus on his work.',true],['Both sides openly blamed the fans for the break-up.',false],['Some fans supported the couple.',true],['Some fans said the relationship had ruined her career.',true],['K-pop labels usually encourage idols to date in public.',false]];
+let lvI,lvPts,lvLives;
+function lvReset(){lvI=0;lvPts=0;lvLives=3;lvRender()}
+function lvRender(){const r=$('lv');r.innerHTML='';
+  if(lvI>=LV.length||lvLives<=0){$('lvPill').textContent='DONE';r.append(el('div','big',lvPts+' / '+LV.length),el('div','note',lvLives<=0?'You fell into the lava! Read the text again and try once more.':'You crossed the lava! Now correct the false sentences aloud.'));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',lvReset));r.appendChild(rw);return}
+  $('lvPill').textContent=(lvI+1)+' / '+LV.length+' · '+lvPts+' pts';
+  const w=el('div','lava');w.appendChild(el('div','lives','LIVES: '+'● '.repeat(lvLives)+'○ '.repeat(3-lvLives)));
+  const st=el('div','st');st.textContent=LV[lvI][0];w.appendChild(st);
+  const s=el('div','stones');let done=false;const next=btn('btn',lvI===LV.length-1?'See result':'Next →',()=>{lvI++;lvRender()});next.hidden=true;
+  [['TRUE',true],['FALSE',false]].forEach(([lab,v])=>s.appendChild(btn('',lab,e=>{if(done)return;done=true;const ok=v===LV[lvI][1];if(ok)lvPts++;else lvLives--;e.currentTarget.classList.add(ok?'right':'wrong');[...s.children].forEach(x=>x.disabled=true);next.hidden=false;if(!ok&&lvLives<=0)next.textContent='See result';$('lvPill').textContent=(lvI+1)+' / '+LV.length+' · '+lvPts+' pts'})));
+  w.appendChild(s);const rw=el('div','row');rw.append(el('span','note grow','Wrong stone = lava! You have 3 lives.'),next);w.appendChild(rw);r.appendChild(w)}
+
+/* ---------- 10 grammar text (ЕГЭ format) ---------- */
+const FIPI=[
+ ['K-pop fans are known','huge amounts of money on their idols.','SPEND','to spend'],
+ ['Several agencies are reported','fans to buy many copies of the same album.','ENCOURAGE','to have encouraged'],
+ ['Photocards are said','into the albums at random.','PUT','to be put'],
+ ['Never before','a small piece of card been so valuable.','HAVE','has'],
+ ['Not only','fans buy albums, but they also crowdfund adverts in the subway.','DO','do'],
+ ['If fans','less, agencies would sell fewer albums.','SPEND','spent'],
+ ['Rarely','a true fan buy just one copy of a new album.','DO','does'],
+ ['A birthday advert at Samsung station is thought','about 7 million won.','COST','to cost'],
+ ['Had the fans','how expensive the adverts would become, they would have started saving earlier.','KNOW','known'],
+ ['Only after the prices went up','some fandoms move their adverts to cheaper stations.','DO','did'],
+ ['If she hadn’t bought ten albums last month, she','enough money for the concert now.','HAVE','would have'],
+ ['The fandom is believed','money for months before the idol’s birthday.','RAISE','to have raised']
+];
+let ruleOn=false;
+function fipiRender(){const r=$('fipi');r.innerHTML='';
+  if(ruleOn){const l=el('div','list');['<b>Inversion:</b> Never / Rarely / Seldom / Not only + <b>auxiliary + subject</b>: <i>Rarely do fans…</i>','<b>Only after / Only when / Not until</b> → inversion in the main clause: <i>Only after… did they…</i>','<b>Passive reporting:</b> is said / believed / known / thought + <b>to do</b> (now) · <b>to be done</b> (passive) · <b>to have done</b> (earlier)','<b>Conditionals:</b> If + Past Simple → would do · <b>Had + subject + V3</b> → would have done · mixed: If + Past Perfect → would do (now)','<b>Watch out:</b> after <i>Never before</i> the auxiliary agrees with the subject: <i>has a card been…</i>'].forEach(x=>l.appendChild(el('div','',x)));r.appendChild(l);return}
+  r.appendChild(el('div','note','Read the text. Change the word on the right so that it fits the gap. Tap a gap to check.'));
+  const f=el('div','fipi');FIPI.forEach((x,i)=>{const row=el('div','row2');row.appendChild(el('span','no',String(i+1)));const line=el('div','line');line.append(document.createTextNode(x[0]+' '));const g=btn('gap',x[3],e=>e.currentTarget.classList.toggle('show'));line.append(g,document.createTextNode(' '+x[1]));row.append(line,el('span','kw',x[2]));f.appendChild(row)});r.appendChild(f)}
+$('ruleBtn').onclick=()=>{ruleOn=!ruleOn;$('ruleBtn').textContent=ruleOn?'Text':'Rule';fipiRender()};
+
+/* ---------- 11 grammar doctor / speed game ---------- */
+const GD=[
+ ['Rarely fans buy only one album.','fans','Rarely do fans buy only one album.'],
+ ['She is said to has posted a handwritten letter.','has','She is said to have posted a handwritten letter.'],
+ ['Not only fans sent messages, but they also sent a truck.','fans','Not only did fans send messages, but they also sent a truck.'],
+ ['If I had more money, I will buy a ticket to Seoul.','will','If I had more money, I would buy a ticket to Seoul.'],
+ ['The idol is believed to dating an actor.','dating','The idol is believed to be dating an actor.'],
+ ['Had she knew about the backlash, she would have waited.','knew','Had she known about the backlash, she would have waited.'],
+ ['Never I have seen such a loyal fandom.','I','Never have I seen such a loyal fandom.'],
+ ['The advert is thought to cost 7 million won last year.','cost','The advert is thought to have cost 7 million won last year.'],
+ ['Only when the price rose fans moved the advert.','fans','Only when the price rose did fans move the advert.'],
+ ['If he didn’t buy so many photocards last year, he would have money now.','didn’t','If he hadn’t bought so many photocards last year, he would have money now.']
+];
+const SG=[
+ ['Hardly ___ the news broken when the comments started.',['had','was','did','has'],0],
+ ['The truck is said ___ outside the agency all day.',['to stand','to have stood','standing','stood'],1],
+ ['If idols ___ free to date, fans might accept it.',['are','will be','were','had been'],2],
+ ['Not until the next day ___ she reply.',['was','had','does','did'],3],
+ ['Fans are believed ___ millions on albums every year.',['to spend','spending','to have been spent','spent'],0],
+ ['Under no circumstances ___ trainees miss a practice.',['do','should','have','are'],1],
+ ['If she hadn’t gone public, she ___ the backlash.',['won’t face','wouldn’t face','wouldn’t have faced','hadn’t faced'],2],
+ ['Seldom ___ fans think about the idol’s feelings.',['are','have','did','do'],3],
+ ['The album is reported ___ a million copies in its first week.',['to have sold','to sell','selling','sold'],0],
+ ['No sooner ___ the photo appeared than fans started arguing.',['did','had','was','have'],1]
+];
+let gdI,gdPts,sgI,sgPts,sgT=null,sgLeft;
+function sgStop(){if(sgT){clearInterval(sgT);sgT=null}}
+function gRender(i){sgStop();if(i===0)gdReset();else sgReset()}
+function gdReset(){gdI=0;gdPts=0;gdRender()}
+function gdRender(){const r=$('gbody');r.innerHTML='';
+  if(gdI>=GD.length){$('gPill').textContent=gdPts+' pts';r.append(el('div','big',gdPts+' / '+GD.length),el('div','note','Read the cured sentences aloud.'));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',gdReset));r.appendChild(rw);return}
+  const g=GD[gdI];$('gPill').textContent=(gdI+1)+' / '+GD.length+' · '+gdPts+' pts';
+  r.append(el('div','meter','<i style="width:'+(gdI/GD.length*100)+'%"></i>'),el('div','note','<b>Grammar doctor.</b> This sentence is ill. Tap the word that causes the problem, then say the cure aloud.'));
+  const words=el('div','hunt');let done=false,first=true;const cure=el('div','ans','<b>Cure:</b> '+g[2]);cure.hidden=true;
+  const next=btn('btn',gdI===GD.length-1?'See result':'Next →',()=>{gdI++;gdRender()});next.hidden=true;
+  g[0].split(' ').forEach(w=>words.appendChild(btn('serif',w,e=>{if(done)return;const b=e.currentTarget;
+    if(w.replace(/[.,]/g,'')===g[1]){b.classList.add('hit');done=true;if(first)gdPts++;cure.hidden=false;next.hidden=false;$('gPill').textContent=(gdI+1)+' / '+GD.length+' · '+gdPts+' pts'}
+    else{first=false;b.classList.add('miss');setTimeout(()=>b.classList.remove('miss'),450)}})));
+  const box=el('div','huntbox');box.appendChild(words);r.append(box,cure);const rw=el('div','row');rw.append(el('span','note grow','First tap right = 1 point.'),next);r.appendChild(rw)}
+function sgReset(){sgStop();sgI=0;sgPts=0;sgRender(false)}
+function sgRender(run){const r=$('gbody');r.innerHTML='';sgStop();
+  if(sgI>=SG.length){$('gPill').textContent=sgPts+' pts';r.append(el('div','big',sgPts+' / '+SG.length),el('div','note','Speed Game finished!'));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',sgReset));r.appendChild(rw);return}
+  const s=SG[sgI];$('gPill').textContent=(sgI+1)+' / '+SG.length+' · '+sgPts+' pts';
+  const w=el('div','sg');const bar=el('div','sgbar');bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="sgRing" cx="50" cy="50" r="45"/></svg><span id="sgSec">10</span>'));bar.appendChild(el('span','note grow','<b>Speed Game.</b> 10 seconds for each question.'));w.appendChild(bar);
+  if(!run){w.appendChild(el('div','q','<span style="width:100%;text-align:center">Ready? Choose the right answer before the time runs out.</span>'));const rw=el('div','row');rw.append(el('span','grow'),btn('btn','Start',()=>sgRender(true)),el('span','grow'));w.appendChild(rw);r.appendChild(w);ring('sgRing',1,'10','sgSec');return}
+  w.appendChild(el('div','q','<span style="width:100%;text-align:center">'+s[0].replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')+'</span>'));
+  const two=el('div','two');let done=false;const next=btn('btn',sgI===SG.length-1?'See result':'Next →',()=>{sgI++;sgRender(true)});next.hidden=true;
+  const finish=k=>{if(done)return;done=true;sgStop();[...two.children].forEach((b,j)=>{b.disabled=true;if(j===s[2])b.classList.add('right');else if(j===k)b.classList.add('wrong')});if(k===s[2])sgPts++;next.hidden=false;$('gPill').textContent=(sgI+1)+' / '+SG.length+' · '+sgPts+' pts'};
+  s[1].forEach((o,k)=>two.appendChild(btn('',o,()=>finish(k))));w.appendChild(two);const rw=el('div','row');rw.append(el('span','grow'),next);w.appendChild(rw);r.appendChild(w);
+  sgLeft=10;ring('sgRing',1,'10','sgSec');sgT=setInterval(()=>{sgLeft--;ring('sgRing',sgLeft/10,String(sgLeft),'sgSec');if(sgLeft<=0)finish(-1)},1000)}
+
+/* ---------- 12 auction ---------- */
+const AU=[
+ ['A birthday advert for your idol at Samsung station in Seoul','about 7,000,000 won','Real fact: fandoms crowdfund these adverts. In 2022 the price at Samsung station went up by 50%.'],
+ ['Ten copies of the same album — to get one photocard of your favourite member','10 × album price','Real fact: photocards are put into albums at random. One group, NCT, released 50 different cards with one album.'],
+ ['A truck with a digital billboard to send a message to your idol’s agency','a few thousand dollars','Real fact: in 2024 an angry fan sent a truck like this to Karina’s agency.'],
+ ['A cheaper birthday advert at a smaller station','about 3,000,000 won','Real fact: when prices went up, some fandoms moved their adverts to cheaper stations.'],
+ ['A rare photocard that another fan is selling online','five times the album price','Real fact: in 2023 Korea’s competition watchdog checked whether agencies made some cards rarer on purpose.'],
+ ['A ticket to see your favourite group live in Seoul — plus the flight','a month of pocket money × 10','What would you give up to pay for it?'],
+ ['A premium K-drama subscription: no adverts, new episodes first','every month','Is it worth it if you can watch the episodes later for free?'],
+ ['A hoodie, a lightstick and a poster with your idol’s name','a whole set of merch','Would you wear it to school? Why or why not?'],
+ ['A one-week K-pop dance course in Seoul','your summer savings','Could you live like a trainee for a week?'],
+ ['A donation to charity in your idol’s name for his birthday','any amount','Is this a better way to show love than an advert?']
+];
+let auI,auBuy;
+function auReset(){auI=0;auBuy=0;auRender()}
+function auRender(){const r=$('au');r.innerHTML='';
+  if(auI>=AU.length){$('auPill').textContent='DONE';r.append(el('div','big','You bought '+auBuy+' / '+AU.length),el('div','note','Are you a careful spender or a big spender? Which purchase would you never make? Why?'));const rw=el('div','row');rw.appendChild(btn('btn light','Start again',auReset));r.appendChild(rw);return}
+  const a=AU[auI];$('auPill').textContent='LOT '+(auI+1)+' / '+AU.length;
+  const card=el('div','lot','<div class="lot-in"><div class="lot-face lot-front"><div class="lotn">LOT '+(auI+1)+'</div><div class="what"></div><div class="price"></div></div><div class="lot-face lot-back"><div class="vd"></div><div class="fact"></div><div class="ask">Justify your choice in 20 seconds.</div></div></div>');
+  card.querySelector('.what').textContent=a[0];card.querySelector('.price').textContent=a[1];card.querySelector('.fact').textContent=a[2];r.appendChild(card);
+  const bp=el('div','bp');const next=btn('btn',auI===AU.length-1?'See result':'Next lot →',()=>{auI++;auRender()});next.hidden=true;
+  [['BUY','buy'],['PASS','pass']].forEach(([lab,c])=>bp.appendChild(btn(c,lab,()=>{if(c==='buy')auBuy++;card.querySelector('.vd').textContent='YOU CHOSE: '+lab;[...bp.children].forEach(x=>x.disabled=true);card.classList.add('flipped');next.hidden=false})));
+  r.appendChild(bp);const rw=el('div','row');rw.append(el('span','note grow','Decide first — then flip the lot.'),next);r.appendChild(rw)}
+
+/* ---------- 13 wheel + 3-2-1 ---------- */
+const WH=['Idols should be allowed to date openly.','Fans have the right to know about a star’s private life.','Spending money on merch is a waste.','Trainee programmes should have an age limit.','Social media makes fans more aggressive.','Agencies should stop selling random photocards.','Being a fan makes young people happier.','A public apology is sometimes unfair.'];
+const WCOL=['#dfece5','#f3e6dc','#e4ebf1','#f1ead6','#e9e2ef','#e2eee9','#f4e1dc','#e6e9dc'];
+const WWORDS=['fandom','go public','spark a backlash','parasocial relationship','merch','crowdfund','spend a fortune on','be under pressure','issue a public apology','collectible'];
+let whRot=0,whT=null;function whStop(){if(whT){clearInterval(whT);whT=null}}
+function wheelSVG(){const n=WH.length,R=50;let s='<svg viewBox="0 0 100 100" id="whSvg">';for(let i=0;i<n;i++){const a0=(i/n)*2*Math.PI-Math.PI/2,a1=((i+1)/n)*2*Math.PI-Math.PI/2;const x0=50+R*Math.cos(a0),y0=50+R*Math.sin(a0),x1=50+R*Math.cos(a1),y1=50+R*Math.sin(a1);const am=(a0+a1)/2;
+  s+='<path d="M50 50 L'+x0.toFixed(2)+' '+y0.toFixed(2)+' A50 50 0 0 1 '+x1.toFixed(2)+' '+y1.toFixed(2)+' Z" fill="'+WCOL[i]+'" stroke="#fff" stroke-width="1"/>';
+  s+='<text x="'+(50+34*Math.cos(am)).toFixed(2)+'" y="'+(50+34*Math.sin(am)).toFixed(2)+'" font-size="9" font-weight="800" fill="#155e61" text-anchor="middle" dominant-baseline="middle" font-family="Arial">'+(i+1)+'</text>'}return s+'</svg>'}
+function whReset(){whStop();const r=$('wh');r.innerHTML='';const wrap=el('div','wheelwrap');const w=el('div','wheel','<div class="pin"></div>'+wheelSVG());const hub=btn('hub','SPIN',whSpin);w.appendChild(hub);
+  const right=el('div','');right.id='whRight';right.style.cssText='display:flex;flex-direction:column;gap:8px;min-width:0';right.appendChild(el('div','topic','Spin the wheel to get a statement.'));right.appendChild(el('div','note','Agree or disagree — then follow 3–2–1.'));
+  wrap.append(w,right);r.appendChild(wrap);
+  const s=el('div','s321','<div><b>3</b><span>Use <u>three</u> words from the lesson.</span></div><div><b>2</b><span>Give <u>two</u> arguments with examples.</span></div><div><b>1</b><span>Finish with <u>one</u> conclusion: “All in all, …”</span></div>');r.appendChild(s);
+  const bank=el('div','wbank');WWORDS.forEach(x=>bank.appendChild(el('span','',x)));r.appendChild(bank);$('whPill').textContent='60 s';
+  const svg=$('whSvg');svg.style.transition='none';svg.style.transform='rotate('+whRot+'deg)'}
+function whSpin(){whStop();const n=WH.length,k=Math.floor(Math.random()*n);const seg=360/n;const target=360-(k*seg+seg/2);whRot=whRot-(whRot%360)+360*5+target;const svg=$('whSvg');svg.style.transition='';svg.style.transform='rotate('+whRot+'deg)';
+  setTimeout(()=>{const rr=$('whRight');rr.innerHTML='';rr.append(el('div','lab','STATEMENT '+(k+1)),el('div','topic',WH[k]));let l=60;const bar=el('div','sgbar');bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="whRing" cx="50" cy="50" r="45"/></svg><span id="whSec">60</span>'));
+    bar.appendChild(btn('btn','Start 60 s',()=>{whStop();l=60;ring('whRing',1,'60','whSec');whT=setInterval(()=>{l--;ring('whRing',l/60,String(l),'whSec');$('whPill').textContent=l+' s';if(l<=0)whStop()},1000)}));rr.appendChild(bar);ring('whRing',1,'60','whSec')},3300)}
+
+/* ---------- reset: every time from the start ---------- */
+function resetAll(){
+  ivI=0;ivRender();qfReset();fcReset();memReset();fwReset();videoReset();pPg=0;vqI=0;segTabs('vTabs',['Predict','30-second talk'],vRender);
+  rdShown=false;rdRender();lvReset();ruleOn=false;$('ruleBtn').textContent='Rule';fipiRender();segTabs('gTabs',['Grammar doctor','Speed Game'],gRender);auReset();whReset();$('tnPanel').hidden=true;
+}
+resetAll();go(0);
+</script>
+<script src="../card-audio.js?v=1"></script>
+</body>
+</html>

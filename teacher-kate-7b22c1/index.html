@@ -337,7 +337,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
         <button class="t-home" id="tHome">Home</button>
         <div id="tModules"></div><button class="t-covernotes" id="tCoverNotes" aria-label="Teacher Notes">Teacher Notes</button>
       </aside>
-      <main class="t-work"><div class="t-right-lessons" id="tRightLessons"><div class="t-right-label">KATYA · LESSONS</div><button id="tSeries" type="button"><small>NEW SERIES · MODULE 2</small><strong>Status Update</strong><span>5 lessons · Generations · Money · Likes →</span></button><button id="tPrevLesson" type="button"><small>PREVIOUS LESSON</small><strong>Gen Z & Money</strong><span>Generations · Money · Conditionals →</span></button><button id="tCurrentLesson" type="button"><small>TODAY'S LESSON</small><strong>Are We Addicted to Being Seen?</strong><span>The Attention Trap · B2+ →</span></button></div><button class="t-board-fullscreen" id="tBoardFullscreen">На весь экран</button>
+      <main class="t-work"><div class="t-right-lessons" id="tRightLessons"><div class="t-right-label">KATYA · LESSONS</div><button id="tSeries" type="button"><small>NEW SERIES · MODULE 2</small><strong>Status Update</strong><span>5 lessons · Generations · Money · Likes →</span></button><button id="tPrevLesson" type="button"><small>PREVIOUS LESSON</small><strong>Gen Z & Money</strong><span>Generations · Money · Conditionals →</span></button><button id="tCurrentLesson" type="button"><small>TODAY'S LESSON</small><strong>Are We Addicted to Being Seen?</strong><span>The Attention Trap · B2+ →</span></button><button id="tKorea" type="button"><small>NEW LESSON · KOREA</small><strong>The Price of Being Seen</strong><span>Fandom · Money · K-pop · B2 →</span></button></div><button class="t-board-fullscreen" id="tBoardFullscreen">На весь экран</button>
         <section class="t-cover"><img class="t-art" id="tArt" alt="Katya English Hub — Small steps. Big progress."></section><section class="t-module-dialog" id="tModuleDialog" role="dialog" aria-modal="true" aria-labelledby="tModuleTitle" hidden><h2 id="tModuleTitle"></h2><p>Материалы этого модуля пока не добавлены.</p><button id="tModuleClose">Назад</button></section>
         <section class="t-view" id="tView">
           <div class="t-top">
@@ -379,7 +379,8 @@ html.teacher-mode #teacherRoot{display:grid!important}
         {id:'m1l1',title:'Lesson 1 · Elections in Russia',url:'../kate-english-hub/extra-practice-elections-russia.html'},
         {id:'m1l2',title:'Lesson 2 · Generations',url:'../kate-english-hub/homework-lesson2-generations.html'},
         {id:'m1l3',title:'Lesson 3 · Useful Tools',url:'../kate-english-hub/useful-tools-false-synonyms.html'},
-        {id:'m1l4',title:'Lesson 5 · The Attention Trap',url:'lesson5-attention-trap.html?v=20261029-l5seoul'}
+        {id:'m1l4',title:'Lesson 5 · The Attention Trap',url:'lesson5-attention-trap.html?v=20261029-l5seoul'},
+        {id:'m1l6',title:'Lesson 6 · Korea: The Price of Being Seen',url:'lesson6-korea-being-seen.html?v=20261029-k1'}
       ]},
       ...Array.from({length:7},(_,i)=>({module:'Module '+(i+2),lessons:[
         {id:'m'+(i+2)+'l1',title:'Lesson 1',url:''},
@@ -391,6 +392,7 @@ html.teacher-mode #teacherRoot{display:grid!important}
     const SERIES={id:'status-update',title:'Status Update · series',url:'series-status-update.html?v=20261020'};
     document.getElementById('tSeries').onclick=()=>openLesson(1,SERIES);
     document.getElementById('tCurrentLesson').onclick=()=>openLesson(0,course[0].lessons[3]);
+    document.getElementById('tKorea').onclick=()=>openLesson(0,course[0].lessons[4]);
     document.getElementById('tPrevLesson').onclick=()=>openLesson(0,{id:'genz-money',title:'Gen Z & Money',url:'lesson3-money-generations.html'});
     let current='';
     const modules=document.getElementById('tModules');
