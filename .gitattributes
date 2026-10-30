@@ -1,0 +1,39 @@
+# Обработка бинарных файлов и переводов строк.
+# Нужно, чтобы git не пытался строить текстовые diff'ы для медиа
+# и не нормализовал переводы строк внутри JS-данных с base64.
+
+# --- Бинарные медиа ---
+*.mp3 binary
+*.mp4 binary
+*.m4a binary
+*.wav binary
+*.ogg binary
+*.webp binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.pdf binary
+*.b64 binary
+*.zip binary
+
+# --- Текст ---
+*.html text eol=lf
+*.css  text eol=lf
+*.js   text eol=lf
+*.mjs  text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.txt  text eol=lf
+*.yml  text eol=lf
+*.yml  text eol=lf
+*.py   text eol=lf
+*.sh   text eol=lf
+
+# Языковая статистика не должна считать гигантские генераторы данных кодом.
+*.b64 linguist-generated=true
+card-audio/*.mp3 linguist-generated=true
+
+# Аудио-кэш и медиа не участвуют в diff-просмотре на GitHub.
+*.mp3 -diff
+*.mp4 -diff
