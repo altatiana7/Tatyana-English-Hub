@@ -11,7 +11,7 @@ let S=blank();const load=()=>{S=blank();
 const save=()=>{if(RV||S.sent)return;try{localStorage.setItem(KEY+'-'+who,JSON.stringify(S));}catch(e){}};
 function paintWho(){const w=$('#who');w.innerHTML='';NAMES.forEach((n,i)=>{const b=el('button','tab'+(i===who?' on':''),n);b.type='button';b.onclick=()=>{who=i;try{localStorage.setItem(KEY+'-who',i);}catch(e){}load();paintWho();go(0);};w.append(b);});}
 let cur=0;const AG='ABCDEFG';
-const audio=el('audio','main');audio.controls=true;audio.preload='none';audio.src='audio/listening.mp3';
+const audio=el('audio','main');audio.controls=true;audio.preload='none';audio.src='../shared/audio/listening.mp3';
 const EMAIL={from:'Emily@mail.uk',to:'Russian_friend@ege.ru',subj:'School rules',
  body:'…Our school has just banned mobile phones in class, and everybody is talking about it. Do you use your phone at school, and what for? How do you usually prepare for important tests? What would you change about your school timetable if you could?\n…By the way, I have just joined our school debate club…',about:'her debate club'};
 const PROJ={subj:'what skills teenagers in Zetland consider most important for their future career',rows:[['Communication skills',34],['Knowledge of foreign languages',27],['Digital skills',21],['Time management',12],['Creativity',6]],col:'Skill',
