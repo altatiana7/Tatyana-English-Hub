@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teaching Progress — журнал учебного прогресса</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Teaching Progress — стиль соответствует Tatyana English Hub (Inter, #17343a, #245f5e, #d8f2ee) */
+/* Локальный прототип: не защищённая многопользовательская база, только localStorage. */
+:root{
+  --bg:#f7f3ec;
+  --ink:#17343a;
+  --muted:#6b7c7f;
+  --primary:#245f5e;
+  --primary-hover:#1c4d4c;
+  --accent:#3b827f;
+  --light:#d8f2ee;
+  --light-text:#0e3d3c;
+  --card:#ffffff;
+  --border:#e8ece9;
+  --shadow:0 12px 38px rgba(23,52,58,.08);
+  --danger:#a34d45;
+  --success:#2e7d32;
+  --warn:#b45309;
+  --info:#2f6f9f;
+  --radius:22px;
+}
+*,::before,::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;padding:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.hidden{display:none!important}
+.header{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:50;
+  box-shadow:0 2px 10px rgba(23,52,58,.04)
+}
+.header-inner{max-width:1400px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:1.25rem;letter-spacing:-0.02em;color:var(--ink)}
+.brand .dot{width:10px;height:10px;background:var(--primary);border-radius:50%}
+.nav{display:flex;gap:8px;align-items:center}
+.nav-button, .action-button{
+  border-radius:12px;padding:10px 16px;font-weight:700;font-size:.95rem;
+  border:1px solid var(--border);color:var(--ink);background:#fff
+}
+.nav-button.active{background:var(--light);color:var(--primary);border-color:var(--primary)}
+.action-button{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 6px 16px rgba(36,95,94,.2)}
+.action-button:hover{background:var(--primary-hover)}
+.action-button:active{transform:translateY(1px)}
+.nav-button:hover{border-color:var(--accent)}
+.demo-banner{
+  background:#fff3cd;
+  border:1px solid #e2c98a;
+  color:#7a6200;
+  padding:10px 24px;
+  font-size:.85rem;
+  font-weight:700;
+  display:flex;align-items:center;gap:10px
+}
+.demo-banner b{color:#6b5200}
+.container{max-width:1400px;margin:0 auto;padding:28px 24px 60px}
+
+/* Кartoчки студентов */
+.section-title{font-size:1.5rem;font-weight:800;margin:0 0 18px;color:var(--ink);display:flex;align-items:center;gap:10px}
+.section-title span{font-weight:600;font-size:.9rem;color:var(--muted);background:var(--light);padding:4px 10px;border-radius:999px}
+.search-wrap{position:relative;margin-bottom:24px}
+.search-wrap input{
+  width:100%;max-width:420px;padding:12px 16px 12px 42px;border:1px solid var(--border);border-radius:12px;background:#fff;font-size:1rem;color:var(--ink)
+}
+.search-wrap input::placeholder{color:#9fb2b1}
+.search-wrap::before{content:"\f002";position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1rem;color:#9fb2b1}
+.student-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.student-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px;min-height:300px
+}
+.student-card header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.student-name{font-size:1.25rem;font-weight:800;margin:0 0 2px;color:var(--ink)}
+.student-id{font-size:.75rem;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.student-level{font-size:.85rem;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--light);color:var(--light-text);width:fit-content}
+.student-field{font-size:.92rem;color:var(--ink)}
+.student-field .label{color:var(--muted);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:3px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:.78rem;font-weight:700;padding:5px 10px;border-radius:999px;border:1px solid var(--border);background:#fff;color:var(--ink)}
+.actions{margin-top:auto;display:flex;gap:10px}
+.btn-sm{font-size:.85rem;font-weight:700;padding:8px 12px;border-radius:10px;border:1px solid var(--border);color:var(--ink);background:#fff}
+.btn-sm.primary{background:var(--primary);color:#fff;border-color:var(--primary)}
+.btn-sm:hover{border-color:var(--accent)}
+.btn-danger{color:var(--danger);border-color:#f4c2c1}
+.btn-danger:hover{background:#fdecea;border-color:var(--danger)}
+.empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
+.empty p{font-size:1.1rem;margin:0 0 10px}
+
+/* История уроков */
+.history-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.back-button{font-weight:700;color:var(--primary);font-size:1rem;display:inline-flex;align-items:center;gap:6px}
+.back-button:hover{text-decoration:underline}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+.filters select,.filters input[type="date"]{
+  padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:#fff;font-size:.95rem;color:var(--ink)
+}
+.lesson-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.lesson-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)
+}
+.lesson-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.lesson-date{font-weight:800;font-size:1rem;color:var(--ink)}
+.lesson-topic{font-size:1.05rem;font-weight:700;color:var(--ink);margin:2px 0 6px}
+.lesson-meta{font-size:.86rem;color:var(--muted);margin-bottom:6px}
+.lesson-homework{font-size:.9rem;color:var(--ink)}
+.lesson-footer{margin-top:auto;display:flex;gap:8px}
+.badge{font-size:.75rem;font-weight:800;padding:4px 9px;border-radius:999px;text-transform:uppercase;letter-spacing:.06em}
+.badge.planned{background:#e8ece9;color:var(--muted)}
+.badge.done{background:#dff4e7;color:var(--success)}
+.badge.completed{background:#dff4e7;color:var(--success)}
+.badge.assigned{background:#e3f0fd;color:var(--info)}
+.badge.overdue{background:#fbe3df;color:var(--danger)}
+.badge.none{background:#e8ece9;color:var(--muted)}
+.badge.lesson-status{font-size:.72rem;}
+.btn-icon{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);display:grid;place-items:center;color:var(--muted);font-size:1rem}
+.btn-icon.edit:hover{color:var(--primary);border-color:var(--primary)}
+.btn-icon.del:hover{color:var(--danger);border-color:var(--danger)}
+
+/* Модалка CRUD */
+dialog{border:none;border-radius:18px;padding:0;box-shadow:var(--shadow);max-width:560px;width:92vw;background:var(--card)}
+dialog::backdrop{background:rgba(23,52,58,.35)}
+.modal-head{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal-head h3{margin:0;font-size:1.25rem;font-weight:800}
+.modal-close{font-size:1.4rem;line-height:1;color:var(--muted)}
+.modal-body{padding:20px 24px;display:flex;flex-direction:column;gap:14px}
+.form-row{display:flex;flex-direction:column;gap:6px}
+.form-row label{font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.form-row input,.form-row select,.form-row textarea{
+  padding:10px 14px;border:1px solid var(--border);border-radius:12px;background:#fff;font-size:1rem;color:var(--ink)
+}
+.form-row textarea{resize:vertical;min-height:80px}
+.row-half{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal-foot{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+.toast{position:fixed;inset-inline:50%;inset-bottom:24px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:10px;font-size:.95rem;font-weight:700;opacity:0;pointer-events:none;transition:opacity .25s;z-index:100;box-shadow:0 10px 30px rgba(23,52,58,.25)}
+.toast.show{opacity:1}
+
+/* Экспорт/импорт */
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;align-items:center}
+.file-input{display:none}
+
+/* Диалог подтверждения импорта */
+.import-confirm{
+  position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
+  background:rgba(23,52,58,.45);
+}
+.import-confirm.hidden{display:none}
+.import-confirm-card{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px 28px;
+  max-width:460px;width:90vw;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px;
+}
+.import-confirm-head{display:flex;justify-content:space-between;align-items:center}
+.import-confirm-head h3{margin:0;font-size:1.2rem;font-weight:800}
+.import-confirm-close{font-size:1.6rem;line-height:1;color:var(--muted)}
+.import-confirm-body p{margin:0 0 8px;color:var(--ink);font-size:.95rem;line-height:1.5}
+.import-confirm-body p strong{color:var(--primary)}
+.import-confirm-foot{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
+
+/* адаптив */
+@media(max-width:640px){
+  .container{padding:16px 16px 50px}
+  .header-inner{padding:12px 16px;flex-wrap:wrap}
+  .nav{flex-wrap:wrap}
+  .row-half{grid-template-columns:1fr}
+  .modal-head{padding:16px 20px}
+  .modal-body{padding:16px 20px}
+  .modal-foot{padding:12px 20px}
+  .import-confirm-card{padding:20px 24px}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="brand"><div class="dot"></div>Teaching Progress</div>
+    <nav class="nav">
+      <button class="nav-button active" id="nav-students">Ученики</button>
+      <button class="nav-button" id="nav-history">История уроков</button>
+      <button class="action-button" id="btn-add-lesson">+ Занятие</button>
+    </nav>
+  </div>
+</header>
+
+<div class="demo-banner" role="banner">
+  <strong>Демо-прототип.</strong> Все ученики, темы, даты и оценки — вымышленные демонстрационные данные.
+  Хранилище только локальное (<code>localStorage</code> браузера). Это не защищённая многопользовательская база.
+</div>
+
+<div class="container">
+  <!-- УЧЕНИКИ -->
+  <section id="view-students">
+    <div class="section-title">Ученики<span>карточки прогресса и ссылки на уроки</span></div>
+    <div class="search-wrap"><input id="search-students" type="search" placeholder="Поиск по имени, учебнику, теме…"></div>
+    <div class="tools">
+      <button class="btn-sm primary" id="btn-add-student">+ Ученика</button>
+      <button class="btn-sm" id="btn-export">Экспорт JSON</button>
+      <button class="btn-sm" id="btn-import">Импорт JSON <input class="file-input" id="file-import" type="file" accept=".json"></button>
+    </div>
+    <div class="student-grid" id="students-list"></div>
+    <p class="empty hidden" id="empty-students">Совпадений не найдено</p>
+  </section>
+
+  <!-- ИСТОРИЯ -->
+  <section id="view-history" class="hidden">
+    <div class="history-header">
+      <div>
+        <button class="back-button" id="btn-back">← Назад к ученикам</button>
+        <h2 id="history-title" style="margin:4px 0 0;font-size:1.3rem;font-weight:800">История уроков</h2>
+        <p id="history-sub" style="margin:0;color:var(--muted);font-size:.95rem"></p>
+      </div>
+      <button class="action-button" id="btn-add-lesson-for">+ Занятие для этого ученика</button>
+    </div>
+    <div class="filters">
+      <select id="filter-status"><option value="">Все статусы занятия</option><option value="planned">Запланировано</option><option value="done">Проведено</option><option value="cancelled">Отменено</option></select>
+      <select id="filter-homework"><option value="">Домашнее задание — любой статус</option><option value="none">Не задано</option><option value="assigned">Задано</option><option value="completed">Выполнено</option><option value="overdue">Просрочено</option></select>
+      <input id="filter-date" type="date">
+    </div>
+    <div class="lesson-grid" id="lessons-list"></div>
+    <p class="empty hidden" id="empty-lessons">Занятий не найдено</p>
+  </section>
+</div>
+
+<!-- Модалка ученика / занятия -->
+<dialog id="modal">
+  <div class="modal-head"><h3 id="modal-title">Редактирование</h3><button class="modal-close" id="modal-close">×</button></div>
+  <div class="modal-body" id="modal-body"></div>
+  <div class="modal-foot">
+    <button class="btn-sm" id="modal-cancel">Отмена</button>
+    <button class="btn-sm primary" id="modal-save">Сохранить</button>
+  </div>
+</dialog>
+
+<!-- Подтверждение импорта -->
+<div id="import-confirm" class="import-confirm hidden" role="dialog" aria-modal="true" aria-label="Подтверждение импорта">
+  <div class="import-confirm-card">
+    <div class="import-confirm-head"><h3>Импорт данных</h3><button class="import-confirm-close" id="import-confirm-close">×</button></div>
+    <div class="import-confirm-body">
+      <p>Импорт заменит <strong>все текущие данные</strong> в локальном хранилище браузера (учеников и историю уроков).</p>
+      <p>Перед импортом рекомендуется скачать резервную копию текущего состояния.</p>
+    </div>
+    <div class="import-confirm-foot">
+      <button class="btn-sm" id="import-cancel">Отмена</button>
+      <button class="btn-sm" id="import-backup-then">Скачать резервную копию и импортировать</button>
+      <button class="btn-sm primary" id="import-proceed">Импортировать без копии</button>
+    </div>
+  </div>
+</div>
+
+<p class="toast" id="toast"></p>
+
+<script>
+/* ===================== Модель данных (synthetic demo) ===================== */
+const STORAGE_KEY = 'teaching_progress_v2';
+const VERSION = 2;
+
+const HOMEWORK_STATUSES = ['none','assigned','completed','overdue'];
+const LESSON_STATUSES = ['planned','done','cancelled'];
+const HW_LABELS = {none:'Не задано', assigned:'Задано', completed:'Выполнено', overdue:'Просрочено'};
+const LS_LABELS = {planned:'Запланировано', done:'Проведено', cancelled:'Отменено'};
+
+// Ссылки на существующие уроки/хабы GitHub Pages (уже публичные в репозитории).
+const LESSON_LINKS = {
+  maya:  'https://altatiana7.github.io/Tatyana-English-Hub/maya-english-hub/',
+  nikita:'https://altatiana7.github.io/Tatyana-English-Hub/teacher-nikita-7f3a92/',
+  gabi:  'https://altatiana7.github.io/Tatyana-English-Hub/gabi-english-hub/',
+  kate:  'https://altatiana7.github.io/Tatyana-English-Hub/kate-english-hub/',
+  sonya: 'https://altatiana7.github.io/Tatyana-English-Hub/teacher-calendar/planner-v2.html',
+  timofey:'https://altatiana7.github.io/timofey-teacher/'
+};
+
+/* Дата по локальному времени преподавателя (YYYY-MM-DD), не UTC. */
+function localDateString(d = new Date()){
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+
+function seedDemo(){
+  const now = localDateString();
+  return {
+    version: VERSION,
+    students:[
+      {id:'s-1',name:'Мая',textbook:'English File Pre-Intermediate',level:'A2',lastTopic:'Present Simple vs Present Continuous',vocab:['schedule','routine','occasionally'],grammar:['Present Simple','adverbs of frequency'],homework:'WB p.12 ex.4b — 5 предложений о распорядке дня',homeworkStatus:'completed',lessonKey:'maya',color:'#1a5060',createdAt:now},
+      {id:'s-2',name:'Никита',textbook:'Outcomes Pre-Intermediate',level:'A2+/B1',lastTopic:'Phrasal verbs: travel',vocab:['check in','set off','look forward to'],grammar:['phrasal verbs','Past Simple'],homework:'Выписать 8 фразовых глаголов и составить истории',homeworkStatus:'assigned',lessonKey:'nikita',color:'#7a4010',createdAt:now},
+      {id:'s-3',name:'Габи',textbook:'Gateway to the World B1',level:'B1',lastTopic:'Teenage life and free time',vocab:['hobby','hang out','screen time'],grammar:['Present Perfect','used to'],homework:'Записать аудио-ответ на вопрос «Что ты делаешь в выходные?»',homeworkStatus:'overdue',lessonKey:'gabi',color:'#2e5220',createdAt:now},
+      {id:'s-4',name:'Кейт (Катя)',textbook:'Gen Z & Money / авторский курс',level:'B1+',lastTopic:'Digital money and budgeting',vocab:['cashless','budget','subscription'],grammar:['First conditional','future forms'],homework:'Прочитать статью и подготовить 3 вопроса',homeworkStatus:'completed',lessonKey:'kate',color:'#8b2252',createdAt:now},
+      {id:'s-5',name:'Соня',textbook:'Общий разговорный курс',level:'B2',lastTopic:'Discussion: city vs village',vocab:['bustling','peaceful','commute'],grammar:['comparatives','argumentative phrases'],homework:'Эссе 180 слов: «Где лучше жить?»',homeworkStatus:'completed',lessonKey:'sonya',color:'#9b4827',createdAt:now},
+      {id:'s-6',name:'Тимофей',textbook:'On Screen B1–B2 + ОГЭ',level:'B1',lastTopic:'ОГЭ: письмо другу',vocab:['invite','accept','decline'],grammar:['informal letter structure'],homework:'Написать ответ на письмо друга по шаблону ОГЭ',homeworkStatus:'assigned',lessonKey:'timofey',color:'#1e3050',createdAt:now}
+    ],
+    lessons:[
+      {id:'l-1',studentId:'s-1',date:'2026-10-20',topic:'Present Simple vs Present Continuous',homework:'WB p.12 ex.4b',status:'done',homeworkStatus:'completed',notes:'Хорошо различает времена, ошибки только с глаголами чувств',createdAt:now},
+      {id:'l-2',studentId:'s-1',date:'2026-10-23',topic:'Adverbs of frequency',homework:'написать 5 предложений',status:'done',homeworkStatus:'none',notes:'Домашка не принесена — перенесена на след. урок',createdAt:now},
+      {id:'l-3',studentId:'s-2',date:'2026-10-21',topic:'Phrasal verbs: travel',homework:'8 фразовых глаголов + истории',status:'done',homeworkStatus:'assigned',notes:'Ещё усложняет значения',createdAt:now},
+      {id:'l-4',studentId:'s-3',date:'2026-10-18',topic:'Teenage life and free time',homework:'аудио-ответ о выходных',status:'done',homeworkStatus:'completed',notes:'Аудио прислала, уровень хороший',createdAt:now},
+      {id:'l-5',studentId:'s-4',date:'2026-10-19',topic:'Digital money and budgeting',homework:'статья + 3 вопроса',status:'done',homeworkStatus:'completed',notes:'Обсудили криптовалюту и карманные деньги',createdAt:now},
+      {id:'l-6',studentId:'s-5',date:'2026-10-15',topic:'City vs village',homework:'эссе 180 слов',status:'done',homeworkStatus:'completed',notes:'Эссе принято, ошибки в артиклях',createdAt:now},
+      {id:'l-7',studentId:'s-6',date:'2026-10-17',topic:'ОГЭ: письмо другу',homework:'ответ по шаблону',status:'planned',homeworkStatus:'assigned',notes:'Перенесён на вторник',createdAt:now},
+      {id:'l-8',studentId:'s-6',date:'2026-10-09',topic:'ОГЭ: чтение',homework:'текст + задания',status:'done',homeworkStatus:'completed',notes:'7 из 9 баллов',createdAt:now}
+    ]
+  };
+}
+
+let state = {version:VERSION,students:[],lessons:[]};
+let viewStudentId = null;   // фильтр истории по ученику
+let formDirty = false;      // защита от потери данных в форме
+
+/* ===================== localStorage ===================== */
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return seedDemo();
+    const parsed = JSON.parse(raw);
+    if(parsed && Array.isArray(parsed.students) && Array.isArray(parsed.lessons)){
+      return parsed;
+    }
+    return seedDemo();
+  }catch(e){ return seedDemo(); }
+}
+function saveState(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 2200);
+}
+
+/* ===================== Рендер ===================== */
+function escapeHtml(s){ return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function studentLink(s){ return LESSON_LINKS[s.lessonKey] || '#'; }
+function hwBadgeClass(v){ return v && HOMEWORK_STATUSES.includes(v) ? v : 'none'; }
+
+function renderStudents(){
+  const q = document.getElementById('search-students').value.toLowerCase();
+  const list = document.getElementById('students-list');
+  const empty = document.getElementById('empty-students');
+  const filtered = state.students.filter(s=>{
+    const hay = `${s.name} ${s.textbook} ${s.level} ${s.lastTopic} ${(s.vocab||[]).join(' ')} ${(s.grammar||[]).join(' ')} ${s.homework??''}`.toLowerCase();
+    return hay.includes(q);
+  });
+  list.innerHTML = '';
+  if(filtered.length===0){ empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+  filtered.forEach(s=>{
+    const lessonsCount = state.lessons.filter(l=>l.studentId===s.id).length;
+    const lastLesson = state.lessons.filter(l=>l.studentId===s.id).sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
+    const hwClass = hwBadgeClass(s.homeworkStatus);
+    const card = document.createElement('article');
+    card.className='student-card';
+    card.innerHTML = `
+      <header>
+        <div>
+          <div class="student-name">${escapeHtml(s.name)}</div>
+          <div class="student-id">ID ${s.id}</div>
+        </div>
+        <span class="student-level">${escapeHtml(s.level)}</span>
+      </header>
+      <div class="student-field"><span class="label">Учебник</span>${escapeHtml(s.textbook)}</div>
+      <div class="student-field"><span class="label">Последняя тема</span>${escapeHtml(s.lastTopic)}</div>
+      <div class="chips">
+        ${(s.vocab||[]).map(v=>`<span class="chip" title="Активная лексика">Лекс: ${escapeHtml(v)}</span>`).join('')}
+        ${(s.grammar||[]).map(g=>`<span class="chip" title="Грамматика">Грамм: ${escapeHtml(g)}</span>`).join('')}
+        <span class="chip" style="border-color:var(--border);color:var(--muted)">ДЗ: ${HW_LABELS[s.homeworkStatus]||'—'}</span>
+      </div>
+      <div class="student-field"><span class="label">Домашнее задание</span><span style="font-weight:700">${escapeHtml(s.homework||'—')}</span></div>
+      <div style="margin-top:auto;display:flex;gap:8px">
+        <a class="btn-sm primary" href="${studentLink(s)}" target="_blank" rel="noopener">Урок на GitHub</a>
+        <button class="btn-sm" title="Редактировать карточку" onclick="openStudentModal('${escapeHtml(s.id)}')">✎</button>
+        <button class="btn-sm btn-danger" title="Удалить ученика" onclick="deleteStudent('${escapeHtml(s.id)}')">×</button>
+      </div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:.86rem;color:var(--muted)">
+        Уроков: ${lessonsCount}${lastLesson?` · Последний: ${lastLesson.date} — ${escapeHtml(lastLesson.topic)}`:''}
+      </div>
+    `;
+    card.querySelector('header').addEventListener('click',()=>openStudent(s.id));
+    list.appendChild(card);
+  });
+}
+
+function renderHistory(){
+  const title = document.getElementById('history-title');
+  const sub = document.getElementById('history-sub');
+  const list = document.getElementById('lessons-list');
+  const empty = document.getElementById('empty-lessons');
+  const statusF = document.getElementById('filter-status').value;
+  const hwF = document.getElementById('filter-homework').value;
+  const dateF = document.getElementById('filter-date').value;
+
+  const s = viewStudentId ? state.students.find(x=>x.id===viewStudentId) : null;
+  let items = state.lessons.filter(l=> viewStudentId ? l.studentId===viewStudentId : true);
+  items = items.filter(l=>{
+    if(statusF && l.status!==statusF) return false;
+    if(hwF && l.homeworkStatus!==hwF) return false;
+    if(dateF && l.date!==dateF) return false;
+    return true;
+  }).sort((a,b)=>new Date(b.date)-new Date(a.date));
+
+  if(s){ title.textContent = `История уроков — ${escapeHtml(s.name)}`; sub.textContent = `${s.textbook} · уровень ${s.level} · ссылка на урок выше`; }
+  else { title.textContent = 'Вся история уроков'; sub.textContent = 'Все занятия всех учеников'; }
+
+  list.innerHTML='';
+  if(items.length===0){ empty.classList.remove('hidden'); return; }
+  empty.classList.add('hidden');
+  items.forEach(l=>{
+    const student = state.students.find(x=>x.id===l.studentId);
+    const card = document.createElement('article');
+    card.className='lesson-card';
+    const hwClass = hwBadgeClass(l.homeworkStatus);
+    card.innerHTML=`
+      <div class="lesson-head">
+        <div class="lesson-date">${escapeHtml(l.date)}</div>
+        <span class="badge lesson-status">${LS_LABELS[l.status]||l.status}</span>
+      </div>
+      <div class="lesson-topic">${escapeHtml(l.topic)}</div>
+      <div class="lesson-meta">${escapeHtml(student?student.name:'—')} · ${escapeHtml(student?student.level:'—')}</div>
+      <div class="lesson-homework"><span style="font-weight:700">ДЗ:</span> ${escapeHtml(l.homework||'—')}
+        <span class="badge ${hwClass}" style="margin-left:8px">${HW_LABELS[l.homeworkStatus]||'—'}</span>
+      </div>
+      <div class="lesson-footer">
+        ${l.notes?`<span style="font-size:.86rem;color:var(--muted);flex:1">✎ ${escapeHtml(l.notes)}</span>`:''}
+        <button class="btn-icon edit" title="Редактировать" onclick="openLessonModal('${escapeHtml(l.id)}')">✎</button>
+        <button class="btn-icon del" title="Удалить" onclick="deleteLesson('${escapeHtml(l.id)}')">×</button>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+/* ===================== Навигация ===================== */
+function show(sectionId){
+  document.querySelectorAll('.container > section').forEach(sec=>sec.classList.add('hidden'));
+  document.querySelectorAll('.nav-button').forEach(b=>b.classList.remove('active'));
+  document.getElementById(sectionId).classList.remove('hidden');
+  if(sectionId==='view-students'){
+    document.querySelector('#nav-students').classList.add('active');
+    viewStudentId = null;
+    renderStudents();
+  } else {
+    document.querySelector('#nav-history').classList.add('active');
+    renderHistory();
+  }
+}
+document.getElementById('nav-students').onclick=()=>show('view-students');
+document.getElementById('nav-history').onclick=()=>show('view-history');
+document.getElementById('btn-back').onclick=()=>show('view-students');
+document.getElementById('search-students').oninput=renderStudents;
+document.getElementById('filter-status').onchange=renderHistory;
+document.getElementById('filter-homework').onchange=renderHistory;
+document.getElementById('filter-date').onchange=renderHistory;
+
+/* ===================== Защита от потери данных в форме ===================== */
+function setDirty(dirty){ formDirty = !!dirty; }
+
+function guardCloseModal(){
+  if(formDirty){
+    if(!confirm('Есть несохранённые изменения. Закрыть форму без сохранения?')) return false;
+  }
+  setDirty(false);
+  return true;
+}
+
+const modalEl = document.getElementById('modal');
+// Закрытие через backdrop / Esc
+modalEl.addEventListener('cancel',(e)=>{
+  if(formDirty){
+    e.preventDefault();
+    if(confirm('Есть несохранённые изменения. Закрыть форму без сохранения?')){ setDirty(false); modalEl.close(); }
+  }
+});
+document.getElementById('modal-close').onclick = ()=>{ if(guardCloseModal()) modalEl.close(); };
+document.getElementById('modal-cancel').onclick = ()=>{ if(guardCloseModal()) modalEl.close(); };
+
+window.addEventListener('beforeunload',(e)=>{
+  if(formDirty){
+    e.preventDefault();
+    e.returnValue = 'Есть несохранённые изменения. Вы действительно хотите покинуть страницу?';
+    return e.returnValue;
+  }
+});
+
+/* ===================== Ученики: CRUD ===================== */
+function openStudentModal(id=null){
+  setDirty(false);
+  const s = id ? state.students.find(x=>x.id===id) : null;
+  const isEdit = !!s;
+  document.getElementById('modal-title').textContent = isEdit?'Редактировать ученика':'Новый ученик';
+  document.getElementById('modal-body').innerHTML = `
+    <form id="student-form">
+      <div class="row-half">
+        <div class="form-row"><label>Имя ученика</label><input name="name" value="${escapeHtml(s?s.name:'')}" required></div>
+        <div class="form-row"><label>Уровень</label><select name="level"><option value="A1">A1</option><option value="A2">A2</option><option value="A2+/B1">A2+/B1</option><option value="B1">B1</option><option value="B1+">B1+</option><option value="B2">B2</option><option value="C1">C1</option></select></div>
+      </div>
+      <div class="form-row"><label>Учебник / курс</label><input name="textbook" value="${escapeHtml(s?s.textbook:'')}" placeholder="Напр. English File Pre-Int"></div>
+      <div class="form-row"><label>Последняя пройденная тема</label><input name="lastTopic" value="${escapeHtml(s?s.lastTopic:'')}" placeholder="Напр. Present Simple"></div>
+      <div class="row-half">
+        <div class="form-row"><label>Активная лексика (через запятую)</label><input name="vocab" value="${escapeHtml(s?(s.vocab||[]).join(', '):'')}" placeholder="слово, фраза, идиома"></div>
+        <div class="form-row"><label>Грамматика (через запятую)</label><input name="grammar" value="${escapeHtml(s?(s.grammar||[]).join(', '):'')}" placeholder="Present Simple, модальные глаголы"></div>
+      </div>
+      <div class="form-row"><label>Домашнее задание</label><textarea name="homework">${escapeHtml(s?s.homework:'')}</textarea></div>
+      <div class="row-half">
+        <div class="form-row"><label>Статус ДЗ</label><select name="homeworkStatus">${HOMEWORK_STATUSES.map(v=>`<option value="${v}" ${s&&s.homeworkStatus===v?'selected':''}>${HW_LABELS[v]}</option>`).join('')}</select></div>
+        <div class="form-row"><label>Ссылка на урок (GitHub)</label><input name="lessonKey" list="lesson-links" placeholder="maya / nikita / gabi …" value="${escapeHtml(s?s.lessonKey:'')}"></div>
+      </div>
+      <datalist id="lesson-links">
+        ${Object.entries(LESSON_LINKS).map(([k,v])=>`<option value="${escapeHtml(k)}">${escapeHtml(v)}</option>`).join('')}
+      </datalist>
+    </form>
+  `;
+  if(s){
+    document.getElementById('modal-body').querySelector('select[name="level"]').value = s.level;
+  }
+  const form = document.getElementById('student-form');
+  form.addEventListener('input',()=>setDirty(true));
+  form.addEventListener('change',()=>setDirty(true));
+  const save = ()=>{
+    const fd = new FormData(form);
+    const student = {
+      id: s?s.id:'s-'+Date.now(),
+      name: fd.get('name').trim(),
+      textbook: fd.get('textbook').trim(),
+      level: fd.get('level'),
+      lastTopic: fd.get('lastTopic').trim(),
+      vocab: fd.get('vocab').toString().split(',').map(x=>x.trim()).filter(Boolean),
+      grammar: fd.get('grammar').toString().split(',').map(x=>x.trim()).filter(Boolean),
+      homework: fd.get('homework').trim(),
+      homeworkStatus: fd.get('homeworkStatus'),
+      lessonKey: fd.get('lessonKey').trim(),
+      color: s?s.color:'#'+Math.floor(Math.random()*0xffffff).toString(16).padStart(6,'0'),
+      createdAt: s?s.createdAt:localDateString()
+    };
+    if(!student.name){ toast('Введите имя'); setDirty(true); return; }
+    if(!HOMEWORK_STATUSES.includes(student.homeworkStatus)) student.homeworkStatus='none';
+    if(s){ Object.assign(state.students.find(x=>x.id===s.id), student); toast('Карточка обновлена'); }
+    else { state.students.push(student); toast('Ученик добавлен'); }
+    saveState(); setDirty(false); renderStudents(); renderHistory(); document.getElementById('modal').close();
+  };
+  document.getElementById('modal-save').onclick = save;
+  document.getElementById('modal').showModal();
+}
+window.openStudentModal = openStudentModal;
+
+function deleteStudent(id){
+  if(!confirm('Удалить ученика и всю его историю уроков?')) return;
+  state.students = state.students.filter(x=>x.id!==id);
+  state.lessons = state.lessons.filter(l=>l.studentId!==id);
+  if(viewStudentId===id) viewStudentId=null;
+  saveState(); renderStudents(); renderHistory(); toast('Удалено');
+}
+window.deleteStudent = deleteStudent;
+
+function openStudent(id){
+  viewStudentId = id;
+  show('view-history');
+}
+
+/* ===================== Занятия: CRUD ===================== */
+document.getElementById('btn-add-lesson').onclick = ()=>openLessonModal();
+document.getElementById('btn-add-lesson-for').onclick = ()=>openLessonModal();
+
+function openLessonModal(id=null){
+  setDirty(false);
+  const l = id ? state.lessons.find(x=>x.id===id) : null;
+  const studentsForSelect = viewStudentId ? state.students.filter(x=>x.id===viewStudentId) : state.students;
+  if(viewStudentId && studentsForSelect.length===0){ toast('Нет учеников'); return; }
+  document.getElementById('modal-title').textContent = l?'Редактировать занятие':'Новое занятие';
+  document.getElementById('modal-body').innerHTML = `
+    <form id="lesson-form">
+      ${!viewStudentId?`<div class="form-row"><label>Ученик</label><select name="studentId" required>${studentsForSelect.map(s=>`<option value="${escapeHtml(s.id)}" ${l&&l.studentId===s.id?'selected':''}>${escapeHtml(s.name)} (${escapeHtml(s.level)})</option>`).join('')}</select></div>`:''}
+      <div class="row-half">
+        <div class="form-row"><label>Дата</label><input name="date" type="date" value="${escapeHtml(l?l.date:localDateString())}" required></div>
+        <div class="form-row"><label>Статус занятия</label><select name="status">${LESSON_STATUSES.map(v=>`<option value="${v}" ${l&&l.status===v?'selected':''}>${LS_LABELS[v]}</option>`).join('')}</select></div>
+      </div>
+      <div class="form-row"><label>Тема занятия</label><input name="topic" value="${escapeHtml(l?l.topic:'')}" required placeholder="Напр. Present Simple"></div>
+      <div class="form-row"><label>Домашнее задание</label><input name="homework" value="${escapeHtml(l?l.homework:'')}" placeholder="Напр. WB p.12 ex.1"></div>
+      <div class="row-half">
+        <div class="form-row"><label>Статус ДЗ</label><select name="homeworkStatus">${HOMEWORK_STATUSES.map(v=>`<option value="${v}" ${l&&l.homeworkStatus===v?'selected':''}>${HW_LABELS[v]}</option>`).join('')}</select></div>
+      </div>
+      <div class="form-row"><label>Заметки учителя</label><textarea name="notes">${escapeHtml(l?l.notes:'')}</textarea></div>
+    </form>
+  `;
+  const form = document.getElementById('lesson-form');
+  form.addEventListener('input',()=>setDirty(true));
+  form.addEventListener('change',()=>setDirty(true));
+  const save = ()=>{
+    const fd = new FormData(form);
+    const lesson = {
+      id: l?l.id:'l-'+Date.now(),
+      studentId: viewStudentId?viewStudentId:fd.get('studentId'),
+      date: fd.get('date'),
+      topic: fd.get('topic').trim(),
+      homework: fd.get('homework').trim(),
+      status: fd.get('status'),
+      homeworkStatus: fd.get('homeworkStatus'),
+      notes: fd.get('notes').trim(),
+      createdAt: l?l.createdAt:localDateString()
+    };
+    if(!lesson.topic){ toast('Введите тему'); setDirty(true); return; }
+    if(!LESSON_STATUSES.includes(lesson.status)) lesson.status='planned';
+    if(!HOMEWORK_STATUSES.includes(lesson.homeworkStatus)) lesson.homeworkStatus='none';
+    if(l){ Object.assign(state.lessons.find(x=>x.id===l.id), lesson); toast('Занятие обновлено'); }
+    else { state.lessons.push(lesson); toast('Занятие добавлено'); }
+    saveState(); setDirty(false); renderStudents(); renderHistory(); document.getElementById('modal').close();
+  };
+  document.getElementById('modal-save').onclick = save;
+  document.getElementById('modal').showModal();
+}
+window.openLessonModal = openLessonModal;
+
+function deleteLesson(id){
+  if(!confirm('Удалить запись о занятии?')) return;
+  state.lessons = state.lessons.filter(l=>l.id!==id);
+  saveState(); renderStudents(); renderHistory(); toast('Занятие удалено');
+}
+window.deleteLesson = deleteLesson;
+
+/* ===================== Валидация импорта ===================== */
+function isNonEmptyStr(v){ return typeof v === 'string' && v.trim().length > 0; }
+function isStr(v){ return typeof v === 'string'; }
+function isArrayOfStr(v){ return Array.isArray(v) && v.every(x=>typeof x==='string'); }
+function isValidDateStr(v){
+  if(typeof v !== 'string') return false;
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;
+  const d = new Date(v + 'T00:00:00');
+  return !isNaN(d.getTime());
+}
+
+function validateImport(parsed){
+  const errors = [];
+  if(parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)){
+    errors.push('Корень файла должен быть объектом.');
+    return {ok:false,errors};
+  }
+  if(!Array.isArray(parsed.students)) errors.push('Отсутствует массив students.');
+  if(!Array.isArray(parsed.lessons)) errors.push('Отсутствует массив lessons.');
+  if(errors.length) return {ok:false,errors};
+
+  const studentIds = new Set();
+  parsed.students.forEach((s,i)=>{
+    const p = `students[${i}]`;
+    if(!isNonEmptyStr(s.id)){ errors.push(`${p}: поле id обязательно.`); }
+    else{
+      if(studentIds.has(s.id)) errors.push(`${p}: дубликат id "${s.id}".`);
+      studentIds.add(s.id);
+    }
+    if(!isNonEmptyStr(s.name)) errors.push(`${p}: поле name обязательно.`);
+    if(!isStr(s.textbook)) errors.push(`${p}: поле textbook должно быть строкой.`);
+    if(!isStr(s.level)) errors.push(`${p}: поле level должно быть строкой.`);
+    if(!isStr(s.lastTopic)) errors.push(`${p}: поле lastTopic должно быть строкой.`);
+    if(!isArrayOfStr(s.vocab)) errors.push(`${p}: поле vocab должен быть массивом строк.`);
+    if(!isArrayOfStr(s.grammar)) errors.push(`${p}: поле grammar должен быть массивом строк.`);
+    if(!isStr(s.homework)) errors.push(`${p}: поле homework должно быть строкой.`);
+    if(!HOMEWORK_STATUSES.includes(s.homeworkStatus)) errors.push(`${p}: недопустимый статус ДЗ.`);
+    if(!isStr(s.lessonKey)) errors.push(`${p}: поле lessonKey должно быть строкой.`);
+    if(!isStr(s.color)) errors.push(`${p}: поле color должно быть строкой.`);
+    if(!isStr(s.createdAt)) errors.push(`${p}: поле createdAt должно быть строкой.`);
+  });
+
+  const lessonIds = new Set();
+  parsed.lessons.forEach((l,i)=>{
+    const p = `lessons[${i}]`;
+    if(!isNonEmptyStr(l.id)){ errors.push(`${p}: поле id обязательно.`); }
+    else{
+      if(lessonIds.has(l.id)) errors.push(`${p}: дубликат id "${l.id}".`);
+      lessonIds.add(l.id);
+    }
+    if(!isNonEmptyStr(l.studentId)) errors.push(`${p}: поле studentId обязательно.`);
+    else if(!studentIds.has(l.studentId)) errors.push(`${p}: studentId "${l.studentId}" не найден среди учеников.`);
+    if(!isValidDateStr(l.date)) errors.push(`${p}: дата должна быть в формате ГГГГ-ММ-ДД.`);
+    if(!isNonEmptyStr(l.topic)) errors.push(`${p}: поле topic обязательно.`);
+    if(!isStr(l.homework)) errors.push(`${p}: поле homework должно быть строкой.`);
+    if(!LESSON_STATUSES.includes(l.status)) errors.push(`${p}: недопустимый статус занятия.`);
+    if(!HOMEWORK_STATUSES.includes(l.homeworkStatus)) errors.push(`${p}: недопустимый статус ДЗ.`);
+    if(!isStr(l.notes)) errors.push(`${p}: поле notes должно быть строкой.`);
+    if(!isStr(l.createdAt)) errors.push(`${p}: поле createdAt должно быть строкой.`);
+  });
+
+  return {ok: errors.length===0, errors};
+}
+
+function normalizeImported(parsed){
+  return {
+    version: parsed.version || VERSION,
+    students: parsed.students.map(s=>({
+      id: s.id, name: s.name, textbook: s.textbook||'', level: s.level||'',
+      lastTopic: s.lastTopic||'', vocab: Array.isArray(s.vocab)?s.vocab:[],
+      grammar: Array.isArray(s.grammar)?s.grammar:[],
+      homework: s.homework||'', homeworkStatus: HOMEWORK_STATUSES.includes(s.homeworkStatus)?s.homeworkStatus:'none',
+      lessonKey: s.lessonKey||'', color: s.color||'#'+Math.floor(Math.random()*0xffffff).toString(16).padStart(6,'0'),
+      createdAt: s.createdAt||localDateString()
+    })),
+    lessons: parsed.lessons.map(l=>({
+      id: l.id, studentId: l.studentId, date: l.date, topic: l.topic,
+      homework: l.homework||'', status: LESSON_STATUSES.includes(l.status)?l.status:'planned',
+      homeworkStatus: HOMEWORK_STATUSES.includes(l.homeworkStatus)?l.homeworkStatus:'none',
+      notes: l.notes||'', createdAt: l.createdAt||localDateString()
+    }))
+  };
+}
+
+/* Скачать резервную копию текущего состояния */
+function downloadBackup(filename){
+  const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href=url;
+  a.download = filename || `teaching-progress-backup-${localDateString()}.json`;
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+}
+
+/* Экспорт */
+document.getElementById('btn-export').onclick = ()=>{
+  downloadBackup(`teaching-progress-export-${localDateString()}.json`);
+  toast('Экспорт сохранён');
+};
+
+/* Импорт с подтверждением и резервной копией */
+const importConfirmEl = document.getElementById('import-confirm');
+function closeImportConfirm(){ importConfirmEl.classList.add('hidden'); }
+
+document.getElementById('btn-import').onclick = ()=>{
+  setDirty(false);
+  importConfirmEl.classList.remove('hidden');
+};
+document.getElementById('import-cancel').onclick = closeImportConfirm;
+document.getElementById('import-confirm-close').onclick = closeImportConfirm;
+importConfirmEl.addEventListener('click',(e)=>{ if(e.target===importConfirmEl) closeImportConfirm(); });
+
+document.getElementById('import-backup-then').onclick = ()=>{
+  closeImportConfirm();
+  downloadBackup();
+  setTimeout(()=>document.getElementById('file-import').click(), 300);
+};
+document.getElementById('import-proceed').onclick = ()=>{
+  closeImportConfirm();
+  document.getElementById('file-import').click();
+};
+
+document.getElementById('file-import').onchange = (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (ev)=>{
+    try{
+      const parsed = JSON.parse(ev.target.result);
+      const check = validateImport(parsed);
+      if(!check.ok){
+        throw new Error(check.errors.join(' '));
+      }
+      const clean = normalizeImported(parsed);
+      state = clean;
+      saveState();
+      renderStudents();
+      renderHistory();
+      toast('Импорт завершён (' + clean.students.length + ' учеников, ' + clean.lessons.length + ' занятий)');
+    }catch(err){
+      toast('Ошибка импорта: '+err.message);
+    }
+  };
+  reader.readAsText(file);
+  e.target.value='';
+};
+
+document.getElementById('modal-close').onclick = ()=>{ if(guardCloseModal()) modalEl.close(); };
+document.getElementById('btn-add-student').onclick = ()=>openStudentModal();
+
+/* ===================== Запуск ===================== */
+state = loadState();
+show('view-students');
+</script>
+</body>
+</html>
