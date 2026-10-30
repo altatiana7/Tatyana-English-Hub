@@ -195,6 +195,7 @@ body.lesson-open{overflow:hidden}
         <button onclick="openHomeworkLesson(3)"><span>Lesson 3 · Music & Study</span><span>›</span></button>
         <button onclick="openHomeworkLesson('money')"><span>Gen Z &amp; Money · Words</span><span>›</span></button>
         <button onclick="openHomeworkLesson('bbc5')"><span>Lesson 5 · BBC + Words</span><span>›</span></button>
+        <button onclick="openHomeworkLesson('inversion')" style="border:2px solid #0d98a2;background:#ecfaf9"><span>Inversion · B2 Test <b class="hw-badge">NEW</b></span><span>›</span></button>
         <button onclick="openHomeworkLesson('grammar11')" style="border:2px solid #a7d5c9;background:#effaf6"><span>11 · Grammar Lab · Test <b class="hw-badge">NEW</b></span><span>›</span></button>
         <button onclick="openHomeworkLesson('phone')" style="border:2px solid #efc12c;background:#fffbea"><span>Smartphones · Words <b class="hw-badge">NEW</b></span><span>›</span></button>
       </div>
@@ -373,7 +374,11 @@ function openHomeworkLesson(lesson){
   document.body.classList.add('lesson-open');
   view.classList.add('on');
   view.setAttribute('aria-hidden','false');
-  if(lesson==='grammar11'){
+  if(lesson==='inversion'){
+    title.textContent='Homework · Inversion · B2';
+    frame.removeAttribute('srcdoc');
+    frame.src='homework-inversion.html?v=20261030';
+  }else if(lesson==='grammar11'){
     title.textContent='Homework · 11 / Grammar Lab';
     frame.removeAttribute('srcdoc');
     frame.src='homework-grammar-lab-11.html?v=20261027';
