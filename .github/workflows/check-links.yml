@@ -1,0 +1,25 @@
+name: Check links
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Проверяем только локальные пути: внешние ссылки не трогаем,
+      # чтобы CI не падал из-за чужих сайтов и сети.
+      - name: Проверить локальные ссылки
+        run: python3 tools/check-links.py --strict
