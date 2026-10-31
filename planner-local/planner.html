@@ -90,7 +90,7 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
     <div class="card section">
       <div class="tutor-note">Репетиторство · новые имена из личного расписания автоматически добавляются сюда и в оплату</div>
       <div class="student-form">
-        <div><label>Имя ученика</label><input id="studentName" type="text" placeholder="Например: Арина ЕГЭ"></div>
+        <div><label>Имя ученика</label><input id="studentName" type="text" placeholder="Например: Мария ЕГЭ"></div>
         <div><label>Время</label><input id="studentTime" type="text" placeholder="18:00"></div>
         <div><label>Уровень / класс</label><input id="studentLevel" type="text" placeholder="B1 / 8 класс"></div>
         <button class="primary" type="button" onclick="addStudent()">Добавить</button>
@@ -120,7 +120,7 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
       <div class="notice" style="margin-top:10px">Каждый ученик показывается один раз. План, фактическую оплату и цену за 1 занятие вводите прямо в строке ученика. Итоги пересчитываются автоматически и сохраняются в файл на вашем компьютере.</div>
     </div>
   </section>
-  <section id="attendance" class="panel"><div class="notice">Посещаемость сохраняется в резервной и облачной копии планнера.</div></section>
+  <section id="attendance" class="panel"><div class="notice">Посещаемость сохраняется вместе с остальными данными — в файл планнера.</div></section>
   <section id="notes" class="panel"><div class="card section"><textarea id="notesBox" placeholder="Notes..."></textarea></div></section>
   <section id="egetests" class="panel">
     <div class="card section">
@@ -129,7 +129,7 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
         <div class="filterbox" style="width:220px"><label>Код ученика</label><input id="egeResultCode" maxlength="6" autocomplete="off" placeholder="Например: A7K9Q2" style="text-transform:uppercase;font-size:18px;font-weight:900;letter-spacing:.12em"></div>
         <button class="primary" type="button" onclick="checkEgeCode()">Проверить код</button>
       </div>
-      <div id="egeCheckStatus" class="notice">Введите 6-значный код, который Арина получит после теста.</div>
+      <div id="egeCheckStatus" class="notice">Проверка кодов работает только в версии с облаком; здесь она отключена.</div>
       <div id="egeCheckResult" style="display:none;margin-top:10px"></div>
     </div>
   </section>
