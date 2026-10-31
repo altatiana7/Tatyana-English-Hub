@@ -543,15 +543,33 @@ function toast(msg, ms){
    5. ЛОГИКА
    ======================================================================= */
 const app = document.getElementById("app");
+/* Пометка для учителя: видно, что открыты все юниты. */
+function teacherBadge(){
+  if (!TEACHER_MODE) return;
+  if (document.getElementById('teacherBadge')) return;
+  const el = document.createElement('div');
+  el.id = 'teacherBadge';
+  el.textContent = 'Версия для учителя · открыты все юниты';
+  el.style.cssText = 'position:fixed;left:12px;bottom:12px;z-index:9999;background:#2f3e46;color:#fff;' +
+    'font:600 12px/1 system-ui,sans-serif;padding:8px 12px;border-radius:99px;opacity:.9';
+  document.body.appendChild(el);
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', teacherBadge);
+else teacherBadge();
+
 /* Какой юнит открыт по умолчанию. Остальные юниты закрыты, пока их не откроют. */
-const OPEN_UNITS = [0];
+/* Для учителя: адрес ?teacher=1 открывает все юниты. Обычный адрес
+   работает как раньше — открыт только Unit 0. */
+const TEACHER_MODE = /[?&](teacher|all)=1(&|$)/.test(location.search);
+const OPEN_UNITS = TEACHER_MODE ? DATA.map(u => u.id) : [0];
 function isUnitOpen(id){ return OPEN_UNITS.indexOf(Number(id)) !== -1; }
 const state = { unit: OPEN_UNITS[0], mode: null, queue: [], idx: 0, correct: 0, wrong: [], answered: false,
                 showRu: false, roundLen: 10, rate: 0.9, firstTry: new Set(), roundWords: new Set() };
 
+const BEST_PREFIX = TEACHER_MODE ? "gg3t_best_" : "gg3_best_";
 const BEST = {
-  get(u, m){ try { return JSON.parse(localStorage.getItem("gg3_best_" + u + "_" + m) || "null"); } catch(e){ return null; } },
-  set(u, m, pct){ try { const o = BEST.get(u, m); if (o === null || pct > o) localStorage.setItem("gg3_best_" + u + "_" + m, JSON.stringify(pct)); } catch(e){} }
+  get(u, m){ try { return JSON.parse(localStorage.getItem(BEST_PREFIX + u + "_" + m) || "null"); } catch(e){ return null; } },
+  set(u, m, pct){ try { const o = BEST.get(u, m); if (o === null || pct > o) localStorage.setItem(BEST_PREFIX + u + "_" + m, JSON.stringify(pct)); } catch(e){} }
 };
 
 function shuffle(a){ for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
@@ -603,7 +621,7 @@ function renderHome(){
   app.querySelectorAll("[data-unit]").forEach(b => {
     b.onclick = () => {
       const id = Number(b.dataset.unit);
-      if (!isUnitOpen(id)){ toast("Этот юнит пока закрыт. Сейчас открыт только Unit 0."); return; }
+      if (!isUnitOpen(id)){ toast("Этот юнит пока закрыт."); return; }
       state.unit = id; renderUnit();
     };
   });
