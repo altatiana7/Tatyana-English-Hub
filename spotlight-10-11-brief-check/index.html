@@ -164,7 +164,7 @@ function renderText(part,instr){
  const first=part.title.split(' · ')[0];
  $('stageBody').innerHTML=`<div class="passage"><h3>${esc(first)}</h3>${part.items.map(it=>{const[a,b]=it[1].split('___');const k=key(it);
   return `${it[3]?`<span class="subhead">${esc(it[3])}</span>`:''}${esc(a)}<span style="white-space:nowrap"><span class="qn">${it[0]}</span><input class="gap" data-k="${k}" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Answer ${it[0]}" value="${esc(answers[k]||'')}"><span class="given">${esc(it[2])}</span><span class="ans" data-a="${k}"></span></span>${esc(b)} `}).join('')}</div>`;
- $('.gap').forEach(i=>i.oninput=()=>{cancelAutoReset();answers[i.dataset.k]=i.value;checkedSig=''});
+ $$('.gap').forEach(i=>i.oninput=()=>{cancelAutoReset();answers[i.dataset.k]=i.value;checkedSig=''});
  const mark=()=>{let ok=0;part.items.forEach(it=>{const k=key(it),acc=KEYS[v][it[0]],good=acc.map(norm).includes(norm(answers[k]));if(good)ok++;const inp=document.querySelector(`[data-k="${k}"]`);inp.classList.toggle('correct',good);inp.classList.toggle('wrong',!good);document.querySelector(`[data-a="${k}"]`).textContent=good?'':'→ '+acc[0]});$('score').textContent=ok+' / '+part.items.length;refit()};
  $('check').onclick=()=>{checkedSig=sig;mark();autoReset(()=>{part.items.forEach(it=>delete answers[key(it)]);checkedSig='';renderText(part,instr);refit()})};
  $('reset').onclick=()=>{cancelAutoReset();part.items.forEach(it=>delete answers[key(it)]);checkedSig='';renderText(part,instr);refit()};
@@ -177,10 +177,10 @@ function renderVocab(part){
  $('subBar').innerHTML=`<button class="pill solid" id="check">Check</button><button class="pill lime" id="reset">Reset</button><span class="score" id="score"></span><span class="instr">Exam tasks 30–36 · Choose A, B, C or D · Spotlight ${grade} word list will be added here</span>`;
  const body=part.text.split('\n').map(p=>'<p>'+esc(p).replace(/\{(\d+)\}/g,(m,n)=>{const k=v+'-'+n;return `<span style="white-space:nowrap"><span class="qn">${n}</span><select class="pick" data-k="${k}" data-n="${n}" aria-label="Gap ${n}"><option value="">· · ·</option>${part.opts[n].map((o,i)=>`<option value="${i+1}" ${answers[k]==i+1?'selected':''}>${LET[i]}) ${esc(o)}</option>`).join('')}</select><span class="ans" data-a="${k}"></span></span>`})+'</p>').join('');
  $('stageBody').innerHTML=`<div class="passage"><h3>${esc(part.title)}</h3>${body}</div>`;
- $('.pick').forEach(s=>s.onchange=()=>{cancelAutoReset();answers[s.dataset.k]=s.value;checkedSig=''});
+ $$('.pick').forEach(s=>s.onchange=()=>{cancelAutoReset();answers[s.dataset.k]=s.value;checkedSig=''});
  const mark=()=>{let ok=0;$$('.pick').forEach((s,i)=>{const right=KEYS[v].v[i],good=s.value===right;if(good)ok++;s.classList.toggle('correct',good);s.classList.toggle('wrong',!good);s.nextElementSibling.textContent=good?'':'→ '+LET[right-1]+') '+part.opts[s.dataset.n][right-1]});$('score').textContent=ok+' / 7';refit()};
- $('check').onclick=()=>{checkedSig=sig;mark();autoReset(()=>{$('.pick').forEach(s=>delete answers[s.dataset.k]);checkedSig='';renderVocab(part);refit()})};
- $('reset').onclick=()=>{cancelAutoReset();$('.pick').forEach(s=>delete answers[s.dataset.k]);checkedSig='';renderVocab(part);refit()};
+ $('check').onclick=()=>{checkedSig=sig;mark();autoReset(()=>{$$('.pick').forEach(s=>delete answers[s.dataset.k]);checkedSig='';renderVocab(part);refit()})};
+ $('reset').onclick=()=>{cancelAutoReset();$$('.pick').forEach(s=>delete answers[s.dataset.k]);checkedSig='';renderVocab(part);refit()};
  if(checkedSig===sig)mark();
 }
 
@@ -197,18 +197,18 @@ function renderListening(){
  const card=q=>`<div class="qCard"><div class="qnum">${q.n}</div><div><div class="qstem">${esc(q.stem)}</div><div class="opts">${q.options.map((o,i)=>`<label class="opt"><input type="radio" name="q${q.n}" value="${i+1}"><span>${i+1}) ${esc(o)}</span></label>`).join('')}</div></div></div>`;
  $('ovTitle').textContent=`Variant ${currentVariant}`;$('lScore').textContent='';
  $('ovBody').innerHTML=`<div class="part" data-part="0"><div class="board"><div class="stList">${st}</div><div class="speakerGrid six">${sp}</div></div></div><div class="part" data-part="1"><div class="board">${tf}</div></div><div class="part" data-part="2"><div class="qGrid">${set.q.slice(0,4).map(card).join('')}</div></div><div class="part" data-part="3"><div class="qGrid">${set.q.slice(4).map(card).join('')}</div></div>`;
- $('.tf button',$('ovBody')).forEach(b=>b.onclick=()=>{cancelAutoReset();$('button',b.parentNode).forEach(x=>x.classList.remove('on','correct','wrong','hint'));b.classList.add('on')});
+ $$('.tf button',$('ovBody')).forEach(b=>b.onclick=()=>{cancelAutoReset();$$('button',b.parentNode).forEach(x=>x.classList.remove('on','correct','wrong','hint'));b.classList.add('on')});
  $('partTabs').innerHTML=['Task 1','Task 2','Tasks 3–6','Tasks 7–9'].map((t,i)=>`<button class="tab" data-tab="${i}">${t}</button>`).join('');
  $$('[data-tab]').forEach(b=>b.onclick=()=>jumpTo(+b.dataset.tab));
  $('openBoard').onclick=()=>openTasks(1,true);$('openOnline').onclick=()=>openTasks(0.74,false);
 }
-function openTasks(s,full){scale=s;drawSize();moveAudio($('audioSlot'));$('overlay').classList.add('open');$('overlay').setAttribute('aria-hidden','false');showPart(0);if(full&&!document.fullscreenElement){document.documentElement.requestFullscreen().then(()=>{weWentFull=true}).catch(()=>{})}}
+function openTasks(s,full){scale=s;drawSize();moveAudio($('audioSlot'));$('overlay').classList.add('open');$('overlay').setAttribute('aria-hidden','false');showPart(0);if(full&&!document.fullscreenElement&&document.documentElement.requestFullscreen){Promise.resolve(document.documentElement.requestFullscreen()).then(()=>{weWentFull=true}).catch(()=>{})}}
 const JT={1:[98.1,383.1,673.9],2:[99.5,387.4,680.8],3:[99.6,656.1,941.0],4:[99.5,383.6,670.8],5:[99.5,659.4,1137.2],6:[99.2,535.6,913.4],7:[99.5,600.9,1061.1],8:[99.8,581.9,1046.3],9:[100.2,417.3,738.9],10:[100.9,417.0,738.6]};
-function showPart(i){cancelAutoReset();$('.part',$('ovBody')).forEach(p=>p.classList.toggle('active',+p.dataset.part===i));$$('[data-tab]').forEach(b=>b.classList.toggle('active',+b.dataset.tab===i));refit()}
+function showPart(i){cancelAutoReset();$$('.part',$('ovBody')).forEach(p=>p.classList.toggle('active',+p.dataset.part===i));$$('[data-tab]').forEach(b=>b.classList.toggle('active',+b.dataset.tab===i));refit()}
 function jumpTo(i){showPart(i);const times=JT[currentVariant];if(!times)return;const t=times[Math.min(i,times.length-1)];const a=$('track');if(!a)return;const playing=!a.paused;const seek=()=>{try{a.currentTime=t}catch{}};if(a.readyState>=1)seek();else a.addEventListener('loadedmetadata',seek,{once:true});if(playing)a.play().catch(()=>{})}
 function moveAudio(to){const a=$('track');if(!a||!to||a.parentNode===to)return;const playing=!a.paused;to.appendChild(a);if(playing&&a.paused)a.play().catch(()=>{})}
 function clearListening(){const body=$('ovBody');$$('input[type=radio]',body).forEach(r=>r.checked=false);$$('select',body).forEach(e=>{e.value='';e.classList.remove('correct','wrong')});$$('.opt',body).forEach(o=>o.classList.remove('correct','wrong'));$$('.tf button',body).forEach(b=>b.classList.remove('on','correct','wrong','hint'));$$('.ans',body).forEach(a=>a.textContent='');$('lScore').textContent=''}
-function closeTasks(){cancelAutoReset();if(!$('overlay').classList.contains('open'))return;clearListening();if(weWentFull&&document.fullscreenElement)document.exitFullscreen().catch(()=>{});weWentFull=false;moveAudio($('audioHome'));$('overlay').classList.remove('open');$('overlay').setAttribute('aria-hidden','true');refit()}
+function closeTasks(){cancelAutoReset();if(!$('overlay').classList.contains('open'))return;clearListening();if(weWentFull&&document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(()=>{});weWentFull=false;moveAudio($('audioHome'));$('overlay').classList.remove('open');$('overlay').setAttribute('aria-hidden','true');refit()}
 $('closeTasks').onclick=closeTasks;
 $('lCheck').onclick=()=>{const k=LISTEN[currentVariant].key,body=$('ovBody');let ok=0;
  $$('[data-sp]',body).forEach(s=>{const right=k.t1[+s.dataset.sp],good=s.value===right;if(good)ok++;s.classList.toggle('correct',good);s.classList.toggle('wrong',!good);s.nextElementSibling.textContent=good?'':'→ '+right});
