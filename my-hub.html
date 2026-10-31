@@ -107,6 +107,27 @@
     color: rgba(255,255,255,0.78);
     line-height: 1.4;
   }
+  /* Тихая строка внизу: планнер. Без карточки и описания — чтобы
+     не бросался в глаза тому, кто просто листает хаб. */
+  .foot-link {
+    margin: 18px 0 4px;
+    text-align: center;
+  }
+  .foot-link a {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    opacity: 0.55;
+  }
+  .foot-link a:hover,
+  .foot-link a:focus-visible {
+    opacity: 1;
+    text-decoration: underline;
+  }
+
   .card-tag {
     display: inline-block;
     margin-top: auto;
@@ -426,4 +447,9 @@
       </div>
     </a>
   </div>
+</div>
+
+<!-- Планнер: тихая ссылка внизу, без описания -->
+<div class="foot-link">
+  <a href="planner-local/planner.html">Планнер</a>
 </div>
