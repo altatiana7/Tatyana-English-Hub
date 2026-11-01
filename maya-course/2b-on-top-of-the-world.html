@@ -76,20 +76,29 @@ button.back{transform:none;background:#fff;border:1px solid #c9d1da;color:var(--
 .c1{background:#fff0b3}.c2{background:#dcf4e7}.c3{background:#e4e6fb}.c4{background:#fde4ec}.c5{background:#dcecfb}.c6{background:#fde9d4}.c7{background:#d9f1f0}
 .head h2{font-weight:400;font-style:italic}
 .qz{height:220px}
-@media (max-width:560px){.menu{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{height:120px}}
+/* v3 · меню всегда на экране, задание открывается рядом */
+main{display:grid;grid-template-columns:270px minmax(0,1fr);gap:14px;align-items:start;max-width:1100px;width:100%;margin:0 auto}
+#menu.view{display:block;max-width:none;margin:0;position:sticky;top:0}
+#menu .menu{grid-template-columns:1fr;gap:8px;max-width:none}
+#menu .blk{min-height:56px;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;padding:10px 12px}
+#menu .blk::after{font-size:22px;top:50%;transform:translateY(-50%)}
+#menu .blk strong{font-size:16px;margin:0;padding-right:34px}
+#menu .blk small{margin:0;min-width:92px}
+#menu .blk.act{outline:3px solid #1f2d3d55}
+.view:not(#menu){max-width:none;margin:0}
+.hero{height:200px;max-width:none}
+@media (max-width:760px){main{grid-template-columns:1fr}#menu.view{position:static}#menu .menu{grid-template-columns:repeat(2,minmax(0,1fr))}#menu .blk small{display:none}.hero{height:120px}}
 </style>
 </head>
 <body>
 <div class="bar">
-  <button class="tbtn" id="home" hidden>← Меню урока</button>
   <span class="name">Maya · 2B On top of the world</span>
   <span class="pill">7 ACTIVITIES · ONE SCREEN</span>
 </div>
 <main>
 
 <!-- МЕНЮ БЛОКОВ -->
-<section class="view on" id="menu">
-  <div class="hero"><img src="media/2b-hero.jpg" alt="Swing on the edge of a mountain" onerror="this.remove()"><span class="tag">REAL PHOTO · ECUADOR</span></div>
+<section class="view" id="menu">
   <div class="menu">
     <button class="blk c1" data-b="warm"><small>1 · WARM-UP</small><strong>Фото и вопросы</strong></button>
     <button class="blk c2" data-b="vocab"><small>2 · VOCABULARY</small><strong>Карточки Quizlet</strong></button>
@@ -99,6 +108,12 @@ button.back{transform:none;background:#fff;border:1px solid #c9d1da;color:var(--
     <button class="blk c6" data-b="game"><small>6 · GAME</small><strong>Speed Game</strong></button>
     <button class="blk c7" data-b="speak"><small>7 · SPEAKING</small><strong>Фото на телефоне</strong></button>
   </div>
+</section>
+
+<!-- ПРИВЕТСТВИЕ -->
+<section class="view on" id="welcome">
+  <div class="hero"><img src="media/2b-hero.jpg" alt="Swing on the edge of a mountain" onerror="this.remove()"><span class="tag">REAL PHOTO · ECUADOR</span></div>
+  <div class="note">Выберите блок слева: задание откроется справа, а меню останется на экране.</div>
 </section>
 
 <!-- 1. WARM-UP -->
@@ -332,14 +347,13 @@ $('#gmStart').onclick=()=>{clearInterval(gmT);gmStart()};
 
 // --- navigation ---
 function show(id){
-  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id===id));
-  $('#home').hidden=id==='menu';
+  document.querySelectorAll('.view:not(#menu)').forEach(v=>v.classList.toggle('on',v.id===id));
+  document.querySelectorAll('.blk').forEach(b=>b.classList.toggle('act',b.dataset.b===id));
   if(id==='game')gmStart();
   window.scrollTo(0,0);
 }
-document.querySelectorAll('.blk').forEach(b=>b.onclick=()=>show({warm:'warm',vocab:'vocab',prep:'prep',gram:'gram',weak:'weak',game:'game',speak:'speak'}[b.dataset.b]));
-document.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>show('menu'));
-$('#home').onclick=()=>show('menu');
+document.querySelectorAll('.blk').forEach(b=>b.onclick=()=>show(b.dataset.b));
+document.querySelectorAll('[data-back]').forEach(b=>b.remove());
 })();
 </script>
 </body>
