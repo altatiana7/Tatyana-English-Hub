@@ -118,6 +118,17 @@ main{display:block;padding:10px;max-width:none}
 .card.c1{background:#fff0b3}.card.c2{background:#dcf4e7}.card.c3{background:#e4e6fb}.card.c4{background:#fde4ec}.card.c5{background:#dcecfb}.card.c6{background:#fde9d4}.card.c7{background:#d9f1f0}
 @media (max-width:1000px){.board{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(260px,auto)}}
 @media (max-width:620px){.board{grid-template-columns:1fr}}
+
+/* v5 · несколько вопросов на карточке */
+.mlist{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px;overflow:auto}
+.mrow{background:#fff;border:1px solid #e4ded3;border-radius:10px;padding:6px 8px;display:flex;flex-direction:column;gap:5px}
+.mq{font-size:14px;line-height:1.3}
+.mq u{text-decoration:none;border-bottom:2px solid var(--blue)}
+.mopts{display:flex;gap:5px;flex-wrap:wrap}
+.chip{border:1px solid #d6dbe4;background:#faf9f6;border-radius:8px;padding:3px 10px;font-size:13px}
+.chip.ok{background:var(--okbg);border-color:var(--ok)}
+.chip.no{background:var(--nobg);border-color:var(--no)}
+.card .qz .front.ph{background-size:cover;background-position:center}
 </style>
 </head>
 <body>
@@ -139,9 +150,8 @@ main{display:block;padding:10px;max-width:none}
 </section>
 
 <section class="card c3"><header><b>03</b><span>Prepositions · at · in · on</span></header>
-  <div class="counter" id="pCount"></div>
-  <div class="sent" id="pSent"></div>
-  <div class="pair three" id="pBtns"></div>
+  <div class="mlist" id="pList"></div>
+  <div class="qnav"><button class="arrow" id="pPrev">‹</button><span class="counter" id="pCnt"></span><button class="arrow" id="pNext">›</button></div>
 </section>
 
 <section class="card c4"><header><b>04</b><span>Grammar · Past continuous</span><button class="rbtn" id="ruleBtn">Правило</button></header>
@@ -150,16 +160,14 @@ main{display:block;padding:10px;max-width:none}
     <div>Прерывание: We <b>were having</b> lunch <b>when</b> it started to rain.</div>
     <div><b>Обратите внимание:</b> was — I, he, she, it; were — we, you, they. В вопросе Was / Were в начале.</div>
   </div>
-  <div class="counter" id="gCount"></div>
-  <div class="sent" id="gSent"></div>
-  <div class="pair" id="gBtns"></div>
+  <div class="mlist" id="gList"></div>
+  <div class="qnav"><button class="arrow" id="gPrev">‹</button><span class="counter" id="gCnt"></span><button class="arrow" id="gNext">›</button></div>
 </section>
 
 <section class="card c5"><header><b>05</b><span>Pronunciation · was, were</span></header>
   <div class="hint">В утверждениях слабо (/wəz/, /wə/), в вопросах и коротких ответах — сильно (/wɒz/, /wɜː/).</div>
-  <div class="counter" id="wCount"></div>
-  <div class="sent" id="wSent"></div>
-  <div class="pair" id="wBtns"></div>
+  <div class="mlist" id="wList"></div>
+  <div class="qnav"><button class="arrow" id="wPrev">‹</button><span class="counter" id="wCnt"></span><button class="arrow" id="wNext">›</button></div>
 </section>
 
 <section class="card c6"><header><b>06</b><span>Speed Game</span></header>
@@ -292,25 +300,42 @@ function choice({items,sentSel,btnsSel,countSel,optionsOf,answerOf,htmlOf,onDone
   draw();
 }
 
-const PREP_OPTS=['at','in','on','—'];
-choice({
-  items:PREP,sentSel:'#pSent',btnsSel:'#pBtns',countSel:'#pCount',
-  optionsOf:()=>['at','in','on'],
-  answerOf:it=>it[1],
-  htmlOf:it=>'<span>'+esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')+'</span>'
-});
-choice({
-  items:GRAM,sentSel:'#gSent',btnsSel:'#gBtns',countSel:'#gCount',
-  optionsOf:it=>it[1],
-  answerOf:it=>it[2],
-  htmlOf:it=>'<span>'+esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')+'</span>'
-});
-choice({
-  items:WEAK,sentSel:'#wSent',btnsSel:'#wBtns',countSel:'#wCount',
-  optionsOf:()=>['strong','weak'],
-  answerOf:it=>it[1],
-  htmlOf:it=>'<span>'+esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')+'</span>'
-});
+// --- several questions per screen ---
+function multi({items,per,k,optionsOf,answerOf,textOf}){
+  let page=0;const pages=Math.ceil(items.length/per);const done={};
+  const list=$('#'+k+'List');
+  const draw=()=>{
+    $('#'+k+'Cnt').textContent=(page+1)+' / '+pages;
+    $('#'+k+'Prev').disabled=page===0;$('#'+k+'Next').disabled=page===pages-1;
+    list.innerHTML='';
+    items.slice(page*per,page*per+per).forEach((it,n)=>{
+      const idx=page*per+n;
+      const row=document.createElement('div');row.className='mrow';
+      row.innerHTML='<div class="mq">'+textOf(it)+'</div><div class="mopts"></div>';
+      const box=row.querySelector('.mopts');
+      optionsOf(it).forEach(o=>{
+        const b=document.createElement('button');b.className='chip';b.textContent=o;
+        const st=done[idx];
+        if(st){ if(o===answerOf(it))b.classList.add('ok'); else if(o===st.pick)b.classList.add('no'); }
+        b.onclick=()=>{
+          if(done[idx])return;
+          done[idx]={pick:o};
+          box.querySelectorAll('.chip').forEach(x=>{if(x.textContent===answerOf(it))x.classList.add('ok')});
+          if(o!==answerOf(it))b.classList.add('no');
+        };
+        box.appendChild(b);
+      });
+      list.appendChild(row);
+    });
+  };
+  $('#'+k+'Prev').onclick=()=>{if(page>0){page--;draw()}};
+  $('#'+k+'Next').onclick=()=>{if(page<pages-1){page++;draw()}};
+  draw();
+}
+const blank=t=>esc(t).replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>');
+multi({items:PREP,per:3,k:'p',optionsOf:()=>['at','in','on'],answerOf:it=>it[1],textOf:it=>blank(it[0])});
+multi({items:GRAM,per:3,k:'g',optionsOf:it=>it[1],answerOf:it=>it[2],textOf:it=>blank(it[0])});
+multi({items:WEAK,per:3,k:'w',optionsOf:()=>['strong','weak'],answerOf:it=>it[1],textOf:it=>blank(it[0])});
 
 // --- speed game ---
 const GM_TIME=15;
