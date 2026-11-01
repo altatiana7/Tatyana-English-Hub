@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maya · 2B On top of the world</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c2236;--muted:#5d6478;--line:#e1e3ee;--ok:#4f8a5f;--okbg:#e6efe7;--no:#a9443a;--nobg:#f6e7e3;--gold:#b8955a;--blue:#3e5c76;--teal:#4f7f7d;--pink:#a9503b;--purple:#6b4e71;--green:#5c7f69;--orange:#a8844c}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:linear-gradient(135deg,#f6f3ed 0%,#f1efea 50%,#f4efe6 100%);color:var(--ink);font-family:'PT Serif',Georgia,'Times New Roman',serif;font-size:17px;overflow:hidden;display:flex;flex-direction:column}
+button{font:inherit;cursor:pointer;color:inherit}
+.bar{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:6px 10px;background:#1f2d3d;border-bottom:3px solid var(--gold)}
+.bar .name{font-weight:700;font-size:17px;color:#fff;white-space:nowrap;margin-right:auto}
+.tbtn{border:1px solid #ffffff66;background:transparent;color:#fff;border-radius:9px;padding:6px 12px;font-size:14px;white-space:nowrap}
+main{flex:1;min-height:0;overflow:auto;padding:12px}
+.menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:760px;margin:0 auto}
+.blk{border:0;border-radius:12px;padding:16px 14px;color:#fff;text-align:left;box-shadow:0 2px 8px #1f2d3d22}
+.blk small{display:block;font-size:13px;opacity:.9;letter-spacing:.04em}
+.blk strong{display:block;font-size:20px;margin-top:3px}
+.c1{background:var(--pink)}.c2{background:var(--blue)}.c3{background:var(--green)}.c4{background:var(--orange)}.c5{background:var(--purple)}.c6{background:var(--teal)}.c7{background:var(--gold)}
+.view{display:none;max-width:700px;margin:0 auto}
+.view.on{display:block}
+.head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.head h2{margin:0;font-size:20px;flex:1}
+.back{border:1px solid #c9d1da;background:#fff;border-radius:9px;padding:6px 12px;font-size:14px}
+.note{background:#fff;border:1px solid #e4ded3;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:16px;line-height:1.5}
+.note b{color:var(--blue)}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ans{border:1px solid #d6dbe4;background:#fff;border-radius:12px;padding:16px 10px;font-size:18px;min-height:64px}
+.ans.ok{background:var(--okbg);border-color:var(--ok)}
+.ans.no{background:var(--nobg);border-color:var(--no)}
+.sent{background:#fff;border:1px solid #e4ded3;border-radius:12px;padding:18px;font-size:21px;text-align:center;min-height:90px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;line-height:1.4}
+.sent u{text-decoration:none;border-bottom:2px solid var(--blue);padding:0 12px}
+.counter{text-align:center;color:var(--muted);font-size:15px;margin-bottom:8px}
+.timer{height:8px;background:#e1e3ee;border-radius:99px;overflow:hidden;margin-bottom:10px}
+.timer i{display:block;height:100%;width:100%;background:var(--gold);transition:width 1s linear}
+.score{text-align:center;font-size:18px;margin:6px 0}
+/* quizlet */
+.qz{perspective:1100px;cursor:pointer;height:240px;margin-bottom:10px}
+.qz .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.qz.f .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12px}
+.front{background:#f3efe8;border:2px solid #e9d7ca}
+.front strong{font-size:30px;color:#1f2d3d}
+.front small{margin-top:10px;color:#8a7a6a;font-size:13px}
+.back{transform:rotateY(180deg);background:#faf4ef;border:2px solid #d6a68f}
+.back .en{font-size:20px;font-weight:700;color:#1f2d3d}
+.back .ru{font-size:18px;color:#7a3f2e;margin-top:4px}
+.back .ex{font-size:16px;font-style:italic;color:#4a4f63;margin-top:8px}
+.qnav{display:flex;align-items:center;justify-content:center;gap:12px}
+.arrow{width:44px;height:34px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:18px}
+.arrow:disabled{opacity:.35}
+.prompt{background:#fff;border:1px solid #e4ded3;border-radius:14px;padding:22px;font-size:19px;text-align:center;min-height:150px;display:flex;align-items:center;justify-content:center;line-height:1.45}
+.rule{background:#fff;border-left:4px solid var(--gold);padding:10px 14px;margin:8px 0;font-size:16px;line-height:1.5}
+table{border-collapse:collapse;width:100%;background:#fff;margin:8px 0;font-size:16px}
+td,th{border:1px solid #e4ded3;padding:7px 9px;text-align:left}
+th{background:#f3efe8}
+</style>
+</head>
+<body>
+<div class="bar">
+  <span class="name">2B · On top of the world</span>
+  <button class="tbtn" id="home" hidden>← Меню урока</button>
+</div>
+<main>
+
+<!-- МЕНЮ БЛОКОВ -->
+<section class="view on" id="menu">
+  <div class="menu">
+    <button class="blk c1" data-b="warm"><small>1 · WARM-UP</small><strong>Фото и вопросы</strong></button>
+    <button class="blk c2" data-b="vocab"><small>2 · VOCABULARY</small><strong>Карточки Quizlet</strong></button>
+    <button class="blk c3" data-b="prep"><small>3 · PREPOSITIONS</small><strong>at · in · on</strong></button>
+    <button class="blk c4" data-b="gram"><small>4 · GRAMMAR</small><strong>Past continuous</strong></button>
+    <button class="blk c5" data-b="weak"><small>5 · PRONUNCIATION</small><strong>was · were</strong></button>
+    <button class="blk c6" data-b="game"><small>6 · GAME</small><strong>Speed Game</strong></button>
+    <button class="blk c7" data-b="speak"><small>7 · SPEAKING</small><strong>Фото на телефоне</strong></button>
+  </div>
+</section>
+
+<!-- 1. WARM-UP -->
+<section class="view" id="warm">
+  <div class="head"><h2>1 · Warm-up</h2><button class="back" data-back>← Меню</button></div>
+  <div class="note">Прочитайте подпись к фото на странице 18 и ответьте на вопросы. Ответ 40 секунд, одна карточка за раз.</div>
+  <div class="qz" id="warmCard"><div class="in"><div class="face front"><strong id="warmQ"></strong><small>нажмите, чтобы увидеть подсказку</small></div><div class="face back"><div class="ex" id="warmA"></div></div></div></div>
+  <div class="qnav"><button class="arrow" id="warmPrev">‹</button><span class="counter" id="warmCount"></span><button class="arrow" id="warmNext">›</button></div>
+</section>
+
+<!-- 2. VOCABULARY -->
+<section class="view" id="vocab">
+  <div class="head"><h2>2 · Vocabulary</h2><button class="back" data-back>← Меню</button></div>
+  <div class="qz" id="vocabCard"><div class="in"><div class="face front"><strong id="vW"></strong><small>нажмите на карточку</small></div><div class="face back"><div class="en" id="vEn"></div><div class="ru" id="vRu"></div><div class="ex" id="vEx"></div></div></div></div>
+  <div class="qnav"><button class="arrow" id="vPrev">‹</button><span class="counter" id="vCount"></span><button class="arrow" id="vNext">›</button></div>
+</section>
+
+<!-- 3. PREPOSITIONS -->
+<section class="view" id="prep">
+  <div class="head"><h2>3 · at · in · on</h2><button class="back" data-back>← Меню</button></div>
+  <div class="counter" id="pCount"></div>
+  <div class="sent" id="pSent"></div>
+  <div class="pair" id="pBtns"></div>
+</section>
+
+<!-- 4. GRAMMAR -->
+<section class="view" id="gram">
+  <div class="head"><h2>4 · Past continuous</h2><button class="back" data-back>← Меню</button></div>
+  <div class="rule"><b>was / were + глагол с -ing</b> — действие, которое длилось в конкретный момент в прошлом, или фон для истории.<br>I <b>was studying</b>. We <b>were riding</b>. It <b>wasn't raining</b>.</div>
+  <div class="rule">Прерывание: «We <b>were having</b> lunch <b>when</b> it started to rain» — past continuous + past simple.</div>
+  <div class="note"><b>На что обратить внимание:</b> was для I, he, she, it; were для we, you, they. В вопросе — Was / Were в начале.</div>
+  <div class="counter" id="gCount"></div>
+  <div class="sent" id="gSent"></div>
+  <div class="pair" id="gBtns"></div>
+</section>
+
+<!-- 5. WEAK FORMS -->
+<section class="view" id="weak">
+  <div class="head"><h2>5 · Pronunciation: was, were</h2><button class="back" data-back>← Меню</button></div>
+  <div class="note">Сначала озвучка из учебника, потом текст. В утверждениях was и were звучат слабо (/wəz/, /wə/), в вопросах и коротких ответах — сильно (/wɒz/, /wɜː/).</div>
+  <div class="counter" id="wCount"></div>
+  <div class="sent" id="wSent"></div>
+  <div class="pair" id="wBtns"></div>
+</section>
+
+<!-- 6. GAME -->
+<section class="view" id="game">
+  <div class="head"><h2>6 · Speed Game</h2><button class="back" data-back>← Меню</button></div>
+  <div class="note">15 секунд на каждый вопрос. Очки за скорость.</div>
+  <div class="timer"><i id="gmBar"></i></div>
+  <div class="score" id="gmScore"></div>
+  <div class="sent" id="gmSent"></div>
+  <div class="pair" id="gmBtns"></div>
+  <div class="score" id="gmEnd"></div>
+  <div style="text-align:center;margin-top:10px"><button class="back" id="gmStart">Начать заново</button></div>
+</section>
+
+<!-- 7. SPEAKING -->
+<section class="view" id="speak">
+  <div class="head"><h2>7 · Speaking</h2><button class="back" data-back>← Меню</button></div>
+  <div class="note">В паре: ответьте, потом задайте партнёру «What about you?». Можно показать фото на телефоне.</div>
+  <div class="qz" id="spkCard"><div class="in"><div class="face front"><strong id="spkQ"></strong><small>нажмите, чтобы увидеть образец</small></div><div class="face back"><div class="ex" id="spkA"></div></div></div></div>
+  <div class="qnav"><button class="arrow" id="spkPrev">‹</button><span class="counter" id="spkCount"></span><button class="arrow" id="spkNext">›</button></div>
+</section>
+
+</main>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const esc=s=>String(s);
+
+const WARM=[
+ ["Где может быть это место и что происходит на фоне?","Например: It could be in Ecuador. There is a volcano and there is smoke in the sky."],
+ ["Как вы думаете, что чувствует человек на качелях?","Например: I think he is excited, but maybe a little scared."],
+ ["Где вы были, когда последний раз делали фото?","Например: I was on holiday in Spain. We were walking by the sea."],
+ ["Что вы делали, когда кто-то сделал ваше фото?","Например: I was laughing with my friends when my sister took the picture."]
+];
+
+const VOCAB=[
+ ["swing","качели","We were swinging over the edge of the mountain."],
+ ["volcano","вулкан","The volcano was active that day."],
+ ["rope","верёвка","The swing hangs from two old ropes."],
+ ["cloud of ash","облако пепла","A huge cloud of ash covered the sky."],
+ ["terrified","очень напуганный","I was terrified when I saw the smoke."],
+ ["waiting room","приёмная","I was sitting in a waiting room at the doctor's."],
+ ["photograph","фотография","This photograph was taken in Ecuador."],
+ ["photographer","фотограф","My friend is a photographer."],
+ ["photography","фотография (искусство)","I love photography."],
+ ["take a photo","сфотографировать","Can you take a photo of us?"]
+];
+
+const PREP=[
+ ["We usually have breakfast ___ the kitchen.","in"],
+ ["I get up ___ 7 o'clock on weekdays.","at"],
+ ["She goes out ___ Fridays.","on"],
+ ["My birthday is ___ March.","in"],
+ ["We have lunch ___ noon.","at"],
+ ["The shop is ___ the corner.","on"],
+ ["I do my homework ___ the evening.","in"],
+ ["They listen to music ___ the bus.","on"],
+ ["We went to Spain ___ the summer.","in"],
+ ["He is ___ work now.","at"],
+ ["I was born ___ 1990.","in"],
+ ["We go shopping ___ the weekend.","at"]
+];
+
+const GRAM=[
+ ["I ___ studying acting at university.",["was","were","am","is"],"was"],
+ ["We ___ riding up the mountain on our bikes.",["was","were","are","is"],"were"],
+ ["The swing ___ on the edge of a mountain.",["is","was","are","were"],"is"],
+ ["The volcano ___ active that day.",["was","were","is","are"],"was"],
+ ["We ___ swinging when the smoke came.",["was","were","wasn't","weren't"],"were"],
+ ["Sean ___ looking at the camera.",["wasn't","weren't","didn't","isn't"],"wasn't"],
+ ["___ you terrified at the swing?",["Were","Was","Did","Are"],"Were"],
+ ["The weather ___ beautiful when we arrived.",["was","were","is","are"],"was"],
+ ["They ___ talking when the cloud started to cover the sky.",["were","was","are","is"],"were"],
+ ["I ___ looking through a magazine in the waiting room.",["was","were","am","is"],"was"],
+ ["The children ___ listening when the bell rang.",["wasn't","weren't","didn't","aren't"],"weren't"],
+ ["She ___ driving too fast when it started to snow.",["was","were","is","are"],"was"]
+];
+
+// weak: sentence with was/were, answer = strong or weak form
+const WEAK=[
+ ["In 2014, I ___ studying acting.","weak"],
+ ["___ it hot in Ecuador?","strong"],
+ ["We ___ riding up the mountain.","weak"],
+ ["___ you terrified at the top?","strong"],
+ ["She ___ looking at the photo.","weak"],
+ ["No, it ___ not cold.","strong"]
+];
+
+const SPK=[
+ ["Do you post photos on social media? What kind?","Например: I post photos of my food and holidays on Instagram."],
+ ["Do you have a photo as a background on your phone? Who or what is it of?","Например: My background is a photo of my cat. It was taken last summer."],
+ ["Do you have any photos you really like on your phone? What was happening at the time?","Например: I like a photo from the sea. We were walking on the beach when my friend took it."],
+ ["Do you have a favourite photo of yourself as a child? Who took it? What were you wearing?","Например: My mum took it. I was wearing a red dress and I was laughing."]
+];
+
+function pick(){}
+function setQz(id,cardSel,fn){}
+
+// --- simple card deck ---
+function deck(list,render,{cardSel,prev,next,count,onFlip}){
+  let i=0;
+  const card=$(cardSel);
+  const show=()=>{card.classList.remove('f');render(list[i]);$(count).textContent=(i+1)+' / '+list.length;$(prev).disabled=i===0;$(next).disabled=i===list.length-1};
+  card.onclick=()=>card.classList.toggle('f');
+  $(prev).onclick=()=>{if(i>0){i--;show()}};
+  $(next).onclick=()=>{if(i<list.length-1){i++;show()}};
+  return show;
+}
+
+deck(WARM,([q,a])=>{$('#warmQ').textContent=q;$('#warmA').textContent=a},{cardSel:'#warmCard',prev:'#warmPrev',next:'#warmNext',count:'#warmCount'})();
+deck(VOCAB,([w,r,e])=>{$('#vW').textContent=w;$('#vEn').textContent=w;$('#vRu').textContent=r;$('#vEx').textContent=e},{cardSel:'#vocabCard',prev:'#vPrev',next:'#vNext',count:'#vCount'})();
+deck(SPK,([q,a])=>{$('#spkQ').textContent=q;$('#spkA').textContent=a},{cardSel:'#spkCard',prev:'#spkPrev',next:'#spkNext',count:'#spkCount'})();
+
+// --- choice screens: one question per screen, auto-advance ---
+function choice({items,sentSel,btnsSel,countSel,optionsOf,answerOf,htmlOf,onDone}){
+  let i=0,score=0,locked=false;
+  const draw=()=>{
+    const it=items[i];locked=false;
+    $(countSel).textContent=(i+1)+' / '+items.length;
+    $(sentSel).innerHTML=htmlOf(it);
+    const opts=optionsOf(it);
+    $(btnsSel).innerHTML=opts.map(o=>`<button class="ans" data-v="${esc(o)}">${esc(o)}</button>`).join('');
+    $(btnsSel).querySelectorAll('.ans').forEach(b=>b.onclick=()=>{
+      if(locked)return;locked=true;
+      const ok=b.dataset.v===answerOf(it);
+      b.classList.add(ok?'ok':'no');
+      if(!ok)$(btnsSel).querySelectorAll('.ans').forEach(x=>{if(x.dataset.v===answerOf(it))x.classList.add('ok')});
+      if(ok)score++;
+      setTimeout(()=>{i++;if(i<items.length)draw();else onDone&&onDone(score,items.length)},ok?700:1400);
+    });
+  };
+  draw();
+}
+
+const PREP_OPTS=['at','in','on','—'];
+choice({
+  items:PREP,sentSel:'#pSent',btnsSel:'#pBtns',countSel:'#pCount',
+  optionsOf:()=>['at','in','on'],
+  answerOf:it=>it[1],
+  htmlOf:it=>esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')
+});
+choice({
+  items:GRAM,sentSel:'#gSent',btnsSel:'#gBtns',countSel:'#gCount',
+  optionsOf:it=>it[1],
+  answerOf:it=>it[2],
+  htmlOf:it=>esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')
+});
+choice({
+  items:WEAK,sentSel:'#wSent',btnsSel:'#wBtns',countSel:'#wCount',
+  optionsOf:()=>['strong','weak'],
+  answerOf:it=>it[1],
+  htmlOf:it=>esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')
+});
+
+// --- speed game ---
+const GM_TIME=15;
+let gmT=null,gmLeft=0,gmI=0,gmScore=0,gmItems=[];
+function gmStart(){
+  gmItems=[...PREP].sort(()=>Math.random()-0.5);
+  gmI=0;gmScore=0;$('#gmEnd').textContent='';$('#gmBtns').style.display='';$('#gmSent').style.display='';
+  gmNext();
+}
+function gmNext(){
+  if(gmI>=gmItems.length){
+    clearInterval(gmT);$('#gmSent').textContent='';$('#gmBtns').innerHTML='';$('#gmBar').style.width='0';
+    $('#gmEnd').textContent='Результат: '+gmScore+' из '+gmItems.length;return;
+  }
+  const it=gmItems[gmI];
+  $('#gmSent').innerHTML=esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>');
+  $('#gmBtns').innerHTML=['at','in','on'].map(o=>`<button class="ans" data-v="${o}">${o}</button>`).join('');
+  $('#gmScore').textContent='Очки: '+gmScore;
+  gmLeft=GM_TIME;$('#gmBar').style.transition='none';$('#gmBar').style.width='100%';
+  requestAnimationFrame(()=>{$('#gmBar').style.transition='width 1s linear';$('#gmBar').style.width=(gmLeft/GM_TIME*100)+'%'});
+  clearInterval(gmT);
+  gmT=setInterval(()=>{gmLeft--;$('#gmBar').style.width=(gmLeft/GM_TIME*100)+'%';if(gmLeft<=0){clearInterval(gmT);gmI++;gmNext()}},1000);
+  $('#gmBtns').querySelectorAll('.ans').forEach(b=>b.onclick=()=>{
+    if(!gmT)return;clearInterval(gmT);
+    const ok=b.dataset.v===it[1];
+    if(ok)gmScore+=gmLeft;
+    b.classList.add(ok?'ok':'no');
+    setTimeout(()=>{gmI++;gmNext()},600);
+    gmT=null;
+    setTimeout(()=>{},0);
+  });
+}
+$('#gmStart').onclick=()=>{clearInterval(gmT);gmStart()};
+
+// --- navigation ---
+function show(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id===id));
+  $('#home').hidden=id==='menu';
+  if(id==='game')gmStart();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('.blk').forEach(b=>b.onclick=()=>show({warm:'warm',vocab:'vocab',prep:'prep',gram:'gram',weak:'weak',game:'game',speak:'speak'}[b.dataset.b]));
+document.querySelectorAll('[data-back]').forEach(b=>b.onclick=()=>show('menu'));
+$('#home').onclick=()=>show('menu');
+})();
+</script>
+</body>
+</html>
