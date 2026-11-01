@@ -129,6 +129,15 @@ main{display:block;padding:10px;max-width:none}
 .chip.ok{background:var(--okbg);border-color:var(--ok)}
 .chip.no{background:var(--nobg);border-color:var(--no)}
 .card .qz .front.ph{background-size:cover;background-position:center}
+
+/* v6 · фото */
+.card .front.ph{justify-content:flex-end;background-size:cover;background-position:center;border-color:#fff}
+.card .front.ph strong{background:#fffffff0;padding:6px 10px;border-radius:8px;font-size:15px;line-height:1.25}
+.card .front.ph small{display:none}
+.vimg{width:100%;height:78px;object-fit:cover;border-radius:8px;margin-bottom:6px}
+.mq{display:flex;align-items:center;gap:8px}
+.th{width:54px;height:40px;object-fit:cover;border-radius:6px;flex:none}
+.hero img{width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 <body>
@@ -145,7 +154,7 @@ main{display:block;padding:10px;max-width:none}
 </section>
 
 <section class="card c2"><header><b>02</b><span>Vocabulary · Quizlet</span></header>
-  <div class="qz" id="vocabCard"><div class="in"><div class="face front"><strong id="vW"></strong><small>нажмите на карточку</small></div><div class="face back"><div class="en" id="vEn"></div><div class="ru" id="vRu"></div><div class="ex" id="vEx"></div></div></div></div>
+  <div class="qz" id="vocabCard"><div class="in"><div class="face front"><strong id="vW"></strong><small>нажмите на карточку</small></div><div class="face back"><img class="vimg" id="vImg" alt="" hidden><div class="en" id="vEn"></div><div class="ru" id="vRu"></div><div class="ex" id="vEx"></div></div></div></div>
   <div class="qnav"><button class="arrow" id="vPrev">‹</button><span class="counter" id="vCount"></span><button class="arrow" id="vNext">›</button></div>
 </section>
 
@@ -261,6 +270,16 @@ const SPK=[
  ["Do you have a favourite photo of yourself as a child? Who took it? What were you wearing?","Например: My mum took it. I was wearing a red dress and I was laughing."]
 ];
 
+const IMG=n=>'media/2b-'+n+'.jpg';
+const WARM_IMG=['hero','hero',null,null];
+WARM.forEach((w,i)=>w[2]=WARM_IMG[i]);
+const VOC_IMG={swing:'hero',volcano:'volcano','cloud of ash':'volcano',terrified:'volcano','waiting room':'waiting-room','take a photo':'selfie'};
+VOCAB.forEach(v=>v[3]=VOC_IMG[v[0]]||null);
+const SPK_IMG=['selfie','selfie','selfie','childhood'];
+SPK.forEach((w,i)=>w[2]=SPK_IMG[i]);
+const THUMBS=[['bikes','bikes'],['waiting room','waiting-room'],['snow','snow-car'],['bell','bell'],['riding up the mountain','bikes']];
+const thumb=t=>{const h=THUMBS.find(x=>t.includes(x[0]));return h?'<img class="th" src="'+IMG(h[1])+'" alt="">':''};
+function setFront(sel,img){const f=document.querySelector(sel+' .front');if(img){f.classList.add('ph');f.style.backgroundImage='url('+IMG(img)+')'}else{f.classList.remove('ph');f.style.backgroundImage=''}}
 function pick(){}
 function setQz(id,cardSel,fn){}
 
@@ -275,9 +294,9 @@ function deck(list,render,{cardSel,prev,next,count,onFlip}){
   return show;
 }
 
-deck(WARM,([q,a])=>{$('#warmQ').textContent=q;$('#warmA').textContent=a},{cardSel:'#warmCard',prev:'#warmPrev',next:'#warmNext',count:'#warmCount'})();
-deck(VOCAB,([w,r,e])=>{$('#vW').textContent=w;$('#vEn').textContent=w;$('#vRu').textContent=r;$('#vEx').textContent=e},{cardSel:'#vocabCard',prev:'#vPrev',next:'#vNext',count:'#vCount'})();
-deck(SPK,([q,a])=>{$('#spkQ').textContent=q;$('#spkA').textContent=a},{cardSel:'#spkCard',prev:'#spkPrev',next:'#spkNext',count:'#spkCount'})();
+deck(WARM,([q,a,im])=>{$('#warmQ').textContent=q;$('#warmA').textContent=a;setFront('#warmCard',im)},{cardSel:'#warmCard',prev:'#warmPrev',next:'#warmNext',count:'#warmCount'})();
+deck(VOCAB,([w,r,e,im])=>{const vi=$('#vImg');vi.hidden=!im;if(im)vi.src=IMG(im);$('#vW').textContent=w;$('#vEn').textContent=w;$('#vRu').textContent=r;$('#vEx').textContent=e},{cardSel:'#vocabCard',prev:'#vPrev',next:'#vNext',count:'#vCount'})();
+deck(SPK,([q,a,im])=>{$('#spkQ').textContent=q;$('#spkA').textContent=a;setFront('#spkCard',im)},{cardSel:'#spkCard',prev:'#spkPrev',next:'#spkNext',count:'#spkCount'})();
 
 // --- choice screens: one question per screen, auto-advance ---
 function choice({items,sentSel,btnsSel,countSel,optionsOf,answerOf,htmlOf,onDone}){
@@ -332,7 +351,7 @@ function multi({items,per,k,optionsOf,answerOf,textOf}){
   $('#'+k+'Next').onclick=()=>{if(page<pages-1){page++;draw()}};
   draw();
 }
-const blank=t=>esc(t).replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>');
+const blank=t=>thumb(t)+'<span>'+esc(t).replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')+'</span>';
 multi({items:PREP,per:3,k:'p',optionsOf:()=>['at','in','on'],answerOf:it=>it[1],textOf:it=>blank(it[0])});
 multi({items:GRAM,per:3,k:'g',optionsOf:it=>it[1],answerOf:it=>it[2],textOf:it=>blank(it[0])});
 multi({items:WEAK,per:3,k:'w',optionsOf:()=>['strong','weak'],answerOf:it=>it[1],textOf:it=>blank(it[0])});
