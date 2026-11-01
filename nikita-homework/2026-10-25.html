@@ -106,12 +106,16 @@ details p{font-size:18px;line-height:1.5;margin:8px 0 0}
 <section id="s4" class="scr">
 <button class="back">← Lesson map</button>
 <h2>4 · Input · listen and notice</h2>
-<video controls playsinline preload="metadata" src="media/big-five.mp4"></video>
-<p class="q">Which five traits does the video name? Say them aloud before you check.</p>
-<details><summary>Check the five traits</summary><p>O · C · E · A · N: Openness · Conscientiousness · Extraversion · Agreeableness · Neuroticism</p></details>
-<p class="q" style="margin-top:16px">Now read one source. Note one fact and one interpretation, on paper.</p>
+<div class="row" style="margin-top:0"><button class="btn sub alt" data-sub="n1">Listen · questions</button><button class="btn sub" data-sub="n2">Read · sources</button></div>
+<div id="n1" class="pane" style="margin-top:10px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
+<video controls playsinline preload="metadata" src="media/big-five.mp4" style="flex:1 1 360px;max-height:34vh;width:auto;margin:0"></video>
+<div id="nq" style="flex:1 1 380px;min-width:0"></div>
+</div>
+<div id="n2" class="pane" hidden style="margin-top:10px">
+<p class="q">Read one source. Note one fact and one interpretation, on paper.</p>
 <div class="links"><a href="https://www.pbs.org/wgbh/americanexperience/features/mormons-smith/" target="_blank" rel="noopener">PBS · Joseph Smith ↗</a><a href="https://www.josephsmithpapers.org/paper-summary/mayors-order-to-nauvoo-city-marshal-10-june-1844/1" target="_blank" rel="noopener">Historical document ↗</a></div>
 <p class="note">The sources include primary documents. Keep verifiable events, religious beliefs and interpretations apart.</p>
+</div>
 </section>
 
 <!-- 5 LANGUAGE LAB -->
@@ -270,5 +274,17 @@ Quiz($('xq'),[
 {q:'The evidence is weak, so he ___ have made a mistake.',o:['might','can’t','should'],a:0,e:'A possibility: the evidence is inconclusive.'},
 {q:'“Smith wanted power over his followers.” This statement is a…',o:['Fact','Belief','Interpretation'],a:2,e:'A claim about motives; it cannot be proven directly.'},
 {q:'Critics said he could ___ his followers’ decisions.',o:['exert influence over','rule out','foster loyalty'],a:0,e:'Exert influence over: affect beliefs or decisions.'}
+]);
+
+/* 4 input: Big Five listening questions */
+Quiz($('nq'),[
+{q:'Who is excited to explore the island and decorates the hut?',o:['Odelia','Claire','Emile','Albert'],a:0,e:'Odelia is open: she is interested in new things.'},
+{q:'Who starts the crucial survival tasks right away?',o:['Claire','Nora','Albert','Emile'],a:0,e:'Claire is conscientious: prepared, she organises water and food.'},
+{q:'Who wants to celebrate and share his happiness?',o:['Emile','Albert','Odelia','Nora'],a:0,e:'Emile is extravert: he needs to talk and gathers everyone.'},
+{q:'Who offers Nora a drink from his coconut?',o:['Albert','Claire','Emile','Odelia'],a:0,e:'Albert is agreeable: his main concern is Nora.'},
+{q:'Who has a total breakdown on the beach?',o:['Nora','Albert','Claire','Odelia'],a:0,e:'Nora is neurotic: easily stressed, the island looks dangerous to her.'},
+{q:'Who coined the term "big five"?',o:['Lewis Goldberg','Emile','The first pirate','Albert'],a:0,e:'The psychologist Lewis Goldberg coined the term.'},
+{q:'How many pirates are on the second ship?',o:['three','five','eight'],a:1,e:'Five pirates, each with the opposite traits.'},
+{q:'Which pirate says "we could help them"?',o:['Pirate one','Pirate two','Pirate three','Pirate four'],a:0,e:'Pirate one is emotionally stable and relaxed.'}
 ]);
 </script></body></html>
