@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>25 October · Joseph Smith</title><style>
-*{box-sizing:border-box}
+*{box-sizing:border-box}[hidden]{display:none!important}
 body{margin:0;background:#f3f0eb;color:#17212b;font:16px Inter,Segoe UI,Arial,sans-serif}
 .wrap{max-width:990px;margin:auto;padding:14px}
 .hero{background:linear-gradient(120deg,#071b27,#123e54);color:#fff;border-radius:16px;padding:12px 20px}
@@ -47,7 +47,7 @@ details p{font-size:18px;line-height:1.5;margin:8px 0 0}
 .chunks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 .chunk{border:2px solid #cfdde2;border-radius:10px;background:#f5f8f9;padding:9px 12px;font:inherit;font-size:16px;color:#0d3042;cursor:pointer}
 .built{min-height:60px;background:#f5f8f9;border:2px dashed #bed1d6;border-radius:12px;padding:12px;font-size:19px;line-height:1.5}
-.inside .aim{display:none}.inside .hero p{display:none}.inside .hero{padding:8px 16px}.timer{font-size:34px;font-weight:800;color:#0d3042;margin-right:6px}
+.inside .aim{display:none}.inside .hero p{display:none}.inside .hero{padding:8px 16px}#nq .opt,#dtq .opt{padding:9px 11px;font-size:17px}#nq .q,#dtq .q{margin:4px 0 10px}.timer{font-size:34px;font-weight:800;color:#0d3042;margin-right:6px}
 @media(max-width:620px){.wrap{padding:10px}.map{grid-template-columns:1fr 1fr}.opts{grid-template-columns:1fr}.rules{grid-template-columns:1fr}.hero h1{font-size:23px}}
 @media(max-height:620px){.wrap{padding:8px}.hero{padding:8px 16px}.hero h1{font-size:22px}.aim{padding:6px 12px;font-size:14px}.scr{padding:12px 14px}.q{font-size:19px;margin:4px 0 10px}}
 </style></head><body><main class="wrap">
@@ -106,10 +106,14 @@ details p{font-size:18px;line-height:1.5;margin:8px 0 0}
 <section id="s4" class="scr">
 <button class="back">← Lesson map</button>
 <h2>4 · Input · listen and notice</h2>
-<div class="row" style="margin-top:0"><button class="btn sub alt" data-sub="n1">Listen · questions</button><button class="btn sub" data-sub="n2">Read · sources</button></div>
+<div class="row" style="margin-top:0"><button class="btn sub alt" data-sub="n1">Big Five · questions</button><button class="btn sub" data-sub="n3">Dark Triad · questions</button><button class="btn sub" data-sub="n2">Read · sources</button></div>
 <div id="n1" class="pane" style="margin-top:10px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
-<video controls playsinline preload="metadata" src="media/big-five.mp4" style="flex:1 1 360px;max-height:34vh;width:auto;margin:0"></video>
+<video controls playsinline preload="metadata" src="media/big-five.mp4" style="flex:1 1 300px;max-height:28vh;width:auto;margin:0"></video>
 <div id="nq" style="flex:1 1 380px;min-width:0"></div>
+</div>
+<div id="n3" class="pane" hidden style="margin-top:10px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
+<video controls playsinline preload="metadata" src="media/dark-triad.mp4" style="flex:1 1 300px;max-height:28vh;width:auto;margin:0"></video>
+<div id="dtq" style="flex:1 1 380px;min-width:0"></div>
 </div>
 <div id="n2" class="pane" hidden style="margin-top:10px">
 <p class="q">Read one source. Note one fact and one interpretation, on paper.</p>
@@ -286,5 +290,17 @@ Quiz($('nq'),[
 {q:'Who coined the term "big five"?',o:['Lewis Goldberg','Emile','The first pirate','Albert'],a:0,e:'The psychologist Lewis Goldberg coined the term.'},
 {q:'How many pirates are on the second ship?',o:['three','five','eight'],a:1,e:'Five pirates, each with the opposite traits.'},
 {q:'Which pirate says "we could help them"?',o:['Pirate one','Pirate two','Pirate three','Pirate four'],a:0,e:'Pirate one is emotionally stable and relaxed.'}
+]);
+
+/* 4 input: Dark Triad listening questions */
+Quiz($('dtq'),[
+{q:'Which three traits make up the dark triad?',o:['Narcissism, psychopathy and Machiavellianism','Narcissism, extraversion and agreeableness','Psychopathy, neuroticism and openness'],a:0,e:'The three traits are narcissism, psychopathy and Machiavellianism.'},
+{q:'Who wants nothing more than admiration?',o:['The narcissist','The psychopath','The Machiavellian'],a:0,e:'Narcissists show grandiosity and entitlement and want admiration.'},
+{q:'Who believes it is better to be feared than liked?',o:['The Machiavellian','The narcissist','The psychopath'],a:0,e:'Machiavellians use manipulation and offence to control others.'},
+{q:'Who shows little fear, acts impulsively and enjoys mental thrills?',o:['The psychopath','The narcissist','The Machiavellian'],a:0,e:'Psychopaths come across as cold and feel no remorse.'},
+{q:'Which two traits are regarded as mental disorders?',o:['Narcissism and psychopathy','Psychopathy and Machiavellianism','Narcissism and Machiavellianism'],a:0,e:'Machiavellianism is not regarded as a mental disorder.'},
+{q:'Which group scores significantly higher on all three traits?',o:['Men','Women','Children'],a:0,e:'Research shows men score higher than women on all three.'},
+{q:'What may explain the traits in evolutionary terms?',o:['A fast life strategy','A slow life strategy only','Random mutation with no reason'],a:0,e:'The traits may have survived because they optimise a fast life.'},
+{q:'Narcissists and psychopaths are often open to new ideas and…',o:['extroverted','conscientious','agreeable'],a:0,e:'Both are often open and extroverted.'}
 ]);
 </script></body></html>
