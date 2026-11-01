@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="app">
-<aside class="sidebar"><div class="brand">MAYA<small>HOMEWORK HUB</small></div><div class="course">ENGLISH FILE · PRE-INTERMEDIATE</div><div class="sideModules"><button class="sideModule" data-module="1A"><strong>1A</strong><span>Getting started</span></button><button class="sideModule" data-module="1B"><strong>1B</strong><span>People</span></button><button class="sideModule" data-module="1C"><strong>1C</strong><span>Remakes</span></button><button class="sideModule" data-module="1D"><strong>1D</strong><span>Practical English</span></button><button class="sideModule" data-module="1E"><strong>1E</strong><span>Culture</span></button></div><a class="sideExtra" href="extra-1c-remakes.html"><b>ЭКСТРА к 1С</b><small>Remakes · Present Tenses · Video</small></a><button class="sideVocab" id="sideVocab"><b>VOCABULARY</b><small>Quizlet cards · all lessons</small></button><button class="sideHw" id="sideHomework">CURRENT HOMEWORK →</button></aside>
+<aside class="sidebar"><div class="brand">MAYA<small>HOMEWORK HUB</small></div><div class="course">ENGLISH FILE · PRE-INTERMEDIATE</div><div class="sideModules"><button class="sideModule" data-module="1A"><strong>1A</strong><span>Getting started</span></button><button class="sideModule" data-module="1B"><strong>1B</strong><span>People</span></button><button class="sideModule" data-module="1C"><strong>1C</strong><span>Remakes</span></button><button class="sideModule" data-module="1D"><strong>1D</strong><span>Practical English</span></button><button class="sideModule" data-module="1E"><strong>1E</strong><span>Culture</span></button><button class="sideModule" data-module="2A"><strong>2A</strong><span>Past Simple</span></button></div><a class="sideExtra" href="extra-1c-remakes.html"><b>ЭКСТРА к 1С</b><small>Remakes · Present Tenses · Video</small></a><button class="sideVocab" id="sideVocab"><b>VOCABULARY</b><small>Quizlet cards · all lessons</small></button><button class="sideHw" id="sideHomework">CURRENT HOMEWORK →</button></aside>
 <main class="main">
 <section class="top"><div><div class="hello">Hi Maya!</div><p class="message">Your homework space.</p></div><div class="rightTop"><div class="mayaBadge">MAYA</div><div class="dateCard"><b>Today</b><span id="todayDate"></span></div></div></section>
 <button class="currentHomework" id="currentHomework"><span><span class="hwLabel" id="currentHwLabel"></span><span class="hwTitle" id="currentHwTitle"></span></span><span class="hwHint">CLICK HERE TO START →</span></button>
@@ -56,6 +56,15 @@ function moveDeck(step){if(!vocabDeck.length)return;deckIndex=(deckIndex+step+vo
 qs('#deckNext').onclick=()=>moveDeck(1);qs('#deckPrev').onclick=()=>moveDeck(-1);
 function openVocab(){qs('#workspace').classList.remove('open');qs('#vocabPanel').classList.add('open');qs('#sideVocab').classList.add('active');renderVocab('all');qs('#vocabPanel').scrollIntoView({behavior:'smooth',block:'start'})}
 const homeworkArchive={
+  'maya-2a-2026-11-01':{
+    module:'2A',date:'01 NOV 2026',title:'Past Simple: was / were, вопросы и отрицания',sub:'Test · story with verbs · holidays and travel cards',href:'homework-2a-past-simple.html?from=hub',current:true,
+    expressions:[
+      ['go away for the weekend','уехать на выходные','We went away for the weekend.'],
+      ['have a rest','отдыхать','I want to have a rest after work.'],
+      ['take a photo','сфотографировать','Can you take a photo of us?']
+    ],
+    useful:[['go sightseeing','ходить по достопримечательностям'],['on holiday','в отпуске'],['by bus','на автобусе'],['at the seaside','на море']]
+  },
   'maya-1c-2026-09-06':{
     module:'1C',date:'06 SEP 2026',title:'Present Simple vs Present Continuous',sub:'Appearance · clothes · dating · work · travel · Georgia',href:'1c-present-tenses-homework.html',current:false,
     expressions:[
@@ -66,7 +75,7 @@ const homeworkArchive={
     useful:[['by heart','наизусть'],['by accident','нечаянно'],['by chance','случайно'],['by the way','кстати']]
   },
   'maya-1d-2026-09-20':{
-    module:'1D',date:'20 SEP 2026',title:'Photo Description + Present Tenses',sub:'Photo description · Present Simple vs Present Continuous · vocabulary 1A–1C',href:'1d-homework.html?from=hub',current:true,
+    module:'1D',date:'20 SEP 2026',title:'Photo Description + Present Tenses',sub:'Photo description · Present Simple vs Present Continuous · vocabulary 1A–1C',href:'1d-homework.html?from=hub',current:false,
     expressions:[
       ['get on well with','хорошо ладить с','She gets on well with her colleagues.'],
       ['have a lot in common','иметь много общего','They have a lot in common.'],
@@ -76,7 +85,7 @@ const homeworkArchive={
   }
 };
 const currentHomeworkId=Object.keys(homeworkArchive).find(id=>homeworkArchive[id].current);
-const moduleTitles={'1A':'1A · Getting started','1B':'1B · People','1C':'1C · Remakes','1D':'1D · Practical English','1E':'1E · Culture'};
+const moduleTitles={'1A':'1A · Getting started','1B':'1B · People','1C':'1C · Remakes','1D':'1D · Practical English','1E':'1E · Culture','2A':'2A · Past Simple'};
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function renderExpressions(hw){qs('#dailyExpressions').innerHTML=hw.expressions.map(x=>`<div class="expr"><strong>${esc(x[0])}</strong><em>${esc(x[1])}</em><p>${esc(x[2])}</p></div>`).join('');qs('#byBank').innerHTML=hw.useful.map(x=>`<span class="byChip"><b>${esc(x[0])}</b> — ${esc(x[1])}</span>`).join('');qs('#expressionLessonTag').textContent=`${hw.module} · ${hw.date} · ${hw.title}`}
 function renderHome(){const d=new Date();qs('#todayDate').textContent=d.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});const hw=homeworkArchive[currentHomeworkId];qs('#currentHwLabel').textContent=`CURRENT HOMEWORK · ${hw.module}`;qs('#currentHwTitle').textContent=hw.title;renderExpressions(hw)}
