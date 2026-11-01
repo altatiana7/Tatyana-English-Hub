@@ -6,119 +6,108 @@
 <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
 <title>Maya Homework 2A</title>
 <style>
-:root{--p:#4b35ae;--p2:#7458cc;--pink:#ef5f91;--teal:#0a9db4;--ink:#201a45;--line:#e2dbf0;--ok:#15845b;--okbg:#e7f6ef;--bad:#c4435d;--badbg:#fbeaee}
-*{box-sizing:border-box}html,body{height:100%}
-body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,#f3efff,#effaff 55%,#f5fff1)}
-.app{height:100vh;max-width:900px;margin:auto;padding:10px 12px;display:grid;grid-template-rows:auto 1fr;gap:8px}
-.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.title h1{margin:0;font-size:24px;color:var(--p)}.title p{margin:2px 0 0;color:#6b6880;font-size:14px}
-.tabs{display:flex;gap:6px;flex-wrap:wrap}
-.tab{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:8px 14px;font-weight:900;color:#513aad;cursor:pointer}
+:root{--p:#4b35ae;--p2:#7458cc;--pink:#ef5f91;--ink:#201a45;--line:#e2dbf0;--ok:#15845b;--okbg:#e7f6ef;--bad:#c4435d;--badbg:#fbeaee}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:linear-gradient(135deg,#f3efff,#effaff 55%,#f5fff1)}
+.app{height:100vh;max-width:1280px;margin:auto;padding:6px 10px 8px;display:grid;grid-template-rows:auto 1fr;gap:6px}
+.bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bar h1{margin:0;font-size:18px;color:var(--p);font-family:Arial,sans-serif}.bar h1 small{font-weight:400;color:#6b6880;font-size:13px;margin-left:6px}
+.tabs{display:flex;gap:6px;margin-left:auto}
+.tab{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:7px 14px;font:900 14px Arial,sans-serif;color:#513aad;cursor:pointer}
 .tab.active{background:var(--p2);color:#fff;border-color:var(--p2)}
-.panel{display:none;min-height:0;background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:17px;padding:14px 16px;box-shadow:0 8px 22px rgba(70,49,135,.08);overflow:auto}
-.panel.active{display:block}
-.panel h2{margin:0 0 4px;color:var(--p);font-size:20px}
-.hint{color:#6b6880;font-size:14px;margin:0 0 12px}
-.counter{text-align:center;font-weight:900;color:var(--p);font-size:15px;margin-bottom:8px}
-.stem{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;font-size:21px;text-align:center;min-height:110px;display:flex;align-items:center;justify-content:center;line-height:1.4;margin-bottom:12px}
+.finish{border:0;border-radius:999px;background:linear-gradient(110deg,var(--pink),var(--p2));color:#fff;padding:8px 16px;font:900 14px Arial,sans-serif;cursor:pointer}
+.screen{display:none;min-height:0;grid-template-columns:1fr 1fr;gap:10px;align-items:start}.screen .pane{max-height:100%}.screen.active{display:grid}
+.pane{min-height:0;overflow:auto;background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:16px;padding:10px 14px;box-shadow:0 8px 22px rgba(70,49,135,.08)}
+.pane h2{margin:0 0 2px;color:var(--p);font:900 17px Arial,sans-serif}
+.hint{color:#6b6880;font-size:14px;margin:0 0 8px}
+.counter{text-align:center;font:900 14px Arial,sans-serif;color:var(--p);margin-bottom:6px}
+.stem{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:20px;text-align:center;min-height:86px;display:flex;align-items:center;justify-content:center;line-height:1.4;margin-bottom:10px}
 .stem u{text-decoration:none;border-bottom:2px solid var(--p2);padding:0 14px}
-.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.opt{border:1px solid #d9d0ef;background:#fff;border-radius:12px;padding:16px 10px;font-size:18px;font-weight:700;color:var(--ink);cursor:pointer;min-height:60px}
-.opt:hover{background:#f7f4ff}
-.opt.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}
-.opt.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
-.opt:disabled{cursor:default}
-.result{text-align:center;font-size:20px;font-weight:900;color:var(--p);margin-top:12px}
-.story{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;font-size:18px;line-height:2}
-.gap{display:inline-block;min-width:110px;border:1px dashed #9a8ad8;border-radius:8px;padding:2px 10px;margin:0 3px;background:#f7f4ff;color:var(--p);font:inherit;font-weight:700;cursor:pointer}
-.gap.ok{border-style:solid;border-color:var(--ok);background:var(--okbg);color:var(--ok)}
-.gap.bad{border-style:solid;border-color:var(--bad);background:var(--badbg);color:var(--bad)}
-.gapOpts{display:none;margin-top:12px;background:#f7f4ff;border-radius:14px;padding:12px}
-.gapOpts.open{display:block}
-.gapOpts .label{font-weight:900;color:var(--p);margin-bottom:8px}
-.gapOpts .opts{grid-template-columns:1fr 1fr}
-.flashWrap{perspective:1100px;cursor:pointer;height:270px;margin-bottom:12px}
-.flash{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
-.flashWrap.f .flash{transform:rotateY(180deg)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{border:1px solid #d9d0ef;background:#fff;border-radius:12px;padding:13px 8px;font:700 18px Georgia,serif;color:var(--ink);cursor:pointer}
+.opt:hover{background:#f7f4ff}.opt.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}.opt.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.result{text-align:center;font:900 17px Arial,sans-serif;color:var(--p);margin-top:10px}
+.story{font-size:17px;line-height:2.05}
+.gapSel{font:700 16px Georgia,serif;color:var(--p);background:#f7f4ff;border:1px dashed #9a8ad8;border-radius:8px;padding:1px 4px;margin:0 2px;cursor:pointer}
+.gapSel.ok{border-style:solid;border-color:var(--ok);background:var(--okbg);color:var(--ok);opacity:1}.gapSel.bad{border-style:solid;border-color:var(--bad);background:var(--badbg);color:var(--bad);opacity:1}
+.flashWrap{perspective:1100px;cursor:pointer;height:250px;margin:4px 0 10px}
+.flash{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}.flashWrap.f .flash{transform:rotateY(180deg)}
 .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px;border:1px solid var(--line)}
-.front{background:#fff}
-.front strong{font-size:34px;color:var(--p)}
-.front small{margin-top:12px;color:#8a85a0;font-size:13px}
-.back{transform:rotateY(180deg);background:#f8f6ff}
-.back .en{font-size:22px;font-weight:900;color:var(--p)}
-.back .ru{font-size:19px;color:#44358f;margin-top:6px}
-.back .ex{font-size:16px;font-style:italic;color:#4a4f63;margin-top:10px}
+.front{background:#fff}.front strong{font-size:34px;color:var(--p)}.front small{margin-top:12px;color:#8a85a0;font-size:13px}
+.back{transform:rotateY(180deg);background:#f8f6ff}.back .en{font-size:22px;font-weight:900;color:var(--p)}.back .ru{font-size:19px;color:#44358f;margin-top:6px}.back .ex{font-size:16px;font-style:italic;color:#4a4f63;margin-top:10px}
 .nav{display:flex;align-items:center;justify-content:center;gap:14px}
-.arrow{width:46px;height:36px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:18px;color:var(--p);cursor:pointer}
-.arrow:disabled{opacity:.35;cursor:default}
-.finish{display:block;margin:12px auto 0;border:0;border-radius:12px;background:linear-gradient(110deg,var(--pink),var(--p2));color:#fff;padding:12px 22px;font-weight:900;font-size:16px;cursor:pointer}
-.summary{text-align:center;margin-top:14px;font-size:18px;font-weight:900;color:var(--p)}
+.arrow{width:46px;height:36px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:18px;color:var(--p);cursor:pointer}.arrow:disabled{opacity:.35;cursor:default}
+.once{font:700 12px Arial,sans-serif;color:#9a5671;margin-left:6px}
+.modal{position:fixed;inset:0;background:rgba(26,18,58,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:20}.modal.show{display:flex}
+.codeCard{width:min(520px,94vw);background:#fff;border-radius:18px;padding:18px 20px;font-family:Arial,sans-serif}.codeCard h2{margin:0 0 6px;color:var(--p)}
+.code{margin:10px 0;padding:12px;border-radius:12px;background:#f7f4ff;border:1px solid var(--line);font:900 17px Consolas,monospace;word-break:break-word}
+.codeBtns{display:flex;gap:8px;justify-content:flex-end}.codeBtns button{border:0;border-radius:10px;padding:9px 14px;font-weight:900;cursor:pointer}.copy{background:var(--p2);color:#fff}
+@media(max-width:900px){.app{height:auto}.screen.active{display:block}.pane{margin-bottom:10px}.tabs{margin-left:0}}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="bar">
-    <div class="title"><h1>Maya · Homework 2A</h1><p>Past Simple: was / were, вопросы и отрицания · Lost… and found?</p></div>
+    <h1>Maya · Homework 2A<small>Past Simple · Lost… and found?</small></h1>
     <div class="tabs">
-      <button class="tab active" data-tab="test">1 · Test</button>
-      <button class="tab" data-tab="story">2 · Story</button>
-      <button class="tab" data-tab="cards">3 · Cards</button>
-      <button class="tab" data-tab="verbs">4 · New verbs</button>
+      <button class="tab active" data-s="s1">1 · Cards + New verbs</button>
+      <button class="tab" data-s="s2">2 · Test + Story</button>
     </div>
+    <button class="finish" id="finishBtn">Finish &amp; get code</button>
   </div>
 
-  <!-- TEST -->
-  <section class="panel active" id="test">
-    <h2>1 · Test: was / were, правильные и неправильные глаголы</h2>
-    <p class="hint">Выберите правильную форму: was / were или did / didn't с глаголом. Один вопрос за раз, после ответа переход сам.</p>
-    <div class="counter" id="tCount"></div>
-    <div class="stem" id="tStem"></div>
-    <div class="opts" id="tOpts"></div>
-    <div class="result" id="tRes"></div>
-  </section>
+  <div class="screen active" id="s1">
+    <section class="pane">
+      <h2>1 · Cards: holidays, travel, new verbs</h2>
+      <p class="hint">Нажмите на карточку, чтобы увидеть значение и пример.</p>
+      <div class="counter" id="cCount"></div>
+      <div class="flashWrap" id="cardWrap"><div class="flash"><div class="face front"><strong id="cW"></strong><small>нажмите на карточку</small></div><div class="face back"><div class="en" id="cEn"></div><div class="ru" id="cRu"></div><div class="ex" id="cEx"></div></div></div></div>
+      <div class="nav"><button class="arrow" id="cPrev">‹</button><button class="arrow" id="cNext">›</button></div>
+    </section>
+    <section class="pane">
+      <h2>2 · New verbs in context <span class="once">одна попытка</span></h2>
+      <p class="hint">Выберите глагол в Past Simple, который подходит по смыслу.</p>
+      <div class="counter" id="vCount"></div>
+      <div class="stem" id="vStem"></div>
+      <div class="opts" id="vOpts"></div>
+      <div class="result" id="vRes"></div>
+    </section>
+  </div>
 
-  <!-- STORY -->
-  <section class="panel" id="story">
-    <h2>2 · Story: Past Simple</h2>
-    <p class="hint">Нажмите на пропуск и выберите правильную форму глагола.</p>
-    <div class="story" id="storyText"></div>
-    <div class="gapOpts" id="gapOpts"><div class="label" id="gapLabel"></div><div class="opts" id="gapBtns"></div></div>
-    <div class="summary" id="sRes"></div>
-  </section>
-
-  <!-- CARDS -->
-  <section class="panel" id="cards">
-    <h2>3 · Cards: holidays, travel, new verbs</h2>
-    <p class="hint">Нажмите на карточку, чтобы увидеть значение и пример.</p>
-    <div class="counter" id="cCount"></div>
-    <div class="flashWrap" id="cardWrap"><div class="flash"><div class="face front"><strong id="cW"></strong><small>нажмите на карточку</small></div><div class="face back"><div class="en" id="cEn"></div><div class="ru" id="cRu"></div><div class="ex" id="cEx"></div></div></div></div>
-    <div class="nav"><button class="arrow" id="cPrev">‹</button><button class="arrow" id="cNext">›</button></div>
-  </section>
-
-  <!-- NEW VERBS -->
-  <section class="panel" id="verbs">
-    <h2>4 · Новые глаголы: контекст</h2>
-    <p class="hint">Выберите глагол в Past Simple, который подходит по смыслу. Сначала посмотрите новые слова в карточках (вкладка 3).</p>
-    <div class="counter" id="vCount"></div>
-    <div class="stem" id="vStem"></div>
-    <div class="opts" id="vOpts"></div>
-    <div class="result" id="vRes"></div>
-  </section>
-
-  <div style="text-align:center"><button class="finish" id="finishBtn">Посмотреть результат</button></div>
+  <div class="screen" id="s2">
+    <section class="pane">
+      <h2>3 · Test: was / were, did / didn't <span class="once">одна попытка</span></h2>
+      <p class="hint">Один вопрос за раз, после ответа переход сам.</p>
+      <div class="counter" id="tCount"></div>
+      <div class="stem" id="tStem"></div>
+      <div class="opts" id="tOpts"></div>
+      <div class="result" id="tRes"></div>
+    </section>
+    <section class="pane">
+      <h2>4 · Story: Past Simple <span class="once">одна попытка</span></h2>
+      <p class="hint">В каждом пропуске выберите глагол из списка.</p>
+      <div class="story" id="storyText"></div>
+      <div class="result" id="sRes"></div>
+    </section>
+  </div>
 </div>
+
+<div class="modal" id="modal"><div class="codeCard"><h2>Homework code</h2><p>Отправьте этот код учителю.</p><div class="code" id="codeOut"></div><div class="codeBtns"><button id="closeModal">Close</button><button class="copy" id="copyCode">COPY CODE</button></div></div></div>
 
 <script>
 (()=>{
 const $=s=>document.querySelector(s);
+const KEY='maya-hw-2a-v2';
+let st={t:[],v:[],s:{},done:false};
+try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&typeof x==='object')st=Object.assign(st,x)}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
-// --- tabs ---
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===t));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===t.dataset.tab));
+  document.querySelectorAll('.screen').forEach(p=>p.classList.toggle('active',p.id===t.dataset.s));
 });
 
-// --- 1. TEST ---
 const TEST=[
  ["___ you at the airport at 6 o'clock?",["Were","Did","Was","Didn't"],"Were"],
  ["Tom ___ happy with the hotel.",["wasn't","didn't","weren't","not"],"wasn't"],
@@ -151,24 +140,6 @@ const TEST=[
  ["___ the train arrive on time?",["Did","Was","Were","Does"],"Did"],
  ["I ___ time for lunch.",["didn't have","didn't had","not have","wasn't have"],"didn't have"]
 ];
-let ti=0,tScore=0,tLocked=false;
-function tDraw(){
-  const [q,opts]=TEST[ti];tLocked=false;
-  $('#tCount').textContent=(ti+1)+' / '+TEST.length;
-  $('#tStem').innerHTML=q.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;</u>');
-  $('#tOpts').innerHTML=opts.map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('');
-  $('#tOpts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
-    if(tLocked)return;tLocked=true;
-    const ok=b.dataset.v===TEST[ti][2];if(ok)tScore++;
-    b.classList.add(ok?'ok':'bad');
-    if(!ok)$('#tOpts').querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===TEST[ti][2])x.classList.add('ok')});
-    setTimeout(()=>{ti++;if(ti<TEST.length)tDraw();else{$('#tStem').innerHTML='Тест завершён';$('#tOpts').innerHTML='';$('#tCount').textContent='';$('#tRes').textContent='Тест: '+tScore+' из '+TEST.length}},ok?650:1200);
-  });
-}
-tDraw();
-
-// --- 2. STORY ---
-// [text, gapIndex] segments; gaps have 4 options, first is correct
 const GAPS=[
  ["went",["went","go","goes","going"]],["was",["was","were","is","be"]],["woke up",["woke up","wake up","wakes up","waking up"]],
  ["weren't",["weren't","wasn't","didn't","aren't"]],["met",["met","meet","meets","meeting"]],["told",["told","tell","tells","telling"]],
@@ -180,42 +151,6 @@ const GAPS=[
 const STORY_PARTS=[
  "Last summer my friend Olga and I ",0," to Greece for two weeks. The flight ",1," early, so we ",2," at 4 a.m. We ",3," happy about that! At the airport we ",4," a funny old man who ",5," us about the islands. The hotel ",6," small, but the view ",7," amazing. On the first day we ",8," to do anything, so we ",9," on the beach all day. The sea ",10," warm and the food ",11," delicious. On Thursday we ",12," a boat trip, and it ",13," a little, but nobody ",14,". Olga ",15," souvenirs, but I ",16," a beautiful ceramic plate. It ",17," the best holiday of my life!"
 ];
-const answered=Array(GAPS.length).fill(null);
-let openGap=null;
-function renderStory(){
-  const wrap=$('#storyText');wrap.innerHTML='';
-  STORY_PARTS.forEach(p=>{
-    if(typeof p==='number'){
-      const b=document.createElement('button');b.className='gap';
-      const a=answered[p];
-      b.textContent=a===null?'_______':a.v;
-      if(a){b.classList.add(a.ok?'ok':'bad')}
-      b.onclick=()=>openGapPanel(p);
-      wrap.appendChild(b);
-    }else wrap.appendChild(document.createTextNode(p));
-  });
-}
-function openGapPanel(i){
-  if(answered[i])return;
-  openGap=i;
-  const opts=[...GAPS[i][1]].sort(()=>Math.random()-0.5);
-  $('#gapLabel').textContent='Пропуск '+(i+1)+' из '+GAPS.length;
-  $('#gapBtns').innerHTML=opts.map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('');
-  $('#gapOpts').classList.add('open');
-  $('#gapBtns').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
-    const ok=b.dataset.v===GAPS[openGap][1][0];
-    answered[openGap]={v:b.dataset.v,ok};
-    $('#gapOpts').classList.remove('open');
-    renderStory();updateStoryScore();
-  });
-}
-function updateStoryScore(){
-  const done=answered.filter(Boolean),ok=done.filter(a=>a.ok).length;
-  $('#sRes').textContent=done.length===GAPS.length?'Текст: '+ok+' из '+GAPS.length:'Заполнено: '+done.length+' из '+GAPS.length;
-}
-renderStory();updateStoryScore();
-
-// --- 3. CARDS ---
 const CARDS=[
  ["holiday","отпуск, праздничные дни","We had a long holiday in May."],
  ["vacation","отпуск (американский вариант)","How was your vacation?"],
@@ -240,20 +175,6 @@ const CARDS=[
  ["complain","жаловаться","The guests complained about the noise."],
  ["recommend","рекомендовать","My friend recommended this restaurant."]
 ];
-let ci=0;
-function cDraw(){
-  const [w,r,e]=CARDS[ci];
-  $('#cardWrap').classList.remove('f');
-  $('#cW').textContent=w;$('#cEn').textContent=w;$('#cRu').textContent=r;$('#cEx').textContent=e;
-  $('#cCount').textContent=(ci+1)+' / '+CARDS.length;
-  $('#cPrev').disabled=ci===0;$('#cNext').disabled=ci===CARDS.length-1;
-}
-$('#cardWrap').onclick=()=>$('#cardWrap').classList.toggle('f');
-$('#cPrev').onclick=()=>{if(ci>0){ci--;cDraw()}};
-$('#cNext').onclick=()=>{if(ci<CARDS.length-1){ci++;cDraw()}};
-cDraw();
-
-// --- 4. NEW VERBS ---
 const VERBS=[
  ["I ___ my keys at home, so I couldn't open the door.",["forgot","managed","arrived","missed"],"forgot"],
  ["We ___ the last bus, so we walked home.",["managed","missed","forgot","arrived"],"missed"],
@@ -268,27 +189,74 @@ const VERBS=[
  ["The guests ___ about the noisy room.",["complained","recommended","managed","arrived"],"complained"],
  ["My friend ___ this restaurant to me.",["recommended","complained","packed","cancelled"],"recommended"]
 ];
-let vi=0,vScore=0,vLocked=false;
-function vDraw(){
-  const [q,opts]=VERBS[vi];vLocked=false;
-  $('#vCount').textContent=(vi+1)+' / '+VERBS.length;
-  $('#vStem').innerHTML=q.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;</u>');
-  $('#vOpts').innerHTML=opts.map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('');
-  $('#vOpts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
-    if(vLocked)return;vLocked=true;
-    const ok=b.dataset.v===VERBS[vi][2];if(ok)vScore++;
-    b.classList.add(ok?'ok':'bad');
-    if(!ok)$('#vOpts').querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===VERBS[vi][2])x.classList.add('ok')});
-    setTimeout(()=>{vi++;if(vi<VERBS.length)vDraw();else{$('#vStem').innerHTML='Вкладка завершена';$('#vOpts').innerHTML='';$('#vCount').textContent='';$('#vRes').textContent='Новые глаголы: '+vScore+' из '+VERBS.length}},ok?650:1200);
-  });
-}
-vDraw();
 
-// --- result ---
+// one-question-at-a-time quiz, one attempt (answers kept)
+function quiz(items,arr,ids,label){
+  const score=()=>arr.filter((a,i)=>a===items[i][2]).length;
+  function end(){$(ids.stem).innerHTML='Готово';$(ids.opts).innerHTML='';$(ids.count).textContent='';$(ids.res).textContent=label+': '+score()+' из '+items.length}
+  function draw(){
+    const i=arr.length;if(i>=items.length||st.done){end();return}
+    const [q,opts,right]=items[i];let locked=false;
+    $(ids.count).textContent=(i+1)+' / '+items.length;
+    $(ids.stem).innerHTML=q.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;</u>');
+    $(ids.opts).innerHTML=shuffle(opts).map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('');
+    $(ids.opts).querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      if(locked||st.done)return;locked=true;
+      const ok=b.dataset.v===right;arr.push(b.dataset.v);save();
+      b.classList.add(ok?'ok':'bad');
+      if(!ok)$(ids.opts).querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===right)x.classList.add('ok')});
+      setTimeout(draw,ok?650:1200);
+    });
+  }
+  draw();return score;
+}
+const vScore=quiz(VERBS,st.v,{count:'#vCount',stem:'#vStem',opts:'#vOpts',res:'#vRes'},'New verbs');
+const tScore=quiz(TEST,st.t,{count:'#tCount',stem:'#tStem',opts:'#tOpts',res:'#tRes'},'Test');
+
+// story with dropdowns, one attempt per gap
+function sScore(){return Object.keys(st.s).filter(k=>st.s[k]===GAPS[k][1][0]).length}
+function sUpdate(){const n=Object.keys(st.s).length;$('#sRes').textContent=n===GAPS.length?'Story: '+sScore()+' из '+GAPS.length:'Заполнено: '+n+' из '+GAPS.length}
+const wrap=$('#storyText');
+STORY_PARTS.forEach(p=>{
+  if(typeof p!=='number'){wrap.appendChild(document.createTextNode(p));return}
+  const sel=document.createElement('select');sel.className='gapSel';
+  sel.innerHTML='<option value="">— '+(p+1)+' —</option>'+shuffle(GAPS[p][1]).map(o=>`<option>${o}</option>`).join('');
+  const mark=()=>{const v=st.s[p];if(v===undefined)return;sel.value=v;sel.disabled=true;sel.classList.add(v===GAPS[p][1][0]?'ok':'bad');if(v!==GAPS[p][1][0])sel.title='Правильно: '+GAPS[p][1][0]};
+  sel.onchange=()=>{if(!sel.value||st.done)return;st.s[p]=sel.value;save();mark();sUpdate()};
+  if(st.done)sel.disabled=true;
+  mark();wrap.appendChild(sel);
+});
+sUpdate();
+
+// cards
+let ci=0;
+function cDraw(){const [w,r,e]=CARDS[ci];$('#cardWrap').classList.remove('f');$('#cW').textContent=w;$('#cEn').textContent=w;$('#cRu').textContent=r;$('#cEx').textContent=e;$('#cCount').textContent=(ci+1)+' / '+CARDS.length;$('#cPrev').disabled=ci===0;$('#cNext').disabled=ci===CARDS.length-1}
+$('#cardWrap').onclick=()=>$('#cardWrap').classList.toggle('f');
+$('#cPrev').onclick=()=>{if(ci>0){ci--;cDraw()}};$('#cNext').onclick=()=>{if(ci<CARDS.length-1){ci++;cDraw()}};
+cDraw();
+
+// finish: lock everything and give a short code
+function code(){
+  const wT=TEST.map((q,i)=>st.t[i]===q[2]?null:'T'+(i+1)).filter(Boolean);
+  const wV=VERBS.map((q,i)=>st.v[i]===q[2]?null:'V'+(i+1)).filter(Boolean);
+  const wS=GAPS.map((g,i)=>st.s[i]===g[1][0]?null:'S'+(i+1)).filter(Boolean);
+  const err=[...wV,...wT,...wS];
+  return '2A · V '+vScore()+'/'+VERBS.length+' · T '+tScore()+'/'+TEST.length+' · S '+sScore()+'/'+GAPS.length+(err.length?' · ошибки: '+err.join(' '):' · без ошибок');
+}
 $('#finishBtn').onclick=()=>{
-  const st=answered.filter(a=>a&&a.ok).length;
-  alert('Тест: '+tScore+' из '+TEST.length+'\nТекст: '+st+' из '+GAPS.length+'\nНовые глаголы: '+vScore+' из '+VERBS.length);
+  if(!st.done){
+    const left=(VERBS.length-st.v.length)+(TEST.length-st.t.length)+(GAPS.length-Object.keys(st.s).length);
+    if(left>0&&!confirm('Не выполнено заданий: '+left+'. Завершить? Попытка одна, после этого изменить ответы нельзя.'))return;
+    st.done=true;save();
+    document.querySelectorAll('.gapSel').forEach(s=>s.disabled=true);
+    $('#vStem').innerHTML='Готово';$('#vOpts').innerHTML='';$('#vRes').textContent='New verbs: '+vScore()+' из '+VERBS.length;
+    $('#tStem').innerHTML='Готово';$('#tOpts').innerHTML='';$('#tRes').textContent='Test: '+tScore()+' из '+TEST.length;
+  }
+  $('#codeOut').textContent=code();$('#modal').classList.add('show');
 };
+$('#closeModal').onclick=()=>$('#modal').classList.remove('show');
+$('#copyCode').onclick=async()=>{try{await navigator.clipboard.writeText($('#codeOut').textContent);$('#copyCode').textContent='COPIED'}catch(e){$('#copyCode').textContent='Скопируйте вручную'}setTimeout(()=>$('#copyCode').textContent='COPY CODE',1200)};
+window.scrollTo(0,0);
 })();
 </script>
 </body>
