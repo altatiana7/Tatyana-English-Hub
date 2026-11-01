@@ -63,6 +63,7 @@ body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);backg
       <button class="tab active" data-tab="test">1 · Test</button>
       <button class="tab" data-tab="story">2 · Story</button>
       <button class="tab" data-tab="cards">3 · Cards</button>
+      <button class="tab" data-tab="verbs">4 · New verbs</button>
     </div>
   </div>
 
@@ -87,11 +88,21 @@ body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink);backg
 
   <!-- CARDS -->
   <section class="panel" id="cards">
-    <h2>3 · Cards: holidays, travel</h2>
+    <h2>3 · Cards: holidays, travel, new verbs</h2>
     <p class="hint">Нажмите на карточку, чтобы увидеть значение и пример.</p>
     <div class="counter" id="cCount"></div>
     <div class="flashWrap" id="cardWrap"><div class="flash"><div class="face front"><strong id="cW"></strong><small>нажмите на карточку</small></div><div class="face back"><div class="en" id="cEn"></div><div class="ru" id="cRu"></div><div class="ex" id="cEx"></div></div></div></div>
     <div class="nav"><button class="arrow" id="cPrev">‹</button><button class="arrow" id="cNext">›</button></div>
+  </section>
+
+  <!-- NEW VERBS -->
+  <section class="panel" id="verbs">
+    <h2>4 · Новые глаголы: контекст</h2>
+    <p class="hint">Выберите глагол в Past Simple, который подходит по смыслу. Сначала посмотрите новые слова в карточках (вкладка 3).</p>
+    <div class="counter" id="vCount"></div>
+    <div class="stem" id="vStem"></div>
+    <div class="opts" id="vOpts"></div>
+    <div class="result" id="vRes"></div>
   </section>
 
   <div style="text-align:center"><button class="finish" id="finishBtn">Посмотреть результат</button></div>
@@ -215,7 +226,19 @@ const CARDS=[
  ["souvenir","сувенир","I bought a souvenir for my mum."],
  ["sightseeing","осмотр достопримечательностей","We went sightseeing in Paris."],
  ["seaside","побережье, морской курорт","We spent a week at the seaside."],
- ["relax","расслабиться, отдыхать","I relaxed by the pool all day."]
+ ["relax","расслабиться, отдыхать","I relaxed by the pool all day."],
+ ["forget","забыть","I forgot my keys at home."],
+ ["manage","успеть, суметь, справиться","We managed to catch the train."],
+ ["arrive","прибыть","The plane arrived at nine in the evening."],
+ ["miss","опоздать на, пропустить","We missed the last bus."],
+ ["lose","потерять","She lost her passport at the airport."],
+ ["pack","упаковать (вещи)","I packed my suitcase the night before."],
+ ["book","забронировать","They booked a room in a small hotel."],
+ ["cancel","отменить","Our flight was cancelled because of the snow."],
+ ["check in","зарегистрироваться (в отеле, на рейс)","We checked in at midnight."],
+ ["rent","арендовать","He rented a car for the week."],
+ ["complain","жаловаться","The guests complained about the noise."],
+ ["recommend","рекомендовать","My friend recommended this restaurant."]
 ];
 let ci=0;
 function cDraw(){
@@ -230,10 +253,41 @@ $('#cPrev').onclick=()=>{if(ci>0){ci--;cDraw()}};
 $('#cNext').onclick=()=>{if(ci<CARDS.length-1){ci++;cDraw()}};
 cDraw();
 
+// --- 4. NEW VERBS ---
+const VERBS=[
+ ["I ___ my keys at home, so I couldn't open the door.",["forgot","managed","arrived","missed"],"forgot"],
+ ["We ___ the last bus, so we walked home.",["managed","missed","forgot","arrived"],"missed"],
+ ["The plane ___ at nine in the evening.",["arrived","lost","packed","booked"],"arrived"],
+ ["We ___ to catch the train, because we ran fast.",["managed","complained","cancelled","rented"],"managed"],
+ ["She ___ her passport at the airport.",["lost","packed","booked","recommended"],"lost"],
+ ["I ___ my suitcase the night before the trip.",["packed","lost","checked in","complained"],"packed"],
+ ["They ___ a room in a small hotel.",["booked","rented","cancelled","arrived"],"booked"],
+ ["Our flight ___ because of the snow.",["cancelled","complained","managed","recommended"],"cancelled"],
+ ["We ___ at the hotel at midnight.",["checked in","complained","lost","packed"],"checked in"],
+ ["He ___ a car for the whole week.",["rented","booked","forgot","missed"],"rented"],
+ ["The guests ___ about the noisy room.",["complained","recommended","managed","arrived"],"complained"],
+ ["My friend ___ this restaurant to me.",["recommended","complained","packed","cancelled"],"recommended"]
+];
+let vi=0,vScore=0,vLocked=false;
+function vDraw(){
+  const [q,opts]=VERBS[vi];vLocked=false;
+  $('#vCount').textContent=(vi+1)+' / '+VERBS.length;
+  $('#vStem').innerHTML=q.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;</u>');
+  $('#vOpts').innerHTML=opts.map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('');
+  $('#vOpts').querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    if(vLocked)return;vLocked=true;
+    const ok=b.dataset.v===VERBS[vi][2];if(ok)vScore++;
+    b.classList.add(ok?'ok':'bad');
+    if(!ok)$('#vOpts').querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===VERBS[vi][2])x.classList.add('ok')});
+    setTimeout(()=>{vi++;if(vi<VERBS.length)vDraw();else{$('#vStem').innerHTML='Вкладка завершена';$('#vOpts').innerHTML='';$('#vCount').textContent='';$('#vRes').textContent='Новые глаголы: '+vScore+' из '+VERBS.length}},ok?650:1200);
+  });
+}
+vDraw();
+
 // --- result ---
 $('#finishBtn').onclick=()=>{
   const st=answered.filter(a=>a&&a.ok).length;
-  alert('Тест: '+tScore+' из '+TEST.length+'\nТекст: '+st+' из '+GAPS.length);
+  alert('Тест: '+tScore+' из '+TEST.length+'\nТекст: '+st+' из '+GAPS.length+'\nНовые глаголы: '+vScore+' из '+VERBS.length);
 };
 })();
 </script>
