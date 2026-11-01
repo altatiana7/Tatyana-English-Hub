@@ -88,97 +88,97 @@ main{display:grid;grid-template-columns:270px minmax(0,1fr);gap:14px;align-items
 .view:not(#menu){max-width:none;margin:0}
 .hero{height:200px;max-width:none}
 @media (max-width:760px){main{grid-template-columns:1fr}#menu.view{position:static}#menu .menu{grid-template-columns:repeat(2,minmax(0,1fr))}#menu .blk small{display:none}.hero{height:120px}}
+
+/* v4 · все задания одним экраном, карточками */
+body{overflow:auto}
+main{display:block;padding:10px;max-width:none}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(250px,calc((100vh - 76px)/2));gap:10px;max-width:1400px;margin:0 auto}
+.card{border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;min-height:0;overflow:hidden;position:relative}
+.card header{display:flex;align-items:center;gap:8px;font-size:14px}
+.card header b{font-family:Arial,sans-serif;font-size:20px;color:#0000002e}
+.card header span{font-weight:700;flex:1}
+.rbtn{border:1px solid #b9a6ad;background:#fff;border-radius:99px;padding:3px 10px;font-size:12px}
+.rulebox{position:absolute;inset:40px 8px 8px;z-index:3;background:#fffffff2;border:1px solid #e4ded3;border-radius:10px;padding:10px;font-size:13px;line-height:1.45;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.rulebox[hidden]{display:none}
+.hint{font-size:12px;line-height:1.35;color:var(--muted)}
+.card .qz{height:auto;flex:1;min-height:0;margin:0}
+.card .front strong{font-size:20px;line-height:1.25}
+.card .front small{font-size:11px}
+.card .back .en{font-size:18px}.card .back .ru{font-size:15px}.card .back .ex{font-size:13px}
+.card .sent span{display:block}
+.card .sent{min-height:0;flex:1;padding:8px;font-size:16px;margin:0;border-radius:10px}
+.card .pair{gap:6px}
+.card .pair.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card .ans{min-height:0;padding:9px 6px;font-size:15px;border-radius:10px}
+.card .counter{font-size:12px;margin:0}
+.card .qnav{gap:8px}.card .arrow{width:38px;height:28px;font-size:16px}
+.card .timer{margin:0}.card .score{font-size:13px;margin:0}
+.card .prompt{min-height:0}
+.hero{height:auto;margin:0;max-width:none;border-radius:14px}
+.card.c1{background:#fff0b3}.card.c2{background:#dcf4e7}.card.c3{background:#e4e6fb}.card.c4{background:#fde4ec}.card.c5{background:#dcecfb}.card.c6{background:#fde9d4}.card.c7{background:#d9f1f0}
+@media (max-width:1000px){.board{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(260px,auto)}}
+@media (max-width:620px){.board{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="bar">
   <span class="name">Maya · 2B On top of the world</span>
-  <span class="pill">7 ACTIVITIES · ONE SCREEN</span>
+  <span class="pill">ONE SCREEN · 7 ACTIVITIES</span>
 </div>
 <main>
+<div class="board">
 
-<!-- МЕНЮ БЛОКОВ -->
-<section class="view" id="menu">
-  <div class="menu">
-    <button class="blk c1" data-b="warm"><small>1 · WARM-UP</small><strong>Фото и вопросы</strong></button>
-    <button class="blk c2" data-b="vocab"><small>2 · VOCABULARY</small><strong>Карточки Quizlet</strong></button>
-    <button class="blk c3" data-b="prep"><small>3 · PREPOSITIONS</small><strong>at · in · on</strong></button>
-    <button class="blk c4" data-b="gram"><small>4 · GRAMMAR</small><strong>Past continuous</strong></button>
-    <button class="blk c5" data-b="weak"><small>5 · PRONUNCIATION</small><strong>was · were</strong></button>
-    <button class="blk c6" data-b="game"><small>6 · GAME</small><strong>Speed Game</strong></button>
-    <button class="blk c7" data-b="speak"><small>7 · SPEAKING</small><strong>Фото на телефоне</strong></button>
-  </div>
-</section>
-
-<!-- ПРИВЕТСТВИЕ -->
-<section class="view on" id="welcome">
-  <div class="hero"><img src="media/2b-hero.jpg" alt="Swing on the edge of a mountain" onerror="this.remove()"><span class="tag">REAL PHOTO · ECUADOR</span></div>
-  <div class="note">Выберите блок слева: задание откроется справа, а меню останется на экране.</div>
-</section>
-
-<!-- 1. WARM-UP -->
-<section class="view" id="warm">
-  <div class="head"><h2>1 · Warm-up</h2><button class="back" data-back>← Меню</button></div>
-  <div class="note">Прочитайте подпись к фото на странице 18 и ответьте на вопросы. Ответ 40 секунд, одна карточка за раз.</div>
+<section class="card c1"><header><b>01</b><span>Warm-up · Фото и вопросы</span></header>
   <div class="qz" id="warmCard"><div class="in"><div class="face front"><strong id="warmQ"></strong><small>нажмите, чтобы увидеть подсказку</small></div><div class="face back"><div class="ex" id="warmA"></div></div></div></div>
   <div class="qnav"><button class="arrow" id="warmPrev">‹</button><span class="counter" id="warmCount"></span><button class="arrow" id="warmNext">›</button></div>
 </section>
 
-<!-- 2. VOCABULARY -->
-<section class="view" id="vocab">
-  <div class="head"><h2>2 · Vocabulary</h2><button class="back" data-back>← Меню</button></div>
+<section class="card c2"><header><b>02</b><span>Vocabulary · Quizlet</span></header>
   <div class="qz" id="vocabCard"><div class="in"><div class="face front"><strong id="vW"></strong><small>нажмите на карточку</small></div><div class="face back"><div class="en" id="vEn"></div><div class="ru" id="vRu"></div><div class="ex" id="vEx"></div></div></div></div>
   <div class="qnav"><button class="arrow" id="vPrev">‹</button><span class="counter" id="vCount"></span><button class="arrow" id="vNext">›</button></div>
 </section>
 
-<!-- 3. PREPOSITIONS -->
-<section class="view" id="prep">
-  <div class="head"><h2>3 · at · in · on</h2><button class="back" data-back>← Меню</button></div>
+<section class="card c3"><header><b>03</b><span>Prepositions · at · in · on</span></header>
   <div class="counter" id="pCount"></div>
   <div class="sent" id="pSent"></div>
-  <div class="pair" id="pBtns"></div>
+  <div class="pair three" id="pBtns"></div>
 </section>
 
-<!-- 4. GRAMMAR -->
-<section class="view" id="gram">
-  <div class="head"><h2>4 · Past continuous</h2><button class="back" data-back>← Меню</button></div>
-  <div class="rule"><b>was / were + глагол с -ing</b> — действие, которое длилось в конкретный момент в прошлом, или фон для истории.<br>I <b>was studying</b>. We <b>were riding</b>. It <b>wasn't raining</b>.</div>
-  <div class="rule">Прерывание: «We <b>were having</b> lunch <b>when</b> it started to rain» — past continuous + past simple.</div>
-  <div class="note"><b>На что обратить внимание:</b> was для I, he, she, it; were для we, you, they. В вопросе — Was / Were в начале.</div>
+<section class="card c4"><header><b>04</b><span>Grammar · Past continuous</span><button class="rbtn" id="ruleBtn">Правило</button></header>
+  <div class="rulebox" id="ruleBox" hidden>
+    <div><b>was / were + глагол с -ing</b> — действие в конкретный момент в прошлом или фон для истории. I <b>was studying</b>. We <b>were riding</b>. It <b>wasn't raining</b>.</div>
+    <div>Прерывание: We <b>were having</b> lunch <b>when</b> it started to rain.</div>
+    <div><b>Обратите внимание:</b> was — I, he, she, it; were — we, you, they. В вопросе Was / Were в начале.</div>
+  </div>
   <div class="counter" id="gCount"></div>
   <div class="sent" id="gSent"></div>
   <div class="pair" id="gBtns"></div>
 </section>
 
-<!-- 5. WEAK FORMS -->
-<section class="view" id="weak">
-  <div class="head"><h2>5 · Pronunciation: was, were</h2><button class="back" data-back>← Меню</button></div>
-  <div class="note">Сначала озвучка из учебника, потом текст. В утверждениях was и were звучат слабо (/wəz/, /wə/), в вопросах и коротких ответах — сильно (/wɒz/, /wɜː/).</div>
+<section class="card c5"><header><b>05</b><span>Pronunciation · was, were</span></header>
+  <div class="hint">В утверждениях слабо (/wəz/, /wə/), в вопросах и коротких ответах — сильно (/wɒz/, /wɜː/).</div>
   <div class="counter" id="wCount"></div>
   <div class="sent" id="wSent"></div>
   <div class="pair" id="wBtns"></div>
 </section>
 
-<!-- 6. GAME -->
-<section class="view" id="game">
-  <div class="head"><h2>6 · Speed Game</h2><button class="back" data-back>← Меню</button></div>
-  <div class="note">15 секунд на каждый вопрос. Очки за скорость.</div>
+<section class="card c6"><header><b>06</b><span>Speed Game</span></header>
   <div class="timer"><i id="gmBar"></i></div>
-  <div class="score" id="gmScore"></div>
+  <div class="score" id="gmScore">15 секунд на вопрос</div>
   <div class="sent" id="gmSent"></div>
-  <div class="pair" id="gmBtns"></div>
+  <div class="pair three" id="gmBtns"></div>
   <div class="score" id="gmEnd"></div>
-  <div style="text-align:center;margin-top:10px"><button class="back" id="gmStart">Начать заново</button></div>
+  <div style="text-align:center"><button class="back" id="gmStart">Старт</button></div>
 </section>
 
-<!-- 7. SPEAKING -->
-<section class="view" id="speak">
-  <div class="head"><h2>7 · Speaking</h2><button class="back" data-back>← Меню</button></div>
-  <div class="note">В паре: ответьте, потом задайте партнёру «What about you?». Можно показать фото на телефоне.</div>
+<section class="card c7"><header><b>07</b><span>Speaking · Фото на телефоне</span></header>
   <div class="qz" id="spkCard"><div class="in"><div class="face front"><strong id="spkQ"></strong><small>нажмите, чтобы увидеть образец</small></div><div class="face back"><div class="ex" id="spkA"></div></div></div></div>
   <div class="qnav"><button class="arrow" id="spkPrev">‹</button><span class="counter" id="spkCount"></span><button class="arrow" id="spkNext">›</button></div>
 </section>
 
+<section class="hero"><img src="media/2b-hero.jpg" alt="Swing on the edge of a mountain" onerror="this.remove()"><span class="tag">REAL PHOTO · ECUADOR</span></section>
+
+</div>
 </main>
 
 <script>
@@ -297,19 +297,19 @@ choice({
   items:PREP,sentSel:'#pSent',btnsSel:'#pBtns',countSel:'#pCount',
   optionsOf:()=>['at','in','on'],
   answerOf:it=>it[1],
-  htmlOf:it=>esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')
+  htmlOf:it=>'<span>'+esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')+'</span>'
 });
 choice({
   items:GRAM,sentSel:'#gSent',btnsSel:'#gBtns',countSel:'#gCount',
   optionsOf:it=>it[1],
   answerOf:it=>it[2],
-  htmlOf:it=>esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')
+  htmlOf:it=>'<span>'+esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')+'</span>'
 });
 choice({
   items:WEAK,sentSel:'#wSent',btnsSel:'#wBtns',countSel:'#wCount',
   optionsOf:()=>['strong','weak'],
   answerOf:it=>it[1],
-  htmlOf:it=>esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')
+  htmlOf:it=>'<span>'+esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')+'</span>'
 });
 
 // --- speed game ---
@@ -326,7 +326,7 @@ function gmNext(){
     $('#gmEnd').textContent='Результат: '+gmScore+' из '+gmItems.length;return;
   }
   const it=gmItems[gmI];
-  $('#gmSent').innerHTML=esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>');
+  $('#gmSent').innerHTML='<span>'+esc(it[0]).replace('___','<u>&nbsp;&nbsp;&nbsp;</u>')+'</span>';
   $('#gmBtns').innerHTML=['at','in','on'].map(o=>`<button class="ans" data-v="${o}">${o}</button>`).join('');
   $('#gmScore').textContent='Очки: '+gmScore;
   gmLeft=GM_TIME;$('#gmBar').style.transition='none';$('#gmBar').style.width='100%';
@@ -345,15 +345,8 @@ function gmNext(){
 }
 $('#gmStart').onclick=()=>{clearInterval(gmT);gmStart()};
 
-// --- navigation ---
-function show(id){
-  document.querySelectorAll('.view:not(#menu)').forEach(v=>v.classList.toggle('on',v.id===id));
-  document.querySelectorAll('.blk').forEach(b=>b.classList.toggle('act',b.dataset.b===id));
-  if(id==='game')gmStart();
-  window.scrollTo(0,0);
-}
-document.querySelectorAll('.blk').forEach(b=>b.onclick=()=>show(b.dataset.b));
-document.querySelectorAll('[data-back]').forEach(b=>b.remove());
+$('#ruleBtn').onclick=()=>{const b=$('#ruleBox');b.hidden=!b.hidden};
+const gmStartOrig=gmStart;
 })();
 </script>
 </body>
