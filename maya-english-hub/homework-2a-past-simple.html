@@ -15,7 +15,7 @@ body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:lin
 .tabs{display:flex;gap:6px;margin-left:auto}
 .tab{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:7px 14px;font:900 14px Arial,sans-serif;color:#513aad;cursor:pointer}
 .tab.active{background:var(--p2);color:#fff;border-color:var(--p2)}
-.finish{border:0;border-radius:999px;background:linear-gradient(110deg,var(--pink),var(--p2));color:#fff;padding:8px 16px;font:900 14px Arial,sans-serif;cursor:pointer}
+.ksbox{font-family:Georgia,serif}.ksbox .btn{border:1px solid #d9d0ef;background:#fff;border-radius:10px;padding:8px 16px;font:900 14px Arial,sans-serif;color:#4b35ae;cursor:pointer}#sendSlot .btn{border:0;border-radius:999px;padding:8px 16px;font:900 14px Arial,sans-serif;cursor:pointer}.finish{border:0;border-radius:999px;background:linear-gradient(110deg,var(--pink),var(--p2));color:#fff;padding:8px 16px;font:900 14px Arial,sans-serif;cursor:pointer}
 .screen{display:none;min-height:0;grid-template-columns:1fr 1fr;gap:10px;align-items:start}.screen .pane{max-height:100%}.screen.active{display:grid}
 .pane{min-height:0;overflow:auto;background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:16px;padding:10px 14px;box-shadow:0 8px 22px rgba(70,49,135,.08)}
 .pane h2{margin:0 0 2px;color:var(--p);font:900 17px Arial,sans-serif}
@@ -53,7 +53,7 @@ body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:lin
       <button class="tab active" data-s="s1">1 · Cards + New verbs</button>
       <button class="tab" data-s="s2">2 · Test + Story</button>
     </div>
-    <button class="finish" id="finishBtn">Finish &amp; get code</button>
+    <span id="sendSlot"></span>
   </div>
 
   <div class="screen active" id="s1">
@@ -92,8 +92,8 @@ body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:lin
   </div>
 </div>
 
-<div class="modal" id="modal"><div class="codeCard"><h2>Homework code</h2><p>Отправьте этот код учителю.</p><div class="code" id="codeOut"></div><div class="codeBtns"><button id="closeModal">Close</button><button class="copy" id="copyCode">COPY CODE</button></div></div></div>
 
+<script src="send.js?v=20261101a"></script>
 <script>
 (()=>{
 const $=s=>document.querySelector(s);
@@ -235,27 +235,30 @@ $('#cardWrap').onclick=()=>$('#cardWrap').classList.toggle('f');
 $('#cPrev').onclick=()=>{if(ci>0){ci--;cDraw()}};$('#cNext').onclick=()=>{if(ci<CARDS.length-1){ci++;cDraw()}};
 cDraw();
 
-// finish: lock everything and give a short code
-function code(){
-  const wT=TEST.map((q,i)=>st.t[i]===q[2]?null:'T'+(i+1)).filter(Boolean);
-  const wV=VERBS.map((q,i)=>st.v[i]===q[2]?null:'V'+(i+1)).filter(Boolean);
-  const wS=GAPS.map((g,i)=>st.s[i]===g[1][0]?null:'S'+(i+1)).filter(Boolean);
-  const err=[...wV,...wT,...wS];
-  return '2A · V '+vScore()+'/'+VERBS.length+' · T '+tScore()+'/'+TEST.length+' · S '+sScore()+'/'+GAPS.length+(err.length?' · ошибки: '+err.join(' '):' · без ошибок');
+// send to teacher: one attempt, goes straight to the teacher's results page
+function lockAll(){
+  st.done=true;save();
+  document.querySelectorAll('.gapSel').forEach(s=>s.disabled=true);
+  $('#vStem').innerHTML='Отправлено';$('#vOpts').innerHTML='';$('#vCount').textContent='';$('#vRes').textContent='New verbs: '+vScore()+' из '+VERBS.length;
+  $('#tStem').innerHTML='Отправлено';$('#tOpts').innerHTML='';$('#tCount').textContent='';$('#tRes').textContent='Test: '+tScore()+' из '+TEST.length;
 }
-$('#finishBtn').onclick=()=>{
-  if(!st.done){
-    const left=(VERBS.length-st.v.length)+(TEST.length-st.t.length)+(GAPS.length-Object.keys(st.s).length);
-    if(left>0&&!confirm('Не выполнено заданий: '+left+'. Завершить? Попытка одна, после этого изменить ответы нельзя.'))return;
-    st.done=true;save();
-    document.querySelectorAll('.gapSel').forEach(s=>s.disabled=true);
-    $('#vStem').innerHTML='Готово';$('#vOpts').innerHTML='';$('#vRes').textContent='New verbs: '+vScore()+' из '+VERBS.length;
-    $('#tStem').innerHTML='Готово';$('#tOpts').innerHTML='';$('#tRes').textContent='Test: '+tScore()+' из '+TEST.length;
-  }
-  $('#codeOut').textContent=code();$('#modal').classList.add('show');
-};
-$('#closeModal').onclick=()=>$('#modal').classList.remove('show');
-$('#copyCode').onclick=async()=>{try{await navigator.clipboard.writeText($('#codeOut').textContent);$('#copyCode').textContent='COPIED'}catch(e){$('#copyCode').textContent='Скопируйте вручную'}setTimeout(()=>$('#copyCode').textContent='COPY CODE',1200)};
+function getData(){
+  const fill=(q)=>q.replace('___','_____');
+  const sec=(name,items,ans,score)=>({name,score,max:items.length,items:items.map((q,i)=>({n:i+1,q:fill(q[0]),a:ans[i]===undefined?'':ans[i],right:q[2]}))});
+  const storyAns=GAPS.map((g,i)=>st.s[i]===undefined?'':st.s[i]);
+  const story={name:'Story: Past Simple',score:sScore(),max:GAPS.length,items:GAPS.map((g,i)=>({n:i+1,q:'Пропуск '+(i+1),a:storyAns[i],right:g[1][0]}))};
+  const sections=[sec('New verbs in context',VERBS,st.v,vScore()),sec('Test: was / were, did / didn\'t',TEST,st.t,tScore()),story];
+  const total=sections.reduce((s,x)=>s+x.score,0),max=sections.reduce((s,x)=>s+x.max,0);
+  return {summary:'V '+vScore()+'/'+VERBS.length+' · T '+tScore()+'/'+TEST.length+' · S '+sScore()+'/'+GAPS.length,total,max,sections};
+}
+const slot=$('#sendSlot');
+const sendBtn=KS.button('hw2a',()=>{
+  const left=(VERBS.length-st.v.length)+(TEST.length-st.t.length)+(GAPS.length-Object.keys(st.s).length);
+  if(left>0)alert('Не выполнено заданий: '+left+'. Они будут засчитаны как ошибки.');
+  return getData();
+},()=>lockAll());
+slot.appendChild(sendBtn);
+if(KS.sent('hw2a')&&!st.done)lockAll();
 window.scrollTo(0,0);
 })();
 </script>

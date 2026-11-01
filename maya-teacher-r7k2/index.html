@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Майя · проверка домашки</title>
+<style>
+:root{--p:#4b35ae;--p2:#7458cc;--line:#e2dbf0;--ok:#15845b;--okbg:#e7f6ef;--bad:#c4435d;--badbg:#fbeaee;--ink:#201a45}
+*{box-sizing:border-box}body{margin:0;font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:linear-gradient(135deg,#f3efff,#effaff 55%,#f5fff1);min-height:100vh}
+.wrap{max-width:1100px;margin:auto;padding:8px 12px 20px}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}.bar h1{margin:0;font:900 19px Arial,sans-serif;color:var(--p)}
+.bar button{margin-left:auto;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;font:900 13px Arial,sans-serif;color:var(--p);cursor:pointer}
+.msg{padding:14px;background:#fff;border:1px solid var(--line);border-radius:14px}
+.work{background:#fff;border:1px solid var(--line);border-radius:16px;margin-bottom:10px;box-shadow:0 8px 22px rgba(70,49,135,.07)}
+.head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:11px 14px;cursor:pointer}
+.head b{font:900 16px Arial,sans-serif;color:var(--p)}.head .at{color:#6b6880;font-size:14px}.head .sum{margin-left:auto;font:900 15px Arial,sans-serif}
+.body{display:none;border-top:1px solid var(--line);padding:10px 14px}.work.open .body{display:block}
+.sec{margin-bottom:12px}.sec h3{margin:0 0 6px;font:900 15px Arial,sans-serif;color:var(--p)}
+.items{display:grid;grid-template-columns:repeat(2,1fr);gap:5px}
+.it{border:1px solid var(--line);border-radius:10px;padding:6px 9px;font-size:15px}
+.it.ok{background:var(--okbg);border-color:#b9dcc9}.it.bad{background:var(--badbg);border-color:#efc2cc}
+.it .n{font:900 12px Arial,sans-serif;color:#6b6880;margin-right:4px}.it .a{font-weight:700}.it.bad .a{color:var(--bad);text-decoration:line-through}.it .r{color:var(--ok);font-weight:700;margin-left:6px}
+.only{font:700 13px Arial,sans-serif;color:var(--p);margin-left:10px;cursor:pointer;user-select:none}
+.hideOk .it.ok{display:none}
+@media(max-width:700px){.items{grid-template-columns:1fr}}
+</style></head><body>
+<div class="wrap">
+  <div class="bar"><h1>Майя · проверка домашки</h1><button id="reload">Обновить</button></div>
+  <div id="out"><div class="msg">Загрузка…</div></div>
+</div>
+<script>
+(()=>{
+const DB='https://lzxcmrlubhjfdhtqvqzt.supabase.co',KEY='sb_publishable_PmyZRwzWne8lqprej4XJQA_XiujtjEI';
+const H={'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'};
+const PFX='maya:',out=document.getElementById('out');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function code(ask){let c='';try{c=localStorage.getItem('arina-teacher-code')||''}catch(e){}
+  if(!c&&ask){c=(prompt('Пароль учителя к результатам (тот же, что для работ Арины и Кати):')||'').trim();if(c)try{localStorage.setItem('arina-teacher-code',c)}catch(e){}}return c}
+async function load(){
+  out.innerHTML='<div class="msg">Загрузка…</div>';
+  const c=code(true);if(!c){out.innerHTML='<div class="msg">Нужен пароль учителя. Нажмите «Обновить».</div>';return}
+  let r;try{r=await fetch(DB+'/rest/v1/rpc/get_arina_homework',{method:'POST',headers:H,body:JSON.stringify({p_teacher_code:c})})}catch(e){out.innerHTML='<div class="msg">Нет связи с базой. Проверьте интернет и нажмите «Обновить».</div>';return}
+  if(r.status===400||r.status===401||r.status===403){try{localStorage.removeItem('arina-teacher-code')}catch(e){}out.innerHTML='<div class="msg">Неверный пароль. Нажмите «Обновить» и введите снова.</div>';return}
+  if(!r.ok){out.innerHTML='<div class="msg">Не удалось загрузить работы. Нажмите «Обновить».</div>';return}
+  const rows=((await r.json())||[]).filter(x=>String(x&&x.test_id||'').indexOf(PFX)===0).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  if(!rows.length){out.innerHTML='<div class="msg">Работ Майи пока нет.</div>';return}
+  out.innerHTML=rows.map((x,k)=>{const d=x.answers||{},secs=d.sections||[];
+    const at=d._at||new Date(x.created_at).toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
+    const body=secs.map(s=>`<div class="sec"><h3>${esc(s.name)} · ${s.score} / ${s.max}</h3><div class="items">${(s.items||[]).map(it=>{const ok=it.a===it.right;
+      return `<div class="it ${ok?'ok':'bad'}"><span class="n">${it.n}</span>${esc(it.q)}<br><span class="a">${esc(it.a||'нет ответа')}</span>${ok?'':`<span class="r">${esc(it.right)}</span>`}</div>`}).join('')}</div></div>`).join('')||'<div class="msg">Нет подробностей.</div>';
+    return `<div class="work${k===0?' open':''}"><div class="head"><b>${esc(x.test_title)}</b><span class="at">${esc(at)}</span><span class="sum">${d.total!=null?d.total+' / '+d.max:''}${d.summary?' · '+esc(d.summary):''}</span><span class="only">только ошибки</span></div><div class="body">${body}</div></div>`}).join('');
+  out.querySelectorAll('.work').forEach(w=>{w.querySelector('.head').onclick=e=>{if(e.target.classList.contains('only')){w.classList.add('open');w.classList.toggle('hideOk');return}w.classList.toggle('open')}});
+}
+document.getElementById('reload').onclick=load;load();
+})();
+</script>
+</body></html>
