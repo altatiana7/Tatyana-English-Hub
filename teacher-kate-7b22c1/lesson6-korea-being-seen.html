@@ -341,7 +341,23 @@ body{background:#f3f1f7}
 .tnote .panel{position:absolute;right:0;top:0;width:min(420px,90vw);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #0002;padding:12px 14px;font-size:14px;line-height:1.45}
 .tnote .panel b{color:var(--navy)}
 
-.mem.bigmem button{font-size:15px}
+.predict{flex:1;display:flex;flex-direction:column;gap:8px;min-height:0}
+.phwrap{position:relative;flex:1;min-height:110px;border-radius:12px;overflow:hidden;background:#e7eee9}
+.phwrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.phgrid{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:0;background:transparent}
+.phgrid i{background:#c9d9d2;box-shadow:inset 0 0 0 2px #fff;transition:opacity .5s}
+.phgrid i.open{opacity:0;pointer-events:none}
+.phmsg{display:none;position:absolute;inset:0;align-items:center;justify-content:center;color:var(--muted);font-weight:700;z-index:2;pointer-events:none}
+.phwrap.nophoto .phmsg{display:flex}
+.phwrap.nophoto .phgrid,.phwrap.nophoto img{display:none}
+.phq{font-family:Georgia,serif;font-size:clamp(16px,2.6vh,18px);line-height:1.35}
+
+.mt{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;align-content:center}
+.mtc{display:grid;gap:7px}
+.mt button{border:1px solid #d7e3da;background:#f7f8f4;border-radius:8px;padding:9px 10px;font-size:clamp(15px,2.5vh,17px);text-align:left;line-height:1.25}
+.mt button.sel{background:#dcebe5;border-color:var(--navy)}
+.mt button.done{background:#d9eee0;border-color:#9ccaae;color:#24553a;cursor:default}
+.mt button.no{background:#f8cfc6;border-color:#c2452f}
 .reading a{color:var(--navy)}
 .reading p.fact{margin:0 0 8px}
 .rdlist{display:grid;gap:7px;align-content:start}
@@ -378,7 +394,7 @@ body{background:#f3f1f7}
   <div class="card"><div class="head"><div><p class="eyebrow">03 / QUIZLET</p><h2>Remember the words</h2></div><button class="btn light" type="button" id="fc1Shuffle">Shuffle</button></div>
     <div class="body" id="deck1" style="overflow:hidden"></div>
   </div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">04 / MEMORY · ODD ONE OUT</p><div class="seg" id="mTabs" style="margin-top:3px"></div></div><span class="pill" id="memPill"></span></div><div class="body" id="mem"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">04 / MATCH · ODD ONE OUT</p><div class="seg" id="mTabs" style="margin-top:3px"></div></div><span class="pill" id="memPill"></span></div><div class="body" id="mem"></div></div>
   <div class="card"><div class="head"><div><p class="eyebrow">05 / GAME</p><h2>Forbidden word</h2></div><span class="pill" id="fwPill"></span></div><div class="body" id="fw"></div></div>
 </section>
 
@@ -429,6 +445,7 @@ body{background:#f3f1f7}
   1 Warm-up 6 min · 2 Recall words (money, social media) 8 min · 3 Recall grammar (inversion, passive reporting, conditionals) 8 min · 4 Space-Out contest 10 min · 5 Dopamine sites 8 min · 6 Teenagers, phones and the law 10 min · 7 Debate 10 min · 8 Revision games — reserve or next lesson.<br>
   <b>Sources:</b> ESL News Stories, “Seoul Space-Out Helps People Relax”, 22 July 2025 (<a href="https://eslnewsstories.com/articles/2025-07-22-seoul-space-out-competition-helps-people-relax/" target="_blank" rel="noopener">link</a>); ESL News Stories, “Dopamine Sites: Shopping Without Spending”, 27 July 2026 (<a href="https://eslnewsstories.com/articles/2026-07-27-dopamine-sites-shopping-without-spending/" target="_blank" rel="noopener">link</a>); Asia News Network, 28 Aug 2025, law on phones in classrooms (<a href="https://asianews.network/?p=223394" target="_blank" rel="noopener">link</a>); Korea Herald, May 2026, children and smartphone dependence (<a href="https://www.koreaherald.com/article/10731389" target="_blank" rel="noopener">link</a>); Korea Times, 1 July 2026, “Time to rein in youth social media use” (<a href="https://www.koreatimes.co.kr/amp/opinion/20260701/time-to-rein-in-youth-social-media-use" target="_blank" rel="noopener">link</a>).<br>
   <b>Revision:</b> Jeopardy (Kate vs Teacher) and Escape Room — code 2026.<br>
+  <b>Photos for the predictions</b> (folder assets/lesson6): space-out.jpg, dopamine.jpg, phones-school.jpg. Until they are added, a grey placeholder is shown.<br>
   <b>Note:</b> answers to the gaps open when you tap them. The facts are short summaries of the articles, not the full texts.
 </div></div>
 
@@ -514,17 +531,24 @@ function deckMake(rootId,decks){
   return {reset:()=>pick(0),shuffle:()=>{order=shuffle(order);i=0;show()}}
 }
 let DK1,DK2;
-/* ---------- 04 memory (generic) ---------- */
-function memMake(bodyId,pillId,pairs,big){
-  const r=$(bodyId),pill=$(pillId);let open=[],done=0,tries=0,lock=false;const N=pairs.length;
-  const pl=()=>{pill.textContent=done===N?'DONE · '+tries+' tries':done+' / '+N};
-  function tap(b,p){if(lock||b.classList.contains('open')||b.classList.contains('done'))return;b.classList.add('open');open.push(b);
-    if(open.length===2){tries++;const [a,c]=open;if(a.dataset.p===c.dataset.p){a.classList.add('done');c.classList.add('done');open=[];done++;pl()}
-      else{lock=true;a.classList.add('no');c.classList.add('no');setTimeout(()=>{a.classList.remove('open','no');c.classList.remove('open','no');open=[];lock=false},850)}}}
-  return function reset(){r.innerHTML='';open=[];done=0;tries=0;lock=false;
-    const tiles=shuffle(pairs.flatMap((c,i)=>[[i,c[0],''],[i,c[1],'ru']]));
-    const g=el('div','mem'+(big?' bigmem':''));tiles.forEach(t=>{const b=btn(t[2],t[1],()=>tap(b,t[0]));b.dataset.p=t[0];g.appendChild(b)});
-    r.append(g,el('div','note','Find the pairs. Say each word in a sentence!'));pl()}
+/* ---------- 04 match pairs (generic): word on the left, meaning on the right ---------- */
+function memMake(bodyId,pillId,pairs){
+  const r=$(bodyId),pill=$(pillId);const N=pairs.length,R=5;let round,miss;
+  function reset(){round=0;miss=0;draw()}
+  function draw(){r.innerHTML='';
+    if(round*R>=N){pill.textContent='DONE · '+miss+' misses';r.append(el('div','big',N+' / '+N),el('div','note','Choose three pairs and say them in a sentence.'));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',reset));r.appendChild(rw);return}
+    const part=pairs.slice(round*R,round*R+R);pill.textContent='Round '+(round+1)+' / '+Math.ceil(N/R);
+    const L=part.map((p,i)=>[p[0],i]),Rt=shuffle(part.map((p,i)=>[p[1],i]));let sel=null,got=0;
+    const g=el('div','mt'),lc=el('div','mtc'),rc=el('div','mtc');
+    function pick(b,side,id){if(b.classList.contains('done'))return;
+      if(!sel||sel.side===side){if(sel)sel.b.classList.remove('sel');sel={b,side,id};b.classList.add('sel');return}
+      const a=sel;sel=null;a.b.classList.remove('sel');
+      if(a.id===id){a.b.classList.add('done');b.classList.add('done');got++;if(got===R){const nx=btn('btn',(round+1)*R>=N?'See result':'Next round →',()=>{round++;draw()});const rw=el('div','row');rw.append(el('span','grow'),nx);r.appendChild(rw)}}
+      else{miss++;a.b.classList.add('no');b.classList.add('no');setTimeout(()=>{a.b.classList.remove('no');b.classList.remove('no')},600)}}
+    L.forEach(x=>{const b=btn('',x[0],()=>pick(b,'l',x[1]));lc.appendChild(b)});
+    Rt.forEach(x=>{const b=btn('',x[0],()=>pick(b,'r',x[1]));rc.appendChild(b)});
+    g.append(lc,rc);r.append(g,el('div','note','Tap a word, then its pair.'))}
+  return reset;
 }
 let MEMA,MEMB;
 /* ---------- 05 forbidden word ---------- */
@@ -541,7 +565,15 @@ function fwRender(){const r=$('fw');r.innerHTML='';
 function rdMake(bodyId,btnId,cfg){
   const r=$(bodyId),b=$(btnId);let shown=false;
   function render(){r.innerHTML='';b.textContent=shown?'Hide the facts':'Show the facts';
-    if(!shown){const c=el('div','cover');c.append(el('div','q','<span style="width:100%;text-align:center">'+cfg.cover+'</span>'),el('div','note',cfg.predict),btn('btn','Show the facts',()=>{shown=true;render()}));r.appendChild(c);return}
+    if(!shown){
+      const c=el('div','predict');
+      const ph=el('div','phwrap');const img=el('img');img.src='assets/lesson6/'+cfg.img;img.alt=cfg.alt;img.onerror=()=>ph.classList.add('nophoto');
+      const grid=el('div','phgrid');const tiles=[0,1,2,3].map(()=>el('i'));tiles.forEach(t=>grid.appendChild(t));
+      ph.append(img,grid,el('div','phmsg','Photo for the prediction'));
+      const order=shuffle([0,1,2,3]);let k=0;
+      const rv=btn('btn light','Reveal a part',()=>{if(k<4){tiles[order[k]].classList.add('open');k++}rv.textContent=k<4?'Reveal a part ('+k+'/4)':'The whole photo';rv.disabled=k>=4});
+      const rw=el('div','row');rw.append(rv,el('span','grow'),btn('btn','Show the facts',()=>{shown=true;render()}));
+      c.append(el('div','lab','PREDICT FROM THE PHOTO'),ph,el('div','phq',cfg.predict),rw);r.appendChild(c);return}
     const l=el('div','rdlist reading');cfg.facts.forEach(f=>l.appendChild(el('p','',f)));l.appendChild(el('p','src',cfg.src));r.appendChild(l)}
   b.onclick=()=>{shown=!shown;render()};
   return {reset:()=>{shown=false;render()}};
@@ -581,7 +613,7 @@ function mcMake(bodyId,pillId,items,endNote){
 }
 
 /* ---------- facts about the three articles ---------- */
-const RD1={cover:'Seoul holds a contest where the winner is the person who does nothing.',predict:'Predict: how can anyone win by doing nothing? What are the rules?',
+const RD1={img:'space-out.jpg',alt:'People sitting still in a Seoul square',predict:'What can you see? Who are these people and what are they doing? Predict what the event is and what the rules are.',
  facts:['The Space-Out Competition is held in Seoul. This was its 11th year: 126 people in 80 teams took part, and more than 4,500 teams had applied.',
  'Participants (soldiers, train operators, swimmers…) zone out for 90 minutes after a short warm-up. They must stay still and not fall asleep.',
  'A first warning is for breaking focus; a second warning means disqualification. This year only one person got a warning.',
@@ -589,7 +621,7 @@ const RD1={cover:'Seoul holds a contest where the winner is the person who does 
  'Three members of the Seoul punk band Pogo Attack won.',
  'The founder, the artist Woopsyang, felt burned out and anxious about always being busy. Her dream is a World Space-Out Day.'],
  src:'Based on ESL News Stories, 22 July 2025 (Korea Times, New York Times). A short summary.'};
-const RD2={cover:'In Korea you can “order” food online — and nothing ever arrives.',predict:'Predict: why would anyone use a shopping site where nothing is delivered?',
+const RD2={img:'dopamine.jpg',alt:'A young woman looking at a food delivery app at night',predict:'What is she doing, and how does she feel? Predict why she might open a food app late at night and never order.',
  facts:['“Dopamine sites” are a new online trend in South Korea. They copy real shopping and delivery apps, but nothing is bought and nothing is delivered.',
  'Users browse fake products or menus, read reviews, customize an order and add items to the cart.',
  'On some sites a virtual courier moves towards your address — but the order never arrives.',
@@ -597,7 +629,7 @@ const RD2={cover:'In Korea you can “order” food online — and nothing ever 
  'Psychologists suggest that preparing an order gives some of the excitement of buying, so it may satisfy the urge without spending.',
  'Supporters: entertainment, relief from boredom, less unnecessary spending. Critics: users still repeat the behaviour, so the impulse may only get a new digital form.'],
  src:'Based on ESL News Stories, 27 July 2026 (Mashable). A short summary.'};
-const RD3={cover:'Korea has banned phones in classrooms. What about social media?',predict:'Predict: what rules for teenagers and phones exist in your country?',
+const RD3={img:'phones-school.jpg',alt:'A Korean classroom with a box for phones',predict:'What is unusual in this classroom? Predict what rule exists here and why. What rules exist in your country?',
  facts:['In August 2025 the National Assembly passed a law banning phones during lessons in elementary, middle and high schools. It started on 1 March 2026.',
  'Exceptions: education or emergencies, if teachers or school officials approve. Enforcement has been uneven; Gyeonggi plans limits in breaks and at lunchtime too.',
  'Government data: 43% of Koreans aged 10–19 are at risk of smartphone overdependence. Teachers’ union survey (April 2026): 49.2% of 4th–6th graders use phones for over two hours a day after school.',
@@ -735,7 +767,7 @@ function resetAll(){
   ivI=0;ivRender();segTabs('wTabs',['Quick Fire','Mystery Box'],wRender);
   DK1=deckMake('deck1',[['Money',MONEYC],['Social media',SOCC]]);DK2=deckMake('deck2',[['Korea',CARDS]]);
   MEMA=memMake('mem','memPill',MONEYC.slice(0,10).map(c=>[c[0],c[3]]));MEMB=memMake('mem','memPill',SOCC.slice(0,10).map(c=>[c[0],c[3]]));
-  segTabs('mTabs',['Money memory','Social media memory','Odd one out'],mRender);fwReset();
+  segTabs('mTabs',['Money match','Social media match','Odd one out'],mRender);fwReset();
   ruleOn=false;$('ruleBtn').textContent='Rule';fipiRender();segTabs('gTabs',['Grammar doctor','Speed Game'],gRender);
   RDA.reset();LV1();RDB.reset();MC2();RDC.reset();segTabs('rTabs',['Rule or proposal','Numbers'],rRender);
   auReset();whReset();jpReset();erReset();$('tnPanel').hidden=true;
@@ -746,7 +778,7 @@ RDA=rdMake('rd1','rd1Btn',RD1);RDB=rdMake('rd2','rd2Btn',RD2);RDC=rdMake('rd3','
 LV1=chMake('lv1','lv1Pill',LV1D,['TRUE','FALSE'],{lives:true,hint:'Wrong stone = lava! 3 lives.',good:'You crossed the lava! Now correct the false sentences aloud.',bad:'You fell into the lava! Read the facts again and try once more.'});
 MC2=mcMake('mc2','mc2Pill',MC2D,'Retell the article in your own words. Use three facts and two new words.');
 LVR=chMake('rbody','rPill',RULED,['ALREADY A RULE','ONLY A PROPOSAL'],{lives:false,hint:'Think: is it a law in Korea now?',good:'Which rule would you add for your country? Say it with “should”.'});
-MEMN=memMake('rbody','rPill',NUMD,true);
+MEMN=memMake('rbody','rPill',NUMD);
 resetAll();go(0);
 </script>
 <script src="../card-audio.js?v=1"></script>
