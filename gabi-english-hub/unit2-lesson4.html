@@ -14,6 +14,7 @@
 .bombsvg path,.bombsvg rect,.bombsvg .spark,.bombsvg circle:nth-of-type(2){display:none}
 .bombsvg circle:nth-of-type(1){fill:#169be5}
 .bomb-box.hot .bombsvg circle:nth-of-type(1){fill:#e2574c}
+ol.hunt{padding-left:2.1em}
 /* four tense columns: two rows of two */
 .scols:has(> :nth-child(4)){grid-template-columns:repeat(2,minmax(0,1fr))}
 </style>
@@ -22,6 +23,7 @@
 <script src="skills.js?v=20261012e"></script>
 <script>
 /* Module 2 (Law and order), lesson 4: Surprising true crimes (Gateway B1, Unit 2, pages 19–21). Two activities per screen:
+   0 homework review: error hunter with Gabi's own sentences + Speed Game on verb patterns
    1 Speed Game homework check (15 s) + match titles -> 2 the stories from memory + prediction -> 3 words from the stories: flashcards + match
    -> 4 critical thinkers + error hunter -> 5 past simple: find the form + -ed sounds -> 6 all four past tenses: floor is lava + sort -> 7 predict + Playing basketball is not a crime!
    -> 7 questions about the text + ask and answer -> 8 phrasal verbs: match + floor is lava -> 9 use it, don't lose it. */
@@ -47,6 +49,34 @@ const PAST=COURT('Past tenses','GRAMMAR')+`<ul class="say">
 <p class="words"><b>Clues:</b> when / while → continuous · before / after / already / by the time → perfect · for + time before → perfect continuous</p>`;
 const TITLES=['Eating the evidence','Where did the criminals go?!','A criminal pastime'];
 Lesson.boot({kicker:'Module 2 · Lesson 4',steps:[
+{stage:'Check-in',title:'Your homework: exercise 3',hint:'These sentences are from your homework. Find the mistake in each one. <small>Then the Speed Game: 15 seconds for each verb pattern.</small>',cols:'1.15fr 1fr',
+ acts:[
+ {type:'hunt',title:'Error hunter · your homework',tip:'Click the word with the mistake.',items:[
+  {s:'A woman’s stolen a police officer’s chips.',bad:1,fix:'A woman stole …',why:'one finished event in the past: past simple'},
+  {s:'He explained her that it was theft.',bad:2,fix:'explained to her',why:'explain something to someone'},
+  {s:'He told to her that it was theft.',bad:2,fix:'told her',why:'tell someone something: no to'},
+  {s:'He arrested the woman and charged her for theft.',bad:7,fix:'with theft',why:'charge someone with a crime'},
+  {s:'The officer arrested her of theft.',bad:4,fix:'for theft',why:'arrest someone for a crime'},
+  {s:'The police was searching for the two men.',bad:2,fix:'were',why:'the police + plural verb'},
+  {s:'The artist created an art called Reading Work Piece.',bad:4,fix:'a work of art',why:'not “an art”'},
+  {s:'It was destroyed by a woman that who thought it was a crossword.',bad:6,fix:'by a woman who …',why:'that or who, not both'},
+  {s:'She wrote answers on the arts.',bad:5,fix:'the artwork',why:'one work of art = the artwork'},
+  {s:'I didn’t get the question and I can’t sorry.',bad:7,fix:'… question. Sorry!',why:'I didn’t understand the question. Sorry!'}]},
+ {type:'bomb',secs:15,label:'Verb patterns',title:'Speed Game · verb patterns and crime words',items:[
+  {sec:'Verb patterns',q:'The officer explained ___ that it was theft.',o:['her','to her','for her'],a:'to her',why:'explain something to someone'},
+  {sec:'Verb patterns',q:'He told ___ to stop.',o:['to her','for her','her'],a:'her',why:'tell someone'},
+  {sec:'Verb patterns',q:'They charged the two men ___ burglary.',o:['with','for','of'],a:'with',why:'charge someone with a crime'},
+  {sec:'Verb patterns',q:'The police arrested her ___ theft.',o:['with','of','for'],a:'for',why:'arrest someone for a crime'},
+  {sec:'Verb patterns',q:'The police ___ searching for the men.',o:['was','were','is'],a:'were',why:'the police = they'},
+  {sec:'Crime words',q:'A woman ___ three chips.',o:['stole','robbed','charged'],a:'stole',why:'steal a thing'},
+  {sec:'Crime words',q:'Two men ___ a bank.',o:['stole','arrested','robbed'],a:'robbed',why:'rob a place or a person'},
+  {sec:'Crime words',q:'The officer ___ the woman and took her to the police station.',o:['arrested','charged','robbed'],a:'arrested'},
+  {sec:'Crime words',q:'At the police station they ___ her with theft.',o:['stole','charged','arrested'],a:'charged'},
+  {sec:'Crime words',q:'The police think he did it, but they are not sure. He is a ___.',o:['criminal','witness','suspect'],a:'suspect'},
+  {sec:'Crime words',q:'A person who really did the crime is a ___.',o:['criminal','suspect','victim'],a:'criminal'},
+  {sec:'Accuracy',q:'“Reading Work Piece” is a ___.',o:['art','work of art','arts'],a:'work of art'},
+  {sec:'Accuracy',q:'… by a woman ___ thought it was a crossword.',o:['that who','what','who'],a:'who'},
+  {sec:'Accuracy',q:'I didn’t ___ the question. Sorry!',o:['understand','understood','can'],a:'understand',why:'didn’t + base verb'}]}]},
 {stage:'Check-in',title:'Speed Game',hint:'Homework, page 19. <small>15 seconds for each question. Then match each title to its story.</small>',cols:'1.25fr 1fr',
  acts:[
  {type:'bomb',secs:15,label:'Homework check',title:'Speed Game · true crime stories',items:[
