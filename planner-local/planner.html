@@ -104,20 +104,18 @@ textarea{width:100%;min-height:300px;border:1px solid var(--line);border-radius:
         <div class="filterbox"><label>Финансы за месяц</label><input id="payFilterMonth" type="month" onchange="renderPayments()"></div>
       </div>
       <div class="summary-grid">
-        <div class="summary-card"><div class="k">План на месяц</div><div class="v" id="sumPlanMonth">0 ₽</div></div>
         <div class="summary-card"><div class="k">Фактически получено</div><div class="v" id="sumPaidMonth">0 ₽</div></div>
-        <div class="summary-card"><div class="k">Осталось получить</div><div class="v" id="sumRemainMonth">0 ₽</div></div>
         <div class="summary-card"><div class="k">Получено всего</div><div class="v" id="sumPaidAll">0 ₽</div></div>
       </div>
 
       <div class="scroll">
         <table class="finance-table">
-          <thead><tr><th>Ученик</th><th>План на месяц</th><th>Фактически оплачено</th><th>Цена за 1 занятие</th><th>Осталось</th></tr></thead>
+          <thead><tr><th>Ученик</th><th>Цена за 1 занятие</th><th>Фактически оплачено</th></tr></thead>
           <tbody id="financeByStudent"></tbody>
         </table>
       </div>
 
-      <div class="notice" style="margin-top:10px">Каждый ученик показывается один раз. План, фактическую оплату и цену за 1 занятие вводите прямо в строке ученика. Итоги пересчитываются автоматически и сохраняются в файл на вашем компьютере.</div>
+      <div class="notice" style="margin-top:10px">Каждый ученик показывается один раз. Цену за занятие и фактическую оплату вводите прямо в строке ученика. Итоги пересчитываются автоматически и сохраняются в файл на вашем компьютере.</div>
     </div>
   </section>
   <section id="attendance" class="panel"><div class="notice">Посещаемость сохраняется вместе с остальными данными — в файл планнера.</div></section>
@@ -367,26 +365,20 @@ function renderPayments(){
 
   const filterEl=document.getElementById('payFilterMonth');
   const filterMonth=filterEl?filterEl.value:'';
-  const planMonth=students.reduce((a,st)=>a+getPlan(st.id,filterMonth),0);
   const paidMonth=students.reduce((a,st)=>a+getActual(st.id,filterMonth),0);
-  const remainMonth=Math.max(0,planMonth-paidMonth);
   const paidAll=Object.values(actualPayments).reduce((a,v)=>a+money(v),0);
 
   const setText=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=fmtMoney(v)};
-  setText('sumPlanMonth',planMonth);
   setText('sumPaidMonth',paidMonth);
-  setText('sumRemainMonth',remainMonth);
   setText('sumPaidAll',paidAll);
 
   const byStudent=document.getElementById('financeByStudent');
   if(byStudent){
     const rows=students.map(st=>{
-      const plan=getPlan(st.id,filterMonth);
       const paid=getActual(st.id,filterMonth);
-      const balance=Math.max(0,plan-paid);
-      return {st,plan,paid,balance};
+      return {st,paid};
     });
-    byStudent.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x.st.name)+'</b></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(x.plan||'')+'" placeholder="0" onchange="setPlan(\''+esc(x.st.id)+'\',this.value)"></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(x.paid||'')+'" placeholder="0" onchange="setActual(\''+esc(x.st.id)+'\',this.value)"></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(money(x.st.price)||'')+'" placeholder="0" onchange="setStudentPrice(\''+esc(x.st.id)+'\',this.value)"></td><td>'+fmtMoney(x.balance)+'</td></tr>').join('')+'<tr class="total-row"><td>ИТОГО</td><td>'+fmtMoney(planMonth)+'</td><td>'+fmtMoney(paidMonth)+'</td><td>—</td><td>'+fmtMoney(remainMonth)+'</td></tr>';
+    byStudent.innerHTML=rows.map(x=>'<tr><td><b>'+esc(x.st.name)+'</b></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(money(x.st.price)||'')+'" placeholder="0" onchange="setStudentPrice(\''+esc(x.st.id)+'\',this.value)"></td><td><input class="plan-input" type="number" min="0" step="1" value="'+(x.paid||'')+'" placeholder="0" onchange="setActual(\''+esc(x.st.id)+'\',this.value)"></td></tr>').join('')+'<tr class="total-row"><td>ИТОГО</td><td>—</td><td>'+fmtMoney(paidMonth)+'</td></tr>';
   }
 }
 
