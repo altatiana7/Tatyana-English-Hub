@@ -55,6 +55,8 @@ ol.hunt{padding-left:2.1em}
 .cast .chips{margin:0}
 .cbody{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:8px}
 .cast .nav3{flex:none}
+.chead{display:flex;align-items:center;justify-content:space-between;gap:8px}.chead .ghost{padding:6px 12px;font-size:15px}
+.cstage .pl .eq{display:none}
 .cstage .row.nav3 button{padding:8px 14px}
 @media(max-height:640px){
  .act.panel .tcard{padding:6px 12px}.act.panel .tcard .q{font-size:18px}.act.panel .tcard .sub{font-size:14px}
@@ -64,6 +66,8 @@ ol.hunt{padding-left:2.1em}
  .act.panel .cloze select{font-size:15px;padding:1px 4px}
  .act.panel .scol{min-height:44px}
  .act.panel .match button{font-size:14.5px;padding:2px 9px;min-height:0;line-height:1.2}.act.panel .match>div{gap:3px}
+ .cp img{height:58px}.cp span{padding:2px 8px 3px}.cp small{font-size:12.5px}
+ .cstage{padding:6px 12px;gap:6px}.cbody{gap:6px}.cstage .pl{padding:3px 10px;margin:0;flex:none}.cstage.keyopen .pl{display:none}.cstage .cq{font-size:20px}.ckey li{font-size:15px;padding:4px 8px}
  .act.panel .pick{gap:5px}.act.panel .pick button{font-size:15px;padding:4px 11px}
 }
 </style>
@@ -101,20 +105,22 @@ Lesson.ACT.cast={
   let stage;
   if(s.who==null){stage=`<div class="cstage idle">Tap a witness and listen to his statement.<br>Then tap the officer.</div>`}
   else if(P[s.who].officer){const n=a.qs.length,q=a.qs[s.qi];
-   stage=`<div class="cstage cop"><div class="cbody"><span class="tag">Officer · question ${s.qi+1} of ${n}</span><p class="cq">${E(q.q)}</p>
-    ${s.key?`<ul class="ckey"><li><b>Alex</b>${E(q.alex)}</li><li><b>Brian</b>${E(q.brian)}</li></ul>`:`<div class="chips"><b class="lab">Tap each phrase he uses</b>${a.chips.map((c,k)=>`<button data-cused="${k}" class="${s.used[k]?'on':''}">${E(c)}</button>`).join('')}</div>`}</div>
+   stage=`<div class="cstage cop${s.key?' keyopen':''}"><div class="cbody"><div class="chead"><span class="tag">Officer · question ${s.qi+1} of ${n}</span><button class="ghost" data-cqtext>Teacher: show the question</button></div>${Lesson.player({src:q.audio,label:'Police officer'},'q'+s.qi,true)}
+    <p class="cq" id="cq" ${s.qtext?'':'hidden'}>${E(q.q)}</p>
+    ${s.key?`<ul class="ckey">${q.note?`<li><b>Idea</b>${E(q.note)}</li>`:`<li><b>Alex</b>${E(q.alex)}</li><li><b>Ben</b>${E(q.ben)}</li>`}</ul>`:`<div class="chips"><b class="lab">Tap each phrase he uses</b>${a.chips.map((c,k)=>`<button data-cused="${k}" class="${s.used[k]?'on':''}">${E(c)}</button>`).join('')}</div>`}</div>
     <div class="row nav3"><button class="ghost" data-cback ${s.qi===0?'disabled':''}>Back</button><button class="ghost" data-ckey>${s.key?'Hide the key':'Teacher: key'}</button><button class="main" data-cnext>${s.qi===n-1?'First question':'Next question'}</button></div></div>`}
   else{const p=P[s.who];
    stage=`<div class="cstage"><span class="tag">${E(p.name)} · witness statement</span>${Lesson.player({src:p.audio,label:p.name+(p.role.indexOf('15')>-1?', 15':'')},'w'+s.who,true)}
     <div class="row"><button class="ghost" data-ctext>Teacher: show the words</button></div><div class="ctext" id="ctext" ${s.text?'':'hidden'}>${E(p.text)}</div></div>`}
   return `<div class="cast"><div class="cplist">${cards}</div>${stage}</div>`},
  click(a,s,d){
-  if(d.who!==undefined){Lesson.hush();s.who=+d.who;s.heard[s.who]=true;s.text=false;return Lesson.redraw()}
+  if(d.who!==undefined){Lesson.hush();s.who=+d.who;s.heard[s.who]=true;s.text=false;s.qtext=false;return Lesson.redraw()}
+  if(d.cqtext!==undefined){s.qtext=!s.qtext;const t=document.getElementById('cq');if(t)t.hidden=!s.qtext;return}
   if(d.ctext!==undefined){s.text=!s.text;const t=document.getElementById('ctext');if(t)t.hidden=!s.text;return}
   if(d.cused!==undefined){s.used[+d.cused]=!s.used[+d.cused];return Lesson.redraw()}
   if(d.ckey!==undefined){s.key=!s.key;return Lesson.redraw()}
-  if(d.cback!==undefined&&s.qi>0){s.qi--;s.key=false;return Lesson.redraw()}
-  if(d.cnext!==undefined){s.qi=(s.qi+1)%a.qs.length;s.key=false;return Lesson.redraw()}}};
+  if(d.cback!==undefined&&s.qi>0){Lesson.hush();s.qi--;s.key=false;s.qtext=false;return Lesson.redraw()}
+  if(d.cnext!==undefined){Lesson.hush();s.qi=(s.qi+1)%a.qs.length;s.key=false;s.qtext=false;return Lesson.redraw()}}};
 Lesson.boot({kicker:'Module 2 · Lesson 4',steps:[
 {stage:'Check-in',title:'Your homework: exercise 3',hint:'These sentences are from your homework. Find the mistake in each one. <small>Then the Speed Game: 15 seconds for each verb pattern.</small>',cols:'1.15fr 1fr',
  acts:[
@@ -239,7 +245,7 @@ Lesson.boot({kicker:'Module 2 · Lesson 4',steps:[
   {pre:'a video of the incident and the kids all',opts:['became','becomed','become'],ans:['became'],ph:'(m) become'},
   {pre:'famous! Shaquille O’Neal',opts:['met','meeted','meet'],ans:['met'],ph:'(n) meet'},
   {pre:'them personally! Now they don’t play in the street. The police officer',opts:['helped','helps','did helped'],ans:['helped'],ph:'(o) help'}]}]},
-{stage:'Speak',title:'Question forms and the police station',hint:'Look at the photos: who are they? What do you think happened? <small>Choose the right question form. Then the officer interviews the two witnesses.</small>',cols:'1fr 1.3fr',
+{stage:'Speak',title:'Question forms and the police station',hint:'Look at the photos: who are they? What do you think happened? <small>Choose the right question form. Then the officer interviews the two witnesses: listen to his questions.</small>',cols:'1fr 1.3fr',
  help:{label:'Past simple',html:RULE},
  acts:[
  {type:'quiz',title:'Exercise 4 · make the questions',label:'Question',cols:3,shuffle:false,items:[
@@ -253,22 +259,28 @@ Lesson.boot({kicker:'Module 2 · Lesson 4',steps:[
   {q:'Which famous person ___ (meet) the kids?',o:['did met','met','did meet'],a:'met',why:'the question word is the subject: no did'},
   {q:'What ___ the officer ___ (tell) the kids?',o:['did … tell','was … told','did … told'],a:'did … tell',why:'did + base verb'},
   {q:'How long ___ the officer ___ (play) with the kids?',o:['was … played','did … played','did … play'],a:'did … play',why:'did + base verb'}]},
- {type:'cast',title:'Police station · two witnesses',chips:['Alex said …','Brian said …','but','while / when','He wasn’t sure','He was sure'],
+ {type:'cast',title:'Police station · two witnesses',chips:['Alex said …','Ben said …','but','while / when','He wasn’t sure','He was sure'],
   people:[
    {name:'Police officer',role:'asks the questions',img:'assets/witness/officer.jpg',officer:1},
    {name:'Alex',role:'witness, 15',img:'assets/witness/alex.jpg',audio:'assets/witness/alex.mp3',text:'I was walking home from football practice on Friday evening. I think it was about 9 o’clock, but I’m not completely sure. When I was passing the petrol station, I heard someone shouting. I saw a dark car parked near the shop. A man in a grey hoodie was running towards the car. I think he was carrying a bag, but I couldn’t see it clearly. Someone was shouting inside the shop, but I didn’t see who it was. I heard a loud noise, but I don’t remember hearing an alarm. I was looking for my phone when the car drove away. I didn’t see the driver’s face, and I honestly don’t remember anything else.'},
-   {name:'Brian',role:'witness',img:'assets/witness/brian.jpg',audio:'assets/witness/brian.mp3',text:'I was buying a drink at the petrol station at exactly 9.15. I remember the time because I was checking my phone. A dark blue car stopped outside, and two men got out. One was wearing a grey hoodie, and the other had a black jacket. I was standing near the drinks fridge when they entered. The man in the grey hoodie shouted at the cashier and demanded money. The other man was holding a black backpack. When the cashier pressed a button, the alarm went off. Both men ran outside, got into the car and drove away. I clearly remember the driver’s face, and I’m sure the car was a blue Ford.'}],
+   {name:'Ben',role:'witness',img:'assets/witness/ben.jpg',audio:'assets/witness/ben.mp3',text:'I was buying a drink at the petrol station at exactly 9.15. I remember the time because I was checking my phone. A dark blue car stopped outside, and two men got out. One was wearing a grey hoodie, and the other had a black jacket. I was standing near the drinks fridge when they entered. The man in the grey hoodie shouted at the cashier and demanded money. The other man was holding a black backpack. When the cashier pressed a button, the alarm went off. Both men ran outside, got into the car and drove away. I clearly remember the driver’s face, and I’m sure the car was a blue Ford.'}],
   qs:[
-   {q:'What time was it? Were the boys sure?',alex:'About 9 o’clock, but he wasn’t completely sure.',brian:'Exactly 9.15. He was checking his phone.'},
-   {q:'Where was each boy when it happened?',alex:'Outside: walking home from football practice, passing the petrol station.',brian:'Inside the shop: buying a drink, standing near the drinks fridge.'},
-   {q:'How many men did they see?',alex:'One man in a grey hoodie, running towards a dark car.',brian:'Two men got out of a dark blue car: grey hoodie and black jacket.'},
-   {q:'What was the man in the grey hoodie doing?',alex:'Running towards the car.',brian:'Shouting at the cashier and demanding money.'},
-   {q:'What did the boys see in the men’s hands?',alex:'Maybe a bag, but he couldn’t see it clearly.',brian:'The other man was holding a black backpack.'},
-   {q:'Did the boys hear an alarm?',alex:'A loud noise, but he doesn’t remember an alarm.',brian:'Yes: the alarm went off when the cashier pressed a button.'},
-   {q:'What was Alex doing when the car drove away?',alex:'He was looking for his phone.',brian:'(Brian was inside: both men ran out, got into the car and drove away.)'},
-   {q:'Who saw the driver’s face?',alex:'He didn’t see it.',brian:'He clearly remembers it.'},
-   {q:'What did the boys say about the car?',alex:'A dark car, parked near the shop.',brian:'A dark blue Ford. He is sure.'},
-   {q:'Whose statement is more reliable, Alex’s or Brian’s? Why?',alex:'Not sure about the time, didn’t see clearly, was looking for his phone.',brian:'Exact time, many details, was inside, sure about the car. (Accept any reason with “because”.)'}]}]},
+   {q:'What were Alex and Ben doing when the robbery happened?',audio:'assets/witness/q01.mp3',alex:'Walking home from football practice, passing the petrol station.',ben:'Buying a drink at the petrol station, checking his phone.'},
+   {q:'Where was each teenager when the crime took place?',audio:'assets/witness/q02.mp3',alex:'Outside, near the petrol station and the shop.',ben:'Inside the shop, near the drinks fridge.'},
+   {q:'What details did both boys mention?',audio:'assets/witness/q03.mp3',alex:'A man in a grey hoodie, a dark car, the car driving away.',ben:'A man in a grey hoodie, a dark blue car, the car driving away.'},
+   {q:'What did Alex remember about the car?',audio:'assets/witness/q04.mp3',alex:'A dark car parked near the shop. It drove away.',ben:'(Ben: a dark blue Ford.)'},
+   {q:'What did Ben say about the two men?',audio:'assets/witness/q05.mp3',alex:'(Alex saw only one man.)',ben:'One in a grey hoodie shouted at the cashier and demanded money. The other had a black jacket and a black backpack.'},
+   {q:'What was happening when the alarm went off?',audio:'assets/witness/q06.mp3',alex:'He heard a loud noise but doesn’t remember an alarm.',ben:'The cashier pressed a button. Both men ran outside and drove away.'},
+   {q:'Which details did Alex seem unsure about?',audio:'assets/witness/q07.mp3',alex:'The time (about 9), the bag (“I think”), who was shouting, the alarm.',ben:'(Ben was sure about the time.)'},
+   {q:'What specific details did Ben remember?',audio:'assets/witness/q08.mp3',alex:'—',ben:'Exactly 9.15, a dark blue Ford, grey hoodie and black jacket, a black backpack, the driver’s face.'},
+   {q:'Did you notice any contradictions between their stories?',audio:'assets/witness/q09.mp3',alex:'One man, no alarm, a dark car.',ben:'Two men, an alarm, a dark blue Ford.'},
+   {q:'Why do you think Alex couldn’t remember everything?',audio:'assets/witness/q10.mp3',note:'Open question. He was outside, it was dark, he was looking for his phone, he wasn’t sure.'},
+   {q:'Do you think Ben really saw everything he described? Why?',audio:'assets/witness/q11.mp3',note:'Open question. He was inside and checked the time on his phone, but maybe he is too sure.'},
+   {q:'Which teenager seemed more nervous or uncertain?',audio:'assets/witness/q12.mp3',note:'Open question. Alex: “I think …”, “I’m not completely sure”, “I don’t remember”.'},
+   {q:'Does remembering more details always mean someone is telling the truth?',audio:'assets/witness/q13.mp3',note:'Open question. Not always: a person can remember wrongly, or lie.'},
+   {q:'Who do you think is the more reliable witness? Give three reasons.',audio:'assets/witness/q14.mp3',note:'Open question. Ben: exact time, many details, inside the shop. Alex: honest about what he doesn’t know.'},
+   {q:'If you could ask each teenager one more question, what would you ask?',audio:'assets/witness/q15.mp3',note:'Open question, e.g. Alex: Where exactly were you? Ben: Why are you so sure about the car?'}
+  ]}]},
 {stage:'Words',title:'Phrasal verbs: investigating and finding',hint:'Match the phrasal verbs to the definitions. <small>Then the floor is lava: three wrong answers and the game is over.</small>',cols:'1.1fr 1fr',
  acts:[
  {type:'match',title:'Phrasal verbs · exercise 1',tip:'Tap a phrasal verb, then its meaning.',items:[
