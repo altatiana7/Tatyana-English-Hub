@@ -445,7 +445,7 @@ body{background:#f3f1f7}
   1 Warm-up 6 min · 2 Recall words (money, social media) 8 min · 3 Recall grammar (inversion, passive reporting, conditionals) 8 min · 4 Space-Out contest 10 min · 5 Dopamine sites 8 min · 6 Teenagers, phones and the law 10 min · 7 Debate 10 min · 8 Revision games — reserve or next lesson.<br>
   <b>Sources:</b> ESL News Stories, “Seoul Space-Out Helps People Relax”, 22 July 2025 (<a href="https://eslnewsstories.com/articles/2025-07-22-seoul-space-out-competition-helps-people-relax/" target="_blank" rel="noopener">link</a>); ESL News Stories, “Dopamine Sites: Shopping Without Spending”, 27 July 2026 (<a href="https://eslnewsstories.com/articles/2026-07-27-dopamine-sites-shopping-without-spending/" target="_blank" rel="noopener">link</a>); Asia News Network, 28 Aug 2025, law on phones in classrooms (<a href="https://asianews.network/?p=223394" target="_blank" rel="noopener">link</a>); Korea Herald, May 2026, children and smartphone dependence (<a href="https://www.koreaherald.com/article/10731389" target="_blank" rel="noopener">link</a>); Korea Times, 1 July 2026, “Time to rein in youth social media use” (<a href="https://www.koreatimes.co.kr/amp/opinion/20260701/time-to-rein-in-youth-social-media-use" target="_blank" rel="noopener">link</a>).<br>
   <b>Revision:</b> Jeopardy (Kate vs Teacher) and Escape Room — code 2026.<br>
-  <b>Photos for the predictions</b> (folder assets/lesson6): space-out.jpg, dopamine.jpg, phones-school.jpg. Until they are added, a grey placeholder is shown.<br>
+  <b>Photos for the predictions</b> are in assets/lesson6 (space-out.jpg, dopamine.jpg, phones-school.jpg). They are AI-generated illustrations, not news photos.<br>
   <b>Note:</b> answers to the gaps open when you tap them. The facts are short summaries of the articles, not the full texts.
 </div></div>
 
@@ -567,7 +567,7 @@ function rdMake(bodyId,btnId,cfg){
   function render(){r.innerHTML='';b.textContent=shown?'Hide the facts':'Show the facts';
     if(!shown){
       const c=el('div','predict');
-      const ph=el('div','phwrap');const img=el('img');img.src='assets/lesson6/'+cfg.img;img.alt=cfg.alt;img.onerror=()=>ph.classList.add('nophoto');
+      const ph=el('div','phwrap');const img=el('img');img.src='assets/lesson6/'+cfg.img;img.alt=cfg.alt;img.style.objectPosition=cfg.pos||'50% 50%';img.onerror=()=>ph.classList.add('nophoto');
       const grid=el('div','phgrid');const tiles=[0,1,2,3].map(()=>el('i'));tiles.forEach(t=>grid.appendChild(t));
       ph.append(img,grid,el('div','phmsg','Photo for the prediction'));
       const order=shuffle([0,1,2,3]);let k=0;
@@ -621,7 +621,7 @@ const RD1={img:'space-out.jpg',alt:'People sitting still in a Seoul square',pred
  'Three members of the Seoul punk band Pogo Attack won.',
  'The founder, the artist Woopsyang, felt burned out and anxious about always being busy. Her dream is a World Space-Out Day.'],
  src:'Based on ESL News Stories, 22 July 2025 (Korea Times, New York Times). A short summary.'};
-const RD2={img:'dopamine.jpg',alt:'A young woman looking at a food delivery app at night',predict:'What is she doing, and how does she feel? Predict why she might open a food app late at night and never order.',
+const RD2={img:'dopamine.jpg',pos:'50% 62%',alt:'A young woman looking at a food delivery app at night',predict:'What is she doing, and how does she feel? Predict why she might open a food app late at night and never order.',
  facts:['“Dopamine sites” are a new online trend in South Korea. They copy real shopping and delivery apps, but nothing is bought and nothing is delivered.',
  'Users browse fake products or menus, read reviews, customize an order and add items to the cart.',
  'On some sites a virtual courier moves towards your address — but the order never arrives.',
