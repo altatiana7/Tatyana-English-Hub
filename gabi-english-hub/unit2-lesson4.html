@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Module 2 · Lesson 4 · Surprising true crimes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="skills.css?v=20261015big">
+<link rel="stylesheet" href="case.css?v=20261015big">
+<style>
+/* Speed Game: the 15-second check uses the timed engine, shown as a round timer instead of a bomb */
+.bombsvg path,.bombsvg rect,.bombsvg .spark,.bombsvg circle:nth-of-type(2){display:none}
+.bombsvg circle:nth-of-type(1){fill:#169be5}
+.bomb-box.hot .bombsvg circle:nth-of-type(1){fill:#e2574c}
+</style>
+</head>
+<body>
+<script src="skills.js?v=20261012e"></script>
+<script>
+/* Module 2 (Law and order), lesson 4: Surprising true crimes (Gateway B1, Unit 2, pages 19–21). Two activities per screen:
+   1 Speed Game homework check (15 s) + match titles -> 2 the stories from memory + prediction -> 3 words from the stories: flashcards + match
+   -> 4 critical thinkers + error hunter -> 5 past simple: find the form + -ed sounds -> 6 predict + Playing basketball is not a crime!
+   -> 7 questions about the text + ask and answer -> 8 phrasal verbs: match + floor is lava -> 9 use it, don't lose it. */
+const COURT=(t,s)=>`<div class="court"><h4>${t}</h4><span class="stamp">${s||'CASE FILE'}</span></div>`;
+const RULE=COURT('Past simple','GRAMMAR')+`<ul class="say">
+<li><b>+</b> regular: arrest → <b>arrested</b> · irregular: take → <b>took</b></li>
+<li><b>−</b> She <b>didn’t pay</b> any attention. <small>(didn’t + base verb)</small></li>
+<li><b>?</b> How <b>did</b> this <b>happen</b>? <small>(did + base verb)</small></li>
+<li><b>be:</b> I / he / she / it <b>was</b> · you / we / they <b>were</b></li>
+<li><b>be −</b> There <b>wasn’t</b> any evidence. · They <b>weren’t</b> happy.</li>
+<li><b>be ?</b> <b>Were</b> the kids happy? <small>(no did with be)</small></li></ul>
+<p class="words"><b>Watch out:</b> after <b>did / didn’t</b> the verb has no -ed: <s>didn’t paid</s> → didn’t <b>pay</b>.</p>`;
+const ED=COURT('How do we say -ed?','SOUNDS')+`<ul class="say">
+<li><b>/t/</b> after p, k, s, sh, ch: like<b>d</b>, watch<b>ed</b></li>
+<li><b>/ɪd/</b> after t and d: want<b>ed</b>, need<b>ed</b></li>
+<li><b>/d/</b> after all other sounds: arriv<b>ed</b>, stay<b>ed</b></li></ul>`;
+const SENT=COURT('Exercise 1a','SENTENCES')+`<ul class="say"><li><b>a</b> The officer arrested her.</li><li><b>b</b> How did this happen?</li><li><b>c</b> It was just a misunderstanding.</li><li><b>d</b> He took her to the police station.</li><li><b>e</b> She didn’t pay any attention.</li><li><b>f</b> There wasn’t any evidence.</li></ul>`;
+const TITLES=['Eating the evidence','Where did the criminals go?!','A criminal pastime'];
+Lesson.boot({kicker:'Module 2 · Lesson 4',steps:[
+{stage:'Check-in',title:'Speed Game',hint:'Homework, page 19. <small>15 seconds for each question. Then match each title to its story.</small>',cols:'1.25fr 1fr',
+ acts:[
+ {type:'bomb',secs:15,label:'Homework check',title:'Speed Game · true crime stories',items:[
+  {sec:'Which story?',q:'A pizza restaurant in Washington DC',o:TITLES,a:'Eating the evidence'},
+  {sec:'Which story?',q:'A police helicopter over a field',o:TITLES,a:'Where did the criminals go?!'},
+  {sec:'Which story?',q:'A crossword in a museum in Nuremberg',o:TITLES,a:'A criminal pastime'},
+  {sec:'Which story?',q:'The witness report was probably sufficient.',o:TITLES,a:'Eating the evidence'},
+  {sec:'Which story?',q:'Surrey police thanked them for their fast reactions.',o:TITLES,a:'Where did the criminals go?!'},
+  {sec:'Exercise 3',q:'Where and when did a woman steal a police officer’s chips?',o:['At the police station last week','In a pizza restaurant on Wednesday night','In a café on Friday morning'],a:'In a pizza restaurant on Wednesday night'},
+  {sec:'Exercise 3',q:'What happened each time the woman took one of the officer’s chips?',o:['He laughed and gave her more','He asked her to stop and explained it was theft','He called his boss'],a:'He asked her to stop and explained it was theft'},
+  {sec:'Exercise 3',q:'Why did a group of children and adults form a human arrow?',o:['To guide the helicopter to the suspects','To take a photo for social media','To stop the helicopter landing'],a:'To guide the helicopter to the suspects'},
+  {sec:'Exercise 3',q:'How did the human arrow story end?',o:['The men escaped across the field','The children were arrested too','The police caught the men and thanked the people'],a:'The police caught the men and thanked the people'},
+  {sec:'Exercise 3',q:'What do we know about the work of art?',o:['It cost almost $90,000','It was a painting of a dictionary','It was a statue of a reader'],a:'It cost almost $90,000'},
+  {sec:'Exercise 3',q:'Why did the elderly woman say she wrote on the work of art?',o:['She wanted to be famous','She thought it was her newspaper','She followed the sign: “Insert words”'],a:'She followed the sign: “Insert words”'},
+  {sec:'Exercise 3',q:'Why do the police think she wrote on the crossword?',o:['It was probably a misunderstanding','She didn’t like modern art','She wanted to destroy it'],a:'It was probably a misunderstanding'}]},
+ {type:'match',title:'Titles and stories',tip:'Tap a title, then its story.',items:[
+  {l:'Eating the evidence',r:'A woman steals three chips from a police officer.'},
+  {l:'Where did the criminals go?!',r:'A human arrow guides a police helicopter.'},
+  {l:'A criminal pastime',r:'A 91-year-old woman does a crossword that is a work of art.'}]}]},
+{stage:'Reading',title:'The stories from memory',hint:'No text now. Gabi answers each question from memory, then opens the answer. <small>Next to it: what do you think happened next?</small>',cols:'1.2fr 1fr',
+ acts:[
+ {type:'explain',title:'Questions from memory',label:'Question',endLabel:'All the answers',wait:'Gabi answers first. Then open the answer.',revealLabel:'Show the answer',doneLabel:'All the answers',items:[
+  {name:'Eating the evidence',sum:'In a pizza restaurant in Washington DC, on Wednesday night.',ask:'Where and when did a woman steal a police officer’s chips?',head:'Answer',rule:'In a pizza restaurant in Washington DC, on Wednesday night.'},
+  {name:'Eating the evidence',sum:'He asked her to stop; she took a third chip, so he arrested her.',ask:'What happened each time the woman took one of the officer’s chips?',head:'Answer',rule:'He asked her to stop, then explained it was theft. She took a third chip, so he arrested her.'},
+  {name:'Where did the criminals go?!',sum:'To guide the police helicopter to the two suspects.',ask:'Why did a group of children and adults form a human arrow?',head:'Answer',rule:'They realised the helicopter was in search of the two men, so they formed an arrow to guide it to the suspects.'},
+  {name:'Where did the criminals go?!',sum:'Men charged; police thanked the people.',ask:'How did the story end for the criminals, the police and the children and adults?',head:'Answer',rule:'The police caught the two men and charged them with suspected burglary. They thanked the children and adults for their fast reactions.'},
+  {name:'A criminal pastime',sum:'Reading Work Piece by Arthur Koepcke, almost $90,000.',ask:'What do we know about the work of art that the old lady destroyed?',head:'Answer',rule:'It was a crossword called <i>Reading Work Piece</i> by Arthur Koepcke, in a museum in Nuremberg. It cost almost $90,000.'},
+  {name:'A criminal pastime',sum:'She followed the sign: “Insert words”.',ask:'Why did the elderly woman say she wrote on the work of art?',head:'Answer',rule:'She said she simply followed the artist’s instructions: the sign said “Insert words”.'},
+  {name:'A criminal pastime',sum:'Probably a misunderstanding.',ask:'Why do the police think the elderly woman wrote on the crossword?',head:'Answer',rule:'They worked out that it was probably just a misunderstanding: the interactive art possibly confused her.'}]},
+ {type:'talk',title:'What happened next?',label:'Story',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['I think …','Maybe …','Probably …','will / won’t'],cards:[
+  {q:'The woman with the chips: what happened at the police station?'},
+  {q:'The two suspects: what will happen to them now?'},
+  {q:'The 91-year-old woman: what did the museum do next?'}]}]},
+{stage:'Words',title:'Words from the stories',hint:'Guess the meaning first, then turn the card over. <small>Then match without help.</small>',cols:'1fr 1.1fr',
+ acts:[
+ {type:'cards',title:'Flashcards · 10 words',items:[
+  {w:'pay attention',ru:'обращать внимание',d:'listen to or notice something carefully',ex:'She didn’t pay any attention.'},
+  {w:'sufficient',ru:'достаточный',d:'enough',ex:'The witness report was probably sufficient.'},
+  {w:'realise',ru:'осознать, понять',d:'suddenly understand something',ex:'They realised the helicopter was in search of the two men.'},
+  {w:'in search of',ru:'в поисках',d:'looking for',ex:'The helicopter was in search of the two men.'},
+  {w:'get on the ground',ru:'лечь на землю',d:'go down onto the ground',ex:'They quickly got on the ground.'},
+  {w:'in fact',ru:'на самом деле',d:'actually, in reality',ex:'The crossword was in fact a work of art.'},
+  {w:'insert',ru:'вставлять',d:'put something into a space',ex:'The sign said “Insert words”.'},
+  {w:'misunderstanding',ru:'недоразумение',d:'when someone does not understand something correctly',ex:'It was probably just a misunderstanding.'},
+  {w:'turn up',ru:'появиться',d:'arrive or appear',ex:'The suspect turned up at the restaurant.'},
+  {w:'come up with',ru:'придумать',d:'think of an idea or a plan',ex:'They came up with an idea.'}]},
+ {type:'match',title:'Match the words',tip:'Tap a word, then its meaning.',items:[
+  {l:'pay attention',r:'listen to or notice something carefully'},
+  {l:'sufficient',r:'enough'},
+  {l:'realise',r:'suddenly understand something'},
+  {l:'in search of',r:'looking for'},
+  {l:'in fact',r:'actually, in reality'},
+  {l:'misunderstanding',r:'when someone does not understand something correctly'}]}]},
+{stage:'Speak',title:'Critical thinkers',hint:'Are the people in the stories criminals? Use ideas from the text. <small>Then find the past simple mistake in each sentence.</small>',cols:'1fr 1.2fr',
+ acts:[
+ {type:'talk',title:'Are they criminals?',label:'Story',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['In my opinion, … because …','On the one hand, … On the other hand, …','The text says …','It depends on …'],cards:[
+  {q:'Story A: the woman who ate the police officer’s chips. Is she a criminal?'},
+  {q:'Story B: the two men in the old building. Are they criminals?'},
+  {q:'Story C: the 91-year-old woman and the crossword. Is she a criminal?'},
+  {q:'Which story is the strangest? What makes you say that?'}]},
+ {type:'hunt',title:'Error hunter · past simple',tip:'Click the word with the mistake.',items:[
+  {s:'The officer arrest her.',bad:2,fix:'arrested'},
+  {s:'She didn’t paid any attention.',bad:2,fix:'pay',why:'didn’t + base verb'},
+  {s:'Two men breaked into an old building.',bad:2,fix:'broke'},
+  {s:'The police catched the two men.',bad:2,fix:'caught'},
+  {s:'How did this happened?',bad:3,fix:'happen',why:'did + base verb'},
+  {s:'She come across a piece of paper.',bad:1,fix:'came'},
+  {s:'The work of art costed almost $90,000.',bad:4,fix:'cost'},
+  {s:'The children was very fast.',bad:2,fix:'were'},
+  {s:'Did she looked up the answers?',bad:2,fix:'look'},
+  {s:'There wasn’t no evidence.',bad:2,fix:'any'}]}]},
+{stage:'Grammar',title:'Past simple',hint:'Find an example in sentences a–f. <small>Then sort the verbs by the sound of -ed.</small>',split:'minmax(0,.55fr) minmax(0,1.45fr)',cols:'1.1fr 1fr',
+ side:{look:'case',card:()=>SENT+ED},
+ acts:[
+ {type:'quiz',title:'Find the form · exercise 1a',label:'Find',cols:3,shuffle:false,opts:['a','b','c','d','e','f'],items:[
+  {q:'a form of be in the past simple affirmative',plain:'be, affirmative',a:'c'},
+  {q:'a form of be in the past simple negative',plain:'be, negative',a:'f'},
+  {q:'a regular verb in the past simple affirmative',plain:'regular verb',a:'a'},
+  {q:'an irregular verb in the past simple affirmative',plain:'irregular verb',a:'d'},
+  {q:'a past simple question',plain:'question',a:'b'},
+  {q:'a verb in the past simple negative',plain:'negative',a:'e'}]},
+ {type:'sort',title:'-ed sounds',cols:['/t/','/d/','/id/'],items:[{t:'arrived',c:1},{t:'discovered',c:1},{t:'finished',c:0},{t:'liked',c:0},{t:'needed',c:2},{t:'painted',c:2},{t:'passed',c:0},{t:'planned',c:1},{t:'started',c:2},{t:'stayed',c:1},{t:'wanted',c:2},{t:'watched',c:0}]}]},
+{stage:'Grammar',title:'Playing basketball is not a crime!',hint:'First predict from the title. <small>Then choose the past simple form for each gap.</small>',cols:'.8fr 1.6fr',
+ acts:[
+ {type:'talk',title:'Predict',label:'Title',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['I think …','Maybe …','Somebody called …'],cards:[
+  {q:'“Playing basketball is not a crime!” Who called the police? Why?'},
+  {q:'What did the police officer do when he arrived?'}]},
+ {type:'gaps',title:'Exercise 3 · Florida, 2016',inline:true,tail:' them to build a basketball court. And he still plays with them sometimes.',items:[
+  {pre:'In 2016, in a small town in Florida, somebody',opts:['called','calls','did call'],ans:['called'],ph:'(a) call'},
+  {pre:'the police. The person',opts:['wasn’t','didn’t was','weren’t'],ans:['wasn’t'],ph:'(b) not be'},
+  {pre:'happy because of the noise coming from some kids playing basketball in the street. A police officer',opts:['went','goed','gone'],ans:['went'],ph:'(c) go'},
+  {pre:'to investigate. He',opts:['found','finded','founded'],ans:['found'],ph:'(d) find'},
+  {pre:'some teenagers playing basketball. He',opts:['didn’t stop','didn’t stopped','not stopped'],ans:['didn’t stop'],ph:'(e) not stop'},
+  {pre:'them. In fact, he',opts:['started','start','did started'],ans:['started'],ph:'(f) start'},
+  {pre:'to play with them! Other teenagers',opts:['came','comed','come'],ans:['came'],ph:'(g) come'},
+  {pre:'out of their houses. At first, they',opts:['didn’t believe','didn’t believed','weren’t believe'],ans:['didn’t believe'],ph:'(h) not believe'},
+  {pre:'it. In the end, eight kids happily',opts:['played','plaied','did played'],ans:['played'],ph:'(i) play'},
+  {pre:'with the officer. After ten minutes, he',opts:['left','leaved','lefted'],ans:['left'],ph:'(j) leave'},
+  {pre:'. He',opts:['told','telled','tolled'],ans:['told'],ph:'(k) tell'},
+  {pre:'them to continue, but not to make excessive noise. Lots of people',opts:['saw','seen','seed'],ans:['saw'],ph:'(l) see'},
+  {pre:'a video of the incident and the kids all',opts:['became','becomed','become'],ans:['became'],ph:'(m) become'},
+  {pre:'famous! Shaquille O’Neal',opts:['met','meeted','meet'],ans:['met'],ph:'(n) meet'},
+  {pre:'them personally! Now they don’t play in the street. The police officer',opts:['helped','helps','did helped'],ans:['helped'],ph:'(o) help'}]}]},
+{stage:'Grammar',title:'Questions about the text',hint:'Choose the right question form. <small>Then ask and answer the questions aloud.</small>',split:'minmax(0,.55fr) minmax(0,1.45fr)',cols:'1.2fr 1fr',
+ side:{look:'case',card:RULE},
+ acts:[
+ {type:'quiz',title:'Exercise 4 · make the questions',label:'Question',cols:3,shuffle:false,items:[
+  {q:'Why ___ a police officer ___ (investigate) an incident in Florida in 2016?',o:['did … investigate','did … investigated','was … investigated'],a:'did … investigate',why:'did + base verb'},
+  {q:'Who ___ the police officer ___ (find) in the street?',o:['did … found','did … find','was … finding'],a:'did … find',why:'did + base verb'},
+  {q:'___ he ___ (stop) them?',o:['Was … stop','Did … stopped','Did … stop'],a:'Did … stop',why:'Did + base verb'},
+  {q:'What ___ he ___ (do)?',o:['did … do','did … did','was … do'],a:'did … do',why:'did is also the main verb here: did … do'},
+  {q:'___ (be) the kids happy to play with the police officer?',o:['Did','Were','Was'],a:'Were',why:'be: no did. the kids → were'},
+  {q:'How ___ the kids ___ (become) famous?',o:['were … become','did … became','did … become'],a:'did … become',why:'did + base verb'}]},
+ {type:'talk',title:'Ask and answer · exercise 5',label:'Question',secs:30,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['Because …','He …','They …','No, he didn’t.'],cards:[
+  {q:'Why did a police officer investigate an incident in Florida in 2016?'},
+  {q:'Who did the police officer find in the street?'},
+  {q:'Did he stop them?'},
+  {q:'What did he do?'},
+  {q:'Were the kids happy to play with the police officer?'},
+  {q:'How did the kids become famous?'}]}]},
+{stage:'Words',title:'Phrasal verbs: investigating and finding',hint:'Match the phrasal verbs to the definitions. <small>Then the floor is lava: three wrong answers and the game is over.</small>',cols:'1.1fr 1fr',
+ acts:[
+ {type:'match',title:'Phrasal verbs · exercise 1',tip:'Tap a phrasal verb, then its meaning.',items:[
+  {l:'look into',r:'investigate'},
+  {l:'come across',r:'find by accident'},
+  {l:'work out',r:'solve a problem by considering the facts'},
+  {l:'look for',r:'try to find'},
+  {l:'find out',r:'discover'},
+  {l:'turn up',r:'arrive or appear unexpectedly'},
+  {l:'look up',r:'try to find information in a book, a list or on a computer'},
+  {l:'come up with',r:'think of an idea or a plan'}]},
+ {type:'quiz',title:'Floor is lava · the right particle',label:'Sentence',lives:3,cols:2,items:[
+  {q:'You came ___ a friend in a surprising place.',o:['across','out','up','for'],a:'across',why:'come across = find by accident'},
+  {q:'You found ___ something interesting about a famous person.',o:['into','out','up','across'],a:'out',why:'find out = discover'},
+  {q:'A relative suddenly turned ___ at your house.',o:['out','for','up','into'],a:'up',why:'turn up = arrive unexpectedly'},
+  {q:'You worked ___ a difficult problem in a school subject.',o:['up','across','for','out'],a:'out',why:'work out = solve'},
+  {q:'You needed to look ___ an object that you lost.',o:['for','up','into','out'],a:'for',why:'look for = try to find'},
+  {q:'You looked ___ something in detail for a school project.',o:['up','into','for','across'],a:'into',why:'look into = investigate'},
+  {q:'You came ___ with a great new idea.',o:['across','out','up','into'],a:'up',why:'come up with = think of an idea'},
+  {q:'You looked ___ an English word in a dictionary.',o:['for','into','out','up'],a:'up',why:'look up = find information'}]}]},
+{stage:'Speak',title:'Use it … don’t lose it!',hint:'Think of a real time for each situation. Tell the story in the past simple. <small>Then the sentence race from exercise 2.</small>',cols:'1.1fr 1fr',
+ acts:[
+ {type:'talk',title:'Think about a time when …',label:'Situation',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['came across','found out','turned up','worked out','looked for','came up with'],cards:[
+  {q:'… you came across a friend or relative in a surprising or unusual place.'},
+  {q:'… you found out something interesting about a famous person.'},
+  {q:'… a friend or relative suddenly turned up at your house.'},
+  {q:'… you worked out a difficult problem in a school subject.'},
+  {q:'… you needed to look for an object that you lost.'},
+  {q:'… you came up with a great new idea.'}]},
+ {type:'pick',title:'Sentence race · logical or not?',tip:'Tap every sentence that makes sense, then check.',items:[
+  {t:'I came across the key.',ok:1},{t:'I found out the answer.',ok:1},{t:'I worked out the identity of the criminal.',ok:1},{t:'I looked for the key.',ok:1},
+  {t:'I found out the identity of the criminal.',ok:1},{t:'I came up the answer.',ok:0},{t:'I worked across the key.',ok:0},{t:'I looked out the identity of the criminal.',ok:0},
+  {t:'I worked out the answer.',ok:1},{t:'I came for the answer.',ok:0}]}]}
+]});
+</script>
+<script>
+/* Speed Game wording for the timed check (no bomb words on Gabi's screen) */
+(function(){const R=[[/Answer before the bomb explodes\./g,'Answer before the time runs out.'],[/Next bomb/g,'Next'],[/Boom!/g,'Missed.'],[/\bBoom\b/g,'Missed'],[/Defused/g,'Right'],[/ defused/g,' right'],[/exploded/g,'missed'],[/Not a single explosion\./g,'No misses.']];
+function fix(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){let t=n.nodeValue,o=t;R.forEach(r=>{t=t.replace(r[0],r[1])});if(t!==o)n.nodeValue=t}}
+new MutationObserver(()=>fix(document.body)).observe(document.body,{childList:true,subtree:true,characterData:false});fix(document.body)})();
+</script>
+</body>
+</html>
