@@ -46,7 +46,7 @@ function draw(){const step=CFG.steps[cur],s=ST[cur];if(step.acts)step.acts.forEa
  const photo=step.photo&&has(step.photo.src)?`<figure class="photo${step.side?'':' full'}"><img src="${esc(step.photo.src)}" alt="${esc(step.photo.alt||'')}" style="object-position:${esc(step.photo.pos||'center')}">${step.photo.cap?`<figcaption>${esc(step.photo.cap)}</figcaption>`:''}</figure>`:'';
  const side=(step.side?sideHTML(step.side,s):'')+photo;const gated=step.side&&step.side.gate&&!s.open;const look=step.side&&step.side.look?' look-'+step.side.look:'';
  const sh=$('#sheet');sh.style.gridTemplateColumns=side&&step.split?step.split:'';sh.className='sheet'+(side?' two':'')+(step.wide?' wide':'')+(!step.side&&photo?' pic':'');sh.dataset.stage=STAGES.indexOf(step.stage)%6;
- sh.innerHTML=(side?`<aside class="side${look}">${side}</aside>`:'')+`<section class="work"><p class="hint">${step.hint||''}</p>${gated?`<div class="gate"><b>${esc(step.side.gateText||'Listen first. The task stays hidden.')}</b>${step.side.text?'':`<button class="main" data-open>${esc(step.side.gateBtn||'Show the task')}</button>`}</div>`:(step.acts?`<div class="acts c${step.acts.length}${step.stack?' stack':''}" style="${step.cols?'grid-template-columns:'+step.cols:''}">${step.acts.map((a,k)=>`<div class="act panel" id="act-${k}" data-ak="${k}">${a.title?`<b class="ptitle"><i>${k+1}</i>${a.title}</b>`:''}<div class="pbody">${actHTML(a,subS(k))}</div></div>`).join('')}</div>`:`<div class="act" id="act">${actHTML(step.act,s)}</div>`)}</section>`;
+ sh.innerHTML=(side?`<aside class="side${look}">${side}</aside>`:'')+`<section class="work"><p class="hint">${step.hint||''}</p>${step.help?`<details class="helpbtn"><summary>${esc(step.help.label||'Help')}</summary><div class="helppop">${step.help.html}</div></details>`:''}${gated?`<div class="gate"><b>${esc(step.side.gateText||'Listen first. The task stays hidden.')}</b>${step.side.text?'':`<button class="main" data-open>${esc(step.side.gateBtn||'Show the task')}</button>`}</div>`:(step.acts?`<div class="acts c${step.acts.length}${step.stack?' stack':''}" style="${step.cols?'grid-template-columns:'+step.cols:''}">${step.acts.map((a,k)=>`<div class="act panel" id="act-${k}" data-ak="${k}">${a.title?`<b class="ptitle"><i>${k+1}</i>${a.title}</b>`:''}<div class="pbody">${actHTML(a,subS(k))}</div></div>`).join('')}</div>`:`<div class="act" id="act">${actHTML(step.act,s)}</div>`)}</section>`;
  bindSide(step.side,s);bindPlayers();const a=$('#sheet [data-auto]');if(a&&!gated)a.focus()}
 function redrawAct(){const step=CFG.steps[cur];if(step.acts){const el=$('#act-'+AK+' .pbody');if(el){el.innerHTML=actHTML(step.acts[AK],subS(AK));bindPlayers();const f=el.querySelector('[data-auto]');if(f)f.focus()}return}const s=ST[cur];const el=$('#act');if(el){el.innerHTML=actHTML(step.act,s);bindPlayers();const a=el.querySelector('[data-auto]');if(a)a.focus()}}
 
@@ -94,7 +94,8 @@ function initAct(a,s){if(!a)return;
  if(a.type==='write'){s.text=s.text||''}
  if(a.type==='explain'){s.i=0;s.shown={}}
  if(a.type==='flash'){s.st='start';s.found={};s.left=a.secs||7;s.all=false;s.last=''}
- if(a.type==='bomb'){s.st='start';s.i=0;s.ok=0;s.boom=0;s.miss=[];s.left=a.secs||15;s.res=null;s.pick=null}}
+ if(a.type==='bomb'){s.st='start';s.i=0;s.ok=0;s.boom=0;s.miss=[];s.left=a.secs||15;s.res=null;s.pick=null}
+ if(ACT[a.type]&&ACT[a.type].init)ACT[a.type].init(a,s)}
 const fb=(ok,head,body)=>`<div class="fb ${ok?'ok':'no'}"><b>${head}</b>${body?`<span>${body}</span>`:''}</div>`;
 function actHTML(a,s){if(!a)return'';return ACT[a.type].view(a,s)}
 const ACT={
@@ -348,5 +349,5 @@ function onClick(e){const b=e.target.closest('button,[data-sc]');if(!b||b.disabl
  if(c.a.type==='write')ACT.write.after(c.a,c.s)}
 function onInput(e){const c=pick(e.target);if(!c)return;const A=ACT[c.a.type];if(A&&A.input)A.input(c.a,c.s,e.target)}
 const _draw=draw;draw=function(){_draw();const step=CFG.steps[cur];if(step.acts){step.acts.forEach((a,k)=>{const A=ACT[a.type];if(A&&A.after&&$('#act-'+k)){AK=k;A.after(a,subS(k))}});return}const A=step.act&&ACT[step.act.type];if(A&&A.after&&$('#act'))A.after(step.act,ST[cur])};
-window.Lesson={boot,words,nz};
+window.Lesson={boot,words,nz,ACT,player,esc,redraw:()=>redrawAct(),hush};
 })();
