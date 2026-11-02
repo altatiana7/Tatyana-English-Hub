@@ -4,7 +4,7 @@
 <meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Kate · Lesson 6 · Korea: The Price of Being Seen</title>
+<title>Kate · Lesson 6 · Social Media: Korea and Teenagers</title>
 <style>
 
 :root{--ink:#223d3c;--navy:#155e61;--muted:#66756f;--line:#dfe6e0;--bg:#f5f5f0;--ok:#e0f2e5;--okb:#7bb390;--okt:#214c35;--accent:#c57e67;--soft:#f2f5ef}
@@ -340,6 +340,14 @@ body{background:#f3f1f7}
 .tnote{position:fixed;right:14px;top:62px;z-index:30}
 .tnote .panel{position:absolute;right:0;top:0;width:min(420px,90vw);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px #0002;padding:12px 14px;font-size:14px;line-height:1.45}
 .tnote .panel b{color:var(--navy)}
+
+.mem.bigmem button{font-size:15px}
+.reading a{color:var(--navy)}
+.reading p.fact{margin:0 0 8px}
+.rdlist{display:grid;gap:7px;align-content:start}
+.rdlist.reading{overflow:visible!important;max-height:none!important;height:auto!important;border:0!important;padding:0!important;gap:5px}
+.rdlist p{margin:0;background:#f3f6f1;border-radius:8px;padding:5px 9px;font-size:clamp(14px,2.45vh,17px);line-height:1.32}
+.rdlist p.src{background:none;font-size:13px;color:var(--muted);padding:2px 4px}
 </style>
 </head>
 <body>
@@ -354,7 +362,7 @@ body{background:#f3f1f7}
 <main>
 
 <section class="screen s2" data-name="Warm-up">
-  <div class="card"><div class="head"><div><p class="eyebrow">01 / INTERVIEW · SECRET QUESTION</p><h2>Fans, fame and Korea</h2></div><span class="pill" id="ivPill"></span></div>
+  <div class="card"><div class="head"><div><p class="eyebrow">01 / INTERVIEW · SECRET QUESTION</p><h2>Money, social media and phones</h2></div><span class="pill" id="ivPill"></span></div>
     <div class="body" style="overflow:hidden">
       <div class="nums" id="ivNums"></div>
       <div class="iv" id="iv"><div class="iv-in"><div class="iv-face iv-front"><small>LISTEN · 40 SECONDS TO ANSWER</small><div class="n" id="ivN"></div></div><div class="iv-face iv-back"><small>THE QUESTION WAS</small><div class="t" id="ivT"></div></div></div></div>
@@ -366,61 +374,66 @@ body{background:#f3f1f7}
   <div class="card tint"><div class="head"><div><p class="eyebrow">02 / QUICK FIRE · MYSTERY BOX</p><div class="seg" id="wTabs" style="margin-top:3px"></div></div><span class="pill" id="qfPill"></span></div><div class="body" id="qf"></div></div>
 </section>
 
-<section class="screen s3" data-name="Vocabulary">
-  <div class="card"><div class="head"><div><p class="eyebrow">03 / QUIZLET</p><h2>Fandom words</h2></div><button class="btn light" type="button" id="fcShuffle">Shuffle</button></div>
-    <div class="body" style="overflow:hidden">
-      <div class="fc" id="fc" tabindex="0" role="button" aria-label="Flip the card"><div class="fc-in"><div class="fc-face fc-front"><strong id="fcWord"></strong><small>CLICK TO FLIP</small></div><div class="fc-face fc-back"><div class="ru" id="fcRu"></div><div class="m" id="fcMean"></div><div class="e" id="fcEx"></div></div></div></div>
-      <div class="fcnav"><button class="btn light" type="button" id="fcPrev">←</button><span class="cnt" id="fcCnt"></span><button class="btn light" type="button" id="fcNext">→</button></div>
-    </div>
+<section class="screen s3" data-name="Words">
+  <div class="card"><div class="head"><div><p class="eyebrow">03 / QUIZLET</p><h2>Remember the words</h2></div><button class="btn light" type="button" id="fc1Shuffle">Shuffle</button></div>
+    <div class="body" id="deck1" style="overflow:hidden"></div>
   </div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">04 / MEMORY MATCH · ODD ONE OUT</p><div class="seg" id="mTabs" style="margin-top:3px"></div></div><span class="pill" id="memPill"></span></div><div class="body" id="mem"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">04 / MEMORY · ODD ONE OUT</p><div class="seg" id="mTabs" style="margin-top:3px"></div></div><span class="pill" id="memPill"></span></div><div class="body" id="mem"></div></div>
   <div class="card"><div class="head"><div><p class="eyebrow">05 / GAME</p><h2>Forbidden word</h2></div><span class="pill" id="fwPill"></span></div><div class="body" id="fw"></div></div>
 </section>
 
-<section class="screen s2a" data-name="Video">
-  <div class="card"><div class="head"><div><p class="eyebrow">06 / CNN VIDEO</p><h2>Inside a K-pop trainee programme</h2></div></div>
-    <div class="prompt"><b>Before you watch:</b> trainees in Seoul train for years. Only a few ever make their debut. What do you think their day looks like?</div>
-    <div class="media" id="media"></div>
-    <div class="note">While you watch: what do trainees do, what do they give up, and how do they feel?</div>
-  </div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">07 / AFTER WATCHING</p><div class="seg" id="vTabs" style="margin-top:3px"></div></div><span class="pill" id="vPill"></span></div><div class="body" id="vbody"></div></div>
-</section>
-
-<section class="screen s2" data-name="Reading">
-  <div class="card"><div class="head"><div><p class="eyebrow">08 / READING · CNN NEWS</p><h2>The love story fans didn’t want</h2></div><button class="btn light" type="button" id="rdBtn">Show the text</button></div>
-    <div class="body" id="rd" style="overflow:hidden"></div>
-  </div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">09 / FLOOR IS LAVA</p><h2>True or false? Jump to the safe stone</h2></div><span class="pill" id="lvPill"></span></div><div class="body" id="lv"></div></div>
-</section>
-
 <section class="screen s2" data-name="Grammar">
-  <div class="card"><div class="head"><div><p class="eyebrow">10 / GRAMMAR · ЕГЭ FORMAT</p><h2>Fans and money</h2></div><button class="btn light" type="button" id="ruleBtn">Rule</button></div><div class="body" id="fipi"></div></div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">11 / GAME</p><div class="seg" id="gTabs" style="margin-top:3px"></div></div><span class="pill" id="gPill"></span></div><div class="body" id="gbody"></div></div>
+  <div class="card"><div class="head"><div><p class="eyebrow">06 / GRAMMAR · ЕГЭ FORMAT</p><h2>Inversion, passive reporting, conditionals</h2></div><button class="btn light" type="button" id="ruleBtn">Rule</button></div><div class="body" id="fipi"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">07 / GAME</p><div class="seg" id="gTabs" style="margin-top:3px"></div></div><span class="pill" id="gPill"></span></div><div class="body" id="gbody"></div></div>
+</section>
+
+<section class="screen s3" data-name="Space-Out" style="grid-template-columns:minmax(0,.8fr) minmax(0,1.35fr) minmax(0,.95fr)">
+  <div class="card"><div class="head"><div><p class="eyebrow">08 / QUIZLET</p><h2>New words: Korea</h2></div><button class="btn light" type="button" id="fc2Shuffle">Shuffle</button></div>
+    <div class="body" id="deck2" style="overflow:hidden"></div>
+  </div>
+  <div class="card"><div class="head"><div><p class="eyebrow">09 / READING · FACTS</p><h2>Seoul Space-Out contest</h2></div><button class="btn light" type="button" id="rd1Btn">Show the facts</button></div>
+    <div class="body" id="rd1"></div>
+  </div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">10 / FLOOR IS LAVA</p><h2>True or false?</h2></div><span class="pill" id="lv1Pill"></span></div><div class="body" id="lv1"></div></div>
+</section>
+
+<section class="screen s2" data-name="Dopamine">
+  <div class="card"><div class="head"><div><p class="eyebrow">11 / READING · FACTS</p><h2>Dopamine sites: shopping, no spending</h2></div><button class="btn light" type="button" id="rd2Btn">Show the facts</button></div>
+    <div class="body" id="rd2"></div>
+  </div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">12 / QUIZ · ONE QUESTION AT A TIME</p><h2>Choose the answer</h2></div><span class="pill" id="mc2Pill"></span></div><div class="body" id="mc2"></div></div>
+</section>
+
+<section class="screen s2" data-name="Teen rules">
+  <div class="card"><div class="head"><div><p class="eyebrow">13 / READING · FACTS</p><h2>Teenagers, phones and the law in Korea</h2></div><button class="btn light" type="button" id="rd3Btn">Show the facts</button></div>
+    <div class="body" id="rd3"></div>
+  </div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">14 / GAME</p><div class="seg" id="rTabs" style="margin-top:3px"></div></div><span class="pill" id="rPill"></span></div><div class="body" id="rbody"></div></div>
 </section>
 
 <section class="screen s2" data-name="Debate">
-  <div class="card tint"><div class="head"><div><p class="eyebrow">12 / AUCTION</p><h2>Buy or pass? Would you pay for it?</h2></div><span class="pill" id="auPill"></span></div><div class="body" id="au"></div></div>
-  <div class="card"><div class="head"><div><p class="eyebrow">13 / WHEEL CHALLENGE · 3–2–1</p><h2>Spin and speak</h2></div><span class="pill" id="whPill">60 s</span></div><div class="body" id="wh"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">15 / AGREE OR DISAGREE</p><h2>Decide first, then check the fact</h2></div><span class="pill" id="auPill"></span></div><div class="body" id="au"></div></div>
+  <div class="card"><div class="head"><div><p class="eyebrow">16 / WHEEL CHALLENGE · 3–2–1</p><h2>Spin and speak</h2></div><span class="pill" id="whPill">60 s</span></div><div class="body" id="wh"></div></div>
 </section>
 
 <section class="screen s2" data-name="Revision">
-  <div class="card"><div class="head"><div><p class="eyebrow">14 / JEOPARDY</p><h2>Kate vs Teacher</h2></div><span class="pill" id="jpPill"></span></div><div class="body" id="jp"></div></div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">15 / ESCAPE ROOM</p><h2>Open 4 locks to get the code</h2></div><span class="pill" id="erPill"></span></div><div class="body" id="er"></div></div>
+  <div class="card"><div class="head"><div><p class="eyebrow">17 / JEOPARDY</p><h2>Kate vs Teacher</h2></div><span class="pill" id="jpPill"></span></div><div class="body" id="jp"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">18 / ESCAPE ROOM</p><h2>Open 4 locks to get the code</h2></div><span class="pill" id="erPill"></span></div><div class="body" id="er"></div></div>
 </section>
 
 </main>
 </div>
 
 <div class="tnote"><div class="panel" id="tnPanel" hidden>
-  <b>Lesson 6 · Korea: the price of being seen</b> (B2, 60 min)<br>
-  1 Warm-up 7 min · 2 Vocabulary 10 min · 3 Video 10 min · 4 Reading 12 min · 5 Grammar 12 min · 6 Debate 9 min · 7 Revision games — reserve or next lesson.<br>
-  <b>Sources:</b> CNN video “Inside a K-pop trainee program” (2025); CNN news, April 2024 (Karina &amp; Lee Jae-wook); Korea JoongAng Daily, Feb 2022 (subway birthday ads); Digital Music News, Aug 2023 (photocards).<br>
-  <b>Revision:</b> Jeopardy (Kate vs Teacher) and Escape Room — code 2024.<br>
-  <b>Grammar:</b> inversion, passive reporting, conditionals — revision of Lesson 5.<br>
-  <b>Note:</b> answers to the gaps open when you tap them.
+  <b>Lesson 6 · Social media: Korea and teenagers</b> (B2, 60 min)<br>
+  1 Warm-up 6 min · 2 Recall words (money, social media) 8 min · 3 Recall grammar (inversion, passive reporting, conditionals) 8 min · 4 Space-Out contest 10 min · 5 Dopamine sites 8 min · 6 Teenagers, phones and the law 10 min · 7 Debate 10 min · 8 Revision games — reserve or next lesson.<br>
+  <b>Sources:</b> ESL News Stories, “Seoul Space-Out Helps People Relax”, 22 July 2025 (<a href="https://eslnewsstories.com/articles/2025-07-22-seoul-space-out-competition-helps-people-relax/" target="_blank" rel="noopener">link</a>); ESL News Stories, “Dopamine Sites: Shopping Without Spending”, 27 July 2026 (<a href="https://eslnewsstories.com/articles/2026-07-27-dopamine-sites-shopping-without-spending/" target="_blank" rel="noopener">link</a>); Asia News Network, 28 Aug 2025, law on phones in classrooms (<a href="https://asianews.network/?p=223394" target="_blank" rel="noopener">link</a>); Korea Herald, May 2026, children and smartphone dependence (<a href="https://www.koreaherald.com/article/10731389" target="_blank" rel="noopener">link</a>); Korea Times, 1 July 2026, “Time to rein in youth social media use” (<a href="https://www.koreatimes.co.kr/amp/opinion/20260701/time-to-rein-in-youth-social-media-use" target="_blank" rel="noopener">link</a>).<br>
+  <b>Revision:</b> Jeopardy (Kate vs Teacher) and Escape Room — code 2026.<br>
+  <b>Note:</b> answers to the gaps open when you tap them. The facts are short summaries of the articles, not the full texts.
 </div></div>
 
 <script>
+
 const $=id=>document.getElementById(id);
 const el=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;return e};
 const btn=(cls,html,fn)=>{const b=el('button',cls,html);b.type='button';b.onclick=fn;return b};
@@ -441,26 +454,14 @@ function go(i){
   [...$('tabs').children].forEach((c,k)=>c.classList.toggle('on',k===cur));
   $('prev').disabled=cur===0;
   $('next').textContent=cur===screens.length-1?'START AGAIN':'NEXT';
-  hush();ivStopTimer();qfStop();sgStop();whStop();vtStop();
-  if(cur!==2)videoReset();
+  hush();ivStopTimer();qfStop();sgStop();whStop();
 }
 $('prev').onclick=()=>go(cur-1);
 $('next').onclick=()=>{if(cur===screens.length-1){resetAll();go(0)}else go(cur+1)};
 $('tnBtn').onclick=()=>{$('tnPanel').hidden=!$('tnPanel').hidden};
 
 /* ---------- 01 interview ---------- */
-const IV=[
- 'Why do you think K-dramas have become so popular all over the world?',
- 'Would you like to be famous? Why or why not?',
- 'Is it fair that some K-pop idols are not allowed to date?',
- 'Have you ever spent too much money on something connected with a star or a show?',
- 'Should fans have a say in their idols’ private lives?',
- 'What would you do if your favourite actor faced a backlash online?',
- 'Do you think social media makes fans feel closer to celebrities?',
- 'Would you crowdfund a birthday advert for your favourite star?',
- 'What is the difference between a loyal fan and an obsessive fan?',
- 'If you could spend a week in Seoul, what would you do?'
-];
+const IV=["Do you ever feel that you spend too much time on social media? What do you do about it?", "Who is under more pressure today: teenagers or adults? Why?", "Have you ever bought something on impulse? What happened?", "Do you have a side hustle, or would you like to have one?", "Is it easy for you to put your phone away for an hour? What happens when you try?", "Why do so many people crave validation on social media?", "Would you enter a competition where the winner is the person who does nothing? Why or why not?", "What is your digital footprint like? Does it worry you?", "Should schools ban phones during lessons? Give arguments for and against.", "What can other countries learn from the way Korea deals with young people and phones?"];
 let ivI=0,ivT=null,ivLeft=40;
 function ivRender(){$('iv').classList.remove('flipped');$('ivN').textContent='Question '+(ivI+1);$('ivT').textContent=IV[ivI];$('ivPill').textContent=(ivI+1)+' / '+IV.length;
   [...$('ivNums').children].forEach((b,k)=>b.classList.toggle('on',k===ivI));ivStopTimer();ivLeft=40;ring('ivRing',1,'40','ivSec')}
@@ -474,7 +475,7 @@ $('ivPrev').onclick=()=>{hush();ivI=(ivI+IV.length-1)%IV.length;ivRender()};
 $('ivNext').onclick=()=>{hush();ivI=(ivI+1)%IV.length;ivRender()};
 
 /* ---------- 02 quick fire ---------- */
-const QF=[['K-dramas','K-pop'],['Seoul','Busan'],['Real friends','More followers'],['Famous','Rich'],['A concert ticket','Ten albums'],['Likes','Comments'],['Romance drama','Thriller drama'],['Idol','Actor'],['Save','Splurge'],['Fan meeting','Front-row seat']];
+const QF=[["Likes", "Real friends"], ["Save up", "Splurge"], ["Phones in class", "Phone-free school"], ["Frugal", "Generous"], ["Online shopping", "Window shopping"], ["An hour of doing nothing", "An hour of scrolling"], ["A public apology", "A private apology"], ["Influencer", "Teacher"], ["Cut back on spending", "Earn more money"], ["Age limit for social media", "Parental control"]];
 let qfI,qfT=null,qfLeft;
 function qfStop(){if(qfT){clearInterval(qfT);qfT=null}}
 function qfReset(){qfStop();qfI=0;qfRender(false)}
@@ -490,42 +491,44 @@ function qfRender(run){const r=$('qf');r.innerHTML='';qfStop();
   if(run){qfLeft=5;qfT=setInterval(()=>{qfLeft--;ring('qfRing',qfLeft/5,String(Math.max(0,qfLeft)),'qfSec');if(qfLeft<=0){qfStop();qfI++;setTimeout(()=>{if(cur===0)qfRender(true)},700)}},1000)}
 }
 
-/* ---------- 03 quizlet ---------- */
-const CARDS=[
- ['fandom','all the fans of a star or a group, seen as a community','Her fandom raised money for a birthday advert in the subway.','фанатское сообщество'],
- ['trainee','a young person training to become a K-pop star','Trainees practise singing and dancing for years.','стажёр (будущий айдол)'],
- ['make your debut','to perform in public for the first time','Only a few trainees ever make their debut.','дебютировать'],
- ['go public','to let everyone know about something private','The couple went public with their relationship.','объявить открыто'],
- ['spark a backlash','to cause a strong negative public reaction','The news sparked a backlash among some fans.','вызвать волну критики'],
- ['parasocial relationship','a one-sided feeling of closeness to a star you have never met','Many fans have a parasocial relationship with their idol.','односторонняя «связь» со звездой'],
- ['merch','products with a star’s name or image on them','Fans spend a lot of money on merch.','атрибутика, мерч'],
- ['collectible','an object that people collect and that can be valuable','Photocards have become popular collectibles.','предмет коллекционирования'],
- ['crowdfund','to collect money from many people for one project','The fans crowdfunded a giant billboard.','собирать деньги вскладчину'],
- ['spend a fortune on','to spend a very large amount of money on something','Some fans spend a fortune on albums.','потратить целое состояние'],
- ['be under pressure','to feel that people expect a lot from you','Idols are under constant pressure to look perfect.','быть под давлением'],
- ['issue a public apology','to say sorry officially, so that everyone can see it','She issued a handwritten public apology.','принести публичные извинения']
-];
-let fcOrder=CARDS.map((_,i)=>i),fcI=0;
-function fcShow(){const c=CARDS[fcOrder[fcI]];$('fc').classList.remove('flipped');$('fcWord').textContent=c[0];$('fcRu').textContent=c[3];$('fcMean').textContent=c[1];$('fcEx').textContent=c[2];$('fcCnt').textContent=(fcI+1)+' / '+CARDS.length}
-function fcReset(){fcOrder=CARDS.map((_,i)=>i);fcI=0;fcShow()}
-$('fc').onclick=()=>$('fc').classList.toggle('flipped');
-$('fcPrev').onclick=()=>{fcI=(fcI+CARDS.length-1)%CARDS.length;fcShow()};
-$('fcNext').onclick=()=>{fcI=(fcI+1)%CARDS.length;fcShow()};
-$('fcShuffle').onclick=()=>{fcOrder=shuffle(fcOrder);fcI=0;fcShow()};
+const CARDS=[["zone out", "to stop thinking and stare without focus", "Participants zone out for ninety minutes in Seoul.", "отключиться, «зависнуть»"], ["burned out", "extremely tired from too much work or stress", "The founder felt burned out and anxious about always being busy.", "выгоревший, на пределе"], ["pause", "to stop for a short time", "One participant came to feel how important it is to pause and rest.", "сделать паузу"], ["disqualification", "being removed from a competition for breaking a rule", "A second warning means disqualification.", "дисквалификация"], ["heart rate", "the number of times your heart beats in a minute", "Staff dressed as doctors check the heart rates of the participants.", "пульс"], ["dopamine", "a chemical in the brain linked to pleasure and motivation", "Browsing a fake menu can give you a small dopamine boost.", "дофамин"], ["impulse", "a sudden strong wish to do something without thinking", "He ordered the snack on impulse at midnight.", "порыв, импульс"], ["urge", "a strong wish to do something", "She felt the urge to open the delivery app again.", "сильное желание, позыв"], ["satisfy an urge", "to give yourself what you strongly want", "Browsing may satisfy the urge without spending any money.", "утолить желание"], ["customize", "to change something to fit your own taste", "Users can customize a fake order and add it to the cart.", "настраивать под себя"], ["virtual courier", "a delivery person who exists only on the screen", "The virtual courier moves on the map, but the food never arrives.", "виртуальный курьер"], ["psychologist", "an expert who studies how the mind works", "Psychologists say that preparing an order can feel exciting.", "психолог"], ["smartphone overdependence", "using a phone so much that it harms your life", "Government data put many Korean teenagers at risk of smartphone overdependence.", "чрезмерная зависимость от смартфона"], ["ban", "an official rule that stops people from doing something", "A new law bans phones during lessons in Korean schools.", "запрет"], ["age restriction", "a rule that sets a minimum age for something", "Several bills suggest age restrictions for social media.", "возрастное ограничение"], ["algorithm", "a set of computer rules that decides what you see online", "Some proposals would limit recommendation algorithms for minors.", "алгоритм"], ["infinite scrolling", "a feed that never ends, so you keep scrolling", "Some experts want infinite scrolling switched off for minors.", "бесконечная прокрутка"], ["digital detox", "a period when you stay away from digital devices", "Some provinces run digital detox programmes for students.", "цифровой детокс"]];
+const MONEYC=[["rack up debt", "gradually build up more and more debt", "He racked up debt on three credit cards.", "накапливать долги"], ["pay off debt", "give back all the money you owe", "It took her five years to pay off her student debt.", "погасить долг полностью"], ["side hustle", "an extra job or income stream", "Selling vintage clothes online is her side hustle.", "подработка, дополнительный заработок"], ["make ends meet", "have just enough money for basic costs", "Many students work part-time to make ends meet.", "сводить концы с концами"], ["hard-hit", "badly affected by a problem", "Young renters were hard-hit by rising prices.", "сильно пострадавший"], ["wary of", "not fully trusting; cautious about", "Older people are often wary of new payment apps.", "относиться с опаской к"], ["shell out", "pay a lot of money, often unwillingly", "I had to shell out £90 for a taxi home.", "раскошелиться, выложить деньги"], ["frugal", "careful about spending; avoiding waste", "She is frugal: she cooks at home and never wastes food.", "бережливый, экономный"], ["cut back (on)", "spend less on something", "We’re cutting back on takeaways this month.", "сокращать расходы (на что-то)"], ["save up (for)", "keep money so you can buy something later", "I’m saving up for a laptop.", "копить (на что-то)"], ["splurge on", "spend a lot on something special as a treat", "We splurged on a fancy dinner.", "раскошелиться на что-то приятное"], ["rip off", "charge someone far too much; cheat", "That taxi driver ripped us off.", "обдирать, брать втридорога (разг.)"]];
+const SOCC=[["crave validation", "to strongly desire approval from other people", "Some users crave validation through likes.", "жаждать одобрения"], ["seek attention", "to try to make other people notice you", "He often posts to seek attention.", "искать внимания"], ["curate an online persona", "to carefully control how you appear online", "She curates an online persona that looks effortless.", "создавать онлайн-образ"], ["be under public scrutiny", "to be watched and judged by many people", "The creator is under public scrutiny.", "быть под пристальным вниманием"], ["face a backlash", "to experience a strong negative public reaction", "The brand faced a backlash.", "столкнуться с волной критики"], ["be held accountable", "to be required to accept responsibility", "Influencers should be held accountable for misleading claims.", "нести ответственность"], ["cross the line", "to behave in a way that is unacceptable", "The joke crossed the line.", "перейти границу"], ["damage someone's reputation", "to make people think less well of someone", "A rumour can damage a reputation.", "испортить репутацию"], ["digital footprint", "the record of your activity on the internet", "Her digital footprint followed her into adulthood.", "цифровой след"], ["virtue signalling", "publicly displaying moral views mainly to gain approval", "Critics accused the brand of virtue signalling.", "демонстрация моральности напоказ"], ["jump on the bandwagon", "to join a trend because it has become popular", "Many people jumped on the bandwagon.", "присоединиться к тренду"], ["blow something out of proportion", "to make an issue appear more serious than it is", "The media blew the incident out of proportion.", "раздувать проблему"]];
 
-/* ---------- 04 memory ---------- */
-let memOpen=[],memDone=0,memTries=0,memLock=false;
-function memReset(){const r=$('mem');r.innerHTML='';memOpen=[];memDone=0;memTries=0;memLock=false;
-  const pairs=CARDS.slice(0,10);const tiles=shuffle(pairs.flatMap((c,i)=>[[i,c[0],''],[i,c[3],'ru']]));
-  const g=el('div','mem');tiles.forEach(t=>{const b=btn(t[2],t[1],()=>memTap(b,t[0]));b.dataset.p=t[0];g.appendChild(b)});
-  r.append(g,el('div','note','Find the word and its Russian meaning. Say the word aloud in a sentence!'));memPill()}
-function memPill(){$('memPill').textContent=memDone===10?'DONE · '+memTries+' tries':memDone+' / 10'}
-function memTap(b,p){if(memLock||b.classList.contains('open')||b.classList.contains('done'))return;b.classList.add('open');memOpen.push(b);
-  if(memOpen.length===2){memTries++;const [a,c]=memOpen;if(a.dataset.p===c.dataset.p){a.classList.add('done');c.classList.add('done');memOpen=[];memDone++;memPill()}
-    else{memLock=true;a.classList.add('no');c.classList.add('no');setTimeout(()=>{a.classList.remove('open','no');c.classList.remove('open','no');memOpen=[];memLock=false},850)}}}
-
+/* ---------- 03 quizlet decks: one card at a time ---------- */
+function deckMake(rootId,decks){
+  const root=$(rootId);root.innerHTML='';
+  let di=0,order=[],i=0;
+  const tabs=el('div','seg');
+  const card=el('div','fc');card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label','Flip the card');
+  card.innerHTML='<div class="fc-in"><div class="fc-face fc-front"><strong></strong><small>CLICK TO FLIP</small></div><div class="fc-face fc-back"><div class="ru"></div><div class="m"></div><div class="e ex"></div></div></div>';
+  const nav=el('div','fcnav');const cnt=el('span','cnt');
+  const list=()=>decks[di][1];
+  function show(){const c=list()[order[i]];card.classList.remove('flipped');card.querySelector('strong').textContent=c[0];card.querySelector('.ru').textContent=c[3];card.querySelector('.m').textContent=c[1];card.querySelector('.ex').textContent=c[2];cnt.textContent=(i+1)+' / '+list().length}
+  function pick(k){di=k;order=list().map((_,j)=>j);i=0;[...tabs.children].forEach((b,j)=>b.classList.toggle('on',j===k));show()}
+  card.onclick=()=>card.classList.toggle('flipped');
+  card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();card.classList.toggle('flipped')}};
+  nav.append(btn('btn light','←',()=>{i=(i+list().length-1)%list().length;show()}),cnt,btn('btn light','→',()=>{i=(i+1)%list().length;show()}));
+  if(decks.length>1){decks.forEach((d,k)=>tabs.appendChild(btn('',d[0],()=>pick(k))));root.appendChild(tabs)}
+  root.append(card,nav);pick(0);
+  return {reset:()=>pick(0),shuffle:()=>{order=shuffle(order);i=0;show()}}
+}
+let DK1,DK2;
+/* ---------- 04 memory (generic) ---------- */
+function memMake(bodyId,pillId,pairs,big){
+  const r=$(bodyId),pill=$(pillId);let open=[],done=0,tries=0,lock=false;const N=pairs.length;
+  const pl=()=>{pill.textContent=done===N?'DONE · '+tries+' tries':done+' / '+N};
+  function tap(b,p){if(lock||b.classList.contains('open')||b.classList.contains('done'))return;b.classList.add('open');open.push(b);
+    if(open.length===2){tries++;const [a,c]=open;if(a.dataset.p===c.dataset.p){a.classList.add('done');c.classList.add('done');open=[];done++;pl()}
+      else{lock=true;a.classList.add('no');c.classList.add('no');setTimeout(()=>{a.classList.remove('open','no');c.classList.remove('open','no');open=[];lock=false},850)}}}
+  return function reset(){r.innerHTML='';open=[];done=0;tries=0;lock=false;
+    const tiles=shuffle(pairs.flatMap((c,i)=>[[i,c[0],''],[i,c[1],'ru']]));
+    const g=el('div','mem'+(big?' bigmem':''));tiles.forEach(t=>{const b=btn(t[2],t[1],()=>tap(b,t[0]));b.dataset.p=t[0];g.appendChild(b)});
+    r.append(g,el('div','note','Find the pairs. Say each word in a sentence!'));pl()}
+}
+let MEMA,MEMB;
 /* ---------- 05 forbidden word ---------- */
-const FW=[['fandom',['fans','group','community']],['trainee','young','learn','star'],['make your debut',['first','time','perform']],['go public',['secret','tell','everyone']],['spark a backlash',['angry','negative','reaction']],['parasocial relationship',['one-sided','know','close']],['merch',['buy','T-shirt','products']],['collectible',['collect','valuable','card']],['crowdfund',['money','people','together']],['spend a fortune on',['money','expensive','lot']],['be under pressure',['stress','expect','hard']],['issue a public apology',['sorry','letter','everyone']]].map(x=>Array.isArray(x[1])?x:[x[0],x.slice(1)]);
+const FW=[["side hustle", ["extra", "job", "money"]], ["make ends meet", ["just", "enough", "bills"]], ["frugal", ["careful", "spend", "cheap"]], ["wary of", ["careful", "trust", "cautious"]], ["crave validation", ["want", "approval", "likes"]], ["digital footprint", ["online", "trace", "record"]], ["face a backlash", ["negative", "angry", "reaction"]], ["be held accountable", ["responsible", "blame", "answer"]], ["burned out", ["tired", "work", "stress"]], ["zone out", ["stop", "think", "stare"]], ["impulse", ["sudden", "want", "buy"]], ["ban", ["stop", "forbid", "rule"]]];
 let fwI,fwPts;
 function fwReset(){fwI=0;fwPts=0;fwRender()}
 function fwRender(){const r=$('fw');r.innerHTML='';
@@ -534,95 +537,91 @@ function fwRender(){const r=$('fw');r.innerHTML='';
   const w=el('div','fbw');w.append(el('strong','',FW[fwI][0]),el('div','note','Explain it without these words:'));const ban=el('div','ban');FW[fwI][1].forEach(x=>ban.appendChild(el('span','',x)));w.appendChild(ban);r.appendChild(w);
   const rw=el('div','row');rw.append(btn('btn light','Said a forbidden word',()=>{fwI++;fwRender()}),el('span','grow'),btn('btn','Explained! +1',()=>{fwPts++;fwI++;fwRender()}));r.appendChild(rw)}
 
-/* ---------- 06/07 video ---------- */
-const YT='kPqATkmvEWU';
-function videoReset(){const m=$('media');m.innerHTML='<img alt="" src="https://i.ytimg.com/vi/'+YT+'/hqdefault.jpg">';m.appendChild(btn('btn play','Watch ▶',()=>{m.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+YT+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="CNN: Inside a K-pop trainee program"></iframe>'}))}
-const PRED=['Trainees practise for many hours every day.','They can use their phones whenever they want.','They have regular tests in front of teachers.','They live together in dorms.','They can easily combine training with school.','Most trainees become famous in the end.','They have to follow strict rules about their appearance.','Their families pay nothing for the training.','They can have a boyfriend or girlfriend.','They feel under a lot of pressure.'];
-const VQ=['What surprised you most about the trainees’ life?','What do trainees give up to make their debut?','Would you join a trainee programme at 14? Why or why not?','Is the pressure worth it if only a few trainees succeed?','How is a trainee’s life similar to preparing for exams?','Who benefits most from the system: the trainees, the agencies or the fans?','Should there be an age limit for trainees?','If you were a trainee, what would be the hardest rule for you?','How do you think trainees feel when they fail a test?','Would you still love K-pop if you knew everything about the training?'];
-let vtT=null;function vtStop(){if(vtT){clearInterval(vtT);vtT=null}}
-let pPg=0,vqI=0;
-function vRender(i){const r=$('vbody');r.innerHTML='';vtStop();
-  if(i===0){$('vPill').textContent='Predict & check';r.appendChild(el('div','note','Before: tap <b>likely</b> or <b>unlikely</b>. After watching, say which guesses were right.'));
-    PRED.slice(pPg*4,pPg*4+4).forEach((p,k)=>{const t=el('div','task','<div class="txt">'+(pPg*4+k+1)+'. '+p+'</div>');const pk=el('div','pick');['likely','unlikely'].forEach(x=>pk.appendChild(btn('',x,e=>{[...pk.children].forEach(c=>c.classList.remove('sel'));e.currentTarget.classList.add('sel')})));t.appendChild(pk);r.appendChild(t)});
-    const pages=Math.ceil(PRED.length/4);const rw=el('div','row');rw.append(el('span','grow'),btn('btn light','←',()=>{pPg=(pPg+pages-1)%pages;vRender(0)}),el('span','note',(pPg+1)+' / '+pages),btn('btn light','→',()=>{pPg=(pPg+1)%pages;vRender(0)}));r.appendChild(rw)}
-  else{$('vPill').textContent=(vqI+1)+' / '+VQ.length;
-    const w=el('div','qf2');w.appendChild(el('div','lab','30-SECOND TALK'));w.appendChild(el('div','q','<span style="width:100%;text-align:center">'+VQ[vqI]+'</span>'));
-    const bar=el('div','sgbar');bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="vRing" cx="50" cy="50" r="45"/></svg><span id="vSec">30</span>'));
-    bar.append(btn('btn','Start 30 s',()=>{vtStop();let l=30;ring('vRing',1,'30','vSec');vtT=setInterval(()=>{l--;ring('vRing',l/30,String(l),'vSec');if(l<=0)vtStop()},1000)}),el('span','grow'),btn('btn light','←',()=>{vqI=(vqI+VQ.length-1)%VQ.length;vRender(1)}),btn('btn light','→',()=>{vqI=(vqI+1)%VQ.length;vRender(1)}));
-    w.appendChild(bar);r.appendChild(w);ring('vRing',1,'30','vSec')}}
+/* ---------- reading facts (generic) ---------- */
+function rdMake(bodyId,btnId,cfg){
+  const r=$(bodyId),b=$(btnId);let shown=false;
+  function render(){r.innerHTML='';b.textContent=shown?'Hide the facts':'Show the facts';
+    if(!shown){const c=el('div','cover');c.append(el('div','q','<span style="width:100%;text-align:center">'+cfg.cover+'</span>'),el('div','note',cfg.predict),btn('btn','Show the facts',()=>{shown=true;render()}));r.appendChild(c);return}
+    const l=el('div','rdlist reading');cfg.facts.forEach(f=>l.appendChild(el('p','',f)));l.appendChild(el('p','src',cfg.src));r.appendChild(l)}
+  b.onclick=()=>{shown=!shown;render()};
+  return {reset:()=>{shown=false;render()}};
+}
 
-/* ---------- 08 reading ---------- */
-const TEXT=['In February 2024, Karina, a member of the K-pop group aespa, and the actor Lee Jae-wook went public with their relationship. For most people this would be ordinary news, but in the K-pop world it sparked a backlash.',
- 'Some fans claimed that the relationship had “ruined” her career. One fan even sent a truck with an electronic billboard to her agency in Seoul. The message on the screen asked: “Do you not get enough love from your fans?” It also warned that album sales would fall and concert seats would be empty.',
- 'Soon afterwards, Karina posted a handwritten letter on Instagram. She apologised to her fans and promised to “show more maturity”. Not all fans were angry, however: some supported the couple and criticised the backlash.',
- 'About five weeks after going public, the couple split up. Lee’s agency said that he had ended the relationship to focus on his work. Neither side mentioned the controversy, but many fans blamed the backlash for the break-up.',
- 'For years, K-pop labels have limited their idols’ public dating. Many fans feel very close to their idols, although they have never met them — and some behave as if the star belongs to them.'];
-let rdShown=false;
-function rdRender(){const r=$('rd');r.innerHTML='';$('rdBtn').textContent=rdShown?'Hide the text':'Show the text';
-  if(!rdShown){const c=el('div','cover');c.append(el('div','q','<span style="width:100%;text-align:center">A K-pop star apologises… for falling in love.</span>'),el('div','note','Predict: why would a star need to say sorry for a relationship?'),btn('btn','Show the text',()=>{rdShown=true;rdRender()}));r.appendChild(c);return}
-  const t=el('div','reading');TEXT.forEach(p=>t.appendChild(el('p','',p)));t.appendChild(el('p','src','Adapted from CNN news, April 2024.'));r.appendChild(t)}
-$('rdBtn').onclick=()=>{rdShown=!rdShown;rdRender()};
+/* ---------- choice game (generic): lava / rule or proposal ---------- */
+function chMake(bodyId,pillId,items,labels,o){
+  const r=$(bodyId),pill=$(pillId);let i,pts,lives;
+  function reset(){i=0;pts=0;lives=3;draw()}
+  function draw(){r.innerHTML='';
+    if(i>=items.length||(o.lives&&lives<=0)){pill.textContent='DONE';r.append(el('div','big',pts+' / '+items.length),el('div','note',(o.lives&&lives<=0)?o.bad:o.good));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',reset));r.appendChild(rw);return}
+    pill.textContent=(i+1)+' / '+items.length+' · '+pts+' pts';
+    const w=el('div','lava');if(o.lives)w.appendChild(el('div','lives','LIVES: '+'● '.repeat(lives)+'○ '.repeat(3-lives)));
+    const st=el('div','st');st.textContent=items[i][0];w.appendChild(st);
+    const s=el('div','stones');let done=false;const next=btn('btn',i===items.length-1?'See result':'Next →',()=>{i++;draw()});next.hidden=true;
+    const fb=el('div','note grow',o.hint||'');
+    labels.forEach((lab,k)=>s.appendChild(btn('',lab,e=>{if(done)return;done=true;const ok=(k===items[i][1]);if(ok)pts++;else if(o.lives)lives--;
+      e.currentTarget.classList.add(ok?'right':'wrong');[...s.children].forEach((x,j)=>{x.disabled=true;if(!ok&&j===items[i][1])x.classList.add('right')});
+      next.hidden=false;if(o.lives&&lives<=0)next.textContent='See result';if(items[i][2])fb.textContent=items[i][2];pill.textContent=(i+1)+' / '+items.length+' · '+pts+' pts'})));
+    w.appendChild(s);const rw=el('div','row');rw.append(fb,next);w.appendChild(rw);r.appendChild(w)}
+  return reset;
+}
 
-/* ---------- 09 floor is lava ---------- */
-const LV=[['Karina and Lee Jae-wook kept their relationship secret.',false],['All fans were happy about the news.',false],['A fan sent a truck with a digital screen to her agency.',true],['The message asked whether she got enough love from her fans.',true],['Karina apologised in a video on YouTube.',false],['She promised to show more maturity.',true],['The couple stayed together for five months after going public.',false],['Lee’s agency said he wanted to focus on his work.',true],['Both sides openly blamed the fans for the break-up.',false],['Some fans supported the couple.',true],['Some fans said the relationship had ruined her career.',true],['K-pop labels usually encourage idols to date in public.',false]];
-let lvI,lvPts,lvLives;
-function lvReset(){lvI=0;lvPts=0;lvLives=3;lvRender()}
-function lvRender(){const r=$('lv');r.innerHTML='';
-  if(lvI>=LV.length||lvLives<=0){$('lvPill').textContent='DONE';r.append(el('div','big',lvPts+' / '+LV.length),el('div','note',lvLives<=0?'You fell into the lava! Read the text again and try once more.':'You crossed the lava! Now correct the false sentences aloud.'));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',lvReset));r.appendChild(rw);return}
-  $('lvPill').textContent=(lvI+1)+' / '+LV.length+' · '+lvPts+' pts';
-  const w=el('div','lava');w.appendChild(el('div','lives','LIVES: '+'● '.repeat(lvLives)+'○ '.repeat(3-lvLives)));
-  const st=el('div','st');st.textContent=LV[lvI][0];w.appendChild(st);
-  const s=el('div','stones');let done=false;const next=btn('btn',lvI===LV.length-1?'See result':'Next →',()=>{lvI++;lvRender()});next.hidden=true;
-  [['TRUE',true],['FALSE',false]].forEach(([lab,v])=>s.appendChild(btn('',lab,e=>{if(done)return;done=true;const ok=v===LV[lvI][1];if(ok)lvPts++;else lvLives--;e.currentTarget.classList.add(ok?'right':'wrong');[...s.children].forEach(x=>x.disabled=true);next.hidden=false;if(!ok&&lvLives<=0)next.textContent='See result';$('lvPill').textContent=(lvI+1)+' / '+LV.length+' · '+lvPts+' pts'})));
-  w.appendChild(s);const rw=el('div','row');rw.append(el('span','note grow','Wrong stone = lava! You have 3 lives.'),next);w.appendChild(rw);r.appendChild(w)}
+/* ---------- multiple choice (generic): one question, four buttons in two columns ---------- */
+function mixq(q){const o=shuffle(q[1].map((t,j)=>[t,j===q[2]]));return [q[0],o.map(x=>x[0]),o.findIndex(x=>x[1])]}
+function mcMake(bodyId,pillId,items,endNote){
+  const r=$(bodyId),pill=$(pillId);let i,pts;
+  function reset(){i=0;pts=0;draw()}
+  function draw(){r.innerHTML='';
+    if(i>=items.length){pill.textContent='DONE';r.append(el('div','big',pts+' / '+items.length),el('div','note',endNote));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',reset));r.appendChild(rw);return}
+    const s=mixq(items[i]);pill.textContent=(i+1)+' / '+items.length+' · '+pts+' pts';
+    const w=el('div','sg');w.appendChild(el('div','q','<span style="width:100%;text-align:center">'+s[0]+'</span>'));
+    const two=el('div','two');let done=false;const next=btn('btn',i===items.length-1?'See result':'Next →',()=>{i++;draw()});next.hidden=true;
+    s[1].forEach((o,k)=>two.appendChild(btn('',o,()=>{if(done)return;done=true;[...two.children].forEach((b,j)=>{b.disabled=true;if(j===s[2])b.classList.add('right');else if(j===k)b.classList.add('wrong')});if(k===s[2])pts++;next.hidden=false;pill.textContent=(i+1)+' / '+items.length+' · '+pts+' pts'})));
+    w.appendChild(two);const rw=el('div','row');rw.append(el('span','grow'),next);w.appendChild(rw);r.appendChild(w)}
+  return reset;
+}
 
+/* ---------- facts about the three articles ---------- */
+const RD1={cover:'Seoul holds a contest where the winner is the person who does nothing.',predict:'Predict: how can anyone win by doing nothing? What are the rules?',
+ facts:['The Space-Out Competition is held in Seoul. This was its 11th year: 126 people in 80 teams took part, and more than 4,500 teams had applied.',
+ 'Participants (soldiers, train operators, swimmers…) zone out for 90 minutes after a short warm-up. They must stay still and not fall asleep.',
+ 'A first warning is for breaking focus; a second warning means disqualification. This year only one person got a warning.',
+ 'Staff dressed as doctors check heart rates. Winners are chosen by heart-rate stability and spectators’ votes.',
+ 'Three members of the Seoul punk band Pogo Attack won.',
+ 'The founder, the artist Woopsyang, felt burned out and anxious about always being busy. Her dream is a World Space-Out Day.'],
+ src:'Based on ESL News Stories, 22 July 2025 (Korea Times, New York Times). A short summary.'};
+const RD2={cover:'In Korea you can “order” food online — and nothing ever arrives.',predict:'Predict: why would anyone use a shopping site where nothing is delivered?',
+ facts:['“Dopamine sites” are a new online trend in South Korea. They copy real shopping and delivery apps, but nothing is bought and nothing is delivered.',
+ 'Users browse fake products or menus, read reviews, customize an order and add items to the cart.',
+ 'On some sites a virtual courier moves towards your address — but the order never arrives.',
+ 'A popular example is FoodNeverComes, made by the developer Malhee. He often opened delivery apps late at night without needing anything. It began as a joke.',
+ 'Psychologists suggest that preparing an order gives some of the excitement of buying, so it may satisfy the urge without spending.',
+ 'Supporters: entertainment, relief from boredom, less unnecessary spending. Critics: users still repeat the behaviour, so the impulse may only get a new digital form.'],
+ src:'Based on ESL News Stories, 27 July 2026 (Mashable). A short summary.'};
+const RD3={cover:'Korea has banned phones in classrooms. What about social media?',predict:'Predict: what rules for teenagers and phones exist in your country?',
+ facts:['In August 2025 the National Assembly passed a law banning phones during lessons in elementary, middle and high schools. It started on 1 March 2026.',
+ 'Exceptions: education or emergencies, if teachers or school officials approve. Enforcement has been uneven; Gyeonggi plans limits in breaks and at lunchtime too.',
+ 'Government data: 43% of Koreans aged 10–19 are at risk of smartphone overdependence. Teachers’ union survey (April 2026): 49.2% of 4th–6th graders use phones for over two hours a day after school.',
+ 'In May 2026, seven bills to limit minors’ social media were waiting in parliament. Ideas: age restrictions, time limits, safeguards against algorithms, parental consent, no infinite scrolling; officials also discuss a learning-only phone.',
+ 'Australia was the first country to ban under-16s from social media accounts. The UK, France, Spain, Greece and Norway are weighing stricter rules.',
+ 'Not everyone agrees: a Korean research institute calls social media key for young people’s relationships, and some say limits on children are unfair when adults depend on phones too.'],
+ src:'Based on Asia News Network (28 Aug 2025), Korea Herald (May 2026), Korea Times (1 July 2026).'};
+let RDA,RDB,RDC,LV1,MC2,LVR,MEMN;
+const LV1D=[['The Space-Out Competition takes place in Busan.',1,'It takes place in Seoul.'],['It was the 11th year of the competition.',0],['126 people in 80 teams took part.',0],['Only a few hundred teams applied.',1,'More than 4,500 teams applied.'],['Participants zone out for 90 minutes.',0],['Participants may fall asleep if they stay still.',1,'They must not fall asleep.'],['A second warning means disqualification.',0],['Many participants got warnings this year.',1,'Only one person got a warning.'],['Winners are chosen only by the audience’s votes.',1,'Heart-rate stability counts too.'],['Staff dressed as doctors check the heart rates.',0],['The winners were members of a Seoul punk band.',0],['The founder created the contest because she felt burned out.',0]];
+const MC2D=[['What do dopamine sites copy?','real shopping and delivery apps',0,['social networks','banks','school websites']],['What happens after you “order” on these sites?','Nothing is delivered.',0,['The food arrives in an hour.','You get a discount.','Your phone is blocked.']],['What can users see after entering an address?','a virtual courier moving towards them',0,['a real driver’s photo','a map of Seoul only','a bill']],['Who made the site FoodNeverComes?','the developer Malhee',0,['a psychologist','a delivery company','a school student']],['When did Malhee often open delivery apps?','late at night',0,['only at lunch','on holidays','in class']],['How did the idea begin?','as a joke',0,['as a school project','as a government plan','as an advert']],['What can browsing and preparing an order give, according to psychologists?','some of the excitement of buying',0,['a lot of savings','better sleep','real food']],['What might the sites help people do?','control unnecessary spending',0,['earn more money','order faster','find a job']],['What do critics say?','Users may still repeat the behaviour.',0,['The sites are too expensive.','The food is cold.','The sites are illegal.']],['Which of these is NOT mentioned as a feature?','real card payment',0,['reviews','customizing an order','adding items to a cart']]].map(x=>[x[0],[x[1]].concat(x[3]),0]);
+const RULED=[['Students may not use phones during lessons (since March 2026).',0],['Teachers or school officials can approve phone use for learning.',0],['Phones may be used in an emergency.',0],['The law covers elementary, middle and high schools.',0],['The National Assembly passed the law in 2025.',0],['A minimum age for social media accounts.',1,'Bills and commentators suggest it, but it is not law yet.'],['Parental consent for younger users.',1,'Only suggested so far.'],['Night-time limits on minors’ access.',1,'Only suggested so far.'],['Limits on recommendation algorithms for minors.',1,'Bills would add safeguards; none has passed.'],['Infinite scrolling and autoplay switched off for minors.',1,'Only suggested so far.'],['A simpler “learning-only” phone for children.',1,'Officials are only discussing it.'],['Seven bills on minors’ social media were waiting in parliament in May 2026.',1,'They are bills, not laws.']];
+const NUMD=[['43%','Koreans aged 10–19 at risk of overdependence'],['26%','children aged 3–9 in the same risk group'],['2,804','students in the teachers’ union survey'],['49.2%','of 4th–6th graders: over 2 hours a day'],['16.5%','of sixth-graders: over 4 hours a day'],['48.8%','of teens almost always online'],['115','votes in favour of the phone law'],['7','bills on minors’ social media waiting'],['1 March 2026','classroom phone ban starts'],['Under 16','Australia’s limit for social media accounts']];
 /* ---------- 10 grammar text (ЕГЭ format) ---------- */
-const FIPI=[
- ['K-pop fans are known','huge amounts of money on their idols.','SPEND','to spend'],
- ['Several agencies are reported','fans to buy many copies of the same album.','ENCOURAGE','to have encouraged'],
- ['Photocards are said','into the albums at random.','PUT','to be put'],
- ['Never before','a small piece of card been so valuable.','HAVE','has'],
- ['Not only','fans buy albums, but they also crowdfund adverts in the subway.','DO','do'],
- ['If fans','less, agencies would sell fewer albums.','SPEND','spent'],
- ['Rarely','a true fan buy just one copy of a new album.','DO','does'],
- ['A birthday advert at Samsung station is thought','about 7 million won.','COST','to cost'],
- ['Had the fans','how expensive the adverts would become, they would have started saving earlier.','KNOW','known'],
- ['Only after the prices went up','some fandoms move their adverts to cheaper stations.','DO','did'],
- ['If she hadn’t bought ten albums last month, she','enough money for the concert now.','HAVE','would have'],
- ['The fandom is believed','money for months before the idol’s birthday.','RAISE','to have raised']
-];
+const FIPI=[["Teenagers are known", "hours on their phones every day.", "SPEND", "to spend"], ["South Korea is said", "phones in classrooms since March 2026.", "BAN", "to have banned"], ["Never before", "young people been so connected.", "BE", "have"], ["Not only", "teenagers lose sleep, but they also lose focus.", "DO", "do"], ["If teenagers", "less time online, they would sleep better.", "SPEND", "spent"], ["Rarely", "a person pause for ninety minutes without checking a phone.", "DO", "does"], ["Dopamine sites are believed", "people control unnecessary spending.", "HELP", "to help"], ["Had she", "the price, she would not have shelled out so much.", "KNOW", "known"], ["Only after the app closed", "he realise that he had spent nothing.", "DO", "did"], ["If he hadn’t racked up so much debt last year, he", "a side hustle now.", "NEED", "wouldn’t need"], ["No sooner", "she opened the app than she wanted to order food.", "HAVE", "had"], ["The new law is believed", "students’ right to learn.", "PROTECT", "to protect"]];
 let ruleOn=false;
 function fipiRender(){const r=$('fipi');r.innerHTML='';
-  if(ruleOn){const l=el('div','list');['<b>Inversion:</b> Never / Rarely / Seldom / Not only + <b>auxiliary + subject</b>: <i>Rarely do fans…</i>','<b>Only after / Only when / Not until</b> → inversion in the main clause: <i>Only after… did they…</i>','<b>Passive reporting:</b> is said / believed / known / thought + <b>to do</b> (now) · <b>to be done</b> (passive) · <b>to have done</b> (earlier)','<b>Conditionals:</b> If + Past Simple → would do · <b>Had + subject + V3</b> → would have done · mixed: If + Past Perfect → would do (now)','<b>Watch out:</b> after <i>Never before</i> the auxiliary agrees with the subject: <i>has a card been…</i>'].forEach(x=>l.appendChild(el('div','',x)));r.appendChild(l);return}
+  if(ruleOn){const l=el('div','list');['<b>Inversion:</b> Never / Rarely / Seldom / Not only + <b>auxiliary + subject</b>: <i>Rarely do teenagers…</i>','<b>Only after / Only when / Not until</b> → inversion in the main clause: <i>Only after the app closed did he…</i>','<b>Passive reporting:</b> is said / believed / known / thought + <b>to do</b> (now) · <b>to be done</b> (passive) · <b>to have done</b> (earlier)','<b>Conditionals:</b> If + Past Simple → would do · <b>Had + subject + V3</b> → would have done · mixed: If + Past Perfect → would do (now)','<b>Watch out:</b> after <i>Never before</i> the auxiliary agrees with the subject: <i>have young people been…</i>'].forEach(x=>l.appendChild(el('div','',x)));r.appendChild(l);return}
   r.appendChild(el('div','note','Read the text. Change the word on the right so that it fits the gap. Tap a gap to check.'));
   const f=el('div','fipi');FIPI.forEach((x,i)=>{const row=el('div','row2');row.appendChild(el('span','no',String(i+1)));const line=el('div','line');line.append(document.createTextNode(x[0]+' '));const g=btn('gap',x[3],e=>e.currentTarget.classList.toggle('show'));line.append(g,document.createTextNode(' '+x[1]));row.append(line,el('span','kw',x[2]));f.appendChild(row)});r.appendChild(f)}
 $('ruleBtn').onclick=()=>{ruleOn=!ruleOn;$('ruleBtn').textContent=ruleOn?'Text':'Rule';fipiRender()};
 
 /* ---------- 11 grammar doctor / speed game ---------- */
-const GD=[
- ['Rarely fans buy only one album.','fans','Rarely do fans buy only one album.'],
- ['She is said to has posted a handwritten letter.','has','She is said to have posted a handwritten letter.'],
- ['Not only fans sent messages, but they also sent a truck.','fans','Not only did fans send messages, but they also sent a truck.'],
- ['If I had more money, I will buy a ticket to Seoul.','will','If I had more money, I would buy a ticket to Seoul.'],
- ['The idol is believed to dating an actor.','dating','The idol is believed to be dating an actor.'],
- ['Had she knew about the backlash, she would have waited.','knew','Had she known about the backlash, she would have waited.'],
- ['Never I have seen such a loyal fandom.','I','Never have I seen such a loyal fandom.'],
- ['The advert is thought to cost 7 million won last year.','cost','The advert is thought to have cost 7 million won last year.'],
- ['Only when the price rose fans moved the advert.','fans','Only when the price rose did fans move the advert.'],
- ['If he didn’t buy so many photocards last year, he would have money now.','didn’t','If he hadn’t bought so many photocards last year, he would have money now.']
-];
-const SG=[
- ['Hardly ___ the news broken when the comments started.',['had','was','did','has'],0],
- ['The truck is said ___ outside the agency all day.',['to stand','to have stood','standing','stood'],1],
- ['If idols ___ free to date, fans might accept it.',['are','will be','were','had been'],2],
- ['Not until the next day ___ she reply.',['was','had','does','did'],3],
- ['Fans are believed ___ millions on albums every year.',['to spend','spending','to have been spent','spent'],0],
- ['Under no circumstances ___ trainees miss a practice.',['do','should','have','are'],1],
- ['If she hadn’t gone public, she ___ the backlash.',['won’t face','wouldn’t face','wouldn’t have faced','hadn’t faced'],2],
- ['Seldom ___ fans think about the idol’s feelings.',['are','have','did','do'],3],
- ['The album is reported ___ a million copies in its first week.',['to have sold','to sell','selling','sold'],0],
- ['No sooner ___ the photo appeared than fans started arguing.',['did','had','was','have'],1]
-];
+const GD=[["Rarely teenagers put their phones away.", "teenagers", "Rarely do teenagers put their phones away."], ["The law is said to bans phones in class.", "bans", "The law is said to ban phones in class."], ["Never I have felt so exhausted.", "I", "Never have I felt so exhausted."], ["If I had a side hustle, I will save more.", "will", "If I had a side hustle, I would save more."], ["Not only she shells out for clothes, but she also buys gadgets.", "she", "Not only does she shell out for clothes, but she also buys gadgets."], ["Had he knew the price, he would have paid less.", "knew", "Had he known the price, he would have paid less."], ["Only when the app crashed he stopped scrolling.", "he", "Only when the app crashed did he stop scrolling."], ["The idea is believed to started as a joke.", "started", "The idea is believed to have started as a joke."], ["If she hadn’t cut back on spending, she doesn’t have savings now.", "doesn’t", "If she hadn’t cut back on spending, she wouldn’t have savings now."], ["Under no circumstances you should shell out so much.", "you", "Under no circumstances should you shell out so much."]];
+const SG=[["Hardly ___ I put my phone down when it buzzed again.", ["had", "did", "was", "have"], 0], ["A study is reported ___ in Seoul last month.", ["to have been published", "to publish", "publishing", "to be publish"], 0], ["If students ___ phones in class, they would listen better.", ["don’t have", "didn’t have", "hadn’t", "won’t have"], 1], ["Not until the next morning ___ she delete the app.", ["was", "had", "does", "did"], 3], ["Seldom ___ people turn off all notifications.", ["are", "have", "did", "do"], 3], ["Under no circumstances ___ students use phones in exams.", ["do", "should", "have", "are"], 1], ["If I hadn’t shopped around, I ___ much more.", ["would pay", "will pay", "would have paid", "had paid"], 2], ["The founder is known ___ burned out before she created the contest.", ["to have felt", "to feel", "feeling", "to be felt"], 0], ["No sooner ___ the app opened than the virtual courier appeared.", ["did", "had", "was", "has"], 1], ["Only by cutting back ___ she pay off her debt.", ["could", "can", "was", "had"], 0]];
 let gdI,gdPts,sgI,sgPts,sgT=null,sgLeft;
 function sgStop(){if(sgT){clearInterval(sgT);sgT=null}}
 function gRender(i){sgStop();if(i===0)gdReset();else sgReset()}
@@ -640,7 +639,7 @@ function gdRender(){const r=$('gbody');r.innerHTML='';
 function sgReset(){sgStop();sgI=0;sgPts=0;sgRender(false)}
 function sgRender(run){const r=$('gbody');r.innerHTML='';sgStop();
   if(sgI>=SG.length){$('gPill').textContent=sgPts+' pts';r.append(el('div','big',sgPts+' / '+SG.length),el('div','note','Speed Game finished!'));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',sgReset));r.appendChild(rw);return}
-  const s=SG[sgI];$('gPill').textContent=(sgI+1)+' / '+SG.length+' · '+sgPts+' pts';
+  const s=mixq(SG[sgI]);$('gPill').textContent=(sgI+1)+' / '+SG.length+' · '+sgPts+' pts';
   const w=el('div','sg');const bar=el('div','sgbar');bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="sgRing" cx="50" cy="50" r="45"/></svg><span id="sgSec">10</span>'));bar.appendChild(el('span','note grow','<b>Speed Game.</b> 10 seconds for each question.'));w.appendChild(bar);
   if(!run){w.appendChild(el('div','q','<span style="width:100%;text-align:center">Ready? Choose the right answer before the time runs out.</span>'));const rw=el('div','row');rw.append(el('span','grow'),btn('btn','Start',()=>sgRender(true)),el('span','grow'));w.appendChild(rw);r.appendChild(w);ring('sgRing',1,'10','sgSec');return}
   w.appendChild(el('div','q','<span style="width:100%;text-align:center">'+s[0].replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')+'</span>'));
@@ -650,33 +649,22 @@ function sgRender(run){const r=$('gbody');r.innerHTML='';sgStop();
   sgLeft=10;ring('sgRing',1,'10','sgSec');sgT=setInterval(()=>{sgLeft--;ring('sgRing',sgLeft/10,String(sgLeft),'sgSec');if(sgLeft<=0)finish(-1)},1000)}
 
 /* ---------- 12 auction ---------- */
-const AU=[
- ['A birthday advert for your idol at Samsung station in Seoul','about 7,000,000 won','Real fact: fandoms crowdfund these adverts. In 2022 the price at Samsung station went up by 50%.'],
- ['Ten copies of the same album — to get one photocard of your favourite member','10 × album price','Real fact: photocards are put into albums at random. One group, NCT, released 50 different cards with one album.'],
- ['A truck with a digital billboard to send a message to your idol’s agency','a few thousand dollars','Real fact: in 2024 an angry fan sent a truck like this to Karina’s agency.'],
- ['A cheaper birthday advert at a smaller station','about 3,000,000 won','Real fact: when prices went up, some fandoms moved their adverts to cheaper stations.'],
- ['A rare photocard that another fan is selling online','five times the album price','Real fact: in 2023 Korea’s competition watchdog checked whether agencies made some cards rarer on purpose.'],
- ['A ticket to see your favourite group live in Seoul — plus the flight','a month of pocket money × 10','What would you give up to pay for it?'],
- ['A premium K-drama subscription: no adverts, new episodes first','every month','Is it worth it if you can watch the episodes later for free?'],
- ['A hoodie, a lightstick and a poster with your idol’s name','a whole set of merch','Would you wear it to school? Why or why not?'],
- ['A one-week K-pop dance course in Seoul','your summer savings','Could you live like a trainee for a week?'],
- ['A donation to charity in your idol’s name for his birthday','any amount','Is this a better way to show love than an advert?']
-];
+const AU=[["Phones should be banned in schools all day, not only during lessons.", "PHONES IN SCHOOLS", "Fact: Korea’s law bans phones only during lessons. Gyeonggi Province plans limits in breaks and at lunchtime too."], ["Teenagers under 16 should not be allowed to have social media accounts.", "AGE LIMIT", "Fact: Australia was the first country to ban under-16s from holding accounts. Korea has bills, but none has passed."], ["Infinite scrolling and autoplay should be switched off for minors.", "DESIGN", "Fact: this is one of the ideas suggested in Korea to protect young users."], ["Parents, not governments, should decide what teenagers do online.", "WHO DECIDES", "Fact: ideas in Korea include parental consent for younger users."], ["A phone with learning apps only is a good idea for children.", "SIMPLE PHONES", "Fact: the chair of the Education Committee suggested it; the Education Minister is cautiously open to the idea."], ["Doing nothing for 90 minutes is a good way to fight burnout.", "SPACE-OUT", "Fact: the Seoul contest began because its founder felt burned out. This year was its 11th."], ["Dopamine sites are a clever way to stop impulse buying.", "DOPAMINE SITES", "Fact: psychologists say browsing may satisfy the urge; critics say people still repeat the behaviour."], ["Limits on children are unfair when adults are also dependent on their phones.", "FAIRNESS", "Fact: some people in Korea make exactly this argument."], ["Social media is key for young people to build relationships.", "WHY TEENS ARE ONLINE", "Fact: a Korean research institute called social media key infrastructure for young people."], ["Recommendation algorithms should be limited for under-18s.", "ALGORITHMS", "Fact: some bills and proposals in Korea suggest safeguards against engagement-driven algorithms."]];
 let auI,auBuy;
 function auReset(){auI=0;auBuy=0;auRender()}
 function auRender(){const r=$('au');r.innerHTML='';
-  if(auI>=AU.length){$('auPill').textContent='DONE';r.append(el('div','big','You bought '+auBuy+' / '+AU.length),el('div','note','Are you a careful spender or a big spender? Which purchase would you never make? Why?'));const rw=el('div','row');rw.appendChild(btn('btn light','Start again',auReset));r.appendChild(rw);return}
-  const a=AU[auI];$('auPill').textContent='LOT '+(auI+1)+' / '+AU.length;
-  const card=el('div','lot','<div class="lot-in"><div class="lot-face lot-front"><div class="lotn">LOT '+(auI+1)+'</div><div class="what"></div><div class="price"></div></div><div class="lot-face lot-back"><div class="vd"></div><div class="fact"></div><div class="ask">Justify your choice in 20 seconds.</div></div></div>');
+  if(auI>=AU.length){$('auPill').textContent='DONE';r.append(el('div','big','You agreed with '+auBuy+' / '+AU.length),el('div','note','Which statement did you change your mind about after the fact? Which one would you argue about with a friend?'));const rw=el('div','row');rw.appendChild(btn('btn light','Start again',auReset));r.appendChild(rw);return}
+  const a=AU[auI];$('auPill').textContent='STATEMENT '+(auI+1)+' / '+AU.length;
+  const card=el('div','lot','<div class="lot-in"><div class="lot-face lot-front"><div class="lotn">STATEMENT '+(auI+1)+'</div><div class="what"></div><div class="price"></div></div><div class="lot-face lot-back"><div class="vd"></div><div class="fact"></div><div class="ask">Justify your choice in 20 seconds. Use 2–3 words from the lesson.</div></div></div>');
   card.querySelector('.what').textContent=a[0];card.querySelector('.price').textContent=a[1];card.querySelector('.fact').textContent=a[2];r.appendChild(card);
-  const bp=el('div','bp');const next=btn('btn',auI===AU.length-1?'See result':'Next lot →',()=>{auI++;auRender()});next.hidden=true;
-  [['BUY','buy'],['PASS','pass']].forEach(([lab,c])=>bp.appendChild(btn(c,lab,()=>{if(c==='buy')auBuy++;card.querySelector('.vd').textContent='YOU CHOSE: '+lab;[...bp.children].forEach(x=>x.disabled=true);card.classList.add('flipped');next.hidden=false})));
-  r.appendChild(bp);const rw=el('div','row');rw.append(el('span','note grow','Decide first — then flip the lot.'),next);r.appendChild(rw)}
+  const bp=el('div','bp');const next=btn('btn',auI===AU.length-1?'See result':'Next statement →',()=>{auI++;auRender()});next.hidden=true;
+  [['AGREE','buy'],['DISAGREE','pass']].forEach(([lab,c])=>bp.appendChild(btn(c,lab,()=>{if(c==='buy')auBuy++;card.querySelector('.vd').textContent='YOU CHOSE: '+lab;[...bp.children].forEach(x=>x.disabled=true);card.classList.add('flipped');next.hidden=false})));
+  r.appendChild(bp);const rw=el('div','row');rw.append(el('span','note grow','Decide first — then check the fact.'),next);r.appendChild(rw)}
 
 /* ---------- 13 wheel + 3-2-1 ---------- */
-const WH=['Idols should be allowed to date openly.','Fans have the right to know about a star’s private life.','Spending money on merch is a waste.','Trainee programmes should have an age limit.','Social media makes fans more aggressive.','Agencies should stop selling random photocards.','Being a fan makes young people happier.','A public apology is sometimes unfair.'];
-const WCOL=['#dfece5','#f3e6dc','#e4ebf1','#f1ead6','#e9e2ef','#e2eee9','#f4e1dc','#e6e9dc'];
-const WWORDS=['fandom','go public','spark a backlash','parasocial relationship','merch','crowdfund','spend a fortune on','be under pressure','issue a public apology','collectible'];
+const WH=["Phones should be banned in schools all day, not only during lessons.", "Teenagers under 16 should not have social media accounts.", "Doing nothing for an hour is a better way to relax than scrolling.", "Dopamine sites are a smart way to stop impulse buying.", "Governments, not parents, should control what teenagers see online.", "Likes and followers matter too much to young people.", "Adults should follow the same phone rules as teenagers.", "A learning-only phone is a good solution for children.", "Schools, not parents, should teach teenagers how to use social media.", "Everyone should take a digital detox at least once a year."];
+const WCOL=['#dfece5','#f3e6dc','#e4ebf1','#f1ead6','#e9e2ef','#e2eee9','#f4e1dc','#e6e9dc','#e3e8f2','#efe3e8'];
+const WWORDS=["side hustle", "crave validation", "burned out", "zone out", "impulse", "urge", "ban", "age restriction", "smartphone overdependence", "digital detox"];
 let whRot=0,whT=null;function whStop(){if(whT){clearInterval(whT);whT=null}}
 function wheelSVG(){const n=WH.length,R=50;let s='<svg viewBox="0 0 100 100" id="whSvg">';for(let i=0;i<n;i++){const a0=(i/n)*2*Math.PI-Math.PI/2,a1=((i+1)/n)*2*Math.PI-Math.PI/2;const x0=50+R*Math.cos(a0),y0=50+R*Math.sin(a0),x1=50+R*Math.cos(a1),y1=50+R*Math.sin(a1);const am=(a0+a1)/2;
   s+='<path d="M50 50 L'+x0.toFixed(2)+' '+y0.toFixed(2)+' A50 50 0 0 1 '+x1.toFixed(2)+' '+y1.toFixed(2)+' Z" fill="'+WCOL[i]+'" stroke="#fff" stroke-width="1"/>';
@@ -692,7 +680,7 @@ function whSpin(){whStop();const n=WH.length,k=Math.floor(Math.random()*n);const
     bar.appendChild(btn('btn','Start 60 s',()=>{whStop();l=60;ring('whRing',1,'60','whSec');whT=setInterval(()=>{l--;ring('whRing',l/60,String(l),'whSec');$('whPill').textContent=l+' s';if(l<=0)whStop()},1000)}));rr.appendChild(bar);ring('whRing',1,'60','whSec')},3300)}
 
 /* ---------- 02b mystery box ---------- */
-const MB=['Name three K-dramas and say which one you would recommend.','Describe your perfect day in Seoul in 30 seconds.','Explain what a fandom is — as if you were talking to your grandmother.','Say three things you would never buy as a fan, and why.','Give two reasons why K-pop is popular in Russia.','Tell a short story about a time you were a big fan of something.','BONUS! You get 2 points — no task this time.','SWAP! Ask your teacher a question about fame.','Would you rather be a famous idol or a famous actor? Why?','Finish the sentence: “If I were a K-pop star, I would never…”'];
+const MB=["Explain “side hustle” to a ten-year-old in 30 seconds.", "Describe your phone habits for 30 seconds. Use “urge” or “impulse”.", "Say three things you would do in a 90-minute space-out contest instead of falling asleep.", "Give two reasons why teenagers crave validation online.", "BONUS! You get 2 points — no task this time.", "Tell a short story about something you bought on impulse.", "SWAP! Ask your teacher a question about phones in school.", "Would you rather lose your phone for a week or your savings for a month? Why?", "Explain what a “digital footprint” is — as if you were talking to your grandmother.", "Finish the sentence: “If I could change one rule about social media, I would…”"];
 const MBCOL=['#e2456a','#2f74d0','#2a9b62','#ef8a1f','#7a4fd1','#d9497f','#1f8fa0','#c0841f','#3b63c4','#a24fd1'];
 let mbOrder,mbOpened;
 function mbReset(){mbOrder=shuffle(MB.map((_,i)=>i));mbOpened=new Set();mbRender(-1)}
@@ -703,7 +691,7 @@ function mbRender(k){const r=$('qf');r.innerHTML='';$('qfPill').textContent=mbOp
 function wRender(i){qfStop();if(i===0)qfReset();else mbReset()}
 
 /* ---------- 04b odd one out ---------- */
-const OD=[[['fandom','fan club','community','billboard'],3,'The others are groups of people.'],[['trainee','debut','practice','apology'],3,'The others are about becoming a star.'],[['merch','photocard','album','agency'],3,'The others are things fans buy.'],[['crowdfund','donate','raise money','criticise'],3,'The others are about giving money.'],[['backlash','criticism','outrage','support'],3,'The others are negative reactions.'],[['go public','reveal','announce','hide'],3,'The others mean “let people know”.'],[['spend a fortune','splurge','save up','shell out'],2,'The others mean spending a lot.'],[['Seoul','Busan','Incheon','Tokyo'],3,'The others are cities in South Korea.'],[['idol','actor','singer','viewer'],3,'The others are performers.'],[['under pressure','stressed','anxious','relaxed'],3,'The others describe stress.']];
+const OD=[[["frugal", "thrifty", "careful with money", "shell out"], 3, "The others mean “not spending much”."], [["rack up debt", "run up a bill", "pay off debt", "get into debt"], 2, "The others mean “owe more money”."], [["cut back on", "save up for", "shop around", "splurge on"], 3, "The others are careful money habits."], [["crave validation", "seek attention", "curate a persona", "pay back"], 3, "The others are about how people behave online."], [["face a backlash", "be held accountable", "cross the line", "side hustle"], 3, "The others are about criticism and responsibility."], [["digital footprint", "online persona", "scrutiny", "heart rate"], 3, "The others are about how we appear online."], [["burned out", "exhausted", "worn out", "energetic"], 3, "The others mean “very tired”."], [["pause", "zone out", "rest", "shell out"], 3, "The others are about stopping and relaxing."], [["urge", "impulse", "craving", "psychologist"], 3, "The others are strong wishes to do something."], [["ban", "restrict", "limit", "encourage"], 3, "The others mean “make something less allowed”."]];
 let odI,odPts;
 function odReset(){odI=0;odPts=0;odRender()}
 function odRender(){const r=$('mem');r.innerHTML='';
@@ -713,13 +701,10 @@ function odRender(){const r=$('mem');r.innerHTML='';
   const two=el('div','two');let done=false;const fb=el('div','note','');const next=btn('btn',odI===OD.length-1?'See result':'Next →',()=>{odI++;odRender()});next.hidden=true;
   o[0].forEach((x,k)=>two.appendChild(btn('',x,e=>{if(done)return;done=true;if(k===o[1])odPts++;[...two.children].forEach((b,j)=>{b.disabled=true;if(j===o[1])b.classList.add('right');else if(j===k)b.classList.add('wrong')});fb.innerHTML='<b>'+o[0][o[1]]+'</b> — '+o[2];next.hidden=false;$('memPill').textContent=(odI+1)+' / '+OD.length+' · '+odPts+' pts'})));
   w.append(two,fb);const rw=el('div','row');rw.append(el('span','grow'),next);w.appendChild(rw);r.appendChild(w)}
-function mRender(i){if(i===0)memReset();else odReset()}
+function mRender(i){if(i===0)MEMA();else if(i===1)MEMB();else odReset()}
 
 /* ---------- 14 jeopardy ---------- */
-const JP=[['WORDS',[['A young person training to become a K-pop star','trainee'],['To collect money from many people for one project','crowdfund'],['A one-sided feeling of closeness to a star you have never met','a parasocial relationship'],['To cause a strong negative public reaction','to spark a backlash']]],
- ['GRAMMAR',[['Rarely ___ fans buy only one album.','do'],['She is said ___ (post) a handwritten letter.','to have posted'],['Had she ___ (know) about the backlash, she would have waited.','known'],['Correct it: “Only when the price rose fans moved the advert.”','Only when the price rose did fans move the advert.']]],
- ['THE TEXT',[['What did the angry fan send to Karina’s agency?','a truck with an electronic billboard'],['How did Karina apologise?','in a handwritten letter on Instagram'],['How long after going public did the couple split up?','about five weeks'],['What reason did Lee’s agency give for the break-up?','He wanted to focus on his work.']]],
- ['KOREA FACTS',[['Since March 2026, what is banned during lessons in Korean schools?','phones'],['How long does the Space-Out contest last?','90 minutes'],['Why do fans buy many copies of the same album?','Photocards are put into albums at random.'],['About how much can a birthday advert at Samsung station cost?','about 7 million won']]]];
+const JP=[["WORDS", [["Having just enough money for basic costs", "make ends meet"], ["To strongly want approval from other people", "crave validation"], ["Extremely tired from too much work or stress", "burned out"], ["A sudden strong wish to do something without thinking", "an impulse"]]], ["GRAMMAR", [["Rarely ___ teenagers put their phones away.", "do"], ["The new law is believed ___ (protect) students’ right to learn.", "to protect"], ["Had she ___ (know) the price, she would have waited.", "known"], ["Correct it: “Never I have felt so tired.”", "Never have I felt so tired."]]], ["SPACE-OUT & DOPAMINE", [["How long do participants zone out in the Seoul contest?", "90 minutes"], ["What happens after a second warning?", "disqualification"], ["What do dopamine sites never do after you “order”?", "deliver anything"], ["What does the virtual courier do on the map?", "moves towards your address, but never arrives"]]], ["KOREA RULES", [["From which date are phones banned in class?", "1 March 2026"], ["Which schools does the law cover?", "elementary, middle and high schools"], ["What percentage of Koreans aged 10–19 are at risk of smartphone overdependence?", "43%"], ["Name one idea that is only a proposal, not a law.", "e.g. a minimum age, parental consent, night-time limits, limits on algorithms"]]]];
 let jpUsed,jpA,jpB;
 function jpReset(){jpUsed=new Set();jpA=0;jpB=0;jpBoard()}
 function jpScore(){return el('div','score','<span>Kate: '+jpA+'</span><span>Teacher: '+jpB+'</span>')}
@@ -733,26 +718,35 @@ function jpQ(ci,v){const r=$('jp');r.innerHTML='';const q=JP[ci][1][v],pts=(v+1)
   const rw=el('div','row');rw.append(btn('btn light','Flip',()=>c.classList.toggle('flipped')),el('span','grow'),btn('btn','Kate +'+pts,()=>{jpA+=pts;jpBoard()}),btn('btn','Teacher +'+pts,()=>{jpB+=pts;jpBoard()}),btn('btn light','Nobody',jpBoard));r.append(rw,jpScore())}
 
 /* ---------- 15 escape room ---------- */
-const ER=[['WORDS',[['Only a few trainees ever ___ their debut.',['make','do','take','give'],0],['The couple went ___ with their relationship.',['out','open','public','clear'],2],['The fans ___ a giant billboard.',['crowded','crowdfunded','funded up','donated off'],1]]],
- ['GRAMMAR',[['Never before ___ fans spent so much on albums.',['has','did','were','have'],3],['The idol is believed ___ an actor.',['to be dating','dating','to dated','dates'],0],['If I ___ rich, I would fly to Seoul tomorrow.',['am','will be','were','had been'],2]]],
- ['THE TEXT',[['What did Karina promise her fans?',['to leave the group','to show more maturity','to stop dating','to quit Instagram'],1],['Who supported the couple?',['the agency','nobody','some fans','a TV channel'],2],['What did the billboard warn about?',['falling album sales','higher ticket prices','a new group','bad weather'],0]]],
- ['KOREA',[['Where do fans often put birthday adverts for idols?',['on the moon','in the subway','in schools','in hospitals'],1],['Who checked K-pop agencies in 2023?',['the police','the fans','BTS','Korea’s competition watchdog'],3],['What does a Space-Out winner need?',['the calmest heart rate','the most followers','the best dance','the loudest voice'],0]]]];
-const CODE=['2','0','2','4'];
+const ER=[["WORDS", [["A strong wish to do something is an ___.", ["urge", "ban", "pause", "courier"], 0], ["A person who is careful with money is ___.", ["frugal", "hard-hit", "sold out", "burned out"], 0], ["To change something to fit your taste is to ___ it.", ["customize", "satisfy", "disqualify", "ban"], 0]]], ["GRAMMAR", [["Never before ___ young people been so connected.", ["have", "did", "are", "were"], 0], ["Not until midnight ___ he close the app.", ["was", "had", "did", "does"], 2], ["If she hadn’t cut back, she ___ any savings now.", ["wouldn’t have", "won’t have", "didn’t have", "hadn’t"], 0]]], ["SPACE-OUT & DOPAMINE", [["What gets a person disqualified in the Space-Out contest?", ["a second warning", "a loud laugh", "arriving early", "a high pulse only"], 0], ["Who created FoodNeverComes?", ["Malhee", "Woopsyang", "Choi I-ro", "Pogo Attack"], 0], ["What do critics say about dopamine sites?", ["Users may repeat the behaviour", "They are too expensive", "They deliver cold food", "They are illegal"], 0]]], ["KOREA RULES", [["When did the classroom phone ban start?", ["March 2026", "August 2025", "January 2024", "September 2026"], 0], ["Which of these is only a proposal in Korea?", ["a minimum age for accounts", "a ban during lessons", "exceptions for emergencies", "a law for elementary schools"], 0], ["Which country was first to ban under-16s from social media accounts?", ["Australia", "France", "Norway", "Spain"], 0]]]];
+const CODE=['2','0','2','6'];
 let erL,erQ,erMiss;
 function erReset(){erL=0;erQ=0;erMiss=0;erRender()}
 function erRender(){const r=$('er');r.innerHTML='';
   const lk=el('div','locks');ER.forEach((l,i)=>lk.appendChild(el('div',(i<erL?'open':'')+(i===erL?' cur':''),'<small>LOCK '+(i+1)+' · '+l[0]+'</small><b>'+(i<erL?CODE[i]:'?')+'</b>')));r.appendChild(lk);
-  if(erL>=ER.length){$('erPill').textContent='ESCAPED';const d=el('div','door');d.append(el('div','lab','THE DOOR IS OPEN'),el('div','code',CODE.join('')),el('div','note','2024 — the year of Karina’s story. Mistakes: '+erMiss+'.'));r.appendChild(d);const rw=el('div','row');rw.appendChild(btn('btn light','Lock the room again',erReset));r.appendChild(rw);return}
-  const q=ER[erL][1][erQ];$('erPill').textContent='Lock '+(erL+1)+' · '+(erQ+1)+' / 3';
+  if(erL>=ER.length){$('erPill').textContent='ESCAPED';const d=el('div','door');d.append(el('div','lab','THE DOOR IS OPEN'),el('div','code',CODE.join('')),el('div','note','2026 — the year the classroom phone ban started. Mistakes: '+erMiss+'.'));r.appendChild(d);const rw=el('div','row');rw.appendChild(btn('btn light','Lock the room again',erReset));r.appendChild(rw);return}
+  const q=mixq(ER[erL][1][erQ]);$('erPill').textContent='Lock '+(erL+1)+' · '+(erQ+1)+' / 3';
   const w=el('div','sg');w.appendChild(el('div','q','<span style="width:100%;text-align:center">'+q[0].replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>')+'</span>'));
   const two=el('div','two');q[1].forEach((o,k)=>two.appendChild(btn('',o,e=>{if(k===q[2]){e.currentTarget.classList.add('right');[...two.children].forEach(b=>b.disabled=true);setTimeout(()=>{erQ++;if(erQ>=3){erQ=0;erL++}erRender()},650)}else{erMiss++;const b=e.currentTarget;b.classList.add('wrong');b.disabled=true}})));
   w.appendChild(two);w.appendChild(el('div','note','Three right answers open a lock and show one digit of the code.'));r.appendChild(w)}
 
 /* ---------- reset: every time from the start ---------- */
 function resetAll(){
-  ivI=0;ivRender();segTabs('wTabs',['Quick Fire','Mystery Box'],wRender);fcReset();segTabs('mTabs',['Memory','Odd One Out'],mRender);fwReset();videoReset();pPg=0;vqI=0;segTabs('vTabs',['Predict','30-second talk'],vRender);
-  rdShown=false;rdRender();lvReset();ruleOn=false;$('ruleBtn').textContent='Rule';fipiRender();segTabs('gTabs',['Grammar doctor','Speed Game'],gRender);auReset();whReset();jpReset();erReset();$('tnPanel').hidden=true;
+  ivI=0;ivRender();segTabs('wTabs',['Quick Fire','Mystery Box'],wRender);
+  DK1=deckMake('deck1',[['Money',MONEYC],['Social media',SOCC]]);DK2=deckMake('deck2',[['Korea',CARDS]]);
+  MEMA=memMake('mem','memPill',MONEYC.slice(0,10).map(c=>[c[0],c[3]]));MEMB=memMake('mem','memPill',SOCC.slice(0,10).map(c=>[c[0],c[3]]));
+  segTabs('mTabs',['Money memory','Social media memory','Odd one out'],mRender);fwReset();
+  ruleOn=false;$('ruleBtn').textContent='Rule';fipiRender();segTabs('gTabs',['Grammar doctor','Speed Game'],gRender);
+  RDA.reset();LV1();RDB.reset();MC2();RDC.reset();segTabs('rTabs',['Rule or proposal','Numbers'],rRender);
+  auReset();whReset();jpReset();erReset();$('tnPanel').hidden=true;
 }
+function rRender(i){if(i===0)LVR();else MEMN()}
+$('fc1Shuffle').onclick=()=>DK1.shuffle();$('fc2Shuffle').onclick=()=>DK2.shuffle();
+RDA=rdMake('rd1','rd1Btn',RD1);RDB=rdMake('rd2','rd2Btn',RD2);RDC=rdMake('rd3','rd3Btn',RD3);
+LV1=chMake('lv1','lv1Pill',LV1D,['TRUE','FALSE'],{lives:true,hint:'Wrong stone = lava! 3 lives.',good:'You crossed the lava! Now correct the false sentences aloud.',bad:'You fell into the lava! Read the facts again and try once more.'});
+MC2=mcMake('mc2','mc2Pill',MC2D,'Retell the article in your own words. Use three facts and two new words.');
+LVR=chMake('rbody','rPill',RULED,['ALREADY A RULE','ONLY A PROPOSAL'],{lives:false,hint:'Think: is it a law in Korea now?',good:'Which rule would you add for your country? Say it with “should”.'});
+MEMN=memMake('rbody','rPill',NUMD,true);
 resetAll();go(0);
 </script>
 <script src="../card-audio.js?v=1"></script>
