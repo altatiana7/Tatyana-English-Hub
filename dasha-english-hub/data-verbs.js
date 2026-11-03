@@ -63,8 +63,8 @@ window.DASHA.plan=`<div class="tt"><b>Формат:</b> 2 занятия в не
 <tr><td>3</td><td>R5 magic e a, i · GG 1.2 my/your/his/her</td><td>R6 magic e o, u · GG 1.2 (конец) · V2</td></tr>
 <tr><td>4</td><td>R7 ai ay ee ea · GG 0.2 Numbers</td><td>R8 oa ow igh y · GG 0.2 Colours · V3</td></tr>
 <tr><td>5</td><td>R9 ou ow oi oy · GG 0.3 Classroom, a/an</td><td>R10 oo · GG 0.3 (конец) · V2 повтор</td></tr>
-<tr><td>6</td><td>R11 ar or · GG 1.3 (скоро)</td><td>R12 er ir ur · GG 1.4 (скоро)</td></tr>
-<tr><td>7</td><td>R13 ear air · GG 1.5 (скоро)</td><td>R14 silent letters · GG 1.6 · V3 повтор</td></tr>
+<tr><td>6</td><td>R11 ar or · GG 1.3</td><td>R12 er ir ur · GG 1.4</td></tr>
+<tr><td>7</td><td>R13 ear air · GG 1.5</td><td>R14 silent letters · GG 1.6 · V3 повтор</td></tr>
 <tr><td>8</td><td>Обзор: Speed game по R1–R14 · GG 1.7</td><td>Повторение M2 · мини-тест</td></tr></table>
 <div class="tt"><b>Сейчас в школе: Spotlight 3, модуль 2 (Family moments), поэтому семья идёт первой.</b> Весь Spotlight 3 → что берём у нас:</div>
 <table><tr><th>Spotlight 3</th><th>Наш хаб</th></tr>

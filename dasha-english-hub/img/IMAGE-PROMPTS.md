@@ -36,3 +36,8 @@
 | `hub-read.jpg` | Wide photo: a smiling 10-year-old girl reading a picture book on a sofa, colourful letters on the wall behind her. Natural light. |
 | `hub-gg.jpg` | Wide photo: two schoolchildren at a desk with an open English textbook, pencils and a notebook. Bright classroom. |
 | `hub-verbs.jpg` | Wide photo: three children running, jumping and clapping in a sunny schoolyard. Natural light. |
+| `gg-1-3.jpg` | Six national flags (the UK, Spain, Poland, Italy, France, China) on poles against a blue sky, bright daylight. 4:3, photorealistic, modern real people, no cartoon. |
+| `gg-1-4.jpg` | A teenage boy stands at a front door while his friend introduces him to her smiling mum. Warm hallway light. 4:3, photorealistic, modern real people, no cartoon. |
+| `gg-1-5.jpg` | A family photo album open on a table with three photos: children at a grandmother's house, cousins in a park, a family on a beach holiday. 4:3, photorealistic, modern real people, no cartoon. |
+| `gg-1-6.jpg` | Two ten-year-old best friends laughing together outside a school, one wearing a blue backpack. Natural light. 4:3, photorealistic, modern real people, no cartoon. |
+| `gg-1-7.jpg` | A large happy family gathered in a garden: grandparents, parents, uncle, aunt, children, one child holding a small flag. 4:3, photorealistic, modern real people, no cartoon. |
