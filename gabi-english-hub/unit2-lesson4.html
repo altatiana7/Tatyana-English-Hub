@@ -74,10 +74,14 @@ ol.hunt{padding-left:2.1em}
 .story mark{background:#fff0a8;border-radius:4px;padding:0 3px;font-weight:700;color:#10233f}
 .act.panel .order.compact>div{display:flex;flex-direction:row;flex-wrap:wrap;gap:6px;align-content:flex-start}.act.panel .order.compact .lab{flex-basis:100%}
 .act.panel .order.compact button{width:auto;flex:0 1 auto;font-size:15.5px;padding:5px 9px;text-align:left}
+.act.panel .order .okord{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr;gap:4px;counter-reset:o}
+.act.panel .order .okord li{counter-increment:o;min-height:0;border:0;background:#e6f6ec;border-radius:8px;padding:3px 10px;font-size:15.5px;line-height:1.2;color:#10233f}
+.act.panel .order .okord li::before{content:counter(o)". ";font-weight:800}
+@media(max-height:700px){.act.panel .order .okord{grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,auto);grid-auto-flow:column;gap:5px 8px}}
 </style>
 </head>
 <body>
-<script src="skills.js?v=20261102c"></script>
+<script src="skills.js?v=20261103b"></script>
 <script>
 /* Module 2 (Law and order), lesson 4: Surprising true crimes (Gateway B1, Unit 2, pages 19–21). Two activities per screen:
    1 homework review: error hunter with Gabi's own sentences + Speed Game on verb patterns
@@ -327,7 +331,7 @@ Lesson.boot({kicker:'Module 2 · Lesson 4',steps:[
   {q:'The school team won the final.',o:['True','False','Not stated'],a:'Not stated'},
   {q:'Jack wanted to surprise the coach.',o:['True','False','Not stated'],a:'True'},
   {q:'The trophy was very old.',o:['True','False','Not stated'],a:'Not stated'}]},
- {type:'order',title:'Story sequencing',compact:true,from:'Tap the events in the right order',items:[
+ {type:'order',title:'Story sequencing',compact:true,reveal:true,from:'Tap the events in the right order',items:[
   'The trophy was not in its glass case.',
   'Reed looked into the case.',
   'He came across a green hoodie behind a bin.',
