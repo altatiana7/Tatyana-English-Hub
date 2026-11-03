@@ -310,6 +310,7 @@ ENG.speak=function(box,b,ctx){
   function show(){
     const body=actHead(box,b);body.style.flexDirection='column';
     const sp=h('div','sp');const card=h('div','spcard');
+    if(b.imgs&&b.imgs[i]){const im=new Image();im.className='spimg';im.src='img/cards/'+b.imgs[i]+'.jpg';card.append(im);}
     card.append(h('div','pr',esc(b.prompts[i])));
     const ring=h('div','ring');ring.innerHTML=`<span>${b.sec||40}</span>`;let iv=null;
     const go=h('button','btn',`Start ${b.sec||40} s`);go.onclick=()=>{clearInterval(iv);let left=b.sec||40;ring.firstChild.textContent=left;iv=setInterval(()=>{left--;ring.firstChild.textContent=Math.max(left,0);ring.style.background=`conic-gradient(var(--acc) 0 ${Math.max(left,0)/(b.sec||40)*100}%,#E4EAEE 0)`;if(left<=0)clearInterval(iv);},1000);timers.push(iv);};
@@ -321,6 +322,35 @@ ENG.speak=function(box,b,ctx){
     foot.append(pv,h('div','cnt',`${i+1} / ${b.prompts.length}`),nx);body.append(sp,foot);
   }
   show();
+};
+
+/* ---------- picture choice: say/read -> tap picture (or picture -> tap text) ---------- */
+ENG.pic=function(box,b,ctx){
+  let qs,i,score,errs;
+  function start(){qs=shuffle(b.items);i=0;score=0;errs=[];show();}
+  function show(){
+    const body=actHead(box,b,start);const it=qs[i];
+    const pr=h('div','qprompt');
+    if(it.say)pr.append(spk(it.say,'big'));
+    if(it.q)pr.append(h('div','qtext',esc(it.q)));
+    if(it.img){const im=new Image();im.className='pstim';im.src='img/cards/'+it.img+'.jpg';pr.append(im);}
+    pr.append(h('div','cnt',(i+1)+' / '+qs.length));
+    const grid=h('div',b.imgOpts?'pgrid':'opts');if(b.imgOpts)grid.style.gridTemplateColumns=`repeat(${Math.min(it.opts.length,5)},1fr)`;
+    const foot=h('div','foot');const fb=h('div','fb');foot.append(fb);
+    const os=shuffle(it.opts.map((t,k)=>({t,ok:k===0})));
+    os.forEach(o=>{
+      const x=b.imgOpts?h('button','pimg'):h('button','opt',esc(o.t));
+      if(b.imgOpts){const im=new Image();im.src='img/cards/'+o.t+'.jpg';x.append(im);}
+      x.onclick=()=>{
+        grid.querySelectorAll('button').forEach(y=>y.disabled=true);
+        if(o.ok){x.classList.add('ok');score++;fb.className='fb ok';fb.textContent='Yes!';if(!b.imgOpts&&o.t.length<60)say(o.t);}
+        else{x.classList.add('bad');grid.querySelectorAll('button').forEach((y,k)=>{if(os[k].ok)y.classList.add('ok');});errs.push(esc((it.say||it.q||'picture')+' → '+(b.imgOpts?it.ans||'':it.opts[0])));fb.className='fb bad';fb.textContent='Not quite'+(b.imgOpts?'':': '+it.opts[0]);}
+        const last=i===qs.length-1;const n=h('button','btn primary',last?'See result':'Next ›');n.onclick=()=>{if(last)endScreen(body,score,qs.length,errs,start,ctx);else{i++;show();}};foot.append(n);
+      };grid.append(x);});
+    body.append(pr,grid,foot);
+    if(it.say)later(()=>say(it.say,pr.querySelector('.spk')),150);
+  }
+  start();
 };
 
 /* ---------- Quizlet-style card column ---------- */
@@ -415,6 +445,7 @@ function collectTexts(){
       switch(b.t){
         case 'rule':{const re=/data-say="([^"]+)"/g;let m;while((m=re.exec(b.html)))add(m[1]);break;}
         case 'ltap':b.items.forEach(it=>{add(it.say);it.opts.forEach(o=>add(optSay(o)));});break;
+        case 'pic':b.items.forEach(it=>{add(it.say);if(!b.imgOpts)it.opts.forEach(add);});break;
         case 'sort':b.items.forEach(it=>add(it[0]));break;
         case 'odd':b.items.forEach(it=>it.ws.forEach(add));break;
         case 'build':b.items.forEach(it=>{if(typeof it==='string')add(it);else add(it.say||it.w);});break;

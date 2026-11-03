@@ -2,7 +2,7 @@
 window.DASHA=window.DASHA||{paths:[]};
 (function(){
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
-const CARDS=s=>s.split(';').map(x=>x.trim()).filter(Boolean).map(x=>{const p=x.split('=');return {w:p[0],ru:p[1]||'',ex:p[2]||''};});
+const CARDS=s=>s.split(';').map(x=>x.trim()).filter(Boolean).map(x=>{const p=x.split('=');return {w:p[0],ru:p[1]||'',ex:p[2]||'',img:p[3]||''};});
 const H={
  CARDS,
  /* rows: [say, q, opts(correct first), exp] */
@@ -14,13 +14,14 @@ const H={
  BUILD:(title,instr,items)=>({t:'build',title,mech:'Word builder',hint:'Tap the letter tiles',instr,items}),
  SENTS:(title,instr,sents)=>({t:'sents',title,mech:'Listen & read',hint:'Audio first, text later',instr,sents}),
  SPEED:(title,items)=>({t:'speed',title,mech:'15 seconds',hint:'Read before the ring ends',instr:'Read it in 15 seconds!',items}),
- SPEAK:(title,instr,prompts,patterns,sec)=>({t:'speak',title,mech:'Speaking',hint:'Cards and phrases',instr,prompts,patterns,sec:sec||40}),
+ SPEAK:(title,instr,prompts,patterns,sec,imgs)=>({t:'speak',title,mech:'Speaking',hint:'Cards and phrases',instr,prompts,patterns,sec:sec||40,imgs}),
+ PIC:(title,instr,items,imgOpts,hint)=>({t:'pic',title,mech:'Picture quiz',hint:hint||'Look and tap',instr,items,imgOpts}),
  PREDICT:(id,cap,q,opts,reveal)=>({t:'predict',title:'Predict',mech:'Warm-up',hint:'Look at the photo and guess',img:id,cap,q,opts,reveal}),
  RULE:(title,html)=>({t:'rule',title,mech:'Rule',hint:'Listen and look',html}),
  say:t=>`<button class="say" data-say="${t}">${t}</button>`
 };
 window.DASHA.H=H;
-const {LT,TF,MATCH,SORT,HUNT,BUILD,SENTS,SPEED,SPEAK,PREDICT,RULE,say}=H;
+const {LT,TF,MATCH,SORT,HUNT,BUILD,SENTS,SPEED,SPEAK,PIC,PREDICT,RULE,say}=H;
 
 /* ===== Unit 0 ===== */
 const teens=[['thirteen','thirty'],['fourteen','forty'],['fifteen','fifty'],['sixteen','sixty'],['seventeen','seventy'],['eighteen','eighty'],['nineteen','ninety']];
@@ -182,8 +183,46 @@ const U1=[
  teach:'<b>Student\'s Book:</b> 1.7, p.19 (Language Revision) + Unit 1. Проверочное занятие по модулю 2 Spotlight (семья). <b>Тайминг:</b> Predict 3 · Odd one out 5 · am/is/are 5 · Hunter 5 · Match 5 · Sort 4 · Lava 4 · Speed 3 · Speaking 6. Произношение /v/ и /b/ из SB: very – berry, vest – best, van – boat (повторите устно).'}
 ];
 
+
+/* ===== Unit 4 (pictures from teacher's worksheets: img/cards/kid-*, scene-*, face) ===== */
+const KID={a:'She\'s got long straight blond hair and blue eyes.',b:'He\'s got short spiky red hair and green eyes.',c:'He\'s got short straight dark hair and grey eyes.',d:'He\'s got short wavy blond hair.',e:'She\'s got long curly black hair and green eyes.'};
+const kidOpts=(k)=>[ 'kid-'+k, ...['a','b','c','d','e'].filter(x=>x!==k).map(x=>'kid-'+x) ];
+const U4=[
+{id:'4.1',name:'Face and hair · He\'s got … / She\'s got …',short:'Face and hair',
+ cards:CARDS('face=лицо=I can see a face.;hair=волосы=I\'ve got dark hair.;eyes=глаза=She\'s got green eyes.;nose=нос=He\'s got a small nose.;mouth=рот=Open your mouth.;ears=уши=I\'ve got two ears.;teeth=зубы=Brush your teeth.;long=длинные=She\'s got long hair.;short=короткие=He\'s got short hair.;straight=прямые=Straight hair.;wavy=волнистые=Wavy hair.;curly=кудрявые=She\'s got curly hair.;spiky=торчащие=He\'s got spiky hair.;blond=светлые=Blond hair.;dark=тёмные=Dark hair.;red=рыжие=He\'s got red hair.;grey=серые=Grey eyes.;green=зелёные=Green eyes.;blue=голубые=Blue eyes.'.replace(/;(long|short|straight|wavy|curly|spiky|blond)=([^=;]*)=([^;]*)/g,(m,a,b,c)=>';'+a+'='+b+'='+c+'='+({long:'kid-a',short:'kid-c',straight:'kid-a',wavy:'kid-d',curly:'kid-e',spiky:'kid-b',blond:'kid-d'})[a]).replace(/^face=([^=]*)=([^;]*)/,'face=$1=$2=face')),
+ blocks:[
+  PREDICT('cards/face','A cartoon boy\'s face with arrows pointing to nose, mouth, teeth, eyes, hair and ears.','What are we going to learn?',['face and hair','food','numbers'],'Today: face and hair — He\'s got short spiky red hair. She\'s got long curly black hair.'),
+  RULE('Hair: word order',`<table class="rtable"><tr><th>length</th><th>type</th><th>colour</th><th></th></tr><tr><td>long</td><td>straight</td><td>blond</td><td>hair</td></tr><tr><td>short</td><td>spiky</td><td>red</td><td>hair</td></tr></table><div style="margin-top:6px">${say("She's got long straight blond hair.")} ${say("He's got short spiky red hair.")} ${say("I've got dark eyes.")}</div><div class="note">Порядок: <b>длина → тип → цвет → hair</b>. Hair — без «а» и без -s: I've got blond hair. He's got / She's got (у него / у неё есть). Student's Book Unit 4.1.</div>`),
+  PIC('Who is it?','Listen. Tap the child.',[
+    ['She\'s got long straight blond hair.','a'],['He\'s got short spiky red hair.','b'],['He\'s got short straight dark hair.','c'],['He\'s got short wavy blond hair.','d'],['She\'s got long curly black hair.','e'],
+    ['She\'s got blue eyes.','a'],['He\'s got green eyes and red hair.','b'],['He\'s got grey eyes.','c'],['He\'s got blond hair and a yellow hoodie.','d'],['She\'s got green eyes and curly hair.','e']
+  ].map(r=>({say:r[0],opts:kidOpts(r[1]),ans:r[1]})),true),
+  PIC('Which sentence?','Look. Tap the right sentence.',[
+    ['a',KID.a,'He\'s got short spiky red hair.','She\'s got short curly dark hair.','He\'s got long straight blond hair.'],
+    ['b',KID.b,'She\'s got long straight blond hair.','He\'s got short wavy blond hair.','He\'s got long curly black hair.'],
+    ['c',KID.c,'He\'s got short spiky red hair.','She\'s got long curly black hair.','He\'s got short wavy blond hair.'],
+    ['d',KID.d,'She\'s got long straight blond hair.','He\'s got short straight dark hair.','He\'s got short spiky red hair.'],
+    ['e',KID.e,'He\'s got short spiky red hair.','She\'s got long straight blond hair.','He\'s got short wavy blond hair.'],
+    ['a','She\'s got blue eyes.','She\'s got green eyes.','She\'s got grey eyes.','She\'s got brown eyes.'],
+    ['b','He\'s got green eyes.','He\'s got blue eyes.','He\'s got grey eyes.','He\'s got dark eyes.'],
+    ['c','He\'s got grey eyes.','He\'s got green eyes.','He\'s got blue eyes.','He\'s got red eyes.'],
+    ['e','She\'s got green eyes.','She\'s got blue eyes.','She\'s got grey eyes.','She\'s got red eyes.'],
+    ['d','He\'s got blond hair.','He\'s got dark hair.','He\'s got red hair.','He\'s got black hair.']
+  ].map(r=>({img:'kid-'+r[0],opts:r.slice(1),q:'',ans:r[0]})),false),
+  MATCH('Hair and eyes words','Match the English word and the Russian word.',[['long','длинные'],['short','короткие'],['straight','прямые'],['wavy','волнистые'],['curly','кудрявые'],['spiky','торчащие'],['blond','светлые'],['dark','тёмные'],['red','рыжие'],['grey','серые']]),
+  SORT('Hair or eyes?','Which word goes with hair? Which goes with eyes?',['hair','eyes'],[['long',0],['short',0],['curly',0],['wavy',0],['spiky',0],['straight',0],['blue',1],['green',1],['grey',1],['brown',1],['blond',0],['red',0]]),
+  LT('Finish the sentence','Listen. Tap the missing word.',[["She's got long hair.","She's ___ long hair.",['got','have','has']],["He's got short hair.","He's got ___ hair.",['short','shorts','shorter']],["I've got blue eyes.","I've got blue ___.",['eyes','eye','eyed']],["She's got curly hair.","She's got ___ hair.",['curly','curl','curls']],["He's got spiky red hair.","He's got spiky ___ hair.",['red','reds','redly']],["I've got long hair.","I've ___ long hair.",['got','get','gots']],["She's got green eyes.","She's got green ___.",['eyes','eye','ear']],["He's got short wavy hair.","He's got short ___ hair.",['wavy','wave','waves']],["She's got long straight hair.","She's got long ___ hair.",['straight','strait','straights']],["He's got dark hair.","He's got ___ hair.",['dark','darks','dear']]]),
+  HUNT('Error hunter','Tap the wrong word.',['She\'s ~get long hair.|got','He\'s got ~hairs short.|short hair','I\'ve got blond ~hairs.|hair','He ~have got short hair.|has','She\'s got red ~hairs.|hair','I\'ve got ~a blue eyes.|blue eyes','She ~is got long hair.|has','He\'s got ~curly short hair.|short curly','I\'ve ~have long hair.|got','She\'s got long ~blond straight hair.|straight blond']),
+  SENTS('Read and match','Tap a line. Listen. Then read it. (Worksheet: who is it?)',['This person has got short straight dark hair and grey eyes.','This person has got long curly black hair and green eyes.','This person has got short wavy blond hair.','This person has got long straight blond hair and blue eyes.','This person has got short spiky red hair and green eyes.','She\'s got long straight blond hair.','He\'s got short spiky red hair.','He\'s got short straight dark hair.','She\'s got long curly black hair.','He\'s got short wavy blond hair.']),
+  BUILD('Spell the word','Listen. Build the word.',['hair','eyes','nose','mouth','teeth','ears','long','short','curly','wavy','spiky','straight','blond','grey']),
+  SPEED('Speed game',['face','hair','eyes','nose','mouth','ears','teeth','long','short','curly','wavy','spiky','straight','blond']),
+  SPEAK('Describe the picture','Look at the picture. Describe it. Use the phrases.',['Describe A','Describe B','Describe C','Describe E'],['This is …','I can see …','She\'s / He\'s got …','She\'s / He\'s wearing …','She\'s / He\'s in the …','The weather is …','There is …'],60,['scene-a','scene-b','scene-c','scene-e'])
+ ],
+ teach:'<b>Student\'s Book:</b> Unit 4.1 (внешность). Картинки — ваши рабочие листы (Face and Hair, Read–Match–Describe, Describe A–E), вырезаны в папку img/cards. <b>Тайминг:</b> Predict 3 · Rule 5 · Who is it 5 · Which sentence 5 · Match 4 · Sort 3 · Finish 4 · Hunter 4 · Read 5 · Speaking 6. Описание комнат (Describe) в конце — для Даши сложно, начинайте с «She\'s got …», остальное по желанию. Картинок D в Describe нет, для D используйте kid-d из «Who is it?».'}
+];
 window.DASHA.paths.push({id:'gg',title:'Go Getter 1',sub:'Student\'s Book · same order as the book',units:[
   {title:'Unit 0 · Get started!',lessons:U0},
-  {title:'Unit 1 · Family and friends',lessons:U1}
+  {title:'Unit 1 · Family and friends',lessons:U1},
+  {title:'Unit 4 · Appearance',lessons:U4}
 ],later:'Units 2–8 — следующие по плану, будут добавлены.'});
 })();

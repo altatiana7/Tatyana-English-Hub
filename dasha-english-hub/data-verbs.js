@@ -1,6 +1,6 @@
 /* Verbs Box: elementary verbs for Dasha (commands, everyday actions, like / have / can). Plus the teacher's plan. */
 (function(){
-const {CARDS,LT,TF,MATCH,SORT,HUNT,BUILD,SENTS,SPEED,SPEAK,PREDICT,RULE,say}=window.DASHA.H;
+const {CARDS,LT,TF,MATCH,SORT,HUNT,BUILD,SENTS,SPEED,SPEAK,PIC,PREDICT,RULE,say}=window.DASHA.H;
 
 const V1=[
 {id:'V1',name:'Commands · stand up, sit down, open…',short:'Commands',
@@ -53,7 +53,28 @@ const V1=[
  teach:'<b>Цель:</b> три самых частых глагола: like/love, have, can. Связь: Go Getter 1 — Unit 4 (have got), Unit 5 (can). <b>Тайминг:</b> Predict 3 · Rule 4 · Choose 6 · Match 5 · Sort 4 · Hunter 5 · Lava 4 · Build 5 · Sents 5 · About me 5.'}
 ];
 
-window.DASHA.paths.push({id:'verbs',title:'Verbs Box',sub:'Elementary verbs · 3 lessons',units:[{title:'Action words',lessons:V1}],later:'Подключайте по 10 минут между блоками Go Getter.'});
+
+/* V4: picture cards from the teacher's holiday poster (img/cards/h-*.jpg) */
+const HP=[['nap','have a nap','вздремнуть'],['icecream','eat ice cream','есть мороженое'],['photos','take photos','фотографировать'],['swim','swim in a pool','плавать в бассейне'],['helpmum','help your mum','помогать маме'],['teeth','brush your teeth','чистить зубы'],['travel','travel','путешествовать'],['games','play computer games','играть в компьютерные игры'],['chess','play chess','играть в шахматы'],['bicycle','ride a bicycle','кататься на велосипеде'],['film','watch a film','смотреть фильм'],['cook','cook','готовить'],['tidy','tidy your bedroom','убираться в комнате'],['band','listen to music','слушать музыку'],['grandparents','visit your grandparents','навестить бабушку и дедушку'],['friend','make a new friend','найти нового друга'],['wakeup','wake up early','рано вставать'],['workout','work out','заниматься спортом'],['read','read an article','читать статью'],['write','write a composition','писать сочинение'],['cafe','go to a café','пойти в кафе'],['internet','surf the internet','сидеть в интернете']];
+const hpO=id=>['h-'+id,...HP.filter(x=>x[0]!==id).sort(()=>Math.random()-.5).slice(0,3).map(x=>'h-'+x[0])];
+const V4=[
+{id:'V4',name:'Everyday actions · pictures',short:'Actions (pictures)',
+ cards:HP.map(x=>({w:x[1],ru:x[2],ex:'',img:'h-'+x[0]})),
+ blocks:[
+  PREDICT('cards/h-travel','A poster with many small pictures of children doing different things: swimming, cooking, playing chess, riding a bicycle.','What are the children doing?',['different actions','different animals','different foods'],'Today: action phrases — swim, cook, play chess, ride a bicycle.'),
+  PIC('Listen and tap','Listen. Tap the picture.',HP.slice(0,12).map(x=>({say:x[1],opts:hpO(x[0]),ans:x[1]})),true),
+  PIC('Look and tap','Look at the picture. Tap the phrase.',HP.slice(8,22).map(x=>({img:'h-'+x[0],opts:[x[1],...HP.filter(y=>y[0]!==x[0]).sort(()=>Math.random()-.5).slice(0,3).map(y=>y[1])],ans:x[1]})),false),
+  MATCH('Phrase and meaning','Match the English phrase and the Russian phrase.',HP.slice(0,10).map(x=>[x[1],x[2]])),
+  SORT('At home or outside?','Where do you usually do it?',['at home','outside'],[['cook',0],['tidy your bedroom',0],['play computer games',0],['play chess',0],['watch a film',0],['brush your teeth',0],['ride a bicycle',1],['swim in a pool',1],['travel',1],['take photos',1],['visit your grandparents',1],['go to a café',1]]),
+  HUNT('Error hunter','Tap the wrong word.',['I ~plays chess.|play','We ~watches a film.|watch','They ~rides bicycles.|ride','I ~cooks lunch.|cook','You ~swims well.|swim','We ~plays games.|play','I ~brushes my teeth.|brush','They ~eats ice cream.|eat','You ~takes photos.|take','We ~visits our granny.|visit']),
+  BUILD('Spell the word','Listen. Build the word.',['nap','swim','cook','read','write','chess','tidy','travel','photos','film','band','games']),
+  SPEED('Speed game',HP.slice(0,14).map(x=>x[1])),
+  SPEAK('Do you like …?','Look at the picture. Ask and answer.',HP.slice(0,8).map(x=>x[1]),['Do you like …?','Yes, I do.','No, I don\'t.','I like …','I don\'t like …'],40,HP.slice(0,8).map(x=>'h-'+x[0]))
+ ],
+ teach:'<b>Картинки:</b> плакат «What did you do last holiday?» (вырезаны в img/cards). Здесь только настоящее время — I play / we watch. Прошедшее время с этого плаката — позже. <b>Тайминг:</b> Predict 3 · Listen and tap 5 · Look and tap 5 · Match 4 · Sort 4 · Hunter 4 · Build 4 · Speaking 6.'}
+];
+V1.push(V4[0]);
+window.DASHA.paths.push({id:'verbs',title:'Verbs Box',sub:'Elementary verbs · 4 lessons',units:[{title:'Action words',lessons:V1}],later:'Подключайте по 10 минут между блоками Go Getter.'});
 
 window.DASHA.plan=`<div class="tt"><b>Формат:</b> 2 занятия в неделю. Каждое занятие: 5 мин Predict и повторение · 20 мин Reading Lab · 25 мин Go Getter · 10 мин Verbs Box / Speed game.<br>
 <b>Правила для Даши:</b> текст сначала на слух, потом на глаз; читаем вслух; ничего не печатаем (только нажатия); без Memory; ошибки не разбираем сразу — возвращаемся в Speed game.</div>
