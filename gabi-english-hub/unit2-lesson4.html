@@ -38,7 +38,7 @@ ol.hunt{padding-left:2.1em}
 .cast{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
 .cplist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;flex:none}
 .cp{position:relative;display:flex;flex-direction:column;padding:0;border:3px solid #c5d3e6;border-radius:12px;background:#fff;overflow:hidden;cursor:pointer;text-align:left;font:inherit}
-.cp img{display:block;width:100%;height:clamp(66px,15vh,150px);object-fit:cover;object-position:50% 15%}
+.cp img{display:block;width:100%;height:clamp(120px,27vh,215px);object-fit:cover;object-position:50% 25%}
 .cp span{display:block;padding:4px 8px 5px;line-height:1.15}
 .cp b{display:block;font-size:17px;color:#10233f;line-height:1.15}.cp small{display:block;font-size:13.5px;color:#566b84;font-weight:600}
 .cp:hover{border-color:#ffd23f}
@@ -58,6 +58,7 @@ ol.hunt{padding-left:2.1em}
 .chead{display:flex;align-items:center;justify-content:space-between;gap:8px}.chead .ghost{padding:6px 12px;font-size:15px}
 .cstage .pl .eq{display:none}
 .cstage .row.nav3 button{padding:8px 14px}
+@media(max-height:700px){.cstage .chips{display:none}}
 @media(max-height:640px){
  .act.panel .tcard{padding:6px 12px}.act.panel .tcard .q{font-size:18px}.act.panel .tcard .sub{font-size:14px}
  .act.panel .chips{gap:5px}.act.panel .chips button{font-size:13.5px;padding:3px 9px}
@@ -66,10 +67,13 @@ ol.hunt{padding-left:2.1em}
  .act.panel .cloze select{font-size:15px;padding:1px 4px}
  .act.panel .scol{min-height:44px}
  .act.panel .match button{font-size:14.5px;padding:2px 9px;min-height:0;line-height:1.2}.act.panel .match>div{gap:3px}
- .cp img{height:58px}.cp span{padding:2px 8px 3px}.cp small{font-size:12.5px}
  .cstage{padding:6px 12px;gap:6px}.cbody{gap:6px}.cstage .pl{padding:3px 10px;margin:0;flex:none}.cstage.keyopen .pl{display:none}.cstage .cq{font-size:20px}.ckey li{font-size:15px;padding:4px 8px}
  .act.panel .pick{gap:5px}.act.panel .pick button{font-size:15px;padding:4px 11px}
 }
+.story{overflow:auto;min-height:0;font-size:clamp(15.5px,1.3vw,19px);line-height:1.5;color:#10233f}.story p{margin:0 0 7px}
+.story mark{background:#fff0a8;border-radius:4px;padding:0 3px;font-weight:700;color:#10233f}
+.act.panel .order.compact>div{display:flex;flex-direction:row;flex-wrap:wrap;gap:6px;align-content:flex-start}.act.panel .order.compact .lab{flex-basis:100%}
+.act.panel .order.compact button{width:auto;flex:0 1 auto;font-size:15.5px;padding:5px 9px;text-align:left}
 </style>
 </head>
 <body>
@@ -80,7 +84,7 @@ ol.hunt{padding-left:2.1em}
    2 Speed Game homework check (15 s) + match titles -> 3 the stories and their words: flashcards + retell / answer using the words
    -> 4 critical thinkers + error hunter with all four past tenses -> 5 all four past tenses: floor is lava + sort (grammar card under a button)
    -> 6 predict + Playing basketball is not a crime! -> 7 question forms + police station: two witnesses and the officer (audio, photos)
-   -> 8 phrasal verbs: match + floor is lava -> 9 use it, don't lose it. */
+   -> 8 phrasal verbs: match + floor is lava -> 9 detective story (predict + read) -> 10 true/false/not stated + sequencing -> 11 use it, don't lose it. */
 const COURT=(t,s)=>`<div class="court"><h4>${t}</h4><span class="stamp">${s||'CASE FILE'}</span></div>`;
 const RULE=COURT('Past simple','GRAMMAR')+`<ul class="say">
 <li><b>+</b> regular: arrest → <b>arrested</b> · irregular: take → <b>took</b></li>
@@ -98,6 +102,7 @@ const PAST=COURT('Past tenses','GRAMMAR')+`<ul class="say">
 <p class="words"><b>Clues:</b> when / while → continuous · before / after / already / by the time → perfect · for + time before → perfect continuous</p>`;
 const TITLES=['Eating the evidence','Where did the criminals go?!','A criminal pastime'];
 /* Interactive characters: the officer and two witnesses. Tap a witness to hear his statement (the text stays hidden), then tap the officer for his questions. */
+Lesson.ACT.read={view(a){return `<div class="story">${a.html}</div>`}};
 Lesson.ACT.cast={
  init(a,s){s.who=null;s.heard={};s.qi=0;s.key=false;s.text=false;s.used={}},
  view(a,s){const E=Lesson.esc,P=a.people;
@@ -245,7 +250,7 @@ Lesson.boot({kicker:'Module 2 · Lesson 4',steps:[
   {pre:'a video of the incident and the kids all',opts:['became','becomed','become'],ans:['became'],ph:'(m) become'},
   {pre:'famous! Shaquille O’Neal',opts:['met','meeted','meet'],ans:['met'],ph:'(n) meet'},
   {pre:'them personally! Now they don’t play in the street. The police officer',opts:['helped','helps','did helped'],ans:['helped'],ph:'(o) help'}]}]},
-{stage:'Speak',title:'Question forms and the police station',hint:'Look at the photos: who are they? What do you think happened? <small>Choose the right question form. Then the officer interviews the two witnesses: listen to his questions.</small>',cols:'1fr 1.3fr',
+{stage:'Speak',title:'Question forms and the police station',hint:'Look at the photos: who are they? What do you think happened? <small>Choose the right question form. Then the officer interviews the two witnesses: listen to his questions.</small>',cols:'.95fr 1.35fr',
  help:{label:'Past simple',html:RULE},
  acts:[
  {type:'quiz',title:'Exercise 4 · make the questions',label:'Question',cols:3,shuffle:false,items:[
@@ -301,6 +306,38 @@ Lesson.boot({kicker:'Module 2 · Lesson 4',steps:[
   {q:'You looked ___ something in detail for a school project.',o:['up','into','for','across'],a:'into',why:'look into = investigate'},
   {q:'You came ___ with a great new idea.',o:['across','out','up','into'],a:'up',why:'come up with = think of an idea'},
   {q:'You looked ___ an English word in a dictionary.',o:['for','into','out','up'],a:'up',why:'look up = find information'}]}]},
+{stage:'Reading',title:'Detective story: The Missing Trophy',hint:'First predict from the title. <small>Then read the story. The phrasal verbs are highlighted.</small>',cols:'.7fr 1.5fr',
+ acts:[
+ {type:'talk',title:'Predict',label:'Title',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['I think …','Maybe …','Probably …'],cards:[
+  {q:'“The Missing Trophy.” What happened? Who took it, and why?'},
+  {q:'A detective looks into the case. What will he look for? What will he find out?'}]},
+ {type:'read',title:'The Missing Trophy',html:'<p>On Monday morning the school’s gold football trophy was not in its glass case. Detective Reed <mark>looked into</mark> the case at once. The caretaker said the door had been locked all weekend, and nobody had broken the window.</p><p>Reed <mark>looked for</mark> clues in the corridor and <mark>came across</mark> a green hoodie behind a bin. There was a name label inside, so he <mark>looked up</mark> the name in the school list: Jack Miller, class 9B.</p><p>At lunchtime Jack <mark>turned up</mark> at the police station with his mother. “I didn’t take it,” he said. “I was at home on Sunday night.” But Reed <mark>found out</mark> that a camera had filmed a boy in a green hoodie that evening. The boy was walking slowly, holding the trophy with both hands. A thief usually runs!</p><p>Suddenly Reed <mark>worked out</mark> the truth. “The base was loose, wasn’t it?” Jack nodded. “I took it to my dad’s workshop to fix it before the final. I wanted to surprise the coach, but I forgot to tell anyone.” Reed <mark>came up with</mark> a simple plan: Jack brought the trophy back the next day, and everybody said thank you.</p>'}]},
+{stage:'Reading',title:'Detective story: true or false?',hint:'Work from memory: is it true, false or not stated? <small>Then put the events in order.</small>',cols:'.8fr 1.3fr',
+ acts:[
+ {type:'quiz',title:'True · False · Not stated',label:'Sentence',cols:3,shuffle:false,items:[
+  {q:'The trophy was not in its glass case on Monday morning.',o:['True','False','Not stated'],a:'True'},
+  {q:'Someone broke the window.',o:['True','False','Not stated'],a:'False',why:'Nobody had broken the window.'},
+  {q:'Reed came across a hoodie in the corridor.',o:['True','False','Not stated'],a:'True',why:'Behind a bin.'},
+  {q:'The name label gave Reed the name of the boy.',o:['True','False','Not stated'],a:'True',why:'He looked up the name: Jack Miller.'},
+  {q:'Jack came to the police station alone.',o:['True','False','Not stated'],a:'False',why:'He came with his mother.'},
+  {q:'Jack said he was at home on Sunday night.',o:['True','False','Not stated'],a:'True'},
+  {q:'A camera filmed a boy in a green hoodie.',o:['True','False','Not stated'],a:'True'},
+  {q:'The boy was running away with the trophy.',o:['True','False','Not stated'],a:'False',why:'He was walking slowly.'},
+  {q:'Jack’s dad is a police officer.',o:['True','False','Not stated'],a:'Not stated',why:'We only know he has a workshop.'},
+  {q:'The school team won the final.',o:['True','False','Not stated'],a:'Not stated'},
+  {q:'Jack wanted to surprise the coach.',o:['True','False','Not stated'],a:'True'},
+  {q:'The trophy was very old.',o:['True','False','Not stated'],a:'Not stated'}]},
+ {type:'order',title:'Story sequencing',compact:true,from:'Tap the events in the right order',items:[
+  'The trophy was not in its glass case.',
+  'Reed looked into the case.',
+  'He came across a green hoodie behind a bin.',
+  'He looked up the name on the label.',
+  'Jack turned up at the police station.',
+  'Jack said he was at home.',
+  'Reed found out about the camera.',
+  'Reed worked out the truth.',
+  'Jack explained about the loose base.',
+  'Jack brought the trophy back.']}]},
 {stage:'Speak',title:'Use it … don’t lose it!',hint:'Think of a real time for each situation. Tell the story in the past simple. <small>Then the sentence race from exercise 2.</small>',cols:'1.1fr 1fr',
  acts:[
  {type:'talk',title:'Think about a time when …',label:'Situation',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['came across','found out','turned up','worked out','looked for','came up with'],cards:[
