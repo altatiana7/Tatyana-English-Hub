@@ -78,6 +78,9 @@ ol.hunt{padding-left:2.1em}
 .act.panel .order .okord li{counter-increment:o;min-height:0;border:0;background:#e6f6ec;border-radius:8px;padding:3px 10px;font-size:15.5px;line-height:1.2;color:#10233f}
 .act.panel .order .okord li::before{content:counter(o)". ";font-weight:800}
 @media(max-height:700px){.act.panel .order .okord{grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,auto);grid-auto-flow:column;gap:5px 8px}}
+.sw{border:2px solid #7a5cc4;background:#fff;border-radius:8px;padding:0 7px;font:inherit;font-weight:700;color:#10233f;cursor:pointer;margin:0 1px;line-height:1.35}.sw:hover{background:#f1ecff}.sw.on{background:#ffd23f;border-color:#e0b400}.sw.ok{background:#e6f6ec;border-color:#2f9e5f}.sw.no{background:#fde8e6;border-color:#d9534f}
+.act.panel .story.swap{flex:1}
+@media(max-height:700px){.act.panel .story.swap{font-size:14.5px;line-height:1.5}.story.swap p{margin:0 0 4px}.sw{padding:0 5px;border-width:1.5px;line-height:1.25}}
 </style>
 </head>
 <body>
@@ -107,6 +110,17 @@ const PAST=COURT('Past tenses','GRAMMAR')+`<ul class="say">
 const TITLES=['Eating the evidence','Where did the criminals go?!','A criminal pastime'];
 /* Interactive characters: the officer and two witnesses. Tap a witness to hear his statement (the text stays hidden), then tap the officer for his questions. */
 Lesson.ACT.read={view(a){return `<div class="story">${a.html}</div>`}};
+/* Swap task: the phrasal verbs in the story are in the wrong places; Gabi taps two verbs to swap them, then checks. */
+Lesson.ACT.swap={
+ init(a,s){s.cur=a.start.slice();s.sel=null;s.checked=false},
+ view(a,s){const E=Lesson.esc;let ok=0;
+  const html=a.html.replace(/\{(\d+)\}/g,(m,k)=>{k=+k;const v=s.cur[k],good=a.ok[k].includes(v);if(s.checked&&good)ok++;
+   return `<button class="sw${s.sel===k?' on':''}${s.checked?(good?' ok':' no'):''}" data-sw="${k}">${E(a.verbs[v])}</button>`});
+  return `<div class="story swap">${html}</div><div class="row"><button class="main" data-swcheck>Check</button><button class="ghost" data-swagain>Start again</button>${s.checked?`<b class="score">${ok} of ${a.verbs.length} in the right place</b>`:'<span class="muted">Tap two verbs to swap them.</span>'}</div>`},
+ click(a,s,d){
+  if(d.sw!==undefined){const k=+d.sw;s.checked=false;if(s.sel==null)s.sel=k;else if(s.sel===k)s.sel=null;else{const t=s.cur[s.sel];s.cur[s.sel]=s.cur[k];s.cur[k]=t;s.sel=null}return Lesson.redraw()}
+  if(d.swcheck!==undefined){s.checked=true;s.sel=null;return Lesson.redraw()}
+  if(d.swagain!==undefined){s.cur=a.start.slice();s.sel=null;s.checked=false;return Lesson.redraw()}}};
 Lesson.ACT.cast={
  init(a,s){s.who=null;s.heard={};s.qi=0;s.key=false;s.text=false;s.used={}},
  view(a,s){const E=Lesson.esc,P=a.people;
@@ -310,12 +324,12 @@ Lesson.boot({kicker:'Module 2 · Lesson 4',steps:[
   {q:'You looked ___ something in detail for a school project.',o:['up','into','for','across'],a:'into',why:'look into = investigate'},
   {q:'You came ___ with a great new idea.',o:['across','out','up','into'],a:'up',why:'come up with = think of an idea'},
   {q:'You looked ___ an English word in a dictionary.',o:['for','into','out','up'],a:'up',why:'look up = find information'}]}]},
-{stage:'Reading',title:'Detective story: The Missing Trophy',hint:'First predict from the title. <small>Then read the story. The phrasal verbs are highlighted.</small>',cols:'.7fr 1.5fr',
+{stage:'Reading',title:'Detective story: The Missing Trophy',hint:'Predict from the title. <small>Then read the story: the phrasal verbs are in the wrong places. Tap two verbs to swap them.</small>',cols:'.7fr 1.5fr',
  acts:[
  {type:'talk',title:'Predict',label:'Title',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['I think …','Maybe …','Probably …'],cards:[
   {q:'“The Missing Trophy.” What happened? Who took it, and why?'},
   {q:'A detective looks into the case. What will he look for? What will he find out?'}]},
- {type:'read',title:'The Missing Trophy',html:'<p>On Monday morning the school’s gold football trophy was not in its glass case. Detective Reed <mark>looked into</mark> the case at once. The caretaker said the door had been locked all weekend, and nobody had broken the window.</p><p>Reed <mark>looked for</mark> clues in the corridor and <mark>came across</mark> a green hoodie behind a bin. There was a name label inside, so he <mark>looked up</mark> the name in the school list: Jack Miller, class 9B.</p><p>At lunchtime Jack <mark>turned up</mark> at the police station with his mother. “I didn’t take it,” he said. “I was at home on Sunday night.” But Reed <mark>found out</mark> that a camera had filmed a boy in a green hoodie that evening. The boy was walking slowly, holding the trophy with both hands. A thief usually runs!</p><p>Suddenly Reed <mark>worked out</mark> the truth. “The base was loose, wasn’t it?” Jack nodded. “I took it to my dad’s workshop to fix it before the final. I wanted to surprise the coach, but I forgot to tell anyone.” Reed <mark>came up with</mark> a simple plan: Jack brought the trophy back the next day, and everybody said thank you.</p>'}]},
+ {type:'swap',title:'The Missing Trophy · swap the verbs',verbs:['looked into', 'looked for', 'came across', 'looked up', 'turned up', 'found out', 'worked out', 'came up with'],start:[4,5,0,6,1,7,3,2],ok:[[0],[1],[2],[3],[4],[5,6],[6,5],[7]],html:'<p>On Monday morning the school’s gold football trophy was not in its glass case. Detective Reed {0} the case at once. The caretaker said the door had been locked all weekend, and nobody had broken the window.</p><p>Reed {1} clues in the corridor and {2} a green hoodie behind a bin. There was a name label inside, so he {3} the name in the school list: Jack Miller, class 9B.</p><p>At lunchtime Jack {4} at the police station with his mother. “I didn’t take it,” he said. “I was at home on Sunday night.” But Reed {5} that a camera had filmed a boy in a green hoodie that evening. The boy was walking slowly, holding the trophy with both hands. A thief usually runs!</p><p>Suddenly Reed {6} the truth. “The base was loose, wasn’t it?” Jack nodded. “I took it to my dad’s workshop to fix it before the final. I wanted to surprise the coach, but I forgot to tell anyone.” Reed {7} a simple plan: Jack brought the trophy back the next day, and everybody said thank you.</p>'}]},
 {stage:'Reading',title:'Detective story: true or false?',hint:'Work from memory: is it true, false or not stated? <small>Then put the events in order.</small>',cols:'.8fr 1.3fr',
  acts:[
  {type:'quiz',title:'True · False · Not stated',label:'Sentence',cols:3,shuffle:false,items:[
