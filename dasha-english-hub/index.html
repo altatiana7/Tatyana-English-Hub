@@ -90,7 +90,8 @@ button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:8px 14px;border-radius:8px;font-size:14px;z-index:50}
 
 .stage{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px 12px;display:flex;flex-direction:column;min-height:0;min-width:0}
-.bchips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;flex:0 0 auto}
+.bchips{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;margin-bottom:8px;padding-bottom:3px;flex:0 0 auto}
+.bchip{white-space:nowrap;flex:0 0 auto}
 .bchip{border:1px solid var(--line);background:#fff;border-radius:8px;padding:5px 9px;font-size:13px;font-weight:600;color:var(--muted)}
 .bchip.on{background:var(--acc);border-color:var(--acc);color:#fff}
 .bchip:hover:not(.on){border-color:var(--acc)}
@@ -241,18 +242,43 @@ button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .pimg{background:#fff;border:2px solid var(--line);border-radius:12px;padding:4px;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .pimg img{max-width:100%;max-height:100%;object-fit:contain}
 .pimg.ok{border-color:var(--ok);background:var(--ok-soft,#E3F1E6)}.pimg.bad{border-color:#C0584F;background:var(--bad-soft)}
-.spimg{max-height:30vh;max-width:90%;object-fit:contain;border-radius:10px}
+.spimg{max-height:22vh;max-width:90%;object-fit:contain;border-radius:10px}
 .frwrap .qbar{gap:14px;margin-top:6px}.frwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;flex:1;min-height:0}
 .qcard.fr{width:min(640px,90%);height:min(40vh,300px)}
 .frword{font-family:var(--serif);font-weight:700;font-size:clamp(48px,13vh,96px)}
 .frhint{font-family:var(--ui);color:var(--muted);font-size:15px;margin-top:8px}
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:8px;flex:1 1 auto;min-height:0;max-height:58vh;width:100%;max-width:640px;margin:0 auto}
+.bcell{position:relative;background:#fff;border:2px solid var(--line);border-radius:10px;padding:0;overflow:hidden;min-height:0}
+.bcell img{width:100%;height:100%;object-fit:cover;display:block}
+.bcell:hover:not(.got){border-color:var(--acc)}
+.bcell.got{border-color:var(--ok)}.bcell.got img{opacity:.45}
+.bcell.bad{border-color:var(--bad);animation:shake .35s}
+.bcell .tick{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(34px,8vh,64px);font-weight:800;color:var(--ok)}
+.rvwrap{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;flex:1 1 auto;min-height:0;max-height:52vh}
+.rvleft{display:flex;flex-direction:column;gap:4px;min-height:0}
+.rvpic{position:relative;flex:1;min-height:0;border-radius:12px;overflow:hidden;background:#fff;border:1.5px solid var(--line)}
+.rvpic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rvtiles{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr)}
+.rvtile{background:var(--acc);border:2px solid #fff;border-radius:0;transition:opacity .35s;padding:0}
+.rvtile:hover{filter:brightness(1.1)}
+.rvtile.open{opacity:0;pointer-events:none}
+.rvopts{grid-template-columns:1fr;max-height:none}
+.selfq{font-family:var(--serif);font-weight:700;font-size:clamp(24px,5vh,36px);text-align:center;margin:8px 0}
+.selfgoals{font-family:var(--serif);font-size:clamp(18px,3.4vh,24px);margin:0 auto 6px;padding-left:22px;max-width:640px}
+.selfrow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+.selfbtn{border:2px solid var(--line);background:#fff;border-radius:12px;padding:12px 22px;font-weight:700;font-size:clamp(17px,3vh,22px)}
+.selfbtn.ok{background:var(--ok-soft)}.selfbtn.mid{background:var(--sun-soft)}.selfbtn.low{background:var(--bad-soft)}
+.selfbtn.on{border-color:var(--ink)}
+.rtwo{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;margin-bottom:6px}
+@media (max-height:640px){.rtable{font-size:clamp(15px,2.8vh,19px)}.rtable td,.rtable th{padding:1px 9px}.rtable .say{padding:1px 8px}.note{padding:5px 10px;font-size:15px}.abody{gap:6px}}
 </style>
 </head>
 <body>
 <div id="app"></div>
-<script src="data-reading.js?v=14"></script>
+<script src="data-reading.js?v=15"></script>
 <script src="data-gg.js?v=14"></script>
-<script src="data-verbs.js?v=14"></script>
-<script src="engine.js?v=14"></script>
+<script src="data-gg2.js?v=16"></script>
+<script src="data-verbs.js?v=15"></script>
+<script src="engine.js?v=17"></script>
 </body>
 </html>

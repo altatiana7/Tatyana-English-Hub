@@ -335,7 +335,7 @@ ENG.pic=function(box,b,ctx){
     if(it.q)pr.append(h('div','qtext',esc(it.q)));
     if(it.img){const im=new Image();im.className='pstim';im.src='img/cards/'+it.img+'.jpg';pr.append(im);}
     pr.append(h('div','cnt',(i+1)+' / '+qs.length));
-    const grid=h('div',b.imgOpts?'pgrid':'opts');if(b.imgOpts)grid.style.gridTemplateColumns=`repeat(${Math.min(it.opts.length,5)},1fr)`;
+    const grid=h('div',b.imgOpts?'pgrid':'opts');if(b.imgOpts)grid.style.gridTemplateColumns=`repeat(${it.opts.length===4?2:Math.min(it.opts.length,5)},1fr)`;
     const foot=h('div','foot');const fb=h('div','fb');foot.append(fb);
     const os=shuffle(it.opts.map((t,k)=>({t,ok:k===0})));
     os.forEach(o=>{
@@ -351,6 +351,75 @@ ENG.pic=function(box,b,ctx){
     if(it.say)later(()=>say(it.say,pr.querySelector('.spk')),150);
   }
   start();
+};
+
+
+/* ---------- picture bingo (Teacher's Book warm-up): hear a word, tap its photo in the 3x3 grid ---------- */
+ENG.bingo=function(box,b,ctx){
+  let cells,calls,i,score,errs,done;
+  function start(){cells=shuffle(b.items).slice(0,9);calls=shuffle(cells);i=0;score=0;errs=[];done=new Set();show();}
+  function show(){
+    const body=actHead(box,b,start);const it=calls[i];
+    const pr=h('div','qprompt');pr.append(spk(it.say,'big'));pr.append(h('div','cnt',(i+1)+' / '+calls.length));
+    const grid=h('div','bgrid');const foot=h('div','foot');const fb=h('div','fb');foot.append(fb);
+    let tried=false,solved=false;
+    cells.forEach(c=>{
+      const x=h('button','bcell'+(done.has(c)?' got':''));const im=new Image();im.alt='';im.src='img/cards/'+c.img+'.jpg';x.append(im);
+      if(done.has(c))x.append(h('span','tick','✓'));
+      x.onclick=()=>{
+        if(solved||done.has(c))return;
+        if(c===it){
+          solved=true;done.add(c);if(!tried)score++;x.classList.add('got');x.append(h('span','tick','✓'));
+          fb.className='fb ok';fb.textContent='Yes! '+it.say;say(it.say);
+          const last=i===calls.length-1;const n=h('button','btn primary',last?'See result':'Next ›');
+          n.onclick=()=>{if(last)endScreen(body,score,calls.length,errs,start,ctx);else{i++;show();}};foot.append(n);
+        }else{
+          tried=true;x.classList.add('bad');setTimeout(()=>x.classList.remove('bad'),500);
+          fb.className='fb bad';fb.textContent='Not this one. Listen again.';
+          const e=esc(it.say);if(errs.indexOf(e)<0)errs.push(e);
+        }
+      };grid.append(x);
+    });
+    body.append(pr,grid,foot);later(()=>say(it.say,pr.querySelector('.spk')),150);
+  }
+  start();
+};
+
+/* ---------- guess the photo: open tiles one by one, choose the word ---------- */
+ENG.reveal=function(box,b,ctx){
+  let qs,i,score,errs;
+  function start(){qs=shuffle(b.items);i=0;score=0;errs=[];show();}
+  function show(){
+    const body=actHead(box,b,start);const it=qs[i];
+    const wrap=h('div','rvwrap');const pic=h('div','rvpic');const im=new Image();im.alt='';im.src='img/cards/'+it.img+'.jpg';pic.append(im);
+    const tiles=h('div','rvtiles');let open=0;const info=h('div','cnt','Open tiles: 0 / 9  ('+(i+1)+' / '+qs.length+')');
+    for(let k=0;k<9;k++){const t=h('button','rvtile');t.setAttribute('aria-label','Open a tile');t.onclick=()=>{if(t.classList.contains('open'))return;t.classList.add('open');open++;info.textContent='Open tiles: '+open+' / 9  ('+(i+1)+' / '+qs.length+')';};tiles.append(t);}
+    pic.append(tiles);
+    const grid=h('div','opts rvopts');const foot=h('div','foot');const fb=h('div','fb');foot.append(fb);
+    const os=shuffle(it.opts.map((t,k)=>({t,ok:k===0})));
+    os.forEach(o=>{const x=h('button','opt',esc(o.t));x.onclick=()=>{
+      grid.querySelectorAll('.opt').forEach(y=>y.disabled=true);tiles.querySelectorAll('.rvtile').forEach(t=>t.classList.add('open'));
+      say(it.opts[0]);
+      if(o.ok){x.classList.add('ok');score++;fb.className='fb ok';fb.textContent='Yes! '+(open<=3?'Only '+open+' tiles!':'');}
+      else{x.classList.add('bad');grid.querySelectorAll('.opt').forEach((y,k)=>{if(os[k].ok)y.classList.add('ok');});errs.push(esc('photo → '+it.opts[0]));fb.className='fb bad';fb.textContent='Not quite: '+it.opts[0];}
+      const last=i===qs.length-1;const n=h('button','btn primary',last?'See result':'Next ›');n.onclick=()=>{if(last)endScreen(body,score,qs.length,errs,start,ctx);else{i++;show();}};foot.append(n);
+    };grid.append(x);});
+    const left=h('div','rvleft');left.append(pic,info);wrap.append(left,grid);body.append(wrap,foot);
+  }
+  start();
+};
+
+/* ---------- finishing the lesson (Teacher's Book self-assessment) ---------- */
+ENG.self=function(box,b,ctx){
+  const body=actHead(box,b);
+  const q=h('div','selfq',esc(b.q));
+  const row=h('div','selfrow');
+  const reply=h('div','fb');
+  [['I know that!','ok','Great! Now say three words from this lesson.'],['Almost','mid','Good. Look at the cards on the left once more.'],['Help me!','low','No problem. We repeat it next time.']].forEach(a=>{
+    const x=h('button','selfbtn '+a[1],a[0]);x.onclick=()=>{row.querySelectorAll('button').forEach(y=>y.classList.remove('on'));x.classList.add('on');reply.textContent=a[2];};row.append(x);});
+  const goals=h('ul','selfgoals');(b.can||[]).forEach(t=>{const li=h('li',null,esc(t));goals.append(li);});
+  const n=h('button','btn primary',ctx.hasNext?'Next block ›':'Back to blocks');n.onclick=ctx.hasNext?ctx.next:ctx.overview;
+  body.append(q,goals,row,reply,n);
 };
 
 /* ---------- reading warm-up cards: read first, flip -> audio plays only on the flip ---------- */
@@ -445,7 +514,7 @@ function lesson(P,U,k,bi){
     const chips=h('div','bchips');
     const ov=h('button','bchip','All blocks');ov.onclick=overview;chips.append(ov);
     L.blocks.forEach((b,m)=>{const c=h('button','bchip'+(m===j?' on':''),`${m+1} · ${esc(b.title)}`);c.onclick=()=>open(m);chips.append(c);});
-    const act=h('div','act');stg.append(chips,act);
+    const act=h('div','act');stg.append(chips,act);const onChip=chips.querySelector('.bchip.on');if(onChip)onChip.scrollIntoView({inline:'center',block:'nearest'});
     const ctx={hasNext:j<L.blocks.length-1,next:()=>open(j+1),overview};
     ENG[L.blocks[j].t](act,L.blocks[j],ctx);
   }
@@ -473,6 +542,9 @@ function collectTexts(){
         case 'match':if(b.lspeak!==false)b.pairs.forEach(p=>add(p[0]));break;
         case 'hunt':b.items.forEach(s=>{const [t,fix]=s.split('|');const tok=t.split(' ');const bad=[];tok.forEach((x,k)=>{if(x[0]==='~'){bad.push(k);tok[k]=x.slice(1);}});const fx=(fix||'').split('/');bad.forEach((k,n)=>{tok[k]=fx[n]||fx[0];});add(tok.join(' '));});break;
         case 'speak':(b.patterns||[]).forEach(add);break;
+        case 'bingo':b.items.forEach(it=>add(it.say));break;
+        case 'reveal':b.items.forEach(it=>add(it.opts[0]));break;
+        case 'self':add(b.q);(b.can||[]).forEach(add);break;
       }
     });
   })));
