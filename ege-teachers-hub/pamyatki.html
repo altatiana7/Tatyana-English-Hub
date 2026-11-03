@@ -1936,6 +1936,150 @@ const WH_Q=WHEREAS.map(([t,a,b])=>({q:a+' whereas ___',hint:t,opts:shuffle([b,..
 const HT_Q=HOWTO.map(([l,p])=>{const v=p.split(' ')[0];const rest=p.slice(v.length);const verbs=[...new Set(HOWTO.map(x=>x[1].split(' ')[0]))].filter(x=>x!==v);return {q:'How to encourage teenagers to ___'+rest+'?',hint:l,opts:shuffle([v,...shuffle(verbs).slice(0,3)]),a:v}});
 
 /* ====== разделы ====== */
+
+/* ====== из «Шаблонов заданий ЕГЭ» (ноябрь 2026) ====== */
+const TPL_WORDS=[
+ ['issue','спорный вопрос, острая проблема (важная тема)','Climate change is a global issue.','30–36'],
+ ['matter','вопрос, дело — то, с чем имеешь дело (deal with), обсуждаешь (consider), решаешь (solve)','It is a private matter.','30–36'],
+ ['problem','проблема, которую нужно решить; задача, загадка','I can’t solve this maths problem.','30–36'],
+ ['situation','обстоятельства, общее положение дел (matter — конкретный аспект ситуации)','The situation in the city has improved.','30–36'],
+ ['relationship','отношения между конкретными людьми (часто эмоциональная связь)','She has a close relationship with her mum.','30–36'],
+ ['relations','отношения между странами, организациями, большими группами (официальный стиль)','The two countries have good trade relations.','30–36'],
+ ['as a matter of fact','на самом деле, фактически','As a matter of fact, I have never been abroad.','30–36'],
+ ['be on good terms with','быть в хороших отношениях с кем-то','I am on good terms with my neighbours.','30–36'],
+ ['terms','условия, сроки, правила, термины','I agree with the terms of the contract.','30–36'],
+ ['splash','всплеск, брызги; плескаться, брызгать','The children splashed in the pool.','30–36'],
+];
+const TPL_S=[
+ 'It’s no laughing {matter|issue|problem|situation}. // no laughing matter — не до смеха',
+ 'It doesn’t {matter|issue|problem|situation} who is right — let’s stop arguing. // matter как глагол — иметь значение',
+ 'As a {matter|issue|problem|situation} of fact, I have never been abroad. // as a matter of fact — на самом деле',
+ 'The economic {situation|issue|matter|problem} in the country has improved this year. // situation — общее положение дел',
+ 'Pollution is a controversial {issue|matter|situation|problem} that divides public opinion. // issue — спорный вопрос',
+ 'This maths {problem|issue|matter|situation} is too difficult for me. // problem — задача',
+ 'She found herself in a difficult {situation|issue|matter|problem} when she lost her passport. // be in a situation — оказаться в ситуации',
+ 'The {issue|matter|situation|problem} of animal rights was raised at the meeting. // raise an issue — поднять вопрос',
+ 'What’s the {matter|issue|situation}? You look upset. // What’s the matter? — Что случилось?',
+ 'Our school has a serious {problem|matter|relations} with bullying. // have a problem with',
+ 'Russia and China maintain close economic {relations|relationships}. // relations — между странами',
+ 'She has a very warm {relationship|relations} with her grandmother. // relationship — между людьми',
+ 'The company is working to improve its public {relations|relationships}. // public relations (PR)',
+ 'International {relations|relationships} became tense last year. // relations — между странами',
+ 'Their {relationship|relations} ended after two years together. // relationship — отношения пары',
+ 'I agree with the {terms|issues|situations} of the contract. // terms — условия',
+];
+const TPL37=[
+ ['silver surfer','пожилой человек, который пользуется интернетом','My grandma is a real silver surfer.'],
+ ['geek','человек, помешанный на технике и компьютерах','My brother is a computer geek.'],
+ ['to be stuck behind a computer','долго сидеть за компьютером','I was stuck behind my computer all day.'],
+ ['to boot up','загружаться, включать (компьютер)','My laptop takes ages to boot up.'],
+ ['to crash','«упасть», зависнуть, сломаться (о компьютере)','My computer crashed and I lost my essay.'],
+ ['widespread computer use','повсеместное использование компьютеров','Widespread computer use has changed education.'],
+ ['wireless networks','беспроводные сети','Wireless networks let us work anywhere.'],
+ ['time-consuming','отнимающий много времени','Writing by hand is time-consuming.'],
+ ['inefficient','неэффективный','Searching in a library can be inefficient.'],
+ ['instant access','мгновенный доступ','The internet gives us instant access to information.'],
+ ['to keep in touch','поддерживать связь','I keep in touch with my old friends online.'],
+ ['to download','скачивать','I download films to watch on the plane.'],
+ ['for personal purposes','для личных целей','I use my laptop for personal purposes.'],
+];
+const TPL37_S=[
+ 'My grandma has become a real {silver surfer|geek|wireless network} — she shops online every day.',
+ 'My brother is a computer {geek|silver surfer|crash} — he builds his own PCs.',
+ 'I was {stuck behind|booted up|kept in touch with} my computer all weekend doing a project.',
+ 'It takes my old laptop five minutes to {boot up|crash|download}.',
+ 'My computer {crashed|booted up|downloaded} and I lost my essay.',
+ 'Thanks to {wireless networks|silver surfers|personal purposes}, I can work in any café.',
+ 'Writing letters by hand is {time-consuming|wireless|instant} — it takes ages.',
+ 'The internet gives us {instant access|time-consuming|widespread} to information.',
+ 'Social media helps me {keep in touch|boot up|crash} with friends from my old school.',
+ 'I usually {download|crash|boot up} films to watch them on the plane.',
+ 'I use my laptop mostly for personal {purposes|networks|access}.',
+ '{Widespread|Instant|Inefficient} computer use has changed the way we study.',
+ 'Searching for books in a library can be slow and {inefficient|wireless|instant}.',
+];
+const TPL37_FLIP=[
+ {f:'Have you got a computer at home?',b:'As for me, I have a new notebook at home. And to say it’s the most important item in my life is to say nothing.'},
+ {f:'What do you use it for?',b:'To be honest, I don’t always open my notebook to do something serious. I prefer watching videos or surfing my favourite web pages. I do use it to do my homework, but not often.'},
+ {f:'Has your computer changed your life? In what way?',b:'Now my life has become more independent thanks to my notebook. I don’t have to ask my dad silly questions. And I don’t have to waste my pocket money on cinema tickets. That’s awesome!'},
+ {f:'Стимул: «I had a birthday party yesterday.»<br>Задай 3 вопроса',b:'Where did you celebrate your birthday?<br>Did you have a lot of guests at the party?<br>Was there a big cake with candles at the party?'},
+];
+const TPL38=[
+ ['affection','привязанность','слово'],['devotion','преданность','слово'],['tenderness','нежность','слово'],['sacrifice','жертвовать; жертва','слово'],
+ ['adopted child','приёмный ребёнок','слово'],['sibling','брат или сестра','слово'],['timid','робкий','слово'],['frown','хмуриться','слово'],
+ ['tease','дразнить','слово'],['mate','приятель, напарник','слово'],
+ ['be on cloud nine','быть на седьмом небе','идиома'],['tie the knot','пожениться','идиома'],['have butterflies in the stomach','волноваться, «бабочки в животе»','идиома'],
+ ['be on good terms with','быть в хороших отношениях с','конструкция'],['bear in mind','иметь в виду, помнить','конструкция'],
+ ['Understanding and addressing these patterns is crucial…','Понимать эти закономерности и работать с ними крайне важно…','конструкция'],
+];
+const TPL38_S=[
+ 'A mother’s {affection|frown|sibling} for her child is unconditional.',
+ 'Their {devotion|timidity|teasing} to each other lasted for fifty years of marriage.',
+ 'Parents often {sacrifice|tease|frown} their free time for their children.',
+ 'The couple decided to adopt a baby; their {adopted|timid|devoted} son is now five.',
+ 'I have two {siblings|mates|affections} — an older brother and a younger sister.',
+ 'She is too {timid|tender|devoted} to speak in front of the class.',
+ 'Older brothers often {tease|sacrifice|adopt} their little sisters.',
+ 'My dad {frowned|teased|adopted} when he saw my school report.',
+ 'Grandparents show great {tenderness|timidity|teasing} towards their grandchildren.',
+ 'We have been best {mates|siblings|frowns} since primary school.',
+ 'When she passed the exam, she was on cloud {nine|seven|ten}.',
+ 'After five years together, they finally decided to tie the {knot|rope|bond}.',
+ 'Before my first date, I had {butterflies|bees|birds} in my stomach.',
+ 'I’m on good {terms|relations|matters} with all my classmates.',
+ '{Bear|Take|Hold} in mind that teenagers need their parents’ support.',
+];
+const TPL38_FLIP=[
+ {f:'Проблема: arguments with people we love and feeling lonely',b:'A person should learn some useful skills. Effective communication is the cornerstone of healthy relationships. Open and honest communication fosters trust and understanding. Active listening, empathy and conflict resolution skills are vital components of effective communication.'},
+ {f:'Relationships are an intricate tapestry woven with emotions, experiences and connections…',b:'Отношения — это сложное полотно из эмоций, опыта и связей…'},
+ {f:'…that shape the very fabric of our lives.',b:'…которые формируют саму ткань нашей жизни.'},
+ {f:'Emotional bonds provide a sense of security and belonging.',b:'Эмоциональные связи дают ощущение безопасности и принадлежности.'},
+ {f:'…enabling us to navigate the complex territory of human bonds.',b:'…помогая нам ориентироваться в сложном мире человеческих связей.'},
+ {f:'…embedded in our interactions, relationships and societies.',b:'…заложенные в нашем общении, отношениях и обществе.'},
+ {f:'Effective communication is the cornerstone of healthy relationships.',b:'Эффективное общение — краеугольный камень здоровых отношений.'},
+ {f:'Open and honest communication fosters trust and understanding.',b:'Открытое и честное общение укрепляет доверие и понимание.'},
+];
+const TPL_PH=[
+ ['The picture captures a moment of pure happiness and togetherness.','запечатлён момент чистого счастья и единения','Фразы'],
+ ['The photo freezes a fleeting moment of genuine emotion.','фото останавливает мимолётный момент искренних эмоций','Фразы'],
+ ['It’s not a posed shot.','это не постановочный кадр','Фразы'],
+ ['It’s a spontaneous capture of authentic happiness.','это спонтанно пойманный момент настоящего счастья','Фразы'],
+ ['Their eyes sparkle with delight.','их глаза сияют от восторга','Фразы'],
+ ['I can see the slight tilt of the girl’s head as she laughs.','лёгкий наклон головы смеющейся девушки','Фразы'],
+ ['Every detail contributes to the photograph’s charm and emotional resonance.','каждая деталь добавляет фото очарования и эмоций','Фразы'],
+ ['It is a perfect example of travelling with friends.','идеальный пример путешествия с друзьями','Фразы'],
+ ['I guess it’s the best illustration for travelling with a family.','думаю, это лучшая иллюстрация семейного путешествия','Фразы'],
+ ['It allows for quality time together without everyday worries.','позволяет провести время вместе без повседневных забот','Мнение'],
+ ['It helps families become closer and creates happy memories.','сближает семью и создаёт счастливые воспоминания','Мнение'],
+ ['“A family that plays together stays together.”','Семья, которая вместе играет, остаётся вместе','Цитаты'],
+ ['“Family gives us the roots to stand tall and strong.”','Семья даёт нам корни, чтобы стоять прямо и твёрдо','Цитаты'],
+ ['a minibus','микроавтобус','Детали'],['a seat with a high back','сиденье с высокой спинкой','Детали'],['a knitted sweater with braids','вязаный свитер с косами','Детали'],
+ ['a deserted area','безлюдная местность','Детали'],['shoulder-length hair','волосы до плеч','Детали'],['wide windows','широкие окна','Детали'],
+];
+const TPL_PH_S=[
+ 'The picture captures a moment of pure happiness and {togetherness|loneliness|business}.',
+ 'The photo freezes a {fleeting|deserted|knitted} moment of genuine emotion.',
+ 'It’s not a {posed|fleeting|wide} shot.',
+ 'It’s a spontaneous capture of {authentic|deserted|posed} happiness.',
+ 'Their eyes {sparkle|frown|tease} with delight.',
+ 'I can see the slight {tilt|back|braid} of the girl’s head as she laughs.',
+ 'Every detail contributes to the photograph’s charm and emotional {resonance|tilt|area}.',
+ 'It is a perfect {example|capture|resonance} of travelling with friends.',
+ 'It allows for {quality|quantity|posed} time together without everyday worries.',
+ 'It helps families become closer and {creates|freezes|captures} happy memories.',
+ 'A family that plays together {stays|goes|grows} together.',
+ 'Family gives us the {roots|leaves|wings} to stand tall and strong.',
+ 'The girl in the photo has {shoulder-length|high-back|wide} hair.',
+ 'They are driving through a {deserted|fleeting|posed} area.',
+];
+const TPL_PH_M=[
+ ['The picture captures a moment','of pure happiness and togetherness.'],['The photo freezes a fleeting moment','of genuine emotion.'],
+ ['It’s a spontaneous capture','of authentic happiness.'],['Their eyes sparkle','with delight.'],
+ ['Every detail contributes to','the photograph’s charm.'],['It is a perfect example','of travelling with friends.'],
+ ['It allows for quality time together','without everyday worries.'],['It helps families become closer','and creates happy memories.'],
+ ['A family that plays together','stays together.'],['Family gives us the roots','to stand tall and strong.'],
+];
+const TPL_Q=parseS(TPL_S), TPL37_Q=parseS(TPL37_S), TPL38_Q=parseS(TPL38_S), TPL_PH_Q=parseS(TPL_PH_S);
 const SECTIONS=[
  {id:'articles', title:'Артикли', tag:'задания 19–24', img:'pamyatki-img/articles.jpg',
   cards:ART_CARDS.map(c=>({f:c[0],b:c[1],ex:c[2]})),
@@ -2100,6 +2244,41 @@ const SECTIONS=[
    {n:'Значение', type:'match', pairs:LINKERS.map(l=>[l[0],l[2].replace(/ \(.*\)/,'')])},
    {n:'Speed Game', type:'bomb', items:LK_Q},
   ]},
+
+  {id:'tpl-issue', title:'Issue · matter · relations', tag:'задания 30–36', thumb:'issue / matter<br>relationship / relations',
+   cards:TPL_WORDS.map(w=>({f:w[0],b:w[1],ex:w[2]})),
+   acts:[
+    {n:'Выбери слово', type:'choice', items:TPL_Q, all:true},
+    {n:'Значение', type:'match', pairs:TPL_WORDS.map(w=>[w[0],shortMean(w[1])])},
+    {n:'Доктор Грамматика', type:'doctor', items:TPL_Q, all:true},
+    {n:'Speed Game', type:'bomb', items:TPL_Q},
+   ]},
+  {id:'tpl-37', title:'Письмо 37: компьютер', tag:'задание 37', thumb:'silver surfer<br>instant access',
+   cards:TPL37.map(w=>({f:w[0],b:w[1],ex:w[2]})),
+   acts:[
+    {n:'Выбери слово', type:'choice', items:TPL37_Q, all:true},
+    {n:'Значение', type:'match', pairs:TPL37.map(w=>[w[0],shortMean(w[1])])},
+    {n:'Образец ответов', type:'flip', items:TPL37_FLIP, lead:'Ответь вслух и переверни карточку.'},
+    {n:'Доктор Грамматика', type:'doctor', items:TPL37_Q, all:true},
+    {n:'Speed Game', type:'bomb', items:TPL37_Q},
+   ]},
+  {id:'tpl-38', title:'Relationships: эссе 38', tag:'задание 38', thumb:'tie the knot<br>bear in mind',
+   cards:TPL38.map(w=>({f:w[0],b:w[1],ex:w[2],group:w[2]})), groups:['слово','идиома','конструкция'],
+   acts:[
+    {n:'Выбери слово', type:'choice', items:TPL38_Q, all:true},
+    {n:'Значение', type:'match', pairs:TPL38.filter(w=>w[0].length<40).map(w=>[w[0],w[1]])},
+    {n:'Слово · идиома · конструкция', type:'sort', bins:['слово','идиома','конструкция'], items:TPL38.map(w=>[w[0],w[2]]), per:8},
+    {n:'Проблема → решение', type:'flip', items:TPL38_FLIP, lead:'Переведи вслух и переверни карточку.'},
+    {n:'Speed Game', type:'bomb', items:TPL38_Q},
+   ]},
+  {id:'tpl-photo', title:'Описание фото', tag:'устная часть · задание 4', thumb:'not a posed shot<br>fleeting moment',
+   cards:TPL_PH.map(w=>({f:w[0],b:w[1],group:w[2]})), groups:['Фразы','Мнение','Цитаты','Детали'],
+   acts:[
+    {n:'Закончи фразу', type:'choice', items:TPL_PH_Q, all:true},
+    {n:'Начало + конец', type:'match', pairs:TPL_PH_M},
+    {n:'Собери фразу', type:'order', items:TPL_PH.filter(w=>w[2]==='Фразы'||w[2]==='Мнение').map(w=>w[0])},
+    {n:'Speed Game', type:'bomb', items:TPL_PH_Q},
+   ]},
 ];
 
 /* ====== хаб ====== */
