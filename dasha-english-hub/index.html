@@ -30,13 +30,13 @@ button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .btn:disabled{opacity:.4;cursor:default}
 
 /* hub */
-.hubview{overflow:auto;padding-top:6px}
+.hubview{overflow:auto;padding-top:2px}
 .hubtop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
 .brand{font-weight:800;font-size:30px;letter-spacing:-.02em}
 .brand i{display:inline-block;width:10px;height:10px;background:var(--rose);margin-left:6px}
 .sub{color:var(--muted);font-size:14px}
 .paths{display:grid;grid-template-columns:1.15fr 1fr .8fr;gap:12px;align-items:start}
-.pcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;border-top:5px solid var(--acc)}
+.pcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;border-top:5px solid var(--acc)}
 .pcard h2{margin:0;font-size:22px;letter-spacing:-.01em}
 .pcard .psub{color:var(--muted);font-size:14px;margin:2px 0 8px}
 .utitle{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);margin:10px 0 5px}
@@ -53,6 +53,13 @@ button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .p-verbs{--acc:var(--moss);--acc-soft:var(--moss-soft)}
 .later{font-size:13px;color:var(--muted);margin-top:8px}
 
+/* hub covers: whole picture, never cropped */
+.cover{height:clamp(48px,10vh,104px);border-radius:10px;background:var(--acc-soft);display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:8px;position:relative}
+.cover img{width:100%;height:100%;object-fit:contain;display:block}
+.cover .motif{font-family:var(--serif);font-weight:700;font-size:clamp(28px,6vh,44px);color:var(--acc);letter-spacing:.02em}
+.pcard h2 .cnt2{margin-left:auto;font-family:var(--ui);background:var(--acc-soft);border-radius:999px;padding:2px 9px;font-size:12px;font-weight:700;color:var(--acc)}
+.pcard h2{display:flex;align-items:baseline;gap:8px}
+.lchip{min-height:34px;padding:5px 9px}
 /* lesson frame */
 .lessonview{height:100%;display:flex;flex-direction:column;gap:8px}
 .ltop{display:flex;align-items:center;gap:10px;flex:0 0 auto;border-bottom:1px solid var(--line);padding-bottom:7px}
@@ -70,7 +77,7 @@ button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .qword{font-family:var(--serif);font-weight:700;font-size:clamp(28px,5.2vh,40px)}
 .qru{font-size:clamp(20px,3.6vh,26px);font-weight:700}
 .qex{font-family:var(--serif);font-size:clamp(16px,2.6vh,19px);color:var(--muted)}
-.qimg{max-width:100%;max-height:48%;border-radius:8px;object-fit:cover}
+.qimg{max-width:100%;max-height:48%;border-radius:8px;object-fit:contain}
 .qbar{display:flex;align-items:center;justify-content:space-between}
 .qcnt{color:var(--muted);font-size:14px}
 .spk{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);background:#fff;display:inline-flex;align-items:center;justify-content:center;padding:0;flex:0 0 auto}
@@ -186,7 +193,7 @@ button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 /* predict / photo */
 .predict{flex-direction:row;gap:16px}
 .photo{flex:1.2;min-height:0;border-radius:12px;overflow:hidden;background:#EEF2F5;display:flex;align-items:center;justify-content:center}
-.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo img{width:100%;height:100%;object-fit:contain;display:block}
 .photo.ph{border:2px dashed var(--line)}
 .phcap{padding:16px;text-align:center;color:var(--muted);font-family:var(--serif);font-style:italic;font-size:17px}
 .pright{flex:1;display:flex;flex-direction:column;gap:10px;min-width:0}
@@ -233,9 +240,9 @@ button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 </head>
 <body>
 <div id="app"></div>
-<script src="data-reading.js?v=3"></script>
-<script src="data-gg.js?v=3"></script>
-<script src="data-verbs.js?v=3"></script>
-<script src="engine.js?v=3"></script>
+<script src="data-reading.js?v=5"></script>
+<script src="data-gg.js?v=5"></script>
+<script src="data-verbs.js?v=5"></script>
+<script src="engine.js?v=5"></script>
 </body>
 </html>

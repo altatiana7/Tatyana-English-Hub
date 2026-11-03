@@ -342,6 +342,7 @@ function quizlet(L,host){
 
 /* ---------- views ---------- */
 const app=$('#app');
+const COVER={read:{img:'hub-read',motif:'Aa · ai · oa'},gg:{img:'hub-gg',motif:'0 · 1 · 2'},verbs:{img:'hub-verbs',motif:'go · run · eat'}};
 function hub(){
   clearTimers();stopAudio();document.title="Dasha's English";app.innerHTML='';app.className='hubview';
   const top=h('header','hubtop');
@@ -349,7 +350,11 @@ function hub(){
   const tb=h('button','btn teacher','Для учителя');tb.onclick=()=>teacherPlan();top.append(tb);app.append(top);
   const g=h('div','paths');
   D.paths.forEach((P,pi)=>{
-    const c=h('section','pcard p-'+P.id);c.innerHTML=`<h2>${esc(P.title)}</h2><div class="psub">${esc(P.sub)}</div>`;
+    const c=h('section','pcard p-'+P.id);
+    const cv=COVER[P.id]||{};const cover=h('div','cover');const im=new Image();im.alt='';
+    im.onerror=()=>{im.remove();cover.insertAdjacentHTML('afterbegin',`<span class="motif">${esc(cv.motif||'')}</span>`);};im.src='img/'+cv.img+'.jpg';cover.append(im);
+    const n=P.units.reduce((a,U)=>a+U.lessons.filter(L=>!L.soon).length,0);
+    c.append(cover);c.insertAdjacentHTML('beforeend',`<h2>${esc(P.title)}<span class="cnt2">${n} lessons</span></h2><div class="psub">${esc(P.sub)}</div>`);
     P.units.forEach(U=>{
       if(U.title)c.append(h('div','utitle',esc(U.title)));
       const ch=h('div','chips');

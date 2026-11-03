@@ -28,3 +28,11 @@
 | `v1.jpg` | V1 · Commands · stand up, sit down, open… | A teacher standing in front of a bright classroom with one hand raised, showing a "stand up" gesture to smiling children. |
 | `v2.jpg` | V2 · Everyday verbs · go, eat, run, sleep… | Children doing different things in a sunny park: one runs, one jumps, one eats a sandwich on a bench, one drinks juice. |
 | `v3.jpg` | V3 · I like · I have · I can | Three children in a school yard: one holds a football, one draws on a notepad, one plays a guitar. Sunny day, natural expressions. |
+
+## Обложки главной (показываются целиком, без обрезки; подойдёт любой формат, лучше 3:1)
+
+| Файл | Промпт (English) |
+|---|---|
+| `hub-read.jpg` | Wide photo: a smiling 10-year-old girl reading a picture book on a sofa, colourful letters on the wall behind her. Natural light. |
+| `hub-gg.jpg` | Wide photo: two schoolchildren at a desk with an open English textbook, pencils and a notebook. Bright classroom. |
+| `hub-verbs.jpg` | Wide photo: three children running, jumping and clapping in a sunny schoolyard. Natural light. |
