@@ -353,6 +353,22 @@ ENG.pic=function(box,b,ctx){
   start();
 };
 
+/* ---------- reading warm-up cards: read first, flip -> audio plays only on the flip ---------- */
+ENG.flipread=function(box,b,ctx){
+  let order=shuffle(b.items),i=0;
+  const body=actHead(box,b,()=>{order=shuffle(b.items);i=0;show();});
+  const wrap=h('div','frwrap');const card=h('div','qcard fr');const bar=h('div','qbar');
+  const p=h('button','btn sm','‹ Back');const n=h('button','btn primary','Next ›');const cnt=h('span','qcnt');bar.append(p,cnt,n);
+  body.append(wrap);wrap.append(card,bar);
+  function show(){const x=order[i];card.classList.remove('flip');
+    card.innerHTML=`<div class="inner"><div class="side front"><div class="frword">${wordHTML(x.w,b.hl)}</div><div class="frhint">Read it. Then tap the card.</div></div><div class="side back"><div class="frword">${wordHTML(x.w,b.hl)}</div><div class="qru">${esc(x.ru||'')}</div></div></div>`;
+    cnt.textContent=(i+1)+' / '+order.length;n.textContent=i===order.length-1?(ctx.hasNext?'Next block ›':'Back to blocks'):'Next ›';}
+  card.onclick=()=>{const f=card.classList.toggle('flip');if(f)say(plain(order[i].w));};
+  p.onclick=()=>{i=(i-1+order.length)%order.length;show();};
+  n.onclick=()=>{if(i===order.length-1){(ctx.hasNext?ctx.next:ctx.overview)();}else{i++;show();}};
+  show();
+};
+
 /* ---------- Quizlet-style card column ---------- */
 function quizlet(L,host){
   const cards=L.cards||[];let i=0;host.innerHTML='';
@@ -363,8 +379,8 @@ function quizlet(L,host){
   function show(){const x=cards[i];c.classList.remove('flip');if(sp)sp.remove();
     const img=x.img?`<img class="qimg" src="img/cards/${esc(x.img)}.jpg" onerror="this.remove()">`:'';
     c.innerHTML=`<div class="inner"><div class="side front">${img}<div class="qword">${wordHTML(x.w,hl)}</div></div><div class="side back"><div class="qru">${esc(x.ru||'')}</div><div class="qex">${esc(x.ex||'')}</div></div></div>`;
-    sp=spk(plain(x.w));wrap.append(sp);cnt.textContent=(i+1)+' / '+cards.length;}
-  c.onclick=()=>{c.classList.toggle('flip');};
+    cnt.textContent=(i+1)+' / '+cards.length;}
+  c.onclick=()=>{if(c.classList.toggle('flip'))say(plain(cards[i].w));};
   p.onclick=()=>{i=(i-1+cards.length)%cards.length;show();};n.onclick=()=>{i=(i+1)%cards.length;show();};
   if(!cards.length){host.append(h('div','qcnt','—'));return;}
   host.append(wrap,bar);show();
@@ -446,6 +462,7 @@ function collectTexts(){
         case 'rule':{const re=/data-say="([^"]+)"/g;let m;while((m=re.exec(b.html)))add(m[1]);break;}
         case 'ltap':b.items.forEach(it=>{add(it.say);it.opts.forEach(o=>add(optSay(o)));});break;
         case 'pic':b.items.forEach(it=>{add(it.say);if(!b.imgOpts)it.opts.forEach(add);});break;
+        case 'flipread':b.items.forEach(it=>add(it.w));break;
         case 'sort':b.items.forEach(it=>add(it[0]));break;
         case 'odd':b.items.forEach(it=>it.ws.forEach(add));break;
         case 'build':b.items.forEach(it=>{if(typeof it==='string')add(it);else add(it.say||it.w);});break;

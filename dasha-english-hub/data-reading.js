@@ -6,6 +6,7 @@ const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(M
 const CARDS=s=>s.split(';').map(x=>x.trim()).filter(Boolean).map(x=>{const p=x.split('=');return {w:p[0],ru:p[1]||'',ex:p[2]||''};});
 /* magic-e word -> chunks with the vowel and final e highlighted, e.g. cake -> c|*a|k|*e */
 function magic(w){const m=/^([^aeiou]*)([aeiou])([^aeiou]+)e$/.exec(w);if(!m)return w;return [m[1]?m[1].split('').join('|'):'','*'+m[2],m[3].split('').join('|'),'*e'].filter(Boolean).join('|').replace(/c\|h/,'ch').replace(/s\|h/,'sh').replace(/w\|h/,'wh').replace(/t\|h/,'th');}
+const mg0=w=>w;
 const pickN=(a,n)=>shuffle(a).slice(0,n);
 
 function RL(s){
@@ -53,12 +54,16 @@ function RL(s){
   const html=`<div class="rbig"><span class="g">${R.big}</span><span class="ipa">${R.ipa||''}</span></div>
     <div class="rkeys">${keys}</div>
     <div class="note">${R.note}</div>`;
+  const ruMap={};CARDS(s.cards).forEach(c=>{ruMap[plain(c.w)]=c.ru;});
+  const seen={};let frItems=[];flat.forEach(f=>{const k=plain(f.w);if(!seen[k]){seen[k]=1;frItems.push({w:f.w,ru:ruMap[k]||''});}});
+  CARDS(s.cards).forEach(c=>{const k=plain(c.w);if(!seen[k]&&/^[a-z]+$/i.test(k)){seen[k]=1;frItems.push({w:mg0(c.w),ru:c.ru});}});
   const P=s.pred;
   const mg={};s.groups.forEach(g=>{if(g.magic)g.words.forEach(w=>{mg[w]=magic(w);});});
   const cardList=CARDS(s.cards).map(c=>mg[c.w]?{w:mg[c.w],ru:c.ru,ex:c.ex}:c);
   return {id:s.id,name:s.name,short:s.short,cardsLabel:'Words',cards:cardList,hl,teach:s.teach,
     blocks:[
       {t:'predict',title:'Predict',mech:'Warm-up',hint:'Look at the photo and guess',img:s.id.toLowerCase(),cap:P.cap,q:P.q,opts:P.opts,reveal:P.reveal},
+      {t:'flipread',title:'Read the card',mech:'Reading cards',hint:'Read first, flip to listen',instr:'Read the word aloud. Flip the card to hear it.',hl,items:frItems},
       {t:'rule',title:'Sound of the day',mech:'Rule',hint:'Listen to the key words',html},
       {t:'ltap',title:'Listen & tap',mech:'Listening',hint:'Hear a word, tap it',instr:s.ltapInstr||'Listen. Tap the word you hear.',items:ltap},
       {t:'sort',title:'Sort by sound',mech:'Sorting',hint:'Tap a word, tap its box',instr:'Say the word. Which sound is it?',buckets:groups.map(g=>({k:g.k,s:g.s})),items:sortItems,html:true,hl},
