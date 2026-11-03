@@ -66,6 +66,16 @@ window.DASHA.plan=`<div class="tt"><b>Формат:</b> 2 занятия в не
 <tr><td>6</td><td>R11 ar or · GG 1.3 (скоро)</td><td>R12 er ir ur · GG 1.3 (конец)</td></tr>
 <tr><td>7</td><td>R13 ear air · GG 1.4 (скоро)</td><td>R14 silent letters · GG 1.5 · V3</td></tr>
 <tr><td>8</td><td>Обзор: Speed game по R1–R14 · GG 1.6</td><td>GG 1.7 Revision · V3 повтор · мини-тест</td></tr></table>
-<div class="tt"><b>Связь со школьным Spotlight 3:</b> темы школы (приветствия, цвета, числа, семья, школьные вещи, животные) пересекаются с Unit 0–1 Go Getter. Пришлите оглавление Spotlight 3 — привяжу уроки к школьным модулям по неделям.<br>
+<div class="tt"><b>Связь со школьным Spotlight 3</b> (по оглавлению; школьный модуль → что берём у нас):</div>
+<table><tr><th>Spotlight 3</th><th>Наш хаб</th></tr>
+<tr><td>M1 School days! (школа, числа, цвета, команды)</td><td>GG 0.2 · GG 0.3 · V1 Commands · R1–R4</td></tr>
+<tr><td>M2 Family moments! (семья, my/his/her)</td><td>GG 1.1 · GG 1.2 · R5–R6</td></tr>
+<tr><td>M3 All the things I like! (я люблю, еда, игрушки)</td><td>V3 like · have · can · R7–R8</td></tr>
+<tr><td>M4 Come in and play! (игрушки, this/that, мебель)</td><td>GG 0.3 (a/an) · GG Unit 2 (скоро) · R9–R10</td></tr>
+<tr><td>M5 Furry friends! (животные, части тела, can)</td><td>V3 can · GG Unit 5, 7 (скоро) · R11–R12</td></tr>
+<tr><td>M6 Home, sweet home! (комнаты, there is / are)</td><td>GG Unit 3 (скоро) · R13</td></tr>
+<tr><td>M7 A day off! (свободное время, Present Continuous)</td><td>V2 · GG Unit 5 (скоро) · R14</td></tr>
+<tr><td>M8 Day by day! (распорядок дня, Present Simple)</td><td>V2 · GG Unit 6 (скоро)</td></tr></table>
+<div class="tt">Скажите, на каком модуле Даша сейчас в школе — расставлю уроки по неделям под него.<br>
 <b>Фото:</b> для блока Predict положите изображения в папку img/ под именами r1.jpg … r14.jpg, gg-0-1.jpg, gg-0-2.jpg и т. д. (список — в img/IMAGE-PROMPTS.md). Пока нет фото, на экране видна подпись-описание.</div>`;
 })();
