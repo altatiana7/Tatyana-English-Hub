@@ -58,15 +58,15 @@ window.DASHA.paths.push({id:'verbs',title:'Verbs Box',sub:'Elementary verbs · 3
 window.DASHA.plan=`<div class="tt"><b>Формат:</b> 2 занятия в неделю. Каждое занятие: 5 мин Predict и повторение · 20 мин Reading Lab · 25 мин Go Getter · 10 мин Verbs Box / Speed game.<br>
 <b>Правила для Даши:</b> текст сначала на слух, потом на глаз; читаем вслух; ничего не печатаем (только нажатия); без Memory; ошибки не разбираем сразу — возвращаемся в Speed game.</div>
 <table><tr><th>Неделя</th><th>Занятие A</th><th>Занятие B</th></tr>
-<tr><td>1</td><td>R1 b d p t · GG 0.1</td><td>R2 short a, e · GG 0.1 (конец) · V1 Commands</td></tr>
-<tr><td>2</td><td>R3 short i, o, u · GG 0.2</td><td>R4 sh ch th ng · GG 0.2 (конец) · V1 повтор</td></tr>
-<tr><td>3</td><td>R5 magic e a, i · GG 0.3</td><td>R6 magic e o, u · GG 0.3 (конец) · V2</td></tr>
-<tr><td>4</td><td>R7 ai ay ee ea · GG 1.1</td><td>R8 oa ow igh y · GG 1.1 (конец)</td></tr>
-<tr><td>5</td><td>R9 ou ow oi oy · GG 1.2</td><td>R10 oo · GG 1.2 (конец) · V2 повтор</td></tr>
-<tr><td>6</td><td>R11 ar or · GG 1.3 (скоро)</td><td>R12 er ir ur · GG 1.3 (конец)</td></tr>
-<tr><td>7</td><td>R13 ear air · GG 1.4 (скоро)</td><td>R14 silent letters · GG 1.5 · V3</td></tr>
-<tr><td>8</td><td>Обзор: Speed game по R1–R14 · GG 1.6</td><td>GG 1.7 Revision · V3 повтор · мини-тест</td></tr></table>
-<div class="tt"><b>Связь со школьным Spotlight 3</b> (по оглавлению; школьный модуль → что берём у нас):</div>
+<tr><td>1</td><td>R1 b d p t · GG 0.1 (имена, my name is)</td><td>R2 short a, e · GG 1.1 Family · V1 Commands</td></tr>
+<tr><td>2</td><td>R3 short i, o, u · GG 1.1 (конец)</td><td>R4 sh ch th ng · GG 1.2 am/is/are</td></tr>
+<tr><td>3</td><td>R5 magic e a, i · GG 1.2 my/your/his/her</td><td>R6 magic e o, u · GG 1.2 (конец) · V2</td></tr>
+<tr><td>4</td><td>R7 ai ay ee ea · GG 0.2 Numbers</td><td>R8 oa ow igh y · GG 0.2 Colours · V3</td></tr>
+<tr><td>5</td><td>R9 ou ow oi oy · GG 0.3 Classroom, a/an</td><td>R10 oo · GG 0.3 (конец) · V2 повтор</td></tr>
+<tr><td>6</td><td>R11 ar or · GG 1.3 (скоро)</td><td>R12 er ir ur · GG 1.4 (скоро)</td></tr>
+<tr><td>7</td><td>R13 ear air · GG 1.5 (скоро)</td><td>R14 silent letters · GG 1.6 · V3 повтор</td></tr>
+<tr><td>8</td><td>Обзор: Speed game по R1–R14 · GG 1.7</td><td>Повторение M2 · мини-тест</td></tr></table>
+<div class="tt"><b>Сейчас в школе: Spotlight 3, модуль 2 (Family moments), поэтому семья идёт первой.</b> Весь Spotlight 3 → что берём у нас:</div>
 <table><tr><th>Spotlight 3</th><th>Наш хаб</th></tr>
 <tr><td>M1 School days! (школа, числа, цвета, команды)</td><td>GG 0.2 · GG 0.3 · V1 Commands · R1–R4</td></tr>
 <tr><td>M2 Family moments! (семья, my/his/her)</td><td>GG 1.1 · GG 1.2 · R5–R6</td></tr>
@@ -76,6 +76,6 @@ window.DASHA.plan=`<div class="tt"><b>Формат:</b> 2 занятия в не
 <tr><td>M6 Home, sweet home! (комнаты, there is / are)</td><td>GG Unit 3 (скоро) · R13</td></tr>
 <tr><td>M7 A day off! (свободное время, Present Continuous)</td><td>V2 · GG Unit 5 (скоро) · R14</td></tr>
 <tr><td>M8 Day by day! (распорядок дня, Present Simple)</td><td>V2 · GG Unit 6 (скоро)</td></tr></table>
-<div class="tt">Скажите, на каком модуле Даша сейчас в школе — расставлю уроки по неделям под него.<br>
+<div class="tt">
 <b>Фото:</b> для блока Predict положите изображения в папку img/ под именами r1.jpg … r14.jpg, gg-0-1.jpg, gg-0-2.jpg и т. д. (список — в img/IMAGE-PROMPTS.md). Пока нет фото, на экране видна подпись-описание.</div>`;
 })();
