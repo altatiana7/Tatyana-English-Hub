@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Homework · Police station and phrasal verbs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../gabi-english-hub/skills.css?v=20261015big">
+<style>
+/* witnesses: two photos, the statement is only heard; the words are hidden under a button */
+.cast{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.cplist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;flex:none}
+.cp{position:relative;display:flex;flex-direction:column;padding:0;border:3px solid #c5d3e6;border-radius:12px;background:#fff;overflow:hidden;cursor:pointer;text-align:left;font:inherit}
+.cp img{display:block;width:100%;height:clamp(120px,27vh,215px);object-fit:cover;object-position:50% 25%}
+.cp span{display:block;padding:4px 8px 5px;line-height:1.15}
+.cp b{display:block;font-size:17px;color:#10233f;line-height:1.15}.cp small{display:block;font-size:13.5px;color:#566b84;font-weight:600}
+.cp:hover{border-color:#ffd23f}
+.cp.on{border-color:#ffd23f;box-shadow:0 0 0 3px rgba(255,210,63,.55);background:#fff6cf}
+.cp i{position:absolute;right:6px;top:5px;background:#1a8f55;color:#fff;font-style:normal;font-weight:800;font-size:14px;border-radius:50%;width:24px;height:24px;display:grid;place-items:center}
+.cstage{flex:1;min-height:0;overflow:auto;border-radius:12px;padding:10px 14px;background:#f3f7fc;border:2px dashed #c5d3e6;display:flex;flex-direction:column;gap:8px}
+.cstage.idle{justify-content:center;text-align:center;font-weight:700;font-size:18px;color:#3a5070}
+.cstage .tag{align-self:flex-start}
+.cstage .pl .eq{display:none}
+.ctext{background:#fff;border-radius:10px;padding:8px 12px;font-size:16px;line-height:1.45;color:#22344d;max-height:150px;overflow:auto}
+/* answer buttons: four calm colours, two columns, not tall squares */
+.act.panel .opts{grid-template-columns:1fr 1fr;gap:10px;flex:0 0 auto;grid-auto-rows:auto;align-content:start}
+.act.panel .opts button{min-height:52px;padding:8px 12px;font-size:18px;border-width:3px;font-weight:800}
+.act.panel .opts button:nth-child(1){background:#e4eefb;border-color:#8fb1dd}
+.act.panel .opts button:nth-child(2){background:#e5f3ea;border-color:#8cc3a0}
+.act.panel .opts button:nth-child(3){background:#fbf0d4;border-color:#dfc06f}
+.act.panel .opts button:nth-child(4){background:#f7e4e7;border-color:#d79fa9}
+.act.panel .opts button.ok{background:#d3efdc;border-color:#2f9e5f}
+.act.panel .opts button.no{background:#f9d9d6;border-color:#d9534f}
+.act.panel .opts button.dim{opacity:.55}
+@media(max-height:700px){.cstage{padding:6px 12px;gap:6px}.cstage .pl{padding:3px 10px;margin:0;flex:none}}
+</style>
+</head>
+<body>
+<script src="../gabi-english-hub/skills.js?v=20261104a"></script>
+<script>
+/* Homework 9, after Module 2 lesson 4 (Surprising true crimes). Two activities per screen.
+   1 Listen: the two witnesses (hidden words) + the officer's questions as a listening test
+   2 Learn: phrasal verbs, Quizlet-style cards with the Russian translation of each definition + match the verb with its Russian meaning
+   3 Practise: exercise 1 (choose the meaning) + exercise 2 (floor is lava: the right particle) */
+Lesson.ACT.witness={
+ init(a,s){s.who=null;s.heard={};s.text=false},
+ view(a,s){const E=Lesson.esc,P=a.people;
+  const cards=P.map((p,k)=>`<button class="cp${s.who===k?' on':''}" data-who="${k}" aria-label="${E(p.name)}"><img src="${E(p.img)}" alt=""><span><b>${E(p.name)}</b><small>${E(p.role)}</small></span>${s.heard[k]?'<i>✓</i>':''}</button>`).join('');
+  let stage;
+  if(s.who==null){stage=`<div class="cstage idle">Predict: who are these boys? What did they see?<br>Then tap a witness and listen to his statement.</div>`}
+  else{const p=P[s.who];
+   stage=`<div class="cstage"><span class="tag">${E(p.name)} · witness statement</span>${Lesson.player({src:p.audio,label:p.name},'w'+s.who,false)}
+    <div class="row"><button class="ghost" data-ctext>${s.text?'Hide the words':'Show the words'}</button></div><div class="ctext" id="ctext" ${s.text?'':'hidden'}>${E(p.text)}</div></div>`}
+  return `<div class="cast"><div class="cplist">${cards}</div>${stage}</div>`},
+ click(a,s,d){
+  if(d.who!==undefined){Lesson.hush();s.who=+d.who;s.heard[s.who]=true;s.text=false;Lesson.redraw();
+   /* the witness plays on tap; the officer's question must not start by itself at the same time */
+   setTimeout(()=>{document.querySelectorAll('.pl[data-pl="q"] audio').forEach(x=>{x.pause();x.currentTime=0});const w=document.querySelector('.pl[data-pl^="w"] audio');if(w){const r=w.play();if(r&&r.catch)r.catch(()=>{})}},0);return}
+  if(d.ctext!==undefined){s.text=!s.text;const t=document.getElementById('ctext');if(t)t.hidden=!s.text;const b=document.querySelector('[data-ctext]');if(b)b.textContent=s.text?'Hide the words':'Show the words';return}}};
+const W='../gabi-english-hub/assets/witness/';
+const OQ='The officer asks a question. Listen, then choose the best answer.';
+Lesson.boot({kicker:'Module 2 · Homework · 4 November',hub:'./',steps:[
+{stage:'Listen',title:'At the police station',hint:'First listen to the two witnesses. <small>Then the police officer asks you 11 questions: listen and choose the best answer. The words are hidden; you can listen again.</small>',cols:'1fr 1.1fr',
+ acts:[
+ {type:'witness',title:'Two witnesses',people:[
+  {name:'Alex',role:'witness, 15',img:W+'alex.jpg',audio:W+'alex.mp3',text:'I was walking home from football practice on Friday evening. I think it was about 9 o’clock, but I’m not completely sure. When I was passing the petrol station, I heard someone shouting. I saw a dark car parked near the shop. A man in a grey hoodie was running towards the car. I think he was carrying a bag, but I couldn’t see it clearly. Someone was shouting inside the shop, but I didn’t see who it was. I heard a loud noise, but I don’t remember hearing an alarm. I was looking for my phone when the car drove away. I didn’t see the driver’s face, and I honestly don’t remember anything else.'},
+  {name:'Ben',role:'witness',img:W+'ben.jpg',audio:W+'ben.mp3',text:'I was buying a drink at the petrol station at exactly 9.15. I remember the time because I was checking my phone. A dark blue car stopped outside, and two men got out. One was wearing a grey hoodie, and the other had a black jacket. I was standing near the drinks fridge when they entered. The man in the grey hoodie shouted at the cashier and demanded money. The other man was holding a black backpack. When the cashier pressed a button, the alarm went off. Both men ran outside, got into the car and drove away. I clearly remember the driver’s face, and I’m sure the car was a blue Ford.'}]},
+ {type:'quiz',title:'The officer’s questions',label:'Question',cols:2,shuffle:false,items:[
+  {q:OQ,who:'Police officer',audio:W+'q01.mp3',plain:'What were Alex and Ben doing when the robbery happened?',o:['Alex was walking home; Ben was buying a drink','Alex was buying a drink; Ben was walking home','Both were waiting for a bus','Both were buying a drink in the shop'],a:'Alex was walking home; Ben was buying a drink',why:'Alex: walking home from football practice. Ben: buying a drink.'},
+  {q:OQ,who:'Police officer',audio:W+'q02.mp3',plain:'Where was each teenager when the crime took place?',o:['Alex was inside the shop; Ben was outside','Alex was outside near the shop; Ben was inside near the drinks fridge','Both were outside in the street','Both were inside near the cashier'],a:'Alex was outside near the shop; Ben was inside near the drinks fridge',why:'Alex was passing the petrol station; Ben was standing near the drinks fridge.'},
+  {q:OQ,who:'Police officer',audio:W+'q03.mp3',plain:'What details did both boys mention?',o:['A man in a grey hoodie and a car that drove away','The alarm and the driver’s face','The exact time and a blue Ford','A black jacket and a black backpack'],a:'A man in a grey hoodie and a car that drove away',why:'Both talked about the grey hoodie and the car driving away.'},
+  {q:OQ,who:'Police officer',audio:W+'q04.mp3',plain:'What did Alex remember about the car?',o:['A dark blue Ford with two men inside','A dark car parked near the shop','He saw the driver’s face in the car','He didn’t see any car'],a:'A dark car parked near the shop',why:'Alex only saw a dark car near the shop. It drove away.'},
+  {q:OQ,who:'Police officer',audio:W+'q05.mp3',plain:'What did Ben say about the two men?',o:['Both wore grey hoodies and ran away on foot','One shouted at the cashier; the other had a black jacket and a backpack','One talked politely to the cashier; the other waited in the car','They were both holding black backpacks'],a:'One shouted at the cashier; the other had a black jacket and a backpack',why:'The man in the grey hoodie demanded money. The other man held a black backpack.'},
+  {q:OQ,who:'Police officer',audio:W+'q06.mp3',plain:'What was happening when the alarm went off?',o:['The men were getting out of the car','The cashier pressed a button and the men ran outside','Alex was talking to the cashier','Ben was checking his phone outside'],a:'The cashier pressed a button and the men ran outside',why:'Ben: the cashier pressed a button, the alarm went off, both men ran outside.'},
+  {q:OQ,who:'Police officer',audio:W+'q07.mp3',plain:'Which details did Alex seem unsure about?',o:['The time, the bag and the alarm','The petrol station and the football practice','The grey hoodie and the dark car','The exact name of the shop'],a:'The time, the bag and the alarm',why:'“About 9 o’clock”, “I think he was carrying a bag”, “I don’t remember hearing an alarm”.'},
+  {q:OQ,who:'Police officer',audio:W+'q08.mp3',plain:'What specific details did Ben remember?',o:['The cashier’s name and the number plate','Only the grey hoodie; he wasn’t sure about the rest','The exact time, a blue Ford and the driver’s face','The time and the weather'],a:'The exact time, a blue Ford and the driver’s face',why:'Ben: exactly 9.15, a blue Ford, the driver’s face, a black backpack.'},
+  {q:OQ,who:'Police officer',audio:W+'q09.mp3',plain:'Did you notice any contradictions between their stories?',o:['Alex: two men and an alarm. Ben: one man and no alarm','Alex: one man and no alarm. Ben: two men and an alarm','They told exactly the same story','Alex: a red car. Ben: no car'],a:'Alex: one man and no alarm. Ben: two men and an alarm',why:'Alex saw one man and didn’t remember an alarm; Ben saw two men and heard an alarm.'},
+  {q:OQ,who:'Police officer',audio:W+'q10.mp3',plain:'Why do you think Alex couldn’t remember everything?',o:['He was outside, it was dark and he was looking for his phone','He wasn’t at the petrol station','He was talking to Ben at the time','He saw the driver’s face but forgot it'],a:'He was outside, it was dark and he was looking for his phone',why:'He was outside, he wasn’t sure, and he was looking for his phone when the car drove away.'},
+  {q:OQ,who:'Police officer',audio:W+'q12.mp3',plain:'Which teenager seemed more nervous or uncertain?',o:['Ben','Alex','Both were equally sure','Neither of them'],a:'Alex',why:'Alex: “I think …”, “I’m not completely sure”, “I don’t remember”.'}]}]},
+{stage:'Learn',title:'Phrasal verbs: investigating and finding',hint:'Look at the title: which verbs do you already know? <small>Learn the verbs: turn each card over to see the translation and the definition in English and Russian. Then match each verb with its Russian meaning.</small>',cols:'1fr 1.1fr',
+ acts:[
+ {type:'cards',title:'Flashcards',items:[
+  {w:'look into',ru:'расследовать, изучать',d:'investigate — расследовать, изучать',ex:'Detective Reed looked into the case at once.'},
+  {w:'come across',ru:'наткнуться на, случайно найти',d:'find by accident — найти случайно',ex:'He came across a green hoodie behind a bin.'},
+  {w:'work out',ru:'разобраться, решить',d:'solve a problem by considering the facts — решить задачу, обдумав факты',ex:'Suddenly Reed worked out the truth.'},
+  {w:'look for',ru:'искать',d:'try to find — пытаться найти',ex:'Reed looked for clues in the corridor.'},
+  {w:'find out',ru:'выяснить, узнать',d:'discover — обнаружить, узнать',ex:'Reed found out that a camera had filmed a boy.'},
+  {w:'turn up',ru:'появиться, объявиться',d:'arrive or appear unexpectedly — неожиданно прийти или появиться',ex:'Jack turned up at the police station with his mother.'},
+  {w:'look up',ru:'посмотреть, найти (в справочнике)',d:'try to find information in a book, a list or on a computer — искать информацию в книге, списке или на компьютере',ex:'He looked up the name in the school list.'},
+  {w:'come up with',ru:'придумать',d:'think of an idea or a plan — придумать идею или план',ex:'Reed came up with a simple plan.'}]},
+ {type:'match',title:'Verb · Russian meaning',tip:'Tap a phrasal verb, then its meaning in Russian.',items:[
+  {l:'look into',r:'расследовать, изучать'},
+  {l:'come across',r:'случайно найти, наткнуться на'},
+  {l:'work out',r:'решить задачу, обдумав факты'},
+  {l:'look for',r:'пытаться найти, искать'},
+  {l:'find out',r:'узнать, выяснить, обнаружить'},
+  {l:'turn up',r:'неожиданно прийти или появиться'},
+  {l:'look up',r:'искать информацию в книге, списке или на компьютере'},
+  {l:'come up with',r:'придумать идею или план'}]}]},
+{stage:'Practise',title:'Two exercises',hint:'<b>Exercise 1:</b> what does the phrasal verb mean? <small>Then <b>exercise 2</b> (floor is lava): choose the right particle. Three wrong answers and you start again.</small>',cols:'1fr 1fr',
+ acts:[
+ {type:'quiz',title:'Exercise 1 · what does it mean?',label:'Sentence',cols:2,shuffle:false,items:[
+  {q:'Detective Reed looked into the case at once.',o:['investigate','find by accident','think of an idea or a plan'],a:'investigate',why:'look into = investigate'},
+  {q:'Reed looked for clues in the corridor.',o:['discover','try to find','investigate'],a:'try to find',why:'look for = try to find'},
+  {q:'He came across a green hoodie behind a bin.',o:['try to find','arrive or appear unexpectedly','find by accident'],a:'find by accident',why:'come across = find by accident'},
+  {q:'He looked up the name in the school list.',o:['try to find information in a book, a list or on a computer','discover','investigate'],a:'try to find information in a book, a list or on a computer',why:'look up = find information'},
+  {q:'Jack turned up at the police station with his mother.',o:['find by accident','arrive or appear unexpectedly','discover'],a:'arrive or appear unexpectedly',why:'turn up = arrive or appear unexpectedly'},
+  {q:'Reed found out that a camera had filmed a boy.',o:['discover','investigate','solve a problem by considering the facts'],a:'discover',why:'find out = discover'},
+  {q:'Suddenly Reed worked out the truth.',o:['find by accident','solve a problem by considering the facts','think of an idea or a plan'],a:'solve a problem by considering the facts',why:'work out = solve'},
+  {q:'Reed came up with a simple plan.',o:['think of an idea or a plan','discover','arrive or appear unexpectedly'],a:'think of an idea or a plan',why:'come up with = think of an idea'},
+  {q:'A relative suddenly turned up at your house.',o:['arrive or appear unexpectedly','try to find','investigate'],a:'arrive or appear unexpectedly',why:'turn up = arrive unexpectedly'},
+  {q:'You looked up an English word in a dictionary.',o:['think of an idea or a plan','try to find information in a book, a list or on a computer','find by accident'],a:'try to find information in a book, a list or on a computer',why:'look up = find information'}]},
+ {type:'quiz',title:'Exercise 2 · floor is lava',label:'Sentence',lives:3,cols:2,items:[
+  {q:'Detective Reed looked ___ the case at once.',o:['into','out','up','across'],a:'into',why:'look into = investigate'},
+  {q:'Reed looked ___ clues in the corridor.',o:['for','into','up','out'],a:'for',why:'look for = try to find'},
+  {q:'He came ___ a green hoodie behind a bin.',o:['across','out','up','for'],a:'across',why:'come across = find by accident'},
+  {q:'He looked ___ the name in the school list.',o:['up','for','into','across'],a:'up',why:'look up = find information'},
+  {q:'Jack turned ___ at the police station with his mother.',o:['out','up','across','into'],a:'up',why:'turn up = arrive unexpectedly'},
+  {q:'Reed found ___ that a camera had filmed a boy.',o:['up','out','for','into'],a:'out',why:'find out = discover'},
+  {q:'Suddenly Reed worked ___ the truth.',o:['out','across','up','for'],a:'out',why:'work out = solve'},
+  {q:'Reed came ___ with a simple plan.',o:['across','out','up','into'],a:'up',why:'come up with = think of an idea'},
+  {q:'You needed to look ___ an object that you lost.',o:['for','up','into','out'],a:'for',why:'look for = try to find'},
+  {q:'You came ___ a friend in a surprising place.',o:['across','out','up','for'],a:'across',why:'come across = find by accident'}]}]},
+{stage:'Send',title:'Send your homework',hint:'Check your work on the left. Then press <b>Send to teacher</b> and paste the code in your chat with your teacher.',
+ act:{type:'report',name:'Gabi · Homework · Police station and phrasal verbs',assignment:'gabi-hw-2026-11-04',prefix:'G9'}}
+]});
+</script>
+</body>
+</html>
