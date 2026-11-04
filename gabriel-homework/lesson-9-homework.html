@@ -45,28 +45,27 @@
    2 Learn: phrasal verbs, Quizlet-style cards with the Russian translation of each definition + match the verb with its Russian meaning
    3 Practise: exercise 1 (choose the meaning) + exercise 2 (floor is lava: the right particle) */
 Lesson.ACT.witness={
- init(a,s){s.who=null;s.heard={};s.text=false},
+ init(a,s){s.who=null;s.heard={}},
  view(a,s){const E=Lesson.esc,P=a.people;
   const cards=P.map((p,k)=>`<button class="cp${s.who===k?' on':''}" data-who="${k}" aria-label="${E(p.name)}"><img src="${E(p.img)}" alt=""><span><b>${E(p.name)}</b><small>${E(p.role)}</small></span>${s.heard[k]?'<i>✓</i>':''}</button>`).join('');
   let stage;
   if(s.who==null){stage=`<div class="cstage idle">Predict: who are these boys? What did they see?<br>Then tap a witness and listen to his statement.</div>`}
   else{const p=P[s.who];
    stage=`<div class="cstage"><span class="tag">${E(p.name)} · witness statement</span>${Lesson.player({src:p.audio,label:p.name},'w'+s.who,false)}
-    <div class="row"><button class="ghost" data-ctext>${s.text?'Hide the words':'Show the words'}</button></div><div class="ctext" id="ctext" ${s.text?'':'hidden'}>${E(p.text)}</div></div>`}
+</div>`}
   return `<div class="cast"><div class="cplist">${cards}</div>${stage}</div>`},
  click(a,s,d){
-  if(d.who!==undefined){Lesson.hush();s.who=+d.who;s.heard[s.who]=true;s.text=false;Lesson.redraw();
+  if(d.who!==undefined){Lesson.hush();s.who=+d.who;s.heard[s.who]=true;Lesson.redraw();
    /* the witness plays on tap; the officer's question must not start by itself at the same time */
-   setTimeout(()=>{document.querySelectorAll('.pl[data-pl="q"] audio').forEach(x=>{x.pause();x.currentTime=0});const w=document.querySelector('.pl[data-pl^="w"] audio');if(w){const r=w.play();if(r&&r.catch)r.catch(()=>{})}},0);return}
-  if(d.ctext!==undefined){s.text=!s.text;const t=document.getElementById('ctext');if(t)t.hidden=!s.text;const b=document.querySelector('[data-ctext]');if(b)b.textContent=s.text?'Hide the words':'Show the words';return}}};
+   setTimeout(()=>{document.querySelectorAll('.pl[data-pl="q"] audio').forEach(x=>{x.pause();x.currentTime=0});const w=document.querySelector('.pl[data-pl^="w"] audio');if(w){const r=w.play();if(r&&r.catch)r.catch(()=>{})}},0);return}}};
 const W='../gabi-english-hub/assets/witness/';
 const OQ='The officer asks a question. Listen, then choose the best answer.';
 Lesson.boot({kicker:'Module 2 · Homework · 4 November',hub:'./',steps:[
 {stage:'Listen',title:'At the police station',hint:'First listen to the two witnesses. <small>Then the police officer asks you 11 questions: listen and choose the best answer. The words are hidden; you can listen again.</small>',cols:'1fr 1.1fr',
  acts:[
  {type:'witness',title:'Two witnesses',people:[
-  {name:'Alex',role:'witness, 15',img:W+'alex.jpg',audio:W+'alex.mp3',text:'I was walking home from football practice on Friday evening. I think it was about 9 o’clock, but I’m not completely sure. When I was passing the petrol station, I heard someone shouting. I saw a dark car parked near the shop. A man in a grey hoodie was running towards the car. I think he was carrying a bag, but I couldn’t see it clearly. Someone was shouting inside the shop, but I didn’t see who it was. I heard a loud noise, but I don’t remember hearing an alarm. I was looking for my phone when the car drove away. I didn’t see the driver’s face, and I honestly don’t remember anything else.'},
-  {name:'Ben',role:'witness',img:W+'ben.jpg',audio:W+'ben.mp3',text:'I was buying a drink at the petrol station at exactly 9.15. I remember the time because I was checking my phone. A dark blue car stopped outside, and two men got out. One was wearing a grey hoodie, and the other had a black jacket. I was standing near the drinks fridge when they entered. The man in the grey hoodie shouted at the cashier and demanded money. The other man was holding a black backpack. When the cashier pressed a button, the alarm went off. Both men ran outside, got into the car and drove away. I clearly remember the driver’s face, and I’m sure the car was a blue Ford.'}]},
+  {name:'Alex',role:'witness, 15',img:W+'alex.jpg',audio:W+'alex.mp3'},
+  {name:'Ben',role:'witness',img:W+'ben.jpg',audio:W+'ben.mp3'}]},
  {type:'quiz',title:'The officer’s questions',label:'Question',cols:2,shuffle:false,items:[
   {q:OQ,who:'Police officer',audio:W+'q01.mp3',plain:'What were Alex and Ben doing when the robbery happened?',o:['Alex was walking home; Ben was buying a drink','Alex was buying a drink; Ben was walking home','Both were waiting for a bus','Both were buying a drink in the shop'],a:'Alex was walking home; Ben was buying a drink',why:'Alex: walking home from football practice. Ben: buying a drink.'},
   {q:OQ,who:'Police officer',audio:W+'q02.mp3',plain:'Where was each teenager when the crime took place?',o:['Alex was inside the shop; Ben was outside','Alex was outside near the shop; Ben was inside near the drinks fridge','Both were outside in the street','Both were inside near the cashier'],a:'Alex was outside near the shop; Ben was inside near the drinks fridge',why:'Alex was passing the petrol station; Ben was standing near the drinks fridge.'},
