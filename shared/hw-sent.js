@@ -56,7 +56,10 @@ window.HWSent=(function(){
     if(r.status===400||r.status===401||r.status===403){try{localStorage.removeItem('arina-teacher-code')}catch(e){}return {need:true,bad:true}}
     if(!r.ok)throw new Error('load_failed');
     const rows=(await r.json()||[]).filter(x=>String(x.test_id||'').indexOf('timofey-oge-hw-')!==0).map(x=>{const id=String(x.test_id||'');const i=id.indexOf(':');
-      return {key:String(x.id||x.created_at),student:i>0?id.slice(0,i):'arina',page:i>0?id.slice(i+1):id,title:x.test_title||id,at:x.created_at}})
+      const student=i>0?id.slice(0,i):'arina';let title=x.test_title||id;const nm=NAMES[student];
+      /* в заголовке имя уже есть: «Габи · Homework…», а список добавляет его сам */
+      if(nm&&title.indexOf(nm+' · ')===0)title=title.slice(nm.length+3);
+      return {key:String(x.id||x.created_at),student:student,page:(i>0?id.slice(i+1):id).split('~p')[0],title:title,at:x.created_at}})
       .sort((a,b)=>new Date(b.at)-new Date(a.at));
     return {rows}}
   const SEEN='hw-seen-keys';

@@ -26,8 +26,8 @@ const STEPS=[
 ];
 const cnt=o=>Object.keys(o).filter(k=>o[k]!=null&&o[k]!=='').length;
 function isDone(id){return id==='l1'?cnt(S.l1)===6:id==='l2'?cnt(S.l2)===7:id==='l3'?cnt(S.l3)===7:id==='r10'?cnt(S.r10)===7:id==='r12'?cnt(S.r12)===7:id==='w37'?words(S.w37)>=90:id==='w38'?words(S.w38)>=180:id==='tr'?TRN===Object.keys(S.tr).filter(k=>S.tr[k]!==''&&S.tr[k]!=null).length:(S.checked||S.sent);}
-function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':'')+(isDone(s.id)?' done':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.title=s.label;b.type='button';b.onclick=()=>go(k);tabs.append(b);});
-  const on=tabs.querySelector('.on');if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'nearest'});}
+function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':'')+(isDone(s.id)?' done':'')+(P.isSent(s.id)?' sent':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.title=s.label;b.type='button';b.onclick=()=>go(k);tabs.append(b);});
+  const on=tabs.querySelector('.on');if(on&&on.scrollIntoView)on.scrollIntoView({block:'nearest',inline:'nearest'});P.refresh();}
 function go(k){cur=k;if(k>2)audio.pause();Clock.set(STEPS[k].min*60);redraw();}
 function redraw(){document.querySelectorAll('.overlay.smp').forEach(x=>x.remove());paintTabs();main.innerHTML='';STEPS[cur].draw();}
 function nextBtn(){return btn('Дальше: '+STEPS[cur+1].label+' →',()=>go(cur+1),'main sp');}
@@ -56,7 +56,7 @@ function tricky(){
 function trErrors(){const out=[];TR.forEach(b=>b.items.forEach((it,i)=>{if(!trOk(b,i)){const v=S.tr[b.id+i];out.push(b.name+' · '+(b.type==='typed'?it[1]+': '+((v||'').trim()||'—')+' → '+it[3]:it[0].replace(/<br>/g,' ').replace(/“|”/g,'"').slice(0,70)+'… : '+(v==null?'—':it[1][v])+' → '+it[1][it[2]]));}}));return out;}
 function head(ru,src){main.append(el('div','inst','<b>'+ru+'</b>'+(src?'<span class="src">'+src+'</span>':'')));}
 function lisHead(ru){head(ru);const r=el('div','navrow');r.append(audio);main.append(r);}
-function lock(e){if(S.checked||S.sent)e.disabled=true;return e;}
+function lock(e){if(S.checked||S.sent||P.isSent(STEPS[cur].id))e.disabled=true;return e;}
 function mark(ok){return S.checked?(ok?' ok':' bad'):'';}
 
 /* ---------- Аудирование ---------- */
@@ -94,7 +94,7 @@ function lis3(){
     const opts=el('div','kimopts'+(short?' row':''));
     const box=lock(el('input','kimbox'));box.maxLength=1;box.inputMode='numeric';box.value=S.l3[k]||'';box.setAttribute('aria-label','Ответ '+(k+3));
     const paint=()=>{opts.querySelectorAll('.kimopt').forEach((o,j)=>o.classList.toggle('on',S.l3[k]===j+1));box.value=S.l3[k]||'';};
-    const set=v=>{if(S.checked||S.sent)return;S.l3[k]=v;save();paint();paintTabs();};
+    const set=v=>{if(S.checked||S.sent||P.isSent('l3'))return;S.l3[k]=v;save();paint();paintTabs();};
     q[1].forEach((ans,j)=>{const o=el('div','kimopt',(j+1)+') '+esc(ans));o.onclick=()=>set(j+1);
       if(S.checked&&j+1===D.lis.k3[k])o.classList.add('correct');opts.append(o);});
     box.oninput=()=>{const v=+box.value;if(v>=1&&v<=3)set(v);else{box.value='';set(null);}};
@@ -150,6 +150,10 @@ function writing(n){
 
 /* ---------- Отчёт ---------- */
 const errs=(sel,key)=>key.filter((a,k)=>sel[k]!==a).length;
+/* отправка по частям: готовые задания уходят учителю сразу; после отправки задание закрыто, ученица видит только число ошибок */
+const PART_ERR={l1:()=>errs(S.l1,D.lis.k1),l2:()=>errs(S.l2,D.lis.k2),l3:()=>errs(S.l3,D.lis.k3),r10:()=>errs(S.r10,D.r10.a),r12:()=>errs(S.r12,D.r12.a),tr:()=>TRN-trScore()};
+const P=KS.parts('home1',{units:()=>STEPS.slice(0,8).map(s=>({id:s.id,label:s.label,done:!!isDone(s.id),errors:PART_ERR[s.id]?PART_ERR[s.id]():null})),
+  snapshot:()=>{const d=JSON.parse(JSON.stringify(S));delete d.sent;delete d.checked;return d;},onUpdate:()=>redraw()});
 const by3=e=>e===0?3:e===1?2:e===2?1:0,by2=e=>e===0?2:e===1?1:0;
 function scores(){return [['Аудирование 1',by2(errs(S.l1,D.lis.k1)),2],['Аудирование 2',by3(errs(S.l2,D.lis.k2)),3],['Аудирование 3–9',7-errs(S.l3,D.lis.k3),7],['Чтение 10',by3(errs(S.r10,D.r10.a)),3],['Чтение 12–18',7-errs(S.r12,D.r12.a),7]];}
 function line(lbl,sel,key,first,letters){return lbl+': '+key.map((a,k)=>(letters?letters[k]:first+k)+'='+(sel[k]==null?'–':sel[k])+(sel[k]===a?'':' (верно '+a+')')).join(', ');}
@@ -174,11 +178,11 @@ function report(){if(!T)return reportStudent();
   nav.append(msg);if(RV){main.append(nav);return;}const clr=btn('Очистить всё',()=>{if(clr.dataset.sure){try{localStorage.removeItem(KEY+'-'+who);}catch(e){}S=blank();go(0);}else{clr.dataset.sure=1;clr.textContent='Точно очистить? Нажмите ещё раз';}},'sm sp');nav.append(clr);main.append(nav);
 }
 function reportStudent(){
-  head(S.sent?'Работа отправлена учителю. Ответы и баллы покажет учитель.':'Проверьте, всё ли сделано, и отправьте работу учителю. Отправить можно один раз: после отправки ответы изменить нельзя.');
+  head(P.allSent()?'Всё отправлено учителю. Какие именно ошибки, покажет учитель.':'Работу можно отправлять по частям: готовые задания уходят учителю сразу, остальные можно доделать позже. На каждое задание одна попытка.');
   const res=el('div','res'),a=el('div','panel'),b=el('div','panel');
-  a.append(el('h3',null,'Что сделано'));STEPS.slice(0,8).forEach(s=>a.append(el('div','rrow','<span>'+s.label+'</span><span class="note">'+(isDone(s.id)?'готово':'не закончено')+'</span><b>'+(isDone(s.id)?'✓':'—')+'</b>')));
-  b.append(el('h3',null,'Как отправить'),el('p',null,'1. Нажмите «Отправить учителю на проверку».<br>2. Код скопируется сам – вставьте его в чат с учителем и отправьте.'),el('p','note','В код попадают все ответы и оба письменных текста.'));
+  a.append(el('h3',null,'Что сделано'));STEPS.slice(0,8).forEach(s=>a.append(el('div','rrow','<span>'+s.label+'</span><span class="note">'+(P.isSent(s.id)?'отправлено'+(P.errOf(s.id)!=null?' · ошибок: '+P.errOf(s.id):''):isDone(s.id)?'готово':'не закончено')+'</span><b>'+(P.isSent(s.id)||isDone(s.id)?'✓':'—')+'</b>')));
+  b.append(el('h3',null,'Как отправить'),el('p',null,'Нажмите «Отправить сделанное» вверху: готовые задания сразу уйдут учителю. После отправки вы увидите только число ошибок. Ничего копировать и пересылать не нужно.'),el('p','note','Письмо 37 и 38 оценит учитель.'));
   res.append(a,b);main.append(res);
-  const nav=el('div','navrow');nav.append(KS.button('home1',()=>{const d=JSON.parse(JSON.stringify(S));delete d.sent;delete d.checked;return d;},o=>{SENT=o;S.sent=true;redraw();}));main.append(nav);
 }
-Clock.mount();paintWho();go(RV?STEPS.length-1:0);
+Clock.mount();{const hb=document.querySelector('header.bar'),ck=hb&&hb.querySelector('.clock');if(hb&&!RV)hb.insertBefore(P.bar(()=>STEPS[cur].id,{compact:true}),ck);}
+paintWho();go(RV?STEPS.length-1:0);

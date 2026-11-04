@@ -41,7 +41,9 @@ async function load(){
   if(!r.ok){out.innerHTML='<div class="msg">Не удалось загрузить работы. Нажмите «Обновить».</div>';return}
   const rows=((await r.json())||[]).filter(x=>String(x&&x.test_id||'').indexOf(PFX)===0).sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
   if(!rows.length){out.innerHTML='<div class="msg">Работ Майи пока нет.</div>';return}
-  out.innerHTML=rows.map((x,k)=>{const d=x.answers||{},secs=d.sections||[];
+  out.innerHTML=rows.map((x,k)=>{const d=Object.assign({},x.answers||{}),P=d._parts;let secs=d.sections||[];
+    /* работа отправлена по частям: в каждой записи только блоки, ушедшие в этой части */
+    if(P){const ix={v:0,t:1,s:2};secs=secs.filter((s,i)=>(P.ids||[]).some(id=>ix[id]===i));d.total=secs.reduce((a,s)=>a+s.score,0);d.max=secs.reduce((a,s)=>a+s.max,0);d.summary='часть '+P.k+(P.final?' · всё отправлено':': сделано '+(P.all||[]).length+' из '+P.total);}
     const at=d._at||new Date(x.created_at).toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
     const body=secs.map(s=>`<div class="sec"><h3>${esc(s.name)} · ${s.score} / ${s.max}</h3><div class="items">${(s.items||[]).map(it=>{const ok=it.a===it.right;
       return `<div class="it ${ok?'ok':'bad'}"><span class="n">${it.n}</span>${esc(it.q)}<br><span class="a">${esc(it.a||'нет ответа')}</span>${ok?'':`<span class="r">${esc(it.right)}</span>`}</div>`}).join('')}</div></div>`).join('')||'<div class="msg">Нет подробностей.</div>';

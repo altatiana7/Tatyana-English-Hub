@@ -40,7 +40,9 @@ window.KS=(function(){
     if(r.status===400||r.status===401||r.status===403){try{localStorage.removeItem('arina-teacher-code');}catch(e){}return {need:true,bad:true};}
     if(!r.ok)throw new Error('load_failed');
     const rows=(await r.json()||[]).filter(x=>String(x&&x.test_id||'').indexOf(PFX)===0)
-      .map(x=>({id:String(x.id||x.created_at),page:x.test_id.slice(PFX.length),title:TITLE[x.test_id.slice(PFX.length)]||x.test_title,at:x.created_at,data:x.answers||{}}))
+      .map(x=>{const pg=x.test_id.slice(PFX.length),base=pg.split('~p')[0],P=(x.answers||{})._parts;let title=TITLE[base]||x.test_title;
+        if(P&&pg!==base)title=(TITLE[base]||base)+' · часть '+P.k+': сделано '+P.all.length+' из '+P.total+(P.final?' · всё отправлено':'');
+        return {id:String(x.id||x.created_at),page:base,title:title,at:x.created_at,data:x.answers||{}};})
       .sort((a,b)=>new Date(b.at)-new Date(a.at));
     return {rows};}
 
@@ -85,5 +87,7 @@ window.KS=(function(){
     remoteSent(page).then(y=>{if(y&&b.isConnected&&!sent(page)){markSent(page,{at:'',data:{},pending:false});b.replaceWith(doneBtn(page));}});
     return b;}
   function reviewBar(o){return mk('div','ksrev','<b>Проверка работы ученицы</b> · отправлено '+(o.data&&o.data._at||'')+'. Верные ответы и баллы показаны ниже.');}
-  return {T,TITLE,sent,markSent,review,list,unpack,button,reviewBar,flush};
+  /* отправка по частям: готовые задания уходят учителю, не дожидаясь конца работы (см. shared/hw-parts.js) */
+  function parts(page,cfg){return HWParts.make(Object.assign({id:PFX+page,testId:PFX+page,title:'Катя · '+(TITLE[page]||page),lang:'ru',disabled:T,legacySent:()=>!!sent(page)},cfg));}
+  return {T,TITLE,sent,markSent,review,list,unpack,button,reviewBar,flush,parts};
 })();

@@ -93,14 +93,20 @@ body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:lin
 </div>
 
 
-<script src="send.js?v=20261101a"></script>
+<script src="../shared/hw-parts.js?v=1"></script><script src="send.js?v=20261101ap"></script>
 <script>
 (()=>{
 const $=s=>document.querySelector(s);
 const KEY='maya-hw-2a-v2';
 let st={t:[],v:[],s:{},done:false};
 try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&typeof x==='object')st=Object.assign(st,x)}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}try{P.refresh()}catch(e){}}
+/* отправка по частям: каждый готовый блок можно отправить сразу; блок уже закрыт сам (одна попытка), после отправки видно только число ошибок */
+const P=KS.parts('hw2a',{lang:'en',
+  units:()=>[{id:'v',label:'New verbs',done:st.v.length>=VERBS.length,errors:VERBS.length-vScore()},
+             {id:'t',label:'Test',done:st.t.length>=TEST.length,errors:TEST.length-tScore()},
+             {id:'s',label:'Story',done:Object.keys(st.s).length>=GAPS.length,errors:GAPS.length-sScore()}],
+  snapshot:()=>getData()});
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
@@ -191,17 +197,17 @@ const VERBS=[
 ];
 
 // one-question-at-a-time quiz, one attempt (answers kept)
-function quiz(items,arr,ids,label){
+function quiz(items,arr,ids,label,uid){
   const score=()=>arr.filter((a,i)=>a===items[i][2]).length;
   function end(){$(ids.stem).innerHTML='Готово';$(ids.opts).innerHTML='';$(ids.count).textContent='';$(ids.res).textContent=label+': '+score()+' из '+items.length}
   function draw(){
-    const i=arr.length;if(i>=items.length||st.done){end();return}
+    const i=arr.length;if(i>=items.length||st.done||P.isSent(uid)){end();return}
     const [q,opts,right]=items[i];let locked=false;
     $(ids.count).textContent=(i+1)+' / '+items.length;
     $(ids.stem).innerHTML=q.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;</u>');
     $(ids.opts).innerHTML=shuffle(opts).map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('');
     $(ids.opts).querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
-      if(locked||st.done)return;locked=true;
+      if(locked||st.done||P.isSent(uid))return;locked=true;
       const ok=b.dataset.v===right;arr.push(b.dataset.v);save();
       b.classList.add(ok?'ok':'bad');
       if(!ok)$(ids.opts).querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===right)x.classList.add('ok')});
@@ -210,8 +216,8 @@ function quiz(items,arr,ids,label){
   }
   draw();return score;
 }
-const vScore=quiz(VERBS,st.v,{count:'#vCount',stem:'#vStem',opts:'#vOpts',res:'#vRes'},'New verbs');
-const tScore=quiz(TEST,st.t,{count:'#tCount',stem:'#tStem',opts:'#tOpts',res:'#tRes'},'Test');
+const vScore=quiz(VERBS,st.v,{count:'#vCount',stem:'#vStem',opts:'#vOpts',res:'#vRes'},'New verbs','v');
+const tScore=quiz(TEST,st.t,{count:'#tCount',stem:'#tStem',opts:'#tOpts',res:'#tRes'},'Test','t');
 
 // story with dropdowns, one attempt per gap
 function sScore(){return Object.keys(st.s).filter(k=>st.s[k]===GAPS[k][1][0]).length}
@@ -222,8 +228,8 @@ STORY_PARTS.forEach(p=>{
   const sel=document.createElement('select');sel.className='gapSel';
   sel.innerHTML='<option value="">— '+(p+1)+' —</option>'+shuffle(GAPS[p][1]).map(o=>`<option>${o}</option>`).join('');
   const mark=()=>{const v=st.s[p];if(v===undefined)return;sel.value=v;sel.disabled=true;sel.classList.add(v===GAPS[p][1][0]?'ok':'bad');if(v!==GAPS[p][1][0])sel.title='Правильно: '+GAPS[p][1][0]};
-  sel.onchange=()=>{if(!sel.value||st.done)return;st.s[p]=sel.value;save();mark();sUpdate()};
-  if(st.done)sel.disabled=true;
+  sel.onchange=()=>{if(!sel.value||st.done||P.isSent('s'))return;st.s[p]=sel.value;save();mark();sUpdate()};
+  if(st.done||P.isSent('s'))sel.disabled=true;
   mark();wrap.appendChild(sel);
 });
 sUpdate();
@@ -252,12 +258,7 @@ function getData(){
   return {summary:'V '+vScore()+'/'+VERBS.length+' · T '+tScore()+'/'+TEST.length+' · S '+sScore()+'/'+GAPS.length,total,max,sections};
 }
 const slot=$('#sendSlot');
-const sendBtn=KS.button('hw2a',()=>{
-  const left=(VERBS.length-st.v.length)+(TEST.length-st.t.length)+(GAPS.length-Object.keys(st.s).length);
-  if(left>0)alert('Не выполнено заданий: '+left+'. Они будут засчитаны как ошибки.');
-  return getData();
-},()=>lockAll());
-slot.appendChild(sendBtn);
+slot.appendChild(P.bar(null,{compact:true}));
 if(KS.sent('hw2a')&&!st.done)lockAll();
 window.scrollTo(0,0);
 })();

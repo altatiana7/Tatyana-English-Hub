@@ -44,5 +44,7 @@ window.KS=(function(){
         [bt('Отмена',()=>m.ov.remove()),bt('Отправить',async()=>{m.ov.remove();const data=getData()||{};const at=now();data._at=at;const code=await pack(page,data);const o={code,at,data};markSent(page,o);await copy(code);if(onSent)onSent(o);showCode(o);},'kssend')]);
     },'kssend');}
   function reviewBar(o){return mk('div','ksrev','<b>Проверка работы ученицы</b> · отправлено '+(o.data&&o.data._at||'')+'. Верные ответы и баллы показаны ниже.');}
-  return {T,pack,unpack,sent,markSent,review,button,reviewBar,showCode,copy};
+  /* совместимость со страницами, которые отправляют по частям; на сайте учителя кнопка не показывается */
+  function parts(page,cfg){return HWParts.make(Object.assign({id:'katya-ege:'+page,testId:'katya-ege:'+page,title:'Катя · '+page,lang:'ru',disabled:T,legacySent:()=>!!sent(page)},cfg));}
+  return {T,pack,unpack,sent,markSent,review,button,reviewBar,showCode,copy,parts};
 })();

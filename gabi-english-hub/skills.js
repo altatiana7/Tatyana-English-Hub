@@ -25,10 +25,10 @@ function playClip(src,text){hush();if(!src)return say([['q',text]]);const el=new
 /* ---------- shell ---------- */
 function boot(cfg){CFG=cfg;EMBED=new URLSearchParams(location.search).has('embed');document.documentElement.classList.toggle('embed',EMBED);document.documentElement.classList.toggle('once',!!cfg.once);if(cfg.once){const st=document.createElement('style');st.textContent='[data-again],[data-fagain]{display:none!important}';document.head.appendChild(st)}
  document.body.innerHTML=`<div class="bar"><a class="home" href="${esc(cfg.hub||'index.html')}" aria-label="Back to Gabi Hub">←<span>&nbsp;Hub</span></a>
-  <div class="now"><small id="stage"></small><b id="title"></b></div><div class="steps" id="steps" role="tablist" aria-label="Lesson steps"></div>
+  <div class="now"><small id="stage"></small><b id="title"></b></div><div class="steps" id="steps" role="tablist" aria-label="Lesson steps"></div><span id="hwp"></span>
   <button class="arrow" id="prev" aria-label="Previous step">‹</button><button class="arrow next" id="next"></button></div>
   <main class="sheet" id="sheet"></main>`;
- ST=cfg.steps.map(()=>({}));STAGES=[...new Set(cfg.steps.map(x=>x.stage))];
+ ST=cfg.steps.map(()=>({}));STAGES=[...new Set(cfg.steps.map(x=>x.stage))];initParts();
  $('#steps').onclick=e=>{const b=e.target.closest('[data-i]');if(b)go(+b.dataset.i)};
  $('#prev').onclick=()=>{if(cur)go(cur-1)};
  $('#next').onclick=()=>{if(cur===CFG.steps.length-1){if(EMBED)return;ST=CFG.steps.map(()=>({}));SHARED={};seen.clear();go(0)}else go(cur+1)};
@@ -41,7 +41,7 @@ function go(i){hush();clearInterval(tick);tick=0;seen.add(cur);cur=i;drawBar();d
 function drawBar(){const S=CFG.steps;
  $('#steps').innerHTML=S.map((s,i)=>(i&&s.stage!==S[i-1].stage?'<i></i>':'')+`<button class="chip${i===cur?' on':seen.has(i)?' seen':''}" data-i="${i}" role="tab" aria-selected="${i===cur}" title="${esc(s.title)}">${i+1}</button>`).join('');
  $('#stage').textContent=CFG.kicker+' · '+S[cur].stage;$('#title').textContent=(cur+1)+' / '+S.length+' · '+S[cur].title;
- $('#prev').style.visibility=cur?'visible':'hidden';const last=cur===S.length-1;$('#next').textContent=last?'Start again':'Next ›';$('#next').style.visibility=last&&EMBED?'hidden':'visible'}
+ $('#prev').style.visibility=cur?'visible':'hidden';const last=cur===S.length-1;$('#next').textContent=last?'Start again':'Next ›';$('#next').style.visibility=last&&(EMBED||PARTS)?'hidden':'visible'}
 function draw(){const step=CFG.steps[cur],s=ST[cur];if(step.acts)step.acts.forEach((a,k)=>{const ss=subS(k);if(!ss.init){ss.init=true;initAct(a,ss)}});else if(!s.init){s.init=true;initAct(step.act,s)}
  const photo=step.photo&&has(step.photo.src)?`<figure class="photo${step.side?'':' full'}"><img src="${esc(step.photo.src)}" alt="${esc(step.photo.alt||'')}" style="object-position:${esc(step.photo.pos||'center')}">${step.photo.cap?`<figcaption>${esc(step.photo.cap)}</figcaption>`:''}</figure>`:'';
  const side=(step.side?sideHTML(step.side,s):'')+photo;const gated=step.side&&step.side.gate&&!s.open;const look=step.side&&step.side.look?' look-'+step.side.look:'';
@@ -97,7 +97,7 @@ function initAct(a,s){if(!a)return;
  if(a.type==='bomb'){s.st='start';s.i=0;s.ok=0;s.boom=0;s.miss=[];s.left=a.secs||15;s.res=null;s.pick=null}
  if(ACT[a.type]&&ACT[a.type].init)ACT[a.type].init(a,s)}
 const fb=(ok,head,body)=>`<div class="fb ${ok?'ok':'no'}"><b>${head}</b>${body?`<span>${body}</span>`:''}</div>`;
-function actHTML(a,s){if(!a)return'';return ACT[a.type].view(a,s)}
+function actHTML(a,s){if(!a)return'';const u=sentUnit(a);if(u)return sentCard(u);return ACT[a.type].view(a,s)}
 const ACT={
 quiz:{view(a,s){const n=s.items.length;
   const hearts=a.lives?`<span class="hearts">${Array.from({length:a.lives},(_,k)=>`<i class="${k<s.lives?'on':''}">♥</i>`).join('')}</span>`:'';
@@ -206,6 +206,44 @@ function reportTodo(){const L=[];flatActs().forEach(({ac,s,no})=>{if(!ac)return;
   if(ac.type==='gaps')ok=ac.items.every((_,k)=>(s.val||{})[k])&&(ac.free||!!s.checked);else if(ac.type==='quiz')ok=!!s.done;else if(ac.type==='write')ok=!!s.text&&(!ac.min||words(s.text)>=ac.min);else if(ac.type==='map')ok=Object.values(s.val||SHARED.map||{}).filter(Boolean).length>=ac.branches.length;else if(ac.type==='talk')ok=Object.keys(s.spoke||{}).length>=ac.cards.length;
   else if(ac.type==='sort')ok=!!s.checked;else if(ac.type==='hunt')ok=Object.keys(s.hit||{}).length===ac.items.length;else if(ac.type==='memory')ok=Object.keys(s.done||{}).length===ac.pairs.length;else if(ac.type==='match')ok=!!s.pairs&&Object.keys(s.pairs).length===ac.items.length;
   if(!ok&&!L.includes(no))L.push(no)});return L}
+/* ---------- отправка по частям (shared/hw-parts.js) ----------
+   Готовое задание можно отправить, не дожидаясь конца. Отправленное задание закрывается карточкой:
+   ученица видит только число ошибок, а не где и какие. */
+let PARTS=null;
+const UNIT_TYPES=['gaps','quiz','write','map','talk','sort','hunt','memory','match'];
+function actDone(ac,s){s=s||{};
+  if(ac.type==='gaps')return ac.items.every((_,k)=>(s.val||{})[k])&&(ac.free||!!s.checked);
+  if(ac.type==='quiz')return !!s.done;
+  if(ac.type==='write')return !!s.text&&(!ac.min||words(s.text)>=ac.min);
+  if(ac.type==='map')return Object.values(s.val||SHARED.map||{}).filter(Boolean).length>=ac.branches.length;
+  if(ac.type==='talk')return Object.keys(s.spoke||{}).length>=ac.cards.length;
+  if(ac.type==='sort')return !!s.checked;
+  if(ac.type==='hunt')return Object.keys(s.hit||{}).length===ac.items.length;
+  if(ac.type==='memory')return Object.keys(s.done||{}).length===ac.pairs.length;
+  if(ac.type==='match')return !!s.pairs&&Object.keys(s.pairs).length===ac.items.length;
+  return true}
+/* число ошибок; null – задание открытое, его проверяет учитель */
+function actErrors(ac,s){s=s||{};
+  if(ac.type==='gaps')return ac.free||ac.open?null:ac.items.filter((it,k)=>judge(it,(s.val||{})[k])!==true).length;
+  if(ac.type==='quiz')return Math.max(0,(s.items||ac.items).length-(s.ok||0));
+  if(ac.type==='sort')return ac.items.filter((it,i)=>(s.place||{})[i]!==it.c).length;
+  if(ac.type==='hunt')return Math.max(0,ac.items.length-Object.keys(s.first||{}).length);
+  if(ac.type==='match')return s.err||0;
+  if(ac.type==='memory')return 0;
+  return null}
+function unitList(){const L=[];CFG.steps.forEach((st,i)=>{
+  const acts=st.acts?st.acts.map((ac,k)=>({ac,s:((ST[i]||{}).sub||[])[k]||{},id:i+'.'+k,title:ac.title||st.title})):[{ac:st.act,s:ST[i]||{},id:String(i),title:st.title}];
+  acts.forEach(x=>{if(x.ac&&UNIT_TYPES.includes(x.ac.type))L.push({id:x.id,ac:x.ac,s:x.s,label:(i+1)+'. '+x.title})})});return L}
+const sentUnit=a=>{if(!PARTS)return null;const u=unitList().find(x=>x.ac===a);return u&&PARTS.isSent(u.id)?u:null};
+function sentCard(u){const e=PARTS.errOf(u.id);
+  return `<div class="sentcard"><b>✓ Sent to your teacher</b><span>${e==null?'Your teacher will check this task.':'Mistakes: '+e+'. Your teacher will show you which ones.'}</span></div>`}
+function initParts(){PARTS=null;const ra=reportAct();if(!window.HWParts||ra.type!=='report')return;const i=hwId();
+  PARTS=HWParts.make({id:'gabi:'+i.page,testId:'gabi:'+i.page,title:'Габи · '+i.title,lang:'en',
+    units:()=>unitList().map(u=>({id:u.id,label:u.label,done:actDone(u.ac,u.s),errors:actErrors(u.ac,u.s)})),
+    snapshot:()=>reportData(ra),
+    legacySent:()=>!!(window.HWSent&&HWSent.isSent(i.student,i.page)),
+    onUpdate:()=>{drawBar();draw()}});
+  const slot=$('#hwp');if(slot)slot.appendChild(PARTS.bar(null,{compact:true}))}
 function reportAct(){return (CFG.steps.find(x=>x.act&&x.act.type==='report')||{}).act||{}}
 /* A copied code applies only to the version of the work it contains. */
 function reportSnapshot(a){const r=reportData(a);return JSON.stringify([r.assignment,r.steps])}
@@ -228,6 +266,9 @@ async function sendCode(a,s,fin){if(s.copyState==='copying')return;
  let sharing;try{if(matchMedia('(pointer:coarse)').matches&&typeof navigator.share==='function'){s.shared=true;sharing=Promise.resolve(navigator.share({text:code}))}}catch(e){s.shared=false}
  refresh();if(sharing)try{await sharing}catch(e){}finally{if(current()){s.shared=false;refresh()}}}
 ACT.report={view(a,s){clearOutdatedCode(a,s);const todo=reportTodo();
+  if(PARTS)return `<div class="write send"><div class="wside">
+   ${todo.length?`<b class="todo">Not finished: step${todo.length>1?'s':''} ${todo.join(', ')}</b><span class="muted">Send the finished tasks now. You can do the rest and send it later.</span>`:`<b class="ok">Everything is done.</b>`}
+   <div id="hwpbig"></div></div></div>`;
   return `<div class="write send"><textarea readonly data-report spellcheck="false">${esc(reportText(a))}</textarea><div class="wside">
    ${todo.length?`<b class="todo">Not finished: step${todo.length>1?'s':''} ${todo.join(', ')}</b><span class="muted">You can go back and finish, or send it as it is.</span>`:`<b class="ok">Everything is done.</b>`}
    ${hwDone()?hwDone():`<button class="main" data-send data-auto ${s.copyState==='copying'?'disabled':''}>${s.code?'Copy the code again':'Send to teacher'}</button>`}
@@ -352,7 +393,8 @@ function onClick(e){const b=e.target.closest('button,[data-sc]');if(!b||b.disabl
  if(d.stop!==undefined&&!b.closest('.act')){return hush()}
  if(!b.closest('.act'))return;const c=pick(b);if(!c)return;if(CFG.once&&(d.again!==undefined||d.fagain!==undefined))return;const A=ACT[c.a.type];if(A&&A.click)A.click(c.a,c.s,d,b);
  if(c.a.type==='write')ACT.write.after(c.a,c.s)}
-function onInput(e){const c=pick(e.target);if(!c)return;const A=ACT[c.a.type];if(A&&A.input)A.input(c.a,c.s,e.target)}
-const _draw=draw;draw=function(){_draw();const step=CFG.steps[cur];if(step.acts){step.acts.forEach((a,k)=>{const A=ACT[a.type];if(A&&A.after&&$('#act-'+k)){AK=k;A.after(a,subS(k))}});return}const A=step.act&&ACT[step.act.type];if(A&&A.after&&$('#act'))A.after(step.act,ST[cur])};
+function onInput(e){const c=pick(e.target);if(!c)return;const A=ACT[c.a.type];if(A&&A.input)A.input(c.a,c.s,e.target);if(PARTS)PARTS.refresh()}
+const _redrawAct=redrawAct;redrawAct=function(){_redrawAct();if(PARTS)PARTS.refresh()};
+const _draw=draw;draw=function(){_draw();if(PARTS)PARTS.refresh();{const bg=$('#hwpbig');if(bg&&PARTS&&!bg.firstChild)bg.appendChild(PARTS.bar(null));}const step=CFG.steps[cur];if(step.acts){step.acts.forEach((a,k)=>{const A=ACT[a.type];if(A&&A.after&&$('#act-'+k)){AK=k;A.after(a,subS(k))}});return}const A=step.act&&ACT[step.act.type];if(A&&A.after&&$('#act'))A.after(step.act,ST[cur])};
 window.Lesson={boot,words,nz,ACT,player,esc,redraw:()=>redrawAct(),hush};
 })();
