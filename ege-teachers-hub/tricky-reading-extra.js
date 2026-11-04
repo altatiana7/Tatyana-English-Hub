@@ -308,6 +308,16 @@ const WORD_BANK = [
   "whistle",
   "/ˈwɪsəl/",
   "свистеть"
+ ],
+ [
+  "media",
+  "/ˈmiːdiə/",
+  "СМИ"
+ ],
+ [
+  "hotel",
+  "/həʊˈtel/",
+  "отель"
  ]
 ];
 window.TRICKY_READING_EXTRA = WORD_BANK.map(([word,ipa,ru])=>({
