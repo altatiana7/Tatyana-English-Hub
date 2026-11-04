@@ -233,6 +233,82 @@ function teacher(){overlay('Учителю · урок Family',
 
 /* ---------- главный экран урока ---------- */
 const run=f=>box=>f(box);
+/* ---------- Family · новые активности по лексике: Sort, Missing word, True / False, Speed Game ---------- */
+const ALLV=[...CARDS,...FAM];
+const PART=['after','up','along','out','apart','in','down','off'];
+const MW=[['a ______ family','close-knit','дружная семья'],['sibling ______','rivalry','соперничество братьев и сестёр'],['a ______ family','single-parent','неполная семья'],['an ______ family','extended','большая семья с родственниками'],['a ______ family','nuclear','родители и дети'],['a family ______','gathering','семейная встреча'],['______ support','unconditional','безусловная поддержка'],['to be on speaking ______','terms','разговаривать друг с другом'],['a ______ relative','distant','дальний родственник'],['to share the same ______','values','разделять ценности'],['to ______ on somebody','rely','полагаться на кого-то'],
+ ['take ______','after','быть похожим на родственника'],['grow ______','up','вырасти'],['bring ______','up','воспитывать'],['get ______ with','along','ладить с'],['fall ______ with','out','поссориться с'],['make ______ with','up','помириться с'],['drift ______','apart','отдалиться друг от друга'],['fit ______','in','вписаться в коллектив'],['let ______','down','подвести'],['hit it ______','off','сразу найти общий язык'],['go ______ with','out','встречаться с'],['break ______','up','расстаться']];
+const resetQ=st=>{st.i=0;st.pick=null;st.score=0;st.errs=[];st.done=false;st.items=null;};
+Object.assign(S,{so:{set:'a',items:null,sel:null,err:0},sg:{state:'idle',t:60,score:0,miss:0,best:0,lock:false},tf:{i:0,pick:null,score:0,errs:[],done:false,items:null},mw:{i:0,pick:null,score:0,errs:[],done:false,items:null}});
+/* один вопрос на экране, два столбика крупных кнопок */
+function mcq(box,st,build){const wrap=el('div','chq');box.append(wrap);
+  if(!st.items)st.items=build();
+  const items=st.items,n=items.length;
+  if(st.done){const e=el('div','end');e.append(el('div','score',st.score+' / '+n));
+    if(st.errs.length){const ul=el('ul','errs');st.errs.forEach(k=>ul.append(el('li',null,items[k].rev)));e.append(ul);}
+    else e.append(el('div','fb','No mistakes.'));
+    e.append(btn('Play again',()=>{resetQ(st);H.render();},'main'));wrap.append(e);return;}
+  const it=items[st.i];
+  const meta=el('div','meta'),bar=el('div','qzbar');bar.innerHTML='<i style="width:'+(st.i/n*100)+'%"></i>';
+  meta.append(el('span',null,(st.i+1)+' / '+n),bar,el('span',null,'Score '+st.score));wrap.append(meta);
+  wrap.append(el('div','tag',esc(it.tag)),el('div','qtxt',esc(it.q)));
+  if(it.sub)wrap.append(el('div','qsub',esc(it.sub)));
+  const og=el('div','opts');
+  it.opts.forEach(o=>{const b=el('button',null,esc(o));b.type='button';b.disabled=st.pick!==null;
+    if(st.pick!==null){if(o===it.ans)b.classList.add('ok');else if(o===st.pick)b.classList.add('no');}
+    b.onclick=()=>{st.pick=o;if(o===it.ans)st.score++;else st.errs.push(st.i);H.render();};og.append(b);});
+  wrap.append(og);
+  const fb=el('div','fb',st.pick===null?'':(st.pick===it.ans?'Correct.':'The answer is: '+esc(it.ans)+'.'));
+  const nx=btn(st.i===n-1?'See result':'Next',()=>{if(st.i===n-1)st.done=true;else st.i++;st.pick=null;H.render();},'main sm');nx.disabled=st.pick===null;
+  const foot=el('div','foot');foot.append(fb,nx);wrap.append(foot);}
+const mkMW=(x,pool)=>({tag:'Missing word',q:x[0],sub:x[2],opts:shuffle([x[1],...shuffle(pool.filter(w=>w!==x[1])).slice(0,3)]),ans:x[1],rev:x[0].replace('______','<b>'+esc(x[1])+'</b>')});
+const buildMW=()=>{const C=MW.slice(0,11),P=MW.slice(11);return shuffle([...shuffle(C).slice(0,6).map(x=>mkMW(x,C.map(y=>y[1]))),...shuffle(P).slice(0,6).map(x=>mkMW(x,PART))]);};
+const buildTF=()=>shuffle(ALLV).slice(0,12).map(x=>{const t=Math.random()<.5;let m=x[1];
+  if(!t){let o;do{o=ALLV[Math.floor(Math.random()*ALLV.length)];}while(o[1]===x[1]);m=o[1];}
+  return {tag:'Meaning',q:x[0],sub:m,opts:['True','False'],ans:t?'True':'False',rev:'<b>'+esc(x[0])+'</b> – '+esc(x[1])};});
+function missingWord(box){mcq(box,S.mw,buildMW);}
+function trueFalse(box){mcq(box,S.tf,buildTF);}
+/* Sort: выражения по двум коробкам */
+const SORTS={a:['Collocation',CARDS.slice(0,12),'Phrasal verb',CARDS.slice(12)],b:['Family',FAM.slice(0,12),'Relationship',FAM.slice(12)]};
+function sortGame(box){const st=S.so,D=SORTS[st.set];
+  if(!st.items)st.items=shuffle([...shuffle(D[1]).slice(0,6).map(x=>({t:x[0],s:0})),...shuffle(D[3]).slice(0,6).map(x=>({t:x[0],s:1}))]);
+  const again=()=>{S.so={set:st.set,items:null,sel:null,err:0};H.render();};
+  const left=st.items.filter(x=>!x.d).length;
+  const top=el('div','fbar');
+  top.append(seg([['a','Collocations'],['b','Family words']],st.set,v=>{S.so={set:v,items:null,sel:null,err:0};H.render();}),
+    el('span','bl',(left?(12-left)+' / 12':'Done')+' · mistakes '+st.err),btn('Again',again,'sm'));box.append(top);
+  if(left){const pool=el('div','pool');
+    st.items.forEach((x,k)=>{if(x.d)return;const b=el('button','chipx'+(st.sel===k?' sel':''),esc(x.t));b.type='button';b.onclick=()=>{st.sel=st.sel===k?null:k;H.render();};pool.append(b);});
+    box.append(pool);}
+  const bins=el('div','bins');
+  [[D[0],0],[D[2],1]].forEach(([name,s])=>{const bn=el('div','bin'+(st.sel!==null?' hot':''));bn.append(el('h4',null,name));
+    const lst=el('div','pool');st.items.forEach(x=>{if(x.d&&x.s===s)lst.append(el('span','chipx ok',esc(x.t)));});bn.append(lst);
+    bn.onclick=()=>{if(st.sel===null)return;const x=st.items[st.sel];
+      if(x.s===s){x.d=true;st.sel=null;H.render();}else{st.err++;st.sel=null;bn.classList.add('no');setTimeout(()=>H.render(),420);}};
+    bins.append(bn);});
+  box.append(bins);}
+/* Speed Game: 60 секунд, два значения на выбор */
+function speedGame(box){const st=S.sg;if(st.state==='run')st.state='idle';
+  const stop=()=>{clearInterval(st.h);st.h=null;};cleanR=stop;
+  const fmt=t=>'0:'+String(t).padStart(2,'0');
+  const next=()=>{const r=ALLV[Math.floor(Math.random()*ALLV.length)];let o;do{o=ALLV[Math.floor(Math.random()*ALLV.length)];}while(o[1]===r[1]);st.q=[r[0],shuffle([r[1],o[1]]),r[1]];};
+  const paint=()=>{box.innerHTML='';const w=el('div','chq');
+    if(st.state!=='run'){const e=el('div','end');
+      if(st.state==='over')e.append(el('div','score','Score '+st.score),el('div','fb','Mistakes '+st.miss+' · Best '+st.best));
+      else if(st.best)e.append(el('div','fb','Best '+st.best));
+      e.append(btn(st.state==='over'?'Play again':'Start',start,'main'));w.append(e);box.append(w);return;}
+    const meta=el('div','meta'),tm=el('span',null,fmt(st.t)),bar=el('div','qzbar');bar.innerHTML='<i style="width:'+(st.t/60*100)+'%"></i>';
+    meta.append(tm,bar,el('span',null,'Score '+st.score));st.tmEl=tm;st.barEl=bar.firstChild;
+    w.append(meta,el('div','qtxt',esc(st.q[0])));
+    const og=el('div','opts');st.q[1].forEach(o=>{const b=el('button',null,esc(o));b.type='button';
+      b.onclick=()=>{if(st.lock)return;st.lock=true;const ok=o===st.q[2];if(ok)st.score++;else st.miss++;b.classList.add(ok?'ok':'no');
+        setTimeout(()=>{st.lock=false;if(st.state==='run'){next();paint();}},260);};og.append(b);});
+    w.append(og);box.append(w);};
+  const start=()=>{stop();st.state='run';st.t=60;st.score=0;st.miss=0;st.lock=false;next();paint();
+    st.h=setInterval(()=>{st.t--;if(st.t<=0){stop();st.state='over';st.best=Math.max(st.best,st.score);paint();}
+      else{if(st.tmEl)st.tmEl.textContent=fmt(st.t);if(st.barEl)st.barEl.style.width=(st.t/60*100)+'%';}},1000);};
+  paint();}
+
 const H=Hub({title:'Family',sub:'Урок по теме «Семья».',
  clean:()=>{if(cleanR){cleanR();cleanR=null;}},
  groups:[
@@ -243,13 +319,21 @@ const H=Hub({title:'Family',sub:'Урок по теме «Семья».',
   {id:'cards',t:'Cards',sub:'24 карточки',run:b=>cards(b,S.c,CARDS,k=>k<12?'Collocation':'Phrasal verb')},
   {id:'fam',t:'Family words',sub:'22 карточки',run:b=>cards(b,S.f,FAM,k=>k<12?'Family':'Relationship')},
   {id:'pv',t:'Phrasal verbs',sub:'Таблица: как употреблять',run:pvTable},
+  {id:'match',t:'Match',sub:'Выражение и значение',run:match},
+  {id:'sort',t:'Sort',sub:'Разложи по коробкам',run:sortGame},
+  {id:'mword',t:'Missing word',sub:'12 выражений',run:missingWord},
   {id:'choose',t:'Choose',sub:'16 вопросов',run:choose},
+  {id:'tf',t:'True / False',sub:'Верно ли значение?',run:trueFalse},
   {id:'mist',t:'Mistakes',sub:'Найди ошибку',run:mistake},
-  {id:'match',t:'Match',sub:'Выражение и значение',run:match}]},
+  {id:'speed',t:'Speed Game',sub:'60 секунд',run:speedGame}]},
  {name:'Тексты ЕГЭ 30–36',color:'#2855d9',items:[
   {id:'ege',t:'Olivia',sub:'Подружились и поссорились',run:ege},
   {id:'maria',t:'Maria',sub:'Виды семей',run:b=>gapPanel(b,MAR_TXT,()=>MAR_OPT,MAR_KEY,S.mar,'Maria.','Choose the correct word for each gap. One word is used once.',true)},
-  {id:'sarah',t:'Sarah',sub:'Supportive family',run:b=>gapPanel(b,SAR_TXT,c=>SAR[c][0],Object.fromEntries(Object.keys(SAR).map(n=>[n,SAR[n][1]])),S.sar,'Sarah.','Choose the best option for each gap.',false)}]}
+  {id:'sarah',t:'Sarah',sub:'Supportive family',run:b=>gapPanel(b,SAR_TXT,c=>SAR[c][0],Object.fromEntries(Object.keys(SAR).map(n=>[n,SAR[n][1]])),S.sar,'Sarah.','Choose the best option for each gap.',false)}]},
+ {name:'Ещё к теме',color:'#2c7f78',items:[
+  {t:'Вариант ЕГЭ',sub:'Семья и друзья: 1–38',href:'family-variant.html?v=2'},
+  {t:'Quizlet',sub:'Phrasal verbs: карточки',href:'family-quizlet.html?v=68'},
+  {t:'Занятие 1',sub:'Words, Listening, Speaking',href:'extra-family.html?v=57'}]}
  ]});
 drawLeft=drawRight=()=>H.render();
 function pvTable(box){box.append(el('div','inst','<b>Phrasal verbs from the cards.</b> Watch the pattern and the forms.'));
