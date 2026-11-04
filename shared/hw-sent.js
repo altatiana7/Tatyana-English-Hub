@@ -25,11 +25,26 @@ window.HWSent=(function(){
       if(rec&&rec.pending&&rec.o){try{await post(rec.o);rec.pending=false;localStorage.setItem(k,JSON.stringify(rec))}catch(e){}}}}catch(e){}}
   window.addEventListener('online',flush);window.addEventListener('load',()=>setTimeout(flush,1500));
   function badge(s,p){const r=get(s,p);if(!r)return '';
-    return r.pending?'<span class="hwdone hwwait">Сохранено · уйдёт учителю, когда появится интернет</span>'
-      :'<span class="hwdone">✓ Готово · отправлено учителю'+(r.at?' · '+r.at:'')+'</span>'}
+    return r.pending?'<span class="hwdone hwwait">Saved · will be sent when you are online</span>'
+      :'<span class="hwdone">✓ Done · Готово · sent to teacher'+(r.at?' · '+r.at:'')+'</span>'}
   const st=document.createElement('style');
   st.textContent='.hwdone{display:inline-flex;align-items:center;gap:6px;font-weight:800;font-size:15px;color:#1e6b4a;background:#e8f5ef;border:1px solid #b9dcc9;border-radius:10px;padding:6px 12px}.hwwait{color:#8a5a00;background:#fff4e0;border-color:#e8c98c}';
   document.head.appendChild(st);
+
+
+  /* Для страниц без собственной отправки: плавающая кнопка «Домашка готова». o={student,name,page,title} */
+  function doneButton(o){
+    const box=document.createElement('div');box.className='hwfloat';
+    const draw=()=>{box.innerHTML='';
+      if(isSent(o.student,o.page)){box.innerHTML=badge(o.student,o.page);return}
+      const b=document.createElement('button');b.type='button';b.className='hwbtn';b.textContent="I'm done · send to teacher";
+      b.onclick=async()=>{if(!confirm('Send this homework to your teacher? You can send it only once.'))return;b.disabled=true;
+        await submit({student:o.student,name:o.name,page:o.page,title:o.title,data:{done:true,at:now()}});draw()};
+      box.appendChild(b)};
+    draw();(document.body?Promise.resolve():new Promise(r=>addEventListener('DOMContentLoaded',r))).then(()=>document.body.appendChild(box))}
+  const st2=document.createElement('style');
+  st2.textContent='.hwfloat{position:fixed;right:14px;bottom:12px;z-index:9999}.hwbtn{font:800 15px Inter,system-ui,sans-serif;background:#1e8f5f;color:#fff;border:0;border-radius:12px;padding:11px 16px;box-shadow:0 6px 18px rgba(0,0,0,.25);cursor:pointer}.hwbtn:disabled{opacity:.6}.hwfloat .hwdone{box-shadow:0 6px 18px rgba(0,0,0,.18)}';
+  document.head.appendChild(st2);
 
   /* ---------- сайт учителя ---------- */
   const NAMES={gabi:'Габи',nikita:'Никита',kate:'Катя Д',maya:'Майя',dasha:'Даша',timofey:'Тимофей','rita-ege':'Рита','katya-ege':'Катя','arina':'Арина'};
@@ -47,5 +62,5 @@ window.HWSent=(function(){
   const SEEN='hw-seen-keys';
   const seen=()=>{try{return new Set(JSON.parse(localStorage.getItem(SEEN)||'[]'))}catch(e){return new Set()}};
   const markSeen=keys=>{try{const s=seen();keys.forEach(k=>s.add(k));localStorage.setItem(SEEN,JSON.stringify([...s].slice(-500)))}catch(e){}};
-  return {submit,isSent,badge,flush,list,seen,markSeen,NAMES}
+  return {submit,isSent,badge,doneButton,flush,list,seen,markSeen,NAMES}
 })();
