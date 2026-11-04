@@ -97,15 +97,17 @@ ENG.ltap=function(box,b,ctx){
   function start(){qs=shuffle(b.items);i=0;score=0;errs=[];show();}
   function show(){
     const body=actHead(box,b,start);const it=qs[i];
+    if(b.hdr)body.append(h('div','hdrbox',b.hdr));
     const pr=h('div','qprompt');
     if(it.say){pr.append(spk(it.say,'big'));}
+    if(it.color){const sw=h('div','swatch'+(it.color==='#FFFFFF'?' white':''));sw.style.background=it.color;pr.append(sw);}
     if(it.q)pr.append(h('div','qtext',esc(it.q)));
     pr.append(h('div','cnt',(i+1)+' / '+qs.length));
     const grid=h('div','opts');const foot=h('div','foot');const fb=h('div','fb');foot.append(fb);
     const os=shuffle(it.opts.map((t,k)=>({t,ok:k===it.ans})));
     os.forEach(o=>{const x=h('button','opt',esc(o.t));x.onclick=()=>{
       grid.querySelectorAll('.opt').forEach(y=>y.disabled=true);
-      if(o.t.length<40)say(optSay(o.t));
+      if(o.t.length<40&&!b.nosay)say(optSay(o.t));
       if(o.ok){x.classList.add('ok');score++;fb.className='fb ok';fb.textContent='Yes!';}
       else{x.classList.add('bad');grid.querySelectorAll('.opt').forEach((y,k)=>{if(os[k].ok)y.classList.add('ok');});errs.push(esc((it.q||it.say||'')+' → '+it.opts[it.ans]));fb.className='fb bad';fb.textContent='Not quite: '+it.opts[it.ans];}
       if(it.exp)fb.textContent+='  '+it.exp;
@@ -169,20 +171,22 @@ ENG.build=function(box,b,ctx){
   let qs,i,score,errs;
   function start(){qs=shuffle(b.items);i=0;score=0;errs=[];show();}
   function show(){
-    const body=actHead(box,b,start);const it=qs[i];const w=typeof it==='string'?it:it.w;const parts=chunkWord(w);const target=plain(w);
-    const pr=h('div','qprompt');pr.append(spk(it.say||target,'big'),h('div','qtext',it.q?esc(it.q):'Listen. Build the word.'),h('div','cnt',(i+1)+' / '+qs.length));
-    const slots=h('div','slots');const fill=parts.map(()=>null);
+    const body=actHead(box,b,start);const it=qs[i];const w=typeof it==='string'?it:it.w;
+    const SEP=b.sep||(b.words?' ':null);const parts=SEP?w.split(SEP).map(t=>({t})):chunkWord(w);const target=SEP?w:plain(w);const JOIN=SEP||'';
+    const sayTxt=it.say!=null?it.say:target.split(SEP||'\u0000').join(' ');
+    const pr=h('div','qprompt');pr.append(...(sayTxt?[spk(sayTxt,'big')]:[]),h('div','qtext',it.q?esc(it.q):(b.words||b.sep?'Put it in the correct order.':'Listen. Build the word.')),h('div','cnt',(i+1)+' / '+qs.length));
+    const slots=h('div','slots'+(SEP?' wide':''));const fill=parts.map(()=>null);
     const slotEls=parts.map((p,k)=>{const s=h('div','slot','&nbsp;');s.onclick=()=>{if(fill[k]){fill[k].classList.remove('used');fill[k]=null;s.textContent='';s.classList.remove('full');}};slots.append(s);return s;});
     const tiles=h('div','tilerow');const foot=h('div','foot');const fb=h('div','fb');foot.append(fb);let wrongOnce=false;
     shuffle(parts.map(p=>p.t)).forEach(t=>{const tb=h('button','tilebtn',esc(t));tb.onclick=()=>{
       const k=fill.findIndex(x=>!x);if(k<0)return;fill[k]=tb;tb.classList.add('used');slotEls[k].textContent=t;slotEls[k].classList.add('full');
-      if(fill.every(Boolean)){const got=slotEls.map(s=>s.textContent).join('');
-        if(got===target){slots.classList.add('ok');tiles.querySelectorAll('.tilebtn').forEach(y=>y.disabled=true);if(!wrongOnce)score++;fb.className='fb ok';fb.textContent='Yes!';say(target);
+      if(fill.every(Boolean)){const got=slotEls.map(s=>s.textContent).join(JOIN);
+        if(got===target){slots.classList.add('ok');tiles.querySelectorAll('.tilebtn').forEach(y=>y.disabled=true);if(!wrongOnce)score++;fb.className='fb ok';fb.textContent='Yes!';if(sayTxt)say(sayTxt);
           const last=i===qs.length-1;const n=h('button','btn primary',last?'See result':'Next ›');n.onclick=()=>{if(last)endScreen(body,score,qs.length,errs,start,ctx);else{i++;show();}};foot.append(n);}
         else{if(!wrongOnce){errs.push(esc(target));wrongOnce=true;}slots.classList.add('shake');later(()=>{slots.classList.remove('shake');fill.forEach((f,j)=>{if(f){f.classList.remove('used');fill[j]=null;slotEls[j].textContent='';slotEls[j].classList.remove('full');}});},500);}}
     };tiles.append(tb);});
     body.append(pr,slots,tiles,foot);body.style.justifyContent='space-around';
-    later(()=>say(it.say||target,pr.querySelector('.spk')),150);
+    if(sayTxt&&!SEP)later(()=>say(sayTxt,pr.querySelector('.spk')),150);
   }
   start();
 };
@@ -353,6 +357,48 @@ ENG.pic=function(box,b,ctx){
   start();
 };
 
+
+
+/* ---------- textbook picture question: book picture on the left, one question at a time on the right ---------- */
+ENG.picq=function(box,b,ctx){
+  let qs,i,score,errs;
+  function start(){qs=b.shuffle===false?b.items.slice():shuffle(b.items);i=0;score=0;errs=[];show();}
+  function show(){
+    const body=actHead(box,b,start);const it=qs[i];body.style.flexDirection='row';body.style.gap='14px';body.style.overflow='hidden';
+    const left=h('div','pqpic');const im=new Image();im.alt='';im.src='img/book/'+(it.img||b.img)+'.jpg';left.append(im);
+    const right=h('div','pqright');
+    const pr=h('div','pqq');if(it.say)pr.append(spk(it.say,'big'));
+    pr.append(h('div','qtext',esc(it.q)),h('div','cnt',(i+1)+' / '+qs.length));
+    const grid=h('div','pqopts');const foot=h('div','foot');const fb=h('div','fb');foot.append(fb);
+    const os=shuffle(it.opts.map((t,k)=>({t,ok:k===0})));
+    os.forEach(o=>{const x=h('button','opt',esc(o.t));x.onclick=()=>{
+      grid.querySelectorAll('.opt').forEach(y=>y.disabled=true);
+      if(o.ok){x.classList.add('ok');score++;fb.className='fb ok';fb.textContent='Yes!';}
+      else{x.classList.add('bad');grid.querySelectorAll('.opt').forEach((y,k)=>{if(os[k].ok)y.classList.add('ok');});errs.push(esc(it.q+' → '+it.opts[0]));fb.className='fb bad';fb.textContent='Not quite: '+it.opts[0];}
+      if(!b.nosay&&o.t.length<40)say(o.ok?o.t:it.opts[0]);
+      const last=i===qs.length-1;const n=h('button','btn primary',last?'See result':'Next ›');n.onclick=()=>{if(last)endScreen(body,score,qs.length,errs,start,ctx);else{i++;show();}};foot.append(n);
+    };grid.append(x);});
+    right.append(pr,grid,foot);body.append(left,right);
+  }
+  start();
+};
+
+/* ---------- wordsnake: tap the first and the last letter of a hidden word ---------- */
+ENG.snake=function(box,b,ctx){
+  const body=actHead(box,b,()=>ENG.snake(box,b,ctx));
+  const letters=b.text.split('');const found=[];let first=null;
+  const wrap=h('div','snake');const info=h('div','cnt','');const foot=h('div','foot');const fb=h('div','fb');foot.append(fb);
+  const btns=letters.map((ch,k)=>{const x=h('button','sl',esc(ch));x.onclick=()=>pick(k);wrap.append(x);return x;});
+  function upd(){info.textContent=found.length+' / '+b.words.length+' words found'+(found.length?': '+found.map(f=>f.w).join(', '):'');}
+  function pick(k){
+    if(first==null){first=k;btns[k].classList.add('sel');return;}
+    const a=Math.min(first,k),z=Math.max(first,k);const w=b.text.slice(a,z+1);btns[first].classList.remove('sel');first=null;
+    if(b.words.indexOf(w)>=0&&!found.some(f=>f.w===w)){found.push({w});for(let j=a;j<=z;j++){btns[j].classList.add('got'+(found.length%5));}say(w);fb.className='fb ok';fb.textContent='Yes! '+w;upd();
+      if(found.length===b.words.length){const n=h('button','btn primary',ctx.hasNext?'Next ›':'Back to blocks');n.onclick=ctx.hasNext?ctx.next:ctx.overview;foot.append(n);}}
+    else{fb.className='fb bad';fb.textContent='Not a word. Try again.';for(let j=a;j<=z;j++){btns[j].classList.add('shake');(j=>setTimeout(()=>btns[j].classList.remove('shake'),400))(j);}}
+  }
+  body.append(wrap,info,foot);upd();body.style.justifyContent='center';
+};
 
 /* ---------- picture bingo (Teacher's Book warm-up): hear a word, tap its photo in the 3x3 grid ---------- */
 ENG.bingo=function(box,b,ctx){
@@ -539,15 +585,16 @@ function lesson(P,U,k,bi){
   const stg=h('section','stage');main.append(side,stg);app.append(main);
   function overview(){
     clearTimers();stopAudio();stg.innerHTML='';
-    const t=h('div','tiles');
-    L.blocks.forEach((b,j)=>{const x=h('button','tile',`<b>${j+1} · ${esc(b.mech||'')}</b><span>${esc(b.title)}</span><small>${esc(b.hint||'')}</small>`);x.onclick=()=>open(j);t.append(x);});
+    const t=h('div','tiles'+(L.book?' book':''));let g=null;
+    L.blocks.forEach((b,j)=>{if(b.grp&&b.grp!==g){g=b.grp;t.append(h('div','tgrp',esc(g)));}
+      const x=h('button','tile',`<b>${esc(b.tag||(j+1)+' · '+(b.mech||''))}</b><span>${esc(b.title)}</span>${L.book?'':`<small>${esc(b.hint||'')}</small>`}`);x.onclick=()=>open(j);t.append(x);});
     stg.append(t);
   }
   function open(j){
     clearTimers();stopAudio();stg.innerHTML='';
     const chips=h('div','bchips');
     const ov=h('button','bchip','All blocks');ov.onclick=overview;chips.append(ov);
-    L.blocks.forEach((b,m)=>{const c=h('button','bchip'+(m===j?' on':''),`${m+1} · ${esc(b.title)}`);c.onclick=()=>open(m);chips.append(c);});
+    L.blocks.forEach((b,m)=>{const c=h('button','bchip'+(m===j?' on':''),`${esc(b.tag||String(m+1))} · ${esc(b.title)}`);c.onclick=()=>open(m);chips.append(c);});
     const act=h('div','act');stg.append(chips,act);const onChip=chips.querySelector('.bchip.on');if(onChip)onChip.scrollIntoView({inline:'center',block:'nearest'});
     const ctx={hasNext:j<L.blocks.length-1,next:()=>open(j+1),overview};
     ENG[L.blocks[j].t](act,L.blocks[j],ctx);
@@ -563,12 +610,14 @@ function collectTexts(){
     (L.blocks||[]).forEach(b=>{
       switch(b.t){
         case 'rule':{const re=/data-say="([^"]+)"/g;let m;while((m=re.exec(b.html)))add(m[1]);break;}
-        case 'ltap':b.items.forEach(it=>{add(it.say);it.opts.forEach(o=>add(optSay(o)));});break;
+        case 'ltap':b.items.forEach(it=>{add(it.say);if(!b.nosay)it.opts.forEach(o=>add(optSay(o)));});break;
+        case 'picq':b.items.forEach(it=>{add(it.say);if(!b.nosay)it.opts.forEach(add);});break;
         case 'pic':b.items.forEach(it=>{add(it.say);if(!b.imgOpts)it.opts.forEach(add);});break;
         case 'flipread':b.items.forEach(it=>add(it.w));break;
         case 'sort':b.items.forEach(it=>add(it[0]));break;
         case 'odd':b.items.forEach(it=>it.ws.forEach(add));break;
-        case 'build':b.items.forEach(it=>{if(typeof it==='string')add(it);else add(it.say||it.w);});break;
+        case 'build':b.items.forEach(it=>{if(typeof it==='string'){if(b.sep)it.split(b.sep).forEach(add);else add(it);}else if(it.say!=null)add(it.say);else if(b.sep)it.w.split(b.sep).forEach(add);else add(it.w);});break;
+        case 'snake':b.words.forEach(add);break;
         case 'ladder':b.rows.forEach(r=>r.forEach(add));break;
         case 'sents':b.sents.forEach(add);break;
         case 'lava':b.items.forEach(it=>{add(it.say);if(it.a){add(it.a);add(it.b);}});break;

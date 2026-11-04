@@ -302,6 +302,30 @@ button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 .pchips .lchip b{color:var(--acc)}
 .pchips .lchip:hover{border-color:var(--acc)}
 @media (max-width:760px){.pbody{grid-template-columns:1fr}.pchips,.pbody.one .pchips{grid-template-columns:1fr}}
+
+/* ---- textbook transfer ---- */
+.pqpic{flex:1 1 52%;min-width:0;min-height:0;display:flex;align-items:center;justify-content:center;background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:6px}
+.pqpic img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+.pqright{flex:1 1 48%;min-width:0;display:flex;flex-direction:column;gap:10px;justify-content:center}
+.pqq{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pqopts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pqopts .opt{font-size:clamp(17px,3.4vh,26px);padding:10px 8px;min-height:48px}
+.hdrbox{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;text-align:center;font-family:var(--serif);font-size:clamp(22px,4.4vh,34px);font-weight:700}
+.numrow{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.wordbox b{margin:0 8px;font-size:clamp(18px,3.6vh,28px)}
+.swatch{width:clamp(60px,12vh,110px);height:clamp(44px,8vh,80px);border-radius:12px;border:2px solid var(--line);margin:0 auto}
+.swatch.white{border-color:#99a}
+.snake{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:900px}
+.sl{width:clamp(30px,5.2vh,44px);height:clamp(36px,6vh,50px);background:#fff;border:2px solid var(--line);border-radius:8px;font-family:var(--serif);font-size:clamp(18px,3.4vh,26px);font-weight:700;padding:0}
+.sl.sel{border-color:var(--acc);background:var(--acc-soft)}
+.sl.got0{background:#ffe3a3}.sl.got1{background:#bfe8c6}.sl.got2{background:#bde0ff}.sl.got3{background:#f7c8e0}.sl.got4{background:#e0d0ff}
+.sl.shake{animation:shk .35s}@keyframes shk{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.tgrp{grid-column:1/-1;font-weight:700;color:var(--muted);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+.tiles.book{grid-template-columns:repeat(5,1fr);gap:8px}
+.tiles.book .tile{min-height:58px;padding:7px 10px}
+.tiles.book .tile span{font-size:15px}
+.slots.wide .slot{min-width:0}
+.rkeys.cols .col{border-width:3px}
 </style>
 </head>
 <body>
@@ -311,7 +335,8 @@ button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
 <script src="data-gg2.js?v=16"></script>
 <script src="data-verbs.js?v=15"></script>
 <script src="data-sheets.js?v=2"></script>
-<script src="engine.js?v=19"></script>
+<script src="data-book.js?v=1"></script>
+<script src="engine.js?v=20"></script>
 <script src="../shared/page-label.js?v=20261104"></script>
 </body>
 </html>
