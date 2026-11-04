@@ -1,0 +1,105 @@
+/* Dasha's English — cheerful kids theme (loads after the base styles in index.html).
+   Chunky rounded buttons with a "pressed" bottom edge, colourful tiles, warm background.
+   Answer buttons stay calm; all colour lives in frames, tiles, badges and the top bar. */
+:root{
+  --bg:#FFF6E6;
+  --ink:#1F2A44;
+  --muted:#5E6A82;
+  --line:#EADFC8;
+  --teal:#1FA3B5; --teal-soft:#D9F3F6;
+  --rose:#EE5D7A; --rose-soft:#FFE0E7;
+  --moss:#6BB23A; --moss-soft:#E6F5D3;
+  --sun:#F4A51C;  --sun-soft:#FFEFC2;
+  --violet:#7B61D9; --violet-soft:#E9E3FF;
+  --sky:#3E8EF0; --sky-soft:#DCEBFF;
+  --ok:#3FA564; --ok-soft:#DDF4E4; --bad:#E0575B; --bad-soft:#FFE1E1;
+}
+body{background:
+  radial-gradient(circle at 12% 8%,#FFE3A8 0 90px,transparent 91px),
+  radial-gradient(circle at 92% 14%,#CFEFF2 0 120px,transparent 121px),
+  radial-gradient(circle at 88% 92%,#FFD6DE 0 110px,transparent 111px),
+  radial-gradient(circle at 6% 90%,#DDF0C6 0 100px,transparent 101px),
+  var(--bg);
+  background-attachment:fixed}
+#app{padding-top:6px}
+
+/* ---- chunky buttons ---- */
+.btn{border:2px solid var(--ink);border-radius:14px;background:#fff;box-shadow:0 3px 0 var(--ink);font-weight:700;transition:transform .08s,box-shadow .08s}
+.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 0 var(--ink)}
+.btn:active:not(:disabled){transform:translateY(3px);box-shadow:0 0 0 var(--ink)}
+.btn.primary{background:var(--acc);border-color:var(--ink);color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.2)}
+.btn.teacher{background:var(--sun-soft);border-color:var(--sun);box-shadow:0 3px 0 var(--sun)}
+
+/* ---- top bar of a lesson ---- */
+.ltop{background:var(--acc);border:0;border-radius:18px;padding:8px 12px;color:#fff;box-shadow:0 4px 0 rgba(31,42,68,.25)}
+.ltitle{color:#fff;font-size:21px;font-weight:800;letter-spacing:-.01em}
+.lid{background:#fff;color:var(--acc);border-radius:10px;padding:4px 10px;font-size:18px}
+.ltop .btn{border-color:rgba(255,255,255,.9);box-shadow:0 3px 0 rgba(31,42,68,.35)}
+.ltop .btn.teacher{background:#fff}
+
+/* ---- words card (Quizlet) ---- */
+.qlab{color:var(--acc);font-size:13px;letter-spacing:.1em}
+.qcard .side{border:3px solid var(--acc);border-radius:20px;box-shadow:0 5px 0 var(--acc);background:#fff}
+.qcard .back{background:var(--acc-soft)}
+.qword{font-size:clamp(30px,5.6vh,44px);color:var(--ink)}
+.qimg{border-radius:14px}
+.qbar .btn,.qbar button{border-radius:50%}
+.qcnt{font-weight:800;color:var(--acc)}
+
+/* ---- stage ---- */
+.stage{background:#fff;border:3px solid #fff;border-radius:22px;box-shadow:0 6px 0 rgba(31,42,68,.12),0 0 0 3px var(--acc-soft) inset}
+.bchip{border:2px solid var(--acc-soft);background:#fff;border-radius:999px;padding:6px 12px;font-weight:700;color:var(--ink)}
+.bchip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.atitle{font-size:22px;color:var(--acc)}
+.ainstr{color:var(--ink);font-size:19px}
+
+/* ---- the block tiles ---- */
+.tiles,.tiles.book{grid-template-columns:repeat(4,1fr);gap:12px;padding:2px 2px 8px;overflow:auto}
+.tgrp{background:var(--acc);color:#fff;border-radius:999px;padding:5px 16px;width:max-content;font-size:14px;letter-spacing:.04em;margin:8px 0 0;text-transform:none;font-weight:800}
+.tiles .tile,.tiles.book .tile{background:var(--ts);border:3px solid var(--tc);border-radius:20px;box-shadow:0 5px 0 var(--tc);
+  padding:9px 14px 10px;min-height:84px;position:relative;gap:4px;transition:transform .1s,box-shadow .1s;overflow:hidden}
+.tiles .tile:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--tc)}
+.tiles .tile:active{transform:translateY(4px);box-shadow:0 1px 0 var(--tc)}
+.tiles .tile.c0{--tc:var(--teal);--ts:var(--teal-soft)}
+.tiles .tile.c1{--tc:var(--rose);--ts:var(--rose-soft)}
+.tiles .tile.c2{--tc:#E8920A;--ts:var(--sun-soft)}
+.tiles .tile.c3{--tc:var(--moss);--ts:var(--moss-soft)}
+.tiles .tile.c4{--tc:var(--violet);--ts:var(--violet-soft)}
+.tiles .tile.c5{--tc:var(--sky);--ts:var(--sky-soft)}
+.tiles .tile b{align-self:flex-start;background:var(--tc);color:#fff;border-radius:999px;padding:3px 11px;font-size:14px;letter-spacing:.02em}
+.tiles .tile span{font-size:20px;font-weight:800;line-height:1.12;color:var(--ink);margin-top:4px}
+.tiles .tile small{display:block;color:var(--muted);font-size:14px;font-weight:600}
+.tile .tpic{width:calc(100% + 28px);margin:-12px -14px 6px;height:92px;object-fit:cover;display:block;border-bottom:3px solid var(--tc)}
+.tiles.book .tile.withpic{min-height:178px;padding-top:0}
+.tile.withpic .tpic{height:84px}
+
+/* ---- answer buttons: calm colours, chunky shape ---- */
+.opt,.wchip,.tilebtn,.say,.mbtn,.hw,.sline,.lw,.bucket,.slot,.sl,.pimg,.bcell{border-radius:16px}
+.opt{border:2.5px solid #D7DEEA;box-shadow:0 4px 0 #D7DEEA;background:#fff;transition:transform .08s,box-shadow .08s}
+.opt:hover:not(:disabled){border-color:var(--acc);box-shadow:0 4px 0 var(--acc);transform:translateY(-1px);background:var(--acc-soft)}
+.opt:active:not(:disabled){transform:translateY(3px);box-shadow:0 0 0 var(--acc)}
+.opt.ok{border-color:var(--ok);box-shadow:0 4px 0 var(--ok);background:var(--ok-soft)}
+.opt.bad{border-color:var(--bad);box-shadow:0 4px 0 var(--bad);background:var(--bad-soft)}
+.wchip,.tilebtn,.say,.mbtn{border:2.5px solid #D7DEEA;box-shadow:0 3px 0 #D7DEEA}
+.say:hover,.mbtn:hover:not(:disabled){box-shadow:0 3px 0 var(--acc)}
+.rkeys.abc .say{min-width:52px}
+.hw.sel,.wchip.sel,.mbtn.sel{box-shadow:0 3px 0 var(--acc)}
+.spk{border:2.5px solid var(--acc);color:var(--acc);box-shadow:0 3px 0 var(--acc)}
+.spk.on{background:var(--acc);color:#fff}
+.ring{background:conic-gradient(var(--acc) 0 100%,#F0E8D6 0)}
+.note{background:var(--sun-soft);border:2px dashed var(--sun);border-radius:14px}
+.reveal{border:2px solid var(--acc);border-radius:14px}
+.photo,.pqpic{border-radius:18px;border:3px solid var(--acc-soft)}
+.spcard{border:3px solid var(--acc-soft);border-radius:18px;background:var(--acc-soft)}
+.endbox .score{color:var(--acc)}
+
+/* ---- hub (lessons list) ---- */
+.pcard{border:3px solid var(--acc);border-top-width:8px;border-radius:20px;box-shadow:0 5px 0 rgba(31,42,68,.14)}
+.lchip{border:2px solid transparent;border-radius:12px;font-weight:600}
+.lchip:hover{border-color:var(--acc);transform:translateY(-1px)}
+.p-gg{--acc:var(--rose);--acc-soft:var(--rose-soft)}
+.p-read{--acc:var(--teal);--acc-soft:var(--teal-soft)}
+.p-verbs{--acc:var(--moss);--acc-soft:var(--moss-soft)}
+
+@media (max-width:1100px){.tiles,.tiles.book{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:760px){.tiles,.tiles.book{grid-template-columns:repeat(2,1fr)}}

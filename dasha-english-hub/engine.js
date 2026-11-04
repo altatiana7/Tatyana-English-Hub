@@ -587,7 +587,9 @@ function lesson(P,U,k,bi){
     clearTimers();stopAudio();stg.innerHTML='';
     const t=h('div','tiles'+(L.book?' book':''));let g=null;
     L.blocks.forEach((b,j)=>{if(b.grp&&b.grp!==g){g=b.grp;t.append(h('div','tgrp',esc(g)));}
-      const x=h('button','tile',`<b>${esc(b.tag||(j+1)+' · '+(b.mech||''))}</b><span>${esc(b.title)}</span>${L.book?'':`<small>${esc(b.hint||'')}</small>`}`);x.onclick=()=>open(j);t.append(x);});
+      const th=(b.img||(b.items&&b.items[0]&&b.items[0].img)||'').replace(/^book\//,'');
+      const pic=false?`<img class="tpic" alt="" src="img/book/${esc(th)}.jpg" onerror="this.remove()">`:'';
+      const x=h('button','tile c'+(j%6)+(pic?' withpic':''),`${pic}<b>${esc(b.tag||(j+1)+' · '+(b.mech||''))}</b><span>${esc(b.title)}</span><small>${esc(b.mech||b.hint||'')}</small>`);x.onclick=()=>open(j);t.append(x);});
     stg.append(t);
   }
   function open(j){
