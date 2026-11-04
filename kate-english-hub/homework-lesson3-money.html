@@ -94,7 +94,7 @@ textarea:focus{border-color:var(--navy)}
 @media(max-height:620px){header{padding:6px 18px}.brand h1{font-size:21px}.brand p{display:none}.badge{padding:5px 11px}.tabs{padding:6px 14px}.stage{padding:9px 14px}.qcard{padding:11px 16px}}
 @media(max-width:700px){body{overflow:auto}.app{height:auto;min-height:100dvh}.stage{overflow:visible}.badge{display:none}.brand h1{font-size:22px}.step .l{display:none}.step.on .l{display:inline}.top{flex-wrap:wrap;align-items:center}.top p{flex-basis:100%;order:3}.hud,.decks{flex-wrap:wrap}.opts{grid-template-columns:1fr}.foot,.typerow{flex-wrap:wrap}.typerow input{flex-basis:100%;max-width:none}.flip{flex:none;height:250px}textarea{min-height:140px}}
 </style>
-</head>
+<script src="../shared/hw-sent.js?v=1"></script></head>
 <body>
 <div class="app">
 <header>
@@ -295,14 +295,13 @@ function finishWrite(){
   const txt=()=>'Kate · Homework · Money words\n'+['meaning','gap','type'].map((k,i)=>['Meaning','In context','Type it'][i]+': '+(results[k]||'not done')).join(' · ')+'\nLesson words used in writing: '+u.length+' / 18'+(u.length?' ('+u.map(i=>byId[i].t).join(', ')+')':'')+'\n\n'+WRITE.map((q,i)=>(i+1)+'. '+q[0]+'\n'+(answers[i].trim()||'—')).join('\n\n');
   screen.innerHTML='<div class="finish"><h2>Homework complete</h2><div class="big"><b>'+u.length+' / 18</b> lesson words used · '+n+' of '+WRITE.length+' questions answered'+(u.length>=8?' · goal reached':'')+'</div>'+
   '<div class="review"><div><b>Scores:</b> Meaning '+(results.meaning||'not done')+' · In context '+(results.gap||'not done')+' · Type it '+(results.type||'not done')+'</div>'+WRITE.map((q,i)=>'<div><b>'+esc(q[0])+'</b><br>'+(answers[i].trim()?esc(answers[i]):'<span class="x">no answer yet</span>')+'</div>').join('')+'</div>'+
-  '<div class="frow"><button type="button" class="btn" id="copy">Copy my answers for the teacher</button><button type="button" class="btn ghost" id="edit">Edit my answers</button><span class="copied" id="copied"></span></div></div>';
+  '<div class="frow"><button type="button" class="btn" id="copy">Send to teacher</button><button type="button" class="btn ghost" id="edit">Edit my answers</button><span class="copied" id="copied"></span></div></div>';
   $('edit').onclick=()=>{wq=0;drawW()};
-  $('copy').onclick=()=>{const t=txt(),okMsg=()=>{$('copied').textContent='✓ Copied — paste it into a message to your teacher.'};
-    const fallback=()=>{const a=document.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';document.body.appendChild(a);a.select();try{document.execCommand('copy');okMsg()}catch(e){$('copied').textContent='Select the text above and copy it.'}a.remove()};
-    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(okMsg,fallback);else fallback()};
+  const lock=()=>{const d=window.HWSent&&HWSent.badge('kate','lesson3-money');if(d){$('copy').hidden=true;$('edit').hidden=true;$('resetAll').hidden=true;$('copied').innerHTML=d}};
+  $('copy').onclick=async()=>{if(!window.HWSent)return;await HWSent.submit({student:'kate',name:'Катя Д',page:'lesson3-money',title:'Money words',data:{text:txt()}});lock()};lock();
 }
 $('resetAll').onclick=()=>{done={};results={};answers=WRITE.map(()=>'');deck='m';go(0)};
-go(0);
+go(0);if(window.HWSent&&HWSent.isSent('kate','lesson3-money'))$('resetAll').hidden=true;
 </script>
 <script src="../card-audio.js?v=1"></script>
 </body>
