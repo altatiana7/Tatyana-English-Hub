@@ -1,0 +1,247 @@
+<!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Personality · Practice</title><style>
+*{box-sizing:border-box}[hidden]{display:none!important}
+:root{--navy:#0d3042;--ink:#17212b;--muted:#5d6975;--line:#d6dde2;--paper:#f4f0e8}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px Georgia,"Times New Roman",serif}
+.wrap{max-width:1180px;margin:auto;padding:8px 14px 10px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--navy);color:#fff;border-radius:12px;padding:6px 16px}
+.top b{font-size:20px}.top small{color:#e7c98f;font-weight:700;letter-spacing:.08em;font-size:13px}
+.tbtn{border:1px solid #ffffff66;background:transparent;color:#fff;border-radius:9px;padding:4px 12px;font:inherit;font-size:14px;cursor:pointer}
+.scr{display:none}.scr.on{display:block}
+.map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.map button{border:0;border-radius:16px;padding:16px 18px;min-height:128px;color:#fff;font:inherit;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between}
+.map button b{font-size:23px;line-height:1.15}.map button span{font-size:15px;opacity:.92}.map button i{font-style:normal;font-size:30px;font-weight:700;opacity:.55}
+.teach{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-size:15px;line-height:1.45}
+.bar{display:flex;align-items:center;gap:10px;margin:8px 0}
+.back{border:0;border-radius:9px;padding:6px 13px;background:var(--navy);color:#fff;font:inherit;font-size:15px;cursor:pointer}
+.bar h2{margin:0;font-size:21px;flex:1;color:var(--c)}
+.pchip{font-size:14px;color:var(--muted)}
+.card{background:#fff;border:1px solid var(--line);border-top:5px solid var(--c);border-radius:14px;padding:12px 16px}
+.pred{display:flex;gap:14px;align-items:center}
+.pred img{width:150px;height:100px;object-fit:cover;border-radius:10px;flex:none}
+.pred .pq{flex:1}.pred .pq p{margin:0 0 8px;font-size:20px;line-height:1.3}
+.pred .tag{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--c);margin-bottom:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--line);background:#f6f8f9;border-radius:10px;padding:9px 16px;font:inherit;font-size:19px;color:var(--navy);cursor:pointer}
+.chip.sel{background:var(--c);border-color:var(--c);color:#fff}
+.pline{display:none;font-size:15px;color:var(--muted)}
+.done .pred{display:none}.done .pline{display:block;margin-bottom:6px}
+.act{margin-top:10px}
+.cols{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:12px;align-items:start}
+.btn{border:0;border-radius:10px;padding:9px 16px;background:var(--navy);color:#fff;font:inherit;font-size:16px;cursor:pointer}
+.btn.alt{background:var(--c)}.btn:disabled{opacity:.35;cursor:default}
+.tabs{display:flex;gap:8px;margin-bottom:8px}.tabs .btn{background:#e6edf0;color:var(--navy)}.tabs .btn.on{background:var(--c);color:#fff}
+.note{font-size:14px;color:var(--muted)}
+.fl{width:100%;min-height:185px;border:2px solid #cfdae0;border-radius:14px;background:#f8fafb;padding:14px;text-align:center;font:inherit;color:var(--navy);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.fl strong{font-size:clamp(24px,3vw,34px);line-height:1.2}.fl p{margin:0;font-size:19px;line-height:1.35}.fl em{font-size:15px;color:var(--muted)}.fl small{font-size:12px;letter-spacing:.1em;color:var(--c);font-weight:700}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.qh{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.q{font-size:23px;line-height:1.35;margin:6px 0 10px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{border:2px solid #cfdae0;border-radius:12px;background:#f3f6f8;padding:12px 14px;font:inherit;font-size:20px;line-height:1.3;color:var(--navy);cursor:pointer;text-align:left}
+.opt.ok{background:#d8eddd;border-color:#4f9a66}.opt.bad{background:#f3dad6;border-color:#bb5a4d}.opt:disabled{cursor:default;opacity:1}
+.expl{min-height:24px;margin-top:8px;font-size:17px;line-height:1.4;color:#34444c}
+.tbar{flex:1;height:8px;background:#e5ebee;border-radius:5px;overflow:hidden}.tbar i{display:block;height:100%;width:100%;background:var(--c)}
+.score{font-size:28px;font-weight:700;color:var(--navy);margin:2px 0}
+.miss{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0;font-size:14.5px;line-height:1.3}
+.miss div{background:#f6f2ea;border-radius:8px;padding:6px 9px}
+.mt{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px}
+.mt button{border:2px solid #cfdae0;border-radius:10px;background:#f3f6f8;padding:9px 11px;font:inherit;font-size:18px;line-height:1.25;color:var(--navy);cursor:pointer;text-align:left;min-height:48px}
+.mt button.sel{border-color:var(--c);background:#e8eef7}.mt button.ok{background:#d8eddd;border-color:#4f9a66}.mt button.no{background:#f3dad6;border-color:#bb5a4d}
+.legend{font-size:15px;line-height:1.5;background:#f3f6f8;border-radius:10px;padding:8px 12px}.legend b{color:var(--navy)}
+.timer{font-size:32px;font-weight:700;color:var(--navy)}
+.chunks{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0}
+.chunk{border:2px solid #cfdae0;border-radius:10px;background:#f3f6f8;padding:6px 11px;font:inherit;font-size:16px;color:var(--navy);cursor:pointer}
+.built{min-height:48px;background:#f8fafb;border:2px dashed #c3d1d8;border-radius:12px;padding:8px 12px;font-size:18px;line-height:1.4}
+.prof{display:grid;grid-template-columns:150px repeat(3,1fr);gap:6px;align-items:center}
+.prof span{font-size:16px;color:var(--navy);font-weight:700}
+.prof button{border:2px solid #cfdae0;border-radius:10px;background:#f3f6f8;padding:7px;font:inherit;font-size:16px;color:var(--navy);cursor:pointer}.prof button.sel{background:var(--c);border-color:var(--c);color:#fff}
+.say{margin-top:8px;font-size:19px;line-height:1.4;background:#eef5ee;border-radius:12px;padding:10px 14px;min-height:50px}
+@media(max-height:620px){.fl{min-height:165px}.wrap{padding:6px 12px 8px}.top{padding:4px 14px}.top b{font-size:18px}.map{margin-top:8px;gap:8px}.map button{min-height:112px;padding:12px 16px}.bar{margin:5px 0}.card{padding:9px 14px}.pred img{width:128px;height:84px}.pred .pq p{font-size:18px;margin-bottom:6px}.q{font-size:22px;margin:4px 0 8px}.opt{padding:10px 12px;font-size:19px}.fl{padding:10px}.expl{margin-top:5px;font-size:15px}.act{margin-top:7px}.timer{font-size:28px}.score{font-size:24px}.miss{font-size:13.5px}}
+@media(max-width:760px){.map{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr}.opts{grid-template-columns:1fr}.pred img{display:none}}
+</style></head><body><main class="wrap">
+
+<header class="top"><div><small>NIKITA · B2 · PRACTICE LESSON</small><br><b>Personality: close the topic</b></div><button class="tbtn" id="tbtn">For the teacher</button></header>
+<div class="teach" id="teach" hidden><b>Plan (60 min):</b> 1 Warm-up speaking 8 · 2 Words 10 · 3 Speed Game 8 · 4 Phrasal verbs 12 · 5 Tenses 12 · 6 Profile, speaking, topic check 10. Each block starts with a prediction; photos are optional (put media/p1.jpg … p6.jpg next to this page). Words come from the two videos (Big Five island story, Dark Triad). Aim: Nikita talks and chooses, the teacher does not type.</div>
+
+<section id="map" class="scr on"><div class="map" id="mapgrid"></div></section>
+
+<section id="b1" class="scr" style="--c:#2f6f9f"><div class="bar"><button class="back">← Map</button><h2>1 · Warm-up · speak</h2></div><div class="card"><div class="pline" id="l1"></div><div class="pred" id="p1"></div></div>
+<div class="act" id="a1" hidden><div class="cols"><div class="card"><div class="note" id="c1n"></div><button class="fl" id="c1"></button><div class="row" style="justify-content:center"><button class="btn" id="c1p">←</button><button class="btn" id="c1x">→</button></div></div>
+<div class="card"><div class="row" style="margin:0"><span class="timer" id="tm1">1:00</span><button class="btn alt" id="ts1">Start</button><button class="btn" id="tr1">Reset</button></div><div class="chunks" id="ch1"></div><div class="built" id="bt1"></div><div class="row"><button class="btn" id="bc1">Clear</button><span class="note">Tap chunks as you speak.</span></div></div></div></div></section>
+
+<section id="b2" class="scr" style="--c:#17807a"><div class="bar"><button class="back">← Map</button><h2>2 · Words from the videos</h2></div><div class="card"><div class="pline" id="l2"></div><div class="pred" id="p2"></div></div>
+<div class="act" id="a2" hidden><div class="cols"><div class="card"><div class="note" id="c2n"></div><button class="fl" id="c2"></button><div class="row" style="justify-content:center"><button class="btn" id="c2p">←</button><button class="btn" id="c2x">→</button></div></div>
+<div class="card"><div class="qh"><span class="note">Match the word and the meaning</span><span class="note" id="m2n"></span></div><div id="m2"></div></div></div></div></section>
+
+<section id="b3" class="scr" style="--c:#c75b44"><div class="bar"><button class="back">← Map</button><h2>3 · Speed Game · who is it?</h2></div><div class="card"><div class="pline" id="l3"></div><div class="pred" id="p3"></div></div>
+<div class="act" id="a3" hidden><div class="cols" style="grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr)"><div class="card" id="q3"></div><div class="card legend"><b>Big Five</b><br>O open · C conscientious · E extravert · A agreeable · N neurotic<br><b>Dark Triad</b><br>narcissist · psychopath · Machiavellian<br><span class="note">15 seconds for each answer.</span></div></div></div></section>
+
+<section id="b4" class="scr" style="--c:#b9832a"><div class="bar"><button class="back">← Map</button><h2>4 · Phrasal verbs about people</h2></div><div class="card"><div class="pline" id="l4"></div><div class="pred" id="p4"></div></div>
+<div class="act" id="a4" hidden><div class="cols"><div class="card"><div class="note" id="c4n"></div><button class="fl" id="c4"></button><div class="row" style="justify-content:center"><button class="btn" id="c4p">←</button><button class="btn" id="c4x">→</button></div></div><div class="card" id="q4"></div></div></div></section>
+
+<section id="b5" class="scr" style="--c:#6b5ba6"><div class="bar"><button class="back">← Map</button><h2>5 · All the tenses together</h2></div><div class="card"><div class="pline" id="l5"></div><div class="pred" id="p5"></div></div>
+<div class="act" id="a5" hidden><div class="card"><div class="tabs"><button class="btn on" data-t="q5">Choose the form</button><button class="btn" data-t="q5b">Error hunter</button></div><div id="q5" class="pane"></div><div id="q5b" class="pane" hidden></div></div></div></section>
+
+<section id="b6" class="scr" style="--c:#468a58"><div class="bar"><button class="back">← Map</button><h2>6 · Close the topic</h2></div><div class="card"><div class="pline" id="l6"></div><div class="pred" id="p6"></div></div>
+<div class="act" id="a6" hidden><div class="card"><div class="tabs"><button class="btn on" data-t="x1">Your profile</button><button class="btn" data-t="x2">Speak · 90 s</button><button class="btn" data-t="x3">Topic check</button></div>
+<div id="x1" class="pane"><div class="prof" id="prof"></div><div class="say" id="say">Tap High, Medium or Low for each trait.</div></div>
+<div id="x2" class="pane" hidden><p class="q" style="margin-top:0">Describe a leader, boss or public figure you know. Which traits do they show? Is it fair to label people?</p><div class="row" style="margin:0"><span class="timer" id="tm6">1:30</span><button class="btn alt" id="ts6">Start</button><button class="btn" id="tr6">Reset</button></div><div class="chunks" id="ch6"></div><div class="built" id="bt6"></div><div class="row"><button class="btn" id="bc6">Clear</button></div></div>
+<div id="x3" class="pane" hidden></div></div></div></section>
+
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const sh=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const BL=[['b1','Warm-up','Speak · cards and timer','#2f6f9f'],['b2','Words','Cards and matching','#17807a'],['b3','Speed Game','Who is it? 15 seconds','#c75b44'],['b4','Phrasal verbs','Cards and gaps','#b9832a'],['b5','Tenses','Form and error hunter','#6b5ba6'],['b6','Close the topic','Profile · speak · check','#468a58']];
+$('mapgrid').innerHTML=BL.map((b,i)=>'<button data-go="'+b[0]+'" style="background:'+b[3]+'"><i>'+(i+1)+'</i><div><b>'+b[1]+'</b><br><span>'+b[2]+'</span></div></button>').join('');
+function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id===id));window.scrollTo(0,0);}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
+document.querySelectorAll('.back').forEach(b=>b.onclick=()=>show('map'));
+$('tbtn').onclick=()=>{$('teach').hidden=!$('teach').hidden;};
+document.querySelectorAll('.tabs').forEach(t=>t.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{t.querySelectorAll('[data-t]').forEach(x=>x.classList.toggle('on',x===b));t.parentElement.querySelectorAll('.pane').forEach(p=>p.hidden=p.id!==b.dataset.t);}));
+
+/* prediction before each activity */
+const PR=[
+['What does this person need most for the job?',['Charm','Discipline','Curiosity']],
+['How does this person come across?',['cold','friendly','nervous']],
+['Which trait is hardest to spot in five seconds?',['openness','neuroticism','agreeableness']],
+['How does the colleague on the right feel?',['impressed','annoyed','bored']],
+['What has changed most about this person?',['looks','character','job']],
+['Can we judge character from a face?',['yes','partly','no']]];
+PR.forEach((p,i)=>{const n=i+1,box=$('p'+n);
+ box.innerHTML='<img src="media/p'+n+'.jpg" alt="" onerror="this.remove()"><div class="pq"><div class="tag">PREDICT FIRST</div><p>'+p[0]+'</p><div class="chips">'+p[1].map(o=>'<button class="chip">'+o+'</button>').join('')+'</div></div>';
+ box.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{box.querySelectorAll('.chip').forEach(x=>x.classList.toggle('sel',x===c));$('l'+n).textContent='Your prediction: '+c.textContent+' · keep it in mind, we check it later.';$('b'+n).classList.add('done');$('a'+n).hidden=false;});
+});
+
+/* quizlet-style card */
+function Cards(btn,count,prev,next,data,render){let i=0,b=false;
+ function r(){count.textContent=(i+1)+' / '+data.length+' · tap the card to turn it';btn.innerHTML=render(data[i],b);}
+ btn.onclick=()=>{b=!b;r();};prev.onclick=()=>{i=(i+data.length-1)%data.length;b=false;r();};next.onclick=()=>{i=(i+1)%data.length;b=false;r();};r();}
+
+/* quiz engine: one question at a time */
+function Quiz(root,items,opt){opt=opt||{};let i=0,score=0,locked=false,order=sh(items),disp=[],tid=null,miss=[];
+ function stop(){if(tid){clearInterval(tid);tid=null;}}
+ function render(){stop();
+  if(i>=order.length){const total=order.length;root.innerHTML='<p class="score">'+score+' / '+total+'</p><p class="note" style="font-size:16px">'+(score===total?'All correct.':'Check these, then play again:')+'</p><div class="miss">'+miss.slice(0,6).map(m=>'<div>'+m+'</div>').join('')+'</div><button class="btn alt" id="qa">Play again</button>';root.querySelector('#qa').onclick=()=>{i=0;score=0;miss=[];order=sh(items);render();};return;}
+  const it=order[i];locked=false;disp=sh(it.o.map((o,k)=>({o:o,k:k})));
+  root.innerHTML='<div class="qh"><span class="note">'+(i+1)+' / '+order.length+'</span>'+(opt.timer?'<span class="tbar"><i id="tb"></i></span>':'')+'<span class="note">score '+score+'</span></div><p class="q">'+it.q+'</p><div class="opts">'+disp.map((d,k)=>'<button class="opt" data-k="'+k+'">'+d.o+'</button>').join('')+'</div><div class="expl"></div><div class="row"><button class="btn alt" id="nx" disabled>'+(i===order.length-1?'See result':'Next')+'</button></div>';
+  const btns=[].slice.call(root.querySelectorAll('.opt'));
+  function fin(pick){if(locked)return;locked=true;stop();const ok=pick!==null&&disp[pick].k===it.a;if(ok)score++;else miss.push(opt.missE?it.e:it.q.replace(/<[^>]+>/g,'')+' → <b>'+it.o[it.a]+'</b>');
+   btns.forEach((x,k)=>{x.disabled=true;if(disp[k].k===it.a)x.classList.add('ok');else if(k===pick)x.classList.add('bad');});
+   root.querySelector('.expl').textContent=(pick===null?'Time. ':ok?'Correct. ':'Not quite. ')+(it.e||'');
+   const nx=root.querySelector('#nx');nx.disabled=false;nx.onclick=()=>{i++;render();};}
+  btns.forEach((x,k)=>x.onclick=()=>fin(k));
+  if(opt.timer){const t0=Date.now(),bar=root.querySelector('#tb');tid=setInterval(()=>{const f=1-(Date.now()-t0)/(opt.timer*1000);bar.style.width=Math.max(0,f*100)+'%';if(f<=0)fin(null);},100);}
+ }
+ render();}
+
+/* matching: rounds of four */
+function Match(root,label,pairs){let rd=0,mist=0,selL=null,selR=null,done=0;const per=4;
+ function render(){const total=Math.ceil(pairs.length/per);
+  if(rd>=total){root.innerHTML='<p class="score">'+(pairs.length-Math.min(mist,pairs.length))+' / '+pairs.length+'</p><p class="note" style="font-size:16px">First-try matches. Mistakes: '+mist+'.</p><button class="btn alt" id="ma">Play again</button>';label.textContent='';root.querySelector('#ma').onclick=()=>{rd=0;mist=0;render();};return;}
+  const set=pairs.slice(rd*per,rd*per+per);done=0;selL=selR=null;label.textContent='round '+(rd+1)+' / '+total;
+  const L=sh(set.map((p,k)=>({t:p[0],k:k}))),R=sh(set.map((p,k)=>({t:p[1],k:k})));
+  root.innerHTML='<div class="mt"><div style="display:grid;gap:8px">'+L.map(l=>'<button data-s="l" data-k="'+l.k+'">'+l.t+'</button>').join('')+'</div><div style="display:grid;gap:8px">'+R.map(r=>'<button data-s="r" data-k="'+r.k+'">'+r.t+'</button>').join('')+'</div></div><div class="row"><button class="btn alt" id="mn" hidden>'+(rd===total-1?'See result':'Next round')+'</button></div>';
+  root.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>{if(b.classList.contains('ok'))return;
+   if(b.dataset.s==='l'){root.querySelectorAll('[data-s=l]').forEach(x=>x.classList.remove('sel'));selL=b;b.classList.add('sel');}else{root.querySelectorAll('[data-s=r]').forEach(x=>x.classList.remove('sel'));selR=b;b.classList.add('sel');}
+   if(selL&&selR){if(selL.dataset.k===selR.dataset.k){[selL,selR].forEach(x=>{x.classList.remove('sel');x.classList.add('ok');});done++;selL=selR=null;if(done===set.length)root.querySelector('#mn').hidden=false;}
+    else{mist++;const a=selL,c=selR;[a,c].forEach(x=>{x.classList.remove('sel');x.classList.add('no');});selL=selR=null;setTimeout(()=>[a,c].forEach(x=>x.classList.remove('no')),500);}}});
+  root.querySelector('#mn').onclick=()=>{rd++;render();};}
+ render();}
+
+/* timer */
+function Timer(disp,start,reset,sec){let t=sec,id=null;
+ const f=()=>{disp.textContent=Math.floor(t/60)+':'+String(t%60).padStart(2,'0');};
+ start.onclick=()=>{if(id){clearInterval(id);id=null;start.textContent='Start';return;}if(t<=0)t=sec;start.textContent='Pause';id=setInterval(()=>{t--;f();if(t<=0){clearInterval(id);id=null;start.textContent='Start';disp.textContent='Time';}},1000);};
+ reset.onclick=()=>{clearInterval(id);id=null;t=sec;start.textContent='Start';f();};f();}
+function Chunks(box,out,clr,list){list.forEach(c=>{const b=document.createElement('button');b.className='chunk';b.textContent=c;b.onclick=()=>{out.textContent+=(out.textContent?' ':'')+c;};box.appendChild(b);});clr.onclick=()=>{out.textContent='';};}
+
+/* 1 warm-up */
+const WQ=[['How would you describe your own personality in three words?','I’d say I’m… , …and… because…'],['Which Big Five trait is the most useful in your job?','For a lawyer, …matters most because…'],['Would you hire a charming but unreliable person?','It depends on… I’d rather…'],['Can personality change over time?','I tend to think… For example, …'],['Do opposites attract, or do we like people similar to us?','On the one hand… on the other hand…'],['Which is worse in a colleague: arrogance or laziness?','For me, …is worse, because…'],['Is it fair to put people into personality types?','Types can be useful, but…'],['Who is the most agreeable person you know?','She/He always… and never…'],['How do you come across when you meet someone for the first time?','I think I come across as…'],['Do leaders need a touch of narcissism?','Up to a point, yes, because…'],['What do you do when a colleague lets you down?','First of all, I… then I…'],['Which island character would you be, and why?','I’d be… because I’m quite…']];
+Cards($('c1'),$('c1n'),$('c1p'),$('c1x'),WQ,(c,b)=>b?'<small>USEFUL LANGUAGE</small><p>'+c[1]+'</p>':'<small>SPEAK</small><strong>'+c[0]+'</strong>');
+Timer($('tm1'),$('ts1'),$('tr1'),60);
+Chunks($('ch1'),$('bt1'),$('bc1'),['I’d say that','It depends on','For example,','On the one hand,','On the other hand,','I tend to','As far as I’m concerned,','What I mean is','Up to a point']);
+
+/* 2 words */
+const W=[['extravert','outgoing; gets energy from other people','экстраверт','Emile is an extravert: he gathers everyone to celebrate.'],['conscientious','careful and organised; does tasks properly','добросовестный','Claire is conscientious: she organises the water and food.'],['agreeable','friendly and cooperative; cares about others','доброжелательный','Albert is agreeable: he shares his coconut with Nora.'],['neurotic','easily stressed and worried','тревожный, неуравновешенный','Nora is neurotic: the island looks dangerous to her.'],['emotionally stable','calm and relaxed under pressure','эмоционально устойчивый','The first pirate is emotionally stable and relaxed.'],['open to new experiences','curious and interested in new ideas','открытый новому','Odelia is open: she wants to explore the island.'],['narcissist','a person who needs admiration and feels special','нарцисс','A narcissist wants nothing more than admiration.'],['psychopath','a person who feels no fear or remorse','психопат','Psychopaths come across as cold.'],['Machiavellian','a person who manipulates others to control them','макиавеллист','A Machiavellian prefers to be feared than liked.'],['remorse','a deep guilty feeling after doing wrong','раскаяние','He showed no remorse at all.'],['impulsive','acting without thinking first','импульсивный','Impulsive people act first and think later.'],['entitlement','the belief that you deserve special treatment','чувство превосходства, «мне все должны»','Narcissists often show grandiosity and entitlement.']];
+Cards($('c2'),$('c2n'),$('c2p'),$('c2x'),W,(c,b)=>b?'<small>MEANING · RUSSIAN</small><p>'+c[1]+'</p><strong style="font-size:21px">'+c[2]+'</strong><em>'+c[3]+'</em>':'<small>WORD</small><strong>'+c[0]+'</strong>');
+Match($('m2'),$('m2n'),W.map(w=>[w[0],w[1]]));
+
+/* 3 speed game */
+Quiz($('q3'),[
+{q:'“She plans everything and starts the crucial tasks right away.”',o:['open','conscientious','agreeable','neurotic'],a:1,e:'Conscientious: organised and prepared.'},
+{q:'“He needs everyone around him to celebrate.”',o:['extravert','emotionally stable','psychopath','agreeable'],a:0,e:'Extravert: gets energy from other people.'},
+{q:'“He offers his coconut to a worried friend.”',o:['narcissist','agreeable','extravert','open'],a:1,e:'Agreeable: he thinks of others first.'},
+{q:'“One small problem and she has a total breakdown.”',o:['neurotic','conscientious','Machiavellian','open'],a:0,e:'Neurotic: easily stressed.'},
+{q:'“She can’t wait to explore the island and decorate the hut.”',o:['open','psychopath','agreeable','emotionally stable'],a:0,e:'Open to new experiences.'},
+{q:'“I’d rather be feared than liked.”',o:['narcissist','Machiavellian','agreeable','psychopath'],a:1,e:'Machiavellian: controls others by manipulation.'},
+{q:'“I want nothing more than admiration.”',o:['narcissist','conscientious','neurotic','extravert'],a:0,e:'Narcissist: wants admiration.'},
+{q:'“I feel no remorse, and I love the thrill.”',o:['psychopath','agreeable','Machiavellian','open'],a:0,e:'Psychopath: cold, no remorse, loves thrills.'},
+{q:'“Relax, we could help them.”',o:['neurotic','emotionally stable','narcissist','Machiavellian'],a:1,e:'Emotionally stable and relaxed.'},
+{q:'“He calmly plans how to use other people.”',o:['agreeable','Machiavellian','extravert','open'],a:1,e:'Machiavellian: manipulation.'},
+{q:'“She stays calm even when the ship is in danger.”',o:['emotionally stable','neurotic','narcissist','conscientious'],a:0,e:'Emotionally stable: calm under pressure.'},
+{q:'“He acts first, thinks later, and feels no fear.”',o:['psychopath','conscientious','agreeable','neurotic'],a:0,e:'Psychopath: impulsive and fearless.'}],{timer:15});
+
+/* 4 phrasal verbs */
+const PV=[['get along with','have a good relationship with','ладить с','Albert gets along with everybody.'],['take after','be similar to an older relative','пойти в (кого-то)','She takes after her mother.'],['look up to','admire and respect','восхищаться, уважать','I look up to my first boss.'],['look down on','think you are better than','смотреть свысока','Don’t look down on people.'],['show off','try to impress people','выпендриваться','He loves to show off.'],['open up','start to talk about your feelings','открыться','She finally opened up to me.'],['come across as','seem to other people to be','производить впечатление','He comes across as arrogant.'],['stand out','be easy to notice','выделяться','She really stands out.'],['let down','disappoint','подвести','I’m sorry I let you down.'],['fall out with','stop being friends after an argument','поссориться с','They fell out over money.'],['put up with','accept something annoying','мириться с','I can’t put up with rude jokes.'],['bring out','make a quality appear','раскрывать (качество)','Good teachers bring out the best in you.']];
+Cards($('c4'),$('c4n'),$('c4p'),$('c4x'),PV,(c,b)=>b?'<small>MEANING · RUSSIAN</small><p>'+c[1]+'</p><strong style="font-size:21px">'+c[2]+'</strong><em>'+c[3]+'</em>':'<small>PHRASAL VERB</small><strong>'+c[0]+'</strong>');
+Quiz($('q4'),[
+{q:'She’s so kind that she ___ everybody.',o:['gets along with','takes after','puts up with'],a:0,e:'Get along with: have a good relationship with.'},
+{q:'He has his father’s temper. He really ___ his dad.',o:['takes after','looks down on','lets down'],a:0,e:'Take after: be similar to an older relative.'},
+{q:'I ___ my grandmother. She raised three children alone.',o:['look up to','show off','fall out with'],a:0,e:'Look up to: admire and respect.'},
+{q:'Don’t ___ people who didn’t go to university.',o:['look down on','look up to','open up to'],a:0,e:'Look down on: think you are better than someone.'},
+{q:'He kept talking about his salary. He just wanted to ___.',o:['show off','stand out','bring out'],a:0,e:'Show off: try to impress people.'},
+{q:'It took months before she ___ to me about her fears.',o:['opened up','came across','fell out'],a:0,e:'Open up: talk about your feelings.'},
+{q:'In meetings he ___ arrogant, but he’s actually shy.',o:['comes across as','takes after','gets along with'],a:0,e:'Come across as: seem to other people to be.'},
+{q:'In that bright red suit, she really ___ in the crowd.',o:['stands out','puts up','lets down'],a:0,e:'Stand out: be easy to notice.'},
+{q:'I’m sorry I ___ you. I promised to come.',o:['let down','looked up to','brought out'],a:0,e:'Let down: disappoint.'},
+{q:'They ___ about money and haven’t spoken since.',o:['fell out','opened up','showed off'],a:0,e:'Fall out: stop being friends after an argument.'},
+{q:'I can’t ___ his rude jokes any longer.',o:['put up with','look up to','take after'],a:0,e:'Put up with: accept something annoying.'},
+{q:'Good teachers ___ the best in their students.',o:['bring out','let down','look down on'],a:0,e:'Bring out: make a quality appear.'}]);
+
+/* 5 tenses */
+Quiz($('q5'),[
+{q:'Odelia ___ the hut for two hours when Claire arrived.',o:['was decorating','had been decorating','has decorated'],a:1,e:'Past perfect continuous: an activity before another past moment.'},
+{q:'Psychologists ___ the Big Five model since the 1980s.',o:['used','have used','are using'],a:1,e:'Present perfect with since.'},
+{q:'At the moment Nora ___ a breakdown on the beach.',o:['is having','has','had'],a:0,e:'Present continuous: happening now.'},
+{q:'If Albert hadn’t shared his coconut, Nora ___ thirsty.',o:['would be','would have been','will be'],a:1,e:'Third conditional: an unreal past.'},
+{q:'By next month the team ___ the study of 2,000 people.',o:['will have finished','finishes','is finishing'],a:0,e:'Future perfect: done before a future moment.'},
+{q:'I ___ him for years, but I’ve never seen him lose his temper.',o:['know','have known','was knowing'],a:1,e:'Present perfect with a state verb.'},
+{q:'When the pirates arrived, the friends ___ already ___ the fire.',o:['had lit','have lit','were lighting'],a:0,e:'Past perfect: before the pirates arrived.'},
+{q:'Look at her! She ___ a lot recently.',o:['changed','has changed','was changing'],a:1,e:'Present perfect: a result we can see now.'},
+{q:'Yesterday, while I ___ the article, my colleague called.',o:['was reading','read','have read'],a:0,e:'Past continuous: the action in progress.'},
+{q:'He ___ be arrogant, but now he’s much humbler.',o:['used to','is used to','would to'],a:0,e:'Used to: a past state that has changed.'},
+{q:'If I ___ more open, I would have taken that job abroad.',o:['were','had been','would be'],a:1,e:'Third conditional: if + past perfect.'},
+{q:'This time next year I ___ a new team.',o:['will be leading','lead','have led'],a:0,e:'Future continuous: in progress at that time.'}]);
+Quiz($('q5b'),[
+{q:'Tap the sentence with a mistake.',o:['She has worked here since 2019.','I am knowing him very well.','They have just left.'],a:1,e:'“Know” is a state verb: I know him very well.'},
+{q:'Tap the sentence with a mistake.',o:['He didn’t has any remorse.','She didn’t show any remorse.','I don’t feel any remorse.'],a:0,e:'After didn’t, use the base form: didn’t have.'},
+{q:'Tap the sentence with a mistake.',o:['While he was talking, I fell asleep.','I have met him yesterday.','She had left before I arrived.'],a:1,e:'With yesterday use the past simple: I met him yesterday.'},
+{q:'Tap the sentence with a mistake.',o:['She said she would call.','He told me he is tired yesterday.','They asked if I was ready.'],a:1,e:'Reported past: he told me he was tired.'},
+{q:'Tap the sentence with a mistake.',o:['If he had known, he would have helped.','If she will come, call me.','If I were richer, I’d travel.'],a:1,e:'After if use the present: If she comes, call me.'},
+{q:'Tap the sentence with a mistake.',o:['I’ve been waiting for two hours.','She has been knowing him for years.','We’ve been friends since school.'],a:1,e:'State verb: She has known him for years.'},
+{q:'Tap the sentence with a mistake.',o:['By the time I arrived, they had left.','I’ll call you when I will arrive.','She’ll be sleeping at ten.'],a:1,e:'After when (future) use the present: when I arrive.'},
+{q:'Tap the sentence with a mistake.',o:['He used to be shy.','She is used to work long hours.','I’m used to the noise.'],a:1,e:'Be used to + -ing: used to working.'},
+{q:'Tap the sentence with a mistake.',o:['He suggested to go home.','She enjoys working alone.','I’m thinking of changing jobs.'],a:0,e:'Suggest + -ing: suggested going home.'},
+{q:'Tap the sentence with a mistake.',o:['He’s the most reliable person I’ve ever met.','She is more calmer than her sister.','It’s the best advice I’ve been given.'],a:1,e:'Use either more calm or calmer, not both.'}],{missE:true});
+
+/* 6 close the topic */
+const TR=[['Open to new things','curious and open to new ideas','practical and traditional'],['Organised','organised and reliable','spontaneous and flexible'],['Outgoing','outgoing and energetic','reserved and quiet'],['Friendly','friendly and cooperative','direct and competitive'],['Stressed easily','easily stressed','calm under pressure']];
+const pv={};
+function say(){const p=[];TR.forEach((t,i)=>{if(pv[i]==='High')p.push(t[1]);else if(pv[i]==='Low')p.push(t[2]);});$('say').textContent=p.length?'I come across as '+p.join(', ')+'. Is that how others see you?':'Tap High, Medium or Low for each trait.';}
+$('prof').innerHTML=TR.map((t,i)=>'<span>'+t[0]+'</span>'+['High','Medium','Low'].map(v=>'<button data-i="'+i+'" data-v="'+v+'">'+v+'</button>').join('')).join('');
+$('prof').querySelectorAll('button').forEach(b=>b.onclick=()=>{pv[b.dataset.i]=b.dataset.v;$('prof').querySelectorAll('button[data-i="'+b.dataset.i+'"]').forEach(x=>x.classList.toggle('sel',x===b));say();});
+Timer($('tm6'),$('ts6'),$('tr6'),90);
+Chunks($('ch6'),$('bt6'),$('bc6'),['The person I have in mind is','He/She comes across as','What stands out is','He/She must have','He/She tends to','I look up to','I can’t put up with','Labels can be unfair because','It might be that']);
+Quiz($('x3'),[
+{q:'acting without thinking first',o:['impulsive','conscientious','agreeable'],a:0,e:'Impulsive.'},
+{q:'a deep guilty feeling after doing wrong',o:['entitlement','remorse','grandiosity'],a:1,e:'Remorse.'},
+{q:'calm and relaxed under pressure',o:['emotionally stable','neurotic','extravert'],a:0,e:'Emotionally stable.'},
+{q:'a person who needs admiration and feels special',o:['psychopath','narcissist','Machiavellian'],a:1,e:'Narcissist.'},
+{q:'easily stressed and worried',o:['open','agreeable','neurotic'],a:2,e:'Neurotic.'},
+{q:'careful and well organised',o:['conscientious','impulsive','reserved'],a:0,e:'Conscientious.'},
+{q:'outgoing; gets energy from other people',o:['extravert','agreeable','open'],a:0,e:'Extravert.'},
+{q:'a person who manipulates others to control them',o:['narcissist','Machiavellian','psychopath'],a:1,e:'Machiavellian.'},
+{q:'to try to impress people',o:['stand out','show off','bring out'],a:1,e:'Show off.'},
+{q:'to seem to other people to be',o:['come across as','take after','open up'],a:0,e:'Come across as.'}]);
+</script></body></html>
