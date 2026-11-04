@@ -23,7 +23,7 @@ function hush(){try{speechSynthesis.cancel()}catch(e){}if(CLIP){try{CLIP.pause()
 function playClip(src,text){hush();if(!src)return say([['q',text]]);const el=new Audio(src);CLIP=el;let fell=false;const fb=()=>{if(fell||CLIP!==el)return;fell=true;CLIP=null;say([['q',text]])};el.addEventListener('error',fb);const p=el.play();if(p&&p.catch)p.catch(fb)}
 
 /* ---------- shell ---------- */
-function boot(cfg){CFG=cfg;EMBED=new URLSearchParams(location.search).has('embed');document.documentElement.classList.toggle('embed',EMBED);document.documentElement.classList.toggle('once',!!cfg.once);
+function boot(cfg){CFG=cfg;EMBED=new URLSearchParams(location.search).has('embed');document.documentElement.classList.toggle('embed',EMBED);document.documentElement.classList.toggle('once',!!cfg.once);if(cfg.once){const st=document.createElement('style');st.textContent='[data-again],[data-fagain]{display:none!important}';document.head.appendChild(st)}
  document.body.innerHTML=`<div class="bar"><a class="home" href="${esc(cfg.hub||'index.html')}" aria-label="Back to Gabi Hub">←<span>&nbsp;Hub</span></a>
   <div class="now"><small id="stage"></small><b id="title"></b></div><div class="steps" id="steps" role="tablist" aria-label="Lesson steps"></div>
   <button class="arrow" id="prev" aria-label="Previous step">‹</button><button class="arrow next" id="next"></button></div>
