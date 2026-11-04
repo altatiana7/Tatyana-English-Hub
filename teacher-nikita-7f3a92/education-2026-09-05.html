@@ -42,5 +42,6 @@ function next(){i=(i+1)%cards.length;render()}
 function speak(){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(cards[i][0]);u.lang='en-GB';const vs=speechSynthesis.getVoices();u.voice=vs.find(v=>v.lang==='en-GB')||vs.find(v=>v.lang.startsWith('en'))||null;speechSynthesis.speak(u)}
 speechSynthesis.onvoiceschanged=()=>{};render();
 </script>
+<script src="../shared/page-label.js?v=20261104"></script>
 </body>
 </html>

@@ -80,5 +80,6 @@ function phase(i){const n=i+1;return n<=4?1:n<=12?2:n<=26?3:4}
 function render(f='all'){document.getElementById('weeks').innerHTML=weeks.map((w,i)=>{const p=phase(i);if(f!=='all'&&Number(f)!==p)return '';return `<article class="week"><div class="week-head"><div><div class="label">Неделя ${i+1}</div><h3>${w[0]}</h3><p>${w[1]}</p></div><span class="status ${p===4?'red':p===3?'green':''}">${['','диагностика','база','высокий балл','пробники'][p]}</span></div><details><summary>Уроки, домашнее и KPI</summary><ul><li><b>Урок А:</b> ${w[0]}</li><li><b>Урок Б:</b> ${w[1]}</li><li><b>Домашняя работа:</b> ${w[2]}</li><li><b>KPI недели:</b> ошибка записана в error log, повторена в новом контексте и проверена timed task.</li></ul></details></article>`}).join('')}
 render();document.addEventListener('click',e=>{const n=e.target.closest('[data-go]');if(n){document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===n.dataset.go));document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b===n));history.replaceState(null,'','#'+n.dataset.go);scrollTo(0,0)}const f=e.target.closest('[data-filter]');if(f){document.querySelectorAll('.filter').forEach(b=>b.classList.toggle('active',b===f));render(f.dataset.filter)}});})();
 </script>
+<script src="../shared/page-label.js?v=20261104"></script>
 </body>
 </html>

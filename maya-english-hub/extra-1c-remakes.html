@@ -89,4 +89,5 @@ function render(){const a=sets[set];i=(i+a.length)%a.length;front.textContent=a[
 flash.onclick=()=>flash.classList.toggle('flipped');document.getElementById('prev').onclick=()=>{i--;render()};document.getElementById('next').onclick=()=>{i++;render()};
 document.querySelectorAll('[data-set]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-set]').forEach(x=>x.classList.toggle('active',x===b));set=b.dataset.set;i=0;render()});
 document.getElementById('audio').onclick=()=>{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(sets[set][i][0]);u.lang='en-GB';u.rate=.88;speechSynthesis.speak(u)};render();
-</script></body></html>
+</script><script src="../shared/page-label.js?v=20261104"></script>
+</body></html>

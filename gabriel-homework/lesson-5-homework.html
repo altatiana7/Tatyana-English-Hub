@@ -111,4 +111,5 @@ function makeShortCode5(){
 makeCode5.addEventListener('click',()=>{const done=state.flat().filter(x=>x.done).length+wfState.filter(x=>x.done).length;if(done!==54){reportStatus.textContent='Complete all 54 questions before creating the homework code.';return}const code=makeShortCode5();submissionCode5.textContent=code;codeWrap5.hidden=false;reportStatus.textContent='Short homework code created. Send it to your teacher.'});
 copyCode5.addEventListener('click',async()=>{const code=submissionCode5.textContent;if(!code)return;try{await navigator.clipboard.writeText(code);copyCode5.textContent='Copied ✓'}catch(e){window.prompt('Copy this code:',code)}});
 loadProgress();for(let n=0;n<3;n++)mountTask(n);mountWordFormation();renderCard();updateReport();
-</script></body></html>
+</script><script src="../shared/page-label.js?v=20261104"></script>
+</body></html>

@@ -84,4 +84,5 @@ document.getElementById('shuffle').onclick=()=>{cards=[...cards].sort(()=>Math.r
 wordList.onclick=e=>{const x=e.target.closest('[data-i]');if(!x)return;i=+x.dataset.i;flipped=false;render()};
 document.querySelectorAll('[data-deck]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-deck]').forEach(x=>x.classList.toggle('active',x===b));deckName=b.dataset.deck;cards=[...decks[deckName]];i=0;flipped=false;render()});
 render();
-</script></body></html>
+</script><script src="../shared/page-label.js?v=20261104"></script>
+</body></html>

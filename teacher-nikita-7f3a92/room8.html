@@ -469,5 +469,6 @@ function prevFlash(e){e.stopPropagation();fi=(fi-1+flashData.length)%flashData.l
 function speakFlash(e){e.stopPropagation();if('speechSynthesis' in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(flashData[fi].f);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}
 renderFlash();
 </script>
+<script src="../shared/page-label.js?v=20261104"></script>
 </body>
 </html>

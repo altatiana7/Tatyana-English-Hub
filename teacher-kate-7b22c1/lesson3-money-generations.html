@@ -1011,5 +1011,6 @@ function closeZoom(){const l=document.querySelector('.lightbox');if(l)l.remove()
 document.querySelectorAll('img.zoomable').forEach(img=>{img.tabIndex=0;img.setAttribute('role','button');const open=()=>{closeZoom();const l=document.createElement('div');l.className='lightbox';l.innerHTML='<button type="button">CLOSE ✕</button>';const big=new Image();big.src=img.src;big.alt=img.alt;l.prepend(big);l.onclick=closeZoom;document.body.appendChild(l);l.querySelector('button').focus()};img.onclick=open;img.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.querySelector('.lightbox')){e.stopImmediatePropagation();closeZoom()}},true);
 </script>
+<script src="../shared/page-label.js?v=20261104"></script>
 </body>
 </html>

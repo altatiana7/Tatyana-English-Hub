@@ -64,5 +64,6 @@ $('#relList').innerHTML=rel.map((x,i)=>`<div class="question"><p>${i+1}. ${x[0]}
 bind();wordCount();
 document.addEventListener('click',e=>{const b=e.target.closest('.btnCheck');if(!b)return;let scope=b.dataset.scope,els=[];if(scope==='l3')els=$$('#l3 [data-answer]');if(scope==='grammar')els=$$('#grammarList [data-answer]');if(scope==='wf')els=$$('#wfList [data-answer]');if(scope==='rel')els=$$('#relList [data-answer]');let ok=0;els.forEach(el=>{const good=(el.value||'').trim().toLowerCase()===(el.dataset.answer||'').trim().toLowerCase();if(good)ok++;el.style.borderColor=good?'#257567':'#b94646'});const res=$('#res-'+scope);res.classList.add('show');res.innerHTML=`<b>${ok}/${els.length}</b> правильных. Исправь ошибки и запиши их в Error Log.`;});})();
 </script>
+<script src="../shared/page-label.js?v=20261104"></script>
 </body>
 </html>

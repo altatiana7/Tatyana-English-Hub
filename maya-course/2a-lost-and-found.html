@@ -405,5 +405,6 @@ $('#teacherBtn').onclick=()=>$('#drawer').classList.toggle('on');
 document.addEventListener('click',e=>{if(!e.target.closest('#drawer')&&e.target.id!=='teacherBtn')$('#drawer').classList.remove('on')});
 document.addEventListener('keydown',e=>{const q=cur===1?QZ.qzHotel:cur===2?QZ.qzTravel:null;if(!q)return;if(e.key==='ArrowRight')q.step(1);else if(e.key==='ArrowLeft')q.step(-1);else if(e.key===' '){e.preventDefault();q.flip()}});
 </script>
+<script src="../shared/page-label.js?v=20261104"></script>
 </body>
 </html>
