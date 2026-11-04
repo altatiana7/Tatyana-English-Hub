@@ -452,5 +452,13 @@ document.addEventListener('keydown',function(e){
 buildModules();
 </script>
 <script src="../shared/page-label.js?v=20261104"></script>
+<script src="../shared/hw-lock.js?v=20261104"></script><script>
+/* Отправленная домашка закрывается, карточки остаются (Gen Z & Money – только карточки). */
+HWLock.hub([
+ {sel:'button[onclick*="openHomeworkLesson(\'inversion\')"]',id:'kate:inversion'},
+ {sel:'button[onclick*="openHomeworkLesson(\'grammar11\')"]',id:'kate:grammar-lab-11'},
+ {sel:'button[onclick*="openHomeworkLesson(\'money\')"]',id:'kate:lesson3-money',cards:true}
+]);
+</script>
 </body>
 </html>

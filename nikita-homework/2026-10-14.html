@@ -630,6 +630,8 @@ const LESSON=[[
 document.addEventListener('keydown',e=>{if(deckKey&&!e.target.closest('input,textarea,audio,video'))deckKey(e);if(e.key==='Escape')closeDrawers()});
 show(0,0);
 </script>
-<script src="../shared/hw-sent.js?v=2"></script><script>HWSent.doneButton({student:"nikita",name:"Никита",page:"2026-10-14",title:"14 October · BBC listening"})</script><script src="../shared/page-label.js?v=20261104"></script>
+<script src="../shared/hw-sent.js?v=2"></script><script>HWSent.doneButton({student:"nikita",name:"Никита",page:"2026-10-14",title:"14 October · BBC listening"})</script><script src="../shared/hw-lock.js?v=20261104"></script><script>HWLock.page({id:'nikita:2026-10-14',home:'index.html',keep:'#stage',hide:['.bar'],
+ css:'#stage .btn.gold,#stage .btn.ghost[onclick="show(0,0)"],#stage .pane:has(#mt){display:none!important}',
+ onClose:function(){var s=window.show;window.show=function(b,i,p){if(b===blk&&i===cur)return s.apply(this,arguments)}}});</script><script src="../shared/page-label.js?v=20261104"></script>
 </body>
 </html>

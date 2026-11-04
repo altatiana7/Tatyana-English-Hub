@@ -40,6 +40,8 @@ const STEPS=[
  {id:'r',label:'Чтение 11',color:'#66549a',min:7,draw:read11},
  {id:'res',label:'Итоги',color:'#2b2f4a',min:0,draw:results}
 ];
+/* После отправки учителю домашка закрывается: остаётся только устная часть (шаги 1–4). Учитель (window.TEACHER) видит всё. */
+(function(){if(!SENT||window.TEACHER)return;for(let i=STEPS.length-1;i>=0;i--)if(!/^s[1-4]$/.test(STEPS[i].id))STEPS.splice(i,1);})();
 function isDone(id){const sp=S.sp;return id==='s1'?sp.t1!=null:id==='s2'?sp.t2.every(x=>x!=null):id==='s3'?sp.t3.every(x=>x!=null):id==='s4'?(sp.k1!=null&&sp.k2!=null&&sp.k3!=null):id==='res'?false:id==='gw'?(S.g.done&&S.w.done):S[id].done;}
 const lisErr=()=>LIS.key.filter((a,k)=>S.l.val[k]!==a).length,lisScore=()=>{const e=lisErr();return e===0?3:e===1?2:e===2?1:0;};
 function paintTabs(){tabs.innerHTML='';STEPS.forEach((s,k)=>{const b=el('button','tab num'+(k===cur?' on':'')+(isDone(s.id)?' done':''),'<i>'+(k+1)+'</i><span>'+s.label+'</span>');b.type='button';b.title=s.label;b.style.setProperty('--c',s.color);b.onclick=()=>go(k);tabs.append(b);});

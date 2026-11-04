@@ -88,7 +88,8 @@ tabs.innerHTML='<span class="ttlb">Block 1 · Family and friends</span>';
 /* ДОМАШКА: какие сегменты открыты */
 const LMAP={cards:'words',colls:'colls',hunt:'hunt',match:'match'};
 const RMAP={1:'t1-1',2:'t2-1',3:'iv1',4:'t4-1'};
-function hwLeft(v){return !HW.items.length||HW.has('lessonw1:'+LMAP[v]);}
+function hwLeft(v){if(SENT&&!SHOW&&(v==='hunt'||v==='match'))return false;   /* отправлено → игры закрыты, карточки и устная часть остаются */
+  return !HW.items.length||HW.has('lessonw1:'+LMAP[v]);}
 function hwRight(v){if(!HW.items.length)return true;const p='lessonw1:';if(v===1)return HW.has(p+'t1-1')||HW.has(p+'t1-2');if(v===2)return HW.has(p+'t2-1')||HW.has(p+'t2-2');if(v===3)return HW.has(p+'iv1')||HW.has(p+'iv2')||HW.has(p+'iv3');if(v===4)return HW.has(p+'t4-1')||HW.has(p+'t4-2');return false;}
 function hwAnyLeft(){return ['cards','colls','hunt','match'].some(hwLeft);}
 function hwAnyRight(){return [1,2,3,4].some(hwRight);}
@@ -236,8 +237,8 @@ const H=Hub({title:'Block 1 · Family and friends',sub:'Занятие 1. Сло
  {name:'Слова',color:'#8f4d7c',items:[
   {id:'cards',t:'Words',sub:'Карточки: термин и значение',lock:()=>!hwLeft('cards'),run:b=>leftRun('cards',b)},
   {id:'colls',t:'Collocations',sub:'Карточки',lock:()=>!hwLeft('colls'),run:b=>leftRun('colls',b)},
-  {id:'hunt',t:'Error hunter',sub:'Найди ошибку в вопросе',lock:()=>!hwLeft('hunt'),run:b=>leftRun('hunt',b)},
-  {id:'match',t:'Match',sub:'Соедини пары',lock:()=>!hwLeft('match'),onOpen:()=>{S.w.mt=null;},run:b=>leftRun('match',b)}]},
+  {id:'hunt',lockNote:()=>SENT&&!SHOW?'Выполнено · закрыто':'Не в домашнем задании',t:'Error hunter',sub:'Найди ошибку в вопросе',lock:()=>!hwLeft('hunt'),run:b=>leftRun('hunt',b)},
+  {id:'match',lockNote:()=>SENT&&!SHOW?'Выполнено · закрыто':'Не в домашнем задании',t:'Match',sub:'Соедини пары',lock:()=>!hwLeft('match'),onOpen:()=>{S.w.mt=null;},run:b=>leftRun('match',b)}]},
  {name:'Устная часть ЕГЭ',color:'#c8553d',items:[
   {id:'t1',t:'Task 1',sub:'Чтение вслух',cls:'sp4',lock:()=>!hwRight(1),run:b=>rightRun(1,b)},
   {id:'t2',t:'Task 2',sub:'Вопросы по объявлению',cls:'sp4',lock:()=>!hwRight(2),run:b=>rightRun(2,b)},
