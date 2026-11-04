@@ -142,12 +142,37 @@
     width: fit-content;
     border: 1px solid rgba(255,255,255,0.22);
   }
+
+  /* Входящие: домашки, которые ученики отправили */
+  .inbox{margin:6px 0 14px;border-radius:14px;background:#fff;border:2px solid #d9d6cc;padding:10px 12px}
+  .inbox.has{border-color:#2f9e6b;background:#f0faf4;box-shadow:0 0 0 3px rgba(47,158,107,.18)}
+  .inbox h2{font-size:.95rem;margin:0 0 6px;display:flex;align-items:center;gap:8px}
+  .inbox .cnt{background:#2f9e6b;color:#fff;border-radius:999px;font-size:.75rem;padding:1px 9px;font-weight:800}
+  .inbox .r{display:flex;gap:8px;align-items:center;font-size:.82rem;padding:5px 0;border-top:1px solid #e6e3d9}
+  .inbox .r.new{font-weight:800}
+  .inbox .r .nw{background:#e8a317;color:#fff;border-radius:6px;font-size:.62rem;padding:1px 6px;letter-spacing:.06em}
+  .inbox .r .t{margin-left:auto;color:var(--muted);font-weight:500;font-size:.74rem;white-space:nowrap}
+  .inbox button{font:inherit;font-size:.78rem;padding:4px 10px;border-radius:8px;border:1px solid #c9c5b8;background:#fff;cursor:pointer}
 </style>
 
 <div class="page-header">
   <h1>Мои сайты</h1>
 </div>
 
+
+<div class="inbox" id="inbox"><h2>Входящие домашки <span class="cnt" id="inCnt" hidden></span></h2>
+<div id="inList" style="font-size:.82rem;color:var(--muted)">Загружаю…</div>
+<div style="margin-top:6px;display:flex;gap:8px"><button type="button" id="inRefresh">Обновить</button><button type="button" id="inSeen">Отметить всё просмотренным</button></div></div>
+<script src="shared/hw-sent.js?v=1"></script>
+<script>(function(){const L=document.getElementById('inList'),C=document.getElementById('inCnt'),B=document.getElementById('inbox');let rows=[];
+function esc(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function draw(){const seen=HWSent.seen();const nw=rows.filter(r=>!seen.has(r.key));
+ C.hidden=!nw.length;C.textContent=nw.length?nw.length+' новых':'';B.classList.toggle('has',nw.length>0);
+ L.innerHTML=rows.length?rows.slice(0,12).map(r=>{const n=!seen.has(r.key);return '<div class="r'+(n?' new':'')+'">'+(n?'<span class="nw">NEW</span>':'<span>✓</span>')+'<span>'+esc(HWSent.NAMES[r.student]||r.student)+' · '+esc(r.title)+'</span><span class="t">'+new Date(r.at).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+'</span></div>'}).join(''):'Пока ничего не отправляли.'}
+async function load(ask){L.textContent='Загружаю…';try{const res=await HWSent.list(ask);if(res.need){L.innerHTML=res.bad?'Неверный пароль.':'Нужен пароль учителя.';return}rows=res.rows;draw()}catch(e){L.textContent='Не удалось загрузить. Проверьте интернет.'}}
+document.getElementById('inRefresh').onclick=()=>load(true);
+document.getElementById('inSeen').onclick=()=>{HWSent.markSeen(rows.map(r=>r.key));draw()};
+load(false);})();</script>
 <!-- ИНСТРУМЕНТЫ И ИГРЫ — ВВЕРХУ -->
 <div class="group">
   <div class="group-label">Инструменты и игры</div>
