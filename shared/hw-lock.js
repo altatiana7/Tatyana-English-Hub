@@ -28,12 +28,35 @@ window.HWLock=(function(){
 
   /* ---------- что уже отправлено ---------- */
   const PFX={katya:'katya-ege:',rita:'rita-ege:',maya:'maya:'};
-  function localIds(){
-    const ids=new Set();
+  const PART=/~p\d+$/;
+  const count=t=>{const m=String(t||'').match(/\((\d+)\s*\/\s*(\d+)\)\s*$/);return m?{a:+m[1],b:+m[2]}:null};
+  const better=(x,y)=>!x?y:!y?x:{a:Math.max(x.a,y.a),b:Math.max(x.b||0,y.b||0)};
+  /* локально: целиком (hw-sent:, *-sent-…) и по частям (hw-parts:<id>) */
+  function local(){
+    const full=new Set(),parts=new Map();
     try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i)||'';let m;
-      if(k.indexOf('hw-sent:')===0){const v=LS(k);if(v&&v!=='null')ids.add(k.slice(8));}
-      else if((m=k.match(/^(katya|rita|maya)-sent-(.+)$/))){const v=LS(k);if(v&&v!=='null')ids.add(PFX[m[1]]+m[2]);}}}catch(e){}
-    return ids}
+      if(k.indexOf('hw-sent:')===0){const v=LS(k);if(v&&v!=='null')full.add(k.slice(8));}
+      else if((m=k.match(/^(katya|rita|maya)-sent-(.+)$/))){const v=LS(k);if(v&&v!=='null')full.add(PFX[m[1]]+m[2]);}
+      else if(k.indexOf('hw-parts:')===0){let rec=null;try{rec=JSON.parse(LS(k)||'null')}catch(e){}
+        if(rec&&rec.rows&&rec.rows.length){let best=null;rec.rows.forEach(r=>{best=better(best,count(r.title))});
+          const tid=(rec.rows[0].tid||'').replace(PART,'')||k.slice(9);
+          parts.set(tid,best||{a:rec.rows.length,b:0})}}}}catch(e){}
+    return {full:full,parts:parts}}
+  function fromRows(rows){
+    const full=new Set(),parts=new Map();
+    rows.forEach(r=>{
+      if(!PART.test(r.id)){full.add(r.id);return}
+      const base=r.id.replace(PART,'');
+      parts.set(base,better(parts.get(base),count(r.t)||{a:1,b:0}))});
+    return {full:full,parts:parts}}
+  /* состояние работы: {s:'done'|'partial'|'none', a, b} */
+  function status(id,L,R){
+    if(L.full.has(id)||(R&&R.full.has(id)))return {s:'done'};
+    const p=better(L.parts.get(id),R&&R.parts.get(id));
+    if(!p)return {s:'none'};
+    if(p.b&&p.a>=p.b)return {s:'done'};
+    return {s:'partial',a:p.a,b:p.b}}
+  const localIds=()=>{const L=local();return new Set(L.full)};
   let remoteP=null;
   const idOf=x=>typeof x==='string'?x:(x&&x.test_id)||'';
   async function rpc(name,body,ms){
@@ -44,15 +67,16 @@ window.HWLock=(function(){
   function remote(){
     if(remoteP)return remoteP;
     remoteP=(async()=>{
-      try{const raw=sessionStorage.getItem('hw-done-cache');if(raw){const o=JSON.parse(raw);if(Date.now()-o.t<20000)return new Set(o.ids)}}catch(e){}
+      try{const raw=sessionStorage.getItem('hw-done-cache');if(raw){const o=JSON.parse(raw);if(Date.now()-o.t<20000)return fromRows(o.rows)}}catch(e){}
       /* общий список отправленного (пароль не нужен) + у учителя ещё и «Входящие» (по паролю) */
       const code=LS('arina-teacher-code');
       const [a,b]=await Promise.all([rpc('get_arina_done'),code?rpc('get_arina_homework',{p_teacher_code:code}):Promise.resolve([])]);
-      const ids=[...a,...b].map(idOf).filter(Boolean);
-      if(ids.length)try{sessionStorage.setItem('hw-done-cache',JSON.stringify({t:Date.now(),ids:ids}))}catch(e){}
-      return new Set(ids)})();
+      const rows=[...a,...b].map(x=>({id:idOf(x),t:(x&&x.test_title)||''})).filter(x=>x.id);
+      if(rows.length)try{sessionStorage.setItem('hw-done-cache',JSON.stringify({t:Date.now(),rows:rows}))}catch(e){}
+      return fromRows(rows)})();
     return remoteP}
-  async function ready(){const a=await remote(),b=localIds();return new Set([...a,...b])}
+  async function ready(){const R=await remote(),L=local();return id=>status(id,L,R)}
+  const readyLocal=()=>{const L=local();return id=>status(id,L,null)};
   /* вызвать сразу после отправки: сбросить кэш, чтобы замок появился без ожидания */
   function forget(){remoteP=null;try{sessionStorage.removeItem('hw-done-cache')}catch(e){}}
 
@@ -64,6 +88,7 @@ window.HWLock=(function(){
     'button.hwl-closed.hwl-student:not([data-hw-cards]),a.hwl-closed.hwl-student:not([data-hw-cards]){pointer-events:none;cursor:not-allowed}'+
     '.hwl-badge{display:inline-flex;align-items:center;gap:6px;font:800 13px/1.2 Inter,system-ui,Arial,sans-serif;border-radius:9px;padding:5px 10px;margin:4px 8px 4px 0;white-space:nowrap;vertical-align:middle}'+
     '.hwl-badge.done{color:#1e6b4a;background:#e8f5ef;border:1px solid #b9dcc9}'+
+    '.hwl-badge.prog{color:#24518a;background:#e8f0fb;border:1px solid #b6cdee}'+
     '.hwl-badge.todo{color:#8a5a00;background:#fff4e0;border:1px solid #e8c98c}'+
     '.hwl-hide{display:none!important}.hwl-keepshow{display:block!important}'+
     '.hwl-banner{position:sticky;top:0;z-index:2147482000;display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:center;background:#e8f5ef;color:#1e6b4a;border-bottom:2px solid #b9dcc9;padding:12px 16px;font:800 16px/1.35 Inter,system-ui,Arial,sans-serif;text-align:center}'+
@@ -77,7 +102,7 @@ window.HWLock=(function(){
   /* ---------- хаб: закрыть выполненное, пометить «To do» ---------- */
   let hubSrc=null,hubTimer=0;
   let uidN=0;
-  function paint(items,done,final){
+  function paint(items,S,final){
     const T=isTeacher();
     items.forEach(it=>{
       const sel=it.sel||('[data-hw-id="'+it.id+'"]');
@@ -86,14 +111,15 @@ window.HWLock=(function(){
            card:'self' – сама ссылка. Если карточка и есть сама ссылка (или это <button>), текст внутри не переписываем. */
         const card=a.tagName==='BUTTON'||it.card==='self'?a:(it.card?(a.closest(it.card)||a):a.parentElement);   /* card указан, но предка нет → сама ссылка */
         const inline=card===a;
-        const isDone=!!it.always||done.has(it.id);
+        const st=it.always?{s:'done'}:S(it.id);
+        const isDone=st.s==='done';
         const was=a.dataset.hwState;
-        const state=isDone?'done':'todo';
+        const state=st.s+(st.s==='partial'?':'+st.a+'/'+st.b:'');
         if(was===state)return;
         if(!isDone&&!final&&was==null)return;   /* пока база не ответила, «To do» не рисуем */
         const uid=a.dataset.hwUid||(a.dataset.hwUid=String(++uidN));
         a.dataset.hwState=state;a.setAttribute('data-hw-link','1');
-        if(card)card.dataset.hwState=state;
+        if(card)card.dataset.hwState=st.s;
         document.querySelectorAll('.hwl-badge[data-hw-for="'+uid+'"]').forEach(b=>b.remove());
         const badge=(cls,txt)=>{const b=el('span','hwl-badge '+cls,txt);b.dataset.hwFor=uid;
           if(inline){(a.tagName==='BUTTON'&&a.firstElementChild?a.firstElementChild:a).appendChild(b)}else a.insertAdjacentElement('beforebegin',b)};
@@ -101,7 +127,8 @@ window.HWLock=(function(){
           if(a.dataset.hwHref!=null){if(a.tagName!=='BUTTON')a.setAttribute('href',a.dataset.hwHref);a.removeAttribute('aria-disabled');if(a.dataset.hwText!=null)a.innerHTML=a.dataset.hwText}
           delete a.dataset.hwCards;
           if(card)card.classList.remove('hwl-closed','hwl-student');
-          if(it.todo!==false)badge('todo','To do');
+          if(st.s==='partial')badge('prog','In progress'+(st.b?' · '+st.a+'/'+st.b+' sent':' · partly sent'));
+          else if(it.todo!==false)badge('todo','To do');
           return}
         if(a.dataset.hwHref==null){a.dataset.hwHref=a.getAttribute('href')||'';if(!inline)a.dataset.hwText=a.innerHTML}
         if(card){card.classList.add('hwl-closed');if(!T)card.classList.add('hwl-student')}
@@ -115,20 +142,21 @@ window.HWLock=(function(){
   function observe(){
     try{if(!mo)mo=new MutationObserver(()=>{clearTimeout(hubTimer);hubTimer=setTimeout(refresh,150)});
       mo.observe(document.body,{childList:true,subtree:true})}catch(e){}}
-  function paintSafe(items,done,final){            /* наши же правки не должны будить наблюдателя */
+  function paintSafe(items,S,final){            /* наши же правки не должны будить наблюдателя */
     if(mo)mo.disconnect();
-    try{paint(items,done,final)}finally{observe()}}
+    try{paint(items,S,final)}finally{observe()}}
   async function refresh(){
     if(!hubSrc)return;const items=typeof hubSrc==='function'?hubSrc():hubSrc;
-    paintSafe(items,lastDone||localIds(),!!lastDone);
-    const done=await ready();lastDone=done;
-    paintSafe(items,done,true)}
+    paintSafe(items,lastDone||readyLocal(),!!lastDone);
+    const S=await ready();lastDone=S;
+    paintSafe(items,S,true)}
   /* нажатие по закрытой кнопке ничего не открывает (ловим раньше, чем скрипты хаба) */
   document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('[data-hw-link]');
     if(a&&a.dataset.hwState==='done'&&!a.dataset.hwCards&&!isTeacher()){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation()}},true);
   function hub(src){
     hubSrc=src;observe();refresh();
-    window.addEventListener('pageshow',e=>{if(e.persisted){forget();lastDone=null;refresh()}})}
+    window.addEventListener('pageshow',e=>{if(e.persisted){forget();lastDone=null;refresh()}});
+    window.addEventListener('hwparts-flushed',()=>{forget();lastDone=null;refresh()})}
 
   /* ---------- страница домашки: если уже отправлена – закрыть ---------- */
   function isolate(keepEls){
@@ -173,9 +201,9 @@ window.HWLock=(function(){
     window.addEventListener('load',applyClosed)}
   /* сначала смотрим отметки в браузере (мгновенно), потом базу */
   async function page(o){
-    if(localIds().has(o.id)){closePage(o);return true}
-    const done=await ready();
-    if(done.has(o.id)){closePage(o);return true}
+    if(readyLocal()(o.id).s==='done'){closePage(o);return true}
+    const S=await ready();
+    if(S(o.id).s==='done'){closePage(o);return true}
     return false}
 
   return {ready,forget,hub,refresh,page,isTeacher,localIds}
