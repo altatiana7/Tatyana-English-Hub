@@ -4,17 +4,84 @@
 <meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache">
-<title>Gabi · Module 2 · Lesson 4 · Revision</title>
+<title>Gabi · Module 2 · Lesson 4 · Surprising true crimes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="skills.css?v=20261015big">
 <link rel="stylesheet" href="case.css?v=20261015big">
 <style>
-/* Speed Game: the 15-second timer is a round clock, not a bomb */
+/* Speed Game: the 15-second check uses the timed engine, shown as a round timer instead of a bomb */
 .bombsvg path,.bombsvg rect,.bombsvg .spark,.bombsvg circle:nth-of-type(2){display:none}
 .bombsvg circle:nth-of-type(1){fill:#169be5}
 .bomb-box.hot .bombsvg circle:nth-of-type(1){fill:#e2574c}
-/* Kahoot look: one question, four calm coloured answers in two columns */
+ol.hunt{padding-left:2.1em}
+/* sort columns: four in a row when the step has the whole width */
+.sheet:not(.two) .scols:has(> :nth-child(4)){grid-template-columns:repeat(4,minmax(0,1fr))}
+/* answer buttons: compact, not tall squares */
+.act.panel .opts{flex:0 0 auto;grid-auto-rows:auto;align-content:start;gap:8px}
+.act.panel .opts button{min-height:52px;padding:8px 12px;font-size:19px}
+.act.panel .opts.c3 button{font-size:18px}
+/* grammar help hidden under a button */
+.work{position:relative}
+.helpbtn{position:absolute;right:14px;top:10px;z-index:20}
+.helpbtn>summary{list-style:none;cursor:pointer;background:#ffd23f;color:#1b2333;font:800 16px/1 Figtree,sans-serif;padding:10px 16px;border-radius:12px;border:2px solid #e0b400;user-select:none}
+.helpbtn>summary::-webkit-details-marker{display:none}
+.helpbtn[open]>summary{background:#fff;border-color:#ffd23f}
+.helppop{position:absolute;right:0;top:46px;width:min(520px,86vw);max-height:min(430px,70vh);overflow:auto;background:#121826;color:#e8edf6;border:2px solid #ffd23f;border-radius:14px;padding:12px 14px;box-shadow:0 14px 34px rgba(0,0,0,.4)}
+.helppop .court{display:flex;align-items:center;gap:12px;margin:0 0 8px}
+.helppop .court h4{margin:0;font:800 22px/1.1 Montserrat,sans-serif;color:#fff}
+.helppop .stamp{flex:none;border:2px solid #ffd23f;color:#ffd23f;font:800 11px/1 Montserrat,sans-serif;letter-spacing:.14em;padding:5px 7px;border-radius:5px;transform:rotate(-3deg)}
+.helppop .say{margin:0;padding:0;list-style:none;display:grid;gap:5px}.helppop .say li{background:rgba(255,255,255,.08);border-radius:9px;padding:6px 10px;font-size:16.5px}.helppop .say b{color:#ffd23f}
+.helppop .words{margin:9px 0 0;font-size:15px;color:#aebbd0;line-height:1.4}.helppop .words b{color:#ffd23f}
+.work:has(.helpbtn) .hint{padding-right:150px}
+/* witnesses */
+.cast{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.cplist{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;flex:none}
+.cp{position:relative;display:flex;flex-direction:column;padding:0;border:3px solid #c5d3e6;border-radius:12px;background:#fff;overflow:hidden;cursor:pointer;text-align:left;font:inherit}
+.cp img{display:block;width:100%;height:clamp(120px,27vh,215px);object-fit:cover;object-position:50% 25%}
+.cp span{display:block;padding:4px 8px 5px;line-height:1.15}
+.cp b{display:block;font-size:17px;color:#10233f;line-height:1.15}.cp small{display:block;font-size:13.5px;color:#566b84;font-weight:600}
+.cp:hover{border-color:#ffd23f}
+.cp.on{border-color:#ffd23f;box-shadow:0 0 0 3px rgba(255,210,63,.55);background:#fff6cf}
+.cp.cop{border-color:#17304f}.cp.cop.on{border-color:#ffd23f}
+.cp i{position:absolute;right:6px;top:5px;background:#1a8f55;color:#fff;font-style:normal;font-weight:800;font-size:14px;border-radius:50%;width:24px;height:24px;display:grid;place-items:center}
+.cstage{flex:1;min-height:0;overflow:auto;border-radius:12px;padding:10px 14px;background:#f3f7fc;border:2px dashed #c5d3e6;display:flex;flex-direction:column;gap:8px}
+.cstage.idle{justify-content:center;text-align:center;font-weight:700;font-size:19px;color:#3a5070}
+.cstage .tag{align-self:flex-start}
+.cstage .cq{margin:0;font-size:clamp(21px,2.1vw,26px);font-weight:700;line-height:1.25;color:#10233f}
+.cstage.cop{background:#fff6cf;border:2px solid #ffd23f}
+.ckey{margin:0;padding:0;list-style:none;display:grid;gap:5px}.ckey li{background:#fff;border-radius:9px;padding:6px 10px;font-size:16px;line-height:1.3;border-left:6px solid #169be5}.ckey li:nth-child(2){border-left-color:#e2459b}.ckey b{margin-right:6px}
+.ctext{background:#fff;border-radius:10px;padding:8px 12px;font-size:16px;line-height:1.45;color:#22344d;max-height:150px;overflow:auto}
+.cast .chips{margin:0}
+.cbody{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:8px}
+.cast .nav3{flex:none}
+.chead{display:flex;align-items:center;justify-content:space-between;gap:8px}.chead .ghost{padding:6px 12px;font-size:15px}
+.cstage .pl .eq{display:none}
+.cstage .row.nav3 button{padding:8px 14px}
+@media(max-height:700px){.cstage .chips{display:none}}
+@media(max-height:640px){
+ .act.panel .tcard{padding:6px 12px}.act.panel .tcard .q{font-size:18px}.act.panel .tcard .sub{font-size:14px}
+ .act.panel .chips{gap:5px}.act.panel .chips button{font-size:13.5px;padding:3px 9px}
+ .act.panel .hunt{font-size:16.5px;gap:2px}.act.panel .hunt li{line-height:1.45}
+ .act.panel .cloze,.act.panel .cloze:has(.wf){font-size:15.5px;line-height:1.6}
+ .act.panel .cloze select{font-size:15px;padding:1px 4px}
+ .act.panel .scol{min-height:44px}
+ .act.panel .match button{font-size:14.5px;padding:2px 9px;min-height:0;line-height:1.2}.act.panel .match>div{gap:3px}
+ .cstage{padding:6px 12px;gap:6px}.cbody{gap:6px}.cstage .pl{padding:3px 10px;margin:0;flex:none}.cstage.keyopen .pl{display:none}.cstage .cq{font-size:20px}.ckey li{font-size:15px;padding:4px 8px}
+ .act.panel .pick{gap:5px}.act.panel .pick button{font-size:15px;padding:4px 11px}
+}
+.story{overflow:auto;min-height:0;font-size:clamp(15.5px,1.3vw,19px);line-height:1.5;color:#10233f}.story p{margin:0 0 7px}
+.story mark{background:#fff0a8;border-radius:4px;padding:0 3px;font-weight:700;color:#10233f}
+.act.panel .order.compact>div{display:flex;flex-direction:row;flex-wrap:wrap;gap:6px;align-content:flex-start}.act.panel .order.compact .lab{flex-basis:100%}
+.act.panel .order.compact button{width:auto;flex:0 1 auto;font-size:15.5px;padding:5px 9px;text-align:left}
+.act.panel .order .okord{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr;gap:4px;counter-reset:o}
+.act.panel .order .okord li{counter-increment:o;min-height:0;border:0;background:#e6f6ec;border-radius:8px;padding:3px 10px;font-size:15.5px;line-height:1.2;color:#10233f}
+.act.panel .order .okord li::before{content:counter(o)". ";font-weight:800}
+@media(max-height:700px){.act.panel .order .okord{grid-template-columns:1fr 1fr;grid-template-rows:repeat(5,auto);grid-auto-flow:column;gap:5px 8px}}
+.sw{border:2px solid #7a5cc4;background:#fff;border-radius:8px;padding:0 7px;font:inherit;font-weight:700;color:#10233f;cursor:pointer;margin:0 1px;line-height:1.35}.sw:hover{background:#f1ecff}.sw.on{background:#ffd23f;border-color:#e0b400}.sw.ok{background:#e6f6ec;border-color:#2f9e5f}.sw.no{background:#fde8e6;border-color:#d9534f}
+.act.panel .story.swap{flex:1}
+@media(max-height:700px){.act.panel .story.swap{font-size:14.5px;line-height:1.5}.story.swap p{margin:0 0 4px}.sw{padding:0 5px;border-width:1.5px;line-height:1.25}}
+/* Kahoot revision: four calm coloured answers in two columns */
 .act.panel .bomb-q .q{font-size:clamp(22px,2.3vw,30px);line-height:1.25}
 .act.panel .opts{grid-template-columns:1fr 1fr;gap:10px}
 .act.panel .opts button{border-width:3px;font-weight:800}
@@ -22,86 +89,337 @@
 .act.panel .opts button:nth-child(2){background:#e5f3ea;border-color:#8cc3a0}
 .act.panel .opts button:nth-child(3){background:#fbf0d4;border-color:#dfc06f}
 .act.panel .opts button:nth-child(4){background:#f7e4e7;border-color:#d79fa9}
-.act.panel .opts button:hover:not(:disabled){filter:brightness(.96)}
 .act.panel .opts button.ok{background:#d3efdc;border-color:#2f9e5f}
 .act.panel .opts button.no{background:#f9d9d6;border-color:#d9534f}
 .act.panel .opts button.dim{opacity:.55}
-/* module recap under a button (the teacher’s screen is shared with the student) */
-.work{position:relative}
-.helpbtn{position:absolute;right:14px;top:10px;z-index:20}
-.helpbtn>summary{list-style:none;cursor:pointer;background:#ffd23f;color:#1b2333;font:800 16px/1 Figtree,sans-serif;padding:10px 16px;border-radius:12px;border:2px solid #e0b400;user-select:none}
-.helpbtn>summary::-webkit-details-marker{display:none}
-.helpbtn[open]>summary{background:#fff;border-color:#ffd23f}
-.helppop{position:absolute;right:0;top:46px;width:min(560px,88vw);max-height:min(460px,72vh);overflow:auto;background:#121826;color:#e8edf6;border:2px solid #ffd23f;border-radius:14px;padding:12px 14px;box-shadow:0 14px 34px rgba(0,0,0,.4)}
-.helppop .court{display:flex;align-items:center;gap:12px;margin:0 0 8px}
-.helppop .court h4{margin:0;font:800 22px/1.1 Montserrat,sans-serif;color:#fff}
-.helppop .stamp{flex:none;border:2px solid #ffd23f;color:#ffd23f;font:800 11px/1 Montserrat,sans-serif;letter-spacing:.14em;padding:5px 7px;border-radius:5px;transform:rotate(-3deg)}
-.helppop .say{margin:0;padding:0;list-style:none;display:grid;gap:5px}.helppop .say li{background:rgba(255,255,255,.08);border-radius:9px;padding:6px 10px;font-size:16.5px;line-height:1.35}.helppop .say b{color:#ffd23f}
-.work:has(.helpbtn) .hint{padding-right:190px}
 </style>
 </head>
 <body>
 <script src="skills.js?v=20261104a"></script>
 <script>
-/* Module 2 (Law and order), lesson 4 = the last lesson of the module. The rest of the lesson is added from Tatyana's materials.
-   1 warm-up: the three suspects, tell the case from memory + match the detective and court words
-   2 Kahoot-style Speed Game: 20 quick questions on the whole module (crime words, criminals, detectives, past tenses, rules, school court). */
-const SUS=[['Alex','alex','I was playing basketball in the gym at 3:30.'],['Mia','mia','I was doing my homework in the library.'],['Ben','ben','I was waiting for my mum outside school.']];
-const CASE=`<div class="tape"><span>CRIME SCENE · DO NOT CROSS</span></div><div class="filehead"><h4>The Missing £150</h4><span class="stamp">CASE FILE</span></div><div class="sus mini">${SUS.map(s=>`<div><img src="assets/u2/${s[1]}.jpg" alt=""><span><b>${s[0]}<i>SUSPECT</i></b><q>${s[2]}</q></span></div>`).join('')}</div>`;
-const COURT=(t,s)=>`<div class="court"><h4>${t}</h4><span class="stamp">${s||'REVISION'}</span></div>`;
+/* Module 2 (Law and order), lesson 4: Surprising true crimes (Gateway B1, Unit 2, pages 19–21). Two activities per screen:
+   1 homework review: error hunter with Gabi's own sentences + Speed Game on verb patterns
+   2 Speed Game homework check (15 s) + match titles -> 3 the stories and their words: flashcards + retell / answer using the words
+   -> 4 critical thinkers + error hunter with all four past tenses -> 5 all four past tenses: floor is lava + sort (grammar card under a button)
+   -> 6 predict + Playing basketball is not a crime! -> 7 question forms + police station: two witnesses and the officer (audio, photos)
+   -> 8 phrasal verbs: match + floor is lava -> 9 detective story (predict + read) -> 10 true/false/not stated + sequencing -> 11 use it, don't lose it. */
+const COURT=(t,s)=>`<div class="court"><h4>${t}</h4><span class="stamp">${s||'CASE FILE'}</span></div>`;
+const RULE=COURT('Past simple','GRAMMAR')+`<ul class="say">
+<li><b>+</b> regular: arrest → <b>arrested</b> · irregular: take → <b>took</b></li>
+<li><b>−</b> She <b>didn’t pay</b> any attention. <small>(didn’t + base verb)</small></li>
+<li><b>?</b> How <b>did</b> this <b>happen</b>? <small>(did + base verb)</small></li>
+<li><b>be:</b> I / he / she / it <b>was</b> · you / we / they <b>were</b></li>
+<li><b>be −</b> There <b>wasn’t</b> any evidence. · They <b>weren’t</b> happy.</li>
+<li><b>be ?</b> <b>Were</b> the kids happy? <small>(no did with be)</small></li></ul>
+<p class="words"><b>Watch out:</b> after <b>did / didn’t</b> the verb has no -ed: <s>didn’t paid</s> → didn’t <b>pay</b>.</p>`;
 const BOX=COURT('Module 2 in one box')+`<ul class="say">
 <li><b>rob</b> a bank or a person · <b>steal</b> a thing</li>
 <li><b>theft</b> – thief · <b>burglary</b> – burglar · <b>robbery</b> – robber · <b>vandalism</b> – vandal</li>
-<li><b>suspect</b> may have done it · <b>witness</b> saw it · <b>alibi</b> proof you were somewhere else · <b>evidence</b> shows what is true</li>
-<li><b>Past simple</b> finished action (sent) · <b>Past continuous</b> in progress (was waiting)</li>
-<li><b>must</b> a rule · <b>mustn’t</b> not allowed · <b>have to</b> necessary · <b>don’t have to</b> not necessary · <b>should</b> advice</li>
+<li><b>suspect</b> may have done it · <b>witness</b> saw it · <b>alibi</b> proof you were elsewhere · <b>evidence</b> shows what is true</li>
+<li><b>Past simple</b> finished (sent) · <b>Past continuous</b> in progress (was waiting) · <b>Past perfect</b> earlier past (had eaten)</li>
+<li><b>arrest</b> someone <b>for</b> · <b>charge</b> someone <b>with</b> · <b>explain</b> something <b>to</b> someone</li>
+<li><b>must</b> a rule · <b>mustn’t</b> not allowed · <b>don’t have to</b> not necessary · <b>should</b> advice</li>
 <li><b>a fine</b> money · <b>community service</b> unpaid work · <b>accuse</b> say someone did it</li></ul>`;
+const PAST=COURT('Past tenses','GRAMMAR')+`<ul class="say">
+<li><b>Past simple</b> finished action: The officer <b>arrested</b> her.</li>
+<li><b>Past continuous</b> in progress at that moment: The men <b>were running</b> across a field.</li>
+<li><b>Past perfect</b> earlier than another past action: After she <b>had eaten</b> the chips, there wasn’t any evidence.</li>
+<li><b>Past perfect continuous</b> how long before: The police <b>had been looking</b> for the men for an hour.</li></ul>
+<p class="words"><b>Clues:</b> when / while → continuous · before / after / already / by the time → perfect · for + time before → perfect continuous</p>`;
+const TITLES=['Eating the evidence','Where did the criminals go?!','A criminal pastime'];
+/* Interactive characters: the officer and two witnesses. Tap a witness to hear his statement (the text stays hidden), then tap the officer for his questions. */
+Lesson.ACT.read={view(a){return `<div class="story">${a.html}</div>`}};
+/* Swap task: the phrasal verbs in the story are in the wrong places; Gabi taps two verbs to swap them, then checks. */
+Lesson.ACT.swap={
+ init(a,s){s.cur=a.start.slice();s.sel=null;s.checked=false},
+ view(a,s){const E=Lesson.esc;let ok=0;
+  const html=a.html.replace(/\{(\d+)\}/g,(m,k)=>{k=+k;const v=s.cur[k],good=a.ok[k].includes(v);if(s.checked&&good)ok++;
+   return `<button class="sw${s.sel===k?' on':''}${s.checked?(good?' ok':' no'):''}" data-sw="${k}">${E(a.verbs[v])}</button>`});
+  return `<div class="story swap">${html}</div><div class="row"><button class="main" data-swcheck>Check</button><button class="ghost" data-swagain>Start again</button>${s.checked?`<b class="score">${ok} of ${a.verbs.length} in the right place</b>`:'<span class="muted">Tap two verbs to swap them.</span>'}</div>`},
+ click(a,s,d){
+  if(d.sw!==undefined){const k=+d.sw;s.checked=false;if(s.sel==null)s.sel=k;else if(s.sel===k)s.sel=null;else{const t=s.cur[s.sel];s.cur[s.sel]=s.cur[k];s.cur[k]=t;s.sel=null}return Lesson.redraw()}
+  if(d.swcheck!==undefined){s.checked=true;s.sel=null;return Lesson.redraw()}
+  if(d.swagain!==undefined){s.cur=a.start.slice();s.sel=null;s.checked=false;return Lesson.redraw()}}};
+Lesson.ACT.cast={
+ init(a,s){s.who=null;s.heard={};s.qi=0;s.key=false;s.text=false;s.used={}},
+ view(a,s){const E=Lesson.esc,P=a.people;
+  const cards=P.map((p,k)=>`<button class="cp${p.officer?' cop':''}${s.who===k?' on':''}" data-who="${k}" aria-label="${E(p.name)}"><img src="${E(p.img)}" alt=""><span><b>${E(p.name)}</b><small>${E(p.role)}</small></span>${s.heard[k]?'<i>✓</i>':''}</button>`).join('');
+  let stage;
+  if(s.who==null){stage=`<div class="cstage idle">Tap a witness and listen to his statement.<br>Then tap the officer.</div>`}
+  else if(P[s.who].officer){const n=a.qs.length,q=a.qs[s.qi];
+   stage=`<div class="cstage cop${s.key?' keyopen':''}"><div class="cbody"><div class="chead"><span class="tag">Officer · question ${s.qi+1} of ${n}</span><button class="ghost" data-cqtext>Teacher: show the question</button></div>${Lesson.player({src:q.audio,label:'Police officer'},'q'+s.qi,true)}
+    <p class="cq" id="cq" ${s.qtext?'':'hidden'}>${E(q.q)}</p>
+    ${s.key?`<ul class="ckey">${q.note?`<li><b>Idea</b>${E(q.note)}</li>`:`<li><b>Alex</b>${E(q.alex)}</li><li><b>Ben</b>${E(q.ben)}</li>`}</ul>`:`<div class="chips"><b class="lab">Tap each phrase he uses</b>${a.chips.map((c,k)=>`<button data-cused="${k}" class="${s.used[k]?'on':''}">${E(c)}</button>`).join('')}</div>`}</div>
+    <div class="row nav3"><button class="ghost" data-cback ${s.qi===0?'disabled':''}>Back</button><button class="ghost" data-ckey>${s.key?'Hide the key':'Teacher: key'}</button><button class="main" data-cnext>${s.qi===n-1?'First question':'Next question'}</button></div></div>`}
+  else{const p=P[s.who];
+   stage=`<div class="cstage"><span class="tag">${E(p.name)} · witness statement</span>${Lesson.player({src:p.audio,label:p.name+(p.role.indexOf('15')>-1?', 15':'')},'w'+s.who,true)}
+    <div class="row"><button class="ghost" data-ctext>Teacher: show the words</button></div><div class="ctext" id="ctext" ${s.text?'':'hidden'}>${E(p.text)}</div></div>`}
+  return `<div class="cast"><div class="cplist">${cards}</div>${stage}</div>`},
+ click(a,s,d){
+  if(d.who!==undefined){Lesson.hush();s.who=+d.who;s.heard[s.who]=true;s.text=false;s.qtext=false;return Lesson.redraw()}
+  if(d.cqtext!==undefined){s.qtext=!s.qtext;const t=document.getElementById('cq');if(t)t.hidden=!s.qtext;return}
+  if(d.ctext!==undefined){s.text=!s.text;const t=document.getElementById('ctext');if(t)t.hidden=!s.text;return}
+  if(d.cused!==undefined){s.used[+d.cused]=!s.used[+d.cused];return Lesson.redraw()}
+  if(d.ckey!==undefined){s.key=!s.key;return Lesson.redraw()}
+  if(d.cback!==undefined&&s.qi>0){Lesson.hush();s.qi--;s.key=false;s.qtext=false;return Lesson.redraw()}
+  if(d.cnext!==undefined){Lesson.hush();s.qi=(s.qi+1)%a.qs.length;s.key=false;s.qtext=false;return Lesson.redraw()}}};
 Lesson.boot({kicker:'Module 2 · Lesson 4',steps:[
-{stage:'Warm-up',title:'Module 2: what do you remember?',hint:'Look at the three suspects. Predict how the case ended, then tell the story from memory. <small>Then match the detective and court words.</small>',split:'minmax(0,.62fr) minmax(0,1.38fr)',cols:'1.1fr 1fr',
- side:{look:'case',card:CASE},
+{stage:'Check-in',title:'Your homework: exercise 3',hint:'These sentences are from your homework. Find the mistake in each one. <small>Then the Speed Game: 15 seconds for each verb pattern.</small>',cols:'1.15fr 1fr',
  acts:[
- {type:'talk',title:'From memory · no notes',label:'Task',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['At 3:30 …','He said he was …','But …','In my opinion, …','I think … because …'],cards:[
-  {q:'Look at the three suspects. Tell the story of the missing £150 from the beginning.',sub:'Who? Where? When? What was wrong with each alibi?'},
-  {q:'Say seven crimes from this module and explain two of them.',sub:'Use: steal · rob · break in · damage'},
-  {q:'What is the difference between a suspect and a guilty person?'},
-  {q:'Which consequence from the School Court is the fairest? Why?'},
-  {q:'Give one rule for your school with must, mustn’t or should. Explain why.'},
-  {q:'Which crime in this module is the most serious? Why?'}]},
- {type:'match',title:'Detectives and the court',tip:'Tap a word, then its meaning.',items:[
-  {l:'suspect',r:'a person who might have done the crime'},
-  {l:'clue',r:'a small fact or object that helps to solve a crime'},
-  {l:'witness',r:'a person who saw what happened'},
-  {l:'alibi',r:'proof that you were in another place at the time of the crime'},
-  {l:'evidence',r:'information or objects that show something is true'},
-  {l:'guilty',r:'responsible for a crime; you did it'},
-  {l:'a fine',r:'money you pay as a punishment'},
-  {l:'community service',r:'unpaid work that helps the local community'},
-  {l:'accuse',r:'say that someone has done something wrong'},
-  {l:'punish',r:'make someone face a consequence'}]}]},
-{stage:'Revision',title:'Kahoot · Module 2',hint:'First predict: which topic will be the hardest, crimes, detectives, past tenses or rules? <small>Then 20 quick questions, 15 seconds each. The yellow button has the whole module.</small>',help:{label:'Module 2 in a box',html:BOX},
+ {type:'hunt',title:'Error hunter · your homework',tip:'Click the word with the mistake.',items:[
+  {s:'A woman’s stolen a police officer’s chips.',bad:1,fix:'A woman stole …',why:'one finished event in the past: past simple'},
+  {s:'He explained her that it was theft.',bad:2,fix:'explained to her',why:'explain something to someone'},
+  {s:'He told to her that it was theft.',bad:2,fix:'told her',why:'tell someone something: no to'},
+  {s:'He arrested the woman and charged her for theft.',bad:7,fix:'with theft',why:'charge someone with a crime'},
+  {s:'The officer arrested her of theft.',bad:4,fix:'for theft',why:'arrest someone for a crime'},
+  {s:'The police was searching for the two men.',bad:2,fix:'were',why:'the police + plural verb'},
+  {s:'The artist created an art called Reading Work Piece.',bad:4,fix:'a work of art',why:'not “an art”'},
+  {s:'It was destroyed by a woman that who thought it was a crossword.',bad:6,fix:'by a woman who …',why:'that or who, not both'},
+  {s:'She wrote answers on the arts.',bad:5,fix:'the artwork',why:'one work of art = the artwork'},
+  {s:'I didn’t get the question and I can’t sorry.',bad:7,fix:'… question. Sorry!',why:'I didn’t understand the question. Sorry!'}]},
+ {type:'bomb',secs:15,label:'Verb patterns',title:'Speed Game · verb patterns and crime words',items:[
+  {sec:'Verb patterns',q:'The officer explained ___ that it was theft.',o:['her','to her','for her'],a:'to her',why:'explain something to someone'},
+  {sec:'Verb patterns',q:'He told ___ to stop.',o:['to her','for her','her'],a:'her',why:'tell someone'},
+  {sec:'Verb patterns',q:'They charged the two men ___ burglary.',o:['with','for','of'],a:'with',why:'charge someone with a crime'},
+  {sec:'Verb patterns',q:'The police arrested her ___ theft.',o:['with','of','for'],a:'for',why:'arrest someone for a crime'},
+  {sec:'Verb patterns',q:'The police ___ searching for the men.',o:['was','were','is'],a:'were',why:'the police = they'},
+  {sec:'Crime words',q:'A woman ___ three chips.',o:['stole','robbed','charged'],a:'stole',why:'steal a thing'},
+  {sec:'Crime words',q:'Two men ___ a bank.',o:['stole','arrested','robbed'],a:'robbed',why:'rob a place or a person'},
+  {sec:'Crime words',q:'The officer ___ the woman and took her to the police station.',o:['arrested','charged','robbed'],a:'arrested'},
+  {sec:'Crime words',q:'At the police station they ___ her with theft.',o:['stole','charged','arrested'],a:'charged'},
+  {sec:'Crime words',q:'The police think he did it, but they are not sure. He is a ___.',o:['criminal','witness','suspect'],a:'suspect'},
+  {sec:'Crime words',q:'A person who really did the crime is a ___.',o:['criminal','suspect','victim'],a:'criminal'},
+  {sec:'Accuracy',q:'“Reading Work Piece” is a ___.',o:['art','work of art','arts'],a:'work of art'},
+  {sec:'Accuracy',q:'… by a woman ___ thought it was a crossword.',o:['that who','what','who'],a:'who'},
+  {sec:'Accuracy',q:'I didn’t ___ the question. Sorry!',o:['understand','understood','can'],a:'understand',why:'didn’t + base verb'}]}]},
+{stage:'Check-in',title:'Speed Game',hint:'Homework, page 19. <small>15 seconds for each question. Then match each title to its story.</small>',cols:'1.25fr 1fr',
+ acts:[
+ {type:'bomb',secs:15,label:'Homework check',title:'Speed Game · true crime stories',items:[
+  {sec:'Which story?',q:'A pizza restaurant in Washington DC',o:TITLES,a:'Eating the evidence'},
+  {sec:'Which story?',q:'A police helicopter over a field',o:TITLES,a:'Where did the criminals go?!'},
+  {sec:'Which story?',q:'A crossword in a museum in Nuremberg',o:TITLES,a:'A criminal pastime'},
+  {sec:'Which story?',q:'The witness report was probably sufficient.',o:TITLES,a:'Eating the evidence'},
+  {sec:'Which story?',q:'Surrey police thanked them for their fast reactions.',o:TITLES,a:'Where did the criminals go?!'},
+  {sec:'Exercise 3',q:'Where and when did a woman steal a police officer’s chips?',o:['At the police station last week','In a pizza restaurant on Wednesday night','In a café on Friday morning'],a:'In a pizza restaurant on Wednesday night'},
+  {sec:'Exercise 3',q:'What happened each time the woman took one of the officer’s chips?',o:['He laughed and gave her more','He asked her to stop and explained it was theft','He called his boss'],a:'He asked her to stop and explained it was theft'},
+  {sec:'Exercise 3',q:'Why did a group of children and adults form a human arrow?',o:['To guide the helicopter to the suspects','To take a photo for social media','To stop the helicopter landing'],a:'To guide the helicopter to the suspects'},
+  {sec:'Exercise 3',q:'How did the human arrow story end?',o:['The men escaped across the field','The children were arrested too','The police caught the men and thanked the people'],a:'The police caught the men and thanked the people'},
+  {sec:'Exercise 3',q:'What do we know about the work of art?',o:['It cost almost $90,000','It was a painting of a dictionary','It was a statue of a reader'],a:'It cost almost $90,000'},
+  {sec:'Exercise 3',q:'Why did the elderly woman say she wrote on the work of art?',o:['She wanted to be famous','She thought it was her newspaper','She followed the sign: “Insert words”'],a:'She followed the sign: “Insert words”'},
+  {sec:'Exercise 3',q:'Why do the police think she wrote on the crossword?',o:['It was probably a misunderstanding','She didn’t like modern art','She wanted to destroy it'],a:'It was probably a misunderstanding'}]},
+ {type:'match',title:'Titles and stories',tip:'Tap a title, then its story.',items:[
+  {l:'Eating the evidence',r:'A woman steals three chips from a police officer.'},
+  {l:'Where did the criminals go?!',r:'A human arrow guides a police helicopter.'},
+  {l:'A criminal pastime',r:'A 91-year-old woman does a crossword that is a work of art.'}]}]},
+{stage:'Words',title:'The stories and their words',hint:'Guess the meaning first, then turn the card over. <small>Then Gabi tells a story, or answers, and uses the words from the cards.</small>',cols:'1fr 1.2fr',
+ acts:[
+ {type:'cards',title:'Flashcards · 10 words',items:[
+  {w:'pay attention',ru:'обращать внимание',d:'listen to or notice something carefully',ex:'She didn’t pay any attention.'},
+  {w:'sufficient',ru:'достаточный',d:'enough',ex:'The witness report was probably sufficient.'},
+  {w:'realise',ru:'осознать, понять',d:'suddenly understand something',ex:'They realised the helicopter was in search of the two men.'},
+  {w:'in search of',ru:'в поисках',d:'looking for',ex:'The helicopter was in search of the two men.'},
+  {w:'get on the ground',ru:'лечь на землю',d:'go down onto the ground',ex:'They quickly got on the ground.'},
+  {w:'in fact',ru:'на самом деле',d:'actually, in reality',ex:'The crossword was in fact a work of art.'},
+  {w:'insert',ru:'вставлять',d:'put something into a space',ex:'The sign said “Insert words”.'},
+  {w:'misunderstanding',ru:'недоразумение',d:'when someone does not understand something correctly',ex:'It was probably just a misunderstanding.'},
+  {w:'turn up',ru:'появиться',d:'arrive or appear',ex:'The suspect turned up at the restaurant.'},
+  {w:'come up with',ru:'придумать',d:'think of an idea or a plan',ex:'They came up with an idea.'}]},
+ {type:'talk',title:'From memory · no text',label:'Task',secs:60,keepChips:true,chipLabel:'Tap each word he uses',chips:['pay attention','sufficient','realise','in search of','get on the ground','in fact','insert','misunderstanding'],cards:[
+  {q:'Tell the story “Eating the evidence”.',sub:'Who? Where? What happened each time? How did it end?'},
+  {q:'Tell the story “Where did the criminals go?!”',sub:'Who? What did the helicopter do? Why an arrow? How did it end?'},
+  {q:'Tell the story “A criminal pastime”.',sub:'Who? What was the work of art? What did she do?'},
+  {q:'Why did the police officer arrest the woman?',sub:'Use: pay attention · in fact'},
+  {q:'Why did the children and adults make an arrow?',sub:'Use: realise · in search of'},
+  {q:'Why do the police think the old lady is not a criminal?',sub:'Use: insert · misunderstanding'}]}]},
+{stage:'Speak',title:'Critical thinkers',hint:'Are the people in the stories criminals? Use ideas from the text. <small>Then find the past tense mistake in each sentence.</small>',cols:'.8fr 1.2fr',
+ acts:[
+ {type:'talk',title:'Are they criminals?',label:'Story',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['In my opinion, … because …','On the one hand, … On the other hand, …','The text says …','It depends on …'],cards:[
+  {q:'Story A: the woman who ate the police officer’s chips. Is she a criminal?'},
+  {q:'Story B: the two men in the old building. Are they criminals?'},
+  {q:'Story C: the 91-year-old woman and the crossword. Is she a criminal?'},
+  {q:'Which story is the strangest? What makes you say that?'}]},
+ {type:'hunt',title:'Error hunter · all past tenses',tip:'Click the word with the mistake.',items:[
+  {s:'The officer arrest her at the restaurant.',bad:2,fix:'arrested',why:'past simple: finished action'},
+  {s:'The men was running across a field.',bad:2,fix:'were',why:'past continuous: they were + -ing'},
+  {s:'After she had ate the chips, there wasn’t any evidence.',bad:3,fix:'eaten',why:'past perfect: had + past participle'},
+  {s:'The police had been look for the men for an hour.',bad:4,fix:'looking',why:'past perfect continuous: had been + -ing'},
+  {s:'Two men breaked into an old building.',bad:2,fix:'broke',why:'past simple: break → broke'},
+  {s:'The old lady was walk around the museum when it closed.',bad:3,fix:'walking',why:'past continuous: was + -ing'},
+  {s:'By the time the police arrived, the men has already escaped.',bad:8,fix:'had',why:'past perfect: had + past participle'},
+  {s:'She had been do the crossword for twenty minutes.',bad:3,fix:'doing',why:'past perfect continuous: had been + -ing'},
+  {s:'While the officer eat his chips, the woman sat down next to him.',bad:3,fix:'was eating',why:'while + something in progress: past continuous'},
+  {s:'The police have been looking for the men for an hour when the children made an arrow.',bad:2,fix:'had',why:'a past moment: had been looking'}]}]},
+{stage:'Grammar',title:'All the past tenses',hint:'Choose the right past tense for each story. <small>Three wrong answers and the floor is lava. Then sort the forms.</small>',cols:'.85fr 1.15fr',
+ help:{label:'Past tenses',html:PAST},
+ acts:[
+ {type:'quiz',title:'Floor is lava · which past?',label:'Sentence',lives:3,cols:2,items:[
+  {q:'After she ___ (eat) the chips, there wasn’t any evidence.',o:['ate','was eating','had eaten','had been eating'],a:'had eaten',why:'Earlier than “there wasn’t”: past perfect.'},
+  {q:'The officer ___ (eat) his chips when the woman sat down next to him.',o:['ate','was eating','had eaten','had been eating'],a:'was eating',why:'In progress when something happened: past continuous.'},
+  {q:'A witness ___ (call) the police.',o:['called','was calling','had called','had been calling'],a:'called',why:'A finished action: past simple.'},
+  {q:'Two men ___ (run) across a field when the people saw the helicopter.',o:['ran','were running','had run','had been running'],a:'were running',why:'when + in progress: past continuous.'},
+  {q:'The men ___ (break) into the building before the helicopter arrived.',o:['broke','were breaking','had broken','had been breaking'],a:'had broken',why:'before another past action: past perfect.'},
+  {q:'The police ___ (look) for the men for an hour when the children made the arrow.',o:['looked','were looking','had looked','had been looking'],a:'had been looking',why:'for an hour before: past perfect continuous.'},
+  {q:'The old lady ___ (walk) around the museum when she came across the crossword.',o:['walked','was walking','had walked','had been walking'],a:'was walking',why:'In progress when something happened: past continuous.'},
+  {q:'She ___ (not look up) the answers in a dictionary.',o:['didn’t look up','wasn’t looking up','hadn’t looked up','hadn’t been looking up'],a:'didn’t look up',why:'A simple fact about the past: past simple.'},
+  {q:'Later she found out that she ___ (destroy) a work of art.',o:['destroyed','was destroying','had destroyed','had been destroying'],a:'had destroyed',why:'Earlier than “found out”: past perfect.'},
+  {q:'She ___ (do) the crossword for twenty minutes when a guard noticed her.',o:['did','was doing','had done','had been doing'],a:'had been doing',why:'for twenty minutes before: past perfect continuous.'},
+  {q:'While the kids ___ (play) basketball, somebody called the police.',o:['played','were playing','had played','had been playing'],a:'were playing',why:'while + in progress: past continuous.'},
+  {q:'The officer ___ (play) with them for ten minutes and then left.',o:['played','was playing','had played','had been playing'],a:'played',why:'A finished action in a sequence: past simple.'}]},
+ {type:'sort',title:'Sort the forms',cols:['Simple','Continuous','Perfect','Perfect cont.'],items:[{t:'took',c:0},{t:'arrested',c:0},{t:'came across',c:0},{t:'was taking',c:1},{t:'were running',c:1},{t:'was sitting',c:1},{t:'had taken',c:2},{t:'had broken',c:2},{t:'had eaten',c:2},{t:'had been taking',c:3},{t:'had been looking',c:3},{t:'had been waiting',c:3}]}]},
+{stage:'Grammar',title:'Playing basketball is not a crime!',hint:'First predict from the title. <small>Then choose the past simple form for each gap.</small>',cols:'.75fr 1.6fr',
+ acts:[
+ {type:'talk',title:'Predict',label:'Title',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['I think …','Maybe …','Somebody called …'],cards:[
+  {q:'“Playing basketball is not a crime!” Who called the police? Why?'},
+  {q:'What did the police officer do when he arrived?'}]},
+ {type:'gaps',title:'Exercise 3 · Florida, 2016',inline:true,tail:' them to build a basketball court. And he still plays with them sometimes.',items:[
+  {pre:'In 2016, in a small town in Florida, somebody',opts:['called','calls','did call'],ans:['called'],ph:'(a) call'},
+  {pre:'the police. The person',opts:['wasn’t','didn’t was','weren’t'],ans:['wasn’t'],ph:'(b) not be'},
+  {pre:'happy because of the noise coming from some kids playing basketball in the street. A police officer',opts:['went','goed','gone'],ans:['went'],ph:'(c) go'},
+  {pre:'to investigate. He',opts:['found','finded','founded'],ans:['found'],ph:'(d) find'},
+  {pre:'some teenagers playing basketball. He',opts:['didn’t stop','didn’t stopped','not stopped'],ans:['didn’t stop'],ph:'(e) not stop'},
+  {pre:'them. In fact, he',opts:['started','start','did started'],ans:['started'],ph:'(f) start'},
+  {pre:'to play with them! Other teenagers',opts:['came','comed','come'],ans:['came'],ph:'(g) come'},
+  {pre:'out of their houses. At first, they',opts:['didn’t believe','didn’t believed','weren’t believe'],ans:['didn’t believe'],ph:'(h) not believe'},
+  {pre:'it. In the end, eight kids happily',opts:['played','plaied','did played'],ans:['played'],ph:'(i) play'},
+  {pre:'with the officer. After ten minutes, he',opts:['left','leaved','lefted'],ans:['left'],ph:'(j) leave'},
+  {pre:'. He',opts:['told','telled','tolled'],ans:['told'],ph:'(k) tell'},
+  {pre:'them to continue, but not to make excessive noise. Lots of people',opts:['saw','seen','seed'],ans:['saw'],ph:'(l) see'},
+  {pre:'a video of the incident and the kids all',opts:['became','becomed','become'],ans:['became'],ph:'(m) become'},
+  {pre:'famous! Shaquille O’Neal',opts:['met','meeted','meet'],ans:['met'],ph:'(n) meet'},
+  {pre:'them personally! Now they don’t play in the street. The police officer',opts:['helped','helps','did helped'],ans:['helped'],ph:'(o) help'}]}]},
+{stage:'Speak',title:'Question forms and the police station',hint:'Look at the photos: who are they? What do you think happened? <small>Choose the right question form. Then the officer interviews the two witnesses: listen to his questions.</small>',cols:'.95fr 1.35fr',
+ help:{label:'Past simple',html:RULE},
+ acts:[
+ {type:'quiz',title:'Exercise 4 · make the questions',label:'Question',cols:3,shuffle:false,items:[
+  {q:'Why ___ a police officer ___ (investigate) an incident in Florida in 2016?',o:['did … investigate','did … investigated','was … investigated'],a:'did … investigate',why:'did + base verb'},
+  {q:'Who ___ the police officer ___ (find) in the street?',o:['did … found','did … find','was … finding'],a:'did … find',why:'did + base verb'},
+  {q:'___ he ___ (stop) them?',o:['Was … stop','Did … stopped','Did … stop'],a:'Did … stop',why:'Did + base verb'},
+  {q:'What ___ he ___ (do)?',o:['did … do','did … did','was … do'],a:'did … do',why:'did is also the main verb here: did … do'},
+  {q:'___ (be) the kids happy to play with the police officer?',o:['Did','Were','Was'],a:'Were',why:'be: no did. the kids → were'},
+  {q:'How ___ the kids ___ (become) famous?',o:['were … become','did … became','did … become'],a:'did … become',why:'did + base verb'},
+  {q:'Who ___ (call) the police in Florida?',o:['called','did call','did called'],a:'called',why:'Who is the subject: no did'},
+  {q:'Which famous person ___ (meet) the kids?',o:['did met','met','did meet'],a:'met',why:'the question word is the subject: no did'},
+  {q:'What ___ the officer ___ (tell) the kids?',o:['did … tell','was … told','did … told'],a:'did … tell',why:'did + base verb'},
+  {q:'How long ___ the officer ___ (play) with the kids?',o:['was … played','did … played','did … play'],a:'did … play',why:'did + base verb'}]},
+ {type:'cast',title:'Police station · two witnesses',chips:['Alex said …','Ben said …','but','while / when','He wasn’t sure','He was sure'],
+  people:[
+   {name:'Police officer',role:'asks the questions',img:'assets/witness/officer.jpg',officer:1},
+   {name:'Alex',role:'witness, 15',img:'assets/witness/alex.jpg',audio:'assets/witness/alex.mp3',text:'I was walking home from football practice on Friday evening. I think it was about 9 o’clock, but I’m not completely sure. When I was passing the petrol station, I heard someone shouting. I saw a dark car parked near the shop. A man in a grey hoodie was running towards the car. I think he was carrying a bag, but I couldn’t see it clearly. Someone was shouting inside the shop, but I didn’t see who it was. I heard a loud noise, but I don’t remember hearing an alarm. I was looking for my phone when the car drove away. I didn’t see the driver’s face, and I honestly don’t remember anything else.'},
+   {name:'Ben',role:'witness',img:'assets/witness/ben.jpg',audio:'assets/witness/ben.mp3',text:'I was buying a drink at the petrol station at exactly 9.15. I remember the time because I was checking my phone. A dark blue car stopped outside, and two men got out. One was wearing a grey hoodie, and the other had a black jacket. I was standing near the drinks fridge when they entered. The man in the grey hoodie shouted at the cashier and demanded money. The other man was holding a black backpack. When the cashier pressed a button, the alarm went off. Both men ran outside, got into the car and drove away. I clearly remember the driver’s face, and I’m sure the car was a blue Ford.'}],
+  qs:[
+   {q:'What were Alex and Ben doing when the robbery happened?',audio:'assets/witness/q01.mp3',alex:'Walking home from football practice, passing the petrol station.',ben:'Buying a drink at the petrol station, checking his phone.'},
+   {q:'Where was each teenager when the crime took place?',audio:'assets/witness/q02.mp3',alex:'Outside, near the petrol station and the shop.',ben:'Inside the shop, near the drinks fridge.'},
+   {q:'What details did both boys mention?',audio:'assets/witness/q03.mp3',alex:'A man in a grey hoodie, a dark car, the car driving away.',ben:'A man in a grey hoodie, a dark blue car, the car driving away.'},
+   {q:'What did Alex remember about the car?',audio:'assets/witness/q04.mp3',alex:'A dark car parked near the shop. It drove away.',ben:'(Ben: a dark blue Ford.)'},
+   {q:'What did Ben say about the two men?',audio:'assets/witness/q05.mp3',alex:'(Alex saw only one man.)',ben:'One in a grey hoodie shouted at the cashier and demanded money. The other had a black jacket and a black backpack.'},
+   {q:'What was happening when the alarm went off?',audio:'assets/witness/q06.mp3',alex:'He heard a loud noise but doesn’t remember an alarm.',ben:'The cashier pressed a button. Both men ran outside and drove away.'},
+   {q:'Which details did Alex seem unsure about?',audio:'assets/witness/q07.mp3',alex:'The time (about 9), the bag (“I think”), who was shouting, the alarm.',ben:'(Ben was sure about the time.)'},
+   {q:'What specific details did Ben remember?',audio:'assets/witness/q08.mp3',alex:'—',ben:'Exactly 9.15, a dark blue Ford, grey hoodie and black jacket, a black backpack, the driver’s face.'},
+   {q:'Did you notice any contradictions between their stories?',audio:'assets/witness/q09.mp3',alex:'One man, no alarm, a dark car.',ben:'Two men, an alarm, a dark blue Ford.'},
+   {q:'Why do you think Alex couldn’t remember everything?',audio:'assets/witness/q10.mp3',note:'Open question. He was outside, it was dark, he was looking for his phone, he wasn’t sure.'},
+   {q:'Do you think Ben really saw everything he described? Why?',audio:'assets/witness/q11.mp3',note:'Open question. He was inside and checked the time on his phone, but maybe he is too sure.'},
+   {q:'Which teenager seemed more nervous or uncertain?',audio:'assets/witness/q12.mp3',note:'Open question. Alex: “I think …”, “I’m not completely sure”, “I don’t remember”.'},
+   {q:'Does remembering more details always mean someone is telling the truth?',audio:'assets/witness/q13.mp3',note:'Open question. Not always: a person can remember wrongly, or lie.'},
+   {q:'Who do you think is the more reliable witness? Give three reasons.',audio:'assets/witness/q14.mp3',note:'Open question. Ben: exact time, many details, inside the shop. Alex: honest about what he doesn’t know.'},
+   {q:'If you could ask each teenager one more question, what would you ask?',audio:'assets/witness/q15.mp3',note:'Open question, e.g. Alex: Where exactly were you? Ben: Why are you so sure about the car?'}
+  ]}]},
+{stage:'Words',title:'Phrasal verbs: investigating and finding',hint:'Match the phrasal verbs to the definitions. <small>Then the floor is lava: three wrong answers and the game is over.</small>',cols:'1.1fr 1fr',
+ acts:[
+ {type:'match',title:'Phrasal verbs · exercise 1',tip:'Tap a phrasal verb, then its meaning.',items:[
+  {l:'look into',r:'investigate'},
+  {l:'come across',r:'find by accident'},
+  {l:'work out',r:'solve a problem by considering the facts'},
+  {l:'look for',r:'try to find'},
+  {l:'find out',r:'discover'},
+  {l:'turn up',r:'arrive or appear unexpectedly'},
+  {l:'look up',r:'try to find information in a book, a list or on a computer'},
+  {l:'come up with',r:'think of an idea or a plan'}]},
+ {type:'quiz',title:'Floor is lava · the right particle',label:'Sentence',lives:3,cols:2,items:[
+  {q:'You came ___ a friend in a surprising place.',o:['across','out','up','for'],a:'across',why:'come across = find by accident'},
+  {q:'You found ___ something interesting about a famous person.',o:['into','out','up','across'],a:'out',why:'find out = discover'},
+  {q:'A relative suddenly turned ___ at your house.',o:['out','for','up','into'],a:'up',why:'turn up = arrive unexpectedly'},
+  {q:'You worked ___ a difficult problem in a school subject.',o:['up','across','for','out'],a:'out',why:'work out = solve'},
+  {q:'You needed to look ___ an object that you lost.',o:['for','up','into','out'],a:'for',why:'look for = try to find'},
+  {q:'You looked ___ something in detail for a school project.',o:['up','into','for','across'],a:'into',why:'look into = investigate'},
+  {q:'You came ___ with a great new idea.',o:['across','out','up','into'],a:'up',why:'come up with = think of an idea'},
+  {q:'You looked ___ an English word in a dictionary.',o:['for','into','out','up'],a:'up',why:'look up = find information'}]}]},
+{stage:'Reading',title:'Detective story: The Missing Trophy',hint:'Predict from the title. <small>Then read the story: the phrasal verbs are in the wrong places. Tap two verbs to swap them.</small>',cols:'.7fr 1.5fr',
+ acts:[
+ {type:'talk',title:'Predict',label:'Title',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['I think …','Maybe …','Probably …'],cards:[
+  {q:'“The Missing Trophy.” What happened? Who took it, and why?'},
+  {q:'A detective looks into the case. What will he look for? What will he find out?'}]},
+ {type:'swap',title:'The Missing Trophy · swap the verbs',verbs:['looked into', 'looked for', 'came across', 'looked up', 'turned up', 'found out', 'worked out', 'came up with'],start:[4,5,0,6,1,7,3,2],ok:[[0],[1],[2],[3],[4],[5,6],[6,5],[7]],html:'<p>On Monday morning the school’s gold football trophy was not in its glass case. Detective Reed {0} the case at once. The caretaker said the door had been locked all weekend, and nobody had broken the window.</p><p>Reed {1} clues in the corridor and {2} a green hoodie behind a bin. There was a name label inside, so he {3} the name in the school list: Jack Miller, class 9B.</p><p>At lunchtime Jack {4} at the police station with his mother. “I didn’t take it,” he said. “I was at home on Sunday night.” But Reed {5} that a camera had filmed a boy in a green hoodie that evening. The boy was walking slowly, holding the trophy with both hands. A thief usually runs!</p><p>Suddenly Reed {6} the truth. “The base was loose, wasn’t it?” Jack nodded. “I took it to my dad’s workshop to fix it before the final. I wanted to surprise the coach, but I forgot to tell anyone.” Reed {7} a simple plan: Jack brought the trophy back the next day, and everybody said thank you.</p>'}]},
+{stage:'Reading',title:'Detective story: true or false?',hint:'Work from memory: is it true, false or not stated? <small>Then put the events in order.</small>',cols:'.8fr 1.3fr',
+ acts:[
+ {type:'quiz',title:'True · False · Not stated',label:'Sentence',cols:3,shuffle:false,items:[
+  {q:'The trophy was not in its glass case on Monday morning.',o:['True','False','Not stated'],a:'True'},
+  {q:'Someone broke the window.',o:['True','False','Not stated'],a:'False',why:'Nobody had broken the window.'},
+  {q:'Reed came across a hoodie in the corridor.',o:['True','False','Not stated'],a:'True',why:'Behind a bin.'},
+  {q:'The name label gave Reed the name of the boy.',o:['True','False','Not stated'],a:'True',why:'He looked up the name: Jack Miller.'},
+  {q:'Jack came to the police station alone.',o:['True','False','Not stated'],a:'False',why:'He came with his mother.'},
+  {q:'Jack said he was at home on Sunday night.',o:['True','False','Not stated'],a:'True'},
+  {q:'A camera filmed a boy in a green hoodie.',o:['True','False','Not stated'],a:'True'},
+  {q:'The boy was running away with the trophy.',o:['True','False','Not stated'],a:'False',why:'He was walking slowly.'},
+  {q:'Jack’s dad is a police officer.',o:['True','False','Not stated'],a:'Not stated',why:'We only know he has a workshop.'},
+  {q:'The school team won the final.',o:['True','False','Not stated'],a:'Not stated'},
+  {q:'Jack wanted to surprise the coach.',o:['True','False','Not stated'],a:'True'},
+  {q:'The trophy was very old.',o:['True','False','Not stated'],a:'Not stated'}]},
+ {type:'order',title:'Story sequencing',compact:true,reveal:true,from:'Tap the events in the right order',items:[
+  'The trophy was not in its glass case.',
+  'Reed looked into the case.',
+  'He came across a green hoodie behind a bin.',
+  'He looked up the name on the label.',
+  'Jack turned up at the police station.',
+  'Jack said he was at home.',
+  'Reed found out about the camera.',
+  'Reed worked out the truth.',
+  'Jack explained about the loose base.',
+  'Jack brought the trophy back.']}]},
+{stage:'Speak',title:'Use it … don’t lose it!',hint:'Think of a real time for each situation. Tell the story in the past simple. <small>Then the sentence race from exercise 2.</small>',cols:'1.1fr 1fr',
+ acts:[
+ {type:'talk',title:'Think about a time when …',label:'Situation',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['came across','found out','turned up','worked out','looked for','came up with'],cards:[
+  {q:'… you came across a friend or relative in a surprising or unusual place.'},
+  {q:'… you found out something interesting about a famous person.'},
+  {q:'… a friend or relative suddenly turned up at your house.'},
+  {q:'… you worked out a difficult problem in a school subject.'},
+  {q:'… you needed to look for an object that you lost.'},
+  {q:'… you came up with a great new idea.'}]},
+ {type:'pick',title:'Sentence race · logical or not?',tip:'Tap every sentence that makes sense, then check.',items:[
+  {t:'I came across the key.',ok:1},{t:'I found out the answer.',ok:1},{t:'I worked out the identity of the criminal.',ok:1},{t:'I looked for the key.',ok:1},
+  {t:'I found out the identity of the criminal.',ok:1},{t:'I came up the answer.',ok:0},{t:'I worked across the key.',ok:0},{t:'I looked out the identity of the criminal.',ok:0},
+  {t:'I worked out the answer.',ok:1},{t:'I came for the answer.',ok:0}]}]},
+{stage:'Revision',title:'Kahoot · Module 2',hint:'First predict: which topic will be the hardest, crimes, detectives, past tenses or rules? <small>Then 22 quick questions, 15 seconds each. The yellow button has the whole module.</small>',help:{label:'Module 2 in a box',html:BOX},
  acts:[
  {type:'bomb',speed:1,secs:15,label:'Kahoot',title:'Module 2 · Kahoot',items:[
-  {sec:'Crime words',q:'Masked men take money from a bank using threats.',o:['burglary','robbery','fraud','vandalism'],a:'robbery',why:'stealing with force or threats'},
-  {sec:'Crime words',q:'Someone breaks into a house at night and takes a laptop.',o:['mugging','shoplifting','burglary','arson'],a:'burglary',why:'entering a building to steal'},
-  {sec:'Crime words',q:'Starting a fire on purpose is ___.',o:['assault','harassment','theft','arson'],a:'arson'},
-  {sec:'Crime words',q:'Tricking people to get their money is ___.',o:['kidnapping','fraud','vandalism','mugging'],a:'fraud'},
-  {sec:'Crime · criminal · verb',q:'A person who steals things is a ___.',o:['theft','stealer','thief','steal'],a:'thief',why:'theft (crime) · thief (person) · steal (verb)'},
-  {sec:'Crime · criminal · verb',q:'A person who breaks into houses is a ___.',o:['burglar','burglary','robber','break'],a:'burglar',why:'burglary (crime) · burglar (person)'},
-  {sec:'Crime · criminal · verb',q:'Masked men ___ the bank yesterday.',o:['stole','burgled','robbed','theft'],a:'robbed',why:'rob a place or a person · steal a thing'},
-  {sec:'Detectives',q:'Proof that you were in another place at the time of the crime.',o:['a clue','an alibi','evidence','a witness'],a:'an alibi'},
-  {sec:'Detectives',q:'A person who saw what happened.',o:['a witness','a suspect','a victim','a judge'],a:'a witness'},
-  {sec:'Detectives',q:'A person the police think might have done it.',o:['a witness','a victim','a suspect','a judge'],a:'a suspect'},
-  {sec:'The case',q:'Alex says he was in the gym at 3:30. What is the problem?',o:['The gym was closed','The PE teacher left before 3:30','He was with Mia','He was playing football'],a:'The PE teacher left before 3:30',why:'The teacher saw him at 3:25, but nobody saw him at 3:30.'},
-  {sec:'Past tenses',q:'At 3:30 Ben ___ for his mum outside school.',o:['waited','was waiting','were waiting','has waited'],a:'was waiting',why:'in progress at 3:30: past continuous'},
-  {sec:'Past tenses',q:'I ___ home when I saw the police car.',o:['was walking','walked','were walking','walk'],a:'was walking',why:'long action + when + short action (saw)'},
-  {sec:'Past tenses',q:'Choose the correct detective question.',o:['What you were doing at 3:30?','What did you doing at 3:30?','What were you doing at 3:30?','What was you doing at 3:30?'],a:'What were you doing at 3:30?'},
-  {sec:'Rules',q:'It is not allowed: you ___ use your phone during a test.',o:['don’t have to','mustn’t','should','might'],a:'mustn’t'},
-  {sec:'Rules',q:'It is not necessary: on Saturdays we ___ come to school.',o:['mustn’t','must','should','don’t have to'],a:'don’t have to'},
-  {sec:'Rules',q:'It is good advice, not a rule: you ___ say sorry.',o:['should','must','mustn’t','have to'],a:'should'},
-  {sec:'Rules',q:'The past of “have to / must” (a rule in the past): yesterday we ___ wear a uniform.',o:['must','musted','had to','have to'],a:'had to'},
-  {sec:'School Court',q:'Unpaid work that helps the local community.',o:['a fine','a warning','an apology','community service'],a:'community service'},
-  {sec:'School Court',q:'Money you pay as a punishment.',o:['community service','a fine','a warning','an alibi'],a:'a fine'}]}]}
+  {sec:'Crime words',q:'Masked men take money from a bank using threats.',o:['burglary', 'robbery', 'fraud', 'vandalism'],a:'robbery',why:'stealing with force or threats'},
+  {sec:'Crime words',q:'Someone breaks into a house at night and takes a laptop.',o:['mugging', 'shoplifting', 'burglary', 'arson'],a:'burglary',why:'entering a building to steal'},
+  {sec:'Crime words',q:'Starting a fire on purpose is ___.',o:['assault', 'harassment', 'theft', 'arson'],a:'arson'},
+  {sec:'Crime · criminal · verb',q:'A person who steals things is a ___.',o:['theft', 'stealer', 'thief', 'steal'],a:'thief',why:'theft (crime) · thief (person) · steal (verb)'},
+  {sec:'Crime · criminal · verb',q:'A person who breaks into houses is a ___.',o:['burglar', 'burglary', 'robber', 'break'],a:'burglar',why:'burglary (crime) · burglar (person)'},
+  {sec:'Crime · criminal · verb',q:'Masked men ___ the bank yesterday.',o:['stole', 'burgled', 'robbed', 'theft'],a:'robbed',why:'rob a place or a person · steal a thing'},
+  {sec:'Detectives',q:'Proof that you were in another place at the time of the crime.',o:['a clue', 'an alibi', 'evidence', 'a witness'],a:'an alibi'},
+  {sec:'Detectives',q:'A person who saw what happened.',o:['a witness', 'a suspect', 'a victim', 'a judge'],a:'a witness'},
+  {sec:'Detectives',q:'A person the police think might have done it.',o:['a witness', 'a victim', 'a suspect', 'a judge'],a:'a suspect'},
+  {sec:'The case',q:'Alex says he was in the gym at 3:30. What is the problem?',o:['The gym was closed', 'The PE teacher left before 3:30', 'He was with Mia', 'He was playing football'],a:'The PE teacher left before 3:30',why:'The teacher saw him at 3:25, but nobody saw him at 3:30.'},
+  {sec:'Past tenses',q:'At 3:30 Ben ___ for his mum outside school.',o:['waited', 'was waiting', 'were waiting', 'has waited'],a:'was waiting',why:'in progress at 3:30: past continuous'},
+  {sec:'Past tenses',q:'I ___ home when I saw the police car.',o:['was walking', 'walked', 'were walking', 'walk'],a:'was walking',why:'long action + when + short action (saw)'},
+  {sec:'Past tenses',q:'After she ___ the chips, there wasn’t any evidence.',o:['ate', 'was eating', 'had eaten', 'has eaten'],a:'had eaten',why:'earlier than “wasn’t”: past perfect'},
+  {sec:'Past tenses',q:'Choose the correct detective question.',o:['What you were doing at 3:30?', 'What did you doing at 3:30?', 'What were you doing at 3:30?', 'What was you doing at 3:30?'],a:'What were you doing at 3:30?'},
+  {sec:'Verb patterns',q:'The police arrested her ___ theft.',o:['with', 'of', 'for', 'by'],a:'for',why:'arrest someone for a crime'},
+  {sec:'Verb patterns',q:'They charged the two men ___ burglary.',o:['for', 'with', 'of', 'to'],a:'with',why:'charge someone with a crime'},
+  {sec:'Rules',q:'It is not allowed: you ___ use your phone during a test.',o:['don’t have to', 'mustn’t', 'should', 'might'],a:'mustn’t'},
+  {sec:'Rules',q:'It is not necessary: on Saturdays we ___ come to school.',o:['mustn’t', 'must', 'should', 'don’t have to'],a:'don’t have to'},
+  {sec:'Rules',q:'It is good advice, not a rule: you ___ say sorry.',o:['should', 'must', 'mustn’t', 'have to'],a:'should'},
+  {sec:'Rules',q:'Yesterday we ___ wear a uniform. (a rule in the past)',o:['must', 'musted', 'had to', 'have to'],a:'had to'},
+  {sec:'School Court',q:'Unpaid work that helps the local community.',o:['a fine', 'a warning', 'an apology', 'community service'],a:'community service'},
+  {sec:'School Court',q:'Say that someone has done something wrong.',o:['punish', 'accuse', 'apologise', 'confirm'],a:'accuse'}]}]}
 ]});
+</script>
+<script>
+/* Speed Game wording for the timed check (no bomb words on Gabi's screen) */
+(function(){const R=[[/Answer before the bomb explodes\./g,'Answer before the time runs out.'],[/Next bomb/g,'Next'],[/Boom!/g,'Missed.'],[/\bBoom\b/g,'Missed'],[/Defused/g,'Right'],[/ defused/g,' right'],[/exploded/g,'missed'],[/Not a single explosion\./g,'No misses.']];
+function fix(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while(n=w.nextNode()){let t=n.nodeValue,o=t;R.forEach(r=>{t=t.replace(r[0],r[1])});if(t!==o)n.nodeValue=t}}
+new MutationObserver(()=>fix(document.body)).observe(document.body,{childList:true,subtree:true,characterData:false});fix(document.body)})();
 </script>
 </body>
 </html>
