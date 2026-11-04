@@ -38,11 +38,11 @@ const SPEC=[
  cards:[['come','иди сюда, приходи','Come here, please.'],['jump','прыгать','I can jump.'],['drink','пить','I drink water.'],['like','любить, нравиться','I like ice cream.'],['love','любить','I love my dog.'],['have','иметь, у меня есть','I have a cat.'],['dance','танцевать','We dance.'],['fly','летать; запускать','I fly a kite.'],['ride a bike','кататься на велосипеде','I ride a bike.'],['play football','играть в футбол','We play football.'],['cook','готовить','I cook with my dad.'],['can','уметь, мочь','I can do a handstand.']],
  predict:{q:'What are the children doing?',opts:['actions: jump, dance, cook…','sleeping','shopping'],reveal:'Today: everyday verbs. Come, jump, drink, like, love, have, dance, fly, ride, play, cook.'},
  pats:['I can …','I like …','I love …','I have …']},
-{id:'R1',sheet:'R1',title:'Phonics · b d p t',theme:'first words',
+{id:'PH1',sheet:'R1',title:'Phonics · b d p t',theme:'first words',
  cards:[['ball','мяч',"It's a ball."],['bed','кровать',"It's a bed."],['bag','рюкзак, сумка',"It's a bag."],['dog','собака',"It's a dog."],['desk','парта, стол',"It's a desk."],['doll','кукла',"It's a doll."],['pen','ручка',"It's a pen."],['pig','свинья',"It's a pig."],['park','парк',"It's a park."],['tent','палатка',"It's a tent."],['tiger','тигр',"It's a tiger."],['toy','игрушка',"It's a toy."]],
  predict:{q:'What do the words begin with?',opts:['b, d, p, t','m, n, s','a, e, i'],reveal:'Today: first sounds b, d, p, t. Ball, bed, dog, desk, pen, park, tent, toy.'},
  pats:["What's this?","It's a ball.","It's a dog.","It's a tiger."]},
-{id:'R2',sheet:'R2',title:'Phonics · a and e',theme:'short vowels',
+{id:'PH2',sheet:'R2',title:'Phonics · a and e',theme:'short vowels',
  cards:[['cat','кошка',"It's a cat."],['hat','шляпа',"It's a hat."],['bag','сумка',"It's a bag."],['map','карта',"It's a map."],['man','мужчина',"He's a man."],['jam','варенье',"It's jam."],['bed','кровать',"It's a bed."],['pen','ручка',"It's a pen."],['six','шесть','Six things.'],['red','красный',"It's a red apple."],['egg','яйцо',"It's an egg."],['leg','нога','This is a leg.']],
  predict:{q:'Which vowel sounds do you hear?',opts:['a and e','o and u','only i'],reveal:'Today: short vowels a and e. Cat, hat, bag, map, man, jam — bed, pen, red, egg, leg.'},
  pats:["What's this?","It's a cat.","It's an egg.","It's a red apple."]}

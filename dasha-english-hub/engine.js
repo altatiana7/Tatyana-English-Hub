@@ -461,8 +461,8 @@ const app=$('#app');
 const findLesson=id=>{let r=null;D.paths.forEach(P=>P.units.forEach((U,ui)=>U.lessons.forEach((L,k)=>{if(L.id===id&&!r)r={P,U,k,l:L};})));return r;};
 /* x/y = box of the button on the 1672 × 941 picture; decks = flashcard decks, les = lessons (ids) */
 const TILES=[
- {id:'aa',name:'Aa',title:'Vowels',sub:'short vowels · magic e',c:'#C6586A',x:[566,735],y:[350,507],decks:['R2'],les:['R2','R3','R5','R6']},
- {id:'bb',name:'Bb',title:'First sounds',sub:'b d p t · silent letters',c:'#3F6FB5',x:[741,897],y:[350,507],decks:['R1'],les:['R1','R14']},
+ {id:'aa',name:'Aa',title:'Vowels',sub:'short vowels · magic e',c:'#C6586A',x:[566,735],y:[350,507],decks:['PH2'],les:['R2','R3','R5','R6']},
+ {id:'bb',name:'Bb',title:'First sounds',sub:'b d p t · silent letters',c:'#3F6FB5',x:[741,897],y:[350,507],decks:['PH1'],les:['R1','R14']},
  {id:'sh',name:'sh',title:'Digraphs',sub:'sh · ch · th · ng',c:'#2E8B6A',x:[908,1052],y:[350,507],decks:[],les:['R4']},
  {id:'ch',name:'ch',title:'Vowel teams',sub:'ai ay ee ea oa ow igh',c:'#C98A1E',x:[1062,1210],y:[350,507],decks:[],les:['R7','R8']},
  {id:'th',name:'th',title:'Diphthongs and oo',sub:'ou ow oi oy oo',c:'#7B5EA7',x:[1218,1360],y:[350,507],decks:[],les:['R9','R10']},
