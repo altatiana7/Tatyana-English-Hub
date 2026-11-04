@@ -457,29 +457,63 @@ function quizlet(L,host){
 
 /* ---------- views ---------- */
 const app=$('#app');
-const COVER={read:{img:'hub-read',motif:'Aa · ai · oa'},gg:{img:'hub-gg',motif:'0 · 1 · 2'},verbs:{img:'hub-verbs',motif:'go · run · eat'}};
-function hub(){
-  clearTimers();stopAudio();document.title="Dasha's English";app.innerHTML='';app.className='hubview';
-  const top=h('header','hubtop');
-  top.innerHTML=`<div><div class="brand">Dasha's English<i></i></div><div class="sub">Reading Lab · Go Getter 1 · Verbs — choose a lesson</div></div>`;
-  const tb=h('button','btn teacher','Для учителя');tb.onclick=()=>teacherPlan();top.append(tb);app.append(top);
-  const g=h('div','paths');
-  D.paths.forEach((P,pi)=>{
-    const c=h('section','pcard p-'+P.id);
-    const cv=COVER[P.id]||{};const cover=h('div','cover');const im=new Image();im.alt='';
-    im.onerror=()=>{im.remove();cover.insertAdjacentHTML('afterbegin',`<span class="motif">${esc(cv.motif||'')}</span>`);};im.src='img/'+cv.img+'.jpg';cover.append(im);
-    const n=P.units.reduce((a,U)=>a+U.lessons.filter(L=>!L.soon).length,0);
-    c.append(cover);c.insertAdjacentHTML('beforeend',`<h2>${esc(P.title)}<span class="cnt2">${n} lessons</span></h2><div class="psub">${esc(P.sub)}</div>`);
-    P.units.forEach(U=>{
-      if(U.title)c.append(h('div','utitle',esc(U.title)));
-      const ch=h('div','chips');
-      U.lessons.forEach((L,k)=>{const b=h('button','lchip'+(L.soon?' soon':''),`<b>${esc(L.id)}</b><span>${esc(L.short||L.name)}</span>`);b.title=L.name;if(!L.soon)b.onclick=()=>lesson(P,U,k);ch.append(b);});
-      c.append(ch);
-    });
-    if(P.later)c.append(h('div','later',esc(P.later)));
-    g.append(c);
+/* ---------- hub: one full-screen picture, buttons sit on the picture; everything else opens from them ---------- */
+const findLesson=id=>{let r=null;D.paths.forEach(P=>P.units.forEach((U,ui)=>U.lessons.forEach((L,k)=>{if(L.id===id&&!r)r={P,U,k,l:L};})));return r;};
+/* x/y = box of the button on the 1672 × 941 picture; decks = flashcard decks, les = lessons (ids) */
+const TILES=[
+ {id:'aa',name:'Aa',title:'Vowels',sub:'short vowels · magic e',c:'#C6586A',x:[566,735],y:[350,507],decks:['R2'],les:['R2','R3','R5','R6']},
+ {id:'bb',name:'Bb',title:'First sounds',sub:'b d p t · silent letters',c:'#3F6FB5',x:[741,897],y:[350,507],decks:['R1'],les:['R1','R14']},
+ {id:'sh',name:'sh',title:'Digraphs',sub:'sh · ch · th · ng',c:'#2E8B6A',x:[908,1052],y:[350,507],decks:[],les:['R4']},
+ {id:'ch',name:'ch',title:'Vowel teams',sub:'ai ay ee ea oa ow igh',c:'#C98A1E',x:[1062,1210],y:[350,507],decks:[],les:['R7','R8']},
+ {id:'th',name:'th',title:'Diphthongs and oo',sub:'ou ow oi oy oo',c:'#7B5EA7',x:[1218,1360],y:[350,507],decks:[],les:['R9','R10']},
+ {id:'wh',name:'wh',title:'r-sounds',sub:'ar or er ir ur ear air',c:'#2A8C9B',x:[1368,1520],y:[350,507],decks:[],les:['R11','R12','R13']},
+ {id:'school',name:'School',title:'School',sub:'classroom · commands · hello',c:'#3F6FB5',x:[617,892],y:[527,695],decks:['A','G'],les:['0.1','0.3','V1']},
+ {id:'family',name:'Family',title:'Family',sub:'family · friends · meeting people',c:'#C6586A',x:[905,1190],y:[527,695],decks:['E'],les:['1.1','1.2','1.3','1.4','1.5','1.6','1.7','4.1']},
+ {id:'animals',name:'Animals',title:'Animals',sub:'animals · weather · seasons',c:'#5E8F34',x:[1203,1483],y:[527,695],decks:['C'],les:['7.1','7.2','8.4']},
+ {id:'food',name:'Food',title:'Food',sub:'colours · fruit · my day',c:'#C98A1E',x:[617,892],y:[708,888],decks:['B'],les:['0.2','6.1','6.2']},
+ {id:'hobbies',name:'Hobbies',title:'Hobbies',sub:'I can · I like · everyday verbs',c:'#7B5EA7',x:[905,1190],y:[708,888],decks:['H'],les:['5.1','5.2','8.1','V2','V3','V4']},
+ {id:'home',name:'Home',title:'Home',sub:'my things · in the house',c:'#2A8C9B',x:[1203,1483],y:[708,888],decks:['D'],les:['2.1','2.2','3.1','3.2','X1']}
+];
+let curTile=null,curList=null;
+function hub(openId){
+  clearTimers();stopAudio();document.title="Dasha's English";app.innerHTML='';app.className='coverview';
+  const wrap=h('div','coverwrap');const st=h('div','coverstage');
+  const im=new Image();im.alt="Go Getter 1 · phonics and topic blocks";im.src='img/hub-cover.jpg';im.draggable=false;st.append(im);
+  TILES.forEach(t=>{
+    const b=h('button','hot');b.style.cssText=`left:${t.x[0]/16.72}%;top:${t.y[0]/9.41}%;width:${(t.x[1]-t.x[0])/16.72}%;height:${(t.y[1]-t.y[0])/9.41}%;--acc:${t.c}`;
+    b.setAttribute('aria-label',t.title);b.onclick=()=>panel(t);st.append(b);
   });
-  app.append(g);
+  const tb=h('button','btn teacher sm tbtn','Для учителя');tb.onclick=()=>teacherPlan();st.append(tb);
+  wrap.append(st);app.append(wrap);
+  if(openId){const t=TILES.find(x=>x.id===openId);if(t)panel(t);}
+}
+function panel(t){
+  curTile=t.id;stopAudio();
+  const items=[];t.decks.forEach(id=>{const f=findLesson(id);if(f)items.push(f);});
+  const nDecks=items.length;t.les.forEach(id=>{const f=findLesson(id);if(f)items.push(f);});
+  const ov=h('div','pov');const p=h('div','ppanel');p.style.setProperty('--acc',t.c);
+  const head=h('div','phead',`<div class="ptitle">${t.name===t.title?'':`<span class="pbadge">${esc(t.name)}</span>`}<span><b>${esc(t.title)}</b><small>${esc(t.sub)}</small></span></div>`);
+  const cl=h('button','btn sm','✕ Close');cl.onclick=close;head.append(cl);
+  const body=h('div','pbody'+(nDecks?'':' one'));
+  const open=it=>{curList=items;lesson(it.P,it.U,it.k);};
+  if(nDecks){
+    const col=h('div','pcol');col.append(h('div','plab','Flashcards'));
+    items.slice(0,nDecks).forEach(it=>{
+      const b=h('button','deck');const th=new Image();th.alt='';th.src='img/cards/'+it.l.cards[0].img+'.jpg';
+      b.append(th);b.insertAdjacentHTML('beforeend',`<span><b>${esc(it.l.short)}</b><small>${it.l.cards.length} cards · 9 activities</small></span>`);
+      b.onclick=()=>open(it);col.append(b);
+    });
+    body.append(col);
+  }
+  const col2=h('div','pcol');col2.append(h('div','plab','Lessons'));
+  const ch=h('div','pchips');
+  items.slice(nDecks).forEach(it=>{const b=h('button','lchip',`<b>${esc(it.l.id)}</b><span>${esc(it.l.short||it.l.name)}</span>`);b.title=it.l.name;b.onclick=()=>open(it);ch.append(b);});
+  col2.append(ch);body.append(col2);
+  p.append(head,body);ov.append(p);
+  function close(){ov.remove();curTile=null;}
+  ov.onclick=e=>{if(e.target===ov)close();};
+  document.body.querySelectorAll('.pov').forEach(x=>x.remove());
+  app.append(ov);
 }
 function overlay(title,html){
   const ov=h('div','tover');ov.innerHTML=`<div class="tpanel"><div class="th">${title}</div><div class="tt">${html}</div></div>`;
@@ -492,11 +526,11 @@ function lesson(P,U,k,bi){
   clearTimers();stopAudio();const L=U.lessons[k];
   app.innerHTML='';app.className='lessonview p-'+P.id;document.title=L.id+' · '+L.name;
   const top=h('header','ltop');
-  const home=h('button','btn sm','‹ Home');home.onclick=hub;
+  const home=h('button','btn sm','‹ Back');home.onclick=()=>hub(curTile);
   const ttl=h('div','ltitle',`<span class="lid">${esc(L.id)}</span> ${esc(L.name)}`);
   const nav=h('div','btnrow');nav.style.flexWrap='nowrap';
   const all=[];D.paths.forEach(p=>p.units.forEach(u=>u.lessons.forEach((l,j)=>all.push({P:p,U:u,k:j,l}))));
-  const idx=all.findIndex(x=>x.l===L);const playable=all.filter(x=>!x.l.soon&&x.P===P);const pi=playable.findIndex(x=>x.l===L);
+  const playable=(curList&&curList.some(x=>x.l===L))?curList:all.filter(x=>!x.l.soon&&x.P===P);const pi=playable.findIndex(x=>x.l===L);
   const pv=h('button','btn sm','‹');pv.title='Previous lesson';pv.disabled=pi<=0;pv.onclick=()=>{const t=playable[pi-1];lesson(t.P,t.U,t.k);};
   const nx=h('button','btn sm','›');nx.title='Next lesson';nx.disabled=pi<0||pi>=playable.length-1;nx.onclick=()=>{const t=playable[pi+1];lesson(t.P,t.U,t.k);};
   const tch=h('button','btn teacher sm','Для учителя');tch.onclick=()=>overlay('Для учителя · '+esc(L.id),L.teach||'');
