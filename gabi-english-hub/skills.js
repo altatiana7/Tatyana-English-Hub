@@ -23,7 +23,7 @@ function hush(){try{speechSynthesis.cancel()}catch(e){}if(CLIP){try{CLIP.pause()
 function playClip(src,text){hush();if(!src)return say([['q',text]]);const el=new Audio(src);CLIP=el;let fell=false;const fb=()=>{if(fell||CLIP!==el)return;fell=true;CLIP=null;say([['q',text]])};el.addEventListener('error',fb);const p=el.play();if(p&&p.catch)p.catch(fb)}
 
 /* ---------- shell ---------- */
-function boot(cfg){CFG=cfg;EMBED=new URLSearchParams(location.search).has('embed');document.documentElement.classList.toggle('embed',EMBED);
+function boot(cfg){CFG=cfg;EMBED=new URLSearchParams(location.search).has('embed');document.documentElement.classList.toggle('embed',EMBED);document.documentElement.classList.toggle('once',!!cfg.once);
  document.body.innerHTML=`<div class="bar"><a class="home" href="${esc(cfg.hub||'index.html')}" aria-label="Back to Gabi Hub">←<span>&nbsp;Hub</span></a>
   <div class="now"><small id="stage"></small><b id="title"></b></div><div class="steps" id="steps" role="tablist" aria-label="Lesson steps"></div>
   <button class="arrow" id="prev" aria-label="Previous step">‹</button><button class="arrow next" id="next"></button></div>
@@ -347,7 +347,7 @@ function onClick(e){const b=e.target.closest('button,[data-sc]');if(!b||b.disabl
  if(d.peek!==undefined){s.hidden=false;s.left=null;return draw()}
  if(d.say!==undefined&&!b.closest('.act')){hush();return say(step.side.audio[+d.say].script)}
  if(d.stop!==undefined&&!b.closest('.act')){return hush()}
- if(!b.closest('.act'))return;const c=pick(b);if(!c)return;const A=ACT[c.a.type];if(A&&A.click)A.click(c.a,c.s,d,b);
+ if(!b.closest('.act'))return;const c=pick(b);if(!c)return;if(CFG.once&&(d.again!==undefined||d.fagain!==undefined))return;const A=ACT[c.a.type];if(A&&A.click)A.click(c.a,c.s,d,b);
  if(c.a.type==='write')ACT.write.after(c.a,c.s)}
 function onInput(e){const c=pick(e.target);if(!c)return;const A=ACT[c.a.type];if(A&&A.input)A.input(c.a,c.s,e.target)}
 const _draw=draw;draw=function(){_draw();const step=CFG.steps[cur];if(step.acts){step.acts.forEach((a,k)=>{const A=ACT[a.type];if(A&&A.after&&$('#act-'+k)){AK=k;A.after(a,subS(k))}});return}const A=step.act&&ACT[step.act.type];if(A&&A.after&&$('#act'))A.after(step.act,ST[cur])};

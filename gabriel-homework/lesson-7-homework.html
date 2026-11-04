@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="../gabi-english-hub/skills.css?v=20261015big">
 </head>
 <body>
-<script src="../gabi-english-hub/skills.js?v=20261009a"></script>
+<script src="../gabi-english-hub/skills.js?v=20261104b"></script>
 <script>
 /* Homework 7, after Lesson 6 (Gateway to the World B1, Unit 1, Developing writing p15: an informal email).
    Everything was practised in class in writing-email.html; here Gabi answers Maya's questions and writes the full reply.
@@ -19,7 +19,7 @@ const MAIL={from:'Maya',sub:'Hello from Brighton',img:'../gabi-english-hub/asset
 const MAYA=`<p>Hi,</p><p>I’m Maya. I’m from Brighton in the UK. Let me tell you about myself.</p><p>I’ve got one brother and one sister. My sister and I are almost the same age and we go everywhere together. My father’s a teacher and my mother works in an office. What about you? Have you got a big or a small family?</p><p>I love listening to music. My favourite group is Wolf Alice. Right now, I’m listening to one of their new songs. I also enjoy doing all types of sports, but especially team sports like football and basketball. What about you? What do you like doing in your free time?</p><p>What are your favourite subjects at school? Mine are art and English. This year I have special art classes on Saturdays. I have a lot of homework during the week but I love reading when I can. At the moment I’m reading a great book about the Mexican artist Frida Kahlo.</p><p>Anyway, that’s all for now. Is there anything special you’d like to know about me?</p><p>Write back soon.<br>Best wishes,<br>Maya</p>`;
 const TASK=`<h4>Your task</h4><p>Your school is going to be part of the exchange. Write an email introducing yourself to Maya. Include:</p><ul><li>basic personal information</li><li>your family</li><li>your main hobby</li><li>your favourite subjects at school</li></ul><p>Reply to her questions and ask her about herself.</p>`;
 const contractions=t=>(t.match(/\b[A-Za-z]+['’](m|ve|s|re|d|ll|t)\b/g)||[]).length;
-Lesson.boot({kicker:'Homework · 12 October',hub:'./',steps:[
+Lesson.boot({once:true,kicker:'Homework · 12 October',hub:'./',steps:[
 {stage:'Read',title:'Answer Maya’s questions',hint:'Maya asks four questions. Answer each one in a full sentence.',wide:true,
  side:{look:'mail',mail:MAIL,title:'Student’s Book p15 · Maya, from Brighton, is your exchange partner',text:{html:MAYA}},
  act:{type:'gaps',free:true,items:[

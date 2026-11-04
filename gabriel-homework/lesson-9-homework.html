@@ -35,10 +35,11 @@
 .act.panel .opts button.no{background:#f9d9d6;border-color:#d9534f}
 .act.panel .opts button.dim{opacity:.55}
 @media(max-height:700px){.cstage{padding:6px 12px;gap:6px}.cstage .pl{padding:3px 10px;margin:0;flex:none}}
+.once [data-again],.once [data-fagain]{display:none!important}
 </style>
 </head>
 <body>
-<script src="../gabi-english-hub/skills.js?v=20261104a"></script>
+<script src="../gabi-english-hub/skills.js?v=20261104b"></script>
 <script>
 /* Homework 9, after Module 2 lesson 4 (Surprising true crimes). Two activities per screen.
    1 Listen: the two witnesses (hidden words) + the officer's questions as a listening test
@@ -60,7 +61,7 @@ Lesson.ACT.witness={
    setTimeout(()=>{document.querySelectorAll('.pl[data-pl="q"] audio').forEach(x=>{x.pause();x.currentTime=0});const w=document.querySelector('.pl[data-pl^="w"] audio');if(w){const r=w.play();if(r&&r.catch)r.catch(()=>{})}},0);return}}};
 const W='../gabi-english-hub/assets/witness/';
 const OQ='The officer asks a question. Listen, then choose the best answer.';
-Lesson.boot({kicker:'Module 2 · Homework · 4 November',hub:'./',steps:[
+Lesson.boot({once:true,kicker:'Module 2 · Homework · 4 November',hub:'./',steps:[
 {stage:'Listen',title:'At the police station',hint:'First listen to the two witnesses. <small>Then the police officer asks you 11 questions: listen and choose the best answer. The words are hidden; you can listen again.</small>',cols:'1fr 1.1fr',
  acts:[
  {type:'witness',title:'Two witnesses',people:[

@@ -11,13 +11,13 @@
 <style>.letter{background:#fff;border-radius:12px;padding:8px 12px;font-size:15.5px;line-height:1.4;border-left:5px solid var(--acc)}.letter p{margin:0 0 5px}</style>
 </head>
 <body>
-<script src="../gabi-english-hub/skills.js?v=20261014a"></script>
+<script src="../gabi-english-hub/skills.js?v=20261104b"></script>
 <script>
 /* Homework 8, after Module 2 lesson 1 (Law and order). Crime vocabulary (+ 5 words and word formation from lesson 15 Oct): learn (flashcards + memory) -> recall (definitions, situations)
    -> word families + mistakes -> something else: advice to a teenager (writing). Two activities per screen. */
 const LETTER=`<h4>Teen Help · your advice page</h4><div class="letter"><p>Dear Teen Help,</p><p>My best friend wants me to help him take sweets from a shop after school. I just have to watch the door. He says everybody does it and it isn’t a real crime. I don’t want to lose my friend. What should I do?</p><p>Sam, 13</p></div><h4>Useful language</h4><ul><li>It <b>is</b> / <b>isn’t</b> a crime because …</li><li>You <b>should</b> … · You <b>could</b> … · <b>Why don’t you</b> … ?</li><li><b>If I were you, I’d</b> …</li><li>A real friend wouldn’t …</li></ul>`;
 const has3=t=>{const W=['theft','thief','steal','stole','stolen','shoplift','shoplifting','shoplifter','crime','criminal','pickpocket','burglar','robbery','rob','vandalism','fraud','police','illegal','arrest','punish','robber','smuggl','stalk','murder','terror'];const n=t.toLowerCase();return W.filter(w=>new RegExp('\\b'+w).test(n)).length>=3};
-Lesson.boot({kicker:'Module 2 · Homework · 14 October',hub:'./',steps:[
+Lesson.boot({once:true,kicker:'Module 2 · Homework · 14 October',hub:'./',steps:[
 {stage:'Learn',title:'18 crimes',hint:'13 words from last lesson and 5 new words from today. Learn the words. Turn each card over to see the translation. <small>Then find the pairs in Memory.</small>',cols:'1fr 1.15fr',
  acts:[
  {type:'cards',title:'Flashcards',items:[
