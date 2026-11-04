@@ -159,7 +159,7 @@ PR.forEach((p,i)=>{const n=i+1,box=$('p'+n);$('aim'+n).textContent=AIM[i];
 
 /* engines */
 function Cards(btn,count,prev,next,data,render,lbtn,audioKey){let i=0,b=false;
- function r(){count.textContent=(i+1)+' / '+data.length+' · tap the card to turn it';btn.innerHTML=render(data[i],b);if(lbtn){const k=audioKey?audioKey(i,b):null;lbtn.hidden=!k;}}
+ function r(){count.textContent=(i+1)+' / '+data.length+'';btn.innerHTML=render(data[i],b);if(lbtn){const k=audioKey?audioKey(i,b):null;lbtn.hidden=!k;}}
  btn.onclick=()=>{stopAudio();b=!b;r();};prev.onclick=()=>{stopAudio();i=(i+data.length-1)%data.length;b=false;r();};next.onclick=()=>{stopAudio();i=(i+1)%data.length;b=false;r();};
  if(lbtn)lbtn.onclick=()=>{const k=audioKey(i,b);if(k)play(k);};r();}
 function Quiz(root,items,opt){opt=opt||{};let i=0,score=0,locked=false,order=opt.keep?items.slice():sh(items),disp=[],tid=null,miss=[];
@@ -229,8 +229,8 @@ const IV=['Think of a childhood memory. How sure are you that it really happened
  function paint(){const r=el.querySelector('.ring');if(!r)return;r.style.strokeDashoffset=C*(1-left/40);el.querySelector('.secs').textContent=left;}
  function stop(){clearInterval(t);t=null;}
  function draw(){stop();left=40;
-  el.innerHTML='<button class="fl" id="ivc" style="min-height:130px"><small>INTERVIEW '+(i+1)+' / '+IV.length+'</small><strong style="font-size:24px">Listen and answer</strong><em>Your teacher reads the question aloud.</em></button><div class="row" style="justify-content:center"><button class="btn" id="ivp">←</button><button class="btn alt" id="ivf">Flip card</button><svg class="timer" viewBox="0 0 80 80" id="ivt" style="--c:#ff6b4a"><circle cx="40" cy="40" r="34" class="trk"/><circle cx="40" cy="40" r="34" class="ring" stroke-dasharray="'+C+'" stroke-dashoffset="0"/><text x="40" y="48" text-anchor="middle" class="secs">40</text></svg><button class="btn" id="ivn">→</button></div>';
-  let back=false;const flip=()=>{back=!back;el.querySelector('#ivc').innerHTML=back?'<small>QUESTION</small><p>'+IV[i]+'</p>':'<small>INTERVIEW '+(i+1)+' / '+IV.length+'</small><strong style="font-size:24px">Listen and answer</strong><em>Your teacher reads the question aloud.</em>';};
+  el.innerHTML='<button class="fl" id="ivc" style="min-height:130px"><small>INTERVIEW '+(i+1)+' / '+IV.length+'</small><strong style="font-size:24px">Listen and answer</strong></button><div class="row" style="justify-content:center"><button class="btn" id="ivp">←</button><button class="btn alt" id="ivf">Flip card</button><svg class="timer" viewBox="0 0 80 80" id="ivt" style="--c:#ff6b4a"><circle cx="40" cy="40" r="34" class="trk"/><circle cx="40" cy="40" r="34" class="ring" stroke-dasharray="'+C+'" stroke-dashoffset="0"/><text x="40" y="48" text-anchor="middle" class="secs">40</text></svg><button class="btn" id="ivn">→</button></div>';
+  let back=false;const flip=()=>{back=!back;el.querySelector('#ivc').innerHTML=back?'<small>QUESTION</small><p>'+IV[i]+'</p>':'<small>INTERVIEW '+(i+1)+' / '+IV.length+'</small><strong style="font-size:24px">Listen and answer</strong>';};
   el.querySelector('#ivc').onclick=flip;el.querySelector('#ivf').onclick=flip;
   el.querySelector('#ivt').onclick=()=>{stop();left=40;paint();t=setInterval(()=>{left=Math.max(0,left-1);paint();if(!left)stop();},1000);};
   el.querySelector('#ivp').onclick=()=>{i=(i+IV.length-1)%IV.length;draw();};el.querySelector('#ivn').onclick=()=>{i=(i+1)%IV.length;draw();};}
