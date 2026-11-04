@@ -264,6 +264,6 @@ function resultsStudent(){
   b.append(el('h3',null,'Как отправить'),el('p',null,'1. Нажмите «Отправить учителю на проверку».<br>2. Код скопируется сам – вставьте его в чат с учителем и отправьте.'),el('p','note','Устную часть учитель оценивает на занятии.'));
   res.append(a,b);main.append(res);
   const nav=el('div','navrow');nav.append(KS.button('lesson1',()=>{const d=JSON.parse(JSON.stringify(S));return d;},o=>{SENT=o;['g','w','v','r','l'].forEach(k=>S[k].done=true);redraw();}));
-  const h=el('a','btn sp','Домашняя работа →');h.href='home1.html';nav.append(h);main.append(nav);
+  main.append(nav);
 }
 Clock.mount();paintWho();go(Math.min(STEPS.length-1,Math.max(0,(+location.hash.slice(1)||1)-1)));
