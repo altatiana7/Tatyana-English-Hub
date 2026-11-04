@@ -103,6 +103,7 @@ a.bc.now{background:#e8f5f2;border-color:#2c7f78}a.bc.now:hover{background:#dcef
     <button type="button" class="sec" style="--c:#2c7f78" data-p="blocks"><b>Тематические блоки</b><span>17 тем ФИПИ, по 3 занятия на тему</span></button>
     <button type="button" class="sec" style="--c:#4a4f8f" data-p="lessons"><b>Занятия</b><span>Уроки по неделям: тема блока и задания ЕГЭ</span></button>
     <button type="button" class="sec" style="--c:#8f4d7c" data-p="tools"><b>Тренажёры</b><span>Strategies &amp; Traps, письмо 37, задание 38, Russia</span></button>
+    <button type="button" class="sec tonly" style="--c:#d62f7f" data-p="check" title="Работы Риты приходят сюда сами"><b>Проверка домашки <em id="chknew" class="chknew" hidden></em></b><span>Работы Риты приходят сюда сами</span></button>
   </div>
 
   <section class="dash" id="dash">
@@ -149,6 +150,12 @@ a.bc.now{background:#e8f5f2;border-color:#2c7f78}a.bc.now:hover{background:#dcef
     <div class="row">
       <a class="btn main" href="lesson1.html?v=40" style="text-decoration:none">Открыть диагностику →</a>
     </div>
+  </section>
+
+  <section class="pane tonly" id="p-check" hidden>
+    <h2>Проверка домашки</h2>
+    <div class="row"><button type="button" class="btn main" id="chkload">Обновить</button><span class="note" id="chkmsg">Работы, которые Рита отправила, появляются здесь сами.</span></div>
+    <div class="chklist" id="chklist"></div>
   </section>
 
   <section class="pane" id="p-tools" hidden>
