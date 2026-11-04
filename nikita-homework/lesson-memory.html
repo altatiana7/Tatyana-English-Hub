@@ -1,0 +1,339 @@
+<!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Can You Trust Your Own Memory? · Lesson</title><style>
+*{box-sizing:border-box}[hidden]{display:none!important}
+:root{--navy:#1d2a44;--ink:#1d2a44;--muted:#5d6975;--line:#d9d2c0;--paper:#fff8ec}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px Georgia,"Times New Roman",serif}
+.wrap{max-width:1180px;margin:auto;padding:6px 14px 8px}
+.top{display:flex;align-items:center;gap:10px;background:var(--navy);color:#fff;border-radius:12px;padding:5px 14px}
+.top b{font-size:17px;margin-right:auto}.top small{color:#f3d48a;letter-spacing:.08em;font-weight:700;font-size:12px;margin-right:6px}
+.tb{border:1px solid #ffffff66;background:transparent;color:#fff;border-radius:9px;padding:4px 11px;font:inherit;font-size:14px;cursor:pointer}
+.clock{font-weight:700;font-size:18px;min-width:62px;text-align:center}
+.scr{display:none}.scr.on{display:block}
+.goal{margin-top:8px;background:#fff;border:2px solid #12a594;border-radius:14px;padding:9px 16px;font-size:18px;line-height:1.35}
+.can{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}.can span{background:#eef9f6;border:1px solid #bfe3dc;border-radius:999px;padding:4px 12px;font-size:15px}
+.map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:8px}
+.map button{border:0;border-radius:14px;padding:9px 12px;min-height:82px;color:#fff;font:inherit;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between}
+.map button b{font-size:19px;line-height:1.1}.map button span{font-size:13.5px;opacity:.95}.map button i{font-style:normal;font-size:20px;font-weight:700;opacity:.6}
+.teach{margin-top:8px;background:#fff1c2;border:2px solid #ffc21f;border-radius:12px;padding:8px 14px;font-size:14.5px;line-height:1.4}
+.bar{display:flex;align-items:center;gap:10px;margin:6px 0 4px}
+.back{border:0;border-radius:9px;padding:5px 12px;background:var(--navy);color:#fff;font:inherit;font-size:15px;cursor:pointer}
+.bar h2{margin:0;font-size:21px;flex:1;color:var(--c)}
+.aim{font-size:14.5px;color:var(--muted);margin:0 0 6px}
+.card{background:#fff;border:1px solid var(--line);border-top:5px solid var(--c);border-radius:14px;padding:10px 14px}
+.pred{display:flex;gap:14px;align-items:center}
+.pred img{width:140px;height:92px;object-fit:cover;border-radius:10px;flex:none}
+.pred .pq{flex:1}.pred .pq p{margin:0 0 8px;font-size:20px;line-height:1.3}
+.tag{font-size:12.5px;font-weight:700;letter-spacing:.08em;color:var(--c);margin-bottom:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--line);background:#f9f6ee;border-radius:10px;padding:8px 15px;font:inherit;font-size:18px;color:var(--navy);cursor:pointer}
+.chip.sel{background:var(--c);border-color:var(--c);color:#fff}
+.pline{display:none;font-size:15px;color:var(--muted)}
+.done .pred{display:none}.done .pline{display:block}
+.act{margin-top:8px}
+.cols{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:10px;align-items:start}
+.btn{border:0;border-radius:10px;padding:8px 15px;background:var(--navy);color:#fff;font:inherit;font-size:16px;cursor:pointer}
+.btn.alt{background:var(--c)}.btn:disabled{opacity:.35;cursor:default}
+.note{font-size:14px;color:var(--muted)}
+.fl{width:100%;min-height:170px;border:2px solid #d9d2c0;border-radius:14px;background:#fdfbf6;padding:12px;text-align:center;font:inherit;color:var(--navy);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.fl strong{font-size:clamp(24px,3vw,32px);line-height:1.2}.fl p{margin:0;font-size:19px;line-height:1.35}.fl em{font-size:16px;color:var(--muted)}.fl small{font-size:12px;letter-spacing:.1em;color:var(--c);font-weight:700}
+.fl .ru{color:#7a5cff;font-size:18px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:7px}
+.qh{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.q{font-size:22px;line-height:1.35;margin:4px 0 8px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{border:2px solid #d9d2c0;border-radius:12px;background:#f9f6ee;padding:10px 13px;font:inherit;font-size:20px;line-height:1.3;color:var(--navy);cursor:pointer;text-align:left}
+.opt.ok{background:#d8eddd;border-color:#4f9a66}.opt.bad{background:#f6dcd4;border-color:#c4624f}.opt:disabled{cursor:default;opacity:1}
+.expl{min-height:22px;margin-top:7px;font-size:16.5px;line-height:1.4;color:#34444c}
+.tbar{flex:1;height:8px;background:#ece4d0;border-radius:5px;overflow:hidden}.tbar i{display:block;height:100%;width:100%;background:var(--c)}
+.score{font-size:28px;font-weight:700;margin:2px 0}
+.miss{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0;font-size:14.5px;line-height:1.3}
+.miss div{background:#f6f2ea;border-radius:8px;padding:6px 9px}
+.mt{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+.mt button{border:2px solid #d9d2c0;border-radius:10px;background:#f9f6ee;padding:8px 10px;font:inherit;font-size:17.5px;line-height:1.25;color:var(--navy);cursor:pointer;text-align:left;min-height:46px}
+.mt button.sel{border-color:var(--c);background:#e8eef7}.mt button.ok{background:#d8eddd;border-color:#4f9a66}.mt button.no{background:#f6dcd4;border-color:#c4624f}
+.pool,.bin{border:2px dashed #d9d2c0;border-radius:12px;padding:6px;min-height:46px;display:flex;flex-wrap:wrap;gap:6px}
+.bins{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.bin{flex-direction:column;align-items:stretch;min-height:128px;border-color:var(--c);cursor:pointer;align-content:flex-start}.bin b{color:var(--c)}
+.sc{border:2px solid #7a5cff;border-radius:10px;padding:5px 10px;background:#f1edff;font:inherit;font-size:18px;cursor:pointer;color:var(--navy)}.sc.sel{background:#ffc21f;border-color:#e0a100}
+.sent{font-size:23px;line-height:1.5;margin:6px 0}
+.gap{border-bottom:3px solid #ff6b4a;padding:0 14px;color:#ff6b4a}
+.opt.lava{background:#ffd3c9;border-color:#ff6b4a}
+.fipi{display:grid;grid-template-columns:1fr 150px;gap:14px;font-size:18px;line-height:1.62;text-align:left}
+.fipi-side{border-left:2px dashed #d9d2c0;padding-left:12px;font-size:16px;color:#7a5cff;font-weight:700;line-height:1.9}
+.gap2{display:inline-block;min-width:96px;border-bottom:2px solid #e0a100;color:#b7860a;cursor:pointer;text-align:center;padding:0 6px;font-weight:700}.gap2.open{color:var(--ink);border-color:#2fb36b}
+.ew{display:inline-block;padding:1px 5px;margin:1px;border-radius:8px;cursor:pointer;border:2px solid transparent}.ew:hover{border-color:#e0a100}.ew.ok{background:#d8eddd;border-color:#2fb36b}.ew.no{background:#f6dcd4;border-color:#ff6b4a}
+.jgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.jcat{background:var(--c);color:#fff;border-radius:10px;padding:7px;text-align:center;font-weight:700;font-size:16px}
+.jcell{min-height:50px;font:inherit;font-size:24px;font-weight:700;color:#b7860a;background:#fff;border:2px solid var(--c);border-radius:10px;cursor:pointer}.jcell.used{background:#f1ede4;color:transparent;border-color:var(--line)}
+.jq{margin-top:8px;background:#f5f2ff;border:2px solid #7a5cff;border-radius:12px;padding:10px;min-height:92px;text-align:center;font-size:21px}
+.legend{font-size:15.5px;line-height:1.5;background:#f9f6ee;border-radius:10px;padding:8px 12px}
+.frame p{margin:5px 0;font-size:17px}
+.rule{background:#f9f6ee;border-left:4px solid var(--c);border-radius:8px;padding:6px 10px;margin:6px 0;font-size:16px;line-height:1.35}.rule b{color:var(--navy)}
+.timer{width:62px;height:62px;cursor:pointer}.ring{fill:none;stroke:var(--c);stroke-width:7;transform:rotate(-90deg);transform-origin:40px 40px;transition:stroke-dashoffset 1s linear}.trk{fill:none;stroke:#ece4d0;stroke-width:7}.timer text{font:700 22px Georgia,serif;fill:var(--ink)}
+.tm{font-size:30px;font-weight:700}
+.check label{display:block;padding:7px 11px;margin:5px 0;border:2px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-size:17px}.check input{margin-right:9px;transform:scale(1.25)}
+.teacher{margin-top:8px;background:#fff1c2;border:2px solid #ffc21f;border-radius:12px;padding:8px 14px;font-size:14.5px;line-height:1.4}
+@media(max-height:620px){.wrap{padding:5px 12px 6px}.goal{font-size:17px;padding:7px 14px}.map button{min-height:76px}.card{padding:8px 12px}.q{font-size:21px;margin:3px 0 6px}.opt{padding:8px 11px;font-size:19px}.fl{min-height:150px;padding:8px}.expl{margin-top:5px;font-size:15.5px}.act{margin-top:6px}.fipi{font-size:16px;line-height:1.5;gap:10px;grid-template-columns:1fr 130px}.gap2{min-width:84px}.fipi-side{line-height:1.7;font-size:15px}.teacher{font-size:13.5px;line-height:1.35;padding:6px 12px}.jcell{min-height:44px}.sent{font-size:22px}.pred img{width:120px;height:80px}.pred .pq p{font-size:19px;margin-bottom:6px}}
+@media(max-width:760px){.map{grid-template-columns:1fr 1fr}.cols{grid-template-columns:1fr}.opts{grid-template-columns:1fr}.pred img{display:none}.fipi{grid-template-columns:1fr}}
+</style></head><body><main class="wrap">
+
+<header class="top"><small>NIKITA · B2</small><b>Can You Trust Your Own Memory?</b><span class="clock" id="clk">60:00</span><button class="tb" id="clkb">Start</button></header>
+
+<section id="home" class="scr on">
+<div class="goal"><b>Goal:</b> by the end Nikita can use 12 words and 6 phrases about memory, evidence and doubt, use phrasal verbs for investigating, choose the right modal perfect (must, might, can’t, should have) for how sure we can be about the past, and give a one-minute, evidence-aware verdict on a witness account.</div>
+<div class="can"><span>explain how memory fails</span><span>weigh the evidence</span><span>must / might / can’t / should have</span><span>phrasal verbs for investigators</span><span>one minute: a verdict</span></div>
+<div class="map" id="mapgrid"></div>
+<div class="row" style="margin-top:6px"><button class="tb" id="tbtn" style="background:var(--navy)">For the teacher</button></div>
+<div class="teach" id="teach" hidden><b>Plan (60 min):</b> 1 Warm-up 5 · 2 Words 8 · 3 Matching 5 · 4 Sorting 4 · 5 Floor is lava 5 · 6 Phrasal verbs 7 · 7 Word formation 5 · 8 Evidence detective 6 · 9 Error hunter 4 · 10 Jeopardy 4 · 11 Speed Game 3 · 12 Speak 10. Every task has at least 10 items; no typing. If time is short, halve blocks 3, 4 and 10 and keep 8 minutes for block 12.<br><b>Background for the teacher (checked):</b> Loftus and Palmer (1974): the verb in the question (“smashed” vs “hit”) changed speed estimates, and a week later more people in the “smashed” group said they had seen broken glass that was not there. Loftus and Pickrell (1995): 24 participants, about a quarter accepted a false “lost in a mall” memory; a 2023 replication (123 people) found about 35% judged to have a false memory but only 14% who said they really remembered it, so the effect is real but smaller than often claimed. Innocence Project: 69% of 375 DNA exonerations involved eyewitness misidentification. Case: North Carolina, 1984, a victim identified Ronald Cotton from a line-up; he served about 10.5 years; DNA excluded him and matched another man; charges were dismissed on 30 June 1995. Keep the crime itself out of the lesson: talk only about the identification.<br><b>Photo prompts (optional, media/memory/pr1.jpg … pr12.jpg):</b> 1 an adult looking at an old family photo, trying to remember · 2 a witness giving testimony in a courtroom · 3 puzzle pieces on a table · 4 a CCTV monitor showing a blurry figure · 5 sentence cards on a desk · 6 a detective’s desk with case files and a magnifying glass · 7 a printed article with highlighted words · 8 an empty police line-up room, no faces · 9 a red pen marking a sentence · 10 a game-show board · 11 a stopwatch on a desk · 12 a lawyer speaking to a small audience. No recordings in this lesson: the cards are silent, so you read the words aloud.</div>
+</section>
+
+<section id="b1" class="scr" style="--c:#ff6b4a"><div class="bar"><button class="back">← Lesson</button><h2>1 · Warm-up</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim1"></p><div class="card"><div class="pline" id="l1"></div><div class="pred" id="p1"></div></div>
+<div class="act" id="a1" hidden><div class="cols"><div class="card"><div class="note">Interview · answer in 40 seconds</div><div id="iv"></div></div><div class="card"><div class="note">Agree, disagree or not sure?</div><div id="poll"></div></div></div></div>
+<div class="teacher" hidden>Teacher: you read the question aloud, Nikita answers; tap the circle for 40 seconds. The question text is on the back of the card only. The poll has no right answer: ask “Why do you think so?”. Aim: lead to the idea that a sincere memory can still be wrong.</div></section>
+
+<section id="b2" class="scr" style="--c:#12a594"><div class="bar"><button class="back">← Lesson</button><h2>2 · Words and phrases</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim2"></p><div class="card"><div class="pline" id="l2"></div><div class="pred" id="p2"></div></div>
+<div class="act" id="a2" hidden><div class="cols" style="grid-template-columns:minmax(0,1fr) minmax(0,.7fr)"><div class="card"><div class="note" id="c2n"></div><button class="fl" id="c2"></button><div class="row" style="justify-content:center"><button class="btn" id="c2p">←</button><button class="btn" id="c2x">→</button></div></div><div class="card legend"><b>Cards 1–12:</b> twelve words about memory and evidence.<br><b>Cards 13–18:</b> six phrases about proof and doubt.<br><span class="note">Say the word, explain it in your own words, then turn the card.</span></div></div></div>
+<div class="teacher" hidden>Teacher: Nikita says the word and gives the meaning in his own words first, then flips. The cards are silent: read each word aloud and ask him to repeat. Cards 13–18 are the six phrases. If time is short, take the six hardest words.</div></section>
+
+<section id="b3" class="scr" style="--c:#7a5cff"><div class="bar"><button class="back">← Lesson</button><h2>3 · Matching</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim3"></p><div class="card"><div class="pline" id="l3"></div><div class="pred" id="p3"></div></div>
+<div class="act" id="a3" hidden><div class="cols" style="grid-template-columns:minmax(0,.55fr) minmax(0,1.45fr)"><div class="card"><div class="note" id="c3n"></div><button class="fl" id="c3" style="min-height:140px"></button><div class="row" style="justify-content:center"><button class="btn" id="c3p">←</button><button class="btn" id="c3x">→</button></div></div><div class="card"><div class="qh"><span class="note">Match the word and the meaning</span><span class="note" id="m3n"></span></div><div id="m3"></div></div></div></div>
+<div class="teacher" hidden>Teacher: three rounds of four pairs, a correct pair turns green. If Nikita mixes up expressions, go back to the cards on the left and ask for his own example.</div></section>
+
+<section id="b4" class="scr" style="--c:#2e86de"><div class="bar"><button class="back">← Lesson</button><h2>4 · Sorting · how strong is the evidence?</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim4"></p><div class="card"><div class="pline" id="l4"></div><div class="pred" id="p4"></div></div>
+<div class="act" id="a4" hidden><div class="card" id="s4"></div></div>
+<div class="teacher" hidden>One possible grouping, not the only key. Stronger: DNA, CCTV, phone record, a statement written within an hour, a signed dated document. Weaker: two seconds at night, a long interrogation, a photo seen in the news, a memory years later, a far-away witness. Depends: a confident witness, fingerprints. Ask: “What would make it weaker?”. Accept reasoned alternatives.</div></section>
+
+<section id="b5" class="scr" style="--c:#c75b44"><div class="bar"><button class="back">← Lesson</button><h2>5 · Floor is lava</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim5"></p><div class="card"><div class="pline" id="l5"></div><div class="pred" id="p5"></div></div>
+<div class="act" id="a5" hidden><div class="card" id="lv"></div></div>
+<div class="teacher" hidden>A wrong button turns into lava and Nikita tries another one. If a sentence needs three tries, return to the card in block 2. Aim: 12 out of 12.</div></section>
+
+<section id="b6" class="scr" style="--c:#468a58"><div class="bar"><button class="back">← Lesson</button><h2>6 · Phrasal verbs for investigators</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim6"></p><div class="card"><div class="pline" id="l6"></div><div class="pred" id="p6"></div></div>
+<div class="act" id="a6" hidden><div class="cols"><div class="card"><div class="note" id="c6n"></div><button class="fl" id="c6"></button><div class="row" style="justify-content:center"><button class="btn" id="c6p">←</button><button class="btn" id="c6x">→</button></div></div><div class="card" id="q6"></div></div></div>
+<div class="teacher" hidden>Cards on the left, gaps on the right. Nikita says the meaning in his own words first. After the quiz ask him for his own sentence with two of the verbs.</div></section>
+
+<section id="b7" class="scr" style="--c:#b9832a"><div class="bar"><button class="back">← Lesson</button><h2>7 · Word formation</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim7"></p><div class="card"><div class="pline" id="l7"></div><div class="pred" id="p7"></div></div>
+<div class="act" id="a7" hidden><div class="card" id="fp"></div></div>
+<div class="teacher" hidden>Continuous text as on the FIPI site, the root word is on the right. Nikita says the form aloud, then taps the gap. Answers: unreliable, choice, confidently, frequency, analysis, innocence, accurate, mistaken, scepticism, independent. Notice the suffixes -ence, -ency, -ly, -sis, -ism. The facts come from the Loftus and Palmer experiment and the 1984 North Carolina case (see the background on the first screen).</div></section>
+
+<section id="b8" class="scr" style="--c:#6b5ba6"><div class="bar"><button class="back">← Lesson</button><h2>8 · Evidence detective · must, might, can’t, should have</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim8"></p><div class="card"><div class="pline" id="l8"></div><div class="pred" id="p8"></div></div>
+<div class="act" id="a8" hidden><div class="cols" style="grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)"><div class="card"><div class="rule"><b>must have + V3</b><br>strong inference from evidence</div><div class="rule"><b>might / could have + V3</b><br>a possibility, the evidence is not enough</div><div class="rule"><b>can’t have + V3</b><br>strong inference that it was impossible or very unlikely</div><div class="rule"><b>should have + V3</b><br>criticism or regret about what was not done</div><div class="rule"><b>Careful:</b> do not use <i>must have</i> as proof of what someone remembers or intends.</div></div><div class="card" id="q8"></div></div></div>
+<div class="teacher" hidden>must have = strong conclusion from evidence; might have = possibility; can’t have = almost certainly impossible; should have = criticism or regret. After each answer ask which piece of evidence decides it. Do not accept must have as proof of what a person remembers or intends.</div></section>
+
+<section id="b9" class="scr" style="--c:#d64f8a"><div class="bar"><button class="back">← Lesson</button><h2>9 · Error hunter</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim9"></p><div class="card"><div class="pline" id="l9"></div><div class="pred" id="p9"></div></div>
+<div class="act" id="a9" hidden><div class="card" id="eh"></div></div>
+<div class="teacher" hidden>One wrong word in each sentence: a word, a phrasal verb or a modal. Nikita taps it and sees the correction. Aim: he explains in his own words why the word is wrong.</div></section>
+
+<section id="b10" class="scr" style="--c:#4b4bd6"><div class="bar"><button class="back">← Lesson</button><h2>10 · Jeopardy</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim10"></p><div class="card"><div class="pline" id="l10"></div><div class="pred" id="p10"></div></div>
+<div class="act" id="a10" hidden><div class="card" id="jp"></div></div>
+<div class="teacher" hidden>Nikita picks a cell, you read the question; the second tap shows the answer, the third closes the cell. The Cases category uses the facts from the background on the first screen.</div></section>
+
+<section id="b11" class="scr" style="--c:#ff8a3d"><div class="bar"><button class="back">← Lesson</button><h2>11 · Speed Game</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim11"></p><div class="card"><div class="pline" id="l11"></div><div class="pred" id="p11"></div></div>
+<div class="act" id="a11" hidden><div class="cols" style="grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr)"><div class="card" id="q11"></div><div class="card legend"><b>Read the definition.</b><br>Tap the word within 15 seconds.<br><span class="note">No hints: recall the meanings.</span></div></div></div>
+<div class="teacher" hidden>15 seconds per answer. If time runs out, the right answer is shown. The aim is to recall the meanings without hints.</div></section>
+
+<section id="b12" class="scr" style="--c:#12a594"><div class="bar"><button class="back">← Lesson</button><h2>12 · Speak</h2><button class="tb tt" style="background:var(--navy)">For the teacher</button></div><p class="aim" id="aim12"></p><div class="card"><div class="pline" id="l12"></div><div class="pred" id="p12"></div></div>
+<div class="act" id="a12" hidden><div class="cols" style="grid-template-columns:minmax(0,1fr) minmax(0,.9fr)"><div class="card"><div class="note" id="c12n"></div><button class="fl" id="c12" style="min-height:150px"></button><div class="row" style="justify-content:center"><button class="btn" id="c12p">←</button><button class="btn" id="c12x">→</button><span class="tm" id="tm12">1:00</span><button class="btn alt" id="ts12">Start</button><button class="btn" id="tr12">Reset</button></div></div>
+<div class="card check"><b>Tick what you used</b><label><input type="checkbox"> 3 words from today</label><label><input type="checkbox"> cast doubt on / beyond reasonable doubt / hard evidence</label><label><input type="checkbox"> two phrasal verbs (rule out, back up, point to…)</label><label><input type="checkbox"> one modal perfect (must / might / can’t / should have)</label><label><input type="checkbox"> a clear verdict: “On balance, I would say…”</label><p class="note" style="margin:6px 0 0">Exit, out loud: “The word I can now use precisely is…” and “The modal I will use again is…”</p></div></div></div>
+<div class="teacher" hidden>Pick two prompts: one minute to prepare, two answers of one minute each, two minutes for feedback and a better second try; the rest is the exit. Do not interrupt: note good vocabulary and one or two mistakes after the answer. Tick-list on the right: words, phrases, phrasal verbs, a modal perfect, a clear verdict.</div></section>
+
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const sh=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const BL=[['Warm-up','10 questions and a 10-item poll','#ff6b4a'],['Words','12 words + 6 phrases','#12a594'],['Matching','12 pairs','#7a5cff'],['Sorting','12 pieces of evidence','#2e86de'],['Floor is lava','12 sentences','#c75b44'],['Phrasal verbs','12 verbs: cards and gaps','#468a58'],['Word formation','10 gaps, FIPI style','#b9832a'],['Evidence detective','12 modal deductions','#6b5ba6'],['Error hunter','10 sentences','#d64f8a'],['Jeopardy','12 questions','#4b4bd6'],['Speed Game','12 rounds, 15 s','#ff8a3d'],['Speak','10 prompts and exit','#0f8a7f']];
+$('mapgrid').innerHTML=BL.map((b,i)=>'<button data-go="b'+(i+1)+'" style="background:'+b[2]+'"><i>'+(i+1)+'</i><div><b>'+b[0]+'</b><br><span>'+b[1]+'</span></div></button>').join('');
+let aud=null;function stopAudio(){if(aud){aud.pause();aud.currentTime=0;}}
+function play(k){stopAudio();aud=new Audio('media/personality/'+k+'.mp3');aud.play().catch(()=>{});}
+function show(id){stopAudio();if(window.stopSpeed)window.stopSpeed();document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id===id));window.scrollTo(0,0);if(id==='b11'&&window.startSpeed&&!$('a11').hidden)window.startSpeed();}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
+document.querySelectorAll('.back').forEach(b=>b.onclick=()=>show('home'));
+document.querySelectorAll('.tt').forEach(b=>b.onclick=()=>{const t=b.closest('.scr').querySelector('.teacher');t.hidden=!t.hidden;});
+$('tbtn').onclick=()=>{$('teach').hidden=!$('teach').hidden;};
+let sec=3600,run=null;$('clkb').onclick=()=>{if(run){clearInterval(run);run=null;$('clkb').textContent='Start';return;}run=setInterval(()=>{if(sec>0)sec--;$('clk').textContent=String(sec/60|0).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');if(!sec){clearInterval(run);run=null;}},1000);$('clkb').textContent='Pause';};
+
+/* purpose of each step and the prediction before it */
+const AIM=['Warm up: talk about how far we can trust our own memory. No right answers.','Meet the 12 words and 6 phrases for memory, evidence and doubt: say the word, then turn the card.','Connect each word and phrase to its meaning.','Judge how strong each piece of evidence is. Strength depends on context.','Use the words and phrases inside sentences.','Learn the phrasal verbs investigators use, then use them in sentences.','See how a word family changes in a connected text about memory.','Learn how sure we can be about the past: must, might, can’t and should have.','Spot what does not fit: a word, a phrasal verb or a modal.','Retrieve everything from the lesson as a game.','Recall the meanings fast, without hints.','Give a one-minute, evidence-aware verdict about a witness account.'];
+const PR=[['How sure are you that your earliest memory really happened?',['completely','fairly','not very']],['Which word describes a witness who is easy to influence?',['suggestible','reliable','credible']],['How many of the 12 pairs can you match without help?',['0–4','5–8','9–12']],['Is a very confident witness strong evidence?',['strong','weak','it depends']],['What will be harder: the words or the phrases?',['words','phrases','the same']],['Which phrasal verb means “investigate”?',['look into','rule out','put forward']],['Which part of speech will you need most?',['nouns','adjectives','both']],['Which form fits “she was too far away to see the face”?',['must have','might have','can’t have']],['Where will the mistakes be?',['vocabulary','modals','both']],['Which category will be easiest?',['Words','Phrasal verbs','Cases','Modals']],['How many of 12 will you get in 15 seconds each?',['0–6','7–10','11–12']],['Which prompt will be the hardest in 60 seconds?',['my own memory','the DNA case','the police question']]];
+PR.forEach((p,i)=>{const n=i+1,box=$('p'+n);$('aim'+n).textContent=AIM[i];
+ box.innerHTML='<img src="media/memory/pr'+n+'.jpg" alt="" onerror="this.remove()"><div class="pq"><div class="tag">PREDICT FIRST</div><p>'+p[0]+'</p><div class="chips">'+p[1].map(o=>'<button class="chip">'+o+'</button>').join('')+'</div></div>';
+ box.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{box.querySelectorAll('.chip').forEach(x=>x.classList.toggle('sel',x===c));$('l'+n).textContent='Your prediction: '+c.textContent+' · keep it in mind, we check it at the end of the step.';$('b'+n).classList.add('done');$('a'+n).hidden=false;if(n===11&&window.startSpeed)window.startSpeed();});
+});
+
+/* engines */
+function Cards(btn,count,prev,next,data,render,lbtn,audioKey){let i=0,b=false;
+ function r(){count.textContent=(i+1)+' / '+data.length+' · tap the card to turn it';btn.innerHTML=render(data[i],b);if(lbtn){const k=audioKey?audioKey(i,b):null;lbtn.hidden=!k;}}
+ btn.onclick=()=>{stopAudio();b=!b;r();};prev.onclick=()=>{stopAudio();i=(i+data.length-1)%data.length;b=false;r();};next.onclick=()=>{stopAudio();i=(i+1)%data.length;b=false;r();};
+ if(lbtn)lbtn.onclick=()=>{const k=audioKey(i,b);if(k)play(k);};r();}
+function Quiz(root,items,opt){opt=opt||{};let i=0,score=0,locked=false,order=opt.keep?items.slice():sh(items),disp=[],tid=null,miss=[];
+ function stop(){if(tid){clearInterval(tid);tid=null;}}
+ function render(){stop();
+  if(i>=order.length){const tot=order.length;root.innerHTML='<p class="score">'+score+' / '+tot+'</p><p class="note" style="font-size:16px">'+(score===tot?'All correct.':'Check these, then play again:')+'</p><div class="miss">'+miss.slice(0,6).map(m=>'<div>'+m+'</div>').join('')+'</div><button class="btn alt" id="qa">Play again</button>';root.querySelector('#qa').onclick=()=>{i=0;score=0;miss=[];order=opt.keep?items.slice():sh(items);render();};return;}
+  const it=order[i];locked=false;disp=sh(it.o.map((o,k)=>({o:o,k:k})));
+  root.innerHTML='<div class="qh"><span class="note">'+(i+1)+' / '+order.length+'</span>'+(opt.timer?'<span class="tbar"><i id="tb"></i></span>':'')+'<span class="note">score '+score+'</span></div><p class="q">'+it.q+'</p><div class="opts">'+disp.map((d,k)=>'<button class="opt" data-k="'+k+'">'+d.o+'</button>').join('')+'</div><div class="expl"></div><div class="row"><button class="btn alt" id="nx" disabled>'+(i===order.length-1?'See result':'Next')+'</button></div>';
+  const btns=[].slice.call(root.querySelectorAll('.opt'));
+  function fin(pick){if(locked)return;locked=true;stop();const ok=pick!==null&&disp[pick].k===it.a;if(ok)score++;else miss.push(it.q.replace(/<[^>]+>/g,'')+' → <b>'+it.o[it.a]+'</b>');
+   btns.forEach((x,k)=>{x.disabled=true;if(disp[k].k===it.a)x.classList.add('ok');else if(k===pick)x.classList.add('bad');});
+   root.querySelector('.expl').textContent=(pick===null?'Time. ':ok?'Correct. ':'Not quite. ')+(it.e||'');
+   const nx=root.querySelector('#nx');nx.disabled=false;nx.onclick=()=>{i++;render();};}
+  btns.forEach((x,k)=>x.onclick=()=>fin(k));
+  if(opt.timer){const t0=Date.now(),bar=root.querySelector('#tb');tid=setInterval(()=>{const f=1-(Date.now()-t0)/(opt.timer*1000);bar.style.width=Math.max(0,f*100)+'%';if(f<=0)fin(null);},100);}}
+ root._start=render;root._stop=stop;if(!opt.lazy)render();}
+function Match(root,label,pairs,per){let rd=0,mist=0,selL=null,selR=null,done=0;
+ function render(){const total=Math.ceil(pairs.length/per);
+  if(rd>=total){root.innerHTML='<p class="score">'+(pairs.length-Math.min(mist,pairs.length))+' / '+pairs.length+'</p><p class="note" style="font-size:16px">First-try matches. Mistakes: '+mist+'.</p><button class="btn alt" id="ma">Play again</button>';label.textContent='';root.querySelector('#ma').onclick=()=>{rd=0;mist=0;render();};return;}
+  const set=pairs.slice(rd*per,rd*per+per);done=0;selL=selR=null;label.textContent='round '+(rd+1)+' / '+total;
+  const L=sh(set.map((p,k)=>({t:p[0],k:k}))),R=sh(set.map((p,k)=>({t:p[1],k:k})));
+  root.innerHTML='<div class="mt"><div style="display:grid;gap:8px">'+L.map(l=>'<button data-s="l" data-k="'+l.k+'">'+l.t+'</button>').join('')+'</div><div style="display:grid;gap:8px">'+R.map(r=>'<button data-s="r" data-k="'+r.k+'">'+r.t+'</button>').join('')+'</div></div><div class="row"><button class="btn alt" id="mn" hidden>'+(rd===total-1?'See result':'Next round')+'</button></div>';
+  root.querySelectorAll('button[data-s]').forEach(b=>b.onclick=()=>{if(b.classList.contains('ok'))return;
+   if(b.dataset.s==='l'){root.querySelectorAll('[data-s=l]').forEach(x=>x.classList.remove('sel'));selL=b;b.classList.add('sel');}else{root.querySelectorAll('[data-s=r]').forEach(x=>x.classList.remove('sel'));selR=b;b.classList.add('sel');}
+   if(selL&&selR){if(selL.dataset.k===selR.dataset.k){[selL,selR].forEach(x=>{x.classList.remove('sel');x.classList.add('ok');});done++;selL=selR=null;if(done===set.length)root.querySelector('#mn').hidden=false;}
+    else{mist++;const a=selL,c=selR;[a,c].forEach(x=>{x.classList.remove('sel');x.classList.add('no');});selL=selR=null;setTimeout(()=>[a,c].forEach(x=>x.classList.remove('no')),500);}}});
+  root.querySelector('#mn').onclick=()=>{rd++;render();};}
+ render();}
+function Sorting(root,items,bins,model){let placed={},sel=null,checked=false;
+ const chip=k=>'<button class="sc'+(sel===k?' sel':'')+'" data-c="'+k+'">'+items[k][0]+'</button>';
+ function draw(){const left=items.map((_,k)=>k).filter(k=>placed[k]===undefined).slice(0,4);
+  root.innerHTML='<div class="note">Tap a word, then tap a box. Four words at a time.</div><div class="pool">'+(left.map(chip).join('')||'<span class="note">All words are in the boxes.</span>')+'</div><div class="bins">'+bins.map(b=>'<div class="bin" data-b="'+b+'"><b>'+b+'</b>'+items.map((_,k)=>k).filter(k=>placed[k]===b).map(chip).join('')+'</div>').join('')+'</div><div class="row"><button class="btn alt" data-a="check">Show model</button><button class="btn" data-a="reset">Again</button>'+(checked?'<span class="note" style="flex:1">'+model+'</span>':'')+'</div>';
+  root.querySelectorAll('[data-c]').forEach(b=>b.onclick=e=>{e.stopPropagation();const k=+b.dataset.c;if(placed[k]!==undefined){delete placed[k];checked=false;sel=null;}else sel=sel===k?null:k;draw();});
+  root.querySelectorAll('[data-b]').forEach(b=>b.onclick=e=>{if(e.target.closest('[data-c]'))return;if(sel===null)return;placed[sel]=b.dataset.b;sel=null;checked=false;draw();});
+  root.querySelector('[data-a=check]').onclick=()=>{checked=true;draw();};root.querySelector('[data-a=reset]').onclick=()=>{placed={};sel=null;checked=false;draw();};}
+ draw();}
+function Lava(root,items){let i=0;const solved=[];
+ function draw(){const it=items[i],ok=!!solved[i];
+  root.innerHTML='<div class="sent">'+it.s.replace('___','<span class="gap">'+(ok?it.a:'______')+'</span>')+'</div><div class="opts">'+it.o.map(o=>'<button class="opt'+(ok&&o===it.a?' ok':'')+'" data-o="'+o+'"'+(ok?' disabled':'')+'>'+o+'</button>').join('')+'</div><div class="expl" id="lfb">'+(ok?'Correct.':'')+'</div><div class="row"><button class="btn" data-m="-1">←</button><span class="note">'+(i+1)+' / '+items.length+'</span><button class="btn" data-m="1">→</button><b style="margin-left:8px">Solved '+solved.filter(Boolean).length+' / '+items.length+'</b></div>';
+  root.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{if(solved[i])return;if(b.dataset.o===it.a){solved[i]=true;draw();}else{b.classList.add('lava');b.disabled=true;$('lfb').textContent='Lava! Try another answer.';}});
+  root.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{i=(i+ +b.dataset.m+items.length)%items.length;draw();});}
+ draw();}
+function Fipi(root,text,ans,roots){
+ const html=text.replace(/\{(\d+)\}/g,(m,k)=>'<span class="gap2" data-k="'+k+'">'+(+k+1)+'</span>');
+ root.innerHTML='<div class="fipi"><div>'+html+'</div><div class="fipi-side">'+roots.map((r,k)=>'<div>'+(k+1)+'. '+r+'</div>').join('')+'</div></div><div class="note" style="margin-top:4px">Say the form aloud, then tap the gap.</div>';
+ root.querySelectorAll('.gap2').forEach(g=>g.onclick=()=>{g.textContent=ans[+g.dataset.k];g.classList.add('open');});}
+const strip=w=>w.replace(/[.,;:!?"“”()]/g,'');
+function ErrorHunter(root,items){let i=0;const found=[];
+ function draw(){const it=items[i],words=it.s.split(' ');
+  root.innerHTML='<div class="note">Tap the wrong word.</div><div class="sent">'+words.map((w,k)=>'<span class="ew" data-k="'+k+'">'+w+'</span>').join(' ')+'</div><div class="expl" id="ehf">'+(found[i]?'Correct: <b>'+it.c+'</b>. '+it.note:'')+'</div><div class="row"><button class="btn" data-m="-1">←</button><span class="note">'+(i+1)+' / '+items.length+'</span><button class="btn" data-m="1">→</button><b style="margin-left:8px">Found '+found.filter(Boolean).length+' / '+items.length+'</b></div>';
+  root.querySelectorAll('.ew').forEach(sp=>sp.onclick=()=>{if(found[i])return;const k=+sp.dataset.k;if(strip(words[k])===it.w){found[i]=true;draw();}else{sp.classList.add('no');setTimeout(()=>sp.classList.remove('no'),500);}});
+  root.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{i=(i+ +b.dataset.m+items.length)%items.length;draw();});}
+ draw();}
+function Jeopardy(root,cats){const used=new Set();let cur=null;
+ function draw(){const head=cats.map(c=>'<div class="jcat">'+c.name+'</div>').join('');
+  const rows=[0,1,2].map(r=>cats.map((c,ci)=>{const key=ci+'-'+r;return '<button class="jcell'+(used.has(key)?' used':'')+'" data-key="'+key+'">'+(used.has(key)?'':c.cells[r].v)+'</button>';}).join('')).join('');
+  root.innerHTML='<div class="jgrid">'+head+rows+'</div><div class="jq">'+(cur?(cur.stage===1?'<div class="note">Question</div>'+cur.cell.q+'<div class="note">Tap the value again to show the answer</div>':'<div class="note">Answer</div><b>'+cur.cell.a+'</b><div class="note">Tap the value again to close</div>'):'Pick a value. The question appears first.')+'</div>';
+  root.querySelectorAll('.jcell').forEach(b=>b.onclick=()=>{const key=b.dataset.key;if(used.has(key))return;const p=key.split('-').map(Number),cell=cats[p[0]].cells[p[1]];if(!cur||cur.key!==key)cur={key:key,cell:cell,stage:1};else if(cur.stage===1)cur.stage=2;else{used.add(key);cur=null;}draw();});}
+ draw();}
+function Timer(disp,start,reset,sec){let t=sec,id=null;const f=()=>{disp.textContent=Math.floor(t/60)+':'+String(t%60).padStart(2,'0');};
+ start.onclick=()=>{if(id){clearInterval(id);id=null;start.textContent='Start';return;}if(t<=0)t=sec;start.textContent='Pause';id=setInterval(()=>{t--;f();if(t<=0){clearInterval(id);id=null;start.textContent='Start';disp.textContent='Time';}},1000);};
+ reset.onclick=()=>{clearInterval(id);id=null;t=sec;start.textContent='Start';f();};f();}
+
+/* 1 warm-up: interview and poll, ten items each */
+const IV=['Think of a childhood memory. How sure are you that it really happened the way you remember it?','Have you ever argued about what was said or done? Who was right, and how do you know?','Why might two honest people remember the same event differently?','How reliable is a person who says “I’m 100% sure”?','Can a person be completely sincere and still be wrong about what they saw?','Would you convict someone on the evidence of one witness? Why or why not?','What helps you remember an important detail: writing it down, repeating it, or something else?','Do you trust photos and video more than memory? Why?','How might a lawyer test whether a witness is reliable?','If you were on a jury, what would make you doubt a witness?'];
+(function(){const el=$('iv');let i=0,t=null,left=40;const C=2*Math.PI*34;
+ function paint(){const r=el.querySelector('.ring');if(!r)return;r.style.strokeDashoffset=C*(1-left/40);el.querySelector('.secs').textContent=left;}
+ function stop(){clearInterval(t);t=null;}
+ function draw(){stop();left=40;
+  el.innerHTML='<button class="fl" id="ivc" style="min-height:130px"><small>INTERVIEW '+(i+1)+' / '+IV.length+'</small><strong style="font-size:24px">Listen and answer</strong><em>Your teacher reads the question aloud.</em></button><div class="row" style="justify-content:center"><button class="btn" id="ivp">←</button><button class="btn alt" id="ivf">Flip card</button><svg class="timer" viewBox="0 0 80 80" id="ivt" style="--c:#ff6b4a"><circle cx="40" cy="40" r="34" class="trk"/><circle cx="40" cy="40" r="34" class="ring" stroke-dasharray="'+C+'" stroke-dashoffset="0"/><text x="40" y="48" text-anchor="middle" class="secs">40</text></svg><button class="btn" id="ivn">→</button></div>';
+  let back=false;const flip=()=>{back=!back;el.querySelector('#ivc').innerHTML=back?'<small>QUESTION</small><p>'+IV[i]+'</p>':'<small>INTERVIEW '+(i+1)+' / '+IV.length+'</small><strong style="font-size:24px">Listen and answer</strong><em>Your teacher reads the question aloud.</em>';};
+  el.querySelector('#ivc').onclick=flip;el.querySelector('#ivf').onclick=flip;
+  el.querySelector('#ivt').onclick=()=>{stop();left=40;paint();t=setInterval(()=>{left=Math.max(0,left-1);paint();if(!left)stop();},1000);};
+  el.querySelector('#ivp').onclick=()=>{i=(i+IV.length-1)%IV.length;draw();};el.querySelector('#ivn').onclick=()=>{i=(i+1)%IV.length;draw();};}
+ draw();})();
+const PL=['The more confident a witness is, the more accurate they are.','Vivid memories are usually accurate memories.','Memory works like a video camera.','A police officer’s question can change what a witness remembers.','Stress makes witnesses remember details better.','Circumstantial evidence is always weaker than eyewitness testimony.','It is possible to remember an event that never happened.','Juries believe confident witnesses too easily.','Written records are more reliable than human memory.','A confession is the strongest proof of guilt.'];
+(function(){const el=$('poll');let i=0,ans=[];
+ function draw(){if(i>=PL.length){const ag=ans.filter(x=>x==='Agree').length,di=ans.filter(x=>x==='Disagree').length;el.innerHTML='<p class="score" style="font-size:24px">Agree '+ag+' · Disagree '+di+' · Not sure '+(PL.length-ag-di)+'</p><p class="note" style="font-size:16px">Pick the statement you feel most strongly about and say why.</p><button class="btn alt" id="pa">Again</button>';el.querySelector('#pa').onclick=()=>{i=0;ans=[];draw();};return;}
+  el.innerHTML='<div class="qh"><span class="note">'+(i+1)+' / '+PL.length+'</span></div><p class="q" style="min-height:76px">'+PL[i]+'</p><div class="opts" style="grid-template-columns:1fr">'+['Agree','Disagree','Not sure'].map(o=>'<button class="opt" data-o="'+o+'" style="padding:8px 12px">'+o+'</button>').join('')+'</div><div class="note" style="margin-top:6px">Then: “Why do you think so?”</div>';
+  el.querySelectorAll('[data-o]').forEach(b=>b.onclick=()=>{ans[i]=b.dataset.o;i++;draw();});}
+ draw();})();
+
+/* 2 words: twelve words and six phrases */
+const TR=[['eyewitness','a person who saw an event and can describe it','очевидец','The eyewitness described the driver to the police.'],['testimony','what a witness says in court','показания','Her testimony was clear and consistent.'],['recall','remember something and bring it back to mind','вспоминать','He couldn’t recall the colour of the car.'],['vivid','very clear and detailed in the mind','яркий, живой','She has a vivid memory of that night.'],['reliable','able to be trusted','надёжный','A reliable witness gives the same account each time.'],['misleading','giving a wrong idea','вводящий в заблуждение','The question was misleading.'],['suggestible','easily influenced by what others say','внушаемый','Small children can be very suggestible.'],['plausible','seeming possible or likely, but not proven','правдоподобный','His story sounded plausible, but there was no proof.'],['bias','an unfair leaning for or against something','предвзятость','The detective’s bias affected the interview.'],['contaminate','make something less pure or less reliable','искажать, «загрязнять»','News reports can contaminate a witness’s memory.'],['credible','able to be believed','заслуживающий доверия','The jury found her credible.'],['hindsight','understanding something only after it has happened','взгляд задним числом','With hindsight, the signs were obvious.']];
+const PH=[['cast doubt on','make people less sure about','ставить под сомнение','The video cast doubt on his story.'],['beyond reasonable doubt','so clear that no sensible doubt remains','вне разумных сомнений','The jury must be sure beyond reasonable doubt.'],['circumstantial evidence','evidence that suggests something but does not prove it directly','косвенные доказательства','The case rested on circumstantial evidence.'],['reach a verdict','decide whether someone is guilty or not','вынести вердикт','The jury reached a verdict after two days.'],['hard evidence','facts or objects that clearly prove something','неопровержимые доказательства','There was no hard evidence, only memories.'],['the evidence points to','the evidence suggests','улики указывают на','The evidence points to a mistake, not a lie.']];
+const ALL=TR.concat(PH);
+const cardR=(c,b)=>b?'<small>MEANING · RUSSIAN · EXAMPLE</small><p>'+c[1]+'</p><span class="ru">'+c[2]+'</span><em>'+c[3]+'</em>':'<small>'+(TR.indexOf(c)>=0?'WORD':'PHRASE')+'</small><strong>'+c[0]+'</strong>';
+Cards($('c2'),$('c2n'),$('c2p'),$('c2x'),ALL,cardR);
+
+/* 3 matching: six words and six phrases, three rounds of four */
+Cards($('c3'),$('c3n'),$('c3p'),$('c3x'),ALL,cardR);
+Match($('m3'),$('m3n'),[2,3,4,6,7,10].map(i=>[TR[i][0],TR[i][1]]).concat(PH.map(p=>[p[0],p[1]])),4);
+
+/* 4 sorting: how strong is the evidence */
+Sorting($('s4'),[['a DNA match','Stronger'],['a clear CCTV recording','Stronger'],['a phone location record','Stronger'],['a statement written down within an hour','Stronger'],['a signed, dated document','Stronger'],['a face seen for two seconds at night','Weaker'],['a confession after twenty hours of questioning','Weaker'],['an identification after seeing the suspect’s photo in the news','Weaker'],['a memory recalled years later','Weaker'],['a witness who is sure but was far away','Weaker'],['a witness who is very confident','Depends'],['fingerprints on the weapon','Depends']],['Stronger','Weaker','Depends'],'One possible grouping. Stronger: DNA, CCTV, phone record, a statement written within an hour, a signed dated document. Weaker: two seconds at night, a long interrogation, a photo seen in the news, a memory years later, a far-away witness. Depends: a confident witness (confidence is not accuracy), fingerprints (who touched it, and when?).');
+
+/* 5 floor is lava */
+Lava($('lv'),[{s:'The ___ described the driver to the police.',o:['eyewitness','hindsight','bias'],a:'eyewitness'},{s:'Her ___ in court was clear and consistent.',o:['testimony','hindsight','bias'],a:'testimony'},{s:'He couldn’t ___ the colour of the car.',o:['recall','contaminate','reach'],a:'recall'},{s:'She has a ___ memory of the night: she even remembers the smell.',o:['vivid','misleading','plausible'],a:'vivid'},{s:'A ___ witness gives the same account each time.',o:['reliable','suggestible','biased'],a:'reliable'},{s:'The officer’s question was ___: it suggested that the car was red.',o:['misleading','credible','vivid'],a:'misleading'},{s:'Small children can be very ___: they accept what adults suggest.',o:['suggestible','reliable','credible'],a:'suggestible'},{s:'His story sounded ___, but there was no proof.',o:['plausible','contaminated','vivid'],a:'plausible'},{s:'News reports can ___ a witness’s memory.',o:['contaminate','recall','reach'],a:'contaminate'},{s:'The CCTV video helped to ___ doubt on his story.',o:['cast','reach','hold'],a:'cast'},{s:'The jury must be sure beyond ___ doubt.',o:['reasonable','possible','personal'],a:'reasonable'},{s:'The jury will ___ a verdict tomorrow.',o:['reach','make','take'],a:'reach'}]);
+
+/* 6 phrasal verbs for investigators */
+const PV=[['look into','investigate','изучать, расследовать','The police are looking into the case.'],['rule out','decide that something is not possible','исключить','Detectives could not rule out a mistake.'],['back up','support with evidence','подтвердить','Nothing backed up his story.'],['point to','suggest or show','указывать на','The details point to a false memory.'],['turn out','prove to be','оказаться','The witness turned out to be wrong.'],['carry out','do or complete a task','проводить (исследование)','Researchers carried out an experiment.'],['go over','check carefully','просматривать, проверять','The lawyer went over the statement twice.'],['make up','invent','выдумывать','He did not make up the story; he believed it.'],['give away','reveal by accident','выдавать','A tiny detail gave him away.'],['come up with','think of an idea','придумать','She came up with a plausible explanation.'],['put forward','offer for consideration','выдвигать','The defence put forward a new theory.'],['cover up','hide the truth','скрывать, замять','Some officers tried to cover up the error.']];
+Cards($('c6'),$('c6n'),$('c6p'),$('c6x'),PV,(c,b)=>b?'<small>MEANING · RUSSIAN · EXAMPLE</small><p>'+c[1]+'</p><span class="ru">'+c[2]+'</span><em>'+c[3]+'</em>':'<small>PHRASAL VERB</small><strong>'+c[0]+'</strong>');
+Quiz($('q6'),[
+{q:'The police are ___ the case.',o:['looking into','covering up','making up'],a:0,e:'Look into: investigate.'},
+{q:'Detectives could not ___ a mistake.',o:['rule out','back up','carry out'],a:0,e:'Rule out: decide that something is not possible.'},
+{q:'Nothing ___ his story, so the jury doubted it.',o:['backed up','gave away','made up'],a:0,e:'Back up: support with evidence.'},
+{q:'All the details ___ a false memory, not a lie.',o:['point to','cover up','carry out'],a:0,e:'Point to: suggest or show.'},
+{q:'The witness ___ to be wrong.',o:['turned out','put forward','went over'],a:0,e:'Turn out: prove to be.'},
+{q:'Researchers ___ an experiment with a hundred volunteers.',o:['carried out','gave away','covered up'],a:0,e:'Carry out: do or complete a task.'},
+{q:'The lawyer ___ the statement twice before the trial.',o:['went over','made up','ruled out'],a:0,e:'Go over: check carefully.'},
+{q:'He wasn’t lying. He didn’t ___ the story; he believed it.',o:['make up','back up','look into'],a:0,e:'Make up: invent.'},
+{q:'A tiny detail ___ the real culprit.',o:['gave away','ruled out','put forward'],a:0,e:'Give away: reveal by accident.'},
+{q:'She ___ a plausible explanation for the mistake.',o:['came up with','turned out','went over'],a:0,e:'Come up with: think of an idea.'},
+{q:'The defence ___ a new theory about that night.',o:['put forward','carried out','gave away'],a:0,e:'Put forward: offer for consideration.'},
+{q:'Some officers tried to ___ the error.',o:['cover up','look into','point to'],a:0,e:'Cover up: hide the truth.'}]);
+
+/* 7 word formation */
+Fipi($('fp'),"Many people believe that memory works like a video camera, but psychologists have shown that it is often {0}. In one famous experiment, volunteers watched a film of a car crash and were asked how fast the cars were going. The {1} of a single verb in the question changed their answers. A week later some of them {2} claimed to remember broken glass, although there was none. The {3} of such errors is a serious problem for the justice system. In one American case from 1984, a witness sincerely identified the wrong man; it took more than ten years before DNA {4} proved his {5}. Researchers say that a witness who feels very sure is not necessarily {6}. Careful police work can reduce the risk of {7} identification. A lawyer should therefore treat every confident witness with {8}, and an honest investigator will always welcome {9} evidence.",
+ ['unreliable','choice','confidently','frequency','analysis','innocence','accurate','mistaken','scepticism','independent'],['RELY','CHOOSE','CONFIDENT','FREQUENT','ANALYSE','INNOCENT','ACCURACY','MISTAKE','SCEPTICAL','DEPEND']);
+
+/* 8 modals of deduction, four forms */
+const MO=['must have','might have','can’t have','should have'];
+Quiz($('q8'),[
+{q:'The witness was fifty metres away, at night. She ___ seen the face clearly.',o:MO,a:2,e:'The conditions make it almost impossible.'},
+{q:'His account matches the CCTV exactly. He ___ been there.',o:MO,a:0,e:'The match is strong evidence.'},
+{q:'The detective repeated his suggestion several times. The witness ___ absorbed it into her memory.',o:MO,a:1,e:'A possibility: the evidence does not settle it.'},
+{q:'The police ___ used a fair line-up instead of showing one photo.',o:MO,a:3,e:'Criticism of what was done wrongly.'},
+{q:'Both statements were written within an hour. The details ___ been fresh.',o:MO,a:0,e:'Writing quickly makes fresh details very likely.'},
+{q:'The suspect was abroad on that date, with a stamped passport. He ___ committed the robbery.',o:MO,a:2,e:'The passport rules it out.'},
+{q:'The witness read newspaper reports before the interview. They ___ influenced her memory.',o:MO,a:1,e:'A real possibility, but not proof.'},
+{q:'The jury ___ been told that confidence does not prove accuracy.',o:MO,a:3,e:'Criticism: they were not told.'},
+{q:'His fingerprints are on the glass, but he works in the shop. He ___ touched it innocently.',o:MO,a:1,e:'An innocent explanation is possible.'},
+{q:'Three independent witnesses checked the alibi. He ___ been at the cinema.',o:MO,a:0,e:'Several independent checks: a strong inference.'},
+{q:'It was dark and she was terrified. She ___ noticed every detail.',o:MO,a:2,e:'Fear and darkness make that very unlikely.'},
+{q:'The lawyer ___ asked about the lighting. It was the key question.',o:MO,a:3,e:'Criticism of a missed chance.'}],{keep:true});
+
+/* 9 error hunter */
+ErrorHunter($('eh'),[
+{s:'A confident witness is always accurate, so the jury trusted her completely.',w:'always',c:'not always',note:'Confidence does not guarantee accuracy.'},
+{s:'His story was plausible, but there was no hard evidence to cast it up.',w:'cast',c:'back',note:'Back up means support with evidence.'},
+{s:'The witness only saw the man for a second, so she must have noticed every detail.',w:'must',c:'can’t',note:'One second is too short: can’t have noticed every detail.'},
+{s:'The records are incomplete, so the clerk must have forgotten the date.',w:'must',c:'might',note:'Incomplete records suggest a possibility, not a certainty.'},
+{s:'She has a vivid memory, so she cannot recall anything about the night.',w:'cannot',c:'can',note:'A vivid memory is clear and detailed, so she can recall it.'},
+{s:'Researchers carried off an experiment to test how memory changes.',w:'off',c:'out',note:'Carry out an experiment.'},
+{s:'The jury must be sure beyond reasonable proof before they reach a verdict.',w:'proof',c:'doubt',note:'The phrase is beyond reasonable doubt.'},
+{s:'Circumstantial evidence proves a fact directly, without any other link.',w:'proves',c:'suggests',note:'Circumstantial evidence suggests a fact but does not prove it directly.'},
+{s:'They tried to cover down the mistake, but a witness gave it away.',w:'down',c:'up',note:'Cover up means hide the truth.'},
+{s:'A credible witness gives a different account every time she is asked.',w:'credible',c:'unreliable',note:'A credible witness is consistent; a changing account is a warning sign.'}]);
+
+/* 10 jeopardy: twelve questions */
+Jeopardy($('jp'),[
+{name:'Words',cells:[{v:100,q:'To remember something and bring it back to mind',a:'recall'},{v:200,q:'Easily influenced by what other people say',a:'suggestible'},{v:300,q:'Seeming possible or likely, but not proven',a:'plausible'}]},
+{name:'Phrasal verbs',cells:[{v:100,q:'To investigate',a:'look into'},{v:200,q:'To decide that something is not possible',a:'rule out'},{v:300,q:'To hide the truth',a:'cover up'}]},
+{name:'Cases',cells:[{v:100,q:'In the famous car-crash experiment, which verb made people guess a higher speed: hit or smashed?',a:'smashed'},{v:200,q:'In the 1984 North Carolina case of mistaken identity, what finally showed that the man was innocent?',a:'DNA analysis'},{v:300,q:'According to the Innocence Project, about what share of DNA exonerations in the US involved eyewitness misidentification?',a:'about two-thirds (69%)'}]},
+{name:'Modals',cells:[{v:100,q:'Which form expresses a strong conclusion from evidence: must have, might have or can’t have?',a:'must have'},{v:200,q:'What does should have + V3 express?',a:'criticism or regret about the past'},{v:300,q:'Complete: He was abroad on that date, so he ___ committed the crime.',a:'can’t have'}]}]);
+
+/* 11 speed game: twelve definitions, 15 seconds each */
+Quiz($('q11'),[
+{q:'To remember something and bring it back to mind',o:['recall','contaminate','plausible'],a:0},
+{q:'Very clear and detailed in the mind',o:['vivid','misleading','biased'],a:0},
+{q:'Able to be trusted',o:['reliable','suggestible','plausible'],a:0},
+{q:'Giving a wrong idea',o:['misleading','credible','vivid'],a:0},
+{q:'Easily influenced by what others say',o:['suggestible','reliable','credible'],a:0},
+{q:'Seeming possible or likely, but not proven',o:['plausible','vivid','reliable'],a:0},
+{q:'An unfair leaning for or against something',o:['bias','hindsight','testimony'],a:0},
+{q:'To make something less pure or less reliable',o:['contaminate','recall','reach'],a:0},
+{q:'Able to be believed',o:['credible','misleading','suggestible'],a:0},
+{q:'Understanding something only after it has happened',o:['hindsight','testimony','bias'],a:0},
+{q:'A person who saw an event and can describe it',o:['eyewitness','suspect','juror'],a:0},
+{q:'What a witness says in court',o:['testimony','hindsight','bias'],a:0}],{timer:15,lazy:true});
+window.startSpeed=()=>$('q11')._start();window.stopSpeed=()=>$('q11')._stop();
+
+/* 12 speak: ten prompts */
+const SP=[['Describe a memory you are sure about. How could you check it?','I clearly remember… I could check it by… It might have changed because…'],['Why can an honest eyewitness still be wrong?','An honest witness can be wrong because… Memory is… For example…'],['A witness is 100% sure, but the DNA says otherwise. What should the jury do?','The jury should… The DNA evidence points to… The witness might have…'],['A police officer asks: “Did you see the red car?” What is wrong with the question?','The question is misleading because… It might make the witness… A better question would be…'],['Would you trust CCTV more than a witness? Explain.','On the one hand… On the other hand… I would trust… because…'],['You are a lawyer. How would you cast doubt on a confident witness?','I would ask about… I would point out that… The witness can’t have…'],['Can a false memory feel completely real? Give your opinion.','It is possible that… Research suggests… However…'],['Should a person be convicted on one witness alone? Why or why not?','In my opinion… beyond reasonable doubt… hard evidence…'],['Tell the story of a mistaken identification, using three modal perfects.','The witness must have… He can’t have… The police should have…'],['How can the police reduce the risk of mistaken identification?','They should… They could… For example, a fair line-up…']];
+Cards($('c12'),$('c12n'),$('c12p'),$('c12x'),SP,(c,b)=>b?'<small>SUPPORT</small><p>'+c[1]+'</p>':'<small>PROMPT</small><p style="font-size:21px">'+c[0]+'</p>');
+Timer($('tm12'),$('ts12'),$('tr12'),60);
+</script></body></html>
