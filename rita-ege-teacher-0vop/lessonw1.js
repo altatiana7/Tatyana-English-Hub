@@ -219,5 +219,31 @@ function teacher(){const notes={1:'<p><b>Задание 1 · чтение всл
   overlay('Учителю · только для вас','<p><b>Ход урока, 60 минут.</b> 0–7: Words слева (карточки, потом Match). 7–15: Error hunter. 15–25: задание 2. 25–45: задание 3, Set 1 и Set 2 с записью. 45–55: задание 1 или 4 – по времени. 55–60: Homework.</p>'+notes[S.right],
    S.right===2?ADS[S.t2.v].points.map((p,k)=>scoreRow((k+1)+'. '+p,1,()=>S.sc.t2[k],n=>S.sc.t2[k]=n)):S.right===3?IV[S.iv.v].q.map((q,k)=>scoreRow('Answer '+(k+1),1,()=>S.sc.t3[k],n=>S.sc.t3[k]=n)):S.right===1?[scoreRow('Reading aloud',1,()=>S.sc.t1,n=>S.sc.t1=n)]:[scoreRow('К1',4,()=>S.sc.k1,n=>S.sc.k1=n),scoreRow('К2',3,()=>S.sc.k2,n=>S.sc.k2=n),scoreRow('К3',3,()=>S.sc.k3,n=>S.sc.k3=n)]);}
 
-/* ссылки с главного экрана: #w #h #m – карточки слева, #t1–#t4 – устная часть справа, #hw – домашнее задание */
-(function(){const h=location.hash.slice(1),L={w:'cards',c:'colls',h:'hunt',m:'match'}[h],R=/^t[1-4]$/.test(h)?+h[1]:0;if(L)S.left=L;if(R)S.right=R;layout();if(h==='hw')homework();if(RV)showReview(RV);})();
+/* ---------- главный экран занятия: плитки, задание на всю ширину ---------- */
+function leftRun(id,body){S.left=id;
+  if(S.left==='cards')quizlet(body,S.w,WORDS.length,k=>['Term','<div class="qzterm">'+esc(WORDS[k][0])+'</div>'],k=>['Definition','<div class="qzdef">'+ED.t('w1.w.'+k+'.d',WORDS[k][1])+'</div><div class="qzex">'+ED.t('w1.w.'+k+'.x',WORDS[k][2])+'</div>'],(k,f)=>f?WORDS[k][1]+'. '+WORDS[k][2]:WORDS[k][0]);
+  else if(S.left==='colls')quizlet(body,S.c,COLL.length,k=>['Collocation','<div class="qzterm">'+esc(COLL[k][0])+'</div>'],k=>['Meaning','<div class="qzdef">'+esc(COLL[k][1])+'</div>'],(k,f)=>f?'':COLL[k][0]);
+  else if(S.left==='hunt'&&!SHOW)hunter(body);
+  else if(S.left==='hunt')quizlet(body,S.h,HUNT.length,k=>['Find the mistake','<div class="qzterm">'+esc(HUNT[k][0])+'</div>'],k=>['Correct question','<div class="qzwrong">'+esc(HUNT[k][0])+'</div><div class="qzdef qzok">'+ED.t('w1.h.'+k,HUNT[k][1])+'</div><div class="qzex">'+esc(HUNT[k][2])+'</div>'],(k,f)=>f?HUNT[k][1]:'');
+  else match(body);}
+function rightRun(n,body){S.right=n;[null,t1,t2,t3,t4][n](body);}
+const H=Hub({title:'Block 1 · Family and friends',sub:'Занятие 1. Слова и устная часть ЕГЭ.',
+ clean:()=>{if(cleanL){cleanL();cleanL=null;}if(cleanR){cleanR();cleanR=null;}stopSay();},
+ right:()=>{const n=[btn('Homework',homework,'main sm')];
+  if(!SHOW)n.push(sendBtn());else{const a=el('a','btn sm','Письменная часть →');a.href='block1.html?v=48#1';a.style.textDecoration='none';n.push(a);}
+  return n;},
+ groups:[
+ {name:'Слова',color:'#8f4d7c',items:[
+  {id:'cards',t:'Words',sub:'Карточки: термин и значение',lock:()=>!hwLeft('cards'),run:b=>leftRun('cards',b)},
+  {id:'colls',t:'Collocations',sub:'Карточки',lock:()=>!hwLeft('colls'),run:b=>leftRun('colls',b)},
+  {id:'hunt',t:'Error hunter',sub:'Найди ошибку в вопросе',lock:()=>!hwLeft('hunt'),run:b=>leftRun('hunt',b)},
+  {id:'match',t:'Match',sub:'Соедини пары',lock:()=>!hwLeft('match'),onOpen:()=>{S.w.mt=null;},run:b=>leftRun('match',b)}]},
+ {name:'Устная часть ЕГЭ',color:'#c8553d',items:[
+  {id:'t1',t:'Task 1',sub:'Чтение вслух',cls:'sp4',lock:()=>!hwRight(1),run:b=>rightRun(1,b)},
+  {id:'t2',t:'Task 2',sub:'Вопросы по объявлению',cls:'sp4',lock:()=>!hwRight(2),run:b=>rightRun(2,b)},
+  {id:'t3',t:'Task 3',sub:'Интервью',cls:'sp4',lock:()=>!hwRight(3),run:b=>rightRun(3,b)},
+  {id:'t4',t:'Task 4',sub:'Монолог по фото',cls:'sp4',lock:()=>!hwRight(4),run:b=>rightRun(4,b)}]}
+ ]});
+drawLeft=drawRight=()=>H.render();
+(function(){const h=location.hash.slice(1),M={w:'cards',c:'colls',h:'hunt',m:'match',t1:'t1',t2:'t2',t3:'t3',t4:'t4'};
+ H.render();if(M[h])H.open(M[h]);if(h==='hw')homework();if(RV)showReview(RV);})();
