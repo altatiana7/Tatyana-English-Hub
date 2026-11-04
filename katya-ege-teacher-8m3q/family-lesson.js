@@ -30,11 +30,34 @@ const EGE={30:[['fit in','break up','take after','bring up'],'fit in'],31:[['let
 
 const SETS=[
  {name:'Family ties',q:['Do you have an extended or an immediate family?','How many members are there in your family?','Do you get along with all your relatives?','Who is the breadwinner in your family?','Do you take after your mother or your father?','What do you usually do together?']},
- {name:'Task 3 · Friends and family',q:['How do you usually keep in touch with your relatives?','What makes a family close-knit?','What can teenagers do when they fall out with their parents?','Is it better to have a few close friends or a wide circle of acquaintances?','What is the best way to make friends at a new school?']}];
+ {name:'Task 3 · Friends and family',q:['How do you usually keep in touch with your relatives?','What makes a family close-knit?','What can teenagers do when they fall out with their parents?','Is it better to have a few close friends or a wide circle of acquaintances?','What is the best way to make friends at a new school?']},
+ {name:'Family vocabulary',q:['How do you usually resolve a conflict when you fall out with a family member?','Can you think of a time when you took after one of your members of the family? What was it?','In your opinion, what is the most important thing to make a family close-knit?','Have you ever been the black sheep of the family? If so, how did your family react?','How do you show your family members that you are there for them when they need help?']}];
+
+/* Лексика «Семья»: слова, упражнения 1–3, задания в формате ЕГЭ */
+const FAM=[['nuclear family','нуклеарная семья (мать, отец и дети)'],['extended family','расширенная семья (включает бабушек, дедушек, тётей, дядей и т. д.)'],['immediate family','ближайшие родственники (родители, дети, братья, сёстры)'],['single-parent family','семья с одним родителем'],['stepfamily','отчим/мачеха и их дети (сводная семья)'],['half-brother / half-sister','сводный брат/сестра (общий только один родитель)'],['adoptive parents','приёмные родители'],['guardian','опекун'],['relative','родственник'],['ancestor','предок'],['descendant','потомок'],['kin','родня, близкие родственники'],
+ ['to get along with someone','ладить с кем-то','I get along well with my parents, and we have a lot in common.'],
+ ['to have a strong bond','иметь крепкую связь','The siblings have a strong bond, always supporting each other.'],
+ ['to fall out with someone','поссориться с кем-то','They fell out over a silly argument, but later made up.'],
+ ['to be close-knit','быть сплочённым','Our family is very close-knit, and we always spend holidays together.'],
+ ['to look after someone','заботиться о ком-то','She looks after her elderly parents and makes sure they are comfortable.'],
+ ['to have a misunderstanding','иметь недоразумение','They had a misunderstanding, but it was cleared up after a good conversation.'],
+ ['to take after someone','походить на кого-то (по характеру, внешности)','She takes after her mother in terms of personality, they’re both very kind and caring.'],
+ ['to be a black sheep of the family','быть белой вороной в семье','He’s always been the black sheep of the family, doing things differently from everyone else.'],
+ ['to raise a child','воспитывать ребёнка','They raised their children with strong values and always taught them the importance of kindness.'],
+ ['to be there for someone','быть рядом с кем-то, поддерживать','No matter what happens, my family is always there for me when I need them.']];
+const MAR_TXT='Maria comes from a large [1]. She has many cousins, uncles, and aunts, as well as her grandparents, who live nearby. Her [2] includes her parents and her younger brother. Maria’s parents got divorced a few years ago, and she now lives with her [3] in a small apartment. Her father married another woman, and she has a [4] from this marriage. His name is Jake, and they get along very well. Maria’s mother, however, is an [5] to her because she has taken care of her since Maria was a baby. Her father’s [6] lives in a different city, and Maria doesn’t see them very often.';
+const MAR_OPT=['nuclear family','immediate family','single-parent family','stepfamily','adoptive parents','extended family'];
+const MAR_KEY={1:6,2:2,3:3,4:4,5:5,6:1};
+const MIST=[['His half-brother is very close to him, and they often spend weekends together.',null],['Her adoptive parents raised her in a loving environment after she was abandoned.',null],['The guardian of the children decided to send them to a new school.','The parent of the children decided to send them to a new school.','guardian — опекун, а не родитель.'],['She has a small extended family, consisting of her mother and father only.','She has a small nuclear family, consisting only of her mother and father.','extended family — это семья с большими родственниками.'],['Our family is not a nuclear family because we have many cousins living with us.','Our family is not an extended family because we don’t have many cousins living with us.','nuclear family — это семья, состоящая из родителей и детей.']];
+const PAIRS=[['to be close-knit','Иметь крепкие отношения и всегда поддерживать друг друга.'],['to fall out with','Поссориться с кем-то и прекратить общение на некоторое время.'],['to take after someone','Быть похожим на кого-то из семьи, обычно по характеру или внешности.'],['to have a misunderstanding','Иметь недоразумение, неправильно понять что-то.'],['to raise a child','Заботиться о ребёнке и обучать его жизни.'],['to be the black sheep of the family','Быть тем, кто отличается от остальных членов семьи, часто ведёт себя иначе.']];
+const SAR_TXT='Sarah has always had a very supportive family. She gets along well with her parents and they have a very [1] relationship. She is especially close to her brother, and they [2] each other through thick and thin. They even look after their grandmother together when she’s not feeling well. Recently, however, Sarah and her cousin had a small [3] about a family event. They disagreed on where to hold it, but after talking it through, they were able to [4] and move on. Sarah sometimes feels like the [5] of the family because she chooses a different career path than her parents and siblings, but they always support her no matter what. She’s glad her parents [6] her with love and care, raising her with strong values. She knows that no matter what happens, her family will always [7] her, and that means a lot to her.';
+const SAR={1:[['close-knit','black sheep','strong bond','misunderstanding'],3],2:[['take after','be there for','fall out with','raise a child'],2],3:[['be there for','misunderstanding','look after','get along with'],2],4:[['take after','have a strong bond','make up','raise a child'],3],5:[['nuclear family','black sheep','relative','ancestor'],2],6:[['raise a child','look after','take after','adoptive parents'],2],7:[['make up','get along with','be there for','raise a child'],3]};
+
 
 const S={left:'cards',right:'predict',c:{i:0,order:null,shuf:false,flip:false},
   ch:{i:0,pick:null,score:0,errs:[],done:false,ord:null},
-  sp:{set:0,q:0,flip:false},eg:{ans:{},open:null}};
+  sp:{set:0,q:0,flip:false},eg:{ans:{},open:null},
+  f:{i:0,order:null,shuf:false,flip:false},mi:{i:0,done:[],pick:null},ma:{sel:null,ok:{},err:0,ord:null},mar:{cur:1,a:{},chk:false},sar:{cur:1,a:{},chk:false}};
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 
 /* ---------- озвучка вопросов ---------- */
@@ -55,15 +78,17 @@ function layout(){main.innerHTML='';const ws=el('div','ws');PL=el('section','wpa
 
 /* ---------- слева: карточки и выбор слова ---------- */
 function drawLeft(){PL.innerHTML='';
-  PL.append(seg([['cards','Cards'],['choose','Choose the word']],S.left,v=>{S.left=v;drawLeft();}));
+  PL.append(seg([['cards','Cards'],['fam','Family words'],['choose','Choose'],['mist','Mistakes'],['match','Match']],S.left,v=>{S.left=v;drawLeft();}));
   const body=el('div','pbody');PL.append(body);
-  if(S.left==='cards')cards(body);else choose(body);}
-function cards(box){const st=S.c,n=CARDS.length;if(!st.order)st.order=[...Array(n).keys()];
-  const k=st.order[st.i],c=CARDS[k];
+  if(S.left==='cards')cards(body,S.c,CARDS,k=>k<12?'Collocation':'Phrasal verb');
+  else if(S.left==='fam')cards(body,S.f,FAM,k=>k<12?'Family':'Relationship');
+  else if(S.left==='choose')choose(body);else if(S.left==='mist')mistake(body);else match(body);}
+function cards(box,st,deck,kindOf){const n=deck.length;if(!st.order)st.order=[...Array(n).keys()];
+  const k=st.order[st.i],c=deck[k];
   const bar=el('div','qzbar');bar.innerHTML='<i style="width:'+((st.i+1)/n*100)+'%"></i>';
   const card=el('div','qzcard'+(st.flip?' flipped':'')),inner=el('div','qzin');
-  const kind=k<12?'Collocation':'Phrasal verb';
-  inner.append(el('div','qzface qzfront','<span class="qzk">'+kind+'</span><div class="qzterm">'+esc(c[0])+'</div>'),el('div','qzface qzback','<span class="qzk">Meaning</span><div class="qzdef">'+esc(c[1])+'</div>'));card.append(inner);
+  const kind=kindOf(k);
+  inner.append(el('div','qzface qzfront','<span class="qzk">'+kind+'</span><div class="qzterm">'+esc(c[0])+'</div>'),el('div','qzface qzback','<span class="qzk">Meaning</span><div class="qzdef">'+esc(c[1])+'</div>'+(c[2]?'<div class="qzex">'+esc(c[2])+'</div>':'')));card.append(inner);
   const flip=()=>{st.flip=!st.flip;card.classList.toggle('flipped',st.flip);};card.onclick=flip;
   const move=d=>{st.i=(st.i+d+n)%n;st.flip=false;drawLeft();};
   const nav=el('div','qznav'),pv=el('button','qzarr','&larr;'),nx=el('button','qzarr','&rarr;');pv.type=nx.type='button';pv.onclick=()=>move(-1);nx.onclick=()=>move(1);pv.disabled=st.i===0;
@@ -89,9 +114,11 @@ function choose(box){const st=S.ch,n=CH.length;const wrap=el('div','chq');box.ap
 
 /* ---------- справа: прогноз → устная часть → ЕГЭ 30–36 ---------- */
 function drawRight(){if(cleanR){cleanR();cleanR=null;}PR.innerHTML='';
-  PR.append(seg([['predict','1 · Predict'],['speak','2 · Speaking'],['ege','3 · EGE 30–36']],S.right,v=>{S.right=v;drawRight();}));
+  PR.append(seg([['predict','1 · Predict'],['speak','2 · Speaking'],['ege','3 · Olivia'],['maria','4 · Maria'],['sarah','5 · Sarah']],S.right,v=>{S.right=v;drawRight();}));
   const body=el('div','pbody');PR.append(body);
-  if(S.right==='predict')predict(body);else if(S.right==='speak')speak(body);else ege(body);}
+  if(S.right==='predict')predict(body);else if(S.right==='speak')speak(body);else if(S.right==='ege')ege(body);
+  else if(S.right==='maria')gapPanel(body,MAR_TXT,()=>MAR_OPT,MAR_KEY,S.mar,'Task 1. Maria.','Choose the correct word for each gap. One word is used once.',true);
+  else gapPanel(body,SAR_TXT,c=>SAR[c][0],Object.fromEntries(Object.keys(SAR).map(n=>[n,SAR[n][1]])),S.sar,'Lexis and grammar 30–36. Sarah.','Choose the best option for each gap.',false);}
 
 function predict(box){box.append(el('div','inst','<b>Look at the photos and predict.</b>'));
   const g=el('div','pic3');for(let i=1;i<=3;i++){const f=el('figure');const img=new Image();const ex=['jpg','png','webp'];let x=0;img.alt='Photo '+i;
@@ -136,6 +163,43 @@ function ege(box){const st=S.eg;box.append(el('div','inst','<b>Read the text and
   const bar=el('div','fbar');bar.append(el('b',null,ok+' / 7'),btn('Show answers',()=>{Object.keys(EGE).forEach(n=>st.ans[n]=EGE[n][1]);st.open=null;drawRight();},'sm'),btn('Reset',()=>{st.ans={};st.open=null;drawRight();},'sm'));box.append(bar);
   const close=()=>{if(st.open!==null){st.open=null;drawRight();}};document.addEventListener('click',close);cleanR=()=>document.removeEventListener('click',close);}
 
+/* ---------- лист «Семья»: найди ошибку, соедини, текст с пропусками ---------- */
+function mistake(box){const st=S.mi,n=MIST.length,wrap=el('div','chq');box.append(wrap);
+  if(st.i>=n){const ok=st.done.filter(x=>x).length;wrap.append(el('div','end','<div class="score">'+ok+' / '+n+'</div>'));wrap.append(btn('Play again',()=>{S.mi={i:0,done:[],pick:null};drawLeft();},'main'));return;}
+  const it=MIST[st.i],bad=!!it[1];
+  const meta=el('div','meta');const b0=el('div','qzbar');b0.innerHTML='<i style="width:'+(st.i/n*100)+'%"></i>';meta.append(el('span',null,(st.i+1)+' / '+n),b0);wrap.append(meta);
+  wrap.append(el('div','tag','Find the mistake'),el('div','qtxt',esc(it[0])));
+  const og=el('div','opts');[['ok','Correct sentence'],['bad','There is a mistake']].forEach(([v,l])=>{const b=el('button',null,l);b.type='button';b.disabled=st.pick!==null;
+    if(st.pick!==null){if(v===(bad?'bad':'ok'))b.classList.add('ok');else if(st.pick===v)b.classList.add('no');}
+    b.onclick=()=>{st.pick=v;st.done[st.i]=(v==='bad')===bad;drawLeft();};og.append(b);});wrap.append(og);
+  let fb='';if(st.pick!==null)fb=bad?'<b>'+esc(it[1])+'</b><br><span style="color:#586380">'+esc(it[2])+'</span>':'This sentence is correct.';
+  wrap.append(el('div','fb',fb));wrap.lastChild.style.cssText='min-height:60px;font-size:15px;flex:none';
+  const nx=btn(st.i===n-1?'See result':'Next sentence',()=>{st.i++;st.pick=null;drawLeft();},'main sm');nx.disabled=st.pick===null;wrap.append(nx);}
+
+function match(box){const st=S.ma,n=PAIRS.length;if(!st.ord)st.ord=shuffle([...Array(n).keys()]);
+  const top=el('div','fbar'),done=Object.keys(st.ok).length;
+  top.append(el('b',null,'Match the expressions with their meanings.'),el('span','bl',(done===n?'Done · ':'')+done+' / '+n+' · mistakes '+st.err),btn('Again',()=>{S.ma={sel:null,ok:{},err:0,ord:null};drawLeft();},'sm'));box.append(top);
+  const g=el('div','mt'),L=el('div','col'),R=el('div','col');
+  PAIRS.forEach((p,i)=>{const b=el('button',st.ok[i]?'ok':(st.sel===i?'sel':''),esc(p[0]));b.type='button';b.disabled=!!st.ok[i];b.onclick=()=>{st.sel=i;drawLeft();};L.append(b);});
+  st.ord.forEach(i=>{const b=el('button',st.ok[i]?'ok':'',esc(PAIRS[i][1]));b.type='button';b.disabled=!!st.ok[i];
+    b.onclick=()=>{if(st.sel===null)return;if(st.sel===i){st.ok[i]=true;st.sel=null;}else{st.err++;b.classList.add('no');setTimeout(()=>drawLeft(),450);st.sel=null;return;}drawLeft();};R.append(b);});
+  g.append(L,R);box.append(g);}
+
+/* текст с пропусками, справа варианты (Maria, Sarah) */
+function gapPanel(box,txt,optsOf,keys,st,title,inst,uniq){box.append(el('div','inst','<b>'+title+'</b> '+inst));
+  const rd=el('div','rd');rd.style.cssText='display:grid;grid-template-columns:1fr 235px;gap:10px;align-items:start';box.append(rd);
+  const tx=el('div','rtext');tx.style.cssText='border:1px solid #e3e8f2;border-radius:10px;background:#fbfcfe;padding:8px 12px;font-size:15.5px;line-height:1.62;max-height:calc(100vh - 215px);overflow:auto';
+  txt.split(/\[(\d+)\]/).forEach((p,i)=>{if(i%2===0){tx.append(document.createTextNode(p));return;}
+    const id=+p,cur=st.a[id];let c='gap'+(cur!==undefined&&st.chk?(cur===keys[id]?' ok':' no'):'');const g=el('span',c,cur!==undefined?id+' · '+esc(optsOf(id)[cur-1]):String(id));
+    if(st.cur===id)g.style.outline='3px solid #2855d9';g.onclick=()=>{st.cur=id;drawRight();};tx.append(g);});
+  const op=el('div');op.style.cssText='display:flex;flex-direction:column;gap:5px;max-height:calc(100vh - 215px);overflow:auto';op.append(el('div','tag','Gap '+st.cur));
+  optsOf(st.cur).forEach((o,k)=>{const n=k+1,used=uniq&&Object.entries(st.a).some(([x,v])=>v===n&&+x!==st.cur);const b=el('button',null,n+'. '+esc(o));b.type='button';
+    b.style.cssText='text-align:left;padding:6px 10px;border:2px solid '+(st.a[st.cur]===n?'#6f8fd8':'#c9d3e6')+';background:'+(st.a[st.cur]===n?'#dbe6fb':'#f8faff')+';border-radius:10px;font-weight:600;font-size:15px;'+(used?'opacity:.45':'');
+    b.onclick=()=>{if(st.chk)return;st.a[st.cur]=n;const ids=Object.keys(keys).map(Number),next=ids.find(x=>st.a[x]===undefined);if(next!==undefined)st.cur=next;drawRight();};op.append(b);});
+  rd.append(tx,op);
+  const ids=Object.keys(keys).map(Number),ok=ids.filter(x=>st.a[x]===keys[x]).length;
+  const bar=el('div','fbar');bar.append(btn('Check',()=>{st.chk=true;drawRight();},'main sm'),btn('Show answers',()=>{ids.forEach(x=>st.a[x]=keys[x]);st.chk=true;drawRight();},'sm'),btn('Reset',()=>{st.a={};st.chk=false;st.cur=1;drawRight();},'sm'),el('b',null,st.chk?ok+' / '+ids.length:''));box.append(bar);}
+
 /* ---------- заметки учителя ---------- */
 function teacher(){overlay('Учителю · урок Family',
 '<p><b>Порядок на уроке (около 60 минут).</b></p><ol>'+
@@ -164,6 +228,6 @@ function teacher(){overlay('Учителю · урок Family',
 '<tr><td>go out with sb</td><td>не разделяется</td><td>go – went</td></tr>'+
 '<tr><td>break up (with sb)</td><td>без объекта</td><td>break – broke</td></tr></table>'+
 '<p>Типичные ловушки: grow up (сам вырос) и bring up (воспитали); take after (характер, внешность, как у родственника) и look like (только внешность). В тексте 30–36 все глаголы стоят в Past Simple, обратите внимание на формы fell и made.</p>'+
-'<p><b>Озвучка вопросов.</b> Сейчас используется голос браузера; если он звучит неестественно, можно читать вопросы самой: на обороте карточки текст и таймер.</p>');}
+'<p><b>Лист «Семья».</b> Добавлено: карточки «Family words» (12 слов о семье и 10 выражений с примерами), «Find the mistake» (упражнение 2), «Match» (упражнение 3), текст «Maria» (упражнение 1), устный набор «Family vocabulary» (5 вопросов) и текст «Sarah» (30–36). Ключи — с листа.</p><p>Замечания к ключам листа: в упражнении 1 пункты 4–6 неудобны (например, «an … to her» при ответе во множественном числе). В упражнении 2 пятое предложение логически верное, а в ключе его «исправляют» наоборот. В Sarah пункт 6 ответ look after, но raise a child тоже подходит по смыслу. Проверь и скажи, если надо поменять.</p><p><b>Озвучка вопросов.</b> Сейчас используется голос браузера; если он звучит неестественно, можно читать вопросы самой: на обороте карточки текст и таймер.</p>');}
 
 layout();
