@@ -55,7 +55,7 @@ window.HWSent=(function(){
     const r=await fetch(DB+'/rest/v1/rpc/get_arina_homework',{method:'POST',headers:H,body:JSON.stringify({p_teacher_code:code})});
     if(r.status===400||r.status===401||r.status===403){try{localStorage.removeItem('arina-teacher-code')}catch(e){}return {need:true,bad:true}}
     if(!r.ok)throw new Error('load_failed');
-    const rows=(await r.json()||[]).map(x=>{const id=String(x.test_id||'');const i=id.indexOf(':');
+    const rows=(await r.json()||[]).filter(x=>String(x.test_id||'').indexOf('timofey-oge-hw-')!==0).map(x=>{const id=String(x.test_id||'');const i=id.indexOf(':');
       return {key:String(x.id||x.created_at),student:i>0?id.slice(0,i):'arina',page:i>0?id.slice(i+1):id,title:x.test_title||id,at:x.created_at}})
       .sort((a,b)=>new Date(b.at)-new Date(a.at));
     return {rows}}
