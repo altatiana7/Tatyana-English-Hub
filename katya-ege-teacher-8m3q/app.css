@@ -611,3 +611,8 @@ main{padding:clamp(8px,3vh,32px) 0 clamp(4px,1.5vh,16px)}
 
 /* отдельный сайт одной ученицы: выбор ученицы не нужен */
 .who{display:none!important}
+
+/* Страница прокручивается вниз, если задания не помещаются в окно (раньше нижняя часть просто обрезалась) */
+main{overflow-y:auto;overscroll-behavior:contain}
+main>.hub2{flex:0 0 auto!important;min-height:auto!important}
+main>.hub2>*{flex-shrink:0}
