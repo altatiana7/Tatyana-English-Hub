@@ -1,0 +1,87 @@
+/* hub: главный экран урока и страница задания */
+.bar{gap:14px!important}
+.bar a.hhome{color:#fff!important;background:#2e3856;text-decoration:none;font-weight:800;font-size:17px!important;border-radius:9px;padding:6px 16px;white-space:nowrap}
+.bar a.hhome:hover{background:#2855d9}
+.bar .htitle{font-weight:800;font-size:18px;color:#c8553d}
+.bar a.hlink{margin-left:auto;color:#2e3856;text-decoration:none;font-weight:700;font-size:16px;border:2px solid #b9c3d6;background:#fff;border-radius:9px;padding:5px 14px}
+.hub{width:100%;max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:10px;padding:2px 6px 10px}
+.hubhead h1{margin:0;font-size:30px;color:#2e3856;line-height:1.1}
+.hubhead p{margin:4px 0 0;font-size:17px;color:#586380}
+.hub section h2{margin:0 0 8px;font-size:17px;font-weight:800;color:#2e3856;letter-spacing:.3px;display:flex;align-items:center;gap:8px}
+.hub section h2::before{content:"";width:6px;height:20px;border-radius:3px;background:var(--c)}
+.hgroups{display:flex;flex-direction:column;gap:12px}.hgroups.two{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px;align-items:start}.hgroups.two .tiles{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px}
+.tile{font:inherit;text-align:left;background:#fff;border:2px solid #dbe3f1;border-top:6px solid var(--c);border-radius:14px;padding:12px 14px 12px;cursor:pointer;display:flex;flex-direction:column;gap:3px;box-shadow:0 4px 12px rgba(30,64,120,.07);min-height:84px;transition:transform .12s,box-shadow .12s}
+.tile:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(30,64,120,.14)}
+.tile .tn{width:30px;height:30px;border-radius:50%;background:var(--c);color:#fff;font-weight:800;font-size:16px;display:grid;place-items:center;margin-bottom:4px}
+.tile b{font-size:21px;color:#2e3856;line-height:1.15}
+.tile i{font-style:normal;font-size:14.5px;color:#6a7592}
+.tile.seen{background:#f6faf7}
+.stg{width:100%;max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:8px;min-height:0}
+.stgtop{display:flex;align-items:center;gap:10px}
+.stgt{flex:1;text-align:center;font-size:23px;font-weight:800;color:#2e3856}
+.stgt span{display:inline-block;font-size:15px;font-weight:800;color:#fff;background:var(--c);border-radius:999px;padding:2px 11px;margin-right:6px;vertical-align:3px}
+.sbtn{font:inherit;font-size:16.5px;font-weight:800;border:2px solid #b9c3d6;background:#fff;color:#2e3856;border-radius:11px;padding:8px 16px;cursor:pointer;white-space:nowrap}
+.sbtn:hover{background:#edf4ff}
+.sbtn.go{background:#2855d9;border-color:#2855d9;color:#fff}.sbtn.go:hover{background:#1f45b4}
+.wpane.stgp{max-height:calc(100vh - 118px);overflow:auto;padding:14px 18px;gap:10px;display:block}
+.stgp .pbody{display:flex;flex-direction:column;gap:12px}
+/* читаемость */
+.stgp .inst{font-size:19px;line-height:1.4}
+.stgp .qzcard{max-width:640px;height:300px;margin:0 auto}
+.stgp .qznav,.stgp .qzbar{max-width:640px;margin-left:auto;margin-right:auto}
+.stgp .qzterm{font-size:32px}.stgp .qzdef{font-size:23px}.stgp .qzex{font-size:19px}
+.stgp .chq{max-width:860px;margin:0 auto;width:100%;gap:12px}
+.stgp .chq .qtxt{font-size:26px;line-height:1.35;min-height:70px}
+.stgp .chq .opts button{font-size:20px!important;padding:11px 14px!important}
+.stgp .chq .fb{font-size:18px}
+.stgp .chq .meta{font-size:16px}
+.stgp .egew{font-size:22px;line-height:2.1;padding:8px 6px}
+.stgp .gap{font-size:21px;min-width:90px}
+.stgp .gpop button{font-size:19px!important}
+.stgp .rtext{max-height:none!important;overflow:visible!important;font-size:19px!important;line-height:1.5!important;padding:10px 16px!important}
+.stgp .rd.wide .rtext{max-height:calc(100vh - 215px)!important;overflow:auto!important;font-size:19px!important}
+.stgp .wr{max-height:none}
+.stgp .rtext p{margin:0 0 10px}
+.stgp .rd{grid-template-columns:1fr 330px!important}
+.stgp .rd.wide{grid-template-columns:1.2fr 1fr!important}
+.stgp .opl{max-height:none!important;overflow:visible!important;gap:8px!important}
+.stgp .opl .hd{font-size:18px}
+.stgp .opl button{font-size:19px!important;padding:9px 12px!important;line-height:1.25!important}
+.stgp .gr{font-size:20px;line-height:1.5;grid-template-columns:1fr 150px;padding:6px 2px}
+.stgp .gr .hint{font-size:19px}.stgp .gg{font-size:20px;min-width:120px}
+.stgp .mq .qt{font-size:22px!important}.stgp .opts1 button{font-size:19px!important;padding:9px 12px!important}
+.stgp .bl{font-size:18px}.stgp .tfr .tt{font-size:19px!important}.stgp .tfr{margin:7px 0}
+.stgp .cp{height:40px!important;font-size:18px!important}.stgp .mg .cp{height:36px!important;font-size:17px!important}
+.stgp .stl{font-size:18px}
+.stgp .fbar .btn,.stgp .fbar button{font-size:17px}
+.stgp .pq{font-size:22px;line-height:1.5}
+.stgp .pic3 img,.stgp .pic3 .ph{height:230px}
+.stgp .mt button{font-size:19px!important;padding:10px 14px!important}
+.stgp .ptab{font-size:19px}
+.stgp .ivw .ivcard .big{font-size:28px}.stgp .ivw .ivcard .qq{font-size:25px}.stgp .ivw .ivcard .smpa{font-size:20px}
+.stgp .ivw .ivcard{height:260px}
+.stgp .kim2{font-size:19px}
+.stgp .wr{font-size:19px!important}
+@media (max-height:640px){
+ .hgroups{gap:8px}
+ .stgp .inst{font-size:16px;line-height:1.25}.stgp .gap,.stgp .gp,.stgp .gg{line-height:1.2!important;padding-top:0;padding-bottom:0;font-size:16.5px!important}
+ .stgp .rtext{font-size:16.5px!important;line-height:1.38!important;padding:6px 12px!important}.stgp .opl button{font-size:16px!important;padding:2px 9px!important}.stgp .opl{gap:4px!important}.stgp .egew{font-size:18px!important;line-height:1.85!important}.stgp .pbody{gap:7px}.stgp .fbar button{font-size:15px;padding:5px 11px}
+ .stgp .rd{grid-template-columns:1fr 290px!important}
+ .stgp .gr{font-size:17px!important;line-height:1.35!important}
+ .stgp .ptab{font-size:16px}.stgp .ptab td,.stgp .ptab th{padding:2px 7px}
+ .stgp .mg .cp{height:28px!important}
+ .stgp .cp{height:32px!important;font-size:16px!important}.stgp .mg .cp{height:30px!important}.stgp .tfr{margin:3px 0}.stgp .tfr .tt{font-size:17px!important}.stgp .bl{font-size:16px}.stgp .stl{font-size:16px}
+ .hub{gap:8px}.hubhead h1{font-size:26px}.hubhead p{display:none}.tile{min-height:76px;padding:8px 12px}.tile .tn{width:24px;height:24px;font-size:14px}.tile b{font-size:18px}.tile i{font-size:13px}.hgroups{display:flex;flex-direction:column;gap:12px}.hgroups.two{display:grid;grid-template-columns:1fr 1fr;gap:12px 22px;align-items:start}.hgroups.two .tiles{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.tiles{gap:8px}.hub section h2{font-size:15px;margin-bottom:5px}
+ .wpane.stgp{max-height:calc(100vh - 106px);padding:10px 14px}
+ .stgt{font-size:19px}.sbtn{font-size:15px;padding:6px 12px}
+ .stgp .qzcard{height:230px}.stgp .rtext,.stgp .egew{font-size:17.5px!important;line-height:1.5!important}
+ .stgp .rd.wide .rtext{max-height:calc(100vh - 190px)!important;font-size:17px!important}.stgp .egew{line-height:2!important}
+ .stgp .chq .qtxt{font-size:22px;min-height:50px}.stgp .chq .opts button{font-size:18px!important;padding:8px 12px!important}
+ .stgp .gr{font-size:17px;padding:3px 2px;line-height:1.4}.stgp .opl button{font-size:17px!important;padding:6px 10px!important}
+ .stgp .pic3 img,.stgp .pic3 .ph{height:170px}.stgp .pq{font-size:19px}
+ .stgp .ivw .ivcard{height:200px}.stgp .mt button{font-size:16px!important;padding:6px 10px!important}
+}
+
+.stgp .qzterm{font-size:30px!important}.stgp .qzdef{font-size:22px!important}

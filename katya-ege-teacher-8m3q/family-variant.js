@@ -81,7 +81,7 @@ const A_F='ABCDEFG';
 
 let PL,PR;
 function layout(){main.innerHTML='';const ws=el('div','ws');PL=el('section','wpane pl');PR=el('section','wpane pr');ws.append(PL,PR);main.append(ws);
-  const hb=document.querySelector('.bar'),g=el('div','hbtns');const a=el('a','btn sm','← Family · урок');a.href='family-lesson.html?v=1';a.style.textDecoration='none';g.append(a,btn('Учителю',teacher,'acc sm'));hb.append(g);drawLeft();drawRight();}
+  const hb=document.querySelector('.bar'),g=el('div','hbtns');const a=el('a','btn sm','← Family · урок');a.href='family-lesson.html?v=2';a.style.textDecoration='none';g.append(a,btn('Учителю',teacher,'acc sm'));hb.append(g);drawLeft();drawRight();}
 
 /* ---------- слева: аудирование ---------- */
 function drawLeft(){PL.innerHTML='';
@@ -196,4 +196,26 @@ function teacher(){overlay('Учителю · вариант «Семья и д�
 '<p><b>Откуда ключи.</b> Для аудирования 1, 2, 3–9 они найдены в открытых разборах этих заданий (вопросы 5 и 6 я проверила по Решу ЕГЭ и 100points). Записи я прослушать не могла, поэтому прогони хотя бы одно аудирование сама. Ключи к чтению и 19–36 сверены с текстом.</p>'+
 '<p><b>Записи.</b> Каждый файл целиком, как ты прислала (в задании 1 около 8,5 минуты, в 3–9 около 10 минут), включая повторное прослушивание.</p>');}
 
-layout();
+
+/* ---------- главный экран варианта ---------- */
+const au=src=>{const a=el('audio','aud');a.controls=true;a.preload='none';a.src=src;return a;};
+const H=Hub({title:'Семья и друзья · вариант ЕГЭ',sub:'Тематический вариант из открытого банка заданий.',cols:true,
+ links:[['Урок Family','family-lesson.html?v=2']],
+ groups:[
+ {name:'Аудирование',color:'#c8553d',items:[
+  {id:'t1',t:'Задание 1',sub:'A–F, говорящие',run:b=>task1(b,au('audio/fam-1.mp3'))},
+  {id:'t2',t:'Задание 2',sub:'True / False / Not stated',run:b=>task2(b,au('audio/fam-2.mp3'))},
+  {id:'t39',t:'Задания 3–9',sub:'Интервью',run:b=>task39(b,au('audio/fam-3-9.mp3'))}]},
+ {name:'Чтение',color:'#2f8f6b',items:[
+  {id:'r10',t:'Задание 10',sub:'Тексты и заголовки',run:reading10},
+  {id:'r11',t:'Задание 11',sub:'Life of Pi',run:reading11},
+  {id:'r18',t:'Задания 12–18',sub:'Punctuality',run:reading18}]},
+ {name:'Грамматика и лексика',color:'#2855d9',items:[
+  {id:'g1',t:'Задания 19–24',sub:'Формы глаголов и слов',run:b=>grammar(b,G1,S.g1)},
+  {id:'g2',t:'Задания 25–29',sub:'Словообразование',run:b=>grammar(b,G2,S.g2)},
+  {id:'mu',t:'Задания 30–36',sub:'Sharing music',run:music}]},
+ {name:'Письмо',color:'#8f4d7c',items:[
+  {id:'w',t:'Задания 37–38',sub:'Только прочитать',run:writing}]}
+ ]});
+drawLeft=drawRight=()=>H.render();
+H.render();

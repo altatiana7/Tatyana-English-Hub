@@ -126,7 +126,7 @@ function predict(box){box.append(el('div','inst','<b>Look at the photos and pred
     img.onerror=()=>{x++;if(x<ex.length)img.src='img/family-'+i+'.'+ex[x];else ph();};img.src='img/family-'+i+'.'+ex[0];f.append(img);g.append(f);}
   box.append(g);
   box.append(el('ol','pq','<li>Who are these people? What is the relationship between them?</li><li>What do you think today’s topic is?</li><li>What problems can people like these have with each other?</li><li>Which words from the cards could you hear?</li>'));
-  box.append(btn('Next: Speaking →',()=>{S.right='speak';drawRight();},'main sm'));}
+}
 
 function speak(box){const st=S.sp,set=SETS[st.set];let left=40,t=null;
   const wrap=el('div','kim2 ivw'),top=el('div','ivtop'),sel=el('select');SETS.forEach((x,k)=>sel.append(new Option('Set '+(k+1)+' · '+x.name,k)));sel.value=st.set;
@@ -187,14 +187,14 @@ function match(box){const st=S.ma,n=PAIRS.length;if(!st.ord)st.ord=shuffle([...A
 
 /* текст с пропусками, справа варианты (Maria, Sarah) */
 function gapPanel(box,txt,optsOf,keys,st,title,inst,uniq){box.append(el('div','inst','<b>'+title+'</b> '+inst));
-  const rd=el('div','rd');rd.style.cssText='display:grid;grid-template-columns:1fr 235px;gap:10px;align-items:start';box.append(rd);
-  const tx=el('div','rtext');tx.style.cssText='border:1px solid #e3e8f2;border-radius:10px;background:#fbfcfe;padding:8px 12px;font-size:15.5px;line-height:1.62;max-height:calc(100vh - 215px);overflow:auto';
+  const rd=el('div','rd');rd.style.cssText='display:grid;grid-template-columns:1fr 320px;gap:14px;align-items:start';box.append(rd);
+  const tx=el('div','rtext');tx.style.cssText='border:1px solid #e3e8f2;border-radius:10px;background:#fbfcfe;padding:10px 16px;font-size:20px;line-height:1.55';
   txt.split(/\[(\d+)\]/).forEach((p,i)=>{if(i%2===0){tx.append(document.createTextNode(p));return;}
     const id=+p,cur=st.a[id];let c='gap'+(cur!==undefined&&st.chk?(cur===keys[id]?' ok':' no'):'');const g=el('span',c,cur!==undefined?id+' · '+esc(optsOf(id)[cur-1]):String(id));
     if(st.cur===id)g.style.outline='3px solid #2855d9';g.onclick=()=>{st.cur=id;drawRight();};tx.append(g);});
-  const op=el('div');op.style.cssText='display:flex;flex-direction:column;gap:5px;max-height:calc(100vh - 215px);overflow:auto';op.append(el('div','tag','Gap '+st.cur));
+  const op=el('div');op.style.cssText='display:flex;flex-direction:column;gap:8px';op.append(el('div','tag','Gap '+st.cur));
   optsOf(st.cur).forEach((o,k)=>{const n=k+1,used=uniq&&Object.entries(st.a).some(([x,v])=>v===n&&+x!==st.cur);const b=el('button',null,n+'. '+esc(o));b.type='button';
-    b.style.cssText='text-align:left;padding:6px 10px;border:2px solid '+(st.a[st.cur]===n?'#6f8fd8':'#c9d3e6')+';background:'+(st.a[st.cur]===n?'#dbe6fb':'#f8faff')+';border-radius:10px;font-weight:600;font-size:15px;'+(used?'opacity:.45':'');
+    b.style.cssText='text-align:left;padding:9px 12px;border:2px solid '+(st.a[st.cur]===n?'#6f8fd8':'#c9d3e6')+';background:'+(st.a[st.cur]===n?'#dbe6fb':'#f8faff')+';border-radius:10px;font-weight:600;font-size:19px;'+(used?'opacity:.45':'');
     b.onclick=()=>{if(st.chk)return;st.a[st.cur]=n;const ids=Object.keys(keys).map(Number),next=ids.find(x=>st.a[x]===undefined);if(next!==undefined)st.cur=next;drawRight();};op.append(b);});
   rd.append(tx,op);
   const ids=Object.keys(keys).map(Number),ok=ids.filter(x=>st.a[x]===keys[x]).length;
@@ -230,4 +230,38 @@ function teacher(){overlay('Учителю · урок Family',
 '<p>Типичные ловушки: grow up (сам вырос) и bring up (воспитали); take after (характер, внешность, как у родственника) и look like (только внешность). В тексте 30–36 все глаголы стоят в Past Simple, обратите внимание на формы fell и made.</p>'+
 '<p><b>Лист «Семья».</b> Добавлено: карточки «Family words» (12 слов о семье и 10 выражений с примерами), «Find the mistake» (упражнение 2), «Match» (упражнение 3), текст «Maria» (упражнение 1), устный набор «Family vocabulary» (5 вопросов) и текст «Sarah» (30–36). Ключи — с листа.</p><p>Замечания к ключам листа: в упражнении 1 пункты 4–6 неудобны (например, «an … to her» при ответе во множественном числе). В упражнении 2 пятое предложение логически верное, а в ключе его «исправляют» наоборот. В Sarah пункт 6 ответ look after, но raise a child тоже подходит по смыслу. Проверь и скажи, если надо поменять.</p><p><b>Озвучка вопросов.</b> Сейчас используется голос браузера; если он звучит неестественно, можно читать вопросы самой: на обороте карточки текст и таймер.</p>');}
 
-layout();
+
+/* ---------- главный экран урока ---------- */
+const run=f=>box=>f(box);
+const H=Hub({title:'Family',sub:'Урок по теме «Семья».',
+ clean:()=>{if(cleanR){cleanR();cleanR=null;}},
+ groups:[
+ {name:'Разминка',color:'#c8553d',items:[
+  {id:'predict',t:'Predict',sub:'Фото: о чём тема?',run:predict},
+  {id:'speak',t:'Speaking',sub:'Вопросы с таймером',run:speak}]},
+ {name:'Лексика',color:'#8f4d7c',items:[
+  {id:'cards',t:'Cards',sub:'24 карточки',run:b=>cards(b,S.c,CARDS,k=>k<12?'Collocation':'Phrasal verb')},
+  {id:'fam',t:'Family words',sub:'22 карточки',run:b=>cards(b,S.f,FAM,k=>k<12?'Family':'Relationship')},
+  {id:'pv',t:'Phrasal verbs',sub:'Таблица: как употреблять',run:pvTable},
+  {id:'choose',t:'Choose',sub:'16 вопросов',run:choose},
+  {id:'mist',t:'Mistakes',sub:'Найди ошибку',run:mistake},
+  {id:'match',t:'Match',sub:'Выражение и значение',run:match}]},
+ {name:'Тексты ЕГЭ 30–36',color:'#2855d9',items:[
+  {id:'ege',t:'Olivia',sub:'Подружились и поссорились',run:ege},
+  {id:'maria',t:'Maria',sub:'Виды семей',run:b=>gapPanel(b,MAR_TXT,()=>MAR_OPT,MAR_KEY,S.mar,'Maria.','Choose the correct word for each gap. One word is used once.',true)},
+  {id:'sarah',t:'Sarah',sub:'Supportive family',run:b=>gapPanel(b,SAR_TXT,c=>SAR[c][0],Object.fromEntries(Object.keys(SAR).map(n=>[n,SAR[n][1]])),S.sar,'Sarah.','Choose the best option for each gap.',false)}]}
+ ]});
+drawLeft=drawRight=()=>H.render();
+function pvTable(box){box.append(el('div','inst','<b>Phrasal verbs from the cards.</b> Watch the pattern and the forms.'));
+ box.insertAdjacentHTML('beforeend','<table class="ptab"><tr><th>Verb</th><th>Pattern</th><th>Forms</th></tr>'+
+ '<tr><td>take after sb</td><td>не разделяется</td><td>take – took</td></tr>'+
+ '<tr><td>grow up</td><td>без объекта</td><td>grow – grew</td></tr>'+
+ '<tr><td>bring up sb</td><td>разделяется: bring him up</td><td>bring – brought</td></tr>'+
+ '<tr><td>get along with sb</td><td>не разделяется</td><td>get – got</td></tr>'+
+ '<tr><td>fall out with sb</td><td>без объекта</td><td>fall – fell</td></tr>'+
+ '<tr><td>make up with sb</td><td>без объекта</td><td>make – made</td></tr>'+
+ '<tr><td>let down sb</td><td>разделяется: let her down</td><td>let – let</td></tr>'+
+ '<tr><td>go out with sb</td><td>не разделяется</td><td>go – went</td></tr>'+
+ '<tr><td>break up (with sb)</td><td>без объекта</td><td>break – broke</td></tr></table>'+
+ '<p style="margin:6px 0 0;font-size:18px;line-height:1.5"><b>grow up</b> (сам вырос) и <b>bring up</b> (воспитали). <b>take after</b> (характер и внешность) и <b>look like</b> (только внешность).</p>');}
+H.render();
