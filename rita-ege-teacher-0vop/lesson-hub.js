@@ -26,7 +26,7 @@ window.Hub=function(cfg){
     const gw=document.createElement('div');gw.className='hgroups'+(cfg.cols?' two':'');h.append(gw);
     cfg.groups.forEach(g=>{const sec=document.createElement('section');sec.innerHTML='<h2 style="--c:'+g.color+'">'+g.name+'</h2>';
       const row=document.createElement('div');row.className='tiles';
-      g.items.forEach(i=>{const b=document.createElement('button');b.type='button';const lk=i.lock&&i.lock();b.className='tile'+(seen[i.id]?' seen':'')+(lk?' locked':'');if(lk)b.disabled=true;b.style.setProperty('--c',i.color);
+      g.items.forEach(i=>{const b=document.createElement('button');b.type='button';b.dataset.task=i.id;const lk=i.lock&&i.lock();b.className='tile'+(seen[i.id]?' seen':'')+(lk?' locked':'');if(lk)b.disabled=true;b.style.setProperty('--c',i.color);
         b.innerHTML='<span class="tn">'+(seen[i.id]?'&#10003;':i.n)+'</span><b>'+i.t+'</b><i>'+(lk?'Не в домашнем задании':(i.sub||''))+'</i>';b.onclick=()=>open(i.id);row.append(b);});
       sec.append(row);gw.append(sec);});
     main.append(h);}
