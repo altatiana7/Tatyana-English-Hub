@@ -21,4 +21,4 @@ $('submit').onclick=()=>{if(answers.filter(Number.isInteger).length!==16)return;
 translations.forEach((t,i)=>{let c=node('div','card');c.append(node('div','question',(i+1)+'. '+t));let ta=node('textarea');ta.placeholder='Write your translation...';ta.value=writing[i]||'';ta.setAttribute('aria-label','Translation '+(i+1));ta.addEventListener('input',()=>{writing[i]=ta.value;persist()});c.append(ta);$('translationCards').append(c)});
 $('copy').hidden=true;function showSent(){$('hwd').appendChild(P.bar(null));lockParts()}render();showSent();document.getElementById('hwpSlot').appendChild(P.bar(null,{compact:true}));
 </script><script src="../shared/page-label.js?v=20261104"></script>
-<script src="../shared/hw-once.js?v=1"></script></body></html>
+</body></html>
