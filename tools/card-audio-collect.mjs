@@ -13,6 +13,7 @@ const PAGES = {
   'kate-english-hub/homework-lesson5-bbc-words.html': `ATT.concat(BBC).flatMap(c=>[c[0],c[2]])`,
   'teacher-kate-7b22c1/lesson5-attention-trap.html': `CARDS.flatMap(c=>[c[0],c[2]])`,
   'teacher-kate-7b22c1/lesson6-korea-being-seen.html': `IV.concat(CARDS.flatMap(c=>[c[0],c[2]]))`,
+  'teacher-kate-7b22c1/lesson7-suneung-korea.html': `IV.concat(SUN.flatMap(c=>[c[0],c[2]]),CARDS.flatMap(c=>[c[0],c[2]]),SOCC.flatMap(c=>[c[0],c[2]]))`,
   'teacher-kate-7b22c1/phrasal-verbs-money.html': `VERBS.flatMap(x=>[x.def,x.v,x.ex])`,
   'kate-english-hub/speaking-music-studying.html': `vocab.flatMap(v=>[v[0],v[1]])`,
   'kate-english-hub/useful-tools-false-synonyms.html': `A.concat(B).map(w=>w.en)`,
