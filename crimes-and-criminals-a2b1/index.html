@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crimes and Criminals · A2–B1</title>
+<style>
+:root{
+  --ink:#16202e; --ink2:#2a3a50; --paper:#f4f1ea; --card:#ffffff; --line:#d9d3c5;
+  --tape:#f2c230; --red:#c8372d; --green:#1f8a4c; --blue:#2457a6; --muted:#5d6675;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:"Segoe UI",Arial,sans-serif;background:var(--paper);color:var(--ink);display:flex;flex-direction:column;overflow:hidden}
+button{font:inherit;cursor:pointer}
+/* top bar */
+.top{display:flex;align-items:center;gap:10px;background:var(--ink);color:#fff;padding:6px 12px;flex:0 0 auto}
+.top .brand{font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:18px;white-space:nowrap;letter-spacing:.3px}
+.top .brand span{color:var(--tape)}
+.steps{display:flex;gap:4px;flex:1;overflow-x:auto;scrollbar-width:none}
+.steps button{background:var(--ink2);color:#dfe6f0;border:0;border-radius:6px;padding:6px 8px;font-size:13px;white-space:nowrap}
+.steps button.on{background:var(--tape);color:var(--ink);font-weight:700}
+.steps button.done{color:#9fd8b3}
+.top .nav{display:flex;gap:6px}
+.top .nav button{background:#fff;color:var(--ink);border:0;border-radius:6px;padding:6px 12px;font-size:14px;font-weight:600}
+.top .nav button:disabled{opacity:.35;cursor:default}
+/* stage */
+.stage{flex:1;min-height:0;padding:12px 18px 12px;display:flex;flex-direction:column;overflow:auto}
+.task{font-size:20px;font-weight:600;margin:0 0 10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.task .tag{background:var(--ink);color:var(--tape);font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 8px;border-radius:4px}
+.task .right{margin-left:auto;display:flex;gap:8px;align-items:center;font-size:16px;font-weight:600}
+.pill{background:#fff;border:1px solid var(--line);border-radius:20px;padding:4px 12px}
+.btn{background:var(--ink);color:#fff;border:0;border-radius:8px;padding:9px 18px;font-size:17px;font-weight:600}
+.btn.alt{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn.go{background:var(--blue)}
+.btn.small{padding:6px 12px;font-size:15px}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.grow{flex:1;min-height:0}
+.hidden{display:none!important}
+.note{color:var(--muted);font-size:16px}
+/* quiz */
+.qwrap{display:flex;gap:18px;flex:1;min-height:0}
+.qimg{flex:0 0 42%;border-radius:10px;overflow:hidden;background:#ddd;max-height:100%}
+.qimg img{width:100%;height:100%;object-fit:cover;display:block}
+.qbody{flex:1;display:flex;flex-direction:column;gap:12px;min-width:0}
+.question{font-size:25px;font-weight:600;line-height:1.35}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{background:#fff;border:2px solid var(--line);border-radius:10px;padding:12px 14px;font-size:19px;text-align:left;color:var(--ink)}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt.right{background:#e3f4ea;border-color:var(--green);color:#0f5a30;font-weight:700}
+.opt.wrong{background:#fbe5e3;border-color:var(--red);color:#8f1f17;font-weight:700}
+.opt:disabled{cursor:default}
+.feedback{font-size:18px;line-height:1.4;padding:10px 14px;border-radius:8px;background:#fff;border-left:5px solid var(--ink)}
+.feedback.ok{border-color:var(--green)} .feedback.bad{border-color:var(--red)}
+.bar{height:8px;background:#e2ddd0;border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--tape);transition:width .3s}
+/* vocab row */
+.vrow{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.vcell{background:#fff;border:2px solid var(--line);border-radius:8px;padding:8px 10px;font-size:19px;min-height:62px}
+.vcell small{display:block;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:2px}
+.vcell.target{border-color:var(--tape);background:#fff8dd}
+.vcell.blank{color:#aaa}
+/* result */
+.result{display:flex;gap:18px;flex:1;min-height:0}
+.result .score{flex:0 0 260px;background:var(--ink);color:#fff;border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.result .score b{font-size:46px;color:var(--tape);font-family:Georgia,serif}
+.result .review{flex:1;overflow:auto;background:#fff;border-radius:12px;padding:12px 16px;font-size:17px}
+.review .it{padding:6px 0;border-bottom:1px solid #eee;line-height:1.4}
+.review .x{color:var(--red);font-weight:700} .review .v{color:var(--green);font-weight:700}
+table.vt{width:100%;border-collapse:collapse;font-size:16px}
+table.vt th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:2px 6px}
+table.vt td{padding:3px 6px;border-top:1px solid #eee}
+/* cards grid */
+.grid{display:grid;gap:12px;flex:1;min-height:0}
+.film{position:relative;border-radius:10px;overflow:hidden;background:#000;border:0;padding:0}
+.film img{width:100%;height:100%;object-fit:cover;display:block;opacity:.95}
+.film .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;padding:22px 12px 8px;font-size:19px;font-weight:700;text-align:left}
+.film .cap.q{color:var(--tape)}
+.overlay{position:fixed;inset:0;background:rgba(10,16,26,.75);display:flex;align-items:center;justify-content:center;z-index:9;padding:30px}
+.modal{background:#fff;border-radius:14px;max-width:1000px;width:100%;max-height:100%;display:flex;overflow:hidden}
+.modal img{width:48%;object-fit:cover}
+.modal .mt{padding:22px 26px;display:flex;flex-direction:column;gap:12px;overflow:auto}
+.modal h2{margin:0;font-family:Georgia,serif;font-size:30px}
+.modal p{margin:0;font-size:21px;line-height:1.45}
+/* match pics */
+.pic{background:#fff;border:3px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;padding:0;text-align:left}
+.pic img{width:100%;flex:1;min-height:0;object-fit:cover;display:block}
+.pic .lab{padding:8px 10px;font-size:19px;font-weight:700;min-height:44px;display:flex;align-items:center;gap:8px}
+.pic .num{background:var(--ink);color:#fff;border-radius:50%;width:28px;height:28px;display:inline-flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+.pic.sel{border-color:var(--blue)}
+.pic.right{border-color:var(--green)} .pic.wrong{border-color:var(--red)}
+.chip{background:#fff;border:2px solid var(--ink);border-radius:8px;padding:7px 12px;font-size:18px;color:var(--ink)}
+.chip.sel{background:var(--ink);color:#fff}
+.chip.used{opacity:.35}
+.defs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.def{background:#fff;border-radius:8px;padding:10px 12px;font-size:16px;line-height:1.4;border:1px solid var(--line)}
+.def b{font-size:18px}
+/* gaps */
+.gap{display:inline-block;min-width:120px;border:0;border-bottom:3px solid var(--ink);background:#fff8dd;padding:1px 8px;margin:0 2px;font:inherit;font-weight:700;color:var(--blue);border-radius:4px 4px 0 0;text-align:center}
+.gap.sel{outline:3px solid var(--blue)}
+.gap.right{background:#e3f4ea;border-color:var(--green);color:#0f5a30}
+.gap.wrong{background:#fbe5e3;border-color:var(--red);color:#8f1f17}
+.dialogue{background:#fff;border-radius:12px;padding:12px 18px;font-size:clamp(17px,2.7vh,21px);line-height:1.75;flex:1;min-height:0;overflow:auto}
+.dialogue p{margin:0 0 clamp(0px,1.2vh,12px)}
+.dialogue.tight p{margin:0 0 clamp(0px,.6vh,8px)}
+.dialogue .who{font-weight:700;color:var(--ink2)}
+/* grammar */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;flex:1;min-height:0}
+.panel{background:#fff;border-radius:12px;padding:12px 16px;overflow:auto}
+.panel h3{margin:0 0 8px;font-family:Georgia,serif;font-size:24px}
+.panel.ps h3{color:var(--blue)} .panel.pc h3{color:var(--red)}
+.rule{font-size:17px;line-height:1.4;margin:0 0 9px}
+.rule em{display:block;font-style:normal;color:var(--ink2);background:#f6f3ec;border-left:4px solid var(--tape);padding:3px 8px;margin-top:3px}
+.ps .rule em{border-color:var(--blue)} .pc .rule em{border-color:var(--red)}
+.formula{font-size:18px;line-height:1.6}
+.formula code{font-family:inherit;font-weight:700;background:#f1eee6;padding:1px 6px;border-radius:4px}
+.markers{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.markers span{background:#f1eee6;border-radius:14px;padding:3px 10px;font-size:15px}
+.subtabs{display:flex;gap:6px}
+.subtabs button{background:#fff;border:2px solid var(--ink);border-radius:20px;padding:4px 14px;font-size:15px;font-weight:600;color:var(--ink)}
+.subtabs button.on{background:var(--ink);color:#fff}
+/* alibi */
+.alibi{background:#fff;border:3px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;padding:0;text-align:left;color:var(--ink)}
+.alibi img{width:100%;flex:1;min-height:0;object-fit:cover;display:block}
+.alibi .nm{padding:6px 10px;font-size:18px;font-weight:700}
+.alibi .ans{padding:0 10px 8px;font-size:16px;color:var(--green);font-weight:600;min-height:22px}
+.starters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.starter{background:#fff8dd;border:1px dashed #b8902a;border-radius:6px;padding:5px 10px;font-size:16px;color:var(--ink)}
+.say{background:#fff;border-radius:8px;border:2px solid var(--line);padding:6px 12px;font-size:19px;min-height:40px;flex:1}
+/* schedule */
+.sched{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:1;min-height:0}
+.sched.ans .slot{font-size:clamp(15px,2.3vh,19px);line-height:1.25;padding:3px 10px}
+.slot{background:#fff;border:2px solid var(--line);border-radius:8px;padding:6px 10px;font-size:clamp(17px,2.8vh,22px);text-align:left;color:var(--ink);display:flex;flex-direction:column;justify-content:center}
+.slot .t{font-size:14px;font-weight:700;color:var(--muted)}
+.slot.miss{background:#fff8dd;border-style:dashed;border-color:#b8902a}
+.slot.shown{background:#e3f4ea;border-color:var(--green);border-style:solid}
+/* typed */
+.tin{font:inherit;font-size:21px;font-weight:600;color:var(--blue);border:0;border-bottom:3px solid var(--ink);background:#fff8dd;padding:2px 8px;width:250px;border-radius:4px 4px 0 0}
+.tin.right{background:#e3f4ea;border-color:var(--green);color:#0f5a30}
+.tin.wrong{background:#fbe5e3;border-color:var(--red);color:#8f1f17}
+.sentence{font-size:25px;line-height:2;background:#fff;border-radius:12px;padding:16px 20px}
+.lives span{display:inline-block;width:18px;height:18px;border-radius:50%;background:var(--red);margin-left:4px}
+.lives span.lost{background:#ddd}
+.bet{display:flex;gap:8px;align-items:center;font-size:17px}
+.bet button{background:#fff;border:2px solid var(--ink);border-radius:8px;padding:5px 12px;font-weight:600;color:var(--ink)}
+.bet button.on{background:var(--tape)}
+.gapnow{background:var(--tape);padding:0 8px;border-radius:4px;font-weight:700}
+.links{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;flex:1;min-height:0}
+.lcard{background:#fff;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--line)}
+.lcard img{width:100%;height:55%;object-fit:cover;display:block}
+.lcard .lt{padding:12px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.lcard h3{margin:0;font-family:Georgia,serif;font-size:23px}
+.lcard p{margin:0;font-size:17px;line-height:1.4;color:var(--ink2)}
+.lcard a{margin-top:auto;align-self:flex-start;text-decoration:none}
+.qa{background:#fff;border-radius:8px;padding:8px 12px;font-size:17px;line-height:1.4;border:1px solid var(--line)}
+.qa .a{color:var(--green);font-weight:600;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="brand">Crimes <span>&amp;</span> Criminals</div>
+  <div class="steps" id="steps"></div>
+  <div class="nav">
+    <button id="prev">‹ Back</button>
+    <button id="next">Next ›</button>
+  </div>
+</div>
+<div class="stage" id="stage"></div>
+
+<script>
+const $ = (s, r=document) => r.querySelector(s);
+const h = (html) => { const t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstElementChild; };
+const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
+const norm = s => s.toLowerCase().replace(/[’']/g,"'").replace(/\s+/g,' ').trim();
+const stage = $('#stage');
+
+/* ---------------- DATA ---------------- */
+const FILMS = [
+ {t:'Knives Out', img:'img/p2_2.jpg', d:'A movie about a famous writer who is found dead, and a detective investigates to find out who committed the crime. There are many secrets and surprises as the detective tries to solve the mystery.'},
+ {t:'Inventing Anna', img:'img/p2_6.jpg', d:'Inspired by a true story, this series follows a woman named Anna who pretends to be a rich socialite in New York. She gets involved in criminal schemes, including stealing identities and money.'},
+ {t:'Money Heist', img:'img/p2_5.jpg', d:'An exciting series about a group of criminals who plan and carry out a heist on the Royal Mint of Spain. They take hostages and face the police as they try to carry out their plan.'},
+ {t:'Sherlock', img:'img/p2_1.jpg', d:'A TV show about Sherlock Holmes, a brilliant detective in modern-day London. Together with his friend Dr Watson, he solves complex crimes using his amazing observation and deduction skills.'},
+ {t:'Death on the Nile', img:'img/p2_3.jpg', d:'A movie based on an Agatha Christie book. Detective Poirot investigates a murder that takes place during a luxurious boat trip along the Nile. He must find the truth among the lies and secrets of the passengers.'},
+ {t:'Enola Holmes', img:'img/p2_4.jpg', d:'A movie about Sherlock Holmes’ younger sister, Enola, who goes on an adventure to find their missing mother. On the way, she gets involved in a dangerous plot and must use her cleverness to solve the mystery.'}
+];
+const COMMON = 'All of these films and series are about crime or mystery: criminal activities, investigations and secrets. Each story is built on crime, investigation and suspense.';
+
+// crime table: [crime, criminal, action, img]
+const CRIMES = [
+ ['theft','thief','to steal','img/p4_1.jpg'],
+ ['robbery','robber','to rob a person or a place','img/p4_2.jpg'],
+ ['burglary','burglar','to break into a house / to burgle','img/p4_3.jpg'],
+ ['mugging','mugger','to mug somebody','img/p4_4.jpg'],
+ ['shoplifting','shoplifter','to steal from a shop / to shoplift','img/p4_5.jpg'],
+ ['arson','arsonist','to set on fire','img/p4_6.jpg'],
+ ['smuggling','smuggler','to smuggle','img/p4_7.jpg'],
+ ['looting','looter','to loot','img/p4_8.jpg'],
+ ['kidnapping','kidnapper','to kidnap','img/p4_9.jpg'],
+ ['murder','murderer','to murder / to kill','img/p4_10.jpg'],
+ ['vandalism','vandal','to damage','img/p4_11.jpg'],
+ ['forgery','forger','to forge money or documents','img/p4_12.jpg']
+];
+// blanks from the worksheet: [row, col]
+const BLANKS = [[0,1],[1,2],[2,1],[4,0],[5,1],[5,2],[6,1],[7,0],[8,1],[9,0],[10,2],[11,2]];
+const COLS = ['crime','criminal','action'];
+
+const FOUR = [
+ {w:'Mugging', n:1, img:'img/p6_3.jpg', d:'robbery which takes place against a pedestrian on the street.'},
+ {w:'Theft', n:2, img:'img/p6_1.jpg', d:'the act of taking property or money that does not belong to you, without the owner’s permission.'},
+ {w:'Burglary', n:3, img:'img/p6_4.jpg', d:'the act of entering a building illegally to commit a crime.'},
+ {w:'Robbery', n:4, img:'img/p6_2.jpg', d:'theft by the threat or use of force. One can rob a person or a place.'}
+];
+const FOUR_Q = [
+ 'Have you ever witnessed or experienced a robbery? If so, what happened?',
+ 'What can people and communities do to protect themselves against burglaries?',
+ 'Have you ever had something stolen from you? How did it happen? Did you get it back?',
+ 'Where do you think these crimes are more likely to happen? Why?'
+];
+
+const PHRASES = [
+ {pre:'The police ', p:'arrested a suspect', post:' who was seen running away from the crime scene.', m:'c'},
+ {pre:'The detectives ', p:'have strong evidence', post:' against the suspect, including fingerprints and CCTV footage.', m:'e'},
+ {pre:'The police officers carefully examined the area to ', p:'look for clues', post:' that could help solve the crime.', m:'h'},
+ {pre:'Mary ', p:'witnessed a crime', post:' and immediately reported it to the police.', m:'b'},
+ {pre:'It is important to remember that it is against the law ', p:'to commit a crime', post:'.', m:'f'},
+ {pre:'The police are ', p:'investigating the crime', post:' to gather more information and find the person responsible.', m:'g'},
+ {pre:'If you commit a serious crime, you may have to ', p:'go to prison', post:' as a punishment.', m:'d'},
+ {pre:'It’s important to ', p:'report a crime to the police', post:' as soon as possible so they can take action.', m:'a'}
+];
+const MEANINGS = {
+ a:'When you tell the police about something bad that happened, like a theft or an attack.',
+ b:'When you see something bad happening, like a robbery or any other crime.',
+ c:'When the police take someone to the police station because they think this person did something wrong.',
+ d:'When someone is sent to a special place as punishment for doing something against the law.',
+ e:'When there is very good proof that shows someone did something wrong.',
+ f:'When someone does something against the law or breaks the rules.',
+ g:'When the police try to find out what happened by asking questions and looking for clues.',
+ h:'When the police search for small signs or hints that can help them solve a crime.'
+};
+
+const DIALOGUE = [
+ ['Detective 1','Have you seen the number of {crimes} in our town? It’s really alarming!'],
+ ['Detective 2','Yes, it’s shocking! Just last week, there was a {burglary} where someone broke into a house of my neighbours.'],
+ ['Detective 1','That’s terrible! We must find the criminal responsible for this. Did you {witness} the crime?'],
+ ['Detective 2','Unfortunately, I didn’t see it personally, but my neighbours {reported} the break-in to the police.'],
+ ['Detective 1','We need to {investigate} this crime together. Let’s look for {clues} and gather strong {evidence} to help us catch the {suspect}.'],
+ ['Detective 2','Absolutely! We can’t let them get away with it. We must {arrest} the suspect and make sure they go to prison for their actions.'],
+ ['Detective 1','Agreed. The safety of our community is our top priority, and we won’t rest until justice is served.'],
+ ['Detective 2','Let’s work together and make sure our investigation is effective. We owe it to the citizens and our town.']
+];
+
+const RIDDLE = [
+ 'Mr. Arthur Williams, a rich man who lived in a beautiful house on Baker Street, in London, has been {kidnapped}.',
+ 'He {searches} the entire house for clues.',
+ 'I believe that I am {in danger}.',
+ 'I fear I may {go missing} by the 3rd of February.',
+ 'There are four {suspects}: Harry Williams (the son), John Brooks (a close friend), June Williams (his wife) and Jack Corbett (the butler).',
+ 'Arthur knew someone close to him was after him. This is why he left a {clue} in the note.'
+];
+const RIDDLE_Q = [
+ ['What did Sherlock Holmes do to search for clues?','He searched the entire house for clues.'],
+ ['What did the secret note found by Sherlock Holmes say?','Arthur Williams believed he was in danger and that someone close to him might want to hurt him.'],
+ ['How did Sherlock Holmes understand who did it?','From the initials “J.B.” in the note and the dates mentioned.'],
+ ['Where did the police find Arthur Williams?','At John Brooks’ house.']
+];
+
+const ALIBI = [
+ {n:'Sarah', img:'img/p17_1.jpg', a:'Sarah was working out in the gym.'},
+ {n:'Mark', img:'img/p17_3.jpg', a:'Mark was playing basketball with his friends.'},
+ {n:'Jason, Joe and Sia', img:'img/p17_5.jpg', a:'They were having a barbecue in the park.'},
+ {n:'Lisa', img:'img/p17_7.jpg', a:'Lisa was dancing at the music festival.'},
+ {n:'Emily', img:'img/p17_2.jpg', a:'Emily was studying for the exam.'},
+ {n:'Kate and Rose', img:'img/p17_4.jpg', a:'They were having coffee in the new local café.'},
+ {n:'Mia', img:'img/p17_6.jpg', a:'Mia was writing a book at home.'},
+ {n:'Ryan', img:'img/p17_8.jpg', a:'Ryan was playing video games with his friends.'}
+];
+
+// [time, activity, card (1 / 2 / 0 = both), answer]
+const DAY = [
+ ['8 am','wake up',0,'She woke up at 8 am.'],
+ ['8.10 – 8.30','have breakfast',2,'She was having breakfast from 8.10 to 8.30.'],
+ ['8.30 – 9.30','run in the park',2,'From 8.30 to 9.30, she was running in the park.'],
+ ['9.30 – 10.00','take a shower',1,'She was taking a shower from 9.30 to 10.00.'],
+ ['10.00 – 11.00','do household chores',2,'She was doing household chores from 10.00 to 11.00.'],
+ ['11.00 – 12.00','meet a friend for lunch',1,'She was meeting a friend for lunch from 11.00 to 12.00.'],
+ ['12.00 – 2.00','shopping at the mall',1,'She was shopping at the mall from 12.00 to 2.00.'],
+ ['2.00 – 3.30','watch a crime movie at home',2,'From 2.00 to 3.30, she was watching a crime movie at home.'],
+ ['3.30 – 4.30','read a book',1,'She was reading a book from 3.30 to 4.30.'],
+ ['4.30 – 5.30','cook dinner',1,'From 4.30 to 5.30, she was cooking dinner.'],
+ ['5.30 – 6.00','have dinner with the family',2,'From 5.30 to 6.00, she was having dinner with her family.'],
+ ['6.00 – 8.00','play board games with the family',1,'She was playing board games with the family from 6.00 to 8.00.'],
+ ['8.00 – 10.00','relax and watch TV',2,'From 8.00 to 10.00, she was relaxing and watching TV.'],
+ ['10.00 – 11.00','browse her work chat',1,'Before bed, she was browsing her work chat.'],
+ ['11 pm','go to bed',1,'She went to bed at 11 pm.']
+];
+
+// typed practice: parts; {base|answer|alt1;alt2}
+const TYPED = [
+ {s:'The thief {steal|stole} the famous painting from the museum while the security guards {patrol|were patrolling} the territory.', why:'The guards’ action was in progress (past continuous); the theft is a short, finished action (past simple).'},
+ {s:'While the police officer {search|was searching} the suspect’s car, he {find|found} a bag of stolen jewellery.', why:'A longer action in progress (was searching) is interrupted by a shorter one (found).'},
+ {s:'The criminal {escape|escaped} from prison while the guards {monitor|were monitoring} the security cameras.', why:'Escaped = a single finished action. While + past continuous = the background action.'},
+ {s:'The detective {interview|was interviewing;interviewed} the witness for 3 hours.', why:'The focus is on the action in progress over a period of time, so past continuous is best (past simple is also possible).'},
+ {s:'The detective {receive|received} an anonymous call that {help|helped} solve the case.', why:'Two finished actions in the past, one after another: past simple.'},
+ {s:'The detective {question|was questioning} the witness when suddenly the lights {go|went} out.', why:'An action in progress (was questioning) is interrupted by a sudden short action (went out).'},
+ {s:'Detective Johnson {walk|was walking} down the dark alley when she {hear|heard} a loud noise coming from behind the corner.', why:'Longer action in progress + when + short action in past simple.'},
+ {s:'The security cameras {record|were recording;recorded} the suspect’s every move during the burglary.', why:'The recording was in progress during the whole burglary, so past continuous is best (past simple is also possible).'}
+];
+
+// choose game: {a/b*} * = correct
+const CHOOSE = [
+ {s:'The detective {questioned/was questioning*} the suspect while he {sweated/was sweating*} nervously under the bright lights.', why:'While: two long actions in progress at the same time.'},
+ {s:'The thief {stole*/was stealing} a sculpture from the museum.', why:'A single finished action: past simple.'},
+ {s:'The detective {received*/was receiving} a cryptic message that {led*/was leading} her to an old house.', why:'Two finished actions in sequence: past simple.'},
+ {s:'The witness {saw*/was seeing} the suspect running away from the crime scene while she {walked/was walking*} her dog.', why:'Short action (saw) during a longer one (was walking). We don’t usually say “was seeing”.'},
+ {s:'While James {shoplifted/was shoplifting*} a wallet from the store, Sarah {kept/was keeping*} a lookout at the door.', why:'While: two actions in progress at the same time.'},
+ {s:'While Emma {walked/was walking*} home alone, she was suddenly mugged by someone.', why:'A longer action interrupted by a sudden event.'},
+ {s:'She {reported*/was reporting} the crime to the police yesterday.', why:'Finished action at a specific time (yesterday): past simple.'},
+ {s:'The police officer {arrived*/was arriving} at the crime scene, {secured*/was securing} the area, and {called*/was calling} for backup.', why:'A chain of actions in chronological order: past simple.'},
+ {s:'The witness {described/was describing*} the criminal to the police while the sketch artist {drew/was drawing*} the suspect’s face.', why:'While: two actions in progress at the same time.'},
+ {s:'The police {searched/were searching*} for clues the whole night.', why:'An action in progress over a long period (the whole night).'}
+];
+
+/* ---------------- STEPS ---------------- */
+const STEPS = [
+ {k:'Warm-up', f:stepFilms},
+ {k:'Crimes', f:stepCrimes},
+ {k:'Theft?', f:stepFour},
+ {k:'Crossword', f:stepCrossword},
+ {k:'Phrases', f:stepPhrases},
+ {k:'Dialogue', f:stepDialogue},
+ {k:'Riddle', f:stepRiddle},
+ {k:'Grammar', f:stepGrammar},
+ {k:'Alibis', f:stepAlibi},
+ {k:'Day off', f:stepDay},
+ {k:'Practice', f:stepTyped},
+ {k:'Case game', f:stepChoose},
+ {k:'Online', f:stepLinks}
+];
+let cur = 0; const visited = new Set();
+function renderNav(){
+  const s=$('#steps'); s.innerHTML='';
+  STEPS.forEach((st,i)=>{const b=h(`<button class="${i===cur?'on':''} ${visited.has(i)&&i!==cur?'done':''}">${st.k}</button>`); b.onclick=()=>go(i); s.appendChild(b);});
+  $('#prev').disabled = cur===0;
+  $('#next').textContent = cur===STEPS.length-1 ? 'Start again' : 'Next ›';
+  const on=s.children[cur]; on && on.scrollIntoView({inline:'center',block:'nearest'});
+}
+function go(i){ cur=i; visited.add(i); stage.innerHTML=''; STEPS[i].f(stage); renderNav(); }
+$('#prev').onclick=()=>cur>0&&go(cur-1);
+$('#next').onclick=()=>go(cur===STEPS.length-1?0:cur+1);
+function header(tag, text, right=''){ return `<div class="task"><span class="tag">${tag}</span><span>${text}</span><span class="right">${right}</span></div>`; }
+
+/* 1. Films */
+function stepFilms(el){
+  el.innerHTML = header("Let's talk",'Do you know any of these films or series? What are they about? What do they have in common?', `<button class="btn small alt" id="common">Show answer</button>`)
+   + `<div class="grid" style="grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr"></div>
+      <div class="feedback ok hidden" id="commonA" style="margin-top:10px;font-size:19px"></div>`;
+  const g=$('.grid',el);
+  FILMS.forEach(f=>{const b=h(`<button class="film"><img src="${f.img}" alt=""><div class="cap">${f.t}</div></button>`); b.onclick=()=>openFilm(f); g.appendChild(b);});
+  $('#common',el).onclick=()=>{const a=$('#commonA',el); a.textContent=COMMON; a.classList.toggle('hidden');};
+}
+function openFilm(f){
+  const o=h(`<div class="overlay"><div class="modal"><img src="${f.img}" alt=""><div class="mt"><h2>${f.t}</h2><p>${f.d}</p><div class="row" style="margin-top:auto"><button class="btn">Close</button></div></div></div></div>`);
+  o.onclick=e=>{ if(e.target===o||e.target.tagName==='BUTTON') o.remove(); };
+  document.body.appendChild(o);
+}
+
+/* generic quiz engine */
+function quiz(el, cfg){
+  // cfg: items[], tag, title, render(item, box) -> returns {question html, options[], correct, img, explain}
+  let order = shuffle(cfg.items.map((_,i)=>i)), qi=0, score=0, streak=0, mistakes=[];
+  function draw(){
+    if(qi>=order.length) return finish();
+    const it = cfg.make(cfg.items[order[qi]]);
+    el.innerHTML = header(cfg.tag, cfg.title, `<span class="pill">${qi+1} / ${order.length}</span><span class="pill">Score: ${score}</span>${streak>1?`<span class="pill">Streak ×${streak}</span>`:''}`)
+      + `<div class="bar" style="margin-bottom:12px"><i style="width:${qi/order.length*100}%"></i></div>
+         <div class="qwrap">${it.img?`<div class="qimg"><img src="${it.img}" alt=""></div>`:''}
+         <div class="qbody"><div class="question">${it.q}</div>${it.extra||''}<div class="opts"></div><div class="fb"></div></div></div>`;
+    const box=$('.opts',el);
+    if(it.oneCol) box.style.gridTemplateColumns='1fr';
+    it.options.forEach(o=>{const b=h(`<button class="opt"></button>`); b.textContent=o; b.onclick=()=>answer(b,o,it); box.appendChild(b);});
+  }
+  function answer(btn,o,it){
+    const ok = o===it.correct;
+    el.querySelectorAll('.opt').forEach(b=>{b.disabled=true; if(b.textContent===it.correct) b.classList.add('right');});
+    if(!ok){ btn.classList.add('wrong'); streak=0; mistakes.push({q:it.plain||it.q, your:o, right:it.correct}); }
+    else { streak++; score += 100 + (streak>1? (streak-1)*20 : 0); }
+    if(it.after) it.after(ok);
+    const last = qi===order.length-1;
+    const fb=h(`<div class="row"><div class="feedback ${ok?'ok':'bad'}" style="flex:1">${ok?'<b>Correct!</b> ':'<b>Not quite.</b> The answer is <b>'+it.correct+'</b>. '}${it.explain||''}</div><button class="btn go">${last?'See result':'Next question ›'}</button></div>`);
+    $('.fb',el).appendChild(fb);
+    $('button',fb).onclick=()=>{qi++; draw();};
+    $('.task .right',el).innerHTML=`<span class="pill">${qi+1} / ${order.length}</span><span class="pill">Score: ${score}</span>`;
+  }
+  function finish(){
+    el.innerHTML = header(cfg.tag, cfg.title) + `<div class="result"><div class="score"><div>Your score</div><b>${score}</b><div>${order.length-mistakes.length} of ${order.length} correct</div><button class="btn alt" style="margin-top:auto">Play again</button></div><div class="review"></div></div>`;
+    const r=$('.review',el);
+    r.innerHTML = mistakes.length ? '<b>Check your mistakes:</b>' + mistakes.map(m=>`<div class="it">${m.q}<br><span class="x">✕ ${m.your}</span> &nbsp; <span class="v">✓ ${m.right}</span></div>`).join('') : '<b>No mistakes. Excellent work!</b>';
+    if(cfg.summary) r.insertAdjacentHTML('beforeend', cfg.summary());
+    $('.score button',el).onclick=()=>{order=shuffle(order);qi=0;score=0;streak=0;mistakes=[];draw();};
+  }
+  draw();
+}
+
+/* 2. Crimes */
+function stepCrimes(el){
+  const pool = BLANKS.map(([r,c])=>({r,c,w:CRIMES[r][c]}));
+  quiz(el,{tag:'Crimes', title:'Complete the table: crime, criminal, action. Discuss the meaning of new words.',
+    items: pool,
+    make(b){
+      const row=CRIMES[b.r];
+      const cells=[0,1,2].map(c=>{
+        if(c===b.c) return `<div class="vcell target"><small>${COLS[c]}</small>?</div>`;
+        const isBlank = BLANKS.some(([r,cc])=>r===b.r&&cc===c);
+        return `<div class="vcell ${isBlank?'blank':''}"><small>${COLS[c]}</small>${isBlank?'…':row[c]}</div>`;
+      }).join('');
+      const same = pool.filter(p=>p.w!==b.w && p.c===b.c).map(p=>p.w);
+      const other = pool.filter(p=>p.w!==b.w && p.c!==b.c).map(p=>p.w);
+      const opts = shuffle([b.w, ...shuffle(same).slice(0,3), ...shuffle(other)].slice(0,4));
+      return {q:`Which word is missing?`, extra:`<div class="vrow">${cells}</div>`, options:shuffle(opts), correct:b.w, img:row[3],
+        plain:`${row[0]} – ${row[1]} – ${row[2]}`, explain:`${row[0]} · ${row[1]} · ${row[2]}`};
+    },
+    summary(){ return `<div style="margin-top:10px"><b>The full table:</b><table class="vt"><tr><th>Crime</th><th>Criminal</th><th>Action</th></tr>${CRIMES.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</table></div>`; }
+  });
+}
+
+/* 3. Theft / robbery / mugging / burglary */
+function stepFour(el){
+  let mode='match';
+  function draw(){
+    el.innerHTML = header('Theft or robbery?', mode==='match'?'Read the definitions. Click a word, then click the matching picture.':'Discuss the questions below.',
+      `<div class="subtabs"><button data-m="match" class="${mode==='match'?'on':''}">Match</button><button data-m="talk" class="${mode==='talk'?'on':''}">Discuss</button></div>`);
+    el.querySelectorAll('.subtabs button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;draw();});
+    if(mode==='talk'){
+      const box=h(`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-height:0"></div>`);
+      FOUR_Q.forEach((q,i)=>box.appendChild(h(`<div class="qa" style="font-size:22px;line-height:1.45;padding:16px 20px;display:flex;gap:12px;align-items:flex-start"><span class="tag" style="background:var(--ink);color:var(--tape);padding:2px 10px;border-radius:4px;font-weight:700">${i+1}</span><span>${q}</span></div>`)));
+      el.appendChild(box); return;
+    }
+    const placed={}; let selW=null;
+    const pics=h(`<div class="grid" style="grid-template-columns:repeat(4,1fr)"></div>`);
+    FOUR.forEach(f=>{const p=h(`<button class="pic" data-n="${f.n}"><img src="${f.img}" alt=""><div class="lab"><span class="num">${f.n}</span><span class="w"></span></div></button>`);
+      p.onclick=()=>{ if(!selW) return; Object.keys(placed).forEach(k=>{if(placed[k]===selW) delete placed[k];}); placed[f.n]=selW; selW=null; refresh(); };
+      pics.appendChild(p);});
+    const words=h(`<div class="row" style="margin:10px 0"></div>`);
+    const defs=h(`<div class="defs"></div>`);
+    shuffle(FOUR).forEach(f=>{
+      const c=h(`<button class="chip">${f.w}</button>`); c.onclick=()=>{selW = selW===f.w?null:f.w; refresh();}; words.appendChild(c);
+      defs.appendChild(h(`<div class="def"><b>${f.w}</b> is ${f.d}</div>`));
+    });
+    const chk=h(`<button class="btn go" style="margin-left:auto">Check</button>`);
+    const rst=h(`<button class="btn alt">Reset</button>`);
+    words.append(chk,rst);
+    el.append(pics,words,defs);
+    function refresh(){
+      words.querySelectorAll('.chip').forEach(c=>{c.classList.toggle('sel',c.textContent===selW); c.classList.toggle('used',Object.values(placed).includes(c.textContent));});
+      pics.querySelectorAll('.pic').forEach(p=>{p.classList.remove('right','wrong'); p.classList.toggle('sel',!!selW); $('.w',p).textContent=placed[p.dataset.n]||'';});
+    }
+    chk.onclick=()=>pics.querySelectorAll('.pic').forEach(p=>{const f=FOUR.find(x=>x.n==p.dataset.n); if(placed[f.n]) p.classList.add(placed[f.n]===f.w?'right':'wrong'); else {$('.w',p).textContent='→ '+f.w; p.classList.add('wrong');}});
+    rst.onclick=()=>draw();
+  }
+  draw();
+}
+
+/* 4. Crossword */
+function stepCrossword(el){
+  el.innerHTML = header('Crossword','Revise the crime vocabulary and practise spelling.')
+   + `<div class="links" style="grid-template-columns:1.2fr 1fr">
+       <div class="lcard"><img src="img/p4_10.jpg" alt=""><div class="lt"><h3>Crime crossword</h3><p>Complete the crossword together or on your own. The student can open the same link on their device.</p><a class="btn go" href="https://wordwall.net/resource/56782792" target="_blank" rel="noopener">Open the crossword (Wordwall)</a></div></div>
+       <div class="lcard"><div class="lt"><h3>Before you start</h3><p style="font-size:19px">Say the criminal and the action for each crime:</p>
+       <table class="vt" style="font-size:18px">${CRIMES.slice(0,6).map(r=>`<tr><td><b>${r[0]}</b></td><td>…</td></tr>`).join('')}</table>
+       <p class="note">Words: theft, robbery, burglary, mugging, shoplifting, arson.</p></div></div>
+     </div>`;
+}
+
+/* 5. Phrases */
+function stepPhrases(el){
+  quiz(el,{tag:'Police phrases', title:'What does the highlighted phrase mean?', items:PHRASES,
+    make(p){
+      const wrong = shuffle(Object.keys(MEANINGS).filter(k=>k!==p.m)).slice(0,3);
+      return {q:`${p.pre}<span class="gapnow">${p.p}</span>${p.post}`, plain:`<b>${p.p}</b>`, options:shuffle([p.m,...wrong]).map(k=>MEANINGS[k]), correct:MEANINGS[p.m], oneCol:true};
+    }});
+}
+
+/* gap-fill engine */
+function gapFill(container, bankWords, bankEl, onDone){
+  let sel=null;
+  const gaps=[...container.querySelectorAll('.gap')];
+  function pick(g){ sel=g; gaps.forEach(x=>x.classList.toggle('sel',x===sel)); }
+  gaps.forEach(g=>g.onclick=()=>{ if(g.dataset.v){ g.dataset.v=''; g.textContent='      '; syncBank(); } pick(g); });
+  shuffle(bankWords).forEach(w=>{const c=h(`<button class="chip"></button>`); c.textContent=w; c.onclick=()=>{
+      if(c.classList.contains('used')) return;
+      const target = sel && !sel.dataset.v ? sel : gaps.find(g=>!g.dataset.v); if(!target) return;
+      target.dataset.v=w; target.textContent=w; target.classList.remove('right','wrong'); syncBank();
+      const nx=gaps.find(g=>!g.dataset.v); pick(nx||null);
+    }; bankEl.appendChild(c);});
+  function syncBank(){ const used=gaps.map(g=>g.dataset.v).filter(Boolean); [...bankEl.querySelectorAll('.chip')].forEach(c=>{const n=used.filter(u=>u===c.textContent).length; c.classList.toggle('used',n>0);}); }
+  gaps.forEach(g=>{g.textContent='      ';});
+  pick(gaps[0]);
+  return {
+    check(){ let ok=0; gaps.forEach(g=>{ g.classList.remove('right','wrong'); if(!g.dataset.v) return; const r=g.dataset.v===g.dataset.a; g.classList.add(r?'right':'wrong'); if(r) ok++; }); return ok; },
+    show(){ gaps.forEach(g=>{g.dataset.v=g.dataset.a; g.textContent=g.dataset.a; g.classList.remove('wrong'); g.classList.add('right');}); syncBank(); },
+    total:gaps.length
+  };
+}
+const withGaps = s => s.replace(/\{([^}]+)\}/g,(_,a)=>`<button class="gap" data-a="${a}"></button>`);
+
+/* 6. Dialogue */
+function stepDialogue(el){
+  el.innerHTML = header("Let's practise",'Read the dialogue. Click a gap and choose a word.', `<span class="pill" id="res">0 / 9</span><button class="btn small go" id="chk">Check</button><button class="btn small alt" id="ans">Show answers</button><button class="btn small alt" id="rst">Start again</button>`)
+   + `<div class="row" id="bank" style="margin-bottom:10px"></div><div class="dialogue">${DIALOGUE.map(([w,t])=>`<p><span class="who">${w}:</span> ${withGaps(t)}</p>`).join('')}</div>`;
+  const gf=gapFill($('.dialogue',el), ['crimes','burglary','witness','reported','investigate','clues','evidence','suspect','arrest'], $('#bank',el));
+  $('#chk',el).onclick=()=>$('#res',el).textContent=`${gf.check()} / ${gf.total}`;
+  $('#ans',el).onclick=()=>{gf.show(); $('#res',el).textContent=`${gf.total} / ${gf.total}`;};
+  $('#rst',el).onclick=()=>stepDialogue((el.innerHTML='',el));
+}
+
+/* 7. Riddle */
+function stepRiddle(el){
+  let mode='gaps';
+  el.innerHTML = header('Detective riddle','Watch the video and solve the riddle.', `<div class="subtabs"><button data-m="gaps" class="on">Complete the sentences</button><button data-m="qs">Answer the questions</button></div>`)
+   + `<div style="display:flex;gap:16px;flex:1;min-height:0">
+        <div style="flex:0 0 41%;display:flex;flex-direction:column;gap:6px">
+          <div style="position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden"><iframe src="https://www.youtube-nocookie.com/embed/98Qm4-NFn5Q?rel=0" title="Detective riddle" style="position:absolute;inset:0;width:100%;height:100%;border:0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+          <a class="note" href="https://youtu.be/98Qm4-NFn5Q" target="_blank" rel="noopener">Open the video on YouTube</a>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:8px;min-width:0">
+          <div id="gapsBox" style="display:flex;flex-direction:column;gap:8px;flex:1;min-height:0">
+            <div class="row" id="bank"></div>
+            <div class="dialogue tight" style="font-size:clamp(17px,2.6vh,21px);line-height:1.6">${RIDDLE.map((s,i)=>`<p><b>${i+1}.</b> ${withGaps(s)}</p>`).join('')}</div>
+            <div class="row"><button class="btn small go" id="chk">Check</button><button class="btn small alt" id="ans">Show answers</button><span class="pill" id="res">0 / 6</span></div>
+          </div>
+          <div id="qsBox" class="hidden" style="display:flex;flex-direction:column;gap:8px;overflow:auto">
+            ${RIDDLE_Q.map((q,i)=>`<div class="qa" style="font-size:19px"><div style="display:flex;gap:10px;align-items:flex-start"><span style="flex:1"><b>${'abcd'[i]})</b> ${q[0]}</span><button class="btn small alt">Show answer</button></div><div class="a hidden">${q[1]}</div></div>`).join('')}
+          </div>
+        </div>
+      </div>`;
+  const gf=gapFill($('#gapsBox .dialogue',el), ['kidnapped','searches','in danger','go missing','suspects','clue'], $('#bank',el));
+  $('#chk',el).onclick=()=>$('#res',el).textContent=`${gf.check()} / 6`;
+  $('#ans',el).onclick=()=>{gf.show();$('#res',el).textContent='6 / 6';};
+  el.querySelectorAll('#qsBox .qa button').forEach(b=>b.onclick=()=>{const a=b.closest('.qa').querySelector('.a'); a.classList.toggle('hidden'); b.textContent=a.classList.contains('hidden')?'Show answer':'Hide answer';});
+  el.querySelectorAll('.subtabs button').forEach(b=>b.onclick=()=>{mode=b.dataset.m; el.querySelectorAll('.subtabs button').forEach(x=>x.classList.toggle('on',x===b)); $('#gapsBox',el).classList.toggle('hidden',mode!=='gaps'); $('#qsBox',el).classList.toggle('hidden',mode!=='qs');});
+}
+
+/* 8. Grammar */
+function stepGrammar(el){
+  let mode='use';
+  function draw(){
+    el.innerHTML = header('Grammar','Past Simple vs. Past Continuous', `<div class="subtabs"><button data-m="use" class="${mode==='use'?'on':''}">When we use it</button><button data-m="form" class="${mode==='form'?'on':''}">How we make it</button></div>`);
+    el.querySelectorAll('.subtabs button').forEach(b=>b.onclick=()=>{mode=b.dataset.m;draw();});
+    const timeline = `<svg viewBox="0 0 1000 70" style="width:100%;height:64px;margin-bottom:8px;background:#fff;border-radius:10px">
+      <line x1="40" y1="38" x2="960" y2="38" stroke="#16202e" stroke-width="3"/><polygon points="960,30 976,38 960,46" fill="#16202e"/>
+      <text x="930" y="64" font-size="15" fill="#5d6675" font-family="Segoe UI">now</text>
+      <rect x="180" y="28" width="420" height="20" rx="4" fill="#c8372d" opacity=".85"/>
+      <text x="190" y="22" font-size="17" fill="#c8372d" font-weight="700" font-family="Segoe UI">was chasing the suspect</text>
+      <line x1="470" y1="12" x2="470" y2="62" stroke="#2457a6" stroke-width="5"/>
+      <text x="480" y="66" font-size="17" fill="#2457a6" font-weight="700" font-family="Segoe UI">tripped and fell</text>
+      <text x="640" y="44" font-size="17" fill="#16202e" font-family="Segoe UI">The detective was chasing the suspect when he tripped and fell.</text>
+    </svg>`;
+    if(mode==='use'){
+      el.insertAdjacentHTML('beforeend', timeline + `<div class="cols">
+        <div class="panel ps"><h3>Past Simple</h3>
+          <p class="rule">A finished action at a specific time in the past.<em>Two months ago, the judge punished the criminals.</em></p>
+          <p class="rule">Past events in chronological order.<em>The thief entered the house, stole jewellery and ran away before the police arrived.</em></p>
+          <p class="rule">Past habits or past states.<em>Bob really enjoyed detective stories and read a lot.</em></p></div>
+        <div class="panel pc"><h3>Past Continuous</h3>
+          <p class="rule">An action in progress at a specific point in the past.<em>At 3 p.m. yesterday, the detective was interviewing the witness.</em></p>
+          <p class="rule">To set the scene in a story.<em>It was a dark and stormy night, and the rain was pouring down.</em></p>
+          <p class="rule">A longer action interrupted by a shorter one (past simple).<em>The detective was chasing the suspect when he tripped and fell.</em></p></div></div>`);
+    } else {
+      el.insertAdjacentHTML('beforeend', `<div class="cols">
+        <div class="panel ps"><h3>Past Simple</h3>
+          <div class="formula"><b>+</b> Subject + <code>V2 / -ed</code> — The detective <b>solved</b> the crime.<br>
+          <b>−</b> Subject + <code>didn't + V</code> — The detective <b>didn't solve</b> the crime.<br>
+          <b>?</b> <code>Did</code> + subject + <code>V</code> — <b>Did</b> the detective <b>solve</b> the crime?</div>
+          <p class="rule" style="margin-top:10px"><b>Time words:</b></p>
+          <div class="markers"><span>yesterday</span><span>last night / week / month / year</span><span>… ago</span><span>in 2005</span><span>in the past</span></div></div>
+        <div class="panel pc"><h3>Past Continuous</h3>
+          <div class="formula"><b>+</b> Subject + <code>was / were + V-ing</code> — The detective <b>was investigating</b> the crime.<br>
+          <b>−</b> Subject + <code>wasn't / weren't + V-ing</code> — The detective <b>wasn't investigating</b> the crime.<br>
+          <b>?</b> <code>Was / Were</code> + subject + <code>V-ing</code> — <b>Was</b> the detective <b>investigating</b> the crime?</div>
+          <p class="rule" style="margin-top:10px"><b>Time words:</b></p>
+          <div class="markers"><span>while</span><span>when</span><span>all day</span><span>all evening</span><span>for hours</span><span>at that time</span><span>yesterday at 3 am</span></div></div></div>
+        <div class="feedback" style="margin-top:10px">Your turn: make your own examples in both tenses about a crime or a detective.</div>`);
+    }
+  }
+  draw();
+}
+
+/* 9. Alibi */
+function stepAlibi(el){
+  el.innerHTML = header('What is their alibi?','Detective Freedman is investigating a crime. What were the suspects doing at the time? Use the past continuous.', `<button class="btn small alt" id="all">Show all answers</button>`)
+   + `<div class="grid" style="grid-template-columns:repeat(4,1fr);grid-template-rows:1fr 1fr"></div>
+      <div class="starters" style="margin-top:10px"><span class="note">Click to start:</span>
+        <button class="starter">At the time of the crime, … was …</button><button class="starter">… couldn't do it because … was …</button><button class="starter">I think …'s alibi is (not) solid because …</button><button class="starter">Whose alibi looks solid?</button></div>
+      <div class="row" style="margin-top:8px"><div class="say" contenteditable="true" spellcheck="false"></div><button class="btn small alt" id="clr">Clear</button></div>`;
+  const g=$('.grid',el);
+  ALIBI.forEach(a=>{const c=h(`<button class="alibi"><img src="${a.img}" alt=""><div class="nm">${a.n}</div><div class="ans"></div></button>`); c.onclick=()=>{const x=$('.ans',c); x.textContent = x.textContent?'':a.a;}; g.appendChild(c);});
+  $('#all',el).onclick=()=>g.querySelectorAll('.alibi').forEach((c,i)=>$('.ans',c).textContent=ALIBI[i].a);
+  el.querySelectorAll('.starter').forEach(s=>s.onclick=()=>{$('.say',el).textContent=s.textContent; $('.say',el).focus();});
+  $('#clr',el).onclick=()=>$('.say',el).textContent='';
+}
+
+/* 10. Day off */
+function stepDay(el){
+  let card=1; const shown=new Set();
+  function draw(){
+    el.innerHTML = header('Detective Freedman’s day off','Work in pairs. Ask about the missing activities. Use the past simple or past continuous.',
+      `<div class="subtabs"><button data-c="1" class="${card===1?'on':''}">Card 1</button><button data-c="2" class="${card===2?'on':''}">Card 2</button><button data-c="0" class="${card===0?'on':''}">Answers</button></div>`)
+      + `<div class="starters" style="margin-bottom:8px"><span class="note">Ask:</span><span class="starter">What was she doing from … to …?</span><span class="starter">What did she do at …?</span><span class="note">Click a yellow slot to check.</span></div>
+         <div class="sched ${card===0||shown.size?'ans':''}"></div>`;
+    el.querySelectorAll('.subtabs button').forEach(b=>b.onclick=()=>{card=+b.dataset.c; shown.clear(); draw();});
+    const s=$('.sched',el);
+    DAY.forEach((d,i)=>{
+      const has = card===0 || d[2]===0 || d[2]===card;
+      const b=h(`<button class="slot ${has?'':'miss'} ${shown.has(i)?'shown':''}"><span class="t">${d[0]}</span><span>${card===0||shown.has(i)?d[3]:(has?d[1]:'?')}</span></button>`);
+      if(!has) b.onclick=()=>{shown.has(i)?shown.delete(i):shown.add(i); draw();};
+      s.appendChild(b);
+    });
+  }
+  draw();
+}
+
+/* 11. Typed practice */
+function stepTyped(el){
+  let order=shuffle(TYPED.map((_,i)=>i)), qi=0, score=0, mistakes=[];
+  function draw(){
+    if(qi>=order.length) return finish();
+    const it=TYPED[order[qi]]; const n=it.s.match(/\{/g).length;
+    let k=0;
+    const html=it.s.replace(/\{([^|]+)\|([^}]+)\}/g,(_,base,ans)=>`<input class="tin" data-a="${ans}" placeholder="(${base})" autocomplete="off" spellcheck="false" data-i="${k++}"> <span class="note">(${base})</span>`);
+    el.innerHTML = header("Let's practise",'Type the verb in the past simple or past continuous. Press Enter to check.', `<span class="pill">${qi+1} / ${order.length}</span><span class="pill">Score: ${score}</span>`)
+      + `<div class="bar" style="margin-bottom:14px"><i style="width:${qi/order.length*100}%"></i></div>
+         <div class="sentence">${html}</div>
+         <div class="row" style="margin-top:14px" id="act"><button class="btn go" id="chk">Check</button></div><div id="fb" style="margin-top:12px"></div>`;
+    const ins=[...el.querySelectorAll('.tin')]; ins[0].focus();
+    ins.forEach((x,i)=>x.onkeydown=e=>{ if(e.key==='Enter'){ if(i<ins.length-1 && !ins[i+1].value) ins[i+1].focus(); else check(); } });
+    $('#chk',el).onclick=check;
+    let done=false;
+    function check(){
+      if(done){ qi++; draw(); return; }
+      done=true; let all=true;
+      ins.forEach(x=>{const acc=x.dataset.a.split(';'); const ok=acc.some(a=>norm(a)===norm(x.value)); x.classList.add(ok?'right':'wrong'); x.disabled=true; if(!ok){all=false; x.insertAdjacentHTML('afterend',` <b style="color:var(--green)">✓ ${acc[0]}</b>`);} });
+      if(all) score+=100; else mistakes.push({q:it.s.replace(/\{([^|]+)\|([^;}]+)[^}]*\}/g,'<b>$2</b>'), your:ins.map(x=>x.value||'—').join(' / ')});
+      const last=qi===order.length-1;
+      $('#fb',el).innerHTML=`<div class="feedback ${all?'ok':'bad'}">${all?'<b>Correct!</b> ':'<b>Not quite.</b> '}${it.why}</div>`;
+      $('#chk',el).textContent= last?'See result':'Next question ›';
+      $('.task .right',el).innerHTML=`<span class="pill">${qi+1} / ${order.length}</span><span class="pill">Score: ${score}</span>`;
+      setTimeout(()=>{const b=$('#chk',el); b&&b.focus();},0);
+    }
+  }
+  function finish(){
+    el.innerHTML = header("Let's practise",'Past simple or past continuous') + `<div class="result"><div class="score"><div>Your score</div><b>${score}</b><div>${order.length-mistakes.length} of ${order.length} sentences correct</div><button class="btn alt" style="margin-top:auto">Play again</button></div><div class="review">${mistakes.length?'<b>Check your mistakes:</b>'+mistakes.map(m=>`<div class="it">${m.q}<br><span class="x">✕ you wrote: ${m.your}</span></div>`).join(''):'<b>No mistakes. Excellent work!</b>'}</div></div>`;
+    $('.score button',el).onclick=()=>{order=shuffle(order);qi=0;score=0;mistakes=[];draw();};
+  }
+  draw();
+}
+
+/* 12. Choose game with lives and bets */
+function stepChoose(el){
+  // flatten into gap-questions
+  let qs=[];
+  CHOOSE.forEach((c,si)=>{ const parts=[...c.s.matchAll(/\{([^}]+)\}/g)]; parts.forEach((m,gi)=>qs.push({si,gi})); });
+  let qi=0, score=0, lives=3, bet=1, mistakes=[], filled={};
+  function sentenceHTML(si,gi){
+    let k=0;
+    return CHOOSE[si].s.replace(/\{([^}]+)\}/g,(_,opts)=>{ const i=k++; const right=opts.split('/').find(o=>o.endsWith('*')).replace('*','');
+      if(i<gi) return `<b style="color:var(--green)">${filled[si+'_'+i]||right}</b>`;
+      if(i===gi) return `<span class="gapnow">?</span>`;
+      return '<span class="note">_____</span>'; });
+  }
+  function draw(){
+    if(qi>=qs.length || lives<=0) return finish();
+    const {si,gi}=qs[qi]; const opts=[...CHOOSE[si].s.matchAll(/\{([^}]+)\}/g)][gi][1].split('/');
+    const right=opts.find(o=>o.endsWith('*')).replace('*','');
+    el.innerHTML = header('Case game','Choose the correct verb form. Bet double if you are sure!',
+      `<span class="pill">Sentence ${si+1} / ${CHOOSE.length}</span><span class="pill">Score: ${score}</span><span class="pill lives">Lives${[0,1,2].map(i=>`<span class="${i<lives?'':'lost'}"></span>`).join('')}</span>`)
+     + `<div class="bar" style="margin-bottom:12px"><i style="width:${qi/qs.length*100}%"></i></div>
+        <div class="sentence" style="font-size:29px;padding:22px 26px">${sentenceHTML(si,gi)}</div>
+        <div class="bet" style="margin:16px 0"><span>How sure are you?</span><button data-b="1" class="${bet===1?'on':''}">Not sure: 100 points</button><button data-b="2" class="${bet===2?'on':''}">Sure: 200 points, but a wrong answer costs a life and 100 points</button></div>
+        <div class="opts"></div><div class="fb" style="margin-top:12px"></div>`;
+    el.querySelectorAll('.bet button').forEach(b=>b.onclick=()=>{bet=+b.dataset.b; el.querySelectorAll('.bet button').forEach(x=>x.classList.toggle('on',x===b));});
+    const box=$('.opts',el);
+    opts.map(o=>o.replace('*','')).forEach(o=>{const b=h(`<button class="opt" style="font-size:25px;text-align:center;padding:20px 14px"></button>`); b.textContent=o; b.onclick=()=>answer(b,o,right,si,gi); box.appendChild(b);});
+  }
+  function answer(btn,o,right,si,gi){
+    const ok=o===right;
+    el.querySelectorAll('.opt').forEach(b=>{b.disabled=true; if(b.textContent===right) b.classList.add('right');});
+    el.querySelectorAll('.bet button').forEach(b=>b.disabled=true);
+    if(ok){ score+=100*bet; }
+    else { btn.classList.add('wrong'); lives-=1; if(bet===2) score=Math.max(0,score-100); mistakes.push({q:CHOOSE[si].s.replace(/\{([^}]+)\}/g,(_,x)=>'<b>'+x.split('/').find(z=>z.endsWith('*')).replace('*','')+'</b>'), your:o, right}); }
+    filled[si+'_'+gi]=right;
+    const last = qi===qs.length-1 || lives<=0;
+    const fb=h(`<div class="row"><div class="feedback ${ok?'ok':'bad'}" style="flex:1">${ok?'<b>Correct!</b> ':'<b>Not quite.</b> The answer is <b>'+right+'</b>. '}${CHOOSE[si].why}</div><button class="btn go">${last?'See result':'Next question ›'}</button></div>`);
+    $('.fb',el).appendChild(fb); $('button',fb).onclick=()=>{qi++; bet=1; draw();};
+    $('.task .right',el).innerHTML=`<span class="pill">Sentence ${si+1} / ${CHOOSE.length}</span><span class="pill">Score: ${score}</span><span class="pill lives">Lives${[0,1,2].map(i=>`<span class="${i<lives?'':'lost'}"></span>`).join('')}</span>`;
+  }
+  function finish(){
+    const solved = lives>0;
+    el.innerHTML = header('Case game', solved?'Case closed!':'Out of lives. The suspect got away this time.') + `<div class="result"><div class="score"><div>Your score</div><b>${score}</b><div>${solved?'You solved all 10 sentences.':'You reached sentence '+(qs[Math.min(qi,qs.length-1)].si+1)+' of 10.'}</div><div>Lives left: ${lives}</div><button class="btn alt" style="margin-top:auto">Play again</button></div><div class="review">${mistakes.length?'<b>Check your mistakes:</b>'+mistakes.map(m=>`<div class="it">${m.q}<br><span class="x">✕ ${m.your}</span> &nbsp; <span class="v">✓ ${m.right}</span></div>`).join(''):'<b>No mistakes. Excellent work!</b>'}</div></div>`;
+    $('.score button',el).onclick=()=>{qi=0;score=0;lives=3;bet=1;mistakes=[];filled={};draw();};
+  }
+  draw();
+}
+
+/* 13. Links */
+function stepLinks(el){
+  el.innerHTML = header("Let's play!",'Finish the lesson with online games.')
+   + `<div class="links">
+       <div class="lcard"><img src="img/p24_1.jpg" alt=""><div class="lt"><h3>Breakout: Detectives</h3><p>Complete the tasks and help solve the case. Write down the numbers you find and add them up to get the secret code.</p><a class="btn go" href="https://view.genial.ly/646a9ef47f6c5f001a2fc603" target="_blank" rel="noopener">Open the game (Genially)</a></div></div>
+       <div class="lcard"><img src="img/p6_4.jpg" alt=""><div class="lt"><h3>Quizlet</h3><p>Revise the words and do different activities to remember them even better.</p><a class="btn go" href="https://quizlet.com/_db1w7t?x=1jqt&i=4vrgxy" target="_blank" rel="noopener">Open Quizlet</a></div></div>
+       <div class="lcard"><img src="img/p4_10.jpg" alt=""><div class="lt"><h3>Crossword</h3><p>Practise the spelling of the crime words once more.</p><a class="btn go" href="https://wordwall.net/resource/56782792" target="_blank" rel="noopener">Open Wordwall</a></div></div>
+     </div>`;
+}
+
+go(0);
+</script>
+</body>
+</html>
