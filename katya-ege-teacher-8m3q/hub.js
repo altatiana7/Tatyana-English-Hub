@@ -76,7 +76,7 @@
   function openWork(page,data,raw=false){
     sessionStorage.setItem('katya-review',JSON.stringify({page:page,data:data}));
     open(raw?'review-answers.html?v=20261106':(PAGE[page]||'review-answers.html?v=20261106'));
-  }));open(P);}
+  }
   let seen={};try{seen=JSON.parse(localStorage.getItem('katya-seen')||'{}');}catch(e){}
   const saveSeen=()=>{try{localStorage.setItem('katya-seen',JSON.stringify(seen));}catch(e){}};
   const badge=n=>{const b=document.getElementById('chknew');if(b){b.textContent=n;b.hidden=!n;}};
