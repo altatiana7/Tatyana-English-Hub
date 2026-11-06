@@ -83,7 +83,7 @@
   async function loadChecks(ask){
     const msg=document.getElementById('chkmsg'),box=document.getElementById('chklist');if(!box)return;
     if(ask)msg.textContent='Загрузка…';
-    let res;try{res=await KS.list(ask);}catch(e){if(ask)msg.textContent='Не удалось загрузить работы. Проверьте интернет и нажмите «Обновить».';return;}
+    let res;try{res=await KS.list(ask);}catch(e){if(ask)msg.textContent='Не удалось загрузить работы: '+(e&&e.message||'ошибка сети')+'. Проверьте подключение и нажмите «Обновить».';return;}
     if(res.need){if(ask||res.bad)msg.textContent=res.bad?'Неверный пароль. Нажмите «Обновить» и введите его ещё раз.':'Нажмите «Обновить» и один раз введите пароль учителя (тот же, что для работ Арины).';return;}
     const rows=res.rows;badge(rows.filter(r=>!seen[r.id]).length);
     msg.textContent=rows.length?'Сдано работ: '+rows.length+'. Нажмите на работу – откроются ответы Кати: верно – зелёным, неверно – красным, баллы – на вкладке итогов.':'Катя пока ничего не отправила.';
@@ -91,12 +91,12 @@
     rows.forEach(r=>{const it=document.createElement('div');it.className='chki'+(seen[r.id]?'':' new');
       const when=new Date(r.at).toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
       it.innerHTML='<div><b></b><span>отправлено '+when+'</span></div>';it.querySelector('b').textContent=r.title;
-      const b=document.createElement('button');b.type='button';b.className='btn main';b.textContent='Открыть';
-      b.onclick=()=>{try{seen[r.id]=1;saveSeen();openWork(r.page,Object.assign({_at:when},r.data));loadChecks(false);}catch(e){msg.textContent=e.message;}};
+      const b=document.createElement('button');b.type='button';b.className='btn main';b.textContent=r.data&&r.data._parts?'Открыть часть':'Открыть';
+      b.onclick=()=>{try{seen[r.id]=1;saveSeen();const payload=Object.assign({_at:when},r.data);openWork(r.page,payload,!!payload._parts);loadChecks(false);}catch(e){msg.textContent=e.message;}};
       it.append(b);
       const rbtn=document.createElement('button');rbtn.type='button';rbtn.className='btn check-raw';rbtn.textContent='Ответы';
       rbtn.onclick=()=>{seen[r.id]=1;saveSeen();openWork(r.page,Object.assign({_at:when},r.data),true);};
-      it.append(rbtn);box.append(it);});
+      if(!(r.data&&r.data._parts))it.append(rbtn);box.append(it);});
   }
   if(TCH&&document.getElementById('chklist')){
     document.getElementById('chkload').onclick=()=>loadChecks(true);
