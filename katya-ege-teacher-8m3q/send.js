@@ -6,7 +6,7 @@ window.KS=(function(){
   const T=!!window.TEACHER,PFX='katya-ege:';
   const DB='https://lzxcmrlubhjfdhtqvqzt.supabase.co',KEY='sb_publishable_PmyZRwzWne8lqprej4XJQA_XiujtjEI';
   const H={'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'};
-  const TITLE={mock1:'Пробник ЕГЭ 2027 · Вариант 1 · Аудирование 3–9',home1:'Диагностика · домашняя часть',lesson1:'Диагностика · тест',lessonw1:'Занятие 1 · Error hunter и Match'};
+  const TITLE={'family-week4-homework':'Family · Week 4 · УЧ-4, Reading 10–11, Grammar & Word Formation','family-hw':'Family and Friends · чтение, грамматика, лексика',mock1:'Пробник ЕГЭ 2027 · Вариант 1 · Аудирование 3–9',home1:'Диагностика · домашняя часть',lesson1:'Диагностика · тест',lessonw1:'Занятие 1 · Error hunter и Match'};
   const now=()=>new Date().toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
 
   /* ---------- отправка в базу ---------- */
@@ -55,8 +55,8 @@ window.KS=(function(){
     return {page:m[1],data:JSON.parse(new TextDecoder().decode(u))};}
 
   const mk=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;};
-  const st=mk('style');st.textContent='.ksov{position:fixed;inset:0;z-index:300;background:rgba(20,33,61,.35);display:flex;align-items:center;justify-content:center;padding:16px}'+
-    '.ksbox{background:#fff;border-radius:16px;box-shadow:0 18px 50px rgba(20,33,61,.25);padding:18px 20px;max-width:520px;width:100%;display:flex;flex-direction:column;gap:10px;font-size:16px;line-height:1.45}'+
+  const st=mk('style');st.textContent='.ksov{position:fixed;inset:0;z-index:300;background:rgba(29,58,52,.35);display:flex;align-items:center;justify-content:center;padding:16px}'+
+    '.ksbox{background:#fff;border-radius:16px;box-shadow:0 18px 50px rgba(29,58,52,.25);padding:18px 20px;max-width:520px;width:100%;display:flex;flex-direction:column;gap:10px;font-size:16px;line-height:1.45}'+
     '.ksbox h4{margin:0;font-size:19px}.ksbox p{margin:0}'+
     '.ksrow{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.kssend{background:#d62f7f!important;border-color:#d62f7f!important;color:#fff!important}'+
     '.ksdone{display:inline-flex;align-items:center;gap:6px;font-size:14.5px;font-weight:700;color:#1e6b4a;background:#e8f5ef;border:1px solid #b9dcc9;border-radius:10px;padding:5px 10px;cursor:default}'+

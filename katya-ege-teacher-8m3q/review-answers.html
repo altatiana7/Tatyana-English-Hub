@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>Катя ЕГЭ · Отправленные ответы</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f0f3f6;color:#24313d;font:16px/1.45 system-ui,Arial,sans-serif}
+header{position:sticky;top:0;background:#293c52;color:white;padding:9px 18px;display:flex;align-items:center;gap:12px;z-index:2}
+header strong{font-size:17px;flex:1}button{font:inherit;font-size:14px;cursor:pointer;border:1px solid #b2c5d2;border-radius:8px;background:#fff;padding:7px 11px}
+main{max-width:1180px;margin:0 auto;padding:14px;display:grid;gap:10px}
+article{background:#fff;border:1px solid #d6e0e8;border-radius:12px;padding:12px 16px;overflow-wrap:anywhere}
+h1{font-size:21px;margin:0 0 4px}h2{font-size:17px;margin:0 0 6px}p{margin:4px 0}
+.meta{color:#617181;font-size:14px}.answers{display:grid;gap:6px}.answer{border:1px solid #e1e9f0;border-left:4px solid #2c7f78;background:#fafcfd;border-radius:6px;padding:8px 12px}
+.answer b{display:block;font-size:13px;color:#4d6479;word-break:break-word;margin-bottom:3px}
+.answer pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;font:16px/1.5 Georgia,serif}
+details summary{cursor:pointer;font-weight:700}#json{white-space:pre-wrap;overflow-wrap:anywhere;max-height:40vh;overflow:auto;font-size:12px}
+@media(max-width:650px){header{flex-wrap:wrap}header strong{flex-basis:100%}main{padding:8px}}
+</style></head><body>
+<header><strong>Катя ЕГЭ · полученные ответы</strong><button id="copy">Копировать</button><button id="save">Сохранить JSON</button><button id="back">Закрыть</button></header>
+<main><article><h1 id="title">Ответы ученицы</h1><p class="meta" id="meta"></p></article><article><h2>Ответы по заданиям</h2><div id="answers" class="answers"></div></article>
+<article><details><summary>Исходные данные работы</summary><pre id="json"></pre></details></article></main>
+<script>
+(function(){
+  const store=sessionStorage.getItem('katya-review');
+  let rec=null;try{rec=store?JSON.parse(store):null}catch(e){}
+  const main=document.getElementById('answers'),meta=document.getElementById('meta');
+  if(!rec){meta.textContent='Работа не выбрана. Откройте раздел «Проверка домашки» и нажмите «Ответы».';return;}
+  const data=rec.data||{},page=rec.page||'';
+  document.getElementById('title').textContent='Работа: '+page;
+  meta.textContent='Отправлено: '+(data._at||'дата не указана')+' · Все ответы приведены без изменений.';
+  const pretty=JSON.stringify(data,null,2);document.getElementById('json').textContent=pretty;
+  const add=(k,v)=>{
+    const el=document.createElement('div');el.className='answer';
+    const label=document.createElement('b');label.textContent=k||'Ответ';
+    const val=document.createElement('pre');val.textContent=String(v==null?'—':v);
+    el.append(label,val);main.append(el);
+  };
+  let count=0;
+  const walk=(v,path,depth)=>{
+    if(count>500){if(count===501)add('Внимание','Число полей превышает 500. Полные данные доступны в JSON.');count++;return;}
+    if(depth>12){add(path,JSON.stringify(v));count++;return;}
+    if(v&&typeof v==='object'){
+      if(Array.isArray(v)){if(!v.length){add(path,'[пусто]');count++;}else v.forEach((x,i)=>walk(x,path+' ['+(i+1)+']',depth+1));return;}
+      const entries=Object.entries(v);if(!entries.length){add(path,'{пусто}');count++;}
+      else entries.forEach(([k,x])=>walk(x,path?path+' / '+k:k,depth+1));return;
+    }
+    add(path,v);count++;
+  };
+  walk(data,'',0);
+  if(count===0)add('Ответы','Данные работы пусты');
+  document.getElementById('copy').onclick=()=>{if(navigator.clipboard){navigator.clipboard.writeText(pretty).catch(()=>{});}else{alert('Откройте исходные данные и скопируйте текст вручную.');}};
+  document.getElementById('save').onclick=()=>{
+    const blob=new Blob([pretty],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='Katya-EGE-'+page.replace(/[^a-z0-9_-]/gi,'-')+'-answers.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  };
+  document.getElementById('back').onclick=()=>{if(parent!==window)parent.postMessage('ege-home',location.origin);else location.href='index.html';};
+})();
+</script></body></html>

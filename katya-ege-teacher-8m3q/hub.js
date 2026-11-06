@@ -72,9 +72,11 @@
     setTimeout(()=>{try{f.focus();}catch(e){}},50);}
 
   /* сайт учителя: проверка домашки – работы Кати приходят из базы сами */
-  const PAGE={home1:'home1.html?v=41',lesson1:'lesson1.html?v=94#9',lessonw1:'lessonw1.html?v=74'};
-  function openWork(page,data){const P=PAGE[page];if(!P)throw new Error('Неизвестная работа: '+page);
-    sessionStorage.setItem('katya-review',JSON.stringify({page:page,data:data}));open(P);}
+  const PAGE={'family-week4-homework':'family-week4-review.html?v=20261106','family-hw':'family-hw.html?v=1',mock1:'mock1.html?v=2',home1:'home1.html?v=41',lesson1:'lesson1.html?v=94#9',lessonw1:'lessonw1.html?v=74'};
+  function openWork(page,data,raw=false){
+    sessionStorage.setItem('katya-review',JSON.stringify({page:page,data:data}));
+    open(raw?'review-answers.html?v=20261106':(PAGE[page]||'review-answers.html?v=20261106'));
+  }));open(P);}
   let seen={};try{seen=JSON.parse(localStorage.getItem('katya-seen')||'{}');}catch(e){}
   const saveSeen=()=>{try{localStorage.setItem('katya-seen',JSON.stringify(seen));}catch(e){}};
   const badge=n=>{const b=document.getElementById('chknew');if(b){b.textContent=n;b.hidden=!n;}};
@@ -91,7 +93,10 @@
       it.innerHTML='<div><b></b><span>отправлено '+when+'</span></div>';it.querySelector('b').textContent=r.title;
       const b=document.createElement('button');b.type='button';b.className='btn main';b.textContent='Открыть';
       b.onclick=()=>{try{seen[r.id]=1;saveSeen();openWork(r.page,Object.assign({_at:when},r.data));loadChecks(false);}catch(e){msg.textContent=e.message;}};
-      it.append(b);box.append(it);});
+      it.append(b);
+      const rbtn=document.createElement('button');rbtn.type='button';rbtn.className='btn check-raw';rbtn.textContent='Ответы';
+      rbtn.onclick=()=>{seen[r.id]=1;saveSeen();openWork(r.page,Object.assign({_at:when},r.data),true);};
+      it.append(rbtn);box.append(it);});
   }
   if(TCH&&document.getElementById('chklist')){
     document.getElementById('chkload').onclick=()=>loadChecks(true);
@@ -99,6 +104,12 @@
     loadChecks(false);
     document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')loadChecks(false);});
   }
+  /* Backwards compatibility: codes sent before database submission */
+  const cb=document.getElementById('chkbtn');
+  if(cb)cb.onclick=async()=>{const m=document.getElementById('chkmsg');try{
+    const o=await KS.unpack(document.getElementById('chkcode').value);
+    openWork(o.page,o.data);m.textContent='Открыта работа '+o.page+'.';
+  }catch(e){m.textContent='Не получилось открыть код: '+e.message;}};
   window.addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='ege-home')close();});
   document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('main a[href], .sitemenu a[href]');if(!a)return;
     const u=new URL(a.href,location.href);if(u.origin!==location.origin||/index\.html$/.test(u.pathname)||!/\.html$/.test(u.pathname))return;
