@@ -13,7 +13,7 @@ window.KS=(function(){
   async function submit(page,data){
     const r=await fetch(DB+'/rest/v1/rpc/submit_arina_homework',{method:'POST',headers:H,body:JSON.stringify({
       p_test_id:PFX+page,p_test_title:'Катя · '+(TITLE[page]||page),p_score:1,p_max_score:1,p_answers:data||{},p_details:[]})});
-    if(!r.ok)throw new Error('submit_failed');return true;}
+    if(!r.ok)throw new Error('HTTP '+r.status);return true;}
 
   /* одна попытка: отметка об отправке хранится в браузере ученицы */
   const SK=p=>'katya-sent-'+p;
@@ -24,7 +24,7 @@ window.KS=(function(){
   async function flush(){if(T||flushing)return;flushing=true;
     try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(!k||k.indexOf('katya-sent-')!==0)continue;
       const p=k.slice(11),o=sent(p);if(!o||!o.pending)continue;
-      try{await submit(p,o.data);o.pending=false;markSent(p,o);document.querySelectorAll('[data-ks="'+p+'"]').forEach(x=>x.replaceWith(doneBtn(p)));}catch(e){}}}
+      try{await submit(p,o.data);o.pending=false;o.error='';markSent(p,o);document.querySelectorAll('[data-ks="'+p+'"]').forEach(x=>x.replaceWith(doneBtn(p)));}catch(e){o.error=e&&e.message||'сетевая ошибка';markSent(p,o);}}}
     catch(e){}flushing=false;}
   if(!T){window.addEventListener('online',flush);window.addEventListener('load',()=>setTimeout(flush,1200));}
 
@@ -38,7 +38,7 @@ window.KS=(function(){
     if(!code)return {need:true};
     const r=await fetch(DB+'/rest/v1/rpc/get_arina_homework',{method:'POST',headers:H,body:JSON.stringify({p_teacher_code:code})});
     if(r.status===400||r.status===401||r.status===403){try{localStorage.removeItem('arina-teacher-code');}catch(e){}return {need:true,bad:true};}
-    if(!r.ok)throw new Error('load_failed');
+    if(!r.ok)throw new Error('сервер вернул HTTP '+r.status);
     const rows=(await r.json()||[]).filter(x=>String(x&&x.test_id||'').indexOf(PFX)===0)
       .map(x=>{const pg=x.test_id.slice(PFX.length),base=pg.split('~p')[0],P=(x.answers||{})._parts;let title=TITLE[base]||x.test_title;
         if(P&&pg!==base)title=(TITLE[base]||base)+' · часть '+P.k+': сделано '+P.all.length+' из '+P.total+(P.final?' · всё отправлено':'');
@@ -66,7 +66,7 @@ window.KS=(function(){
   function box(title,html,buttons){const ov=mk('div','ksov'),b=mk('div','ksbox');b.append(mk('h4',null,title));if(html)b.insertAdjacentHTML('beforeend',html);
     const r=mk('div','ksrow');buttons.forEach(x=>r.append(x));b.append(r);ov.append(b);ov.onclick=e=>{if(e.target===ov)ov.remove();};document.body.append(ov);return {ov,b};}
   function bt(text,fn,cls){const x=mk('button','btn'+(cls?' '+cls:''),text);x.type='button';x.onclick=fn;return x;}
-  function doneBtn(p){const o=sent(p)||{};const x=mk('span','ksdone'+(o.pending?' kswait':''),o.pending?'Отправляется… (ждёт интернет)':'✓ Отправлено учителю'+(o.at?' · '+o.at:''));
+  function doneBtn(p){const o=sent(p)||{};const x=mk('span','ksdone'+(o.pending?' kswait':''),o.pending?(o.error?'Не отправлено · '+o.error:'Отправляется… (ждёт интернет)'):'✓ Отправлено учителю'+(o.at?' · '+o.at:''));
     if(o.pending)x.dataset.ks=p;x.title=o.pending?'Работа сохранена и уйдёт сама, как только появится интернет':'Работа у учителя. Отправить можно один раз.';return x;}
   /* другая попытка с другого устройства: если работа уже в базе, кнопку закрываем */
   async function remoteSent(p){try{const r=await fetch(DB+'/rest/v1/rpc/get_arina_done',{method:'POST',headers:H,body:'{}'});if(!r.ok)return false;
@@ -80,9 +80,9 @@ window.KS=(function(){
       const m=box('Отправить работу учителю?','<p>Отправить можно <b>один раз</b>. После отправки ответы изменить нельзя, правильные ответы покажет учитель.</p>',
         [bt('Отмена',()=>m.ov.remove()),bt('Отправить',async()=>{m.ov.remove();
           const data=getData()||{};const at=now();data._at=at;const o={at,data,pending:true};markSent(page,o);
-          let ok=false;try{ok=await submit(page,data);}catch(e){}
-          o.pending=!ok;markSent(page,o);if(onSent)onSent(o);if(b.isConnected)b.replaceWith(doneBtn(page));
-          const f=box(ok?'Работа отправлена':'Работа сохранена',ok?'<p>Учитель уже видит твою работу. Больше ничего делать не нужно.</p>':'<p>Сейчас нет связи с интернетом. Работа сохранена в этом браузере и уйдёт учителю сама, как только появится интернет. Просто открой сайт ещё раз позже.</p>',[bt('Готово',()=>f.ov.remove(),'main')]);},'kssend')]);
+          let ok=false,fail='';try{ok=await submit(page,data);}catch(e){fail=e&&e.message||'ошибка сети';}
+          o.pending=!ok;o.error=fail;markSent(page,o);if(onSent)onSent(o);if(b.isConnected)b.replaceWith(doneBtn(page));
+          const f=box(ok?'Работа отправлена':'Работа сохранена',ok?'<p>Учитель уже видит твою работу. Больше ничего делать не нужно.</p>':'<p>Сервер не подтвердил отправку ('+fail+'). Ответы сохранены в этом браузере. Сайт повторит отправку при следующем открытии. Пока учитель может не видеть работу.</p>',[bt('Готово',()=>f.ov.remove(),'main')]);},'kssend')]);
     },'kssend');
     remoteSent(page).then(y=>{if(y&&b.isConnected&&!sent(page)){markSent(page,{at:'',data:{},pending:false});b.replaceWith(doneBtn(page));}});
     return b;}
