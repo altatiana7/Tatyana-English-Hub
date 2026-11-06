@@ -36,7 +36,7 @@ document.addEventListener('change',e=>{if(e.target&&e.target.dataset&&e.target.d
   DATA.r10.forEach((set,i)=>set.key.forEach((key,j)=>expected['r10-'+i+'-'+j]=String(key+1)));
   DATA.r11.forEach((set,i)=>set.key.forEach((key,j)=>expected['r11-'+i+'-'+j]=String(key+1)));
   Object.entries(DATA.grammar).forEach(([name,items],i)=>items.forEach((line,j)=>expected['g-'+i+'-'+j]=String(line[2])));
-  const normalize=s=>String(s||'').trim().toLowerCase().replace(/\\s+/g,' ');
+  const normalize=s=>String(s||'').trim().toLowerCase().replace(/\s+/g,' ');
   let correct=0,attempted=0;
   Object.entries(expected).forEach(([key,answer])=>{
     const el=[...document.querySelectorAll('[data-key]')].find(e=>e.dataset.key===key);
