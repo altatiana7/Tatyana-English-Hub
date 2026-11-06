@@ -6,7 +6,7 @@ window.KS=(function(){
   const T=!!window.TEACHER,PFX='katya-ege:';
   const DB='https://lzxcmrlubhjfdhtqvqzt.supabase.co',KEY='sb_publishable_PmyZRwzWne8lqprej4XJQA_XiujtjEI';
   const H={'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'};
-  const TITLE={'family-hw':'Family and Friends · чтение, грамматика, лексика',mock1:'Пробник ЕГЭ 2027 · Вариант 1 · Аудирование 3–9',home1:'Диагностика · домашняя часть',lesson1:'Диагностика · тест',lessonw1:'Занятие 1 · Error hunter и Match'};
+  const TITLE={'family-week4-homework':'Family · Week 4 · УЧ-4, Reading 10–11, Grammar & Word Formation','family-hw':'Family and Friends · чтение, грамматика, лексика',mock1:'Пробник ЕГЭ 2027 · Вариант 1 · Аудирование 3–9',home1:'Диагностика · домашняя часть',lesson1:'Диагностика · тест',lessonw1:'Занятие 1 · Error hunter и Match'};
   const now=()=>new Date().toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
 
   /* ---------- отправка в базу ---------- */
