@@ -13,12 +13,12 @@
     const LB=[['lesson1.html?v=93#5','Listening · 1–9','',1],['lesson1.html?v=94#8','Reading · 11','',1],['lesson1.html?v=93#6','Grammar · 19–24','',1],['lesson1.html?v=94#6','Word Formation · 25–29','',1],['lesson1.html?v=94#7','Vocabulary · 30–36','',1],['write37.html?v=57','Writing · 37','',1],['write38.html?v=57','Writing · 38','',1]];
     function lk(href,text,hwPfx,xtra){
       const a=document.createElement('a');a.textContent=text;
-      const open=(TCH||!xtra)&&(!has||HW.items.some(x=>x===hwPfx||x.indexOf(hwPfx)===0));if(xtra&&!TCH)a.title='Открывает учитель';
+      const open=TCH||(!xtra&&(!has||HW.items.some(x=>x===hwPfx||x.indexOf(hwPfx)===0)));if(xtra&&!TCH)a.title='Открывает учитель';
       if(open){a.href=href;}else{a.className='lock';a.href='#';a.onclick=e=>e.preventDefault();}
       return a;
     }
     /* «Продолжить урок» */
-    const contOpen=!has||HW.page('lessonw1');
+    const contOpen=TCH||!has||HW.page('lessonw1');
     const cont=document.createElement('a');cont.className='cont';cont.style.textDecoration='none';
     if(contOpen){cont.href='lessonw1.html?v='+V;}else{cont.href='#';cont.onclick=e=>e.preventDefault();cont.style.opacity='.4';cont.style.cursor='not-allowed';}
     cont.innerHTML='<span>Занятие 1 · неделя 1</span><b>Продолжить урок →</b>';
@@ -35,7 +35,7 @@
       const bar=document.createElement('div');bar.className='hwbar';
       bar.innerHTML='<b>Homework'+(HW.due?' · due '+HW.due:'')+'</b>';
       const list=document.createElement('div');list.className='hwlist';
-      HW.items.forEach(id=>{const a=document.createElement('a');a.className='hwt';a.textContent=HW.label(id);a.href=HW.href(id)+'?v='+V;list.append(a);});
+      HW.items.forEach(id=>{const a=document.createElement('a');a.className='hwt';a.textContent=HW.label(id);const [base,hash='']=HW.href(id).split('#');a.href=base+'?v='+V+(hash?'#'+hash:'');list.append(a);});
       bar.append(list);
       const np=document.getElementById('now-panel');np.insertBefore(bar,np.firstChild);
     }
@@ -111,7 +111,7 @@
     openWork(o.page,o.data);m.textContent='Открыта работа '+o.page+'.';
   }catch(e){m.textContent='Не получилось открыть код: '+e.message;}};
   window.addEventListener('message',e=>{if(e.origin===location.origin&&e.data==='ege-home')close();});
-  document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('main a[href], .sitemenu a[href]');if(!a)return;
+  document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('main a[href], .sitemenu a[href]');if(!a||a.target==='_blank')return;
     const u=new URL(a.href,location.href);if(u.origin!==location.origin||/index\.html$/.test(u.pathname)||!/\.html$/.test(u.pathname))return;
-    e.preventDefault();open(u.pathname.split('/').pop()+u.search+u.hash);});
+    e.preventDefault();open(u.href);});
 })();
