@@ -99,7 +99,6 @@ button{font:inherit;color:inherit}
 
 <div class="toast hidden" id="toast" role="status"></div>
 
-<script src="../shared/hw-sent.js?v=2"></script>
 <script>
 const DATA = {
  "title": "ОГЭ · чтение · задание от 6 ноября",
@@ -209,7 +208,7 @@ const $=id=>document.getElementById(id);
 function key(item){try{return atob(item.key)}catch(e){return ""}}
 let state={answers:{},checked:false,tab:0};
 try{const s=JSON.parse(localStorage.getItem(LS)||"null");if(s&&s.answers)state=Object.assign(state,s);}catch(e){}
-function save(){try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}}
+function save(){try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){};scheduleReadingSend();}
 function toast(m){const t=$("toast");t.textContent=m;t.classList.remove("hidden");clearTimeout(t.t);t.t=setTimeout(()=>t.classList.add("hidden"),7000);}
 function totals(){let ok=0,filled=0,total=0;
   DATA.sets.forEach(s=>s.items.forEach(it=>{total++;const a=state.answers[it.id];if(a){filled++;if(a===key(it))ok++;}}));
@@ -271,9 +270,67 @@ $("check").onclick=()=>{
 };
 $("reset").onclick=()=>{state.checked=false;save();draw();};
 
-if(window.HWSent){
-  HWSent.doneButton({student:"timofey",name:"Тимофей",page:"timofey-oge-reading-2026-11-06",title:"ОГЭ · чтение · 6 ноября"});
+/* Передача реальных ответов и баллов в Timofey Teacher's Hub. */
+const RD_DB="https://lzxcmrlubhjfdhtqvqzt.supabase.co";
+const RD_KEY="sb_publishable_PmyZRwzWne8lqprej4XJQA_XiujtjEI";
+let readingSending=false,readingTimer=null;
+function readingSignature(){
+  return DATA.sets.flatMap(s=>s.items.map(it=>it.id+"="+(state.answers[it.id]||""))).join("|");
 }
+function readingStatus(message){
+  const b=$("sendReading");if(b)b.textContent=message;
+}
+function scheduleReadingSend(){
+  clearTimeout(readingTimer);
+  if(totals().filled===totals().total&&state.sentSig!==readingSignature()){
+    readingTimer=setTimeout(()=>sendReading(false),1200);
+  }
+  if(!readingSending)readingStatus(state.sentSig===readingSignature()?"Отправлено учителю ✓":"Отправить ответы учителю");
+}
+async function sendReading(manual){
+  const t=totals(),sig=readingSignature();
+  if(t.filled!==t.total){
+    if(manual)toast("Заполни все 16 ответов перед отправкой. Осталось "+(t.total-t.filled)+".");
+    return false;
+  }
+  if(sig===state.sentSig){
+    readingStatus("Отправлено учителю ✓");
+    if(manual)toast("Все ответы уже получены учителем.");
+    return true;
+  }
+  if(readingSending)return false;
+  readingSending=true;readingStatus("Отправляю…");
+  try{
+    const detail=DATA.sets.flatMap(s=>s.items.map((it,i)=>({
+      id:it.id,question:s.label+" · "+(i+1)+". "+it.prompt,
+      chosen:state.answers[it.id]||"",correct:key(it),
+      is_correct:state.answers[it.id]===key(it)
+    })));
+    const response=await fetch(RD_DB+"/rest/v1/rpc/submit_arina_homework",{
+      method:"POST",headers:{apikey:RD_KEY,Authorization:"Bearer "+RD_KEY,"Content-Type":"application/json"},
+      body:JSON.stringify({
+        p_test_id:"timofey-oge-reading-2026-11-06",
+        p_test_title:"Тимофей · ОГЭ Reading · 6 ноября · True / False / Not stated",
+        p_score:t.ok,p_max_score:t.total,
+        p_answers:{student:"Тимофей",assignment:LS,answers:state.answers},p_details:detail
+      })
+    });
+    if(!response.ok)throw new Error("HTTP "+response.status);
+    state.sentSig=sig;save();
+    readingStatus("Отправлено учителю ✓");
+    if(manual)toast("Ответы и баллы отправлены Татьяне.");
+    return true;
+  }catch(e){
+    readingStatus("Повторить отправку");
+    if(manual)toast("Не удалось отправить. Проверь интернет и нажми снова.");
+    return false;
+  }finally{readingSending=false}
+}
+const sendButton=document.createElement("button");sendButton.type="button";sendButton.id="sendReading";
+sendButton.className="btn primary";sendButton.onclick=()=>sendReading(true);$("send").append(sendButton);
+scheduleReadingSend();
+window.addEventListener("online",()=>scheduleReadingSend());
+window.addEventListener("load",()=>scheduleReadingSend());
 draw();
 </script>
 </body>
