@@ -78,7 +78,7 @@
     setTimeout(()=>{try{f.focus();}catch(e){}},50);}
 
   /* сайт учителя: проверка домашки – работы Кати приходят из базы сами */
-  const PAGE={'family-hw':'family-hw.html?v=1',mock1:'mock1.html?v=2',home1:'home1.html?v=41',lesson1:'lesson1.html?v=94#9',lessonw1:'lessonw1.html?v=74'};
+  const PAGE={'family-week4-homework':'family-week4-review.html?v=20261106','family-hw':'family-hw.html?v=1',mock1:'mock1.html?v=2',home1:'home1.html?v=41',lesson1:'lesson1.html?v=94#9',lessonw1:'lessonw1.html?v=74'};
   function openWork(page,data){const P=PAGE[page];if(!P)throw new Error('Неизвестная работа: '+page);
     sessionStorage.setItem('katya-review',JSON.stringify({page:page,data:data}));open(P);}
   let seen={};try{seen=JSON.parse(localStorage.getItem('katya-seen')||'{}');}catch(e){}
@@ -87,10 +87,10 @@
   async function loadChecks(ask){
     const msg=document.getElementById('chkmsg'),box=document.getElementById('chklist');if(!box)return;
     if(ask)msg.textContent='Загрузка…';
-    let res;try{res=await KS.list(ask);}catch(e){if(ask)msg.textContent='Не удалось загрузить работы. Проверьте интернет и нажмите «Обновить».';return;}
-    if(res.need){if(ask||res.bad)msg.textContent=res.bad?'Неверный пароль. Нажмите «Обновить» и введите его ещё раз.':'Нажмите «Обновить» и один раз введите пароль учителя (тот же, что для работ Арины).';return;}
+    let res;try{res=await KS.list(ask);}catch(e){msg.textContent='Ошибка загрузки работ из базы. Проверьте интернет и нажмите «Обновить». '+(e.message||'');return;}
+    if(res.need){msg.textContent=res.bad?'Неверный пароль учителя. Нажмите «Обновить», чтобы ввести его снова.':'Для загрузки работ требуется пароль учителя. Нажмите «Обновить» и введите пароль.';box.innerHTML='';return;}
     const rows=res.rows;badge(rows.filter(r=>!seen[r.id]).length);
-    msg.textContent=rows.length?'Сдано работ: '+rows.length+'. Нажмите на работу – откроются ответы Кати: верно – зелёным, неверно – красным, баллы – на вкладке итогов.':'Катя пока ничего не отправила.';
+    msg.textContent=rows.length?'Сдано работ: '+rows.length+'. Нажмите на работу – откроются ответы Кати: верно – зелёным, неверно – красным, баллы – на вкладке итогов.':'В базе нет отправленных работ Кати. Проверьте, что на её странице была нажата кнопка «Отправить учителю на проверку».';
     box.innerHTML='';
     rows.forEach(r=>{const it=document.createElement('div');it.className='chki'+(seen[r.id]?'':' new');
       const when=new Date(r.at).toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
