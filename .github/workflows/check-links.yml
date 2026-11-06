@@ -23,3 +23,25 @@ jobs:
       # чтобы CI не падал из-за чужих сайтов и сети.
       - name: Проверить локальные ссылки
         run: python3 tools/check-links.py --strict
+
+      - name: Проверить JavaScript кабинетов Кати ЕГЭ
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in \
+            katya-ege-teacher-8m3q/hub.js \
+            katya-ege-teacher-8m3q/send.js \
+            katya-ege-teacher-8m3q/mode.js \
+            katya-ege-teacher-8m3q/homework.js \
+            katya-ege-teacher-8m3q/nav.js \
+            katya-ege-teacher-8m3q/blocks.js \
+            katya-ege-teacher-8m3q/guide.js \
+            ege-2027-b2-katya/hub.js \
+            ege-2027-b2-katya/send.js \
+            ege-2027-b2-katya/mode.js \
+            ege-2027-b2-katya/homework.js \
+            ege-2027-b2-katya/nav.js \
+            ege-2027-b2-katya/blocks.js
+          do
+            node --check "$f"
+          done
