@@ -84,7 +84,7 @@
     const msg=document.getElementById('chkmsg'),box=document.getElementById('chklist');if(!box)return;
     if(ask)msg.textContent='Загрузка…';
     let res;try{res=await KS.list(ask);}catch(e){if(ask)msg.textContent='Не удалось загрузить работы: '+(e&&e.message||'ошибка сети')+'. Проверьте подключение и нажмите «Обновить».';return;}
-    if(res.need){if(ask||res.bad)msg.textContent=res.bad?'Неверный пароль. Нажмите «Обновить» и введите его ещё раз.':'Нажмите «Обновить» и один раз введите пароль учителя (тот же, что для работ Арины).';return;}
+    if(res.need){msg.textContent=res.bad?'Неверный пароль. Нажмите «Обновить» и введите его ещё раз.':'Нажмите «Обновить» и один раз введите пароль учителя (тот же, что для работ Арины).';return;}
     const rows=res.rows;badge(rows.filter(r=>!seen[r.id]).length);
     msg.textContent=rows.length?'Сдано работ: '+rows.length+'. Нажмите на работу – откроются ответы Кати: верно – зелёным, неверно – красным, баллы – на вкладке итогов.':'Катя пока ничего не отправила.';
     box.innerHTML='';
