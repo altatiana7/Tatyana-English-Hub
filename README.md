@@ -19,6 +19,7 @@
 | `ege-2027-b2-*`, `ege-teachers-hub` | Курсы ЕГЭ B2 (копии под разных учеников) |
 | `spotlight-*`, `go-getter-*` | Материалы по школьным учебникам |
 | `*-english-hub/`, `*-homework/` | Личные страницы учеников |
+| `timofey-oge-reading/` | Тимофей: ОГЭ Reading от 6 ноября — два текста, 16 вопросов True / False / Not stated |
 | `dasha-english-hub/` | Даша (4 класс): Reading Lab, Go Getter 1, глаголы; фото-подсказки в `img/IMAGE-PROMPTS.md` |
 | `card-audio/` | Озвучка карточек (генерируется workflow, не редактируется руками) |
 | `tools/` | Служебные скрипты и проверки |
