@@ -320,6 +320,53 @@ html.teacher-mode #teacherRoot{display:grid!important}
 #teacherRoot .t-right-lessons{gap:8px}#teacherRoot .t-right-lessons button{padding:10px 16px;gap:4px}#teacherRoot .t-right-lessons strong{font-size:17px}
 #teacherRoot #tSeries{background:rgba(21,94,97,.92);border-color:#155e61;color:#fff}#teacherRoot #tSeries small{color:#f2c8b7}#teacherRoot #tSeries span{color:#d9ebe6}#teacherRoot #tSeries:hover{background:#155e61}
 @media(max-width:760px){#teacherRoot .t-right-lessons{top:23%;right:10px;width:45vw}#teacherRoot .t-right-lessons button{padding:10px}#teacherRoot .t-right-lessons strong{font-size:14px}#teacherRoot .t-right-lessons span{display:none}}
+
+/* 2026-11-07: right lesson cards stay within the screen and scroll independently. */
+#teacherRoot .t-right-lessons{
+  top:clamp(90px,20vh,170px);
+  bottom:16px;
+  max-height:none;
+  overflow-y:auto;
+  overflow-x:hidden;
+  align-content:start;
+  overscroll-behavior:contain;
+  scrollbar-width:thin;
+  scrollbar-color:#c99d94 transparent;
+  padding:0 5px 12px 0;
+}
+#teacherRoot .t-right-lessons button{flex-shrink:0}
+@media(max-width:760px){
+  #teacherRoot .t-right-lessons{top:20vh;bottom:12px}
+}
+/* Static sidebar artwork contains an already-expanded Module 1.
+   Cover that printed text and provide real, collapsible live labels. */
+#teacherRoot .t-modwrap:first-child::before{
+  content:"";
+  position:absolute;
+  top:23%;left:9%;width:87%;height:19.5%;
+  border-radius:3px;
+  background:#f5e9e4;
+  pointer-events:none;
+}
+#teacherRoot .t-modwrap:first-child .t-lesson{
+  display:none;
+  left:22%;width:73%;height:6%;
+  padding:0 4px!important;
+  background:#f5e9e4!important;
+  color:#4d3531!important;
+  border-radius:4px;
+  font:500 clamp(8px,.75vw,12px) Arial,sans-serif;
+  text-align:left;
+  white-space:normal;
+}
+#teacherRoot .t-modwrap:first-child .t-lessons.open .t-lesson{display:block}
+#teacherRoot .t-modwrap:first-child .t-lesson:hover{background:#ead5cf!important}
+#teacherRoot .t-modwrap:first-child .t-module::after{
+  content:"›";position:absolute;right:6%;top:0;
+  font:600 14px Arial,sans-serif;color:#6f504b;
+}
+#teacherRoot .t-modwrap:first-child .t-module.open::after{content:"⌄"}
+
 </style>
 <script>
 (function(){
@@ -400,12 +447,12 @@ html.teacher-mode #teacherRoot{display:grid!important}
     const modules=document.getElementById('tModules');
     course.forEach((m,mi)=>{
       const wrap=document.createElement('div');wrap.className='t-modwrap';
-      const mb=document.createElement('button');mb.className='t-module'+(mi===0?' open':'');
+      const mb=document.createElement('button');mb.className='t-module';
       mb.innerHTML='<span>'+m.module+'</span><span>›</span>';
-      mb.setAttribute('aria-label',m.module);
+      mb.setAttribute('aria-label',m.module);if(mi===0)mb.setAttribute('aria-expanded','false');
       mb.style.top=([18.5,42.5,48.8,55.1,61.4,67.7,74,80.3][mi])+'%';
-      const list=document.createElement('div');list.className='t-lessons'+(mi===0?' open':'');
-      mb.onclick=()=>{if(mi===1){openLesson(1,SERIES);return;}if(mi===0){document.getElementById('tModuleDialog').hidden=true;return;}document.getElementById('tModuleTitle').textContent=m.module;document.getElementById('tModuleDialog').hidden=false;document.getElementById('tModuleClose').focus()};
+      const list=document.createElement('div');list.className='t-lessons';
+      mb.onclick=()=>{if(mi===1){openLesson(1,SERIES);return;}if(mi===0){document.getElementById('tModuleDialog').hidden=true;const expanded=list.classList.toggle('open');mb.classList.toggle('open',expanded);mb.setAttribute('aria-expanded',String(expanded));return;}document.getElementById('tModuleTitle').textContent=m.module;document.getElementById('tModuleDialog').hidden=false;document.getElementById('tModuleClose').focus()};
       m.lessons.forEach(l=>{
         const b=document.createElement('button');
         b.className='t-lesson'+(!l.url?' empty':'');
