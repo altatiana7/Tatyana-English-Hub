@@ -58,6 +58,9 @@ def is_dynamic(ref: str, after: str = "") -> bool:
     """Ссылка собрана в JS, проверить её статически нельзя."""
     if any(tok in ref for tok in ("${", "{{", "}}", "' +", '" +', "'+", '+"', "+'")):
         return True
+    # url('+c.img+') -- кавычки уже отброшены, остался кусок склейки с плюсом на краю
+    if ref.strip().startswith("+") or ref.strip().endswith("+"):
+        return True
     # 'prefix-' + i + '.js' -- склейка сразу за кавычкой
     return after.lstrip()[:1] in {"+", "\\"}
 
