@@ -364,6 +364,52 @@ body{background:#f3f1f7}
 .rdlist.reading{overflow:visible!important;max-height:none!important;height:auto!important;border:0!important;padding:0!important;gap:5px}
 .rdlist p{margin:0;background:#f3f6f1;border-radius:8px;padding:5px 9px;font-size:clamp(14px,2.45vh,17px);line-height:1.32}
 .rdlist p.src{background:none;font-size:13px;color:var(--muted);padding:2px 4px}
+
+/* ===== redesign: linked blocks, expand / collapse ===== */
+.screen:nth-of-type(8){--hd:linear-gradient(90deg,#0f8f8a,#3bb8a6)}
+.screen:nth-of-type(9){--hd:linear-gradient(90deg,#c43d2e,#ea7550)}
+.screen{padding:12px 16px;gap:12px}
+.card .head{padding-top:6px;padding-bottom:6px}
+.xp{border:0;width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.25);color:#fff;font-size:17px;line-height:1;flex:none;padding:0}
+.xp:hover{background:rgba(255,255,255,.45)}
+.card.full{position:absolute;inset:12px 16px;z-index:30;max-height:none;box-shadow:0 0 0 9999px rgba(30,25,50,.3),0 18px 50px rgba(30,25,50,.35)}
+.card.full .body{zoom:1.15}
+.screen.auto{align-content:center;align-items:start}
+.screen.auto .card .body{zoom:1.12}
+.screen.auto .card{align-self:start;max-height:calc(100dvh - 54px - 26px)}
+.screen.auto .fc{flex:none;height:clamp(190px,34vh,300px);max-height:none}
+.screen.auto .iv{flex:none;height:clamp(130px,24vh,200px);max-height:none}
+.screen.auto .phwrap{flex:none;height:clamp(170px,38vh,320px)}
+.screen.auto .jq{flex:none;height:clamp(130px,22vh,200px)}
+.screen.auto .sg{flex:none;gap:12px}
+.screen.auto .q{flex:none;padding:6px 0}
+.screen[data-name="Words"]{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}
+.screen[data-name="Words"]>.card:nth-child(1){grid-column:1;grid-row:1}
+.screen[data-name="Words"]>.card:nth-child(2){grid-column:2;grid-row:1}
+.screen[data-name="Words"]>.card:nth-child(3){grid-column:1/3;grid-row:2}
+.screen[data-name="Words"] .fbw{padding:8px 12px}
+.screen[data-name="Suneung"]{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);grid-template-rows:minmax(0,1fr) minmax(0,1fr)}
+.screen[data-name="Suneung"]>.card:nth-child(1){grid-column:1;grid-row:1}
+.screen[data-name="Suneung"]>.card:nth-child(2){grid-column:2;grid-row:1/3}
+.screen[data-name="Suneung"]>.card:nth-child(3){grid-column:1;grid-row:2}
+.screen[data-name="Too hard?"]{grid-template-rows:minmax(0,1fr) auto}
+.screen[data-name="Too hard?"]>.card:nth-child(1){grid-column:1;grid-row:1/3}
+.screen[data-name="Too hard?"]>.card:nth-child(2){grid-column:2;grid-row:1}
+.screen[data-name="Too hard?"]>.card:nth-child(3){grid-column:2;grid-row:2}
+.screen[data-name="Debate"]{grid-template-rows:minmax(0,1fr) auto}
+.screen:not(.auto) .two button{padding:clamp(11px,2.3vh,19px) 14px;font-size:clamp(17px,2.8vh,21px)}
+.screen:not(.auto) .sg .q span{font-size:clamp(20px,3.4vh,27px)}
+.rstage{text-align:center}
+.kn{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.kn div{background:#f3f6f1;border-radius:8px;padding:8px 6px;text-align:center;display:flex;flex-direction:column;gap:2px}
+.kn b{font-size:clamp(18px,3vh,24px);color:var(--navy)}
+.kn span{font-size:13px;line-height:1.25;color:var(--muted)}
+.s321.h{grid-template-columns:repeat(3,minmax(0,1fr))}
+.roles{display:flex;flex-wrap:wrap;gap:8px}
+.roles button{border:1px solid #d5e0d7;background:var(--soft);color:var(--navy);border-radius:8px;padding:9px 13px;font-size:16px;font-weight:800}
+.roles button.sel{background:var(--navy);border-color:var(--navy);color:#fff}
+.rstage{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:10px;border:2px solid #e3cfb3;border-radius:12px;background:linear-gradient(#fffdfa,#f8ede0);padding:12px 16px}
+.rstage .topic{font-family:Georgia,serif;font-size:clamp(19px,3.2vh,26px);font-weight:700;line-height:1.25}
 </style>
 </head>
 <body>
@@ -377,7 +423,7 @@ body{background:#f3f1f7}
 </header>
 <main>
 
-<section class="screen s2" data-name="Warm-up">
+<section class="screen s2 auto" data-name="Warm-up">
   <div class="card"><div class="head"><div><p class="eyebrow">01 / INTERVIEW · SECRET QUESTION</p><h2>Exams, pressure and the future</h2></div><span class="pill" id="ivPill"></span></div>
     <div class="body" style="overflow:hidden">
       <div class="nums" id="ivNums"></div>
@@ -394,16 +440,16 @@ body{background:#f3f1f7}
   <div class="card"><div class="head"><div><p class="eyebrow">03 / QUIZLET</p><h2>Words from Lesson 6</h2></div><button class="btn light" type="button" id="fc1Shuffle">Shuffle</button></div>
     <div class="body" id="deck1" style="overflow:hidden"></div>
   </div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">04 / MATCH</p><div class="seg" id="mTabs" style="margin-top:3px"></div></div><span class="pill" id="memPill"></span></div><div class="body" id="mem"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">04 / QUIZ</p><div class="seg" id="mTabs" style="margin-top:3px"></div></div><span class="pill" id="memPill"></span></div><div class="body" id="mem"></div></div>
   <div class="card"><div class="head"><div><p class="eyebrow">05 / GAME</p><h2>Forbidden word</h2></div><span class="pill" id="fwPill"></span></div><div class="body" id="fw"></div></div>
 </section>
 
-<section class="screen s2" data-name="Grammar">
+<section class="screen s2 auto" data-name="Grammar">
   <div class="card"><div class="head"><div><p class="eyebrow">06 / GRAMMAR · ЕГЭ FORMAT</p><h2>Inversion, passive reporting, conditionals</h2></div><button class="btn light" type="button" id="ruleBtn">Rule</button></div><div class="body" id="fipi"></div></div>
   <div class="card tint"><div class="head"><div><p class="eyebrow">07 / GAME</p><div class="seg" id="gTabs" style="margin-top:3px"></div></div><span class="pill" id="gPill"></span></div><div class="body" id="gbody"></div></div>
 </section>
 
-<section class="screen s3" data-name="Suneung" style="grid-template-columns:minmax(0,.8fr) minmax(0,1.35fr) minmax(0,.95fr)">
+<section class="screen s3" data-name="Suneung">
   <div class="card"><div class="head"><div><p class="eyebrow">08 / QUIZLET</p><h2>New words: Suneung</h2></div><button class="btn light" type="button" id="fc2Shuffle">Shuffle</button></div>
     <div class="body" id="deck2" style="overflow:hidden"></div>
   </div>
@@ -418,30 +464,33 @@ body{background:#f3f1f7}
     <div class="body" id="rd2"></div>
   </div>
   <div class="card tint"><div class="head"><div><p class="eyebrow">12 / QUIZ · ONE QUESTION AT A TIME</p><h2>Choose the answer</h2></div><span class="pill" id="mc2Pill"></span></div><div class="body" id="mc2"></div></div>
+  <div class="card"><div class="head"><div><p class="eyebrow">13 / KEY NUMBERS</p><h2>The English test in numbers</h2></div></div><div class="body"><div class="kn" id="kn"></div></div></div>
 </section>
 
-<section class="screen s2" data-name="Rituals">
-  <div class="card"><div class="head"><div><p class="eyebrow">13 / READING · FACTS</p><h2>Rituals, hope and pressure</h2></div><button class="btn light" type="button" id="rd3Btn">Show the facts</button></div>
+<section class="screen s2 auto" data-name="Rituals">
+  <div class="card"><div class="head"><div><p class="eyebrow">14 / READING · FACTS</p><h2>Rituals, hope and pressure</h2></div><button class="btn light" type="button" id="rd3Btn">Show the facts</button></div>
     <div class="body" id="rd3"></div>
   </div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">14 / GAME</p><div class="seg" id="rTabs" style="margin-top:3px"></div></div><span class="pill" id="rPill"></span></div><div class="body" id="rbody"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">15 / GAME</p><div class="seg" id="rTabs" style="margin-top:3px"></div></div><span class="pill" id="rPill"></span></div><div class="body" id="rbody"></div></div>
 </section>
 
-<section class="screen s2" data-name="Gaokao">
-  <div class="card"><div class="head"><div><p class="eyebrow">15 / READING · FACTS</p><h2>Suneung and the Chinese gaokao</h2></div><button class="btn light" type="button" id="rd4Btn">Show the facts</button></div>
+<section class="screen s2 auto" data-name="Gaokao">
+  <div class="card"><div class="head"><div><p class="eyebrow">16 / READING · FACTS</p><h2>Suneung and the Chinese gaokao</h2></div><button class="btn light" type="button" id="rd4Btn">Show the facts</button></div>
     <div class="body" id="rd4"></div>
   </div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">16 / SORT · QUIZ</p><div class="seg" id="cTabs" style="margin-top:3px"></div></div><span class="pill" id="cPill"></span></div><div class="body" id="cbody"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">17 / SORT · QUIZ</p><div class="seg" id="cTabs" style="margin-top:3px"></div></div><span class="pill" id="cPill"></span></div><div class="body" id="cbody"></div></div>
 </section>
 
 <section class="screen s2" data-name="Debate">
-  <div class="card tint"><div class="head"><div><p class="eyebrow">17 / AGREE OR DISAGREE</p><h2>Decide first, then check the fact</h2></div><span class="pill" id="auPill"></span></div><div class="body" id="au"></div></div>
-  <div class="card"><div class="head"><div><p class="eyebrow">18 / WHEEL CHALLENGE · 3–2–1</p><h2>Spin and speak</h2></div><span class="pill" id="whPill">60 s</span></div><div class="body" id="wh"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">18 / AGREE OR DISAGREE</p><h2>Decide first, then check the fact</h2></div><span class="pill" id="auPill"></span></div><div class="body" id="au"></div></div>
+  <div class="card"><div class="head"><div><p class="eyebrow">19 / ROLE CARDS · 60 s</p><h2>Pick a role and speak</h2></div><span class="pill" id="whPill">0 / 10</span></div><div class="body" id="wh"></div></div>
+  <div class="card"><div class="head"><div><p class="eyebrow">20 / 3–2–1</p><h2>How to answer</h2></div></div><div class="body"><div class="s321 h"><div><b>3</b><span>Use <u>three</u> words from the lesson.</span></div><div><b>2</b><span>Give <u>two</u> arguments with examples.</span></div><div><b>1</b><span>Finish with <u>one</u> conclusion: “All in all, …”</span></div></div></div></div>
+  <div class="card"><div class="head"><div><p class="eyebrow">21 / WORDS TO USE</p><h2>Words from the lesson</h2></div></div><div class="body"><div class="wbank" id="wbank"></div></div></div>
 </section>
 
-<section class="screen s2" data-name="Revision">
-  <div class="card"><div class="head"><div><p class="eyebrow">19 / JEOPARDY</p><h2>Kate vs Teacher</h2></div><span class="pill" id="jpPill"></span></div><div class="body" id="jp"></div></div>
-  <div class="card tint"><div class="head"><div><p class="eyebrow">20 / ESCAPE ROOM</p><h2>Open 4 locks to get the code</h2></div><span class="pill" id="erPill"></span></div><div class="body" id="er"></div></div>
+<section class="screen s2 auto" data-name="Revision">
+  <div class="card"><div class="head"><div><p class="eyebrow">22 / JEOPARDY</p><h2>Kate vs Teacher</h2></div><span class="pill" id="jpPill"></span></div><div class="body" id="jp"></div></div>
+  <div class="card tint"><div class="head"><div><p class="eyebrow">23 / ESCAPE ROOM</p><h2>Open 4 locks to get the code</h2></div><span class="pill" id="erPill"></span></div><div class="body" id="er"></div></div>
 </section>
 
 </main>
@@ -479,7 +528,7 @@ function go(i){
   [...$('tabs').children].forEach((c,k)=>c.classList.toggle('on',k===cur));
   $('prev').disabled=cur===0;
   $('next').textContent=cur===screens.length-1?'START AGAIN':'NEXT';
-  hush();ivStopTimer();qfStop();sgStop();whStop();
+  closeFull();hush();ivStopTimer();qfStop();sgStop();whStop();
 }
 $('prev').onclick=()=>go(cur-1);
 $('next').onclick=()=>{if(cur===screens.length-1){resetAll();go(0)}else go(cur+1)};
@@ -559,6 +608,7 @@ function memMake(bodyId,pillId,pairs){
   return reset;
 }
 let MEMA,MEMB;
+function defQuiz(arr,n){return arr.slice(0,n).map((c,i)=>{const o=[c[0]];for(let k=1;o.length<4&&k<40;k++){const w=arr[(i+k*3)%arr.length][0];if(!o.includes(w))o.push(w)}return ['Which word? “'+c[1]+'”',o,0]})}
 /* ---------- 05 forbidden word ---------- */
 const FW=[["side hustle", ["extra", "job", "money"]], ["make ends meet", ["just", "enough", "bills"]], ["frugal", ["careful", "spend", "cheap"]], ["wary of", ["careful", "trust", "cautious"]], ["crave validation", ["want", "approval", "likes"]], ["digital footprint", ["online", "trace", "record"]], ["face a backlash", ["negative", "angry", "reaction"]], ["be held accountable", ["responsible", "blame", "answer"]], ["burned out", ["tired", "work", "stress"]], ["zone out", ["stop", "think", "stare"]], ["impulse", ["sudden", "want", "buy"]], ["ban", ["stop", "forbid", "rule"]]];
 let fwI,fwPts;
@@ -719,15 +769,22 @@ let whRot=0,whT=null;function whStop(){if(whT){clearInterval(whT);whT=null}}
 function wheelSVG(){const n=WH.length,R=50;let s='<svg viewBox="0 0 100 100" id="whSvg">';for(let i=0;i<n;i++){const a0=(i/n)*2*Math.PI-Math.PI/2,a1=((i+1)/n)*2*Math.PI-Math.PI/2;const x0=50+R*Math.cos(a0),y0=50+R*Math.sin(a0),x1=50+R*Math.cos(a1),y1=50+R*Math.sin(a1);const am=(a0+a1)/2;
   s+='<path d="M50 50 L'+x0.toFixed(2)+' '+y0.toFixed(2)+' A50 50 0 0 1 '+x1.toFixed(2)+' '+y1.toFixed(2)+' Z" fill="'+WCOL[i]+'" stroke="#fff" stroke-width="1"/>';
   s+='<text x="'+(50+34*Math.cos(am)).toFixed(2)+'" y="'+(50+34*Math.sin(am)).toFixed(2)+'" font-size="9" font-weight="800" fill="#155e61" text-anchor="middle" dominant-baseline="middle" font-family="Arial">'+(i+1)+'</text>'}return s+'</svg>'}
-function whReset(){whStop();const r=$('wh');r.innerHTML='';const wrap=el('div','wheelwrap');const w=el('div','wheel','<div class="pin"></div>'+wheelSVG());const hub=btn('hub','SPIN',whSpin);w.appendChild(hub);
-  const right=el('div','');right.id='whRight';right.style.cssText='display:flex;flex-direction:column;gap:8px;min-width:0';right.appendChild(el('div','topic','Spin the wheel to get a statement.'));right.appendChild(el('div','note','Agree or disagree — then follow 3–2–1.'));
-  wrap.append(w,right);r.appendChild(wrap);
-  const s=el('div','s321','<div><b>3</b><span>Use <u>three</u> words from the lesson.</span></div><div><b>2</b><span>Give <u>two</u> arguments with examples.</span></div><div><b>1</b><span>Finish with <u>one</u> conclusion: “All in all, …”</span></div>');r.appendChild(s);
-  const bank=el('div','wbank');WWORDS.forEach(x=>bank.appendChild(el('span','',x)));r.appendChild(bank);$('whPill').textContent='60 s';
-  const svg=$('whSvg');svg.style.transition='none';svg.style.transform='rotate('+whRot+'deg)'}
-function whSpin(){whStop();const n=WH.length,k=Math.floor(Math.random()*n);const seg=360/n;const target=360-(k*seg+seg/2);whRot=whRot-(whRot%360)+360*5+target;const svg=$('whSvg');svg.style.transition='';svg.style.transform='rotate('+whRot+'deg)';
-  setTimeout(()=>{const rr=$('whRight');rr.innerHTML='';rr.append(el('div','lab','STATEMENT '+(k+1)),el('div','topic',WH[k]));let l=60;const bar=el('div','sgbar');bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="whRing" cx="50" cy="50" r="45"/></svg><span id="whSec">60</span>'));
-    bar.appendChild(btn('btn','Start 60 s',()=>{whStop();l=60;ring('whRing',1,'60','whSec');whT=setInterval(()=>{l--;ring('whRing',l/60,String(l),'whSec');$('whPill').textContent=l+' s';if(l<=0)whStop()},1000)}));rr.appendChild(bar);ring('whRing',1,'60','whSec')},3300)}
+const ROLES=['Student','Parent','Teacher','Education Minister','Police officer'];
+let whOrder=[],whN=0;
+function whReset(){whStop();whOrder=shuffle(WH.map((_,i)=>i));whN=0;whDraw(null);
+  const wb=$('wbank');wb.innerHTML='';WWORDS.forEach(x=>wb.appendChild(el('span','',x)))}
+function whDraw(role){whStop();const r=$('wh');r.innerHTML='';
+  if(whN>=WH.length){$('whPill').textContent='DONE';r.append(el('div','big',WH.length+' / '+WH.length),el('div','note','Choose one statement and give your own opinion.'));const rw=el('div','row');rw.appendChild(btn('btn light','Play again',whReset));r.appendChild(rw);return}
+  $('whPill').textContent=(whN+1)+' / '+WH.length;
+  const roles=el('div','roles');ROLES.forEach(x=>roles.appendChild(btn(x===role?'sel':'',x,()=>whDraw(x))));r.appendChild(roles);
+  const st=el('div','rstage');
+  if(!role){st.append(el('div','lab','CHOOSE A ROLE'))}
+  else{st.append(el('div','lab','YOU ARE: '+role.toUpperCase()),el('div','topic',WH[whOrder[whN]]));
+    let l=60;const bar=el('div','sgbar');bar.appendChild(el('div','ring','<svg viewBox="0 0 100 100"><circle class="t" cx="50" cy="50" r="45"/><circle class="p" id="whRing" cx="50" cy="50" r="45"/></svg><span id="whSec">60</span>'));
+    bar.appendChild(btn('btn','Start 60 s',()=>{whStop();l=60;ring('whRing',1,'60','whSec');whT=setInterval(()=>{l--;ring('whRing',l/60,String(l),'whSec');if(l<=0)whStop()},1000)}));
+    bar.appendChild(el('span','grow'));bar.appendChild(btn('btn light','Next statement →',()=>{whN++;whDraw(null)}));st.appendChild(bar)}
+  r.appendChild(st);if(role)ring('whRing',1,'60','whSec')}
+function whSpin(){}
 
 /* ---------- 02b mystery box ---------- */
 const MB=["Describe your best way to prepare for an exam in 30 seconds. Use “cram” or “revise”.", "Explain “a high-stakes exam” to a ten-year-old in 30 seconds.", "Give two reasons why some families see an exam as a gateway to a good career.", "Say three things a country can do to help students on exam day.", "BONUS! You get 2 points: say one fact about the Space-Out contest in Seoul. Use “zone out”.", "Describe a ritual or superstition you know, from any country, for 30 seconds.", "What would you say to a friend who feels burned out before exams? Give two pieces of advice.", "Give two arguments: is it fair that one test decides so much?", "BONUS! You get 2 points: use “crave validation” in a sentence about exam results and social media.", "Speak for 30 seconds about the hardest subject at school and why it is hard."];
@@ -782,9 +839,10 @@ function erRender(){const r=$('er');r.innerHTML='';
 
 /* ---------- reset: every time from the start ---------- */
 function resetAll(){
+  {const k=$('kn');k.innerHTML='';NUMD.slice(6,10).forEach(p=>k.appendChild(el('div','','<b>'+p[0]+'</b><span>'+p[1]+'</span>')))}
   ivI=0;ivRender();segTabs('wTabs',['Quick Fire','Mystery Box'],wRender);
   DK1=deckMake('deck1',[['Korea',CARDS],['Social media',SOCC]]);DK2=deckMake('deck2',[['Suneung',SUN]]);
-  MEMA=memMake('mem','memPill',CARDS.slice(0,10).map(c=>[c[0],c[3]]));MEMB=memMake('mem','memPill',SOCC.slice(0,10).map(c=>[c[0],c[3]]));
+  MEMA=mcMake('mem','memPill',defQuiz(CARDS,10),'Choose three words and use them in your own sentences.');MEMB=mcMake('mem','memPill',defQuiz(SOCC,10),'Choose three words and use them in your own sentences.');
   segTabs('mTabs',['Korea words','Social media words'],mRender);fwReset();
   ruleOn=false;$('ruleBtn').textContent='Rule';fipiRender();segTabs('gTabs',['Grammar doctor','Speed Game'],gRender);
   RDA.reset();LV1();RDB.reset();MC2();RDC.reset();RDD.reset();segTabs('cTabs',['Suneung or Gaokao?','Quiz'],cRender);segTabs('rTabs',['Ritual or myth','Numbers'],rRender);
@@ -797,8 +855,12 @@ RDA=rdMake('rd1','rd1Btn',RD1);RDB=rdMake('rd2','rd2Btn',RD2);RDC=rdMake('rd3','
 LV1=chMake('lv1','lv1Pill',LV1D,['TRUE','FALSE'],{lives:true,hint:'Wrong stone = lava! 3 lives.',good:'You crossed the lava! Now correct the false sentences aloud.',bad:'You fell into the lava! Read the facts again and try once more.'});
 MC2=mcMake('mc2','mc2Pill',MC2D,'Retell the article in your own words. Use three facts and two new words.');
 LVR=chMake('rbody','rPill',RULED,['TRUE','MYTH'],{lives:false,hint:'Think about what families and officials really do.',good:'Which ritual would you try yourself? Which one would you drop? Use “would”.'});
-MEMN=memMake('rbody','rPill',NUMD);
+MEMN=mcMake('rbody','rPill',NUMD.map((p,i)=>{const o=[p[1]];for(let k=1;o.length<4&&k<40;k++){const w=NUMD[(i+k*3)%NUMD.length][1];if(!o.includes(w))o.push(w)}return ['What does “'+p[0]+'” refer to?',o,0]}),'Say three numbers and what they show, in full sentences.');
 resetAll();go(0);
+
+function closeFull(){document.querySelectorAll('.card.full').forEach(c=>{c.classList.remove('full');const b=c.querySelector('.xp');if(b){b.textContent='\u2922';b.setAttribute('aria-label','Expand')}})}
+document.querySelectorAll('.card .head').forEach(h=>{const b=document.createElement('button');b.type='button';b.className='xp';b.textContent='\u2922';b.setAttribute('aria-label','Expand');b.onclick=()=>{const c=h.parentElement,was=c.classList.contains('full');closeFull();if(!was){c.classList.add('full');b.textContent='\u2921';b.setAttribute('aria-label','Collapse')}};h.appendChild(b)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeFull()});
 </script>
 <script src="../card-audio.js?v=1"></script>
 <script src="../shared/page-label.js?v=20261104"></script>
