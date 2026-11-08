@@ -1,0 +1,1864 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0f6b62">
+<title>Culture Shock · B1 · Tatyana English Hub</title>
+<style>
+/* Culture Shock · B1 — вёрстка урока.
+   Светлая «бумажная» тема + тёмная, крупные кнопки, работает на телефоне. */
+
+:root{
+  --bg:#f4f1ea; --paper:#fffdf9; --ink:#1d2b2a; --ink2:#3b4f4c; --muted:#6d7c78;
+  --line:#e2dbcf; --line2:#d3cabb;
+  --teal:#0f6b62; --teal2:#14a08f; --mint:#e2f3ef; --warm:#f5c451; --warm-soft:#fbeecb;
+  --ok:#1a7f4b; --ok-soft:#e4f6ea; --bad:#b4322a; --bad-soft:#fdeae7;
+  --shadow:0 14px 40px rgba(29,43,42,.10);
+  --radius:20px;
+  --font:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --serif:Georgia,"Times New Roman",serif;
+}
+:root[data-theme="dark"]{
+  --bg:#12191a; --paper:#192222; --ink:#eef3f0; --ink2:#c8d4d0; --muted:#93a3a0;
+  --line:#2b3838; --line2:#374747;
+  --teal:#5fd0bf; --teal2:#7ee0d0; --mint:#1d3332; --warm:#f0bf55; --warm-soft:#3a3324;
+  --ok:#6fd79f; --ok-soft:#17301f; --bad:#f08b80; --bad-soft:#331a18;
+  --shadow:0 14px 40px rgba(0,0,0,.45);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font); color:var(--ink); background:var(--bg);
+  line-height:1.55; -webkit-font-smoothing:antialiased;
+  padding-bottom:calc(78px + env(safe-area-inset-bottom,0px));
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(900px 420px at 12% -8%, rgba(20,160,143,.13), transparent 70%),
+    radial-gradient(700px 380px at 92% 4%, rgba(245,196,81,.16), transparent 72%);
+}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--teal)}
+
+.shell{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding:18px clamp(12px,2.4vw,28px) 30px}
+
+/* ── шапка ── */
+.topbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.back{display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-weight:800;font-size:14px;
+  background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:8px 14px;color:var(--ink2)}
+.back:hover{border-color:var(--teal)}
+.topbar .spacer{flex:1}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--line);
+  border-radius:999px;padding:7px 12px;font-size:12.5px;font-weight:800;color:var(--ink2);white-space:nowrap}
+.chip b{color:var(--teal)}
+.icon-btn{width:40px;height:40px;display:grid;place-items:center;border-radius:999px;border:1px solid var(--line);
+  background:var(--paper);font-size:17px;line-height:1}
+.icon-btn:hover{border-color:var(--teal)}
+
+.hero{background:var(--paper);
+  background:linear-gradient(135deg,var(--paper),color-mix(in srgb,var(--mint) 65%,var(--paper)));
+  border:1px solid var(--line);border-radius:26px;padding:clamp(18px,3.4vw,34px);box-shadow:var(--shadow);margin-bottom:16px}
+.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:900;color:var(--teal);margin:0 0 8px}
+.hero h1{font-family:var(--serif);font-size:clamp(30px,5.4vw,52px);line-height:1.05;margin:0 0 8px;letter-spacing:-.02em}
+.hero p{margin:0;color:var(--ink2);max-width:70ch}
+.meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.tag{font-size:12px;font-weight:850;letter-spacing:.03em;background:var(--mint);color:var(--teal);
+  border-radius:999px;padding:6px 11px}
+.tag.warm{background:var(--warm-soft);color:#8a6412}
+:root[data-theme="dark"] .tag.warm{color:var(--warm)}
+
+/* ── прогресс ── */
+.progress{display:flex;align-items:center;gap:10px;margin:0 0 16px;font-size:13px;font-weight:800;color:var(--muted)}
+.bar{flex:1;height:9px;background:var(--line);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,var(--teal),var(--teal2));transition:width .4s ease}
+
+/* ── карточка шага ── */
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:clamp(16px,2.8vw,30px)}
+.card + .card{margin-top:16px}
+.step-head{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap}
+.num{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
+  background:var(--teal);color:#fff;font-weight:900;font-size:15px}
+:root[data-theme="dark"] .num{color:#0b1a19}
+.step-head h2{margin:0;font-size:clamp(20px,3.2vw,28px);line-height:1.15;letter-spacing:-.01em}
+.step-head .sub{margin:2px 0 0;color:var(--muted);font-size:13.5px}
+.step-head .grow{flex:1;min-width:180px}
+
+h3{font-size:17px;margin:22px 0 10px}
+.lead{color:var(--ink2);margin:0 0 16px;max-width:76ch}
+.muted{color:var(--muted)}
+.hidden{display:none !important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+
+/* ── кнопки ── */
+.btn{border:1px solid var(--line2);background:var(--paper);color:var(--ink);border-radius:12px;
+  padding:11px 16px;font-weight:850;font-size:14.5px;min-height:44px;display:inline-flex;align-items:center;gap:8px;
+  justify-content:center;transition:transform .12s ease,border-color .12s ease,background .12s ease}
+.btn:hover{border-color:var(--teal)}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--teal);border-color:var(--teal);color:#fff}
+:root[data-theme="dark"] .btn.primary{color:#08191a}
+.btn.primary:hover{background:var(--teal2);border-color:var(--teal2)}
+.btn.soft{background:var(--mint);border-color:transparent;color:var(--teal)}
+.btn.warm{background:var(--warm-soft);border-color:transparent;color:#8a6412}
+.btn:disabled{opacity:.45;cursor:default;transform:none}
+.btn.sm{padding:7px 12px;min-height:36px;font-size:13px;border-radius:10px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:18px}
+.actions.end{justify-content:space-between}
+
+/* ── словарь ── */
+.word-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+.word{background:var(--paper);
+  background:linear-gradient(180deg,var(--paper),color-mix(in srgb,var(--mint) 40%,var(--paper)));
+  border:1px solid var(--line);border-radius:16px;padding:13px 14px;position:relative}
+.word .w{font-weight:900;font-size:16.5px;letter-spacing:-.01em;padding-right:38px}
+.word .ipa{color:var(--muted);font-size:13px;margin-left:4px;font-weight:600}
+.word .pos{font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-left:6px}
+.word .m{font-size:14px;color:var(--ink2);margin:6px 0 2px}
+.word .ru{font-size:13px;color:var(--muted)}
+.word .ex{font-size:13.5px;font-style:italic;color:var(--ink2);border-left:3px solid var(--warm);padding-left:9px;margin-top:8px}
+.word .say{position:absolute;top:10px;right:10px;border:1px solid var(--line);background:var(--paper);
+  width:34px;height:34px;border-radius:999px;display:grid;place-items:center;font-size:14px}
+.word .say:hover{border-color:var(--teal);background:var(--mint)}
+.word .say.on{background:var(--teal);border-color:var(--teal);color:#fff}
+
+/* ── вопросы lead-in ── */
+.ql{display:grid;gap:10px;counter-reset:q}
+.ql .q{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--paper)}
+.ql .q b{font-weight:800}
+.ql .hint{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.ql .hint span{font-size:11.5px;font-weight:800;color:var(--teal);background:var(--mint);border-radius:999px;padding:3px 9px}
+
+/* ── определения ── */
+.def-list{display:grid;gap:10px}
+.def{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:10px;align-items:center;
+  border:1px solid var(--line);border-radius:14px;padding:11px 13px;background:var(--paper)}
+.def p{margin:0;font-size:14.5px}
+.def select{width:100%;padding:10px 12px;border-radius:11px;border:1.5px solid var(--line2);
+  background:var(--paper);color:var(--ink);font-weight:700;font-size:14px}
+.def.ok{border-color:var(--ok);background:var(--ok-soft)}
+.def.no{border-color:var(--bad);background:var(--bad-soft)}
+.def .mark{font-weight:900;font-size:13px;margin-top:4px}
+.def.ok .mark{color:var(--ok)} .def.no .mark{color:var(--bad)}
+@media(max-width:640px){.def{grid-template-columns:1fr}}
+
+/* ── видео-история ── */
+.video-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.vt{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:9px 14px;font-weight:850;font-size:13.5px}
+.vt.on{background:var(--teal);border-color:var(--teal);color:#fff}
+:root[data-theme="dark"] .vt.on{color:#08191a}
+.vt .done{color:var(--ok);font-weight:900}
+:root[data-theme="dark"] .vt .done{color:#7ee0d0}
+.vt.on .done{color:#fff}
+
+.player{border-radius:18px;border:1px solid var(--line);overflow:hidden;background:var(--paper)}
+.player-top{display:flex;gap:12px;align-items:center;padding:13px 15px;background:var(--ink);color:#fff}
+.player-top .flag{font-size:24px}
+.player-top .who{font-weight:900;font-size:15px}
+.player-top .loc{font-size:12.5px;opacity:.8}
+.player-top .time{margin-left:auto;font-weight:900;font-size:13px;font-variant-numeric:tabular-nums;
+  background:rgba(255,255,255,.15);padding:4px 10px;border-radius:999px}
+
+/* «видео»: карточка-кадр */
+.screen{position:relative;aspect-ratio:16/9;min-height:200px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:12px;text-align:center;
+  background:linear-gradient(150deg,#0d3b37,#12433d 45%,#1a5b50);color:#fff;padding:20px;overflow:hidden}
+.subwrap{background:#0b2a27;padding:0;line-height:0}
+.screen::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 22% 18%,rgba(245,196,81,.22),transparent 45%),
+             radial-gradient(circle at 82% 78%,rgba(20,160,143,.30),transparent 50%)}
+.screen .inner{position:relative;z-index:1;max-width:46ch}
+.screen .kicker{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;opacity:.82;font-weight:900}
+.screen h4{font-family:var(--serif);font-size:clamp(20px,3.6vw,34px);margin:8px 0 6px;line-height:1.12}
+.screen .cap{font-size:13.5px;opacity:.9}
+.screen .big-play{position:relative;z-index:1;width:74px;height:74px;border-radius:999px;border:0;
+  background:rgba(255,255,255,.94);color:#0d3b37;font-size:26px;display:grid;place-items:center;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);margin-bottom:10px}
+.screen .big-play:hover{transform:scale(1.06)}
+.screen.playing .big-play{display:none}
+.subtitle{color:#eaf6f3;font-size:14.5px;line-height:1.45;padding:10px 16px 13px;text-align:center}
+.subtitle:empty{display:none;padding:0}
+.transcript-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.transcript{max-height:0;overflow:hidden;transition:max-height .35s ease;border-top:1px solid transparent}
+.transcript.open{max-height:1400px;border-top-color:var(--line)}
+.transcript .t-inner{padding:12px 15px 16px;display:grid;gap:8px}
+.line{display:grid;grid-template-columns:86px minmax(0,1fr) 34px;gap:9px;align-items:start;
+  padding:6px 8px;border-radius:10px;transition:background .15s}
+.line:hover{background:var(--mint)}
+.line.on{background:var(--warm-soft)}
+.line .who{font-size:12px;font-weight:900;color:var(--teal);text-transform:uppercase;letter-spacing:.05em;padding-top:3px}
+.line .tx{font-size:14.5px}
+.line .say{border:1px solid var(--line);background:var(--paper);border-radius:999px;width:30px;height:30px;font-size:12px}
+.line .say:hover{border-color:var(--teal)}
+
+/* панель управления «видео» */
+.player-ctrl{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:11px 14px;border-top:1px solid var(--line);background:var(--paper)}
+.player-ctrl .btn{flex:1 1 auto;min-width:0}
+@media(min-width:640px){.player-ctrl .btn{flex:0 0 auto}}
+.player-ctrl .btn.sm{padding:9px 13px;min-height:44px;font-size:16px;flex:0 0 auto}
+.player-ctrl .btn.sm.on{background:var(--mint);border-color:var(--teal)}
+
+/* режим учителя: экран приглушён, чтобы читались ключи */
+.teacher-mode .screen .inner{opacity:.5!important}
+
+/* вопросы к видео */
+.qblock{margin-top:14px;display:grid;gap:12px}
+.qcard{border:1px solid var(--line);border-radius:16px;padding:13px 14px;background:var(--paper)}
+.qcard .qq{font-weight:800;font-size:15px;margin:0 0 10px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:9px;align-items:flex-start;text-align:left;border:1.5px solid var(--line2);
+  background:var(--paper);border-radius:12px;padding:10px 12px;font-size:14.5px;font-weight:600;width:100%}
+.opt .b{flex:none;width:23px;height:23px;border-radius:7px;display:grid;place-items:center;font-size:12px;
+  font-weight:900;background:var(--bg);border:1px solid var(--line2)}
+.opt:hover:not(:disabled){border-color:var(--teal)}
+.opt.correct{background:var(--ok-soft);border-color:var(--ok)}
+.opt.correct .b{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.opt.wrong .b{background:var(--bad);border-color:var(--bad);color:#fff}
+
+/* ── true/false ── */
+.tf{display:grid;gap:9px}
+.tf-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;
+  border:1px solid var(--line);border-radius:13px;padding:10px 12px;background:var(--paper)}
+.tf-row .s{font-size:14.5px}
+.tf-row .why{grid-column:1/-1;font-size:13px;color:var(--muted);display:none}
+.tf-row.answered .why{display:block}
+.tf-row.ok{border-color:var(--ok);background:var(--ok-soft)}
+.tf-row.no{border-color:var(--bad);background:var(--bad-soft)}
+.tf-btns{display:flex;gap:6px}
+.tf-btns button{border:1.5px solid var(--line2);background:var(--paper);border-radius:10px;padding:7px 12px;
+  font-weight:900;font-size:13px;min-width:56px}
+.tf-btns button.on-t{background:var(--ok);border-color:var(--ok);color:#fff}
+.tf-btns button.on-f{background:var(--bad);border-color:var(--bad);color:#fff}
+@media(max-width:520px){.tf-row{grid-template-columns:1fr}}
+
+/* ── диалоги ── */
+.dlg{border:1px solid var(--line);border-radius:16px;padding:14px;background:var(--paper)}
+.dlg h3{margin:0 0 10px;font-size:16px}
+.dline{display:grid;grid-template-columns:76px minmax(0,1fr);gap:10px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.dline:last-child{border-bottom:0}
+.dline .who{font-size:12px;font-weight:900;text-transform:uppercase;color:var(--teal);letter-spacing:.05em;padding-top:4px}
+.dline .tx{font-size:15px;line-height:1.6}
+.gap-input{display:inline-block;min-width:96px;max-width:180px;padding:3px 8px;border:0;border-bottom:2px solid var(--teal2);
+  background:var(--mint);border-radius:6px 6px 0 0;font-weight:800;font-size:14.5px;color:var(--ink);text-align:center}
+.gap-input:focus{outline:2px solid var(--teal2);outline-offset:1px}
+.gap-input.correct{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.gap-input.wrong{background:var(--bad-soft);border-color:var(--bad);color:var(--bad);text-decoration:line-through}
+.bank{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 4px}
+.bank span{font-size:12.5px;font-weight:850;border:1px dashed var(--line2);border-radius:999px;padding:4px 10px;background:var(--bg)}
+
+/* ── коллокации ── */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.col-h{font-size:11.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.colbtn{border:1.5px solid var(--line2);background:var(--paper);border-radius:12px;padding:10px 12px;
+  font-weight:700;font-size:14px;width:100%;text-align:left;margin-bottom:7px}
+.colbtn:hover:not(:disabled){border-color:var(--teal)}
+.colbtn.sel{border-color:var(--teal);background:var(--mint);color:var(--teal)}
+.colbtn.paired{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);opacity:.9}
+.colbtn.shake{animation:shake .32s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.pairlist{display:grid;gap:7px;margin-top:14px}
+.pairlist .p{display:flex;gap:8px;align-items:center;font-size:14.5px;border-left:3px solid var(--ok);padding:5px 10px;background:var(--ok-soft);border-radius:0 10px 10px 0}
+.pairlist .p b{color:var(--ok)}
+
+.gapsent{display:grid;gap:10px}
+.gs{display:flex;gap:9px;align-items:center;flex-wrap:wrap;border:1px solid var(--line);border-radius:13px;padding:10px 12px;background:var(--paper)}
+.gs .txt{font-size:14.5px}
+.gs .hint{font-size:12.5px;color:var(--muted);font-style:italic}
+.gs input{padding:8px 11px;border-radius:10px;border:1.5px solid var(--line2);background:var(--paper);
+  color:var(--ink);font-weight:750;font-size:14.5px;min-width:150px}
+.gs input:focus{outline:2px solid var(--teal2);outline-offset:1px}
+.gs.ok{border-color:var(--ok);background:var(--ok-soft)}
+.gs.no{border-color:var(--bad);background:var(--bad-soft)}
+.gs .mark{font-weight:900;font-size:13px}
+.gs.ok .mark{color:var(--ok)} .gs.no .mark{color:var(--bad)}
+
+/* ── таблица сравнения ── */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14.5px;background:var(--paper)}
+th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td b{color:var(--teal)}
+
+/* ── сценарии ── */
+.scen{border:1px solid var(--line);border-radius:16px;background:var(--paper);overflow:hidden}
+.scen + .scen{margin-top:12px}
+.scen-head{display:flex;gap:10px;align-items:center;padding:13px 15px;background:var(--warm-soft);cursor:pointer}
+.scen-head .t{font-weight:900;font-size:15.5px}
+.scen-head .chev{margin-left:auto;font-weight:900;color:var(--muted);transition:transform .2s}
+.scen.open .scen-head .chev{transform:rotate(180deg)}
+.scen-body{display:none;padding:14px 15px 16px;gap:12px}
+.scen.open .scen-body{display:grid}
+.scen-body .sit{font-size:14.5px}
+.useful{display:flex;gap:7px;flex-wrap:wrap}
+.useful span{font-size:12.5px;font-weight:750;background:var(--mint);color:var(--teal);border-radius:999px;padding:5px 10px}
+.tip{border-left:3px solid var(--warm);padding-left:10px;font-size:13.5px;color:var(--ink2)}
+
+/* ── чек-лист ── */
+.check{display:grid;gap:9px}
+.check label{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;
+  padding:10px 12px;background:var(--paper);font-size:14.5px;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:1px;accent-color:var(--teal);flex:none}
+.check label.on{border-color:var(--teal);background:var(--mint)}
+.hw{border:1px dashed var(--line2);border-radius:14px;padding:13px 15px;background:var(--paper)}
+.hw ol{margin:0;padding-left:20px;display:grid;gap:7px;font-size:14.5px}
+
+/* ── карточки-перевод (быстрый тренажёр) ── */
+.flash{display:grid;gap:12px;justify-items:center}
+.fc{background:var(--paper);width:100%;max-width:520px;min-height:200px;border-radius:18px;border:2px solid var(--line2);
+  background:linear-gradient(180deg,var(--paper),color-mix(in srgb,var(--mint) 55%,var(--paper)));
+  display:grid;place-items:center;text-align:center;padding:22px;cursor:pointer;position:relative}
+.fc .front{font-weight:900;font-size:clamp(22px,4vw,34px);letter-spacing:-.02em}
+.fc .back{display:none;gap:6px}
+.fc.flipped .front{display:none}
+.fc.flipped .back{display:grid}
+.fc .back .m{font-size:15px;color:var(--ink2)}
+.fc .back .ex{font-size:14px;font-style:italic;color:var(--muted)}
+.fc .corner{position:absolute;top:10px;left:12px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:900}
+
+/* ── нижняя навигация ── */
+.bottom{position:fixed;left:0;right:0;bottom:0;z-index:20;
+  background:var(--paper);background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);padding:10px max(12px,calc((100vw - 1120px)/2)) calc(10px + env(safe-area-inset-bottom,0px))}
+.bottom-in{display:flex;gap:9px;align-items:center;max-width:1120px;margin:0 auto}
+.bottom .step-name{flex:1;min-width:0;font-size:12.5px;font-weight:800;color:var(--muted);text-align:center;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bottom .btn{flex:none}
+
+/* ── плашка «Учитель» и панель ключей ── */
+.teacher-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px;
+  background:var(--warm-soft);border:1px solid var(--warm);border-radius:14px;padding:10px 13px;font-size:13.5px}
+.teacher-bar b{font-weight:900}
+.teacher-bar .spacer{flex:1}
+.answer{display:none;background:var(--warm-soft);border-left:3px solid var(--warm);border-radius:0 10px 10px 0;
+  padding:8px 11px;font-size:13.5px;margin-top:9px}
+.teacher-mode .answer{display:block}
+.answer.hidden{display:none!important}
+.answer b{color:#8a6412}
+:root[data-theme="dark"] .answer b{color:var(--warm)}
+
+/* ── печать ── */
+@media print{
+  body{background:#fff;color:#000;padding:0}
+  body::before,.bottom,.topbar,.teacher-bar,.progress,.actions,.video-tabs,.word .say,.line .say{display:none!important}
+  .card{box-shadow:none;border:1px solid #bbb;break-inside:avoid;page-break-inside:avoid;margin-bottom:10px}
+  .transcript{max-height:none!important;overflow:visible!important}
+  .scen-body{display:grid!important}
+  .answer{display:none!important}
+  .teacher-mode .answer{display:block!important}
+  .teacher-mode .answer.hidden{display:none!important}
+  a{color:#000;text-decoration:none}
+  @page{margin:14mm}
+}
+@media(max-width:700px){
+  .cols{grid-template-columns:1fr}
+  .hero h1{font-size:30px}
+  .screen{aspect-ratio:auto;min-height:0;padding:22px 16px}
+  .screen h4{font-size:22px}
+  .line{grid-template-columns:minmax(0,1fr) 32px}
+  .line .who{grid-column:1/-1;padding-top:0}
+}
+
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <div class="topbar">
+    <a class="back" href="../my-lessons/">← Мои уроки</a>
+    <span class="spacer"></span>
+    <span class="chip">Уровень <b>B1</b></span>
+    <span class="chip">⏱ <b id="timeChip">60 мин</b></span>
+    <a class="back" href="worksheet.html">🖨 Worksheet</a>
+    <a class="back" href="teacher-notes.html">📋 Методичка</a>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="Светлая / тёмная тема" title="Светлая / тёмная тема">🌙</button>
+  </div>
+
+  <section class="hero">
+    <p class="eyebrow">B1 · Reading, Listening &amp; Speaking</p>
+    <h1>Culture Shock</h1>
+    <p>Three small things that surprised three very different people: milk in a bag in Ukraine, smiling strangers in Korea and a bottle cap that will not come off in Germany.</p>
+    <div class="meta-row">
+      <span class="tag">10 новых слов</span>
+      <span class="tag">3 истории со звуком</span>
+      <span class="tag warm">Учительский режим с ключами</span>
+      <span class="tag warm">Печатный worksheet</span>
+    </div>
+  </section>
+
+  <div class="progress">
+    <span id="progLabel">Шаг 1 из 11</span>
+    <div class="bar"><i id="progBar"></i></div>
+    <span id="progPct">0%</span>
+  </div>
+
+  <!-- TEACHER BAR -->
+  <div class="teacher-bar hidden" id="teacherBar">
+    <b>🧑‍🏫 Режим учителя</b>
+    <span>все ответы открыты, тексты аудио видны сразу</span>
+    <span class="spacer"></span>
+    <button class="btn sm" type="button" id="revealAll">Показать все ответы</button>
+    <button class="btn sm" type="button" id="printBtn">🖨 Печать / PDF</button>
+  </div>
+
+  <div id="steps"></div>
+
+  <p style="text-align:center;color:var(--muted);font-size:12.5px;margin:22px 0 0">
+    Culture Shock · B1 · собственный урок для Tatyana English Hub ·
+    <a href="worksheet.html" style="color:inherit">worksheet</a> ·
+    <a href="teacher-notes.html" style="color:inherit">методическая записка</a>
+  </p>
+
+</div>
+
+<div class="bottom">
+  <div class="bottom-in">
+    <button class="btn" type="button" id="prevBtn">← Назад</button>
+    <span class="step-name" id="stepName">Lead-in</span>
+    <button class="btn primary" type="button" id="nextBtn">Дальше →</button>
+  </div>
+</div>
+
+<script>
+/* Culture Shock · B1 — весь контент урока в одном файле.
+   Урок написан с нуля по мотивам описания темы Culture Shock (B1):
+   три истории (Украина, Корея, Германия), лексика, аудирование, диалоги,
+   сценарии. Никаких чужих PDF и текстов — только собственный материал. */
+
+window.CULTURE_SHOCK = {
+  meta: {
+    title: "Culture Shock",
+    subtitle: "Three small things that surprised three very different people",
+    level: "B1",
+    time: "60 min",
+    skills: ["Vocabulary", "Listening", "Speaking", "Writing"],
+    author: "Урок для Tatyana English Hub"
+  },
+
+  /* ───────────── 1. LEAD-IN ───────────── */
+  leadIn: {
+    intro: "Culture shock does not always mean pyramids or strange food. For many people it is milk in a bag, a smiling stranger, or a bottle cap that will not come off. In this lesson you will listen to three short stories and see how small details change the way we feel in a new country.",
+    questions: [
+      {
+        q: "Have you ever travelled to another country? What surprised you most?",
+        hints: ["Weird", "Proper", "The environment", "To stare"]
+      },
+      {
+        q: "What would you miss about Ukraine (Russia, Norway…)? And what would you like about a foreign city?",
+        hints: ["Customs", "Shopping", "Small talk"]
+      },
+      {
+        q: "Have you ever felt like a stranger in your own country? When?",
+        hints: ["Culture shock", "To feel out of place"]
+      },
+      {
+        q: "Some people say travelling is easy today. Do you agree?",
+        hints: ["The internet", "Translate apps", "English"]
+      }
+    ]
+  },
+
+  /* ───────────── 2. VOCABULARY PREVIEW ───────────── */
+  vocabulary: [
+    {
+      word: "culture shock",
+      ipa: "/ˈkʌltʃə ʃɒk/",
+      pos: "noun",
+      meaning: "the feeling of surprise or worry you get in a new culture",
+      ru: "культурный шок",
+      example: "My first week in Tokyo was a real culture shock.",
+      tag: "main idea"
+    },
+    {
+      word: "proper",
+      ipa: "/ˈprɒpə/",
+      pos: "adj",
+      meaning: "correct, real, the way it should be",
+      ru: "правильный, настоящий",
+      example: "I couldn’t find a proper cup of tea anywhere."
+    },
+    {
+      word: "weird",
+      ipa: "/wɪəd/",
+      pos: "adj",
+      meaning: "strange and difficult to understand",
+      ru: "странный",
+      example: "Putting milk in a bag is weird if you grew up with cartons."
+    },
+    {
+      word: "to trick",
+      ipa: "/trɪk/",
+      pos: "verb",
+      meaning: "to make someone believe something that is not true, usually as a joke",
+      ru: "обмануть, разыграть",
+      example: "His friends tricked him and said there was a snake in the garden."
+    },
+    {
+      word: "to twist",
+      ipa: "/twɪst/",
+      pos: "verb",
+      meaning: "to turn something with your hands; also to hurt a joint (an ankle, a wrist)",
+      ru: "крутить; подвернуть (ногу)",
+      example: "I tried to twist off the bottle cap and cut my finger."
+    },
+    {
+      word: "cap",
+      ipa: "/kæp/",
+      pos: "noun",
+      meaning: "the flat cover that closes a bottle",
+      ru: "крышка",
+      example: "In Germany the bottle cap is attached to the bottle."
+    },
+    {
+      word: "speed sign",
+      ipa: "/ˈspiːd saɪn/",
+      pos: "noun",
+      meaning: "a road sign that shows how fast you may drive",
+      ru: "дорожный знак скорости",
+      example: "I did not see any speed signs on the motorway."
+    },
+    {
+      word: "to stare",
+      ipa: "/steə/",
+      pos: "verb",
+      meaning: "to look at somebody for a long time, without looking away",
+      ru: "пристально смотреть",
+      example: "People stared at me when I spoke English in the shop."
+    },
+    {
+      word: "the environment",
+      ipa: "/ði ɪnˈvaɪrənmənt/",
+      pos: "noun",
+      meaning: "the natural world: air, water, land, animals",
+      ru: "окружающая среда",
+      example: "Attached caps protect the environment because they do not get lost."
+    },
+    {
+      word: "custom",
+      ipa: "/ˈkʌstəm/",
+      pos: "noun",
+      meaning: "something a group of people usually does; a tradition",
+      ru: "обычай",
+      example: "In some countries it is a custom to leave your shoes at the door."
+    }
+  ],
+
+  /* ───────────── 3. DEFINITIONS ───────────── */
+  definitions: [
+    { id: "d1", definition: "strange and difficult to understand", answer: "weird" },
+    { id: "d2", definition: "to turn something with your hands", answer: "to twist" },
+    { id: "d3", definition: "the flat cover of a bottle", answer: "cap" },
+    { id: "d4", definition: "correct, real, the way it should be", answer: "proper" },
+    { id: "d5", definition: "to look at somebody for a long time", answer: "to stare" },
+    { id: "d6", definition: "the natural world around us", answer: "the environment" },
+    { id: "d7", definition: "a sign that shows how fast you may drive", answer: "speed sign" },
+    { id: "d8", definition: "to make someone believe something that is not true, as a joke", answer: "to trick" }
+  ],
+
+  /* ───────────── 4–6. THREE VIDEO STORIES ───────────── */
+  videos: [
+    {
+      id: "ua",
+      country: "Ukraine",
+      flag: "🇺🇦",
+      city: "Kyiv",
+      speaker: "Danylo, 24, student",
+      headline: "Milk does not come in a box",
+      duration: "0:19",
+      accent: "English with a Ukrainian accent",
+      audio: "audio/ua.mp3",
+      transcript: [
+        { who: "Danylo", text: "Before I moved here, my friends said, “You will have a real culture shock in Ukraine.”" },
+        { who: "Danylo", text: "They told me about the food, the transport, the winter, everything." },
+        { who: "Danylo", text: "But honestly? The only thing that surprised me was the milk." },
+        { who: "Danylo", text: "It does not come in a carton. It comes in a plastic bag!" },
+        { who: "Danylo", text: "The first time I tried to open one, I did it the wrong way and the milk was everywhere." },
+        { who: "Danylo", text: "My neighbour watched me for a minute and then said, “Nobody showed you how to do it, did they?”" },
+        { who: "Danylo", text: "So maybe culture shock is not about big things. Sometimes it is just a bag of milk." }
+      ],
+      questions: [
+        {
+          q: "What did Danylo’s friends warn him about?",
+          options: [
+            "The food, the transport and the winter",
+            "Only the milk",
+            "The language at university"
+          ],
+          answer: 0
+        },
+        {
+          q: "What was the only thing that really surprised him?",
+          options: ["The winter", "The milk in a bag", "The cost of transport"],
+          answer: 1
+        },
+        {
+          q: "What happened the first time he opened the bag?",
+          options: [
+            "He drank it all",
+            "His neighbour opened it for him",
+            "He opened it the wrong way and the milk went everywhere"
+          ],
+          answer: 2
+        },
+        {
+          q: "What is his conclusion?",
+          options: [
+            "Culture shock is about big things only",
+            "Sometimes culture shock is just a bag of milk",
+            "People in Ukraine are unfriendly"
+          ],
+          answer: 1
+        }
+      ]
+    },
+    {
+      id: "kr",
+      country: "Korea",
+      flag: "🇰🇷",
+      city: "Seoul",
+      speaker: "Ji-woo, 29, designer",
+      headline: "Why is everybody smiling at me?",
+      duration: "1:11",
+      accent: "English with a Korean accent",
+      audio: "audio/kr.mp3",
+      transcript: [
+        { who: "Ji-woo", text: "The first month in America, I had one question every day: why is everybody smiling at me?" },
+        { who: "Ji-woo", text: "In Korea, we do not usually smile at strangers. We keep our face calm. It is polite." },
+        { who: "Ji-woo", text: "So when a man in the street looked at me and said, “Hey, how are you today?”, I was sure that something was wrong." },
+        { who: "Ji-woo", text: "I was sure he wanted something: money, my phone, my time." },
+        { who: "Ji-woo", text: "Later my roommate told me the truth. Nobody wants anything! It is just small talk. It is a way of saying, “I see you, and I am not a dangerous person.”" },
+        { who: "Ji-woo", text: "And Korean people do the same thing, but in a different way: we offer food. My mother gives food to everybody, even to the postman." },
+        { who: "Ji-woo", text: "So we are not cold and Americans are not fake. We just say “hello” with different words." }
+      ],
+      questions: [
+        {
+          q: "What question did Ji-woo have every day?",
+          options: [
+            "Why is the food so sweet?",
+            "Why is everybody smiling at me?",
+            "Why is everything so far away?"
+          ],
+          answer: 1
+        },
+        {
+          q: "In Korea, what is polite in the street?",
+          options: ["To smile at everybody", "To keep your face calm", "To say hello to every stranger"],
+          answer: 1
+        },
+        {
+          q: "What did Ji-woo think when a man said “Hey, how are you today?”",
+          options: [
+            "That the man wanted something",
+            "That the man was a friend of his father",
+            "That the man was lost"
+          ],
+          answer: 0
+        },
+        {
+          q: "How do Korean people show friendliness, according to Ji-woo?",
+          options: ["They smile all the time", "They offer food", "They ask a lot of questions"],
+          answer: 1
+        },
+        {
+          q: "What is his conclusion?",
+          options: [
+            "Korean people are cold and Americans are fake",
+            "Small talk is a waste of time",
+            "We say “hello” with different words"
+          ],
+          answer: 2
+        }
+      ]
+    },
+    {
+      id: "de",
+      country: "Germany",
+      flag: "🇩🇪",
+      city: "Berlin",
+      speaker: "Lena, 31, nurse",
+      headline: "The cap, the motorway and Sunday",
+      duration: "1:04",
+      accent: "English with a German accent",
+      audio: "audio/de.mp3",
+      transcript: [
+        { who: "Lena", text: "Three things surprised me when I moved back to Germany after five years in Britain." },
+        { who: "Lena", text: "One: the bottle cap. Here it is attached to the bottle. You twist it and it stays on. It is for the environment — so the caps do not get lost in the street." },
+        { who: "Lena", text: "Two: the motorway. I drove for an hour and I did not see a single speed sign. Some parts of the autobahn have no speed limit at all." },
+        { who: "Lena", text: "Three: Sunday. On Sunday the shops are closed. Not late, not half-closed — closed. If you forget to buy bread on Saturday, you will have no bread." },
+        { who: "Lena", text: "My British friend says these rules are strange. My German mother says they are proper. Maybe we are both right." }
+      ],
+      questions: [
+        {
+          q: "Why is the bottle cap attached to the bottle?",
+          options: [
+            "So it is easier to open",
+            "For the environment — so caps are not lost",
+            "Because it is cheaper for the company"
+          ],
+          answer: 1
+        },
+        {
+          q: "What surprised her about the motorway?",
+          options: [
+            "There are no speed signs, and some parts have no speed limit",
+            "It is always empty",
+            "It is very slow"
+          ],
+          answer: 0
+        },
+        {
+          q: "What happens on Sunday in Germany?",
+          options: ["Shops open late", "Shops are closed", "Only food shops are closed"],
+          answer: 1
+        },
+        {
+          q: "What do her British friend and her German mother think about the rules?",
+          options: [
+            "Both think they are strange",
+            "Both think they are perfect",
+            "The friend thinks they are strange, the mother thinks they are proper"
+          ],
+          answer: 2
+        }
+      ]
+    }
+  ],
+
+  /* таблица-сравнение после трёх видео */
+  comparison: {
+    columns: ["Speaker / country", "What surprised them", "Why it matters"],
+    rows: [
+      { speaker: "Danylo · Ukraine", what: "Milk comes in a plastic bag", why: "Everyday shopping looks different from home" },
+      { speaker: "Ji-woo · Korea / USA", what: "Strangers smile and say hello", why: "Friendliness is a custom, not a character trait" },
+      { speaker: "Lena · Germany / Britain", what: "Attached caps, no speed limit, closed Sundays", why: "Rules protect the environment and the week’s rhythm" }
+    ]
+  },
+
+  /* ───────────── 7. TRUE / FALSE (mix по всем видео) ───────────── */
+  trueFalse: [
+    { s: "Danylo’s friends told him the milk would surprise him most.", answer: false, why: "They warned him about food, transport and winter — the milk surprised nobody but him." },
+    { s: "Danylo opened the milk bag correctly the first time.", answer: false, why: "He opened it the wrong way and the milk went everywhere." },
+    { s: "In Korea it is polite to keep your face calm in the street.", answer: true, why: "Ji-woo says Koreans do not usually smile at strangers." },
+    { s: "Ji-woo decided that Americans are fake.", answer: false, why: "He says “we are not cold and Americans are not fake”." },
+    { s: "Korean people sometimes show friendliness by offering food.", answer: true, why: "His mother gives food to everybody, even the postman." },
+    { s: "Bottle caps in Germany are attached to the bottle to protect the environment.", answer: true, why: "Lena explains that caps do not get lost in the street." },
+    { s: "There are speed signs every kilometre on the German autobahn.", answer: false, why: "She drove for an hour without seeing a single speed sign." },
+    { s: "German shops are open on Sunday but close earlier.", answer: false, why: "On Sunday they are closed — not late, not half-closed." },
+    { s: "Gift refusal is always polite in every culture.", answer: false, why: "In many cultures you must refuse once or twice before you accept — refusing for real can hurt people." },
+    { s: "Culture shock can be caused by very small details.", answer: true, why: "All three stories are about small, practical details." }
+  ],
+
+  /* ───────────── 8. DIALOGUES: gap-fill ───────────── */
+  dialogues: [
+    {
+      title: "In the supermarket",
+      lines: [
+        { who: "Ben", text: "Excuse me, sorry — do you know how to open this? The milk is in a [1] , not a carton." },
+        { who: "Oksana", text: "Oh, easy. You do not [2] it. You cut the corner with scissors." },
+        { who: "Ben", text: "That is so [3] . I’ve never seen milk like this." },
+        { who: "Oksana", text: "And for you, tea in a bag is [4] , I suppose?" },
+        { who: "Ben", text: "No, actually! But I still can’t find a [5] cup of coffee anywhere in this city." }
+      ],
+      gaps: ["bag", "twist", "weird", "strange", "proper"],
+      gapsByLine: [["bag"], ["twist"], ["weird"], ["strange", "weird"], ["proper"]],
+      bank: ["twist", "bag", "weird", "proper", "strange"]
+    },
+    {
+      title: "On the motorway",
+      lines: [
+        { who: "Anna", text: "Why are you driving so slowly? Everybody is passing us!" },
+        { who: "Klaus", text: "No [1] limit here. But I am British, so I still look for a speed [2] every two minutes." },
+        { who: "Anna", text: "And why did you [3] at that truck for so long?" },
+        { who: "Klaus", text: "Because in Britain we never see a truck that big. Come on, admit it — this country is a little [4] ." },
+        { who: "Anna", text: "It is not weird. It is just different. And it is better for the [5] — that is why the caps stay on the bottles." }
+      ],
+      gaps: ["speed", "sign", "stare", "weird", "environment"],
+      gapsByLine: [["speed"], ["sign"], ["stare"], ["weird", "strange"], ["environment"]],
+      bank: ["speed", "sign", "stare", "weird", "environment"]
+    }
+  ],
+
+  /* ───────────── 9. COLLOCATIONS ───────────── */
+  collocations: {
+    pairs: [
+      { left: "culture", right: "shock", example: "Living abroad gave me a real culture shock." },
+      { left: "twist", right: "your ankle", example: "I twisted my ankle on the icy stairs." },
+      { left: "protect", right: "the environment", example: "Attached caps protect the environment." },
+      { left: "bottle", right: "cap", example: "The bottle cap stayed on the bottle." },
+      { left: "speed", right: "limit", example: "Some parts of the autobahn have no speed limit." },
+      { left: "proper", right: "cup of tea", example: "After a week in Asia I wanted a proper cup of tea." },
+      { left: "small", right: "talk", example: "Small talk with strangers feels strange to some people." },
+      { left: "to stare", right: "at somebody", example: "It is rude to stare at people on the metro." },
+      { left: "to trick", right: "somebody into something", example: "They tricked me into trying the local speciality." },
+      { left: "social", right: "custom", example: "Taking your shoes off at the door is a social custom." }
+    ],
+    sentences: [
+      { text: "It is rude to ____ at people on the metro.", answer: ["stare"], hint: "look for a long time" },
+      { text: "Please ____ the cap before you recycle the bottle.", answer: ["twist off", "twist", "unscrew"], hint: "turn it with your hand" },
+      { text: "We must ____ the environment for our children.", answer: ["protect"], hint: "keep safe" },
+      { text: "In Norway there is a strict ____ limit in the city centre.", answer: ["speed"], hint: "how fast you may drive" },
+      { text: "I need a ____ cup of tea after that flight.", answer: ["proper"], hint: "real, the way it should be" },
+      { text: "Living in Japan was a real culture ____ for me.", answer: ["shock"], hint: "the feeling of surprise" }
+    ]
+  },
+
+  /* ───────────── 10. DISCUSSION ───────────── */
+  discussion: [
+    "The three speakers all say culture shock is about small things. Do you agree? Give an example from your life.",
+    "Is it polite to smile at strangers in your culture? What happens if you do?",
+    "Which is easier: to adapt to a new culture or to keep your own habits? Why?",
+    "Some people say the internet has killed culture shock. Is that true?",
+    "What would a foreigner find strange in your country? Make a list of five things.",
+    "Is it OK to break a local custom if you do not understand it?"
+  ],
+
+  /* ───────────── 11. SCENARIOS (role-play) ───────────── */
+  scenarios: [
+    {
+      title: "The hugging grandma",
+      situation: "You are at a family dinner in a new country. The grandmother of the family hugs you and kisses you on both cheeks. In your culture people do not touch strangers. What do you do?",
+      useful: ["Thank you, that’s very kind", "I’m sorry, I’m not used to…", "Could we shake hands instead?", "I really appreciate it"],
+      tips: "Smile, thank her, and explain your custom politely. Do not pull away without a word."
+    },
+    {
+      title: "The too-honest compliment",
+      situation: "Your colleague says: “That jacket is awful. You should wear something else.” She is smiling. You feel hurt. What do you say?",
+      useful: ["Thanks for being honest, but…", "In my culture we usually…", "I actually like it", "Did you mean that as a joke?"],
+      tips: "Ask a question before you get angry: maybe it is a joke, or maybe it is normal directness in her culture."
+    },
+    {
+      title: "The refused gift",
+      situation: "You bring a small gift to your host family. They say, “Oh no, we can’t accept this!” and put it on the table. Do they hate it?",
+      useful: ["Please, it’s just a small thing", "I’d be happy if you took it", "Is it not polite here?"],
+      tips: "In many cultures you refuse a gift once or twice before accepting it. Offer it again; if they still refuse, leave it with a card."
+    },
+    {
+      title: "The silent neighbour",
+      situation: "You greet your neighbour every morning. He only nods and never says a word. You think he dislikes you.",
+      useful: ["Morning! Nice weather today", "Is everything OK?", "Just so you know, I’m friendly"],
+      tips: "In some cultures a nod is a full greeting. Give it time — and keep saying hello."
+    }
+  ],
+
+  /* ───────────── 12. WRAP UP ───────────── */
+  wrapUp: {
+    checklist: [
+      "I can talk about culture shock and everyday customs.",
+      "I can understand three short stories about cultural differences.",
+      "I can use 10 new words: culture shock, proper, weird, to trick, to twist, cap, speed sign, to stare, the environment, custom.",
+      "I can use collocations like twist your ankle, protect the environment, bottle cap.",
+      "I can react politely to an awkward cross-cultural situation."
+    ],
+    homework: [
+      "Write 5 sentences with the collocations from task 9.",
+      "Record a 60-second voice message: “Three things that would surprise a foreigner in my city”.",
+      "Optional: watch a short video about culture shock (any country) and tell the group two facts from it."
+    ]
+  }
+};
+
+</script>
+<script>
+/* Сгенерировано tools/culture-shock-tts.py — не править вручную. */
+window.CULTURE_SHOCK_AUDIO = {};
+
+</script>
+<script>
+/* Culture Shock · B1 — логика урока.
+   Один статический файл: без сборки и без бэкенда.
+   Озвучка: если рядом с уроком лежит audio/<id>-<n>.mp3 — играем файл,
+   иначе читаем браузерным синтезом речи (голос en-GB, если он есть). */
+(function () {
+  "use strict";
+
+  var D = window.CULTURE_SHOCK;
+  if (!D) return;
+
+  var ROOT = "audio/";
+  var MANIFEST = window.CULTURE_SHOCK_AUDIO || {};   // {"ua-1": true, ...}
+
+  /* ─────────────── хранилище ответов ─────────────── */
+  var KEY = "culture-shock-b1-v1";
+  var store = {};
+  try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { store = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} }
+  function get(k, dflt) { return Object.prototype.hasOwnProperty.call(store, k) ? store[k] : dflt; }
+  function set(k, v) { store[k] = v; save(); }
+
+  /* ─────────────── речь ─────────────── */
+  var Speech = (function () {
+    var supported = "speechSynthesis" in window;
+    var voices = [];
+    var btn = null;
+    var queue = [];
+    var playing = false;
+    var rate = Number(get("ttsRate", 0.92)) || 0.92;
+    var audio = null;
+
+    function loadVoices() {
+      if (!supported) return;
+      voices = window.speechSynthesis.getVoices() || [];
+    }
+    if (supported) {
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+    function pickVoice() {
+      if (!voices.length) loadVoices();
+      var en = voices.filter(function (v) { return /^en(-|_)?/i.test(v.lang || ""); });
+      var prefer = [
+        /Sonia/i, /Libby/i, /Google UK English Female/i, /Google UK English Male/i,
+        /Daniel/i, /Microsoft (Sonia|Libby|Ryan|Hazel)/i, /en-GB/i, /^en[-_]US/i, /^en/i
+      ];
+      for (var p = 0; p < prefer.length; p++) {
+        for (var i = 0; i < en.length; i++) {
+          if (prefer[p].test(en[i].name || "") || prefer[p].test(en[i].lang || "")) return en[i];
+        }
+      }
+      return en[0] || null;
+    }
+    function mark(on) {
+      if (btn) btn.classList.toggle("on", !!on);
+    }
+    function stop() {
+      queue = [];
+      playing = false;
+      if (supported) window.speechSynthesis.cancel();
+      if (audio) { try { audio.pause(); } catch (e) {} audio = null; }
+      mark(false);
+      if (typeof stop.onEnd === "function") { var f = stop.onEnd; stop.onEnd = null; f(); }
+    }
+    function speakOne(text, onstart, onend) {
+      if (MANIFEST.hasOwnProperty(text.key)) {
+        audio = new Audio(ROOT + text.key + ".mp3");
+        audio.onended = function () { if (onend) onend(); };
+        audio.onerror = function () { tts(text, onstart, onend); };
+        audio.play().catch(function () { tts(text, onstart, onend); });
+        return;
+      }
+      tts(text, onstart, onend);
+    }
+    function tts(item, onstart, onend) {
+      if (!supported) { if (onend) onend(); return; }
+      var u = new SpeechSynthesisUtterance(item.text);
+      var v = pickVoice();
+      if (v) { u.voice = v; u.lang = v.lang; } else { u.lang = "en-GB"; }
+      u.rate = rate;
+      u.pitch = 1;
+      u.onstart = function () { if (onstart) onstart(); };
+      u.onend = function () { if (onend) onend(); };
+      u.onerror = function () { if (onend) onend(); };
+      window.speechSynthesis.speak(u);
+    }
+    function play(list, opts) {
+      opts = opts || {};
+      stop();
+      queue = (list || []).filter(function (x) { return x && x.text; });
+      if (!queue.length) return;
+      btn = opts.btn || null;
+      mark(true);
+      playing = true;
+      next();
+    }
+    function next() {
+      if (!queue.length) { playing = false; mark(false); if (typeof stop.onEnd === "function") { var f = stop.onEnd; stop.onEnd = null; f(); } return; }
+      var item = queue.shift();
+      if (typeof item.onStart === "function") item.onStart();
+      speakOne(item, null, function () {
+        if (typeof item.onEnd === "function") item.onEnd();
+        next();
+      });
+    }
+    function say(text, b) { play([{ text: text }], { btn: b }); }
+
+    /* Проигрывание записанного файла истории.
+       opts: {btn, rate, onTime(seconds, duration), onEnd, onError} */
+    function playFile(url, opts) {
+      stop();
+      opts = opts || {};
+      btn = opts.btn || null;
+      mark(true);
+      var a = new Audio(url);
+      audio = a;
+      a.playbackRate = opts.rate || 1;
+      a.addEventListener("timeupdate", function () {
+        if (opts.onTime) opts.onTime(a.currentTime, a.duration || 0);
+      });
+      a.addEventListener("ended", function () {
+        playing = false; mark(false); audio = null;
+        if (opts.onEnd) opts.onEnd();
+      });
+      a.addEventListener("error", function () {
+        playing = false; mark(false); audio = null;
+        if (opts.onError) opts.onError();
+      });
+      a.play().catch(function () { if (opts.onError) opts.onError(); });
+    }
+    function setRate(r) { rate = r; set("ttsRate", r); }
+    return {
+      play: play, stop: stop, say: say, setRate: setRate, playFile: playFile,
+      get rate() { return rate; },
+      supported: supported
+    };
+  })();
+
+  /* ─────────────── утилиты ─────────────── */
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  }
+  function norm(s) {
+    return String(s || "").toLowerCase().replace(/[’‘`]/g, "'").replace(/[.!?,;:]/g, "")
+      .replace(/\s+/g, " ").trim();
+  }
+  function shuffle(a) {
+    a = a.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+  function el(html) {
+    var t = document.createElement("template");
+    t.innerHTML = html.trim();
+    return t.content.firstElementChild;
+  }
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+
+  /* ─────────────── шаги урока ─────────────── */
+  var STEPS = [
+    { id: "lead", name: "Lead-in", render: renderLead },
+    { id: "vocab", name: "Vocabulary", render: renderVocab },
+    { id: "defs", name: "Definitions", render: renderDefs },
+    { id: "v1", name: "Video 1 · Ukraine", render: function (n) { return renderVideo(0, n); } },
+    { id: "v2", name: "Video 2 · Korea", render: function (n) { return renderVideo(1, n); } },
+    { id: "v3", name: "Video 3 · Germany", render: function (n) { return renderVideo(2, n); } },
+    { id: "mix", name: "True / False", render: renderMix },
+    { id: "dlg", name: "Dialogues", render: renderDialogues },
+    { id: "coll", name: "Collocations", render: renderCollocations },
+    { id: "speak", name: "Discussion & scenarios", render: renderDiscussion },
+    { id: "wrap", name: "Wrap up", render: renderWrap }
+  ];
+
+  var cur = Number(get("cur", 0)) || 0;
+  if (cur < 0 || cur >= STEPS.length) cur = 0;
+
+  /* ─────────────── 1. LEAD-IN ─────────────── */
+  function renderLead() {
+    var html = '<section class="card">' +
+      head(1, "Lead-in", "Пять минут на разговор до новой лексики") +
+      '<p class="lead">' + esc(D.leadIn.intro) + "</p>" +
+      '<h3>Обсудите в парах</h3><div class="ql">';
+    D.leadIn.questions.forEach(function (q, i) {
+      html += '<div class="q"><b>' + (i + 1) + ". " + esc(q.q) + "</b>" +
+        '<div class="hint">' + (q.hints || []).map(function (h) { return "<span>" + esc(h) + "</span>"; }).join("") + "</div></div>";
+    });
+    html += "</div>" +
+      '<div class="actions">' +
+      '<button class="btn soft" type="button" id="leadSay">🔊 Прочитать вопросы</button>' +
+      '<span class="muted" style="font-size:13px">Совет: сначала по-английски, потом можно переключиться на русский для деталей.</span>' +
+      "</div></section>";
+    var node = el(html);
+    $("#leadSay", node).addEventListener("click", function () {
+      var list = D.leadIn.questions.map(function (q) { return { text: q.q }; });
+      Speech.play(list, { btn: this });
+    });
+    return node;
+  }
+
+  function head(n, title, sub, extra) {
+    return '<div class="step-head"><div class="num">' + n + "</div>" +
+      '<div class="grow"><h2>' + esc(title) + "</h2>" +
+      (sub ? '<p class="sub">' + esc(sub) + "</p>" : "") + "</div>" + (extra || "") + "</div>";
+  }
+
+  /* ─────────────── 2. VOCABULARY ─────────────── */
+  function renderVocab() {
+    var showRu = get("showRu", false);
+    var html = '<section class="card">' +
+      head(2, "Vocabulary preview", "10 слов, которые встречаются во всех трёх историях") +
+      '<div class="actions" style="margin:0 0 14px">' +
+      '<button class="btn soft" type="button" id="ruToggle">' + (showRu ? "Скрыть перевод" : "Показать перевод") + "</button>" +
+      '<button class="btn" type="button" id="sayAll">🔊 Прослушать все слова</button>' +
+      '<button class="btn" type="button" id="flashBtn">🗂 Карточки-тренажёр</button>' +
+      "</div><div class=\"word-grid\" id=\"wg\">";
+    D.vocabulary.forEach(function (w, i) {
+      html += '<div class="word">' +
+        '<button class="say" type="button" data-say="' + esc(w.word) + '" title="Прослушать">🔊</button>' +
+        '<div class="w">' + esc(w.word) + '<span class="ipa">' + esc(w.ipa) + "</span></div>" +
+        '<div class="pos">' + esc(w.pos) + "</div>" +
+        '<div class="m">' + esc(w.meaning) + "</div>" +
+        '<div class="ru"' + (showRu ? "" : ' style="display:none"') + ">🇷🇺 " + esc(w.ru) + "</div>" +
+        '<div class="ex">' + esc(w.example) + "</div>" +
+        "</div>";
+    });
+    html += "</div>" +
+      '<div id="flashWrap" class="hidden" style="margin-top:22px">' + flashHtml() + "</div>" +
+      "</section>";
+    var node = el(html);
+
+    $("#ruToggle", node).addEventListener("click", function () {
+      var on = get("showRu", false);
+      set("showRu", !on);
+      $$(".ru", node).forEach(function (x) { x.style.display = !on ? "block" : "none"; });
+      this.textContent = !on ? "Скрыть перевод" : "Показать перевод";
+    });
+    $$("[data-say]", node).forEach(function (b) {
+      b.addEventListener("click", function () { Speech.say(b.getAttribute("data-say"), b); });
+    });
+    $("#sayAll", node).addEventListener("click", function () {
+      Speech.play(D.vocabulary.map(function (w) { return { text: w.word }; }), { btn: this });
+    });
+    $("#flashBtn", node).addEventListener("click", function () {
+      var w = $("#flashWrap", node);
+      w.classList.toggle("hidden");
+      if (!w.classList.contains("hidden")) w.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    wireFlash(node);
+    return node;
+  }
+
+  function flashHtml() {
+    return '<div class="flash" id="flash">' +
+      '<div class="fc" id="fc" tabindex="0" role="button" aria-label="Перевернуть карточку">' +
+      '<span class="corner" id="fcCorner"></span>' +
+      '<div class="front" id="fcFront"></div>' +
+      '<div class="back"><div class="m" id="fcMean"></div><div class="ex" id="fcEx"></div><div class="m" id="fcRu" style="color:var(--teal);font-weight:800"></div></div>' +
+      "</div>" +
+      '<div class="actions" style="margin:0">' +
+      '<button class="btn" type="button" id="fcPrev">←</button>' +
+      '<span class="muted" id="fcCnt" style="font-weight:800;min-width:66px;text-align:center"></span>' +
+      '<button class="btn" type="button" id="fcNext">→</button>' +
+      '<button class="btn soft" type="button" id="fcSay">🔊</button>' +
+      "</div></div>";
+  }
+
+  function wireFlash(node) {
+    var fc = $("#fc", node);
+    if (!fc) return;
+    var i = 0;
+    function paint() {
+      var w = D.vocabulary[i];
+      fc.classList.remove("flipped");
+      $("#fcFront", node).textContent = w.word;
+      $("#fcMean", node).textContent = w.meaning;
+      $("#fcEx", node).textContent = "“" + w.example + "”";
+      $("#fcRu", node).textContent = "🇷🇺 " + w.ru;
+      $("#fcCnt", node).textContent = (i + 1) + " / " + D.vocabulary.length;
+      $("#fcCorner", node).textContent = w.ipa + " · " + w.pos;
+    }
+    fc.addEventListener("click", function () { fc.classList.toggle("flipped"); });
+    fc.addEventListener("keydown", function (e) {
+      if (e.key === " " || e.key === "Enter") { e.preventDefault(); fc.classList.toggle("flipped"); }
+    });
+    $("#fcPrev", node).addEventListener("click", function () { i = (i - 1 + D.vocabulary.length) % D.vocabulary.length; paint(); });
+    $("#fcNext", node).addEventListener("click", function () { i = (i + 1) % D.vocabulary.length; paint(); });
+    $("#fcSay", node).addEventListener("click", function () { Speech.say(D.vocabulary[i].word, this); });
+    paint();
+  }
+
+  /* ─────────────── 3. DEFINITIONS ─────────────── */
+  function renderDefs() {
+    var opts = D.definitions.map(function (d) { return d.answer; });
+    var html = '<section class="card">' +
+      head(3, "Definitions", "Подберите слово к определению") +
+      '<div class="def-list" id="defs">';
+    D.definitions.forEach(function (d, i) {
+      html += '<div class="def" data-i="' + i + '"><div><p>' + (i + 1) + ". " + esc(d.definition) + "</p>" +
+        '<div class="mark"></div></div>' +
+        '<select aria-label="Answer for definition ' + (i + 1) + '"><option value="">— выберите слово —</option>' +
+        shuffle(opts).map(function (o) { return '<option>' + esc(o) + "</option>"; }).join("") +
+        "</select></div>";
+    });
+    html += '</div><div class="answer"><b>Ключ:</b> ' + D.definitions.map(function (d, i) {
+      return (i + 1) + " — " + esc(d.answer);
+    }).join(" · ") + "</div>" +
+      '<div class="actions"><button class="btn primary" type="button" id="defCheck">Проверить</button>' +
+      '<button class="btn" type="button" id="defReset">Сбросить</button>' +
+      '<span class="muted" id="defScore" style="font-weight:800"></span></div></section>';
+
+    var node = el(html);
+    var saved = get("defs", {});
+    $$(".def", node).forEach(function (row, i) {
+      var sel = $("select", row);
+      if (saved[i]) sel.value = saved[i];
+    });
+    $$("select", node).forEach(function (s) {
+      s.addEventListener("change", function () {
+        var m = {};
+        $$(".def select", node).forEach(function (x, i) { if (x.value) m[i] = x.value; });
+        set("defs", m);
+      });
+    });
+    $("#defCheck", node).addEventListener("click", function () {
+      var ok = 0, seen = {};
+      $$(".def", node).forEach(function (row, i) {
+        var sel = $("select", row);
+        var mark = $(".mark", row);
+        row.classList.remove("ok", "no");
+        if (!sel.value) { mark.textContent = ""; return; }
+        if (norm(sel.value) === norm(D.definitions[i].answer)) {
+          row.classList.add("ok"); mark.textContent = "✓ верно"; ok++;
+        } else {
+          row.classList.add("no"); mark.textContent = "✗ попробуйте ещё";
+        }
+        seen[i] = sel.value;
+      });
+      set("defs", seen);
+      set("defsDone", ok === D.definitions.length);
+      $("#defScore", node).textContent = ok + " / " + D.definitions.length;
+      if (ok === D.definitions.length) spokenCongrats(node);
+    });
+    $("#defReset", node).addEventListener("click", function () {
+      $$(".def", node).forEach(function (row) {
+        row.classList.remove("ok", "no");
+        $("select", row).value = "";
+        $(".mark", row).textContent = "";
+      });
+      $("#defScore", node).textContent = "";
+      set("defs", {});
+    });
+    return node;
+  }
+
+  function spokenCongrats(node) {
+    var s = $("#defScore", node);
+    if (s) s.textContent += " — отлично!";
+  }
+
+  /* ─────────────── 4–6. VIDEO ─────────────── */
+  function renderVideo(idx, stepNum) {
+    var v = D.videos[idx];
+    var playAll = false;
+    var html = '<section class="card">' +
+      head(stepNum, "Video " + (idx + 1) + " · " + v.country + " " + v.flag,
+        "Слушайте историю и отвечайте на вопросы") +
+      videoTabs(idx) +
+      '<div class="player">' +
+      '<div class="player-top"><span class="flag">' + v.flag + "</span>" +
+      '<div><div class="who">' + esc(v.speaker) + '</div><div class="loc">' + esc(v.city) + " · " + esc(v.accent) + "</div></div>" +
+      '<span class="time">' + esc(v.duration) + "</span></div>" +
+      '<div class="screen" id="screen">' +
+      '<div class="inner"><div class="kicker">Video ' + (idx + 1) + " · " + esc(v.country) + "</div>" +
+      "<h4>" + esc(v.headline) + "</h4>" +
+      '<div class="cap">' + esc(v.speaker) + "</div></div>" +
+      "</div>" +
+      '<div class="subwrap"><div class="subtitle" id="sub"></div></div>' +
+      '<div class="player-ctrl">' +
+      '<button class="btn primary" type="button" id="playBtn">▶ Слушать историю</button>' +
+      '<button class="btn" type="button" id="stopBtn">■ Стоп</button>' +
+      '<button class="btn soft" type="button" id="trBtn">📄 Текст</button>' +
+      '<button class="btn sm" type="button" id="rateBtn" title="Скорость речи">' + rateIcon(Speech.rate) + "</button>" +
+      "</div>" +
+      '<div class="transcript" id="tr"><div class="t-inner" id="trInner"></div></div>' +
+      "</div>" +
+      '<h3>Questions</h3><div class="qblock" id="qs"></div>' +
+      '<div class="answer"><b>Ключ:</b> ' + v.questions.map(function (q, i) {
+        return (i + 1) + " — " + "ABC"[q.answer];
+      }).join(" · ") + "</div>" +
+      '<div class="actions"><button class="btn" type="button" id="qCheck">Проверить ответы</button>' +
+      '<span class="muted" id="qScore" style="font-weight:800"></span></div>' +
+      "</section>";
+
+    var node = el(html);
+
+    // transcript
+    var trInner = $("#trInner", node);
+    v.transcript.forEach(function (line, i) {
+      var row = el('<div class="line" data-i="' + i + '"><div class="who">' + esc(line.who) + "</div>" +
+        '<div class="tx">' + esc(line.text) + "</div>" +
+        '<button class="say" type="button" title="Прослушать строку">▶</button></div>');
+      $(".say", row).addEventListener("click", function () {
+        Speech.play([{ text: line.text, onStart: function () { row.classList.add("on"); }, onEnd: function () { row.classList.remove("on"); } }], { btn: this });
+      });
+      trInner.appendChild(row);
+    });
+
+    $("#trBtn", node).addEventListener("click", function () {
+      var tr = $("#tr", node);
+      var open = tr.classList.toggle("open");
+      this.textContent = open ? "📄 Скрыть текст" : "📄 Текст";
+    });
+
+    var screen = $("#screen", node);
+    var sub = $("#sub", node);
+    screen.insertAdjacentHTML("afterbegin", '<button class="big-play" type="button" id="bigPlay" aria-label="Play">▶</button>');
+    var screenInner = $(".inner", node);
+
+    function resetLines() { $$(".line", node).forEach(function (l) { l.classList.remove("on"); }); }
+    function rateIcon(r) { return r < 0.9 ? "🐢" : r < 0.99 ? "🚶" : "🐇"; }
+    if (isTeacher && v.transcript.length) {
+      sub.textContent = v.transcript[0].text;
+      screenInner.style.opacity = "0.5";
+    }
+    /* Записанный голос: подсветка строк по времени, оценённому по длине текста. */
+    function storyFromFile(btn) {
+      var lens = v.transcript.map(function (l) { return Math.max(12, l.text.length); });
+      var total = lens.reduce(function (a, b) { return a + b; }, 0);
+      var acc = 0;
+      var marks = lens.map(function (L) { var st = acc / total; acc += L; return { start: st, end: acc / total }; });
+      var last = -1;
+      function at(sec, dur) {
+        if (!dur) return;
+        var f = sec / dur;
+        var i = 0;
+        for (; i < marks.length; i++) { if (f < marks[i].end) break; }
+        if (i === last) return;
+        last = i;
+        resetLines();
+        var row = $('.line[data-i="' + i + '"]', node);
+        if (row) row.classList.add("on");
+        sub.textContent = v.transcript[i] ? v.transcript[i].text : "";
+        screenInner.style.opacity = "0.35";
+      }
+      Speech.playFile(ROOT + v.id + ".mp3", {
+        btn: btn,
+        rate: Speech.rate < 0.9 ? 0.85 : 1,
+        onTime: at,
+        onEnd: function () {
+          sub.textContent = ""; screenInner.style.opacity = "1"; resetLines();
+        },
+        onError: function () { MANIFEST[v.id] = false; sayStory(btn); }
+      });
+    }
+
+    function sayStory(btn) {
+      resetLines();
+      if (MANIFEST[v.id]) { return storyFromFile(btn); }
+      var list = v.transcript.map(function (line, i) {
+        return {
+          text: line.text,
+          onStart: function () {
+            var row = $('.line[data-i="' + i + '"]', node);
+            resetLines();
+            if (row) row.classList.add("on");
+            sub.textContent = line.text;
+            screenInner.style.opacity = "0.35";
+          }
+        };
+      });
+      list[list.length - 1].onEnd = function () {
+        sub.textContent = "";
+        screenInner.style.opacity = "1";
+        resetLines();
+      };
+      Speech.play(list, { btn: btn });
+    }
+    $("#playBtn", node).addEventListener("click", function () { sayStory(this); });
+    $("#bigPlay", node).addEventListener("click", function () { sayStory($("#playBtn", node)); });
+    $("#stopBtn", node).addEventListener("click", function () {
+      Speech.stop(); sub.textContent = ""; screenInner.style.opacity = "1"; resetLines();
+    });
+    $("#rateBtn", node).addEventListener("click", function () {
+      var seq = [0.92, 0.75, 1.0];
+      var at = seq.indexOf(Speech.rate);
+      var nx = seq[(at === -1 ? 0 : at + 1) % seq.length];
+      Speech.setRate(nx);
+      this.textContent = rateIcon(nx);
+      this.title = "Скорость: " + nx;
+      this.classList.add("on");
+      var me = this;
+      setTimeout(function () { me.classList.remove("on"); }, 500);
+    });
+
+    // questions
+    var qs = $("#qs", node);
+    var savedQ = get("q_" + v.id, {});
+    v.questions.forEach(function (q, qi) {
+      var card = el('<div class="qcard" data-q="' + qi + '"><p class="qq">' + (qi + 1) + ". " + esc(q.q) + "</p>" +
+        '<div class="opts"></div></div>');
+      var opts = $(".opts", card);
+      q.options.forEach(function (o, oi) {
+        var b = el('<button class="opt" type="button"><span class="b">' + "ABC"[oi] + "</span><span>" + esc(o) + "</span></button>");
+        b.dataset.o = oi;
+        if (savedQ[qi] === oi) b.classList.add("correct");
+        b.addEventListener("click", function () {
+          if (card.dataset.locked === "1") return;
+          $$(".opt", card).forEach(function (x) { x.disabled = true; });
+          card.dataset.locked = "1";
+          if (oi === Number(q.answer)) { b.classList.add("correct"); }
+          else {
+            b.classList.add("wrong");
+            var right = $('.opt[data-o="' + q.answer + '"]', card);
+            if (right) right.classList.add("correct");
+          }
+          var res = get("q_" + v.id, {});
+          res[qi] = oi;
+          set("q_" + v.id, res);
+        });
+        if (savedQ[qi] !== undefined) b.disabled = true;
+        opts.appendChild(b);
+      });
+      if (savedQ[qi] !== undefined) card.dataset.locked = "1";
+      qs.appendChild(card);
+    });
+
+    $("#qCheck", node).addEventListener("click", function () {
+      var ok = 0, answered = 0;
+      var res = get("q_" + v.id, {});
+      D.videos[idx].questions.forEach(function (q, qi) {
+        if (res[qi] === undefined) return;
+        answered++;
+        if (res[qi] === Number(q.answer)) ok++;
+      });
+      $("#qScore", node).textContent = answered
+        ? ok + " / " + D.videos[idx].questions.length + " верно"
+        : "Сначала ответьте на вопросы";
+    });
+
+    return node;
+  }
+
+  function videoTabs(active) {
+    return '<div class="video-tabs">' + D.videos.map(function (v, i) {
+      var done = get("q_" + v.id, {});
+      var all = Object.keys(done).length;
+      return '<button class="vt' + (i === active ? " on" : "") + '" type="button" data-go="' + (3 + i) + '">' +
+        v.flag + " " + esc(v.country) + (all ? ' <span class="done">✓' + all + "</span>" : "") + "</button>";
+    }).join("") + "</div>";
+  }
+
+  /* ─────────────── 7. TRUE / FALSE + таблица ─────────────── */
+  function renderMix() {
+    var html = '<section class="card">' +
+      head(7, "Put it together", "True or false — по всем трём историям") +
+      '<div class="tf" id="tf">';
+    D.trueFalse.forEach(function (t, i) {
+      html += '<div class="tf-row" data-i="' + i + '"><div class="s">' + (i + 1) + ". " + esc(t.s) + "</div>" +
+        '<div class="tf-btns"><button type="button" data-v="1">TRUE</button><button type="button" data-v="0">FALSE</button></div>' +
+        '<div class="why"></div></div>';
+    });
+    html += '</div><div class="answer"><b>Ключ:</b> ' + D.trueFalse.map(function (t, i) {
+      return (i + 1) + " — " + (t.answer ? "T" : "F");
+    }).join(" · ") + "<br>" + D.trueFalse.map(function (t, i) {
+      return (i + 1) + ") " + esc(t.why);
+    }).join("<br>") + "</div>" +
+      '<div class="actions"><button class="btn primary" type="button" id="tfCheck">Проверить</button>' +
+      '<button class="btn" type="button" id="tfReset">Сбросить</button>' +
+      '<span class="muted" id="tfScore" style="font-weight:800"></span></div>' +
+      '<h3>Что удивило каждого — и почему это важно</h3><div class="table-wrap"><table><thead><tr>' +
+      D.comparison.columns.map(function (c) { return "<th>" + esc(c) + "</th>"; }).join("") +
+      "</tr></thead><tbody>" +
+      D.comparison.rows.map(function (r) {
+        return "<tr><td><b>" + esc(r.speaker) + "</b></td><td>" + esc(r.what) + "</td><td>" + esc(r.why) + "</td></tr>";
+      }).join("") +
+      "</tbody></table></div>" +
+      '<div class="actions"><button class="btn" type="button" id="tableSay">🔊 Прочитать таблицу</button></div>' +
+      "</section>";
+
+    var node = el(html);
+    var saved = get("tf", {});
+
+    $$(".tf-row", node).forEach(function (row, i) {
+      var yes = $('[data-v="1"]', row), no = $('[data-v="0"]', row);
+      function paint(v) {
+        yes.classList.toggle("on-t", v === true);
+        no.classList.toggle("on-f", v === false);
+        row.classList.add("answered");
+      }
+      if (saved[i] !== undefined) paint(saved[i] === 1);
+      [yes, no].forEach(function (b) {
+        b.addEventListener("click", function () {
+          var v = b.getAttribute("data-v") === "1";
+          var s = get("tf", {});
+          s[i] = v ? 1 : 0;
+          set("tf", s);
+          paint(v);
+          row.classList.remove("ok", "no");
+          row.classList.add(v === D.trueFalse[i].answer ? "ok" : "no");
+          $(".why", row).textContent = (v === D.trueFalse[i].answer ? "✓ " : "✗ ") +
+            (D.trueFalse[i].answer ? "TRUE. " : "FALSE. ") + D.trueFalse[i].why;
+        });
+      });
+    });
+
+    $("#tfCheck", node).addEventListener("click", function () {
+      var ok = 0;
+      $$(".tf-row", node).forEach(function (row, i) {
+        var v = $(".on-t", row) ? true : $(".on-f", row) ? false : null;
+        if (v === null) return;
+        var good = v === D.trueFalse[i].answer;
+        row.classList.remove("ok", "no");
+        row.classList.add(good ? "ok" : "no");
+        $(".why", row).textContent = (good ? "✓ " : "✗ ") + (D.trueFalse[i].answer ? "TRUE. " : "FALSE. ") + D.trueFalse[i].why;
+        if (good) ok++;
+      });
+      $("#tfScore", node).textContent = ok + " / " + D.trueFalse.length;
+    });
+    $("#tfReset", node).addEventListener("click", function () {
+      $$(".tf-row", node).forEach(function (row) {
+        row.classList.remove("ok", "no", "answered");
+        $$("button", row).forEach(function (b) { b.classList.remove("on-t", "on-f"); });
+        $(".why", row).textContent = "";
+      });
+      $("#tfScore", node).textContent = "";
+      set("tf", {});
+    });
+    $("#tableSay", node).addEventListener("click", function () {
+      var list = [];
+      D.comparison.rows.forEach(function (r) {
+        list.push({ text: r.speaker + ". " + r.what + "." });
+        list.push({ text: r.why + "." });
+      });
+      Speech.play(list, { btn: this });
+    });
+    return node;
+  }
+
+  /* ─────────────── 8. DIALOGUES ─────────────── */
+  function renderDialogues() {
+    var html = '<section class="card">' +
+      head(8, "Dialogues", "Заполните пропуски: некоторые слова подходят дважды") +
+      '<div id="dlgs"></div>' +
+      '<div class="answer"><b>Ключ:</b> Dialogue 1 — ' + D.dialogues[0].gaps.join(", ") +
+      "; Dialogue 2 — " + D.dialogues[1].gaps.join(", ") + "</div>" +
+      '<div class="actions"><button class="btn primary" type="button" id="dlgCheck">Проверить</button>' +
+      '<button class="btn" type="button" id="dlgReset">Сбросить</button>' +
+      '<span class="muted" id="dlgScore" style="font-weight:800"></span></div></section>';
+    var node = el(html);
+    var host = $("#dlgs", node);
+    var saved = get("dlg", {});
+
+    D.dialogues.forEach(function (d, di) {
+      var box = el('<div class="dlg" style="margin-bottom:14px"><h3>' + esc(d.title) + "</h3>" +
+        '<div class="bank">' + d.bank.map(function (b) { return "<span>" + esc(b) + "</span>"; }).join("") + "</div></div>");
+      d.lines.forEach(function (line, li) {
+        var text = line.text.replace(/\[(\d)\]/g, function (m, n) {
+          var key = di + "_" + li + "_" + n;
+          var val = saved[key] ? ' value="' + esc(saved[key]) + '"' : "";
+          return ' <input class="gap-input" data-key="' + key + '" data-n="' + (Number(n) - 1) + '"' + val +
+            ' aria-label="gap ' + n + '" autocomplete="off"> ';
+        });
+        var row = el('<div class="dline"><div class="who">' + esc(line.who) + '</div><div class="tx">' + text + "</div></div>");
+        box.appendChild(row);
+      });
+      // подсказка: список пропусков в порядке
+      box.appendChild(el('<div class="actions" style="margin:10px 0 0"><button class="btn sm" type="button" data-play="' + di + '">🔊 Слушать диалог</button></div>'));
+      host.appendChild(box);
+    });
+
+    $$(".gap-input", node).forEach(function (inp) {
+      inp.addEventListener("input", function () {
+        var s = get("dlg", {});
+        s[inp.dataset.key] = inp.value;
+        set("dlg", s);
+      });
+    });
+
+    $$("[data-play]", node).forEach(function (b) {
+      b.addEventListener("click", function () {
+        var d = D.dialogues[Number(b.getAttribute("data-play"))];
+        Speech.play(d.lines.map(function (l) { return { text: l.text.replace(/\[\d\]/g, "blank") }; }), { btn: b });
+      });
+    });
+
+    $("#dlgCheck", node).addEventListener("click", function () {
+      var ok = 0, total = 0;
+      D.dialogues.forEach(function (d, di) {
+        d.lines.forEach(function (line, li) {
+          var n = 0;
+          line.text.replace(/\[(\d)\]/g, function (m, num) { n = Number(num); });
+          if (!n) return;
+          var inp = $('.gap-input[data-key="' + di + "_" + li + "_" + n + '"]', node);
+          if (!inp) return;
+          total++;
+          var right = (d.gapsByLine && d.gapsByLine[li] && d.gapsByLine[li][Number(n) - 1]) || d.gaps[Number(n) - 1];
+          inp.classList.remove("correct", "wrong");
+          if (norm(inp.value) === norm(right)) { inp.classList.add("correct"); ok++; }
+          else inp.classList.add("wrong");
+        });
+      });
+      $("#dlgScore", node).textContent = ok + " / " + total;
+    });
+    $("#dlgReset", node).addEventListener("click", function () {
+      $$(".gap-input", node).forEach(function (i) { i.value = ""; i.classList.remove("correct", "wrong"); });
+      $("#dlgScore", node).textContent = "";
+      set("dlg", {});
+    });
+    return node;
+  }
+
+  /* ─────────────── 9. COLLOCATIONS ─────────────── */
+  function renderCollocations() {
+    var html = '<section class="card">' +
+      head(9, "Collocations", "Соедините половины и допишите предложения") +
+      '<div class="cols"><div><div class="col-h">1-я часть</div><div id="left"></div></div>' +
+      '<div><div class="col-h">2-я часть</div><div id="right"></div></div></div>' +
+      '<div class="pairlist" id="pairs"></div>' +
+      '<div class="actions"><button class="btn" type="button" id="colReset">Сбросить пары</button>' +
+      '<span class="muted" id="colScore" style="font-weight:800"></span></div>' +
+      '<h3>Use them in sentences</h3><div class="gapsent" id="gs"></div>' +
+      '<div class="answer"><b>Ключ:</b> ' + D.collocations.sentences.map(function (x, i) {
+        return (i + 1) + " — " + esc(x.answer[0]);
+      }).join(" · ") + "</div>" +
+      '<div class="actions"><button class="btn primary" type="button" id="gsCheck">Проверить</button>' +
+      '<span class="muted" id="gsScore" style="font-weight:800"></span></div></section>';
+
+    var node = el(html);
+    var pairs = D.collocations.pairs;
+    var leftOrder = shuffle(pairs.map(function (p, i) { return i; }));
+    var rightOrder = shuffle(pairs.map(function (p, i) { return i; }));
+    var picked = null, solved = 0;
+
+    var L = $("#left", node), R = $("#right", node);
+    leftOrder.forEach(function (i) {
+      var b = el('<button class="colbtn" type="button" data-side="l" data-i="' + i + '">' + esc(pairs[i].left) + "</button>");
+      L.appendChild(b);
+    });
+    rightOrder.forEach(function (i) {
+      var b = el('<button class="colbtn" type="button" data-side="r" data-i="' + i + '">' + esc(pairs[i].right) + "</button>");
+      R.appendChild(b);
+    });
+    function pairDone(i) {
+      $$('.colbtn[data-i="' + i + '"]', node).forEach(function (b) { b.classList.add("paired"); b.disabled = true; });
+      var p = pairs[i];
+      $("#pairs", node).appendChild(el('<div class="p"><b>' + esc(p.left + " " + p.right) + "</b> — <span>" + esc(p.example) + "</span></div>"));
+      solved++;
+      $("#colScore", node).textContent = solved + " / " + pairs.length;
+    }
+    node.addEventListener("click", function (e) {
+      var b = e.target.closest(".colbtn");
+      if (!b || b.disabled) return;
+      if (b.dataset.side === "l") {
+        $$('.colbtn[data-side="l"]', node).forEach(function (x) { x.classList.remove("sel"); });
+        b.classList.add("sel");
+        picked = b;
+        return;
+      }
+      if (!picked) { b.classList.add("shake"); setTimeout(function () { b.classList.remove("shake"); }, 340); return; }
+      if (picked.dataset.i === b.dataset.i) {
+        pairDone(Number(b.dataset.i));
+        picked = null;
+      } else {
+        b.classList.add("shake");
+        picked.classList.add("shake");
+        var p = picked;
+        setTimeout(function () {
+          b.classList.remove("shake"); p.classList.remove("shake");
+        }, 340);
+      }
+    });
+
+    $("#colReset", node).addEventListener("click", function () {
+      $$(".colbtn", node).forEach(function (b) { b.classList.remove("paired", "sel"); b.disabled = false; });
+      $("#pairs", node).innerHTML = "";
+      $("#colScore", node).textContent = "";
+      solved = 0; picked = null;
+    });
+
+    var gs = $("#gs", node);
+    D.collocations.sentences.forEach(function (s, i) {
+      var parts = s.text.split("____");
+      var row = el('<div class="gs"><span class="txt">' + (i + 1) + ". " + esc(parts[0]) +
+        '<input data-i="' + i + '" autocomplete="off" aria-label="gap ' + (i + 1) + '">' +
+        esc(parts[1] || "") + '</span><span class="mark"></span></div>');
+      row.appendChild(el('<span class="hint">' + esc(s.hint) + "</span>"));
+      gs.appendChild(row);
+    });
+    $("#gsCheck", node).addEventListener("click", function () {
+      var ok = 0;
+      $$(".gs", node).forEach(function (row, i) {
+        var inp = $("input", row);
+        var good = D.collocations.sentences[i].answer.some(function (a) { return norm(inp.value) === norm(a); });
+        row.classList.remove("ok", "no");
+        row.classList.add(good ? "ok" : "no");
+        $(".mark", row).textContent = good ? "✓" : "✗ " + D.collocations.sentences[i].answer[0];
+        if (good) ok++;
+      });
+      $("#gsScore", node).textContent = ok + " / " + D.collocations.sentences.length;
+    });
+    return node;
+  }
+
+  /* ─────────────── 10. DISCUSSION + SCENARIOS ─────────────── */
+  function renderDiscussion() {
+    var html = '<section class="card">' +
+      head(10, "Discussion", "Говорим: вопросы и три неловкие ситуации") +
+      '<div class="ql">' + D.discussion.map(function (q, i) {
+        return '<div class="q"><b>' + (i + 1) + ". " + esc(q) + "</b></div>";
+      }).join("") + "</div>" +
+      '<div class="actions"><button class="btn soft" type="button" id="discSay">🔊 Прочитать вопросы</button></div>' +
+      '<h3>Scenarios · role-play</h3>' +
+      '<p class="muted" style="font-size:13.5px;margin-top:-4px">Выберите карточку, прочитайте ситуацию и разыграйте ответ. Полезные фразы — под ситуацией.</p>' +
+      D.scenarios.map(function (s, i) {
+        return '<div class="scen" data-i="' + i + '"><div class="scen-head" role="button" tabindex="0"><span>' + "🎭" + "</span>" +
+          '<span class="t">' + esc(s.title) + '</span><span class="chev">▾</span></div>' +
+          '<div class="scen-body"><p class="sit">' + esc(s.situation) + "</p>" +
+          '<div class="useful">' + s.useful.map(function (u) { return "<span>" + esc(u) + "</span>"; }).join("") + "</div>" +
+          '<p class="tip">💡 ' + esc(s.tips) + "</p>" +
+          '<div class="actions" style="margin:0"><button class="btn sm" type="button" data-say-scen="' + i + '">🔊 Прочитать ситуацию</button></div>' +
+          "</div></div>";
+      }).join("") + "</section>";
+
+    var node = el(html);
+    $$(".scen", node).forEach(function (sc) {
+      var h = $(".scen-head", sc);
+      function toggle() { sc.classList.toggle("open"); }
+      h.addEventListener("click", toggle);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+    });
+    $$("[data-say-scen]", node).forEach(function (b) {
+      b.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var s = D.scenarios[Number(b.getAttribute("data-say-scen"))];
+        Speech.play([{ text: s.situation }], { btn: b });
+      });
+    });
+    $("#discSay", node).addEventListener("click", function () {
+      Speech.play(D.discussion.map(function (q) { return { text: q }; }), { btn: this });
+    });
+    return node;
+  }
+
+  /* ─────────────── 11. WRAP UP ─────────────── */
+  function renderWrap() {
+    var html = '<section class="card">' +
+      head(11, "Wrap up", "Проверьте себя и запишите домашнее задание") +
+      '<div class="check" id="check">' +
+      D.wrapUp.checklist.map(function (c, i) {
+        var on = get("check_" + i, false);
+        return '<label class="' + (on ? "on" : "") + '"><input type="checkbox" data-i="' + i + '"' + (on ? " checked" : "") + "><span>" + esc(c) + "</span></label>";
+      }).join("") + "</div>" +
+      '<h3>Homework</h3><div class="hw"><ol>' +
+      D.wrapUp.homework.map(function (h) { return "<li>" + esc(h) + "</li>"; }).join("") + "</ol></div>" +
+      '<div class="actions"><button class="btn primary" type="button" id="printBtn2">🖨 Распечатать worksheet</button>' +
+      '<button class="btn" type="button" id="restart">↺ Начать урок заново</button></div>' +
+      '<p class="muted" style="font-size:12.5px;margin-top:14px">Совет: worksheet печатается с ответами, если включён режим учителя, и без ответов — в обычном режиме.</p>' +
+      "</section>";
+
+    var node = el(html);
+    $$("input[type=checkbox]", node).forEach(function (cb) {
+      cb.addEventListener("change", function () {
+        set("check_" + cb.dataset.i, cb.checked);
+        cb.closest("label").classList.toggle("on", cb.checked);
+      });
+    });
+    $("#printBtn2", node).addEventListener("click", function () { window.print(); });
+    $("#restart", node).addEventListener("click", function () {
+      if (!confirm("Очистить все ответы и начать урок сначала?")) return;
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      store = {};
+      cur = 0;
+      render();
+    });
+    return node;
+  }
+
+  /* ─────────────── навигация ─────────────── */
+  var host = document.getElementById("steps");
+  var prevBtn = document.getElementById("prevBtn");
+  var nextBtn = document.getElementById("nextBtn");
+  var stepName = document.getElementById("stepName");
+  var progBar = document.getElementById("progBar");
+  var progPct = document.getElementById("progPct");
+  var progLabel = document.getElementById("progLabel");
+
+  function render() {
+    Speech.stop();
+    window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+    var step = STEPS[cur];
+    host.innerHTML = "";
+    host.appendChild(step.render(cur + 1));
+    stepName.textContent = step.name;
+    prevBtn.disabled = cur === 0;
+    nextBtn.textContent = cur === STEPS.length - 1 ? "Готово ✓" : "Дальше →";
+    nextBtn.disabled = cur === STEPS.length - 1;
+    var visited = get("visited", {});
+    visited[cur] = 1;
+    set("visited", visited);
+    set("cur", cur);
+    var done = Object.keys(visited).length;
+    var pct = Math.round(Math.min(done, STEPS.length) / STEPS.length * 100);
+    progBar.style.width = pct + "%";
+    progPct.textContent = pct + "%";
+    progLabel.textContent = "Шаг " + (cur + 1) + " из " + STEPS.length;
+    // переключатели видео-табов
+    $$("[data-go]", host).forEach(function (b) {
+      b.addEventListener("click", function () { go(Number(b.getAttribute("data-go"))); });
+    });
+    applyTeacher();
+    // панель учителя: прокручиваем к верху
+    if (location.hash && location.hash.length > 1) {
+      try { history.replaceState(null, "", location.pathname); } catch (e) {}
+    }
+  }
+
+  function go(n) {
+    if (n < 0 || n >= STEPS.length) return;
+    cur = n;
+    render();
+  }
+  prevBtn.addEventListener("click", function () { go(cur - 1); });
+  nextBtn.addEventListener("click", function () { go(cur + 1); });
+  document.addEventListener("keydown", function (e) {
+    if (e.target.matches("input, select, textarea")) return;
+    if (e.key === "ArrowRight") go(cur + 1);
+    if (e.key === "ArrowLeft") go(cur - 1);
+  });
+
+  /* ─────────────── тема ─────────────── */
+  var themeBtn = document.getElementById("themeBtn");
+  function applyTheme(t) {
+    if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    else document.documentElement.removeAttribute("data-theme");
+    themeBtn.textContent = t === "dark" ? "☀️" : "🌙";
+  }
+  var savedTheme = get("theme", "");
+  if (!savedTheme) {
+    try { savedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } catch (e) { savedTheme = "light"; }
+  }
+  applyTheme(savedTheme);
+  themeBtn.addEventListener("click", function () {
+    var now = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    var nx = now === "dark" ? "light" : "dark";
+    set("theme", nx);
+    applyTheme(nx);
+  });
+
+  /* ─────────────── режим учителя ─────────────── */
+  var teacherBar = document.getElementById("teacherBar");
+  var isTeacher = /(\?|&)teacher(=|&|$)/.test(location.search) || get("teacher", false);
+  function applyTeacher() {
+    document.body.classList.toggle("teacher-mode", isTeacher);
+    teacherBar.classList.toggle("hidden", !isTeacher);
+    $$(".answer").forEach(function (a) {
+      a.classList.toggle("hidden", !isTeacher);
+      a.style.display = isTeacher ? "block" : "none";   // не зависим от каскада CSS
+    });
+  }
+  applyTeacher();
+  var revealAll = document.getElementById("revealAll");
+  if (revealAll) revealAll.addEventListener("click", function () {
+    // открываем все тексты и подсказки на текущем шаге
+    $$(".transcript").forEach(function (t) { t.classList.add("open"); });
+    $$(".scen").forEach(function (s) { s.classList.add("open"); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("#printBtn"), function (b) {
+    b.addEventListener("click", function () { window.print(); });
+  });
+
+  // Ctrl+Shift+T — включить/выключить режим учителя
+  document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey && e.shiftKey && (e.key === "T" || e.key === "t")) {
+      isTeacher = !isTeacher;
+      set("teacher", isTeacher);
+      applyTeacher();
+    }
+  });
+
+  render();
+})();
+
+</script>
+<script src="../shared/page-label.js?v=20261104"></script>
+</body>
+</html>
