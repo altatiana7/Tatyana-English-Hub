@@ -13,8 +13,7 @@
     'kate-english-hub',
     'gabriel-homework', 'gabi-homework',
     'nikita-homework', 'nikita-course',
-    'maya-english-hub',
-    'homework-hub'
+    'maya-english-hub'
   ];
   var TEACHER_FILE = /teacher/i;
 
