@@ -9,7 +9,7 @@
   if (!D) return;
 
   var ROOT = "audio/";
-  var MANIFEST = window.CULTURE_SHOCK_AUDIO || {};   // {"ua-1": true, ...}
+  var MANIFEST = window.CULTURE_SHOCK_AUDIO || {};   // {"ca": true, "kr": true, ...}
 
   /* ─────────────── хранилище ответов ─────────────── */
   var KEY = "culture-shock-b1-v1";
@@ -167,7 +167,7 @@
     { id: "lead", name: "Lead-in", render: renderLead },
     { id: "vocab", name: "Vocabulary", render: renderVocab },
     { id: "defs", name: "Definitions", render: renderDefs },
-    { id: "v1", name: "Video 1 · Ukraine", render: function (n) { return renderVideo(0, n); } },
+    { id: "v1", name: "Video 1 · Canada", render: function (n) { return renderVideo(0, n); } },
     { id: "v2", name: "Video 2 · Korea", render: function (n) { return renderVideo(1, n); } },
     { id: "v3", name: "Video 3 · Germany", render: function (n) { return renderVideo(2, n); } },
     { id: "mix", name: "True / False", render: renderMix },

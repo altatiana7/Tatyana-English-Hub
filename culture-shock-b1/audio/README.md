@@ -11,7 +11,7 @@ python3 -m venv .venv-tts
 .venv-tts/bin/python tools/culture-shock-tts.py
 ```
 
-Скрипт сам разбирает `data.js`, пишет `ua.mp3`, `kr.mp3`, `de.mp3` и обновляет
+Скрипт сам разбирает `data.js`, пишет `ca.mp3`, `kr.mp3`, `de.mp3` и обновляет
 `audio-manifest.js`. Повторно уже записанные файлы не перезаписываются.
 Отдельные слова и диалоги читает браузерный синтез — файлы для них не нужны.
 

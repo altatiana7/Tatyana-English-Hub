@@ -1,6 +1,6 @@
 /* Culture Shock · B1 — весь контент урока в одном файле.
    Урок написан с нуля по мотивам описания темы Culture Shock (B1):
-   три истории (Украина, Корея, Германия), лексика, аудирование, диалоги,
+   три истории (Канада, Корея, Германия), лексика, аудирование, диалоги,
    сценарии. Никаких чужих PDF и текстов — только собственный материал. */
 
 window.CULTURE_SHOCK = {
@@ -22,7 +22,7 @@ window.CULTURE_SHOCK = {
         hints: ["Weird", "Proper", "The environment", "To stare"]
       },
       {
-        q: "What would you miss about Ukraine (Russia, Norway…)? And what would you like about a foreign city?",
+        q: "What would you miss about your own country? And what would you like about a foreign city?",
         hints: ["Customs", "Shopping", "Small talk"]
       },
       {
@@ -136,29 +136,29 @@ window.CULTURE_SHOCK = {
   /* ───────────── 4–6. THREE VIDEO STORIES ───────────── */
   videos: [
     {
-      id: "ua",
-      country: "Ukraine",
-      flag: "🇺🇦",
-      city: "Kyiv",
-      speaker: "Danylo, 24, student",
+      id: "ca",
+      country: "Canada",
+      flag: "🇨🇦",
+      city: "Toronto",
+      speaker: "Mark, 24, student",
       headline: "Milk does not come in a box",
       duration: "0:19",
-      accent: "English with a Ukrainian accent",
-      audio: "audio/ua.mp3",
+      accent: "Canadian English",
+      audio: "audio/ca.mp3",
       transcript: [
-        { who: "Danylo", text: "Before I moved here, my friends said, “You will have a real culture shock in Ukraine.”" },
-        { who: "Danylo", text: "They told me about the food, the transport, the winter, everything." },
-        { who: "Danylo", text: "But honestly? The only thing that surprised me was the milk." },
-        { who: "Danylo", text: "It does not come in a carton. It comes in a plastic bag!" },
-        { who: "Danylo", text: "The first time I tried to open one, I did it the wrong way and the milk was everywhere." },
-        { who: "Danylo", text: "My neighbour watched me for a minute and then said, “Nobody showed you how to do it, did they?”" },
-        { who: "Danylo", text: "So maybe culture shock is not about big things. Sometimes it is just a bag of milk." }
+        { who: "Mark", text: "Before I moved here, my friends said, “You will have a real culture shock in Canada.”" },
+        { who: "Mark", text: "They told me about the food, the hockey, the winter, everything." },
+        { who: "Mark", text: "But honestly? The only thing that surprised me was the milk." },
+        { who: "Mark", text: "It does not come in a carton. It comes in a plastic bag!" },
+        { who: "Mark", text: "The first time I tried to open one, I did it the wrong way and the milk was everywhere." },
+        { who: "Mark", text: "My roommate watched me for a minute and then said, “Nobody showed you how to do it, did they?”" },
+        { who: "Mark", text: "So maybe culture shock is not about big things. Sometimes it is just a bag of milk." }
       ],
       questions: [
         {
-          q: "What did Danylo’s friends warn him about?",
+          q: "What did Mark’s friends warn him about?",
           options: [
-            "The food, the transport and the winter",
+            "The food, the hockey and the winter",
             "Only the milk",
             "The language at university"
           ],
@@ -173,7 +173,7 @@ window.CULTURE_SHOCK = {
           q: "What happened the first time he opened the bag?",
           options: [
             "He drank it all",
-            "His neighbour opened it for him",
+            "His roommate opened it for him",
             "He opened it the wrong way and the milk went everywhere"
           ],
           answer: 2
@@ -183,7 +183,7 @@ window.CULTURE_SHOCK = {
           options: [
             "Culture shock is about big things only",
             "Sometimes culture shock is just a bag of milk",
-            "People in Ukraine are unfriendly"
+            "People in Canada are unfriendly"
           ],
           answer: 1
         }
@@ -306,7 +306,7 @@ window.CULTURE_SHOCK = {
   comparison: {
     columns: ["Speaker / country", "What surprised them", "Why it matters"],
     rows: [
-      { speaker: "Danylo · Ukraine", what: "Milk comes in a plastic bag", why: "Everyday shopping looks different from home" },
+      { speaker: "Mark · Canada", what: "Milk comes in a plastic bag", why: "Everyday shopping looks different from home" },
       { speaker: "Ji-woo · Korea / USA", what: "Strangers smile and say hello", why: "Friendliness is a custom, not a character trait" },
       { speaker: "Lena · Germany / Britain", what: "Attached caps, no speed limit, closed Sundays", why: "Rules protect the environment and the week’s rhythm" }
     ]
@@ -314,8 +314,8 @@ window.CULTURE_SHOCK = {
 
   /* ───────────── 7. TRUE / FALSE (mix по всем видео) ───────────── */
   trueFalse: [
-    { s: "Danylo’s friends told him the milk would surprise him most.", answer: false, why: "They warned him about food, transport and winter — the milk surprised nobody but him." },
-    { s: "Danylo opened the milk bag correctly the first time.", answer: false, why: "He opened it the wrong way and the milk went everywhere." },
+    { s: "Mark’s friends told him the milk would surprise him most.", answer: false, why: "They warned him about food, hockey and winter — the milk surprised nobody but him." },
+    { s: "Mark opened the milk bag correctly the first time.", answer: false, why: "He opened it the wrong way and the milk went everywhere." },
     { s: "In Korea it is polite to keep your face calm in the street.", answer: true, why: "Ji-woo says Koreans do not usually smile at strangers." },
     { s: "Ji-woo decided that Americans are fake.", answer: false, why: "He says “we are not cold and Americans are not fake”." },
     { s: "Korean people sometimes show friendliness by offering food.", answer: true, why: "His mother gives food to everybody, even the postman." },
@@ -332,9 +332,9 @@ window.CULTURE_SHOCK = {
       title: "In the supermarket",
       lines: [
         { who: "Ben", text: "Excuse me, sorry — do you know how to open this? The milk is in a [1] , not a carton." },
-        { who: "Oksana", text: "Oh, easy. You do not [2] it. You cut the corner with scissors." },
+        { who: "Sophie", text: "Oh, easy. You do not [2] it. You cut the corner with scissors." },
         { who: "Ben", text: "That is so [3] . I’ve never seen milk like this." },
-        { who: "Oksana", text: "And for you, tea in a bag is [4] , I suppose?" },
+        { who: "Sophie", text: "And for you, tea in a bag is [4] , I suppose?" },
         { who: "Ben", text: "No, actually! But I still can’t find a [5] cup of coffee anywhere in this city." }
       ],
       gaps: ["bag", "twist", "weird", "strange", "proper"],
