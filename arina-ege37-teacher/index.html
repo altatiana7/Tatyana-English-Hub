@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teacher Hub · Арина · Разбор писем ЕГЭ 37</title>
+<style>
+:root{--blue:#0039a6;--red:#d52b1e;--ink:#18283f;--line:#d6e1f0;--green:#14663f}*{box-sizing:border-box}
+body{margin:0;background:#f4f7fc;color:var(--ink);font:17px/1.5 Arial,sans-serif}
+header{background:#fff;border-bottom:3px solid var(--red);padding:12px 3vw;display:flex;justify-content:space-between;gap:12px;align-items:center}
+header b,h1,h2{color:var(--blue)}a{color:var(--blue)}main{max-width:1080px;margin:auto;padding:20px 18px 60px}
+h1{font-size:28px;margin:0}h2{font-size:21px;margin:0 0 10px}h3{margin:8px 0;font-size:18px}p{margin:8px 0 13px}
+.panel{background:white;border:1px solid var(--line);border-radius:14px;margin:13px 0;padding:20px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+button{font:inherit;cursor:pointer;border-radius:9px;padding:10px 15px;font-weight:bold;border:1px solid #a9bad7;background:white;color:var(--blue)}
+button.active,button.primary{background:var(--blue);color:white;border-color:var(--blue)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.small{color:#586980;font-size:14px}.tag{font-size:13px;color:#435a7c;font-weight:bold;text-transform:uppercase;letter-spacing:.04em}
+.stimulus{background:#edf3ff;padding:15px;border-radius:9px;white-space:pre-line}
+.task{border-top:1px solid var(--line);padding:16px 0}
+.task:first-of-type{border-top:0}.source{font-size:20px;font-weight:bold;margin:6px 0}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+label{font-weight:bold;display:block;margin:10px 0 5px}
+input[type=text],textarea{font:17px/1.5 Arial,sans-serif;width:100%;padding:10px 12px;border:1px solid #a4b9d4;border-radius:9px;background:white;color:var(--ink)}
+textarea{min-height:115px;resize:vertical}
+.choice{display:inline-flex;align-items:center;gap:6px;border:1px solid #c5d1e1;border-radius:9px;padding:9px 12px;margin:4px 6px 4px 0;cursor:pointer}
+.choice input{accent-color:var(--blue);width:17px;height:17px}
+.feedback{margin-top:10px;padding:10px 12px;border-radius:8px;background:#f2f5fb;display:none}
+.feedback.show{display:block}.good{color:var(--green)}.bad{color:#ab291d}
+.template{white-space:pre-wrap;line-height:1.7;background:#f1f6ff;padding:18px;border-radius:12px;border-left:4px solid var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.grid>div{min-width:0}
+section[hidden]{display:none!important}
+.counter{font-weight:bold}.warn{color:#b0261a}.ok{color:var(--green)}
+@media(max-width:700px){.grid{grid-template-columns:1fr}main{padding:14px 10px}.panel{padding:14px}.source{font-size:18px}header{flex-wrap:wrap}}
+.corrections-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.correction{background:white;border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0;display:flex;flex-direction:column;gap:8px}.correction .source{font-size:17px;line-height:1.4;margin:0;font-weight:600}.correction .answer{background:#eef6f1;border-left:3px solid #14804e;padding:10px;border-radius:7px;font-size:16px;line-height:1.45}.correction .answer[hidden]{display:none}.correction .teacher-note{font-size:14px;color:#4c6074;margin-top:6px}.correction button{align-self:flex-start;padding:7px 12px;font-size:14px}.correction small{color:#5b708a}@media(max-width:720px){.corrections-grid{grid-template-columns:1fr}}</style></head><body>
+<header><b>TEACHER HUB · АРИНА · ЕГЭ 37</b><a href="../my-hub.html">← Мой хаб</a></header>
+<main><h1>Арина · Работа над ошибками · Письмо 37</h1><p class="small">Три письма Арины: School clubs, Travelling, Technology. Учительский тренажёр: исправления, разбор вопросов и работа по семишаговому шаблону памятки Арины.</p>
+<nav id="phases"><button data-phase="correct" class="active">1. Предложения</button><button data-phase="questions">2. Разбор вопросов</button><button data-phase="write">3. Шаблон и практика</button></nav>
+<section id="correct"><div class="panel"><h2>Исходный ответ → правильный вариант</h2><p>Несколько предложений на экране. Нажимай на любое предложение — справа откроется исправление и методический комментарий. Предложения без ошибок специально сохранены: их не нужно переписывать.</p><div class="row"><span id="correctProgress" class="small">20 предложений</span><button id="checkAll" class="primary">Показать все ответы</button><button id="resetCorrections">Скрыть ответы</button></div></div><div id="corrections" class="corrections-grid"></div></section>
+<section id="questions" hidden><div class="panel"><h2>Три вопроса — три разных факта</h2><p>Укажи, что не так с вопросами Арины, и напиши более точный вопрос там, где требуется. Грамматически правильный вопрос не обязательно надо исправлять.</p><div id="questionTasks"></div><button id="checkQuestions" class="primary">Показать рекомендации</button></div></section>
+<section id="write" hidden><div class="panel"><h2>Письмо строго по шаблону</h2><p>Каркас письма соответствует памятке Арины. Заполняй только содержание: три ответа на вопросы и три вопроса другу. Обращение, вступление, переходы, завершение и подпись уже стоят на правильных местах.</p>
+<label for="topic">Тема письма</label><select id="topic" style="font:inherit;padding:10px;border:1px solid #a4b9d4;border-radius:8px;width:100%"><option value="school">School clubs · Emily</option><option value="travel">Travelling · Oliver</option><option value="tech">Technology · Sophie</option></select>
+<div class="stimulus" id="stimulus"></div>
+<div class="grid" id="answerFields"></div>
+<h3>Три вопроса по теме</h3><div class="grid" id="askFields"></div>
+<div class="row"><button class="primary" id="assemble">Собрать и проверить письмо</button><button id="copyLetter">Копировать письмо</button><button id="resetDraft">Очистить поля</button><span class="counter" id="wordCount"></span></div>
+<h3>Готовое письмо</h3><div id="letter" class="template">Заполни поля и нажми «Собрать и проверить письмо».</div><div class="feedback show" id="letterFeedback">Проверка структуры появится здесь.</div>
+<p class="small">Учительская демонстрация: никаких отправок или оценок в ученический кабинет.</p>
+</div></section></main>
+<script>
+'use strict';
+const items=[
+{topic:'Technology',kind:'Ошибка формулировки',s:'For studying Russian teenagers use apps to organise their homework just like you.',a:['Russian teenagers use apps to organise their homework, just like you.','Russian teenagers use apps to organise their homework just like you.','Russian teenagers often use apps to organise their homework.'],note:'For studying звучит неестественно в начале этого предложения. В исходном вопросе спрашивали о gadgets: более полный ответ должен называть также устройства, например laptops or tablets.'},
+{topic:'Technology',kind:'Верно',s:'I think online lessons are as effective as face-to-face lessons.',a:null,note:'Грамматически правильное сравнение as ... as. Не исправляем.'},
+{topic:'Technology',kind:'Верно',s:"I can't see the difference between online lessons and face-to-face lessons.",a:null,note:'Предложение грамматически допустимо, хотя повторяет предыдущую мысль. Лучше заменить повтор конкретным аргументом.'},
+{topic:'Technology',kind:'Верно',s:'I usually put my phone away while I study.',a:null,note:'Правильно: put my phone away и while I study.'},
+{topic:'Technology',kind:'Точнее по заданию',s:'Who else takes part in the robotics competition?',a:null,note:'Вопрос уместен: Sophie собирается участвовать в конкурсе. Никакой ошибки здесь нет.'},
+{topic:'Technology',kind:'Верно',s:'Do you have your own robot?',a:null,note:'Вопрос допустим в контексте конкурса роботов. При желании можно уточнить: Are you going to use your own robot in the competition?'},
+{topic:'School clubs',kind:'Улучшение сочетаемости',s:'So, sport and art clubs are really popular among Russian teenagers.',a:['Sports and art clubs are really popular among Russian teenagers.','Sports clubs and art clubs are really popular among Russian teenagers.'],note:'Sports clubs — привычное сочетание. So в начале не требуется, но само по себе не является ошибкой.'},
+{topic:'School clubs',kind:'Верно',s:'Actually, I have never joined a school club before, but I want to.',a:null,note:'Предложение грамматически правильно и отвечает на вопрос о личном опыте.'},
+{topic:'School clubs',kind:'Верно',s:'After classes I usually do my homework and spend my time with friends.',a:null,note:'Допустимо. Более естественно: After school, I usually do my homework and spend time with my friends.'},
+{topic:'School clubs',kind:'Верно',s:'How many people are invited to the charity fair?',a:null,note:'Корректный вопрос о ярмарке, если эта информация не сообщена в письме.'},
+{topic:'School clubs',kind:'Верно',s:'Are you excited about it?',a:null,note:'Правильно построенный вопрос. Но он менее информативен, чем вопрос о мероприятии.'},
+{topic:'School clubs',kind:'Смысловой повтор',s:"Do you think you'll like it?",a:null,note:'Грамматической ошибки нет. Проблема в том, что вместе с Are you excited about it? вопрос почти дублирует запрос об отношении к мероприятию. В следующем блоке замени один вопрос конкретным.'},
+{topic:'Travelling',kind:'Ошибка порядка слов',s:"I'm glad to hear your family and you are planning a short trip during the autumn holidays.",a:["I'm glad to hear that you and your family are planning a short trip during the autumn holidays.","I'm glad to hear you and your family are planning a short trip during the autumn holidays."],note:'Естественный порядок you and your family; that факультативно.'},
+{topic:'Travelling',kind:'Опечатка',s:'I think it’s because we usually trevel together.',a:["I think it's because we usually travel together.","I think it’s because we usually travel together."],note:'trevel → travel. Причину можно выразить точнее: because we always have fun together.'},
+{topic:'Travelling',kind:'Верно',s:'In Russia, I would recommend visiting Red Square in Moscow because there are a lot of things to see.',a:null,note:'Грамматика и recommend + -ing правильные. Для более полного ответа можно назвать ещё одну достопримечательность.'},
+{topic:'Travelling',kind:'Верно',s:'The most memorable trip I have ever taken was my trip to China.',a:null,note:'Present Perfect с ever и Past Simple с was употреблены правильно.'},
+{topic:'Travelling',kind:'Неестественная формулировка',s:"It was last fall and I can't forget that.",a:["It was last autumn, and I'll never forget that trip.","It was last fall, and I'll never forget that trip."],note:'I can’t forget that не является грубой грамматической ошибкой, но конкретное that trip звучит естественнее; last autumn — британский вариант.'},
+{topic:'Travelling',kind:'Вопрос о выборе',s:'What colour of camera would you prefer?',a:['What colour camera would you prefer?','What colour would you prefer for your camera?'],note:'Oliver ещё только собирается купить камеру. Вопрос о предпочтении уместен. Исправляем именно сочетание What colour of camera.'},
+{topic:'Travelling',kind:'Сочетаемость',s:'What quality in a camera is the most important for you?',a:['Which camera feature is the most important to you?','What is the most important feature of a camera for you?','Which feature of a camera is most important to you?'],note:'Уместнее camera feature, и конструкция important to you.'},
+{topic:'Travelling',kind:'Верно',s:'Which brand of camera do you prefer?',a:null,note:'Грамматически правильный вопрос, логичный перед покупкой камеры.'}
+];
+const qTasks=[
+{topic:'Robotics competition',s:'Who else takes part in the robotics competition?',status:'Корректно',tip:'София участвует в конкурсе. Вопрос о других участниках подходит. Более предметный альтернативный вопрос: How many teams are taking part?'},
+{topic:'Robotics competition',s:'Are you excited about it?',status:'Корректно, но общий',tip:'Возможен, однако подробности конкурса лучше раскрывает: When will the competition take place?'},
+{topic:'Robotics competition',s:'Do you have your own robot?',status:'Корректно',tip:'Связан с участием в соревновании. Более конкретно: What kind of robot are you going to present?'},
+{topic:'Charity fair',s:'How many people are invited to the charity fair?',status:'Корректно',tip:'Вопрос о числе приглашённых, при отсутствии ответа в стимуле.'},
+{topic:'Charity fair',s:'Are you excited about it?',status:'Корректно, но общий',tip:'Можно оставить, но место/организация ярмарки дают более конкретную информацию.'},
+{topic:'Charity fair',s:"Do you think you'll like it?",status:'Дублирование смысла',tip:'Пересекается с Are you excited about it? Замена: What will you sell at the fair?'},
+{topic:'New camera',s:'What colour of camera would you prefer?',status:'Поправить сочетание',tip:'Oliver планирует покупку, поэтому would you prefer уместно. Исправление: What colour camera would you prefer?'},
+{topic:'New camera',s:'What quality in a camera is the most important for you?',status:'Поправить лексику',tip:'Which camera feature is the most important to you?'},
+{topic:'New camera',s:'Which brand of camera do you prefer?',status:'Корректно',tip:'Oliver выбирает камеру; вопрос о марке уместен.'}
+];
+const topics={
+school:{name:'Emily',label:'after-school clubs',ask:'the charity fair',q:["What after-school clubs are popular among Russian teenagers?","Have you ever joined a school club?","How do you usually spend your free time after classes?"],stim:"Emily has joined a photography club. She asks about after-school clubs. Her school is organising a charity fair next month. Ask three questions about the charity fair."},
+travel:{name:'Oliver',label:'travelling',ask:'your new camera',q:["Do you prefer travelling with your family or with friends?","What places in Russia would you recommend visiting?","What was the most memorable trip you have ever taken?"],stim:"Oliver's family is planning a short trip. He is THINKING OF BUYING a new camera. Ask three questions about his new camera."},
+tech:{name:'Sophie',label:'technology',ask:'the robotics competition',q:["What gadgets do Russian teenagers use for studying?","Do you think online lessons are as effective as face-to-face lessons?","How do you avoid getting distracted by your phone?"],stim:"Sophie uses an app to organise her homework. Next week she is going to take part in a robotics competition. Ask three questions about the robotics competition."}
+};
+let state={};
+try{state=JSON.parse(localStorage.getItem('arina-ege37-fix-20261108')||'{}')||{}}catch(e){state={}}
+function persist(){try{localStorage.setItem('arina-ege37-fix-20261108',JSON.stringify(state))}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function norm(s){return String(s).toLowerCase().replace(/[’]/g,"'").replace(/[.,!?]/g,'').replace(/\s+/g,' ').trim()}
+function showPhase(k){document.querySelectorAll('#phases button').forEach(x=>x.classList.toggle('active',x.dataset.phase===k));['correct','questions','write'].forEach(x=>document.getElementById(x).hidden=x!==k);window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('#phases button').forEach(b=>b.addEventListener('click',()=>showPhase(b.dataset.phase)));
+function renderCorrections(){
+const h=document.getElementById('corrections');
+h.innerHTML=items.map((o,i)=>'<article class="correction"><div class="tag">'+(i+1)+' / '+items.length+' · '+esc(o.topic)+'</div><div class="source">'+esc(o.s)+'</div><button type="button" data-reveal="'+i+'" aria-expanded="false">Показать исправление</button><div class="answer" id="ans'+i+'" hidden><strong>'+(o.a?'Как лучше написать:':'Верно — оставить без изменений')+'</strong><div>'+esc(o.a?o.a[0]:o.s)+'</div><div class="teacher-note">'+esc(o.note)+'</div></div></article>').join('');
+h.querySelectorAll('[data-reveal]').forEach(btn=>btn.addEventListener('click',()=>{const el=document.getElementById('ans'+btn.dataset.reveal);el.hidden=!el.hidden;btn.textContent=el.hidden?'Показать исправление':'Скрыть ответ';btn.setAttribute('aria-expanded',String(!el.hidden))}));
+}
+document.getElementById('checkAll').addEventListener('click',()=>{document.querySelectorAll('.answer').forEach(e=>e.hidden=false);document.querySelectorAll('[data-reveal]').forEach(b=>{b.textContent='Скрыть ответ';b.setAttribute('aria-expanded','true')})});
+document.getElementById('resetCorrections').addEventListener('click',()=>{document.querySelectorAll('.answer').forEach(e=>e.hidden=true);document.querySelectorAll('[data-reveal]').forEach(b=>{b.textContent='Показать исправление';b.setAttribute('aria-expanded','false')})});
+function renderQuestions(){document.getElementById('questionTasks').innerHTML=qTasks.map((x,i)=>'<div class="task"><div class="tag">'+esc(x.topic)+'</div><div class="source">'+esc(x.s)+'</div><label>Твой уточнённый вопрос (необязательно, если исходный подходит)</label><input type="text" id="q'+i+'" value="'+esc(state['q'+i]||'')+'"><div class="feedback" id="qf'+i+'"><b>'+esc(x.status)+'</b><div>'+esc(x.tip)+'</div></div></div>').join('');qTasks.forEach((x,i)=>document.getElementById('q'+i).addEventListener('input',e=>{state['q'+i]=e.target.value;persist()}))}
+document.getElementById('checkQuestions').addEventListener('click',()=>document.querySelectorAll('[id^="qf"]').forEach(e=>e.classList.add('show')));
+document.getElementById('topic').addEventListener('change',renderBuilder);
+function renderBuilder(){const key=document.getElementById('topic').value,t=topics[key];document.getElementById('stimulus').textContent=t.stim;document.getElementById('answerFields').innerHTML=t.q.map((q,i)=>'<div><label for="a'+i+'">Ответ '+(i+1)+'</label><div class="small">'+esc(q)+'</div><textarea id="a'+i+'" placeholder="Полный ответ"></textarea></div>').join('');document.getElementById('askFields').innerHTML=[0,1,2].map(i=>'<div><label for="ask'+i+'">Вопрос '+(i+1)+'</label><input type="text" id="ask'+i+'" placeholder="What / When / Where ...?"></div>').join('');for(let i=0;i<3;i++){for(let [id,prefix] of [['a'+i,'a'],['ask'+i,'ask']]){let e=document.getElementById(id);e.value=state[key+'-'+prefix+i]||'';e.addEventListener('input',()=>{state[key+'-'+prefix+i]=e.value;persist()})}}document.getElementById('letter').textContent='Заполни ответы и вопросы и нажми «Собрать и проверить письмо».';document.getElementById('wordCount').textContent='';document.getElementById('letterFeedback').textContent='Проверка структуры появится здесь.'}
+function wordCount(s){return (s.match(/\b[A-Za-z]+(?:['’][A-Za-z]+)?(?:-[A-Za-z]+)*/g)||[]).length}
+let lastLetter='';
+function makeLetter(){const key=document.getElementById('topic').value,t=topics[key],ans=[0,1,2].map(i=>document.getElementById('a'+i).value.trim()),ask=[0,1,2].map(i=>document.getElementById('ask'+i).value.trim());const text=['Dear '+t.name+',','Thanks for your email. It was great to hear from you again.','In your email, you asked me about '+t.label+'. Well, '+ans[0]+' As for your second question, '+ans[1]+' Also, '+ans[2],'Now I\'d like to ask you a few questions about '+t.ask+'. '+ask.join(' '),'That\'s all for now. Write back soon.','Best wishes,','Arina'].join('\n\n');lastLetter=text;document.getElementById('letter').textContent=text;const count=wordCount(text);document.getElementById('wordCount').textContent=count+' слов';document.getElementById('wordCount').className='counter '+(count>=100&&count<=140?'ok':'warn');let errors=[];ans.forEach((x,i)=>{if(!x)errors.push('Нет ответа '+(i+1)+'.');else if(x.split(/\s+/).length<4)errors.push('Ответ '+(i+1)+' слишком короткий: проверь полноту.')});ask.forEach((x,i)=>{if(!x)errors.push('Нет вопроса '+(i+1)+'.');else if(!x.endsWith('?'))errors.push('Вопрос '+(i+1)+' должен заканчиваться знаком ?.');else if(!/^(who|what|when|where|why|which|how|do|does|did|is|are|was|were|will|would|can|could|have|has|had|should)\b/i.test(x))errors.push('Проверь порядок слов в вопросе '+(i+1)+'.')});if(count<100||count>140)errors.push('Объём должен быть 100–140 слов.');if(new Set(ask.map(norm)).size!==3)errors.push('Вопросы не должны повторяться.');const f=document.getElementById('letterFeedback');f.innerHTML='<b>'+(errors.length?'Проверь письмо перед отправкой:':'Структура и базовые формальные требования соблюдены.')+'</b>'+(errors.length?'<ul>'+errors.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>':'<p>Проверь содержательную точность ответов, разные факты в вопросах и грамматику: это требует смысловой проверки.</p>');}
+document.getElementById('assemble').addEventListener('click',makeLetter);
+document.getElementById('copyLetter').addEventListener('click',async()=>{if(!lastLetter)makeLetter();try{await navigator.clipboard.writeText(lastLetter);document.getElementById('letterFeedback').insertAdjacentText('beforeend',' Письмо скопировано.')}catch(e){const r=document.createRange();r.selectNodeContents(document.getElementById('letter'));const s=window.getSelection();s.removeAllRanges();s.addRange(r)}});
+document.getElementById('resetDraft').addEventListener('click',()=>{const k=document.getElementById('topic').value;for(let i=0;i<3;i++){delete state[k+'-a'+i];delete state[k+'-ask'+i]}persist();lastLetter='';renderBuilder()});
+renderCorrections();renderQuestions();renderBuilder();
+</script></body></html>
