@@ -39,7 +39,7 @@ window.CULTURE_SHOCK = {
   /* ───────────── 2. VOCABULARY PREVIEW ───────────── */
   vocabulary: [
     {
-      word: "culture shock",
+      word: "culture shock", icon: "🌍",
       ipa: "/ˈkʌltʃə ʃɒk/",
       pos: "noun",
       meaning: "the feeling of surprise or worry you get in a new culture",
@@ -48,7 +48,7 @@ window.CULTURE_SHOCK = {
       tag: "main idea"
     },
     {
-      word: "proper",
+      word: "proper", icon: "✅",
       ipa: "/ˈprɒpə/",
       pos: "adj",
       meaning: "correct, real, the way it should be",
@@ -56,7 +56,7 @@ window.CULTURE_SHOCK = {
       example: "I couldn’t find a proper cup of tea anywhere."
     },
     {
-      word: "weird",
+      word: "weird", icon: "🤨",
       ipa: "/wɪəd/",
       pos: "adj",
       meaning: "strange and difficult to understand",
@@ -64,7 +64,7 @@ window.CULTURE_SHOCK = {
       example: "Putting milk in a bag is weird if you grew up with cartons."
     },
     {
-      word: "to trick",
+      word: "to trick", icon: "🎭",
       ipa: "/trɪk/",
       pos: "verb",
       meaning: "to make someone believe something that is not true, usually as a joke",
@@ -72,7 +72,7 @@ window.CULTURE_SHOCK = {
       example: "His friends tricked him and said there was a snake in the garden."
     },
     {
-      word: "to twist",
+      word: "to twist", icon: "🔄",
       ipa: "/twɪst/",
       pos: "verb",
       meaning: "to turn something with your hands; also to hurt a joint (an ankle, a wrist)",
@@ -80,7 +80,7 @@ window.CULTURE_SHOCK = {
       example: "I tried to twist off the bottle cap and cut my finger."
     },
     {
-      word: "cap",
+      word: "cap", icon: "🔵",
       ipa: "/kæp/",
       pos: "noun",
       meaning: "the flat cover that closes a bottle",
@@ -88,7 +88,7 @@ window.CULTURE_SHOCK = {
       example: "In Germany the bottle cap is attached to the bottle."
     },
     {
-      word: "speed sign",
+      word: "speed sign", icon: "🛣️",
       ipa: "/ˈspiːd saɪn/",
       pos: "noun",
       meaning: "a road sign that shows how fast you may drive",
@@ -96,7 +96,7 @@ window.CULTURE_SHOCK = {
       example: "I did not see any speed signs on the motorway."
     },
     {
-      word: "to stare",
+      word: "to stare", icon: "👀",
       ipa: "/steə/",
       pos: "verb",
       meaning: "to look at somebody for a long time, without looking away",
@@ -104,7 +104,7 @@ window.CULTURE_SHOCK = {
       example: "People stared at me when I spoke English in the shop."
     },
     {
-      word: "the environment",
+      word: "the environment", icon: "🌱",
       ipa: "/ði ɪnˈvaɪrənmənt/",
       pos: "noun",
       meaning: "the natural world: air, water, land, animals",
@@ -112,7 +112,7 @@ window.CULTURE_SHOCK = {
       example: "Attached caps protect the environment because they do not get lost."
     },
     {
-      word: "custom",
+      word: "custom", icon: "🤝",
       ipa: "/ˈkʌstəm/",
       pos: "noun",
       meaning: "something a group of people usually does; a tradition",
@@ -145,6 +145,8 @@ window.CULTURE_SHOCK = {
       duration: "0:19",
       accent: "Canadian English",
       audio: "audio/ca.mp3",
+      image: "img/ca-milk.webp",
+      imageAlt: "A man in a winter coat looks confused at a plastic bag of milk in a Canadian supermarket",
       transcript: [
         { who: "Mark", text: "Before I moved here, my friends said, “You will have a real culture shock in Canada.”" },
         { who: "Mark", text: "They told me about the food, the hockey, the winter, everything." },
@@ -199,6 +201,8 @@ window.CULTURE_SHOCK = {
       duration: "1:11",
       accent: "English with a Korean accent",
       audio: "audio/kr.mp3",
+      image: "img/kr-smile.webp",
+      imageAlt: "A Korean man on a New York street while a cheerful stranger waves hello",
       transcript: [
         { who: "Ji-woo", text: "The first month in America, I had one question every day: why is everybody smiling at me?" },
         { who: "Ji-woo", text: "In Korea, we do not usually smile at strangers. We keep our face calm. It is polite." },
@@ -258,6 +262,8 @@ window.CULTURE_SHOCK = {
       duration: "1:04",
       accent: "English with a German accent",
       audio: "audio/de.mp3",
+      image: "img/de-cap.webp",
+      imageAlt: "Hands holding a bottle with the cap still attached, a German motorway and a closed shop behind",
       transcript: [
         { who: "Lena", text: "Three things surprised me when I moved back to Germany after five years in Britain." },
         { who: "Lena", text: "One: the bottle cap. Here it is attached to the bottle. You twist it and it stays on. It is for the environment — so the caps do not get lost in the street." },

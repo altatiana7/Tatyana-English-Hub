@@ -221,6 +221,7 @@
       "</div><div class=\"word-grid\" id=\"wg\">";
     D.vocabulary.forEach(function (w, i) {
       html += '<div class="word">' +
+        '<span class="ico" aria-hidden="true">' + (w.icon || "•") + "</span>" +
         '<button class="say" type="button" data-say="' + esc(w.word) + '" title="Прослушать">🔊</button>' +
         '<div class="w">' + esc(w.word) + '<span class="ipa">' + esc(w.ipa) + "</span></div>" +
         '<div class="pos">' + esc(w.pos) + "</div>" +
@@ -277,7 +278,7 @@
     function paint() {
       var w = D.vocabulary[i];
       fc.classList.remove("flipped");
-      $("#fcFront", node).textContent = w.word;
+      $("#fcFront", node).innerHTML = '<span class="fc-ico">' + (w.icon || "") + "</span><span>" + esc(w.word) + "</span>";
       $("#fcMean", node).textContent = w.meaning;
       $("#fcEx", node).textContent = "“" + w.example + "”";
       $("#fcRu", node).textContent = "🇷🇺 " + w.ru;
@@ -375,7 +376,8 @@
       '<div class="player-top"><span class="flag">' + v.flag + "</span>" +
       '<div><div class="who">' + esc(v.speaker) + '</div><div class="loc">' + esc(v.city) + " · " + esc(v.accent) + "</div></div>" +
       '<span class="time">' + esc(v.duration) + "</span></div>" +
-      '<div class="screen" id="screen">' +
+      '<div class="screen" id="screen"' + (v.image ? ' style="background-image:url(\'' + v.image + '\')"' : '') + '>' +
+      '<div class="screen-scrim"></div>' +
       '<div class="inner"><div class="kicker">Video ' + (idx + 1) + " · " + esc(v.country) + "</div>" +
       "<h4>" + esc(v.headline) + "</h4>" +
       '<div class="cap">' + esc(v.speaker) + "</div></div>" +
@@ -887,8 +889,6 @@
   var nextBtn = document.getElementById("nextBtn");
   var stepName = document.getElementById("stepName");
   var progBar = document.getElementById("progBar");
-  var progPct = document.getElementById("progPct");
-  var progLabel = document.getElementById("progLabel");
 
   function render() {
     Speech.stop();
@@ -906,9 +906,7 @@
     set("cur", cur);
     var done = Object.keys(visited).length;
     var pct = Math.round(Math.min(done, STEPS.length) / STEPS.length * 100);
-    progBar.style.width = pct + "%";
-    progPct.textContent = pct + "%";
-    progLabel.textContent = "Шаг " + (cur + 1) + " из " + STEPS.length;
+    if (progBar) progBar.style.width = pct + "%";
     // переключатели видео-табов
     $$("[data-go]", host).forEach(function (b) {
       b.addEventListener("click", function () { go(Number(b.getAttribute("data-go"))); });
