@@ -6,7 +6,7 @@ window.KS=(function(){
   const T=!!window.TEACHER,PFX='maya:';
   const DB='https://lzxcmrlubhjfdhtqvqzt.supabase.co',KEY='sb_publishable_PmyZRwzWne8lqprej4XJQA_XiujtjEI';
   const H={'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'};
-  const TITLE={hw2a:'Homework 2A · Past Simple · Lost… and found?'};
+  const TITLE={hw2a:'Homework 2A · Past Simple · Lost… and found?',hw2b:'Homework 2B · On top of the world · reading + collocations'};
   const now=()=>new Date().toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
 
   /* ---------- отправка в базу ---------- */

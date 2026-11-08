@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>Maya Homework 2B</title>
+<style>
+:root{--p:#4b35ae;--p2:#7458cc;--pink:#ef5f91;--ink:#201a45;--line:#e2dbf0;--ok:#15845b;--okbg:#e7f6ef;--bad:#c4435d;--badbg:#fbeaee}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:linear-gradient(135deg,#f3efff,#effaff 55%,#f5fff1)}
+.app{height:100vh;max-width:1280px;margin:auto;padding:6px 10px 8px;display:grid;grid-template-rows:auto 1fr;gap:6px}
+.bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bar h1{margin:0;font-size:18px;color:var(--p);font-family:Arial,sans-serif}.bar h1 small{font-weight:400;color:#6b6880;font-size:13px;margin-left:6px}
+.tabs{display:flex;gap:6px;margin-left:auto}
+.tab{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:7px 14px;font:900 14px Arial,sans-serif;color:#513aad;cursor:pointer}
+.tab.active{background:var(--p2);color:#fff;border-color:var(--p2)}
+.ksbox{font-family:Georgia,serif}.ksbox .btn{border:1px solid #d9d0ef;background:#fff;border-radius:10px;padding:8px 16px;font:900 14px Arial,sans-serif;color:#4b35ae;cursor:pointer}#sendSlot .btn{border:0;border-radius:999px;padding:8px 16px;font:900 14px Arial,sans-serif;cursor:pointer}.finish{border:0;border-radius:999px;background:linear-gradient(110deg,var(--pink),var(--p2));color:#fff;padding:8px 16px;font:900 14px Arial,sans-serif;cursor:pointer}
+.screen{display:none;min-height:0;grid-template-columns:1fr 1fr;gap:10px;align-items:start}.screen .pane{max-height:100%}.screen.active{display:grid}
+.pane{min-height:0;overflow:auto;background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:16px;padding:10px 14px;box-shadow:0 8px 22px rgba(70,49,135,.08)}
+.pane h2{margin:0 0 2px;color:var(--p);font:900 17px Arial,sans-serif}
+.hint{color:#6b6880;font-size:14px;margin:0 0 8px}
+.counter{text-align:center;font:900 14px Arial,sans-serif;color:var(--p);margin-bottom:6px}
+.stem{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:20px;text-align:center;min-height:86px;display:flex;align-items:center;justify-content:center;line-height:1.4;margin-bottom:10px}
+.stem u{text-decoration:none;border-bottom:2px solid var(--p2);padding:0 14px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{border:1px solid #d9d0ef;background:#fff;border-radius:12px;padding:13px 8px;font:700 18px Georgia,serif;color:var(--ink);cursor:pointer}
+.opt:hover{background:#f7f4ff}.opt.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}.opt.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.result{text-align:center;font:900 17px Arial,sans-serif;color:var(--p);margin-top:10px}
+.story{font-size:17px;line-height:2.05}
+.gapSel{font:700 16px Georgia,serif;color:var(--p);background:#f7f4ff;border:1px dashed #9a8ad8;border-radius:8px;padding:1px 4px;margin:0 2px;cursor:pointer}
+.gapSel.ok{border-style:solid;border-color:var(--ok);background:var(--okbg);color:var(--ok);opacity:1}.gapSel.bad{border-style:solid;border-color:var(--bad);background:var(--badbg);color:var(--bad);opacity:1}
+.flashWrap{perspective:1100px;cursor:pointer;height:250px;margin:4px 0 10px}
+.flash{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}.flashWrap.f .flash{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14px;border:1px solid var(--line)}
+.front{background:#fff}.front strong{font-size:34px;color:var(--p)}.front small{margin-top:12px;color:#8a85a0;font-size:13px}
+.back{transform:rotateY(180deg);background:#f8f6ff}.back .en{font-size:22px;font-weight:900;color:var(--p)}.back .ru{font-size:19px;color:#44358f;margin-top:6px}.back .ex{font-size:16px;font-style:italic;color:#4a4f63;margin-top:10px}
+.nav{display:flex;align-items:center;justify-content:center;gap:14px}
+.arrow{width:46px;height:36px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:18px;color:var(--p);cursor:pointer}.arrow:disabled{opacity:.35;cursor:default}
+.once{font:700 12px Arial,sans-serif;color:#9a5671;margin-left:6px}
+.modal{position:fixed;inset:0;background:rgba(26,18,58,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:20}.modal.show{display:flex}
+.codeCard{width:min(520px,94vw);background:#fff;border-radius:18px;padding:18px 20px;font-family:Arial,sans-serif}.codeCard h2{margin:0 0 6px;color:var(--p)}
+.code{margin:10px 0;padding:12px;border-radius:12px;background:#f7f4ff;border:1px solid var(--line);font:900 17px Consolas,monospace;word-break:break-word}
+.codeBtns{display:flex;gap:8px;justify-content:flex-end}.codeBtns button{border:0;border-radius:10px;padding:9px 14px;font-weight:900;cursor:pointer}.copy{background:var(--p2);color:#fff}
+@media(max-width:900px){.app{height:auto}.screen.active{display:block}.pane{margin-bottom:10px}.tabs{margin-left:0}}
+
+.art{font-size:16px;line-height:1.5}.art img{float:right;width:42%;max-width:380px;margin:2px 0 8px 14px;border-radius:12px}
+.art p{margin:0 0 9px}.art .lead{color:#5b5772;font-style:italic;font-size:15.5px}.art mark{background:#fff1b8;padding:0 2px;border-radius:3px}
+.screen.read{grid-template-columns:1.35fr 1fr}.screen .pane.tall{max-height:calc(100vh - 62px)}
+.stem{font-size:21px}.opt{font-size:18px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar">
+    <h1>Maya · Homework 2B<small>On top of the world · reading and collocations</small></h1>
+    <div class="tabs">
+      <button class="tab active" data-s="s1">1 · Read + Cards</button>
+      <button class="tab" data-s="s2">2 · Practice</button>
+    </div>
+    <span id="sendSlot"></span>
+  </div>
+
+  <div class="screen read active" id="s1">
+    <section class="pane tall">
+      <h2>1 · Read the article: That’s me in the picture</h2>
+      <div class="art">
+<img src="../maya-course/media/2b-swing-book.jpg" alt="">
+<p class="lead">In a feature in <i>The Guardian</i> newspaper called ‘That’s me in the picture’, people describe a photo they were in. This photo was sent in by Christopher Morris.</p>
+<p>In 2014, when I was studying acting at university, I decided to <mark>do a Spanish course</mark> in Ecuador. One weekend, I visited a place called Baños with some friends. <mark>A big attraction</mark> there is the ‘Swing at the end of the world’. The swing is <mark>on the edge of a mountain</mark>, and there are <mark>incredible views</mark>. <mark>On a clear day</mark>, you can see a volcano, Mount Tungurahua.</p>
+<p>We <mark>rented quad bikes</mark> to <mark>ride up</mark> to the swing. The weather was beautiful – <mark>sunshine and clear skies</mark>. We were riding up the mountain on our bikes when we <mark>passed some friends coming down</mark>. ‘<mark>The volcano is active</mark> today,’ they said.</p>
+<p>The swing <mark>hangs from a treehouse</mark>. It’s just two old ropes and <mark>an old wooden seat</mark>. It was dangerous, but we all <mark>took turns</mark>. It was an amazing feeling – one minute your feet are on the ground, and the next, you’re <mark>high up in the air</mark>.</p>
+<p><mark>For a time</mark>, we were swinging on the swing and watching the smoke coming from the volcano. After 20 minutes, there was a lot more smoke and <mark>loud noises</mark>. We could see <mark>an enormous cloud of ash</mark> in the sky. One part of me was thinking, ‘This is so cool’, but the other part was thinking, ‘Are we <mark>in danger</mark>?’ The cloud started to <mark>cover the sky</mark>. I asked my friend Sean to try to <mark>take a good photo</mark> of me with the volcano <mark>in the background</mark>. When people see this photo, they say, ‘Wow, you <mark>look so relaxed</mark>.’ But I <mark>was terrified</mark>! Then we heard local people saying, ‘We have to go’, and we knew <mark>it was time to leave</mark>.</p>
+<p>I <mark>made the photo my profile picture</mark>. Some time later, I was in <mark>a doctor’s waiting room</mark>, and I was <mark>looking through</mark> a <i>National Geographic</i> magazine when I saw the photo. Sean had <mark>won a prize</mark> in <mark>a travel photo competition</mark>!</p>
+      </div>
+    </section>
+    <section class="pane">
+      <h2>2 · Cards: words and collocations from the article</h2>
+      <div class="counter" id="cCount"></div>
+      <div class="flashWrap" id="cardWrap"><div class="flash"><div class="face front"><strong id="cW"></strong><small>click the card</small></div><div class="face back"><div class="en" id="cEn"></div><div class="ru" id="cRu"></div><div class="ex" id="cEx"></div></div></div></div>
+      <div class="nav"><button class="arrow" id="cPrev">‹</button><button class="arrow" id="cNext">›</button></div>
+    </section>
+  </div>
+
+  <div class="screen" id="s2">
+    <section class="pane">
+      <h2>3 · Collocation partners <span class="once">одна попытка</span></h2>
+      <p class="hint">Which word goes with it in the article?</p>
+      <div class="counter" id="aCount"></div>
+      <div class="stem" id="aStem"></div>
+      <div class="opts" id="aOpts"></div>
+      <div class="result" id="aRes"></div>
+    </section>
+    <section class="pane">
+      <h2>4 · Collocations in new sentences <span class="once">одна попытка</span></h2>
+      <p class="hint">Choose the collocation that fits.</p>
+      <div class="counter" id="bCount"></div>
+      <div class="stem" id="bStem"></div>
+      <div class="opts" id="bOpts"></div>
+      <div class="result" id="bRes"></div>
+    </section>
+  </div>
+</div>
+
+<script src="../shared/hw-parts.js?v=1"></script><script src="send.js?v=20261108a"></script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+const KEY='maya-hw-2b-v1';
+let st={a:[],b:[],done:false};
+try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&typeof x==='object')st=Object.assign(st,x)}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}try{P.refresh()}catch(e){}}
+const P=KS.parts('hw2b',{lang:'en',
+  units:()=>[{id:'a',label:'Collocation partners',done:st.a.length>=PART.length,errors:PART.length-aScore()},
+             {id:'b',label:'Collocations in sentences',done:st.b.length>=SENT.length,errors:SENT.length-bScore()}],
+  snapshot:()=>getData()});
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===t));
+  document.querySelectorAll('.screen').forEach(p=>p.classList.toggle('active',p.id===t.dataset.s));
+});
+
+const CARDS=[
+ ["do a Spanish course","пройти курс испанского","I decided to do a Spanish course in Ecuador."],
+ ["a big attraction","главная достопримечательность","A big attraction there is the ‘Swing at the end of the world’."],
+ ["on the edge of a mountain","на краю горы","The swing is on the edge of a mountain."],
+ ["incredible views","невероятные виды","There are incredible views."],
+ ["on a clear day","в ясный день","On a clear day, you can see a volcano."],
+ ["rent quad bikes","взять напрокат квадроциклы","We rented quad bikes to ride up to the swing."],
+ ["ride up (the mountain)","подниматься в гору (на велосипеде, квадроцикле)","We were riding up the mountain on our bikes."],
+ ["sunshine and clear skies","солнце и ясное небо","The weather was beautiful – sunshine and clear skies."],
+ ["pass someone coming down","встретить по дороге того, кто спускается","We passed some friends coming down."],
+ ["the volcano is active","вулкан активен (извергается)","‘The volcano is active today,’ they said."],
+ ["hang from a treehouse","висеть на домике на дереве","The swing hangs from a treehouse."],
+ ["an old wooden seat","старое деревянное сиденье","It’s just two old ropes and an old wooden seat."],
+ ["take turns","делать по очереди","It was dangerous, but we all took turns."],
+ ["high up in the air","высоко в воздухе","The next minute, you’re high up in the air."],
+ ["for a time","какое-то время","For a time, we were swinging on the swing."],
+ ["loud noises","громкие звуки","There was a lot more smoke and loud noises."],
+ ["an enormous cloud of ash","огромное облако пепла","We could see an enormous cloud of ash in the sky."],
+ ["be in danger","быть в опасности","‘Are we in danger?’"],
+ ["cover the sky","закрыть небо","The cloud started to cover the sky."],
+ ["take a good photo","сделать хорошее фото","I asked Sean to take a good photo of me."],
+ ["in the background","на заднем плане","…with the volcano in the background."],
+ ["look relaxed","выглядеть расслабленным","‘Wow, you look so relaxed.’"],
+ ["be terrified","быть в ужасе","But I was terrified!"],
+ ["it was time to leave","пора было уходить","We knew it was time to leave."],
+ ["make it my profile picture","поставить на аватарку","I made the photo my profile picture."],
+ ["a doctor’s waiting room","приёмная врача","I was in a doctor’s waiting room."],
+ ["look through a magazine","пролистывать журнал","I was looking through a National Geographic magazine."],
+ ["win a prize","выиграть приз","Sean had won a prize."],
+ ["a travel photo competition","конкурс фотографий о путешествиях","…a prize in a travel photo competition."]
+];
+/* 3 · партнёры коллокаций (другие коллокации, чем в задании 4) */
+const PART=[
+ ["do ___",["a Spanish course","a prize","turns","the sky"],"a Spanish course"],
+ ["rent ___",["quad bikes","a prize","turns","the sky"],"quad bikes"],
+ ["take ___ (do it one after another)",["turns","views","seats","prizes"],"turns"],
+ ["win ___",["a prize","a course","turns","a seat"],"a prize"],
+ ["cover ___",["the sky","the air","the edge","the views"],"the sky"],
+ ["___ through a magazine",["look","see","watch","listen"],"look"],
+ ["on the ___ of a mountain",["edge","end","side","top"],"edge"],
+ ["an enormous cloud of ___",["ash","sand","snow","ice"],"ash"],
+ ["an old wooden ___",["seat","sky","cloud","noise"],"seat"],
+ ["high up in the ___",["air","sea","ground","floor"],"air"],
+ ["a doctor’s ___ room",["waiting","living","sitting","meeting"],"waiting"],
+ ["make the photo my profile ___",["picture","poster","frame","painting"],"picture"],
+ ["the swing hangs ___ a treehouse",["from","at","of","to"],"from"],
+ ["___ up the mountain on our bikes",["ride","drive","walk","fly"],"ride"]
+];
+/* 4 · коллокации в новых предложениях */
+const SENT=[
+ ["From the top of the hill there are ___ of the whole city.",["incredible views","loud noises","clear skies","big attractions"],"incredible views"],
+ ["The weather was perfect: ___ every day.",["sunshine and clear skies","a cloud of ash","loud noises","in the background"],"sunshine and clear skies"],
+ ["You can’t see the islands when it rains, but ___ you can see all of them.",["on a clear day","for a time","in danger","in the background"],"on a clear day"],
+ ["The old castle is ___ in this town – thousands of tourists visit it.",["a big attraction","a clear day","a waiting room","a wooden seat"],"a big attraction"],
+ ["Don’t swim there after the storm – you could be ___.",["in danger","in the background","on the edge","high up"],"in danger"],
+ ["In my passport photo, there is a white wall ___.",["in the background","in danger","on a clear day","for a time"],"in the background"],
+ ["She was nervous before the interview, but she ___.",["looked relaxed","was terrified","took turns","won a prize"],"looked relaxed"],
+ ["I hate flying. During the storm I ___!",["was terrified","looked relaxed","took a good photo","covered the sky"],"was terrified"],
+ ["At 11 p.m. our hosts started to yawn, and we knew ___.",["it was time to leave","the volcano was active","we were in the background","it was a clear day"],"it was time to leave"],
+ ["___, we sat on the beach and watched the boats. Then we went to a café.",["For a time","On a clear day","In danger","High up"],"For a time"],
+ ["We couldn’t sleep because there were ___ from the street.",["loud noises","incredible views","clear skies","wooden seats"],"loud noises"],
+ ["On our way down the hill, we ___ coming up.",["passed some tourists","rented some tourists","took some tourists","covered some tourists"],"passed some tourists"],
+ ["Scientists say ___ again: there is smoke above the mountain.",["the volcano is active","the sky is clear","the view is incredible","the seat is wooden"],"the volcano is active"],
+ ["She sent her sunset picture to ___ and won first place.",["a travel photo competition","a doctor’s waiting room","a Spanish course","a big attraction"],"a travel photo competition"]
+];
+
+function quiz(items,arr,ids,label,uid){
+  const score=()=>arr.filter((a,i)=>a===items[i][2]).length;
+  function end(){$(ids.stem).innerHTML='Готово';$(ids.opts).innerHTML='';$(ids.count).textContent='';$(ids.res).textContent=label+': '+score()+' из '+items.length}
+  function draw(){
+    const i=arr.length;if(i>=items.length||st.done||P.isSent(uid)){end();return}
+    const [q,opts,right]=items[i];let locked=false;
+    $(ids.count).textContent=(i+1)+' / '+items.length;
+    $(ids.stem).innerHTML=q.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;</u>');
+    $(ids.opts).innerHTML=shuffle(opts).map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('');
+    $(ids.opts).querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      if(locked||st.done||P.isSent(uid))return;locked=true;
+      const ok=b.dataset.v===right;arr.push(b.dataset.v);save();
+      b.classList.add(ok?'ok':'bad');
+      if(!ok)$(ids.opts).querySelectorAll('.opt').forEach(x=>{if(x.dataset.v===right)x.classList.add('ok')});
+      setTimeout(draw,ok?650:1300);
+    });
+  }
+  draw();return score;
+}
+const aScore=quiz(PART,st.a,{count:'#aCount',stem:'#aStem',opts:'#aOpts',res:'#aRes'},'Collocation partners','a');
+const bScore=quiz(SENT,st.b,{count:'#bCount',stem:'#bStem',opts:'#bOpts',res:'#bRes'},'Collocations in sentences','b');
+
+let ci=0;
+function cDraw(){const [w,r,e]=CARDS[ci];$('#cardWrap').classList.remove('f');$('#cW').textContent=w;$('#cEn').textContent=w;$('#cRu').textContent=r;$('#cEx').textContent=e;$('#cCount').textContent=(ci+1)+' / '+CARDS.length;$('#cPrev').disabled=ci===0;$('#cNext').disabled=ci===CARDS.length-1}
+$('#cardWrap').onclick=()=>$('#cardWrap').classList.toggle('f');
+$('#cPrev').onclick=()=>{if(ci>0){ci--;cDraw()}};$('#cNext').onclick=()=>{if(ci<CARDS.length-1){ci++;cDraw()}};
+cDraw();
+
+function lockAll(){st.done=true;save();
+  $('#aStem').innerHTML='Отправлено';$('#aOpts').innerHTML='';$('#aCount').textContent='';$('#aRes').textContent='Collocation partners: '+aScore()+' из '+PART.length;
+  $('#bStem').innerHTML='Отправлено';$('#bOpts').innerHTML='';$('#bCount').textContent='';$('#bRes').textContent='Collocations in sentences: '+bScore()+' из '+SENT.length;}
+function getData(){
+  const fill=q=>q.replace('___','_____');
+  const sec=(name,items,ans,score)=>({name,score,max:items.length,items:items.map((q,i)=>({n:i+1,q:fill(q[0]),a:ans[i]===undefined?'':ans[i],right:q[2]}))});
+  const sections=[sec('Collocation partners',PART,st.a,aScore()),sec('Collocations in new sentences',SENT,st.b,bScore())];
+  const total=sections.reduce((s,x)=>s+x.score,0),max=sections.reduce((s,x)=>s+x.max,0);
+  return {summary:'A '+aScore()+'/'+PART.length+' · B '+bScore()+'/'+SENT.length,total,max,sections};
+}
+$('#sendSlot').appendChild(P.bar(null,{compact:true}));
+if(KS.sent('hw2b')&&!st.done)lockAll();
+window.scrollTo(0,0);
+})();
+</script>
+<script src="../shared/hw-lock.js?v=20261104b"></script><script>HWLock.page({id:'maya:hw2b',home:'index.html',keep:'#s1',hide:['.tabs']});</script><script src="../shared/page-label.js?v=20261104"></script>
+</body>
+</html>
