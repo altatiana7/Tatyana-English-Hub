@@ -146,7 +146,7 @@ window.CULTURE_SHOCK = {
       accent: "Canadian English",
       audio: "audio/ca.mp3",
       image: "img/ca-milk.webp",
-      imageAlt: "A man in a winter coat looks confused at a plastic bag of milk in a Canadian supermarket",
+      imageAlt: "Photograph: a man in a black winter parka holds a plastic bag of milk in a supermarket aisle, spilled milk on the floor, shelves full of bagged milk behind him",
       transcript: [
         { who: "Mark", text: "Before I moved here, my friends said, “You will have a real culture shock in Canada.”" },
         { who: "Mark", text: "They told me about the food, the hockey, the winter, everything." },
@@ -202,7 +202,7 @@ window.CULTURE_SHOCK = {
       accent: "English with a Korean accent",
       audio: "audio/kr.mp3",
       image: "img/kr-smile.webp",
-      imageAlt: "A Korean man on a New York street while a cheerful stranger waves hello",
+      imageAlt: "Photograph: a young Korean man with a backpack looks uncomfortable while a friendly stranger in a yellow jacket waves hello on a New York street",
       transcript: [
         { who: "Ji-woo", text: "The first month in America, I had one question every day: why is everybody smiling at me?" },
         { who: "Ji-woo", text: "In Korea, we do not usually smile at strangers. We keep our face calm. It is polite." },
@@ -263,7 +263,7 @@ window.CULTURE_SHOCK = {
       accent: "English with a German accent",
       audio: "audio/de.mp3",
       image: "img/de-cap.webp",
-      imageAlt: "Hands holding a bottle with the cap still attached, a German motorway and a closed shop behind",
+      imageAlt: "Photograph: a hand holds a plastic bottle whose cap is attached by a hinge, with a German autobahn and a closed shop with a roller shutter behind",
       transcript: [
         { who: "Lena", text: "Three things surprised me when I moved back to Germany after five years in Britain." },
         { who: "Lena", text: "One: the bottle cap. Here it is attached to the bottle. You twist it and it stays on. It is for the environment — so the caps do not get lost in the street." },
