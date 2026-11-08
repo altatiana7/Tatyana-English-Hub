@@ -170,7 +170,8 @@
 <script>(function(){const L=document.getElementById('inList'),C=document.getElementById('inCnt'),B=document.getElementById('inbox'),P=document.getElementById('inPanel'),T=document.getElementById('inToggle'),A=document.getElementById('inArrow');let rows=[];
 const MON=['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
 function esc(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-function row(r,n){return '<div class="r'+(n?' new':'')+'">'+(n?'<span class="nw">NEW</span>':'<span>✓</span>')+'<span>'+esc(HWSent.NAMES[r.student]||r.student)+' · '+esc(r.title)+'</span><span class="t">'+new Date(r.at).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+'</span></div>'}
+const LINK={gabi:p=>'gabi-homework/teacher-check.html?open='+encodeURIComponent(p),maya:()=>'maya-teacher-r7k2/'};
+function row(r,n){const u=LINK[r.student]&&LINK[r.student](r.page);return (u?'<a href="'+u+'" target="_blank" style="color:inherit;text-decoration:none">':'')+'<div class="r'+(n?' new':'')+'">'+(n?'<span class="nw">NEW</span>':'<span>✓</span>')+'<span>'+esc(HWSent.NAMES[r.student]||r.student)+' · '+esc(r.title)+'</span><span class="t">'+new Date(r.at).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+(u?' · открыть':'')+'</span></div>'+(u?'</a>':'')}
 function draw(){const seen=HWSent.seen();const nw=rows.filter(r=>!seen.has(r.key)),old=rows.filter(r=>seen.has(r.key));
  C.hidden=!nw.length;C.textContent=nw.length?nw.length+' новых':'';B.classList.toggle('has',nw.length>0);
  let h=nw.length?nw.map(r=>row(r,true)).join(''):'<div style="padding:4px 0">Новых работ нет.</div>';
