@@ -1,194 +1,1615 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head><meta name="robots" content="noindex,nofollow">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Maya · Funny Travel Stories</title>
-<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<title>Funny Travel Stories — Past Simple</title>
 <style>
-:root{--ink:#1c2236;--muted:#5d6478;--line:#e4ded3;--ok:#4f8a5f;--okbg:#e6efe7;--no:#a9443a;--nobg:#f6e7e3;--gold:#b8955a;--blue:#3e5c76;--accent:#8a3d2f}
 *{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{background:#f7f5f1;color:var(--ink);font-family:'PT Serif',Georgia,'Times New Roman',serif;font-size:17px;display:flex;flex-direction:column}
-button{font:inherit;cursor:pointer;color:inherit}
-.top{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:8px 14px;background:#fbf7f2;border-bottom:1px solid #eadfd2;flex-wrap:wrap}
-.top h1{margin:0;font-size:19px;font-weight:400;font-style:italic;flex:1;min-width:200px}
-.top .who{font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;color:#4f46c4;background:#ece9ff;border-radius:99px;padding:5px 10px}
-.pbtn{border:1px solid #d6c4b2;color:var(--accent);background:#fff;border-radius:99px;padding:6px 14px;font-size:15px;white-space:nowrap}
-.pbtn:hover{background:#fff6ef}
-.pbtn.main{background:var(--accent);color:#fff;border-color:var(--accent)}
-main{flex:1;min-height:0;overflow:auto;padding:12px}
+:root{
+  --navy:#0f2537;
+  --navy-2:#193852;
+  --orange:#f25c05;
+  --orange-2:#ff7a29;
+  --cream:#fffdf8;
+  --sand:#f6efe2;
+  --border:#e8dcc8;
+  --green:#238636;
+  --green-bg:#d3f5dd;
+  --red:#c92a2a;
+  --red-bg:#ffd8d8;
+  --sky:#0b7285;
+  --shadow:0 12px 30px rgba(10,28,46,.26);
+  --shadow-sm:0 4px 14px rgba(10,28,46,.13);
+}
+html,body{min-height:100%;margin:0}
+body{
+  font-family:'Poppins','Segoe UI',system-ui,-apple-system,Arial,sans-serif;
+  color:var(--navy);
+  background-color:#cbe7f5;
+  background-image:
+    linear-gradient(180deg, rgba(215,240,255,.52) 0%, rgba(255,255,255,.12) 28%, rgba(12,32,50,.18) 100%),
+    var(--bg-url);
+  background-size:cover;
+  background-position:center center;
+  background-attachment:fixed;
+  overflow-x:hidden;
+}
 
-/* people */
-.people{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:1100px;margin:0 auto}
-.person{border:1px solid var(--line);background:#fff;border-radius:14px;padding:8px;text-align:left;transition:transform .15s,box-shadow .15s;position:relative}
-.person:hover{transform:translateY(-3px);box-shadow:0 8px 18px #1f2d3d1f}
-.person img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block}
-.person b{display:block;font-size:18px;margin-top:6px}
-.person small{color:var(--muted);font-size:14px}
-.person.done{border-color:var(--ok);box-shadow:inset 0 0 0 2px var(--ok)}
-.person.done::after{content:"Done";position:absolute;top:14px;left:14px;background:var(--ok);color:#fff;font:700 12px Arial,sans-serif;padding:3px 9px;border-radius:99px}
+/* Floating top bar */
+.topbar{
+  max-width:1180px;
+  margin:0 auto;
+  padding:16px 22px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  position:relative;
+  z-index:5;
+}
+.top-grp{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 
-/* story screen */
-.story{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:12px;max-width:1150px;margin:0 auto;align-items:start}
-.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
-.ph{position:relative}
-.ph img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;display:block}
-.ph .q{position:absolute;left:8px;right:8px;bottom:8px;background:rgba(20,22,34,.72);color:#fff;border-radius:8px;padding:7px 10px;font-size:16px;line-height:1.35}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
-.txt{margin:10px 0 0;line-height:1.6;font-size:16px;background:#faf7f1;border-radius:10px;padding:10px 12px}
-.txt[hidden]{display:none}
-.lab{font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin:12px 0 6px}
+.glass-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  color:var(--navy);
+  border:2px solid rgba(255,255,255,.95);
+  border-radius:999px;
+  padding:8px 16px;
+  font:600 14px/1.2 inherit;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(12,32,52,.18);
+  transition:transform .16s ease,box-shadow .16s ease,background .16s ease;
+  user-select:none;
+}
+.glass-pill:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(12,32,52,.25);background:#fff}
+.glass-pill:active{transform:translateY(0)}
+.glass-pill svg{width:16px;height:16px;flex:none}
+.glass-pill.orange{
+  background:linear-gradient(135deg,#ff6b1a,#e85002);
+  color:#fff;
+  border-color:rgba(255,255,255,.45);
+  box-shadow:0 6px 18px rgba(232,80,2,.38);
+}
+.glass-pill.orange:hover{background:linear-gradient(135deg,#ff792e,#f25c05)}
+.glass-pill.dark{
+  background:var(--navy);
+  color:#fff;
+  border-color:var(--navy);
+}
 
-/* quizlet */
-.ql{perspective:1100px;cursor:pointer;height:150px;position:relative}
-.ql .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
-.ql.f .in{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px 44px}
-.front{background:#f3efe8;border:2px solid #e9d7ca}
-.front strong{font-size:26px}
-.back{transform:rotateY(180deg);background:#faf4ef;border:2px solid #d6a68f}
-.back .ru{font-size:20px;color:#7a3f2e;font-weight:700}
-.back .ex{font-size:16px;font-style:italic;color:#4a4f63;margin-top:6px}
-.qnav{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:8px}
-.arrow{width:44px;height:34px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:18px}
-.arrow:disabled{opacity:.35}
-.cnt{color:var(--muted);font-size:15px;min-width:54px;text-align:center}
+#app{
+  max-width:1080px;
+  margin:0 auto;
+  padding:6px 22px 44px;
+  position:relative;
+  z-index:2;
+}
+.fade-in{animation:slideUp .42s cubic-bezier(.2,.8,.2,1) both}
+/* A softly frosted travel-journal mat keeps the portraits distinct from the scenery. */
+.home-stage{
+  position:relative;
+  isolation:isolate;
+  padding:clamp(12px,2vw,22px);
+  border-radius:30px;
+  border:1.5px solid rgba(255,255,255,.86);
+  background:linear-gradient(145deg,rgba(255,253,248,.90),rgba(235,244,245,.84));
+  box-shadow:0 18px 48px rgba(10,28,46,.30),inset 0 1px 0 rgba(255,255,255,.92);
+  -webkit-backdrop-filter:blur(10px) saturate(.84);
+  backdrop-filter:blur(10px) saturate(.84);
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
-/* tasks */
-.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
-.tab{border:0;border-radius:12px;padding:10px 8px;text-align:left;color:var(--ink)}
-.tab small{display:block;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;color:#5d6478}
-.tab strong{display:block;font-size:17px;margin-top:2px}
-.t1{background:#dcf4e7}.t2{background:#e4e6fb}.t3{background:#fde4ec}
-.tab.on{outline:3px solid #1f2d3d55}
-.tv{display:none}.tv.on{display:block}
-.qa{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;cursor:pointer;background:#fff}
-.qa:hover{background:#fcfaf6}
-.qa .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font:700 14px Arial,sans-serif}
-.qa .q{font-size:18px;font-weight:700}
-.qa .a{display:none;color:var(--ok);font-weight:700;margin-top:4px}
-.qa.open .a{display:block}
-.sent{background:#faf7f1;border-radius:12px;padding:18px;font-size:22px;text-align:center;min-height:96px;display:flex;align-items:center;justify-content:center;line-height:1.4;margin-bottom:10px}
-.sent u{text-decoration:none;border-bottom:2px solid var(--blue);padding:0 18px}
-.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.ans{border:1px solid #d6dbe4;background:#fff;border-radius:12px;padding:16px 10px;font-size:20px;min-height:64px}
-.ans:hover{background:#f6f8fb}
-.ans.ok{background:var(--okbg);border-color:var(--ok)}
-.ans.no{background:var(--nobg);border-color:var(--no)}
-.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:15px;margin-bottom:8px}
-.bar2{height:6px;background:#ece7de;border-radius:99px;overflow:hidden;margin-bottom:10px}
-.bar2 i{display:block;height:100%;background:var(--gold);transition:width .3s}
-.res{text-align:center;font-size:22px;padding:20px 0}
-.res small{display:block;font-size:15px;color:var(--muted);margin-top:6px}
-@media (max-width:820px){.people{grid-template-columns:repeat(2,minmax(0,1fr))}.story{grid-template-columns:1fr}}
+/* Home Hero — inspired by cast showcase + world travel */
+.hero{
+  text-align:center;
+  margin:2px auto 20px;
+  max-width:980px;
+}
+.hero-title-row{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:4px 18px;
+  border-radius:24px;
+}
+.hero-title{
+  margin:0;
+  font-size:clamp(30px,4.6vw,50px);
+  font-weight:900;
+  letter-spacing:-.8px;
+  line-height:1.08;
+  color:var(--navy);
+  text-shadow:0 2px 14px rgba(255,255,255,.92),0 1px 2px rgba(255,255,255,.95);
+}
+.hero-title .accent{
+  color:var(--orange);
+  text-shadow:0 2px 14px rgba(255,255,255,.92),0 1px 2px rgba(255,255,255,.95);
+}
+.vol-badge{
+  background:var(--navy);
+  color:#fff;
+  font-size:clamp(14px,1.8vw,19px);
+  font-weight:800;
+  padding:6px 16px;
+  border-radius:999px;
+  box-shadow:0 4px 12px rgba(15,37,55,.28);
+  letter-spacing:.2px;
+}
+.hero-subrow{
+  margin-top:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.hero-banner{
+  background:rgba(255,255,255,.95);
+  backdrop-filter:blur(8px);
+  border-radius:999px;
+  padding:9px 22px;
+  font-size:15px;
+  font-weight:600;
+  color:var(--navy);
+  box-shadow:0 4px 16px rgba(12,32,52,.16);
+  border:2px solid rgba(255,255,255,.95);
+}
+
+/* 4x2 Portrait Cast Grid */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-top:16px;
+}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr);gap:15px}}
+@media(max-width:460px){.cards{grid-template-columns:repeat(2,1fr);gap:10px}}
+
+.card{
+  position:relative;
+  aspect-ratio:1/1;
+  border-radius:20px;
+  overflow:hidden;
+  border:3.5px solid #fff;
+  background:#dce8f0;
+  cursor:pointer;
+  box-shadow:var(--shadow);
+  animation:popIn .48s cubic-bezier(.2,.8,.2,1) both;
+  transition:transform .22s cubic-bezier(.2,.8,.2,1),box-shadow .22s ease,border-color .2s;
+  user-select:none;
+}
+@keyframes popIn{from{opacity:0;transform:scale(.9) translateY(12px)}to{opacity:1;transform:none}}
+.card:nth-child(2){animation-delay:.05s}
+.card:nth-child(3){animation-delay:.10s}
+.card:nth-child(4){animation-delay:.15s}
+.card:nth-child(5){animation-delay:.20s}
+.card:nth-child(6){animation-delay:.25s}
+.card:nth-child(7){animation-delay:.30s}
+.card:nth-child(8){animation-delay:.35s}
+
+.card:hover{
+  transform:translateY(-7px) scale(1.015);
+  box-shadow:0 20px 36px rgba(8,24,40,.38);
+}
+.card.d{border-color:#4cd964}
+.card .ph{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .38s ease;
+}
+.card:hover .ph{transform:scale(1.07)}
+
+.card-shade{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(10,25,40,.32) 0%, rgba(10,25,40,0) 30%, rgba(10,25,40,0) 48%, rgba(8,20,34,.88) 100%);
+  pointer-events:none;
+}
+.card-route{
+  position:absolute;
+  top:10px;
+  left:10px;
+  background:rgba(15,37,55,.78);
+  backdrop-filter:blur(6px);
+  color:#fff;
+  font-size:11.5px;
+  font-weight:700;
+  padding:4px 10px;
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  border:1px solid rgba(255,255,255,.25);
+  max-width:calc(100% - 58px);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.card-voice{
+  position:absolute;
+  top:10px;
+  right:10px;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  font-weight:800;
+  color:#fff;
+  backdrop-filter:blur(6px);
+  border:1.5px solid rgba(255,255,255,.55);
+  transition:transform .2s,background .2s;
+}
+.card-voice.f{background:rgba(214,51,108,.85)}
+.card-voice.m{background:rgba(24,100,171,.85)}
+.card:hover .card-voice{transform:scale(1.1)}
+
+.card-stamp{
+  position:absolute;
+  top:46px;
+  right:10px;
+  background:#238636;
+  color:#fff;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.6px;
+  padding:3px 9px;
+  border-radius:8px;
+  border:1.5px dashed rgba(255,255,255,.8);
+  transform:rotate(-6deg);
+  box-shadow:0 3px 10px rgba(0,0,0,.25);
+}
+
+.card-info{
+  position:absolute;
+  left:14px;
+  right:14px;
+  bottom:12px;
+  color:#fff;
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:8px;
+}
+.card-name{
+  font-size:clamp(20px,2.2vw,27px);
+  font-weight:800;
+  line-height:1.08;
+  letter-spacing:-.3px;
+  text-shadow:0 2px 8px rgba(0,0,0,.65);
+}
+.card-sub{
+  font-size:12.5px;
+  font-weight:600;
+  opacity:.92;
+  margin-top:2px;
+  text-shadow:0 1px 4px rgba(0,0,0,.65);
+}
+.card-go{
+  background:var(--orange);
+  color:#fff;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:none;
+  opacity:0;
+  transform:translateX(-6px);
+  transition:opacity .2s,transform .2s;
+  box-shadow:0 4px 10px rgba(0,0,0,.3);
+}
+.card:hover .card-go{opacity:1;transform:none}
+.clk{animation:bounce .28s}@keyframes bounce{45%{transform:scale(.94)}100%{transform:scale(1)}}
+
+/* Boarding Pass Header inside Lesson */
+.boarding{
+  background:rgba(255,252,245,.96);
+  backdrop-filter:blur(12px);
+  border-radius:22px;
+  border:2px solid #fff;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  margin-bottom:18px;
+}
+.airmail-bar{
+  height:7px;
+  background:repeating-linear-gradient(
+    -45deg,
+    #e8590c 0 14px,
+    #fffdf8 14px 22px,
+    #193852 22px 36px,
+    #fffdf8 36px 44px
+  );
+}
+.bp-top{
+  padding:16px 22px 12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  flex-wrap:wrap;
+  border-bottom:2px dashed var(--border);
+}
+.bp-route{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.bp-av{
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2.5px solid var(--orange);
+  box-shadow:0 3px 8px rgba(0,0,0,.15);
+}
+.bp-pass{
+  font-size:11.5px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:1.1px;
+  color:#6c7a89;
+}
+.bp-cities{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:18px;
+  font-weight:800;
+  color:var(--navy);
+}
+.bp-plane{
+  color:var(--orange);
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-size:14px;
+}
+.voice-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:4px 11px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+.voice-tag.f{background:#ffe3ec;color:#a61e4d}
+.voice-tag.m{background:#dbeafe;color:#1e40af}
+
+.bp-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{
+  border:2px solid var(--border);
+  background:#fff;
+  border-radius:999px;
+  padding:8px 16px;
+  font:700 14px/1.2 inherit;
+  cursor:pointer;
+  color:var(--navy);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:transform .15s,box-shadow .15s,border-color .15s,background .15s;
+}
+.pill:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,.1);border-color:#d0bfa6}
+.pill.next{
+  background:linear-gradient(135deg,#ff6b1a,#e85002);
+  color:#fff;
+  border-color:transparent;
+  animation:glow 2s infinite;
+}
+@keyframes glow{50%{box-shadow:0 0 0 6px rgba(242,92,5,.24)}}
+
+.bp-steps{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:10px 22px;
+  background:rgba(246,239,226,.65);
+  overflow-x:auto;
+}
+.st-btn{
+  border:none;
+  background:transparent;
+  padding:7px 13px;
+  border-radius:999px;
+  font:700 13px/1.2 inherit;
+  color:#5c6f82;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background .18s,color .18s;
+}
+.st-btn:hover{background:rgba(255,255,255,.8);color:var(--navy)}
+.st-btn.active{
+  background:var(--navy);
+  color:#fff;
+  box-shadow:0 2px 8px rgba(15,37,55,.22);
+}
+.bp-head-body{
+  padding:14px 22px 18px;
+}
+.bp-head-body h1{
+  margin:0;
+  font-size:clamp(22px,3vw,29px);
+  font-weight:800;
+  color:var(--navy);
+}
+.bp-head-body .sub{
+  margin:4px 0 0;
+  color:#526477;
+  font-size:15px;
+  font-weight:500;
+}
+
+/* Postcard & Exercise Boxes */
+.postcard{
+  position:relative;
+  background:rgba(255,253,248,.96);
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:16px;
+  border:2px solid #fff;
+  box-shadow:var(--shadow);
+}
+.postmark{
+  position:absolute;
+  top:16px;
+  right:18px;
+  border:2px dashed rgba(232,89,12,.45);
+  color:rgba(232,89,12,.78);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1px;
+  padding:5px 10px;
+  border-radius:8px;
+  transform:rotate(4deg);
+  pointer-events:none;
+}
+@media(max-width:600px){.postmark{display:none}}
+
+.player-row{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.av-wrap{
+  position:relative;
+  flex:none;
+}
+.av{
+  width:96px;
+  height:96px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid #fff;
+  box-shadow:0 6px 18px rgba(15,37,55,.22);
+  display:block;
+}
+.av-wrap.playing::after{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  border-radius:50%;
+  border:3px solid var(--orange);
+  animation:ringPulse 1.3s ease-out infinite;
+}
+@keyframes ringPulse{0%{transform:scale(.96);opacity:1}100%{transform:scale(1.14);opacity:0}}
+
+.audio-ctrl{
+  flex:1;
+  min-width:240px;
+}
+.audio-btns{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+.play-main{
+  background:linear-gradient(135deg,#ff6b1a,#e85002);
+  color:#fff;
+  border:none;
+  border-radius:999px;
+  padding:10px 20px;
+  font:700 15px/1.2 inherit;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  box-shadow:0 5px 14px rgba(232,80,2,.32);
+  transition:transform .15s,box-shadow .15s;
+}
+.play-main:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(232,80,2,.4)}
+.scrub-wrap{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.scrub{
+  flex:1;
+  height:9px;
+  background:#e9dfd0;
+  border-radius:999px;
+  overflow:hidden;
+  cursor:pointer;
+  position:relative;
+}
+.scrub i{
+  display:block;
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--navy),var(--orange));
+  border-radius:999px;
+  transition:width .1s linear;
+}
+.time-lbl{
+  font-size:12.5px;
+  font-weight:700;
+  color:#5c6f82;
+  min-width:74px;
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+
+.story{
+  font-size:18.5px;
+  font-weight:450;
+  line-height:1.75;
+  margin:16px 0 0;
+  padding:16px 18px;
+  background:var(--sand);
+  border-left:4px solid var(--orange);
+  border-radius:12px;
+  color:var(--navy);
+}
+.story mark.vb{
+  background:#ffe0b2;
+  color:#9c3600;
+  font-weight:700;
+  padding:1px 6px;
+  border-radius:6px;
+}
+.hid{display:none}
+
+/* 3D Luggage-Tag / Postcard Flashcards */
+.sec-label{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin:18px 2px 10px;
+}
+.sec-label h3{
+  margin:0;
+  font-size:16px;
+  font-weight:800;
+  color:var(--navy);
+  background:rgba(255,255,255,.9);
+  padding:6px 14px;
+  border-radius:999px;
+  box-shadow:var(--shadow-sm);
+}
+.cnt{
+  margin:0;
+  font-weight:800;
+  font-size:14px;
+  color:var(--orange);
+  background:rgba(255,255,255,.92);
+  padding:6px 14px;
+  border-radius:999px;
+  box-shadow:var(--shadow-sm);
+}
+.fgrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(185px,1fr));
+  gap:14px;
+}
+.fc{perspective:950px;height:126px;cursor:pointer;user-select:none}
+.fi{position:relative;width:100%;height:100%;transition:transform .55s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.fc.f .fi{transform:rotateY(180deg)}
+.ff,.fb{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  border-radius:16px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:21px;
+  font-weight:800;
+  text-align:center;
+  padding:12px;
+  box-shadow:0 6px 18px rgba(10,28,46,.22);
+  border:2.5px solid rgba(255,255,255,.85);
+}
+.ff{
+  background:linear-gradient(145deg,#12293d,#1e4363);
+  color:#fff;
+}
+.ff small{font-size:12px;opacity:.72;font-weight:500;margin-top:7px}
+.fb{
+  background:linear-gradient(145deg,#f25c05,#ff7f36);
+  color:#fff;
+  transform:rotateY(180deg);
+}
+.fb small{font-size:11.5px;opacity:.85;font-weight:600;margin-top:6px}
+
+/* Step 1: Comprehension Ticket Rows */
+.row{
+  display:flex;
+  background:rgba(255,253,248,.96);
+  border-radius:16px;
+  margin-bottom:12px;
+  box-shadow:var(--shadow-sm);
+  border:2px solid #fff;
+  overflow:hidden;
+  cursor:pointer;
+  min-height:84px;
+  animation:slideUp .35s ease both;
+  transition:transform .16s ease,box-shadow .16s ease;
+}
+.row:hover{transform:translateX(6px);box-shadow:var(--shadow)}
+.num{
+  background:var(--navy);
+  color:#fff;
+  font-size:24px;
+  font-weight:800;
+  width:56px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:none;
+}
+.q{
+  flex:1;
+  padding:14px 20px;
+  font-size:20px;
+  font-weight:700;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.q-hint{font-size:12.5px;font-weight:600;color:#7a8b9c;margin-top:3px}
+.ans{font-size:17.5px;font-weight:700;color:var(--green);margin-top:6px}
+.rp{
+  padding:0 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  font-size:13.5px;
+  font-weight:800;
+  color:var(--orange);
+  border-left:2px dashed var(--border);
+  background:rgba(246,239,226,.5);
+  transition:background .15s;
+}
+.rp:hover{background:#ffe8d6}
+
+/* Step 2, 3, 4 Boxes */
+.box{
+  background:rgba(255,253,248,.96);
+  border-radius:16px;
+  padding:18px 20px;
+  margin-bottom:12px;
+  box-shadow:var(--shadow-sm);
+  border:2px solid #fff;
+  font-size:19px;
+  font-weight:650;
+  line-height:1.5;
+}
+.o{
+  display:inline-block;
+  border:2px solid var(--border);
+  background:var(--sand);
+  border-radius:12px;
+  padding:7px 18px;
+  margin:8px 8px 0 0;
+  cursor:pointer;
+  font-size:17px;
+  font-weight:700;
+  transition:transform .14s,background .18s,border-color .18s;
+  user-select:none;
+}
+.o:hover{transform:scale(1.05);background:#fff;border-color:#cbb89d}
+.ok{background:var(--green-bg)!important;border-color:var(--green)!important;color:#14532d!important;animation:pulse .45s}
+.bad{background:var(--red-bg)!important;border-color:var(--red)!important;color:#7f1d1d!important;animation:shake .38s}
+@keyframes pulse{50%{transform:scale(1.08)}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+input.gap-in{
+  font:700 18px inherit;
+  padding:5px 12px;
+  border:2px solid #d5c5ad;
+  background:#fff;
+  border-radius:10px;
+  width:155px;
+  color:var(--navy);
+  margin:0 4px;
+  transition:border-color .15s,box-shadow .15s;
+}
+input.gap-in:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(242,92,5,.18)}
+.gap-ans{
+  display:inline-block;
+  margin-left:8px;
+  font-size:15px;
+  font-weight:800;
+  color:var(--green);
+}
+.check-bar{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:14px;
+  background:rgba(255,255,255,.92);
+  padding:12px 18px;
+  border-radius:16px;
+  box-shadow:var(--shadow-sm);
+}
+
+/* Modals (Teacher Notes, Grammar Guide, Bonus Round) */
+.modal-bg{
+  position:fixed;
+  inset:0;
+  background:rgba(9,22,36,.62);
+  backdrop-filter:blur(5px);
+  z-index:80;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  animation:fadeIn .2s ease;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal{
+  background:var(--cream);
+  border-radius:22px;
+  max-width:740px;
+  width:100%;
+  max-height:88vh;
+  overflow-y:auto;
+  box-shadow:0 24px 60px rgba(0,0,0,.42);
+  border:3px solid #fff;
+}
+.modal-hd{
+  padding:18px 24px;
+  background:var(--navy);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  position:sticky;
+  top:0;
+  z-index:2;
+}
+.modal-hd h2{margin:0;font-size:21px;font-weight:800}
+.close-x{
+  background:rgba(255,255,255,.16);
+  color:#fff;
+  border:none;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  font-size:18px;
+  font-weight:800;
+  cursor:pointer;
+}
+.close-x:hover{background:rgba(255,255,255,.28)}
+.modal-bd{padding:22px 24px;line-height:1.6;font-size:15.5px}
+.modal-bd h3{margin:16px 0 6px;color:var(--orange);font-size:16.5px}
+.modal-bd h3:first-child{margin-top:0}
+.vtable{width:100%;border-collapse:collapse;margin-top:8px;font-size:14.5px}
+.vtable th,.vtable td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left}
+.vtable th{background:var(--sand);font-weight:800}
+
+/* Bonus Round Grid */
+.b-choices{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-top:14px;
+}
+@media(max-width:520px){.b-choices{grid-template-columns:1fr}}
+.b-opt{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 14px;
+  border-radius:14px;
+  border:2px solid var(--border);
+  background:#fff;
+  cursor:pointer;
+  font:700 16px inherit;
+  color:var(--navy);
+  transition:transform .14s,border-color .15s,background .15s;
+}
+.b-opt:hover{transform:translateY(-2px);border-color:var(--orange)}
+.b-opt img{width:48px;height:48px;border-radius:50%;object-fit:cover;flex:none}
+
+.conf{position:fixed;top:-20px;width:10px;height:14px;z-index:120;border-radius:2px;animation:fall 2.3s linear forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(106vh) rotate(720deg);opacity:.85}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div class="top">
-  <button class="pbtn" id="toLesson" hidden>‹ Lesson 2B</button>
-  <h1 id="ttl">Funny Travel Stories · Past Simple</h1>
-  <span class="who" id="who" hidden></span>
-  <button class="pbtn" id="toPeople" hidden>‹ All stories</button>
-  <button class="pbtn main" id="nextP" hidden>Next story ›</button>
-</div>
-<main id="main"></main>
+<div class="topbar" id="topbar"></div>
+<div id="app"></div>
+<div id="modalRoot"></div>
 
 <script>
-const D=[{"k":"anna","n":"Anna","c":"Germany","t":"Rome","s":"Last summer I went to Rome with my sister. We lost our map, so we asked an old man for help. He smiled and walked with us for an hour. Finally we arrived at a small restaurant. It was his son's restaurant! We ate pasta for free and the whole family sang for us.","w":[["lose → lost","потерять"],["ask → asked","спросить"],["arrive → arrived","прибыть"],["sing → sang","петь"],["for free","бесплатно"]],"l":[["Where did Anna go?","She went to Rome."],["Who did she go with?","With her sister."],["What did they lose?","Their map."],["Why was dinner special?","It was free and the family sang."]],"ch":[["We ___ our map.",["lost","losed","lose"],0],["He ___ with us for an hour.",["walk","walked","walks"],1],["The family ___ for us.",["singed","sung","sang"],2],["We ___ pasta for free.",["ate","eated","eat"],0]],"gap":[["Last summer I ___ (go) to Rome.","went"],["We ___ (ask) an old man for help.","asked"],["He ___ (smile) at us.","smiled"],["We ___ (arrive) at a small restaurant.","arrived"],["We ___ (eat) pasta.","ate"]],"cmp":[["Anna travelled alone.",false],["An old man helped them.",true],["The restaurant belonged to the man's son.",true],["They paid a lot for dinner.",false]]},{"k":"jack","n":"Jack","c":"Australia","t":"Bangkok","s":"Two years ago I visited Bangkok. One morning I took a taxi to the airport, but I forgot my passport at the hotel! I ran back, grabbed it and jumped on a tuk-tuk. The driver drove very fast. I got to the airport five minutes before the gate closed and I felt like a movie hero.","w":[["forget → forgot","забыть"],["run → ran","бежать"],["grab → grabbed","схватить"],["gate","выход на посадку"],["hero","герой"]],"l":[["Where did Jack go?","He visited Bangkok."],["What did he forget?","His passport."],["How did he get to the airport?","By tuk-tuk."],["How did he feel?","Like a movie hero."]],"ch":[["I ___ my passport at the hotel.",["forgot","forgetted","forget"],0],["I ___ back to the hotel.",["runned","ran","run"],1],["The driver ___ very fast.",["drived","drove","drive"],1],["I ___ to the airport on time.",["got","getted","get"],0]],"gap":[["I ___ (visit) Bangkok two years ago.","visited"],["I ___ (take) a taxi.","took"],["I ___ (forget) my passport.","forgot"],["I ___ (jump) on a tuk-tuk.","jumped"],["The driver ___ (drive) fast.","drove"]],"cmp":[["Jack lost his phone.",false],["He went back to the hotel.",true],["He missed his flight.",false],["He arrived five minutes before the gate closed.",true]]},{"k":"mei","n":"Mei","c":"China","t":"Iceland","s":"Last winter I travelled to Iceland to see the Northern Lights. We waited outside for three hours in the cold. Nothing happened, so we went back to the hotel. Then I looked out of the window and saw the lights right above the building! I woke everybody up and we watched the sky in our pyjamas.","w":[["wait → waited","ждать"],["see → saw","видеть"],["wake up → woke up","разбудить"],["Northern Lights","северное сияние"],["pyjamas","пижама"]],"l":[["Why did Mei go to Iceland?","To see the Northern Lights."],["How long did they wait?","Three hours."],["Where did she see the lights?","From the hotel window."],["What did they wear?","Pyjamas."]],"ch":[["We ___ for three hours.",["waited","waiting","wait"],0],["We ___ back to the hotel.",["goed","went","gone"],1],["I ___ the lights above the hotel.",["seen","seed","saw"],2],["I ___ everybody up.",["waked","woke","wake"],1]],"gap":[["I ___ (travel) to Iceland.","travelled"],["We ___ (wait) outside.","waited"],["Nothing ___ (happen).","happened"],["I ___ (look) out of the window.","looked"],["I ___ (see) the lights.","saw"]],"cmp":[["It was summer.",false],["They waited for three hours.",true],["They saw the lights outside in the cold.",false],["They watched the sky in pyjamas.",true]]},{"k":"carlos","n":"Carlos","c":"Mexico","t":"Cairo","s":"Three years ago I rode a camel near the Pyramids. The camel didn't like me! It stopped, turned its head and ate my hat. Everybody laughed, and I laughed too. The guide gave me a new hat, and I bought a camel postcard to remember the day.","w":[["ride → rode","ездить верхом"],["camel","верблюд"],["laugh → laughed","смеяться"],["give → gave","дать"],["buy → bought","купить"]],"l":[["What did Carlos ride?","A camel."],["What did the camel do?","It ate his hat."],["Who gave him a new hat?","The guide."],["What did he buy?","A camel postcard."]],"ch":[["I ___ a camel.",["rided","rode","ride"],1],["The camel ___ my hat.",["ate","eated","eaten"],0],["The guide ___ me a new hat.",["gived","give","gave"],2],["I ___ a postcard.",["buyed","bought","buy"],1]],"gap":[["I ___ (ride) a camel.","rode"],["The camel ___ (stop).","stopped"],["It ___ (eat) my hat.","ate"],["Everybody ___ (laugh).","laughed"],["I ___ (buy) a postcard.","bought"]],"cmp":[["The camel liked Carlos.",false],["The camel ate his hat.",true],["Only Carlos laughed.",false],["The guide gave him a new hat.",true]]},{"k":"lena","n":"Lena","c":"Austria","t":"Café, Paris","s":"Last spring I went to a café in Paris. I wanted to order a coffee in French, so I said 'Je voudrais un café'. But the waiter heard something different and brought me a huge chocolate cake. I was too shy to say no, so I ate it all. The waiter smiled and gave me a free coffee.","w":[["order → ordered","заказывать"],["bring → brought","принести"],["huge","огромный"],["shy","стеснительный"],["waiter","официант"]],"l":[["Where did Lena go?","To a café in Paris."],["What language did she speak?","French."],["What did the waiter bring?","A huge chocolate cake."],["What did he give her?","A free coffee."]],"ch":[["I ___ to a café in Paris.",["goed","went","gone"],1],["The waiter ___ me a cake.",["brought","bringed","bring"],0],["I ___ it all.",["eated","eat","ate"],2],["He ___ and gave me a coffee.",["smiled","smile","smiling"],0]],"gap":[["I ___ (want) to order a coffee.","wanted"],["I ___ (say) 'Je voudrais un café'.","said"],["The waiter ___ (bring) a cake.","brought"],["I ___ (be) too shy.","was"],["He ___ (give) me a free coffee.","gave"]],"cmp":[["Lena ordered a coffee in French.",true],["The waiter brought a small sandwich.",false],["She ate the whole cake.",true],["She paid for the coffee.",false]]},{"k":"tom","n":"Tom","c":"USA","t":"Café, Istanbul","s":"Two years ago I visited a café in Istanbul. I drank a very small cup of Turkish coffee and spilled it on my white shirt. A man at the next table laughed and offered me his jacket. Later I found out he was the owner of the café! He refused my money and said, 'Welcome to Istanbul.'","w":[["drink → drank","пить"],["spill → spilled","пролить"],["offer → offered","предложить"],["owner","владелец"],["refuse → refused","отказаться"]],"l":[["What did Tom drink?","Turkish coffee."],["What did he spill it on?","His white shirt."],["What did the man offer?","His jacket."],["Who was the man?","The owner of the café."]],"ch":[["I ___ Turkish coffee.",["drinked","drank","drunk"],1],["I ___ it on my shirt.",["spilled","spill","spills"],0],["A man ___ me his jacket.",["offer","offering","offered"],2],["I ___ out he was the owner.",["finded","found","find"],1]],"gap":[["I ___ (visit) a café in Istanbul.","visited"],["I ___ (drink) Turkish coffee.","drank"],["I ___ (spill) it on my shirt.","spilled"],["A man ___ (laugh).","laughed"],["He ___ (refuse) my money.","refused"]],"cmp":[["Tom spilled tea.",false],["A man offered him a jacket.",true],["The man was a tourist.",false],["Tom didn't pay for the coffee.",true]]},{"k":"sofia","n":"Sofia","c":"Spain","t":"Hotel, Prague","s":"Last year I stayed in a hotel in Prague. At midnight I heard a strange noise in my room. I got out of bed, turned on the light and found a small cat under the bed! It came in through the open balcony door. I called reception, and the cat stayed with me all night.","w":[["stay → stayed","останавливаться"],["hear → heard","слышать"],["noise","шум"],["reception","ресепшен"],["balcony","балкон"]],"l":[["Where did Sofia stay?","In a hotel in Prague."],["When did she hear the noise?","At midnight."],["What did she find?","A small cat."],["How did the cat get in?","Through the balcony door."]],"ch":[["I ___ in a hotel in Prague.",["stayed","stay","stayd"],0],["I ___ a strange noise.",["hear","heared","heard"],2],["I ___ a cat under the bed.",["found","finded","find"],0],["I ___ reception.",["call","called","calling"],1]],"gap":[["I ___ (stay) in a hotel.","stayed"],["I ___ (hear) a noise.","heard"],["I ___ (turn) on the light.","turned"],["I ___ (find) a cat.","found"],["The cat ___ (come) in through the door.","came"]],"cmp":[["The noise was at midnight.",true],["Sofia found a dog.",false],["The balcony door was open.",true],["The cat left immediately.",false]]},{"k":"ben","n":"Ben","c":"UK","t":"Hotel, Dubai","s":"Three years ago I arrived at a hotel in Dubai very late. I went up in the lift, opened my room and saw a stranger sleeping in my bed! I shouted, he woke up and shouted too. We both ran to the reception. The manager checked the computer and said, 'Sorry, sir. We gave you the same room.' I got a better room with a sea view.","w":[["arrive → arrived","прибыть"],["shout → shouted","кричать"],["stranger","незнакомец"],["manager","менеджер"],["sea view","вид на море"]],"l":[["When did Ben arrive?","Very late."],["What did he see in his room?","A stranger in his bed."],["Where did they run?","To the reception."],["What was the new room like?","Better, with a sea view."]],"ch":[["I ___ at the hotel very late.",["arrived","arrive","arriving"],0],["I ___ a stranger in my bed.",["seed","saw","seen"],1],["We both ___ to reception.",["runned","run","ran"],2],["The manager ___ the computer.",["checked","checks","check"],0]],"gap":[["I ___ (arrive) very late.","arrived"],["I ___ (open) my room.","opened"],["I ___ (see) a stranger.","saw"],["I ___ (shout).","shouted"],["I ___ (get) a better room.","got"]],"cmp":[["Ben arrived early in the morning.",false],["A stranger was sleeping in his bed.",true],["The hotel gave the same room to two people.",true],["Ben left the hotel.",false]]}];
+const BG = "media/fts/bg.jpg";
+document.documentElement.style.setProperty('--bg-url', `url("${BG}")`);
 
-/* sentences of a story, each short enough for one recording */
-const SENT=s=>s.match(/[^.!?]+[.!?]+['’]?/g).map(x=>x.trim());
-/* word card: "lose → lost" is shown as "lose · lost"; example = the story sentence with the past form */
-const shown=w=>w.replace(' → ',' · ');
-function example(p,w){const S=SENT(p.s),f=w.split(' → ').map(x=>x.toLowerCase()).reverse();for(const v of f){const r=S.find(x=>x.toLowerCase().includes(v));if(r)return r}return ''}
-/* verb exercise without typing: right form + base form + a wrong form */
-function reg(b){if(/e$/.test(b))return b+'d';if(/[^aeiou]y$/.test(b))return b.slice(0,-1)+'ied';return b+'ed'}
-function verbOpts(base,ans){
-  if(base==='be')return ['was','were','be'];
-  let wrong=reg(base);
-  if(wrong===ans||ans.replace(/(.)\1ed$/,'$1ed')===wrong||ans.replace(/ll/,'l')===wrong)wrong=base+'ing';
-  return [ans,base,wrong];
+const D = [{"k": "anna", "n": "Anna", "c": "Germany", "t": "Rome", "s": "Last summer I went to Rome with my sister. We lost our map, so we asked an old man for help. He smiled and walked with us for an hour. Finally we arrived at a small restaurant. It was his son's restaurant! We ate pasta for free and the whole family sang for us.", "w": [["lose → lost", "потерять"], ["ask → asked", "спросить"], ["arrive → arrived", "прибыть"], ["sing → sang", "петь"], ["for free", "бесплатно"]], "l": [["Where did Anna go?", "She went to Rome."], ["Who did she go with?", "With her sister."], ["What did they lose?", "Their map."], ["Why was dinner special?", "It was free and the family sang."]], "ch": [["We ___ our map.", ["lost", "losed", "lose"], 0], ["He ___ with us for an hour.", ["walk", "walked", "walks"], 1], ["The family ___ for us.", ["singed", "sung", "sang"], 2], ["We ___ pasta for free.", ["ate", "eated", "eat"], 0]], "gap": [["Last summer I ___ (go) to Rome.", "went"], ["We ___ (ask) an old man for help.", "asked"], ["He ___ (smile) at us.", "smiled"], ["We ___ (arrive) at a small restaurant.", "arrived"], ["We ___ (eat) pasta.", "ate"]], "cmp": [["Anna travelled alone.", false], ["An old man helped them.", true], ["The restaurant belonged to the man's son.", true], ["They paid a lot for dinner.", false]], "g": "f", "kind": "trip", "stamp": "ROME · ITALY", "verbs": ["went", "lost", "asked", "smiled", "walked", "arrived", "was", "ate", "sang"]}, {"k": "jack", "n": "Jack", "c": "Australia", "t": "Bangkok", "s": "Two years ago I visited Bangkok. One morning I took a taxi to the airport, but I forgot my passport at the hotel! I ran back, grabbed it and jumped on a tuk-tuk. The driver drove very fast. I got to the airport five minutes before the gate closed and I felt like a movie hero.", "w": [["forget → forgot", "забыть"], ["run → ran", "бежать"], ["grab → grabbed", "схватить"], ["gate", "выход на посадку"], ["hero", "герой"]], "l": [["Where did Jack go?", "He visited Bangkok."], ["What did he forget?", "His passport."], ["How did he get to the airport?", "By tuk-tuk."], ["How did he feel?", "Like a movie hero."]], "ch": [["I ___ my passport at the hotel.", ["forgot", "forgetted", "forget"], 0], ["I ___ back to the hotel.", ["runned", "ran", "run"], 1], ["The driver ___ very fast.", ["drived", "drove", "drive"], 1], ["I ___ to the airport on time.", ["got", "getted", "get"], 0]], "gap": [["I ___ (visit) Bangkok two years ago.", "visited"], ["I ___ (take) a taxi.", "took"], ["I ___ (forget) my passport.", "forgot"], ["I ___ (jump) on a tuk-tuk.", "jumped"], ["The driver ___ (drive) fast.", "drove"]], "cmp": [["Jack lost his phone.", false], ["He went back to the hotel.", true], ["He missed his flight.", false], ["He arrived five minutes before the gate closed.", true]], "g": "m", "kind": "trip", "stamp": "BANGKOK · THAILAND", "verbs": ["visited", "took", "forgot", "ran", "grabbed", "jumped", "drove", "got", "closed", "felt"]}, {"k": "mei", "n": "Mei", "c": "China", "t": "Iceland", "s": "Last winter I travelled to Iceland to see the Northern Lights. We waited outside for three hours in the cold. Nothing happened, so we went back to the hotel. Then I looked out of the window and saw the lights right above the building! I woke everybody up and we watched the sky in our pyjamas.", "w": [["wait → waited", "ждать"], ["see → saw", "видеть"], ["wake up → woke up", "разбудить"], ["Northern Lights", "северное сияние"], ["pyjamas", "пижама"]], "l": [["Why did Mei go to Iceland?", "To see the Northern Lights."], ["How long did they wait?", "Three hours."], ["Where did she see the lights?", "From the hotel window."], ["What did they wear?", "Pyjamas."]], "ch": [["We ___ for three hours.", ["waited", "waiting", "wait"], 0], ["We ___ back to the hotel.", ["goed", "went", "gone"], 1], ["I ___ the lights above the hotel.", ["seen", "seed", "saw"], 2], ["I ___ everybody up.", ["waked", "woke", "wake"], 1]], "gap": [["I ___ (travel) to Iceland.", "travelled"], ["We ___ (wait) outside.", "waited"], ["Nothing ___ (happen).", "happened"], ["I ___ (look) out of the window.", "looked"], ["I ___ (see) the lights.", "saw"]], "cmp": [["It was summer.", false], ["They waited for three hours.", true], ["They saw the lights outside in the cold.", false], ["They watched the sky in pyjamas.", true]], "g": "f", "kind": "trip", "stamp": "REYKJAVIK · ICELAND", "verbs": ["travelled", "waited", "happened", "went", "looked", "saw", "woke", "watched"]}, {"k": "carlos", "n": "Carlos", "c": "Mexico", "t": "Cairo", "s": "Three years ago I rode a camel near the Pyramids. The camel didn't like me! It stopped, turned its head and ate my hat. Everybody laughed, and I laughed too. The guide gave me a new hat, and I bought a camel postcard to remember the day.", "w": [["ride → rode", "ездить верхом"], ["camel", "верблюд"], ["laugh → laughed", "смеяться"], ["give → gave", "дать"], ["buy → bought", "купить"]], "l": [["What did Carlos ride?", "A camel."], ["What did the camel do?", "It ate his hat."], ["Who gave him a new hat?", "The guide."], ["What did he buy?", "A camel postcard."]], "ch": [["I ___ a camel.", ["rided", "rode", "ride"], 1], ["The camel ___ my hat.", ["ate", "eated", "eaten"], 0], ["The guide ___ me a new hat.", ["gived", "give", "gave"], 2], ["I ___ a postcard.", ["buyed", "bought", "buy"], 1]], "gap": [["I ___ (ride) a camel.", "rode"], ["The camel ___ (stop).", "stopped"], ["It ___ (eat) my hat.", "ate"], ["Everybody ___ (laugh).", "laughed"], ["I ___ (buy) a postcard.", "bought"]], "cmp": [["The camel liked Carlos.", false], ["The camel ate his hat.", true], ["Only Carlos laughed.", false], ["The guide gave him a new hat.", true]], "g": "m", "kind": "trip", "stamp": "CAIRO · EGYPT", "verbs": ["rode", "didn't like", "stopped", "turned", "ate", "laughed", "gave", "bought"]}, {"k": "lena", "n": "Lena", "c": "Austria", "t": "Café, Paris", "s": "Last spring I went to a café in Paris. I wanted to order a coffee in French, so I said 'Je voudrais un café'. But the waiter heard something different and brought me a huge chocolate cake. I was too shy to say no, so I ate it all. The waiter smiled and gave me a free coffee.", "w": [["order → ordered", "заказывать"], ["bring → brought", "принести"], ["huge", "огромный"], ["shy", "стеснительный"], ["waiter", "официант"]], "l": [["Where did Lena go?", "To a café in Paris."], ["What language did she speak?", "French."], ["What did the waiter bring?", "A huge chocolate cake."], ["What did he give her?", "A free coffee."]], "ch": [["I ___ to a café in Paris.", ["goed", "went", "gone"], 1], ["The waiter ___ me a cake.", ["brought", "bringed", "bring"], 0], ["I ___ it all.", ["eated", "eat", "ate"], 2], ["He ___ and gave me a coffee.", ["smiled", "smile", "smiling"], 0]], "gap": [["I ___ (want) to order a coffee.", "wanted"], ["I ___ (say) 'Je voudrais un café'.", "said"], ["The waiter ___ (bring) a cake.", "brought"], ["I ___ (be) too shy.", "was"], ["He ___ (give) me a free coffee.", "gave"]], "cmp": [["Lena ordered a coffee in French.", true], ["The waiter brought a small sandwich.", false], ["She ate the whole cake.", true], ["She paid for the coffee.", false]], "g": "f", "kind": "cafe", "stamp": "PARIS · FRANCE", "verbs": ["went", "wanted", "said", "heard", "brought", "was", "ate", "smiled", "gave"]}, {"k": "tom", "n": "Tom", "c": "USA", "t": "Café, Istanbul", "s": "Two years ago I visited a café in Istanbul. I drank a very small cup of Turkish coffee and spilled it on my white shirt. A man at the next table laughed and offered me his jacket. Later I found out he was the owner of the café! He refused my money and said, 'Welcome to Istanbul.'", "w": [["drink → drank", "пить"], ["spill → spilled", "пролить"], ["offer → offered", "предложить"], ["owner", "владелец"], ["refuse → refused", "отказаться"]], "l": [["What did Tom drink?", "Turkish coffee."], ["What did he spill it on?", "His white shirt."], ["What did the man offer?", "His jacket."], ["Who was the man?", "The owner of the café."]], "ch": [["I ___ Turkish coffee.", ["drinked", "drank", "drunk"], 1], ["I ___ it on my shirt.", ["spilled", "spill", "spills"], 0], ["A man ___ me his jacket.", ["offer", "offering", "offered"], 2], ["I ___ out he was the owner.", ["finded", "found", "find"], 1]], "gap": [["I ___ (visit) a café in Istanbul.", "visited"], ["I ___ (drink) Turkish coffee.", "drank"], ["I ___ (spill) it on my shirt.", "spilled"], ["A man ___ (laugh).", "laughed"], ["He ___ (refuse) my money.", "refused"]], "cmp": [["Tom spilled tea.", false], ["A man offered him a jacket.", true], ["The man was a tourist.", false], ["Tom didn't pay for the coffee.", true]], "g": "m", "kind": "cafe", "stamp": "ISTANBUL · TURKEY", "verbs": ["visited", "drank", "spilled", "laughed", "offered", "found out", "was", "refused", "said"]}, {"k": "sofia", "n": "Sofia", "c": "Spain", "t": "Hotel, Prague", "s": "Last year I stayed in a hotel in Prague. At midnight I heard a strange noise in my room. I got out of bed, turned on the light and found a small cat under the bed! It came in through the open balcony door. I called reception, and the cat stayed with me all night.", "w": [["stay → stayed", "останавливаться"], ["hear → heard", "слышать"], ["noise", "шум"], ["reception", "ресепшен"], ["balcony", "балкон"]], "l": [["Where did Sofia stay?", "In a hotel in Prague."], ["When did she hear the noise?", "At midnight."], ["What did she find?", "A small cat."], ["How did the cat get in?", "Through the balcony door."]], "ch": [["I ___ in a hotel in Prague.", ["stayed", "stay", "stayd"], 0], ["I ___ a strange noise.", ["hear", "heared", "heard"], 2], ["I ___ a cat under the bed.", ["found", "finded", "find"], 0], ["I ___ reception.", ["call", "called", "calling"], 1]], "gap": [["I ___ (stay) in a hotel.", "stayed"], ["I ___ (hear) a noise.", "heard"], ["I ___ (turn) on the light.", "turned"], ["I ___ (find) a cat.", "found"], ["The cat ___ (come) in through the door.", "came"]], "cmp": [["The noise was at midnight.", true], ["Sofia found a dog.", false], ["The balcony door was open.", true], ["The cat left immediately.", false]], "g": "f", "kind": "hotel", "stamp": "PRAGUE · CZECHIA", "verbs": ["stayed", "heard", "got", "turned", "found", "came", "called"]}, {"k": "ben", "n": "Ben", "c": "UK", "t": "Hotel, Dubai", "s": "Three years ago I arrived at a hotel in Dubai very late. I went up in the lift, opened my room and saw a stranger sleeping in my bed! I shouted, he woke up and shouted too. We both ran to the reception. The manager checked the computer and said, 'Sorry, sir. We gave you the same room.' I got a better room with a sea view.", "w": [["arrive → arrived", "прибыть"], ["shout → shouted", "кричать"], ["stranger", "незнакомец"], ["manager", "менеджер"], ["sea view", "вид на море"]], "l": [["When did Ben arrive?", "Very late."], ["What did he see in his room?", "A stranger in his bed."], ["Where did they run?", "To the reception."], ["What was the new room like?", "Better, with a sea view."]], "ch": [["I ___ at the hotel very late.", ["arrived", "arrive", "arriving"], 0], ["I ___ a stranger in my bed.", ["seed", "saw", "seen"], 1], ["We both ___ to reception.", ["runned", "run", "ran"], 2], ["The manager ___ the computer.", ["checked", "checks", "check"], 0]], "gap": [["I ___ (arrive) very late.", "arrived"], ["I ___ (open) my room.", "opened"], ["I ___ (see) a stranger.", "saw"], ["I ___ (shout).", "shouted"], ["I ___ (get) a better room.", "got"]], "cmp": [["Ben arrived early in the morning.", false], ["A stranger was sleeping in his bed.", true], ["The hotel gave the same room to two people.", true], ["Ben left the hotel.", false]], "g": "m", "kind": "hotel", "stamp": "DUBAI · UAE", "verbs": ["arrived", "went", "opened", "saw", "shouted", "woke up", "ran", "checked", "said", "gave", "got"]}];
+const IMG = {"mei": "media/fts/mei.jpg", "anna": "media/fts/anna.jpg", "lena": "media/fts/lena.jpg", "ben": "media/fts/ben.jpg", "tom": "media/fts/tom.jpg", "carlos": "media/fts/carlos.jpg", "jack": "media/fts/jack.jpg", "sofia": "media/fts/sofia.jpg"};
+const AUD = {"anna": "media/fts/anna-story.mp3", "jack": "media/fts/jack-story.mp3", "mei": "media/fts/mei-story.mp3", "carlos": "media/fts/carlos-story.mp3", "lena": "media/fts/lena-story.mp3", "tom": "media/fts/tom-story.mp3", "sofia": "media/fts/sofia-story.mp3", "ben": "media/fts/ben-story.mp3"};
+
+/* Safe storage wrapper (works in sandboxed iframes without allow-same-origin) */
+function sGet(k, def){ try{ const v=localStorage.getItem(k); return v===null?def:v; }catch(e){ return def; } }
+function sSet(k, v){ try{ localStorage.setItem(k, v); }catch(e){} }
+
+let cur = null, step = 0, done = {};
+function saveDone(){}
+
+let SND = sGet('snd','1') !== '0', AC;
+let slowMode = false;
+let markVerbs = false;
+
+const $ = s => document.querySelector(s);
+const app = $('#app');
+
+/* UI Sound Effects */
+function tone(f,d=.12,type='sine',v=.14,t0=0){
+  if(!SND) return;
+  try{
+    AC = AC || new (window.AudioContext||window.webkitAudioContext)();
+    if(AC.state === 'suspended') AC.resume();
+    const o=AC.createOscillator(), g=AC.createGain(), t=AC.currentTime+t0;
+    o.type=type; o.frequency.setValueAtTime(f,t);
+    g.gain.setValueAtTime(v,t); g.gain.exponentialRampToValueAtTime(.001,t+d);
+    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t+d);
+  }catch(e){}
 }
-const shuf=a=>a.map(x=>[Math.random(),x]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+const sfx={
+  click:()=>tone(540,.07,'triangle',.12),
+  flip:()=>{tone(420,.08,'triangle',.12);tone(620,.08,'triangle',.11,.06)},
+  ok:()=>{tone(660,.12,'sine',.14);tone(880,.18,'sine',.14,.1)},
+  bad:()=>{tone(220,.18,'sawtooth',.09);tone(170,.22,'sawtooth',.09,.12)},
+  next:()=>{tone(440,.08,'square',.05);tone(660,.1,'square',.05,.07)},
+  win:()=>[523,659,784,1047].forEach((f,i)=>tone(f,.25,'sine',.14,i*.1))
+};
 
-const $=s=>document.querySelector(s),M=$('#main');
-const done={};let cur=null;
-const say=(t,b)=>window.CardAudio&&CardAudio.sayList(t,b||null);
-const stop=()=>window.CardAudio&&CardAudio.stop();
-
-function people(){
-  stop();cur=null;
-  $('#ttl').textContent='Funny Travel Stories · Past Simple';$('#who').hidden=true;$('#toPeople').hidden=true;$('#nextP').hidden=true;
-  M.innerHTML='<div class="people">'+D.map((p,i)=>`<button class="person${done[i]?' done':''}" data-i="${i}"><img src="media/fts/${p.k}.jpg" alt=""><b>${p.n}</b><small>${p.c} · ${p.t}</small></button>`).join('')+'</div>';
-  M.querySelectorAll('.person').forEach(b=>b.onclick=()=>story(+b.dataset.i));
-}
-
-function story(i){
-  stop();cur=i;const p=D[i];M.scrollTop=0;
-  $('#ttl').textContent=p.n+' · '+p.t;$('#who').textContent=p.c.toUpperCase();$('#who').hidden=false;$('#toPeople').hidden=false;$('#nextP').hidden=false;
-  $('#nextP').textContent=i<D.length-1?'Next story ›':'Finish ›';
-  M.innerHTML=`<div class="story">
-   <div class="panel">
-     <div class="ph"><img src="media/fts/${p.k}.jpg" alt=""><div class="q">Look at ${p.n}. What happened in ${p.t.split(', ').pop()}?</div></div>
-     <div class="row"><button class="pbtn main" id="play">Listen</button><button class="pbtn" id="stopA">Stop</button><button class="pbtn" id="showT">Show text</button></div>
-     <p class="txt" id="txt" hidden>${p.s}</p>
-     <div class="lab">WORDS</div>
-     <div class="ql" id="ql"><div class="in"><div class="face front"><strong id="qf"></strong></div><div class="face back"><div class="ru" id="qr"></div><div class="ex" id="qb"></div></div></div></div>
-     <div class="qnav"><button class="arrow" id="wPrev">‹</button><span class="cnt" id="wCnt"></span><button class="arrow" id="wNext">›</button></div>
-   </div>
-   <div class="panel">
-     <div class="tabs">
-       <button class="tab t1 on" data-t="0"><small>01 · SPEAKING</small><strong>Questions</strong></button>
-       <button class="tab t2" data-t="1"><small>02 · GRAMMAR</small><strong>Past Simple</strong></button>
-       <button class="tab t3" data-t="2"><small>03 · READING</small><strong>True or false?</strong></button>
-     </div>
-     <div class="tv on" id="v0"></div><div class="tv" id="v1"></div><div class="tv" id="v2"></div>
-   </div></div>`;
-  /* listening */
-  $('#play').onclick=()=>say(SENT(p.s),$('#play'));
-  $('#stopA').onclick=stop;
-  $('#showT').onclick=()=>{const t=$('#txt');t.hidden=!t.hidden;$('#showT').textContent=t.hidden?'Show text':'Hide text'};
-  /* words: one Quizlet card */
-  let w=0;const card=$('#ql');
-  const drawW=()=>{card.classList.remove('f');const x=p.w[w];$('#qf').textContent=shown(x[0]);$('#qr').textContent=x[1];$('#qb').textContent=example(p,x[0]);
-    $('#wCnt').textContent=(w+1)+' / '+p.w.length;$('#wPrev').disabled=w===0;$('#wNext').disabled=w===p.w.length-1};
-  card.onclick=()=>card.classList.toggle('f');
-  $('#wPrev').onclick=()=>{if(w>0){w--;drawW()}};$('#wNext').onclick=()=>{if(w<p.w.length-1){w++;drawW()}};drawW();
-  /* tabs */
-  M.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{M.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));M.querySelectorAll('.tv').forEach((v,k)=>v.classList.toggle('on',k==t.dataset.t))});
-  /* 01 questions: answer out loud, tap to check */
-  $('#v0').innerHTML=p.l.map((q,k)=>`<div class="qa"><span class="n">${k+1}</span><div><div class="q">${q[0]}</div><div class="a">${q[1]}</div></div></div>`).join('');
-  $('#v0').querySelectorAll('.qa').forEach(r=>r.onclick=()=>r.classList.toggle('open'));
-  /* 02 past simple: choose + verb forms, one at a time */
-  const G=p.ch.map(q=>({s:q[0],o:shuf(q[1].slice()),a:q[1][q[2]]}))
-    .concat(p.gap.map(q=>{const m=q[0].match(/\(([^)]+)\)/);return {s:q[0].replace(/\s*\([^)]+\)/,''),o:shuf(verbOpts(m[1],q[1])),a:q[1]}}));
-  quiz('#v1',G,()=>{});
-  /* 03 true / false */
-  quiz('#v2',p.cmp.map(q=>({s:q[0],o:['True','False'],a:q[1]?'True':'False',plain:1})),()=>{done[i]=1});
+function confetti(){
+  const c=['#f25c05','#238636','#1d6fb8','#f59f00','#d6336c'];
+  for(let i=0;i<72;i++){
+    const d=document.createElement('div');
+    d.className='conf';
+    d.style.left=Math.random()*100+'vw';
+    d.style.background=c[i%c.length];
+    d.style.animationDelay=Math.random()*.6+'s';
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(),3200);
+  }
 }
 
-function quiz(sel,items,onEnd){
-  const box=$(sel);let k=0,score=0;
-  const draw=()=>{
-    if(k>=items.length){box.innerHTML=`<div class="res">${score} / ${items.length}<small>${score===items.length?'All correct.':'Look again at the story.'}</small></div><div style="text-align:center"><button class="pbtn" id="again">Again</button></div>`;
-      box.querySelector('#again').onclick=()=>{k=0;score=0;draw()};onEnd();return}
-    const it=items[k];
-    box.innerHTML=`<div class="meta"><span>${k+1} / ${items.length}</span><span>${score} correct</span></div><div class="bar2"><i style="width:${k/items.length*100}%"></i></div>
-      <div class="sent">${it.plain?it.s:it.s.replace('___','<u>&nbsp;</u>')}</div><div class="opts">${it.o.map(o=>`<button class="ans">${o}</button>`).join('')}</div>`;
-    let lock=false;
-    box.querySelectorAll('.ans').forEach(b=>b.onclick=()=>{if(lock)return;lock=true;const ok=b.textContent===it.a;
-      if(ok){score++;b.classList.add('ok')}else{b.classList.add('no');box.querySelectorAll('.ans').forEach(x=>{if(x.textContent===it.a)x.classList.add('ok')})}
-      setTimeout(()=>{k++;draw()},ok?800:1500)});
+/* =====================================================================
+   VOICE ENGINE:
+   1. Studio Neural Female (voice-00) & Male (voice-01) MP3s for all 8 stories
+   2. Smart Gender-Matched speechSynthesis (Female vs Male) for flashcards/clues
+   ===================================================================== */
+const player = new Audio();
+player.preload = 'auto';
+let playingKey = null;
+
+function fmtTime(sec){
+  if(!isFinite(sec)||sec<0) sec=0;
+  const m=Math.floor(sec/60), s=Math.floor(sec%60);
+  return m+':'+(s<10?'0':'')+s;
+}
+
+function syncPlayerUI(){
+  const btn = $('#playBtn');
+  const avw = $('#avWrap');
+  const bar = $('#scrubFill');
+  const lbl = $('#timeLbl');
+  const isPlaying = !player.paused && !player.ended && player.currentSrc;
+  if(btn){
+    btn.innerHTML = isPlaying ? `${ico('pause')} Pause` : `${ico('play')} Listen`;
+  }
+  if(avw){
+    avw.classList.toggle('playing', !!isPlaying);
+  }
+  if(bar && player.duration){
+    bar.style.width = Math.min(100, (player.currentTime / player.duration)*100) + '%';
+  }
+  if(lbl){
+    lbl.textContent = `${fmtTime(player.currentTime)} / ${fmtTime(player.duration||0)}`;
+  }
+}
+player.addEventListener('timeupdate', syncPlayerUI);
+player.addEventListener('loadedmetadata', syncPlayerUI);
+player.addEventListener('play', syncPlayerUI);
+player.addEventListener('pause', syncPlayerUI);
+player.addEventListener('ended', syncPlayerUI);
+
+function stopAllAudio(){
+  try{ if(window.CardAudio) CardAudio.stop(); }catch(e){}
+  try{ player.pause(); }catch(e){}
+  try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
+  syncPlayerUI();
+}
+
+/* Gender-aware Web Speech synthesis for vocabulary cards & fallback */
+let cachedVoices = [];
+function refreshVoices(){
+  try{
+    if(window.speechSynthesis) cachedVoices = speechSynthesis.getVoices() || [];
+  }catch(e){}
+}
+refreshVoices();
+if(typeof window !== 'undefined' && 'speechSynthesis' in window){
+  speechSynthesis.onvoiceschanged = refreshVoices;
+}
+
+const FEMALE_RE = /zira|aria|jenny|sonia|libby|maisie|natasha|clara|molly|hazel|susan|catherine|linda|heather|eva|samantha|ava|allison|victoria|karen|moira|tessa|fiona|serena|veena|nicky|kathy|uk english female|us english|female|woman|girl|sfg|iob|gba|tpf/i;
+const MALE_RE   = /david|mark|guy|ryan|christopher|eric|steffan|roger|george|james|richard|william|liam|connor|mitchell|alex|daniel|fred|oliver|thomas|aaron|arthur|rishi|gordon|lee|uk english male|\bmale\b|\bman\b|iom|tpd|gbd|sfb/i;
+
+function pickGenderVoice(gender){
+  refreshVoices();
+  const en = cachedVoices.filter(v => /^en([-_]|$)/i.test(v.lang));
+  const pool = en.length ? en : cachedVoices;
+  if(!pool.length) return null;
+
+  if(gender === 'f'){
+    const strictF = pool.filter(v => FEMALE_RE.test(v.name) && !MALE_RE.test(v.name));
+    if(strictF.length){
+      return strictF.find(v => /natural|neural|google|samantha|aria|jenny|sonia|zira/i.test(v.name)) || strictF[0];
+    }
+    const nonMale = pool.filter(v => !MALE_RE.test(v.name));
+    if(nonMale.length) return nonMale[0];
+  } else {
+    const strictM = pool.filter(v => MALE_RE.test(v.name) && !(/female|zira|samantha|victoria|karen|aria|jenny|sonia/i.test(v.name)));
+    if(strictM.length){
+      return strictM.find(v => /natural|neural|google|guy|ryan|daniel|alex|david/i.test(v.name)) || strictM[0];
+    }
+    const nonFem = pool.filter(v => !FEMALE_RE.test(v.name));
+    if(nonFem.length) return nonFem[0];
+  }
+  return pool[0];
+}
+
+function say(text, gender){
+  try{ player.pause(); }catch(e){}
+  if(window.CardAudio){ CardAudio.say(text); return; }
+  const g = gender || (cur !== null ? D[cur].g : 'f');
+  try{ player.pause(); }catch(e){}
+  if(!('speechSynthesis' in window)) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US';
+    u.rate = slowMode ? 0.8 : 0.92;
+    const v = pickGenderVoice(g);
+    if(v){
+      u.voice = v;
+      u.lang = v.lang || 'en-US';
+      const matched = g === 'f' ? FEMALE_RE.test(v.name) : MALE_RE.test(v.name);
+      u.pitch = matched ? (g === 'f' ? 1.05 : 0.94) : (g === 'f' ? 1.2 : 0.82);
+    } else {
+      u.pitch = g === 'f' ? 1.18 : 0.84;
+    }
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+function playStory(forceRestart){
+  if(cur === null) return;
+  const p = D[cur];
+  try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
+  const src = AUD[p.k];
+  if(!src){
+    say(p.s, p.g);
+    return;
+  }
+  if(playingKey !== p.k || !player.src){
+    playingKey = p.k;
+    player.src = src;
+  }
+  player.playbackRate = slowMode ? 0.85 : 1.0;
+  if(forceRestart){
+    player.currentTime = 0;
+    player.play().catch(()=>say(p.s, p.g));
+    return;
+  }
+  if(player.paused || player.ended){
+    if(player.ended) player.currentTime = 0;
+    player.play().catch(()=>say(p.s, p.g));
+  } else {
+    player.pause();
+  }
+}
+
+function seekAudio(ev){
+  if(!player.duration) return;
+  const rect = ev.currentTarget.getBoundingClientRect();
+  const ratio = Math.max(0, Math.min(1, (ev.clientX - rect.left) / rect.width));
+  player.currentTime = ratio * player.duration;
+  syncPlayerUI();
+}
+
+function toggleSlow(){
+  sfx.click();
+  slowMode = !slowMode;
+  player.playbackRate = slowMode ? 0.85 : 1.0;
+  const b = $('#slowBtn');
+  if(b) b.textContent = slowMode ? '0.85× Slow' : '1× Speed';
+}
+
+/* Inline SVG Icons */
+function ico(name){
+  const icons = {
+    compass: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+    plane: '<svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>',
+    cafe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>',
+    hotel: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M3 21h18"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/><path d="M9 7h2"/><path d="M13 7h2"/><path d="M9 11h2"/><path d="M13 11h2"/><path d="M9 15h2"/><path d="M13 15h2"/></svg>',
+    trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>',
+    book: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>',
+    snd: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>',
+    play: '<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><polygon points="6 4 20 12 6 20 6 4"/></svg>',
+    pause: '<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>'
   };
-  draw();
+  return icons[name] || '';
 }
 
-$('#toPeople').onclick=people;
-if(window.parent!==window){$('#toLesson').hidden=false;$('#toLesson').onclick=()=>{stop();parent.postMessage('fts-close','*')}}
-$('#nextP').onclick=()=>{done[cur]=1;cur<D.length-1?story(cur+1):people()};
-people();
-{const h=location.hash.slice(1),i=D.findIndex(p=>p.k===h);if(i>=0)story(i)}
+function kindIcon(k){
+  return k === 'cafe' ? ico('cafe') : (k === 'hotel' ? ico('hotel') : ico('plane'));
+}
+
+function renderTopbar(){
+  const doneCount = Object.keys(done).filter(k => done[k]).length;
+  $('#topbar').innerHTML = `
+    <div class="top-grp">
+      ${window.parent!==window ? `<button class="glass-pill dark" onclick="stopAllAudio();parent.postMessage('fts-close','*')">‹ Lesson 2B</button>` : ''}
+      <button class="glass-pill" onclick="sfx.click();openTeacherNotes()">
+        ${ico('compass')} Teacher notes
+      </button>
+      ${cur !== null ? `<button class="glass-pill" onclick="sfx.click();home()">← All Travellers</button>` : ''}
+    </div>
+    <div class="top-grp">
+      <span class="glass-pill" style="cursor:default" title="Completed travel stories">
+        Passport: ${doneCount}/${D.length}
+      </span>
+      <button class="glass-pill" id="sbtn" onclick="toggleSnd()">
+        ${ico('snd')} SFX: ${SND?'on':'off'}
+      </button>
+      ${doneCount > 0 ? `<button class="glass-pill" onclick="resetProgress()" title="Reset completed stamps">↺ Reset</button>` : ''}
+    </div>
+  `;
+}
+
+function toggleSnd(){
+  SND = !SND;
+  sSet('snd', SND ? '1' : '0');
+  renderTopbar();
+  if(SND) sfx.click();
+}
+
+function resetProgress(){
+  sfx.click();
+  done = {};
+  saveDone();
+  renderTopbar();
+  if(cur === null) home();
+}
+
+function pic(p, cls){
+  return IMG[p.k] ? `<img class="${cls}" src="${IMG[p.k]}" alt="${p.n}">` : `<div class="${cls}">${p.n[0]}</div>`;
+}
+
+/* Home View — Cast of 8 Travellers */
+function home(){
+  cur = null;
+  stopAllAudio();
+  renderTopbar();
+  app.innerHTML = `
+    <div class="fade-in home-stage">
+      <div class="hero">
+        <div class="hero-title-row">
+          <h1 class="hero-title">Funny Travel: <span class="accent">Meet the Travellers</span></h1>
+          <span class="vol-badge">Past Simple</span>
+        </div>
+        <div class="hero-subrow">
+          <button class="glass-pill" onclick="sfx.click();openGrammar()">
+            ${ico('book')} Past Simple guide
+          </button>
+          <div class="hero-banner">
+            Meet 8 travellers around the world. Listen, flip word postcards &amp; practise Past Simple.
+          </div>
+          <button class="glass-pill orange" onclick="sfx.click();openBonus()">
+            ${ico('trophy')} Bonus round
+          </button>
+        </div>
+      </div>
+
+      <div class="cards">
+        ${D.map((p,i)=>`
+          <div class="card ${done[i]?'d':''}" onclick="openCard(${i},this)">
+            ${pic(p,'ph')}
+            <div class="card-shade"></div>
+            <div class="card-route">${kindIcon(p.kind)} ${p.c} → ${p.t}</div>
+            <div class="card-voice ${p.g}" title="${p.g==='f'?'Female voice':'Male voice'}">${p.g==='f'?'♀':'♂'}</div>
+            ${done[i] ? `<div class="card-stamp">✓ VISITED</div>` : ''}
+            <div class="card-info">
+              <div>
+                <div class="card-name">${p.n}</div>
+                <div class="card-sub">${p.t}</div>
+              </div>
+              <div class="card-go">${ico('arrow')}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function openCard(i, el){
+  sfx.click();
+  el.classList.add('clk');
+  setTimeout(()=>{
+    cur = i;
+    step = 0;
+    markVerbs = false;
+    go(true);
+  }, 200);
+}
+
+function jumpStep(s){
+  sfx.click();
+  step = s;
+  go(false);
+}
+
+function nx(){
+  sfx.next();
+  if(step < 4){
+    step++;
+    go(false);
+  } else {
+    done[cur] = 1;
+    saveDone();
+    sfx.win();
+    confetti();
+    home();
+  }
+}
+
+function highlightStory(p){
+  if(!markVerbs) return p.s;
+  let out = p.s;
+  const sorted = [...p.verbs].sort((a,b)=>b.length - a.length);
+  sorted.forEach(v => {
+    const escaped = v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const re = new RegExp(`\\b(${escaped})\\b`, 'gi');
+    out = out.replace(re, '<mark class="vb">$1</mark>');
+  });
+  return out;
+}
+
+function bpHeader(title, subtitle){
+  const p = D[cur];
+  const labels = ['1. Story & Words','2. Questions','3. Choose','4. Gap-fill','5. True / False'];
+  return `
+    <div class="boarding">
+      <div class="airmail-bar"></div>
+      <div class="bp-top">
+        <div class="bp-route">
+          ${pic(p,'bp-av')}
+          <div>
+            <div class="bp-pass">Boarding Pass · Story ${cur+1} of ${D.length}</div>
+            <div class="bp-cities">
+              <span>${p.n} (${p.c})</span>
+              <span class="bp-plane">┈┈${kindIcon(p.kind)}┈┈</span>
+              <span>${p.t}</span>
+              <span class="voice-tag ${p.g}">${p.g==='f'?'Female voice':'Male voice'}</span>
+            </div>
+          </div>
+        </div>
+        <div class="bp-actions">
+          <button class="pill" onclick="sfx.click();home()">Home</button>
+          <button class="pill next" onclick="nx()">${step<4 ? 'Next →' : 'Stamp Passport ✓'}</button>
+        </div>
+      </div>
+      <div class="bp-steps">
+        ${labels.map((lb,idx)=>`<button class="st-btn ${step===idx?'active':''}" onclick="jumpStep(${idx})">${lb}</button>`).join('')}
+      </div>
+      <div class="bp-head-body">
+        <h1>${title}</h1>
+        <p class="sub">${subtitle}</p>
+      </div>
+    </div>
+  `;
+}
+
+function flip(el, rawWord){
+  el.classList.toggle('f');
+  sfx.flip();
+  say(rawWord, D[cur].g);
+  const n = document.querySelectorAll('.fc.f').length;
+  const all = document.querySelectorAll('.fc').length;
+  const cnt = $('#cnt');
+  if(cnt) cnt.textContent = `Postcards flipped: ${n}/${all}`;
+}
+
+function toggleText(b){
+  sfx.click();
+  const t = $('#story');
+  const vb = $('#verbBtn');
+  t.classList.toggle('hid');
+  const hidden = t.classList.contains('hid');
+  b.textContent = hidden ? 'Show text' : 'Hide text';
+  if(vb) vb.style.display = hidden ? 'none' : 'inline-flex';
+}
+
+function toggleVerbs(b){
+  sfx.click();
+  markVerbs = !markVerbs;
+  const t = $('#story');
+  if(t) t.innerHTML = highlightStory(D[cur]);
+  b.classList.toggle('dark', markVerbs);
+  b.textContent = markVerbs ? 'Verbs highlighted' : 'Highlight Past Simple';
+}
+
+function go(autoPlay){
+  stopAllAudio();
+  renderTopbar();
+  const p = D[cur];
+  let h = '<div class="fade-in">';
+
+  if(step === 0){
+    h += bpHeader('Listen to the travel story', 'Listen first in ' + p.n + '\'s voice. Open the text only if you need help.') + `
+      <div class="postcard">
+        <div class="postmark">${p.stamp}</div>
+        <div class="player-row">
+          <div class="av-wrap" id="avWrap">${pic(p,'av')}</div>
+          <div class="audio-ctrl">
+            <div class="audio-btns">
+              <button class="play-main" id="playBtn" onclick="sfx.click();playStory(false)">${ico('play')} Listen</button>
+              <button class="pill" onclick="sfx.click();playStory(true)">↺ Replay</button>
+              <button class="pill" id="slowBtn" onclick="toggleSlow()">${slowMode ? '0.85× Slow' : '1× Speed'}</button>
+              <button class="pill" onclick="toggleText(this)">Show text</button>
+              <button class="pill" id="verbBtn" style="display:none" onclick="toggleVerbs(this)">Highlight Past Simple</button>
+            </div>
+            <div class="scrub-wrap">
+              <div class="scrub" onclick="seekAudio(event)"><i id="scrubFill"></i></div>
+              <div class="time-lbl" id="timeLbl">0:00 / 0:00</div>
+            </div>
+          </div>
+        </div>
+        <p class="story hid" id="story">${highlightStory(p)}</p>
+      </div>
+
+      <div class="sec-label">
+        <h3>Travel Vocabulary Postcards (tap to flip &amp; listen)</h3>
+        <p class="cnt" id="cnt">Postcards flipped: 0/${p.w.length}</p>
+      </div>
+      <div class="fgrid">
+        ${p.w.map(w => {
+          const spoken = w[0].replace(' → ', ', ').replace(/'/g, "\\'");
+          return `<div class="fc" onclick="flip(this,'${spoken}')">
+            <div class="fi">
+              <div class="ff">${w[0]}<small>tap to flip</small></div>
+              <div class="fb">${w[1]}<small>${w[0]}</small></div>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  if(step === 1){
+    h += bpHeader('Check your understanding', 'Answer out loud in full Past Simple sentences. Tap each ticket to check!') +
+      p.l.map((q,i)=>`
+        <div class="row" onclick="sfx.click();this.querySelector('.ans').style.display='block';this.querySelector('.q-hint').style.display='none'">
+          <div class="num">${i+1}</div>
+          <div class="q">
+            ${q[0]}
+            <div class="q-hint">Tap to reveal answer</div>
+            <div class="ans" style="display:none">✓ ${q[1]}</div>
+          </div>
+          <div class="rp" onclick="event.stopPropagation();sfx.click();playStory(false)">Story</div>
+        </div>
+      `).join('');
+  }
+
+  if(step === 2){
+    h += bpHeader('Choose the right verb', 'Tap the correct Past Simple form from ' + p.n + '\'s trip.') +
+      p.ch.map((q,i)=>`
+        <div class="box">
+          ${i+1}. ${q[0]}<br>
+          ${q[1].map((o,k)=>`<span class="o" onclick="pick(this,${i},${k})">${o}</span>`).join('')}
+        </div>
+      `).join('');
+  }
+
+  if(step === 3){
+    h += bpHeader('Put the verb in Past Simple', 'Type the missing Past Simple verb and press Check.') +
+      p.gap.map((q,i)=>`
+        <div class="box">
+          ${i+1}. ${q[0].replace('___', `<input class="gap-in" id="g${i}" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')chk()">`)}
+          <span class="gap-ans hid" id="ga${i}">→ ${q[1]}</span>
+        </div>
+      `).join('') + `
+      <div class="check-bar">
+        <button class="pill next" onclick="chk()">Check answers</button>
+        <button class="pill hid" id="showAnsBtn" onclick="revealGaps()">Show answers</button>
+        <span id="res" style="font-weight:800;font-size:16px"></span>
+      </div>`;
+  }
+
+  if(step === 4){
+    h += bpHeader('True or false?', 'Read each travel statement and choose True or False.') +
+      p.cmp.map((q,i)=>`
+        <div class="box">
+          ${i+1}. ${q[0]}<br>
+          <span class="o" onclick="tf(this,${i},true)">True</span>
+          <span class="o" onclick="tf(this,${i},false)">False</span>
+        </div>
+      `).join('');
+  }
+
+  h += '</div>';
+  app.innerHTML = h;
+
+  if(step === 0){
+    playingKey = p.k;
+    player.src = AUD[p.k] || '';
+    player.playbackRate = slowMode ? 0.85 : 1.0;
+    if(autoPlay){
+      player.play().catch(()=>say(p.s, p.g));
+    }
+  }
+}
+
+function lock(el){
+  if(el.parentNode.dataset.l) return true;
+  el.parentNode.dataset.l = '1';
+  return false;
+}
+
+function pick(el, i, k){
+  if(lock(el)) return;
+  const a = D[cur].ch[i][2];
+  if(k === a){
+    sfx.ok();
+    el.classList.add('ok');
+  } else {
+    sfx.bad();
+    el.classList.add('bad');
+    el.parentNode.querySelectorAll('.o')[a].classList.add('ok');
+  }
+}
+
+function tf(el, i, v){
+  if(lock(el)) return;
+  const a = D[cur].cmp[i][1];
+  if(v === a){
+    sfx.ok();
+    el.classList.add('ok');
+  } else {
+    sfx.bad();
+    el.classList.add('bad');
+    el.parentNode.querySelectorAll('.o')[a ? 0 : 1].classList.add('ok');
+  }
+}
+
+function chk(){
+  let c = 0;
+  D[cur].gap.forEach((q,i)=>{
+    const e = $('#g'+i);
+    e.classList.remove('ok','bad');
+    void e.offsetWidth;
+    if(e.value.trim().toLowerCase() === q[1].toLowerCase()){
+      c++;
+      e.classList.add('ok');
+    } else {
+      e.classList.add('bad');
+    }
+  });
+  $('#res').textContent = `${c}/${D[cur].gap.length}` + (c === D[cur].gap.length ? ' — Perfect trip!' : ' — Try again!');
+  const sb = $('#showAnsBtn');
+  if(sb && c < D[cur].gap.length) sb.classList.remove('hid');
+  if(c === D[cur].gap.length){ sfx.win(); confetti(); }
+  else if(c > 0) sfx.ok();
+  else sfx.bad();
+}
+
+function revealGaps(){
+  sfx.click();
+  D[cur].gap.forEach((q,i)=>{
+    const ga = $('#ga'+i);
+    if(ga) ga.classList.remove('hid');
+  });
+}
+
+/* =====================================================================
+   MODALS: Teacher Notes, Past Simple Guide, and Bonus Round Quiz
+   ===================================================================== */
+function closeModal(){
+  $('#modalRoot').innerHTML = '';
+}
+
+function openTeacherNotes(){
+  $('#modalRoot').innerHTML = `
+    <div class="modal-bg" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <div class="modal-hd">
+          <h2>Teacher Notes — Funny Travel Stories</h2>
+          <button class="close-x" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-bd">
+          <h3>Level &amp; Target Grammar</h3>
+          <p><b>CEFR A1–A2 (Elementary / Pre-Intermediate)</b> · Focus: <b>Past Simple</b> (regular <i>-ed</i> &amp; high-frequency irregular verbs) in real-life travel, café, and hotel situations.</p>
+          <h3>Voice &amp; Listening Setup</h3>
+          <p>All 4 female travellers (<b>Anna, Mei, Lena, Sofia</b>) are voiced with a natural <b>female voice</b>, and all 4 male travellers (<b>Jack, Carlos, Tom, Ben</b>) are voiced with a natural <b>male voice</b>. Use <b>0.85× Slow</b> for weaker listeners and <b>Highlight Past Simple</b> after listening to notice verb forms in context.</p>
+          <h3>Suggested 45-Minute Lesson Flow</h3>
+          <p>
+            <b>1. Warm-up (5 min):</b> Ask students: <i>"Where did you go last summer? Did anything funny happen?"</i><br>
+            <b>2. Whole-class demo (8 min):</b> Open <b>Anna (Rome)</b> together, listen without text, flip the 5 vocabulary postcards, and answer the 4 questions.<br>
+            <b>3. Pair / Individual exploration (20 min):</b> Students pick 2–3 travellers from the grid and collect passport stamps.<br>
+            <b>4. Bonus Round &amp; Speaking (12 min):</b> Play the <b>Bonus round</b> quiz together, then students tell a 4-sentence funny trip story (real or invented!).
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function openGrammar(){
+  $('#modalRoot').innerHTML = `
+    <div class="modal-bg" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <div class="modal-hd">
+          <h2>Past Simple — Traveller's Quick Guide</h2>
+          <button class="close-x" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-bd">
+          <h3>1. Regular Verbs (+ -ed)</h3>
+          <p>Most verbs add <b>-ed</b>: <i>walk → walked, wait → waited, laugh → laughed, spill → spilled</i>.<br>
+          Ends in <b>-e</b> → add <b>-d</b>: <i>smile → smiled, arrive → arrived, refuse → refused</i>.<br>
+          Short vowel + consonant → double consonant: <i>stop → stopped, grab → grabbed</i>.</p>
+          <h3>2. Key Irregular Verbs in These 8 Stories</h3>
+          <table class="vtable">
+            <tr><th>Base form</th><th>Past Simple</th><th>Base form</th><th>Past Simple</th></tr>
+            <tr><td>go</td><td><b>went</b></td><td>see</td><td><b>saw</b></td></tr>
+            <tr><td>lose</td><td><b>lost</b></td><td>wake up</td><td><b>woke up</b></td></tr>
+            <tr><td>eat</td><td><b>ate</b></td><td>ride</td><td><b>rode</b></td></tr>
+            <tr><td>sing</td><td><b>sang</b></td><td>give</td><td><b>gave</b></td></tr>
+            <tr><td>take</td><td><b>took</b></td><td>buy</td><td><b>bought</b></td></tr>
+            <tr><td>forget</td><td><b>forgot</b></td><td>bring</td><td><b>brought</b></td></tr>
+            <tr><td>run</td><td><b>ran</b></td><td>drink</td><td><b>drank</b></td></tr>
+            <tr><td>drive</td><td><b>drove</b></td><td>find</td><td><b>found</b></td></tr>
+            <tr><td>get</td><td><b>got</b></td><td>hear</td><td><b>heard</b></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+const BONUS_Q = [
+  {q: "We lost our map in Rome, and a kind man's family sang for us and gave us free pasta!", k: "anna", opts: ["anna","lena","sofia","mei"]},
+  {q: "I forgot my passport at the hotel in Bangkok and rode a fast tuk-tuk back to the airport!", k: "jack", opts: ["tom","jack","ben","carlos"]},
+  {q: "We watched the Northern Lights right above our hotel in our pyjamas!", k: "mei", opts: ["sofia","anna","mei","lena"]},
+  {q: "A camel near the Pyramids stopped, turned its head, and ate my hat!", k: "carlos", opts: ["carlos","ben","jack","tom"]},
+  {q: "I tried to order coffee in French, and the waiter brought me a huge chocolate cake!", k: "lena", opts: ["anna","lena","mei","sofia"]},
+  {q: "I spilled Turkish coffee on my white shirt, and the café owner offered me his jacket!", k: "tom", opts: ["ben","carlos","tom","jack"]},
+  {q: "At midnight in Prague, I found a small cat under my hotel bed!", k: "sofia", opts: ["mei","sofia","lena","anna"]},
+  {q: "I opened my hotel room late at night in Dubai and saw a stranger sleeping in my bed!", k: "ben", opts: ["jack","tom","carlos","ben"]}
+];
+let bIdx = 0, bScore = 0;
+
+function openBonus(){
+  bIdx = 0; bScore = 0;
+  renderBonus();
+}
+
+function renderBonus(){
+  if(bIdx >= BONUS_Q.length){
+    sfx.win(); confetti();
+    $('#modalRoot').innerHTML = `
+      <div class="modal-bg" onclick="if(event.target===this)closeModal()">
+        <div class="modal">
+          <div class="modal-hd">
+            <h2>World Traveller Bonus Round</h2>
+            <button class="close-x" onclick="closeModal()">✕</button>
+          </div>
+          <div class="modal-bd" style="text-align:center;padding:34px 24px">
+            
+            <h2 style="margin:10px 0;color:var(--navy)">Score: ${bScore} / ${BONUS_Q.length}</h2>
+            <p>You matched the travellers and their funny Past Simple adventures!</p>
+            <button class="glass-pill orange" onclick="sfx.click();openBonus()">Play again</button>
+            <button class="glass-pill" onclick="closeModal()" style="margin-left:8px">Back to Travellers</button>
+          </div>
+        </div>
+      </div>`;
+    return;
+  }
+  const item = BONUS_Q[bIdx];
+  const speaker = D.find(x => x.k === item.k);
+  $('#modalRoot').innerHTML = `
+    <div class="modal-bg" onclick="if(event.target===this)closeModal()">
+      <div class="modal">
+        <div class="modal-hd">
+          <h2>Bonus Round — Who told this story? (${bIdx+1}/${BONUS_Q.length})</h2>
+          <button class="close-x" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-bd">
+          <div class="box" style="margin-bottom:8px;background:var(--sand)">
+            “${item.q}”
+            <div style="margin-top:8px">
+              <button class="pill" onclick="sfx.click();say(${JSON.stringify(item.q).replace(/"/g,'&quot;')}, '${speaker.g}')">Listen to clue</button>
+            </div>
+          </div>
+          <div class="b-choices" id="bChoices">
+            ${item.opts.map(ok => {
+              const ch = D.find(x => x.k === ok);
+              return `<button class="b-opt" onclick="pickBonus(this,'${ok}','${item.k}')">
+                <img src="${IMG[ch.k]}" alt="${ch.n}">
+                <div><div>${ch.n}</div><small style="font-weight:500;color:#5c6f82">${ch.t}</small></div>
+              </button>`;
+            }).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function pickBonus(btn, chosen, right){
+  const wrap = $('#bChoices');
+  if(!wrap || wrap.dataset.l) return;
+  wrap.dataset.l = '1';
+  if(chosen === right){
+    bScore++;
+    sfx.ok();
+    btn.classList.add('ok');
+  } else {
+    sfx.bad();
+    btn.classList.add('bad');
+    [...wrap.querySelectorAll('.b-opt')].forEach(b => {
+      if(b.getAttribute('onclick').includes(`'${right}'`)) b.classList.add('ok');
+    });
+  }
+  setTimeout(()=>{ bIdx++; renderBonus(); }, 950);
+}
+
+home();
+{const h=location.hash.slice(1),i=D.findIndex(p=>p.k===h);if(i>=0){cur=i;step=0;go(false);}}
 </script>
 <script src="../card-audio.js?v=20261108fts"></script>
 </body>
