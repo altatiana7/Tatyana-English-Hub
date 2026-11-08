@@ -3,7 +3,7 @@
 <head><meta name="robots" content="noindex,nofollow">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Maya · 2B On top of the world</title>
+<title>Maya · Revision 2A + 2B On top of the world</title>
 <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 :root{--ink:#1c2236;--muted:#5d6478;--line:#e1e3ee;--ok:#4f8a5f;--okbg:#e6efe7;--no:#a9443a;--nobg:#f6e7e3;--gold:#b8955a;--blue:#3e5c76;--teal:#4f7f7d;--pink:#a9503b;--purple:#6b4e71;--green:#5c7f69;--orange:#a8844c}
@@ -151,24 +151,99 @@ main{display:block;padding:10px;max-width:none}
 #ftsLayer[hidden]{display:none}
 #ftsLayer .fbar{display:flex;justify-content:flex-end;padding:6px 12px;background:#fbf7f2}
 #ftsLayer iframe{flex:1;border:0;width:100%}
+
+/* v6 · два экрана: повторение 2A и урок 2B */
+.scr{border:1px solid #d6c4b2;background:#fff;color:#8a3d2f;border-radius:99px;padding:6px 14px;font-size:14px;white-space:nowrap}
+.scr.on{background:#8a3d2f;color:#fff;border-color:#8a3d2f}
+.board[hidden]{display:none}
+.board.rev{grid-template-columns:repeat(3,minmax(0,1fr))}
+.qsel{border:1px solid #b9a6ad;background:#fff;border-radius:8px;font:inherit;font-size:12px;padding:2px 4px}
+.iv{position:relative;width:52px;height:52px;margin:0 auto}
+.ring{width:52px;height:52px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:4}.rbg{stroke:#ffffffb0}.rfg{stroke:#3e5c76;stroke-dasharray:119.4;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear}
+.ivt{position:absolute;inset:0;display:grid;place-items:center;font:700 15px Arial,sans-serif}
+.ivb{display:flex;gap:6px;justify-content:center}
+#ivCard .front strong{font-size:44px;color:#3e5c76}
+#ivCard .back .en{font-size:21px}
+#ryCard .back .en{font-size:19px;color:var(--ok)}
+.rd .mq{display:block;font-size:14px}
+.rd .ra{display:none;color:var(--ok);font-weight:700;font-size:13px;margin-top:3px}
+.rd.open .ra{display:block}.rd{cursor:pointer}
+#artLayer{position:fixed;inset:0;z-index:50;background:#f7f5f1;overflow:auto}
+#artLayer[hidden]{display:none}
+.art{max-width:1150px;margin:0 auto;padding:10px 14px;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:14px;align-items:start}
+.art img{width:100%;border-radius:12px;display:block}
+.art .tx{background:#fff;border:1px solid #e4ded3;border-radius:12px;padding:12px 16px;font-size:17px;line-height:1.6}
+.art .tx p{margin:0 0 10px}.art .lead{color:#2a5a8a;font-weight:700}
+.art mark{background:#fff3b0;padding:0 2px}.art .pc{background:transparent}.art.pcon .pc{background:#dcecfb;border-bottom:2px solid #3e5c76}
+.abar{display:flex;gap:8px;align-items:center;padding:8px 14px;background:#fbf7f2;border-bottom:1px solid #eadfd2;position:sticky;top:0}
+.abar b{flex:1;font-style:italic;font-weight:400;font-size:17px}
+@media (max-width:820px){.art{grid-template-columns:1fr}.board.rev{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <div class="bar">
-  <span class="name">Maya · 2B On top of the world</span>
-  <span class="pill">ONE SCREEN · 8 ACTIVITIES</span>
+  <span class="name">Maya · Module 2</span>
+  <button class="scr on" data-b="rev">1 · Revision 2A · Lost… and found?</button>
+  <button class="scr" data-b="b2b">2 · 2B · On top of the world</button>
 </div>
 <main>
-<div class="board">
+<div class="board rev" id="rev">
 
 <section class="card c8"><header><b>01</b><span>Past Simple · Funny Travel Stories</span></header>
   <div class="fts" id="ftsGrid"><button class="ftsp" data-k="anna"><img src="media/fts/anna.jpg" alt=""><span>Anna</span></button><button class="ftsp" data-k="jack"><img src="media/fts/jack.jpg" alt=""><span>Jack</span></button><button class="ftsp" data-k="mei"><img src="media/fts/mei.jpg" alt=""><span>Mei</span></button><button class="ftsp" data-k="carlos"><img src="media/fts/carlos.jpg" alt=""><span>Carlos</span></button><button class="ftsp" data-k="lena"><img src="media/fts/lena.jpg" alt=""><span>Lena</span></button><button class="ftsp" data-k="tom"><img src="media/fts/tom.jpg" alt=""><span>Tom</span></button><button class="ftsp" data-k="sofia"><img src="media/fts/sofia.jpg" alt=""><span>Sofia</span></button><button class="ftsp" data-k="ben"><img src="media/fts/ben.jpg" alt=""><span>Ben</span></button></div>
   <button class="rbtn ftsgo" id="ftsOpen">Open all stories</button>
 </section>
 
-<section class="card c1"><header><b>02</b><span>Warm-up · Фото и вопросы</span></header>
+<section class="card c4"><header><b>02</b><span>Ryan's story · Correct the facts</span></header>
+  <div class="qz" id="ryCard"><div class="in"><div class="face front"><strong id="ryQ"></strong></div><div class="face back"><div class="en" id="ryA"></div></div></div></div>
+  <div class="qnav"><button class="arrow" id="ryPrev">‹</button><span class="counter" id="ryCount"></span><button class="arrow" id="ryNext">›</button></div>
+</section>
+
+<section class="card c3"><header><b>03</b><span>Past Simple · regular and irregular</span></header>
+  <div class="mlist" id="pfList"></div>
+  <div class="qnav"><button class="arrow" id="pfPrev">‹</button><span class="counter" id="pfCnt"></span><button class="arrow" id="pfNext">›</button></div>
+</section>
+
+<section class="card c5"><header><b>04</b><span>Pronunciation · -ed endings</span><button class="rbtn" id="edBtn">Правило</button></header>
+  <div class="rulebox" id="edBox" hidden>
+    <div><b>/t/</b> booked, missed · <b>/d/</b> arrived, phoned · <b>/ɪd/</b> invited, needed</div>
+    <div>Обычно <b>-ed</b> звучит как /t/ или /d/. Отдельный слог /ɪd/ — только после <b>t</b> или <b>d</b>: wanted, ended.</div>
+  </div>
+  <div class="mlist" id="edList"></div>
+  <div class="qnav"><button class="arrow" id="edPrev">‹</button><span class="counter" id="edCnt"></span><button class="arrow" id="edNext">›</button></div>
+</section>
+
+<section class="card c2"><header><b>05</b><span>Speaking · Your last holiday</span><select class="qsel" id="ivSel"></select></header>
+  <div class="iv">
+    <svg class="ring" viewBox="0 0 44 44"><circle cx="22" cy="22" r="19" class="rbg"/><circle cx="22" cy="22" r="19" class="rfg" id="ivRing"/></svg>
+    <span class="ivt" id="ivTime">40</span>
+  </div>
+  <div class="qz" id="ivCard"><div class="in"><div class="face front"><strong id="ivN"></strong></div><div class="face back"><div class="en" id="ivQ"></div></div></div></div>
+  <div class="ivb"><button class="rbtn" id="ivPlay">Play</button><button class="rbtn" id="ivRep">Replay</button><button class="rbtn" id="ivStop">Stop</button></div>
+  <div class="qnav"><button class="arrow" id="ivPrev">‹</button><button class="rbtn" id="ivFlip">Перевернуть</button><button class="arrow" id="ivNext">›</button></div>
+</section>
+
+<section class="card c6"><header><b>06</b><span>Speed Game · Past forms</span></header>
+  <div class="timer"><i id="rgBar"></i></div>
+  <div class="score" id="rgScore">15 секунд на вопрос</div>
+  <div class="sent" id="rgSent"></div>
+  <div class="pair" id="rgBtns"></div>
+  <div class="score" id="rgEnd"></div>
+  <div style="text-align:center"><button class="back" id="rgStart">Старт</button></div>
+</section>
+
+</div>
+
+<div class="board" id="b2b" hidden>
+
+<section class="card c1"><header><b>01</b><span>Warm-up · Фото и вопросы</span></header>
   <div class="qz" id="warmCard"><div class="in"><div class="face front"><strong id="warmQ"></strong><small>нажмите, чтобы увидеть подсказку</small></div><div class="face back"><div class="ex" id="warmA"></div></div></div></div>
   <div class="qnav"><button class="arrow" id="warmPrev">‹</button><span class="counter" id="warmCount"></span><button class="arrow" id="warmNext">›</button></div>
+</section>
+
+<section class="card c8"><header><b>02</b><span>Reading · That's me in the picture</span><button class="rbtn" id="artBtn">Article</button></header>
+  <div class="mlist" id="rdList"></div>
 </section>
 
 <section class="card c2"><header><b>03</b><span>Vocabulary · Quizlet</span></header>
@@ -408,6 +483,101 @@ $('#gmStart').onclick=()=>{clearInterval(gmT);gmStart()};
 
 $('#ruleBtn').onclick=()=>{const b=$('#ruleBox');b.hidden=!b.hidden};
 const gmStartOrig=gmStart;
+})();
+</script>
+<div id="artLayer" hidden>
+  <div class="abar"><button class="tbtn" id="artClose">‹ Lesson 2B</button><b>That's me in the picture</b><button class="tbtn" id="pcBtn">Past continuous</button></div>
+  <div class="art" id="art">
+    <div><img src="media/2b-swing-book.jpg" alt=""></div>
+    <div class="tx">
+      <p class="lead">In a feature in <i>The Guardian</i> newspaper called ‘That’s me in the picture’, people describe a photo they were in. This photo was sent in by Christopher Morris.</p>
+      <p>In 2014, when I <span class="pc">was studying</span> acting at university, I decided to do a Spanish course in Ecuador. One weekend, I visited a place called Baños with some friends. A big attraction there is the ‘<mark>Swing</mark> at the end of the world’. The swing is on the edge of a mountain, and there are incredible views. On a clear day, you can see a <mark>volcano</mark>, Mount Tungurahua.</p>
+      <p>We rented quad bikes to ride up to the swing. The weather was beautiful – sunshine and clear skies. We <span class="pc">were riding</span> up the mountain on our bikes when we passed some friends coming down. ‘The volcano is active today,’ they said.</p>
+      <p>The swing hangs from a treehouse. It’s just two old <mark>ropes</mark> and an old wooden seat. It was dangerous, but we all took turns. It was an amazing feeling – one minute your feet are on the ground, and the next, you’re high up in the air.</p>
+      <p>For a time, we <span class="pc">were swinging</span> on the swing and <span class="pc">watching</span> the smoke coming from the volcano. After 20 minutes, there was a lot more smoke and loud noises. We could see an enormous <mark>cloud of ash</mark> in the sky. One part of me <span class="pc">was thinking</span>, ‘This is so cool’, but the other part <span class="pc">was thinking</span>, ‘Are we in danger?’ The cloud started to cover the sky. I asked my friend Sean to try to take a good photo of me with the volcano in the background. When people see this photo, they say, ‘Wow, you look so relaxed.’ But I was terrified! Then we heard local people saying, ‘We have to go’, and we knew it was time to leave.</p>
+      <p>I made the photo my profile picture. Some time later, I was in a doctor’s waiting room, and I <span class="pc">was looking</span> through a <i>National Geographic</i> magazine when I saw the photo. Sean had won a prize in a travel photo competition!</p>
+    </div>
+  </div>
+</div>
+<script src="../card-audio.js?v=20261108rev"></script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s);
+/* два экрана */
+document.querySelectorAll('.scr').forEach(b=>b.onclick=()=>{document.querySelectorAll('.scr').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('main > .board').forEach(x=>x.hidden=x.id!==b.dataset.b);if(window.CardAudio)CardAudio.stop();});
+
+/* 2B · reading questions (Student's Book 1c) */
+const RD=[["Why was Christopher in Ecuador? Why did he decide to go to Baños?","He was doing a Spanish course. Baños has the famous ‘Swing at the end of the world’."],
+ ["How did they go up the mountain? What information did they get on their way up?","On quad bikes. Friends coming down said the volcano was active."],
+ ["Why is the swing dangerous? Who actually tried it?","It’s on the edge of a mountain – just two old ropes and a wooden seat. They all tried it."],
+ ["What started to happen after 20 minutes on the swing? What did Christopher do?","More smoke, loud noises and a cloud of ash. He asked Sean to take a photo."],
+ ["How did he discover that the photo was famous?","He saw it in National Geographic in a doctor’s waiting room. Sean won a prize."]];
+$('#rdList').innerHTML=RD.map((q,i)=>`<div class="mrow rd"><div class="mq">${i+1}. ${q[0]}</div><div class="ra">${q[1]}</div></div>`).join('');
+document.querySelectorAll('.rd').forEach(r=>r.onclick=()=>r.classList.toggle('open'));
+$('#artBtn').onclick=()=>{$('#artLayer').hidden=false};
+$('#artClose').onclick=()=>{$('#artLayer').hidden=true};
+$('#pcBtn').onclick=()=>$('#art').classList.toggle('pcon');
+
+/* Revision 2A */
+function deck(list,render,c){let i=0;const card=$(c.card);
+  const show=()=>{card.classList.remove('f');render(list[i],i);$(c.count)&&($(c.count).textContent=(i+1)+' / '+list.length);$(c.prev).disabled=i===0;$(c.next).disabled=i===list.length-1;c.onShow&&c.onShow(i)};
+  card.onclick=()=>card.classList.toggle('f');
+  $(c.prev).onclick=()=>{if(i>0){i--;show()}};$(c.next).onclick=()=>{if(i<list.length-1){i++;show()}};
+  show();return {go:k=>{i=k;show()},get i(){return i}};}
+
+/* 02 Ryan: wrong fact on the front, correct fact on the back (2A lesson data) */
+const FACTS=[['He went with his family.','He went with friends.'],['They went cycling.','They climbed a mountain.'],['It took three hours to get to the top.','It took about two hours.'],['They had a snack at the top.','They had lunch at the top.'],['The view wasn’t very good.','The view was amazing.'],['He couldn’t find his camera.','He couldn’t find his phone.'],['He went back with only one friend.','All his friends went back up with him.'],['They spent an hour searching.','They spent about half an hour looking.'],['It started getting warmer.','It got colder.'],['He found his phone in his bag.','It was in his jacket pocket.'],['His friends were angry.','His friends were kind about it.']];
+deck(FACTS,(x)=>{$('#ryQ').textContent=x[0];$('#ryA').textContent=x[1]},{card:'#ryCard',prev:'#ryPrev',next:'#ryNext',count:'#ryCount'});
+
+/* 03 past forms, 3 on a screen */
+const VERBS=[['go','went'],['climb','climbed'],['be','was / were'],['take','took'],['have','had'],['can','could'],['sit','sat'],['get','got'],['want','wanted'],['think','thought'],['decide','decided'],['say','said'],['spend','spent'],['start','started'],['feel','felt'],['let','let']];
+const reg=b=>/e$/.test(b)?b+'d':b+'ed';
+const optsOf=v=>{const o=v[1]==='was / were'?['was / were','beed','been']:v[0]===v[1]?[v[1],v[0]+'ed',v[0]+'ted']:[v[1],reg(v[0])===v[1]?v[0]+'s':reg(v[0]),v[0]];return o.sort()};
+function multi(items,k,opts,ans,txt){let page=0;const per=3,pages=Math.ceil(items.length/per),done={};
+  const draw=()=>{$('#'+k+'Cnt').textContent=(page+1)+' / '+pages;$('#'+k+'Prev').disabled=page===0;$('#'+k+'Next').disabled=page===pages-1;
+    const L=$('#'+k+'List');L.innerHTML='';
+    items.slice(page*per,page*per+per).forEach((it,n)=>{const idx=page*per+n,row=document.createElement('div');row.className='mrow';
+      row.innerHTML='<div class="mq">'+txt(it)+'</div><div class="mopts"></div>';const box=row.querySelector('.mopts');
+      opts(it).forEach(o=>{const b=document.createElement('button');b.className='chip';b.textContent=o;const st=done[idx];
+        if(st){if(o===ans(it))b.classList.add('ok');else if(o===st)b.classList.add('no')}
+        b.onclick=()=>{if(done[idx])return;done[idx]=o;box.querySelectorAll('.chip').forEach(x=>{if(x.textContent===ans(it))x.classList.add('ok')});if(o!==ans(it))b.classList.add('no')};
+        box.appendChild(b)});L.appendChild(row)})};
+  $('#'+k+'Prev').onclick=()=>{if(page>0){page--;draw()}};$('#'+k+'Next').onclick=()=>{if(page<pages-1){page++;draw()}};draw();}
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const VS=shuf(VERBS.slice());
+multi(VS,'pf',optsOf,v=>v[1],v=>'<b>'+v[0]+'</b>&nbsp;→&nbsp;<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>');
+
+/* 04 -ed endings (Student's Book 3e) */
+const ED=[['asked','/t/'],['called','/d/'],['checked','/t/'],['decided','/ɪd/'],['happened','/d/'],['lived','/d/'],['rented','/ɪd/'],['started','/ɪd/'],['stopped','/t/'],['thanked','/t/'],['wanted','/ɪd/'],['booked','/t/']];
+multi(ED,'ed',()=>['/t/','/d/','/ɪd/'],e=>e[1],e=>'<b>'+e[0]+'</b>');
+$('#edBtn').onclick=()=>{const b=$('#edBox');b.hidden=!b.hidden};
+
+/* 05 interview: the question only sounds, text on the back, 40-second timer */
+const IV=['Where did you go for your last holiday?','When did you go?','Who did you go with?','Where did you stay? What was it like?','What was the weather like?','What did you do during the day?','What did you do in the evening?','Did you have a good time?','Did you have any problems?'];
+let tmr=null,left=40;const R=119.4;
+const ring=()=>{$('#ivTime').textContent=left;$('#ivRing').style.strokeDashoffset=R*(1-left/40)};
+const stopT=()=>{clearInterval(tmr);tmr=null};
+const startT=()=>{stopT();left=40;ring();tmr=setInterval(()=>{left--;ring();if(left<=0)stopT()},1000)};
+const play=()=>{if(window.CardAudio)CardAudio.say(IV[iv.i],$('#ivPlay'),startT)};
+$('#ivSel').innerHTML=IV.map((q,i)=>`<option value="${i}">${i+1}</option>`).join('');
+const iv=deck(IV,(q,i)=>{$('#ivN').textContent=i+1;$('#ivQ').textContent=q},{card:'#ivCard',prev:'#ivPrev',next:'#ivNext',onShow:i=>{$('#ivSel').value=i;stopT();left=40;ring();if(window.CardAudio)CardAudio.stop()}});
+$('#ivSel').onchange=e=>iv.go(+e.target.value);
+$('#ivPlay').onclick=play;$('#ivRep').onclick=play;
+$('#ivStop').onclick=()=>{if(window.CardAudio)CardAudio.stop();stopT()};
+$('#ivFlip').onclick=()=>$('#ivCard').classList.toggle('f');
+
+/* 06 speed game: past forms, 15 seconds */
+let gT=null,gl=0,gi=0,gs=0,gItems=[];
+function gNext(){if(gi>=gItems.length){clearInterval(gT);gT=null;$('#rgSent').textContent='';$('#rgBtns').innerHTML='';$('#rgBar').style.width='0';$('#rgEnd').textContent='Результат: '+gs+' очков';return}
+  const v=gItems[gi];$('#rgSent').innerHTML='<span><b>'+v[0]+'</b> → ?</span>';
+  const o=shuf(optsOf(v).concat([VERBS[(VERBS.indexOf(v)+3)%VERBS.length][1]]).filter((x,k,a)=>a.indexOf(x)===k)).slice(0,4);if(!o.includes(v[1]))o[0]=v[1];
+  $('#rgBtns').innerHTML=shuf(o).map(x=>`<button class="ans">${x}</button>`).join('');$('#rgScore').textContent='Очки: '+gs;
+  gl=15;$('#rgBar').style.transition='none';$('#rgBar').style.width='100%';requestAnimationFrame(()=>{$('#rgBar').style.transition='width 1s linear'});
+  clearInterval(gT);gT=setInterval(()=>{gl--;$('#rgBar').style.width=(gl/15*100)+'%';if(gl<=0){clearInterval(gT);gi++;gNext()}},1000);
+  $('#rgBtns').querySelectorAll('.ans').forEach(b=>b.onclick=()=>{if(!gT)return;clearInterval(gT);gT=null;const ok=b.textContent===v[1];if(ok)gs+=gl;
+    b.classList.add(ok?'ok':'no');if(!ok)$('#rgBtns').querySelectorAll('.ans').forEach(x=>{if(x.textContent===v[1])x.classList.add('ok')});setTimeout(()=>{gi++;gNext()},ok?600:1200)})}
+$('#rgStart').onclick=()=>{gItems=shuf(VERBS.slice()).slice(0,10);gi=0;gs=0;$('#rgEnd').textContent='';gNext()};
 })();
 </script>
 <div id="ftsLayer" hidden><iframe id="ftsFrame" title="Funny Travel Stories"></iframe></div>
