@@ -9,7 +9,7 @@
 :root{--p:#4b35ae;--p2:#7458cc;--pink:#ef5f91;--ink:#201a45;--line:#e2dbf0;--ok:#15845b;--okbg:#e7f6ef;--bad:#c4435d;--badbg:#fbeaee}
 *{box-sizing:border-box}html,body{height:100%;margin:0}
 body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:linear-gradient(135deg,#f3efff,#effaff 55%,#f5fff1)}
-.app{height:100vh;max-width:1280px;margin:auto;padding:6px 10px 8px;display:grid;grid-template-rows:auto 1fr;gap:6px}
+.app{height:100vh;max-width:1280px;margin:auto;padding:24px 10px 8px;display:grid;grid-template-rows:auto 1fr;gap:6px}
 .bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .bar h1{margin:0;font-size:18px;color:var(--p);font-family:Arial,sans-serif}.bar h1 small{font-weight:400;color:#6b6880;font-size:13px;margin-left:6px}
 .tabs{display:flex;gap:6px;margin-left:auto}
@@ -47,7 +47,9 @@ body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:lin
 .art{font-size:16px;line-height:1.5}.art img{float:right;width:42%;max-width:380px;margin:2px 0 8px 14px;border-radius:12px}
 .art p{margin:0 0 9px}.art .lead{color:#5b5772;font-style:italic;font-size:15.5px}.art mark{background:#fff1b8;padding:0 2px;border-radius:3px}
 .screen.read{grid-template-columns:1.35fr 1fr}.screen .pane.tall{max-height:calc(100vh - 62px)}
-.stem{font-size:21px}.opt{font-size:18px}
+.stem{font-size:21px}
+.aud{display:grid;grid-template-columns:150px 1fr;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:10px;background:#fff}.aud img{width:150px;height:150px;object-fit:cover;border-radius:12px}.aud b{display:block;font:900 20px Arial,sans-serif;color:var(--p)}.aud span{display:block;color:#6b6880;font-size:15px;margin:3px 0 10px}.aud audio{width:100%}
+.opt{font-size:18px}
 </style>
 </head>
 <body>
@@ -57,6 +59,7 @@ body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:lin
     <div class="tabs">
       <button class="tab active" data-s="s1">1 · Read + Cards</button>
       <button class="tab" data-s="s2">2 · Practice</button>
+      <button class="tab" data-s="s3">3 · Listening</button>
     </div>
     <span id="sendSlot"></span>
   </div>
@@ -100,6 +103,23 @@ body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:lin
       <div class="result" id="bRes"></div>
     </section>
   </div>
+
+  <div class="screen" id="s3">
+    <section class="pane">
+      <h2>5 · Listen to two travel stories</h2>
+      <p class="hint">Listen to Anna and Jack. You can listen as many times as you want.</p>
+      <div class="aud"><img src="../maya-course/media/fts/anna.jpg" alt=""><div><b>Anna</b><span>from Germany · a trip to Rome</span><audio controls controlsList="nodownload" preload="none" src="../maya-course/media/fts/anna-story.mp3"></audio></div></div>
+      <div class="aud"><img src="../maya-course/media/fts/jack.jpg" alt=""><div><b>Jack</b><span>from Australia · a trip to Bangkok</span><audio controls controlsList="nodownload" preload="none" src="../maya-course/media/fts/jack-story.mp3"></audio></div></div>
+    </section>
+    <section class="pane">
+      <h2>6 · Listening check <span class="once">одна попытка</span></h2>
+      <p class="hint">Answer after you listen.</p>
+      <div class="counter" id="lCount"></div>
+      <div class="stem" id="lStem"></div>
+      <div class="opts" id="lOpts"></div>
+      <div class="result" id="lRes"></div>
+    </section>
+  </div>
 </div>
 
 <script src="../shared/hw-parts.js?v=1"></script><script src="send.js?v=20261108a"></script>
@@ -107,12 +127,13 @@ body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:lin
 (()=>{
 const $=s=>document.querySelector(s);
 const KEY='maya-hw-2b-v1';
-let st={a:[],b:[],done:false};
-try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&typeof x==='object')st=Object.assign(st,x)}catch(e){}
+let st={a:[],b:[],l:[],done:false};
+try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&typeof x==='object')st=Object.assign(st,x);if(!Array.isArray(st.l))st.l=[]}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}try{P.refresh()}catch(e){}}
 const P=KS.parts('hw2b',{lang:'en',
   units:()=>[{id:'a',label:'Collocation partners',done:st.a.length>=PART.length,errors:PART.length-aScore()},
-             {id:'b',label:'Collocations in sentences',done:st.b.length>=SENT.length,errors:SENT.length-bScore()}],
+             {id:'b',label:'Collocations in sentences',done:st.b.length>=SENT.length,errors:SENT.length-bScore()},
+             {id:'l',label:'Listening check',done:st.l.length>=LIS.length,errors:LIS.length-lScore()}],
   snapshot:()=>getData()});
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{
@@ -185,6 +206,22 @@ const SENT=[
  ["Scientists say ___ again: there is smoke above the mountain.",["the volcano is active","the sky is clear","the view is incredible","the seat is wooden"],"the volcano is active"],
  ["She sent her sunset picture to ___ and won first place.",["a travel photo competition","a doctor’s waiting room","a Spanish course","a big attraction"],"a travel photo competition"]
 ];
+/* 6 · аудирование: Anna и Jack (вопросы из активности Funny Travel Stories) */
+const TF=['True','False'];
+const LIS=[
+ ["Anna: She travelled alone.",TF,"False"],
+ ["Anna: Who did she go to Rome with?",["her sister","her mum","a friend","her husband"],"her sister"],
+ ["Anna: What did they lose?",["their map","their phone","their passports","their bag"],"their map"],
+ ["Anna: An old man helped them.",TF,"True"],
+ ["Anna: The restaurant belonged to the man’s son.",TF,"True"],
+ ["Anna: They paid a lot for dinner.",TF,"False"],
+ ["Jack: What did he forget at the hotel?",["his passport","his phone","his ticket","his wallet"],"his passport"],
+ ["Jack: He lost his phone.",TF,"False"],
+ ["Jack: He went back to the hotel.",TF,"True"],
+ ["Jack: How did he get to the airport?",["by tuk-tuk","by bus","by taxi","on foot"],"by tuk-tuk"],
+ ["Jack: He missed his flight.",TF,"False"],
+ ["Jack: He arrived five minutes before the gate closed.",TF,"True"]
+];
 
 function quiz(items,arr,ids,label,uid){
   const score=()=>arr.filter((a,i)=>a===items[i][2]).length;
@@ -194,7 +231,7 @@ function quiz(items,arr,ids,label,uid){
     const [q,opts,right]=items[i];let locked=false;
     $(ids.count).textContent=(i+1)+' / '+items.length;
     $(ids.stem).innerHTML=q.replace('___','<u>&nbsp;&nbsp;&nbsp;&nbsp;</u>');
-    $(ids.opts).innerHTML=shuffle(opts).map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('');
+    $(ids.opts).innerHTML=(opts===TF?opts:shuffle(opts)).map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('');
     $(ids.opts).querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
       if(locked||st.done||P.isSent(uid))return;locked=true;
       const ok=b.dataset.v===right;arr.push(b.dataset.v);save();
@@ -206,6 +243,7 @@ function quiz(items,arr,ids,label,uid){
   draw();return score;
 }
 const aScore=quiz(PART,st.a,{count:'#aCount',stem:'#aStem',opts:'#aOpts',res:'#aRes'},'Collocation partners','a');
+const lScore=quiz(LIS,st.l,{count:'#lCount',stem:'#lStem',opts:'#lOpts',res:'#lRes'},'Listening check','l');
 const bScore=quiz(SENT,st.b,{count:'#bCount',stem:'#bStem',opts:'#bOpts',res:'#bRes'},'Collocations in sentences','b');
 
 let ci=0;
@@ -216,13 +254,14 @@ cDraw();
 
 function lockAll(){st.done=true;save();
   $('#aStem').innerHTML='Отправлено';$('#aOpts').innerHTML='';$('#aCount').textContent='';$('#aRes').textContent='Collocation partners: '+aScore()+' из '+PART.length;
-  $('#bStem').innerHTML='Отправлено';$('#bOpts').innerHTML='';$('#bCount').textContent='';$('#bRes').textContent='Collocations in sentences: '+bScore()+' из '+SENT.length;}
+  $('#bStem').innerHTML='Отправлено';$('#bOpts').innerHTML='';$('#bCount').textContent='';$('#bRes').textContent='Collocations in sentences: '+bScore()+' из '+SENT.length;
+  $('#lStem').innerHTML='Отправлено';$('#lOpts').innerHTML='';$('#lCount').textContent='';$('#lRes').textContent='Listening check: '+lScore()+' из '+LIS.length;}
 function getData(){
   const fill=q=>q.replace('___','_____');
   const sec=(name,items,ans,score)=>({name,score,max:items.length,items:items.map((q,i)=>({n:i+1,q:fill(q[0]),a:ans[i]===undefined?'':ans[i],right:q[2]}))});
-  const sections=[sec('Collocation partners',PART,st.a,aScore()),sec('Collocations in new sentences',SENT,st.b,bScore())];
+  const sections=[sec('Collocation partners',PART,st.a,aScore()),sec('Collocations in new sentences',SENT,st.b,bScore()),sec('Listening: Anna and Jack',LIS,st.l,lScore())];
   const total=sections.reduce((s,x)=>s+x.score,0),max=sections.reduce((s,x)=>s+x.max,0);
-  return {summary:'A '+aScore()+'/'+PART.length+' · B '+bScore()+'/'+SENT.length,total,max,sections};
+  return {summary:'A '+aScore()+'/'+PART.length+' · B '+bScore()+'/'+SENT.length+' · L '+lScore()+'/'+LIS.length,total,max,sections};
 }
 $('#sendSlot').appendChild(P.bar(null,{compact:true}));
 if(KS.sent('hw2b')&&!st.done)lockAll();
