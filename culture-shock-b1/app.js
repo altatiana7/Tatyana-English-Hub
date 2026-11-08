@@ -183,17 +183,16 @@
   /* ─────────────── 1. LEAD-IN ─────────────── */
   function renderLead() {
     var html = '<section class="card">' +
-      head(1, "Lead-in", "Пять минут на разговор до новой лексики") +
+      head(1, "Lead-in", "Five minutes of speaking before the new vocabulary") +
       '<p class="lead">' + esc(D.leadIn.intro) + "</p>" +
-      '<h3>Обсудите в парах</h3><div class="ql">';
+      '<h3>Discuss in pairs</h3><div class="ql">';
     D.leadIn.questions.forEach(function (q, i) {
       html += '<div class="q"><b>' + (i + 1) + ". " + esc(q.q) + "</b>" +
         '<div class="hint">' + (q.hints || []).map(function (h) { return "<span>" + esc(h) + "</span>"; }).join("") + "</div></div>";
     });
     html += "</div>" +
       '<div class="actions">' +
-      '<button class="btn soft" type="button" id="leadSay">🔊 Прочитать вопросы</button>' +
-      '<span class="muted" style="font-size:13px">Совет: сначала по-английски, потом можно переключиться на русский для деталей.</span>' +
+      '<button class="btn soft" type="button" id="leadSay">🔊 Read the questions</button>' +
       "</div></section>";
     var node = el(html);
     $("#leadSay", node).addEventListener("click", function () {
@@ -213,16 +212,16 @@
   function renderVocab() {
     var showRu = get("showRu", false);
     var html = '<section class="card">' +
-      head(2, "Vocabulary preview", "10 слов, которые встречаются во всех трёх историях") +
+      head(2, "Vocabulary preview", "Ten words that come up in all three stories") +
       '<div class="actions" style="margin:0 0 14px">' +
-      '<button class="btn soft" type="button" id="ruToggle">' + (showRu ? "Скрыть перевод" : "Показать перевод") + "</button>" +
-      '<button class="btn" type="button" id="sayAll">🔊 Прослушать все слова</button>' +
-      '<button class="btn" type="button" id="flashBtn">🗂 Карточки-тренажёр</button>' +
+      '<button class="btn soft" type="button" id="ruToggle">' + (showRu ? "Hide Russian" : "Show Russian") + "</button>" +
+      '<button class="btn" type="button" id="sayAll">🔊 Listen to all words</button>' +
+      '<button class="btn" type="button" id="flashBtn">🗂 Flashcards</button>' +
       "</div><div class=\"word-grid\" id=\"wg\">";
     D.vocabulary.forEach(function (w, i) {
       html += '<div class="word">' +
         '<span class="ico" aria-hidden="true">' + (w.icon || "•") + "</span>" +
-        '<button class="say" type="button" data-say="' + esc(w.word) + '" title="Прослушать">🔊</button>' +
+        '<button class="say" type="button" data-say="' + esc(w.word) + '" title="Listen">🔊</button>' +
         '<div class="w">' + esc(w.word) + '<span class="ipa">' + esc(w.ipa) + "</span></div>" +
         '<div class="pos">' + esc(w.pos) + "</div>" +
         '<div class="m">' + esc(w.meaning) + "</div>" +
@@ -239,7 +238,7 @@
       var on = get("showRu", false);
       set("showRu", !on);
       $$(".ru", node).forEach(function (x) { x.style.display = !on ? "block" : "none"; });
-      this.textContent = !on ? "Скрыть перевод" : "Показать перевод";
+      this.textContent = !on ? "Hide Russian" : "Show Russian";
     });
     $$("[data-say]", node).forEach(function (b) {
       b.addEventListener("click", function () { Speech.say(b.getAttribute("data-say"), b); });
@@ -258,61 +257,67 @@
 
   function flashHtml() {
     return '<div class="flash" id="flash">' +
-      '<div class="fc" id="fc" tabindex="0" role="button" aria-label="Перевернуть карточку">' +
-      '<span class="corner" id="fcCorner"></span>' +
-      '<div class="front" id="fcFront"></div>' +
-      '<div class="back"><div class="m" id="fcMean"></div><div class="ex" id="fcEx"></div><div class="m" id="fcRu" style="color:var(--teal);font-weight:800"></div></div>' +
+      '<div class="fc-row" id="fcRow">' +
+      D.vocabulary.map(function (w, i) {
+        return '<div class="fc" tabindex="0" role="button" data-i="' + i + '" aria-label="Flip the card">' +
+          '<span class="corner">' + esc(w.ipa) + '</span>' +
+          '<div class="front"><span class="fc-ico">' + (w.icon || "•") + "</span><span>" + esc(w.word) + "</span></div>" +
+          '<div class="back"><div class="m">' + esc(w.meaning) + "</div>" +
+          '<div class="ex">“' + esc(w.example) + '”</div>' +
+          '<div class="m ru-line">🇷🇺 ' + esc(w.ru) + "</div></div>" +
+          "</div>";
+      }).join("") +
       "</div>" +
-      '<div class="actions" style="margin:0">' +
-      '<button class="btn" type="button" id="fcPrev">←</button>' +
-      '<span class="muted" id="fcCnt" style="font-weight:800;min-width:66px;text-align:center"></span>' +
-      '<button class="btn" type="button" id="fcNext">→</button>' +
-      '<button class="btn soft" type="button" id="fcSay">🔊</button>' +
+      '<div class="actions" style="margin:14px 0 0">' +
+      '<button class="btn" type="button" id="fcFlipAll">Flip all</button>' +
+      '<button class="btn" type="button" id="fcShuffle">Shuffle</button>' +
+      '<button class="btn soft" type="button" id="fcSay">🔊 All words</button>' +
       "</div></div>";
   }
 
   function wireFlash(node) {
-    var fc = $("#fc", node);
-    if (!fc) return;
-    var i = 0;
-    function paint() {
-      var w = D.vocabulary[i];
-      fc.classList.remove("flipped");
-      $("#fcFront", node).innerHTML = '<span class="fc-ico">' + (w.icon || "") + "</span><span>" + esc(w.word) + "</span>";
-      $("#fcMean", node).textContent = w.meaning;
-      $("#fcEx", node).textContent = "“" + w.example + "”";
-      $("#fcRu", node).textContent = "🇷🇺 " + w.ru;
-      $("#fcCnt", node).textContent = (i + 1) + " / " + D.vocabulary.length;
-      $("#fcCorner", node).textContent = w.ipa + " · " + w.pos;
-    }
-    fc.addEventListener("click", function () { fc.classList.toggle("flipped"); });
-    fc.addEventListener("keydown", function (e) {
-      if (e.key === " " || e.key === "Enter") { e.preventDefault(); fc.classList.toggle("flipped"); }
+    var row = $("#fcRow", node);
+    if (!row) return;
+    $$(".fc", row).forEach(function (card) {
+      function flip() { card.classList.toggle("flipped"); }
+      card.addEventListener("click", flip);
+      card.addEventListener("keydown", function (e) {
+        if (e.key === " " || e.key === "Enter") { e.preventDefault(); flip(); }
+      });
     });
-    $("#fcPrev", node).addEventListener("click", function () { i = (i - 1 + D.vocabulary.length) % D.vocabulary.length; paint(); });
-    $("#fcNext", node).addEventListener("click", function () { i = (i + 1) % D.vocabulary.length; paint(); });
-    $("#fcSay", node).addEventListener("click", function () { Speech.say(D.vocabulary[i].word, this); });
-    paint();
+    $("#fcFlipAll", node).addEventListener("click", function () {
+      var anyOpen = $$(".fc.flipped", row).length < $$(".fc", row).length;
+      $$(".fc", row).forEach(function (c) { c.classList.toggle("flipped", anyOpen); });
+      this.textContent = anyOpen ? "Hide all" : "Flip all";
+    });
+    $("#fcShuffle", node).addEventListener("click", function () {
+      var cards = $$(".fc", row);
+      shuffle(cards.map(function (c, i) { return i; })).forEach(function (i) { row.appendChild(cards[i]); });
+      $$(".fc", row).forEach(function (c) { c.classList.remove("flipped"); });
+    });
+    $("#fcSay", node).addEventListener("click", function () {
+      Speech.play(D.vocabulary.map(function (w) { return { text: w.word }; }), { btn: this });
+    });
   }
 
   /* ─────────────── 3. DEFINITIONS ─────────────── */
   function renderDefs() {
     var opts = D.definitions.map(function (d) { return d.answer; });
     var html = '<section class="card">' +
-      head(3, "Definitions", "Подберите слово к определению") +
+      head(3, "Definitions", "Match each definition with a word") +
       '<div class="def-list" id="defs">';
     D.definitions.forEach(function (d, i) {
       html += '<div class="def" data-i="' + i + '"><div><p>' + (i + 1) + ". " + esc(d.definition) + "</p>" +
         '<div class="mark"></div></div>' +
-        '<select aria-label="Answer for definition ' + (i + 1) + '"><option value="">— выберите слово —</option>' +
+        '<select aria-label="Answer for definition ' + (i + 1) + '"><option value="">— choose a word —</option>' +
         shuffle(opts).map(function (o) { return '<option>' + esc(o) + "</option>"; }).join("") +
         "</select></div>";
     });
-    html += '</div><div class="answer"><b>Ключ:</b> ' + D.definitions.map(function (d, i) {
+    html += '</div><div class="answer"><b>Key:</b> ' + D.definitions.map(function (d, i) {
       return (i + 1) + " — " + esc(d.answer);
     }).join(" · ") + "</div>" +
-      '<div class="actions"><button class="btn primary" type="button" id="defCheck">Проверить</button>' +
-      '<button class="btn" type="button" id="defReset">Сбросить</button>' +
+      '<div class="actions"><button class="btn primary" type="button" id="defCheck">Check</button>' +
+      '<button class="btn" type="button" id="defReset">Reset</button>' +
       '<span class="muted" id="defScore" style="font-weight:800"></span></div></section>';
 
     var node = el(html);
@@ -336,9 +341,9 @@
         row.classList.remove("ok", "no");
         if (!sel.value) { mark.textContent = ""; return; }
         if (norm(sel.value) === norm(D.definitions[i].answer)) {
-          row.classList.add("ok"); mark.textContent = "✓ верно"; ok++;
+          row.classList.add("ok"); mark.textContent = "✓ correct"; ok++;
         } else {
-          row.classList.add("no"); mark.textContent = "✗ попробуйте ещё";
+          row.classList.add("no"); mark.textContent = "✗ try again";
         }
         seen[i] = sel.value;
       });
@@ -361,7 +366,7 @@
 
   function spokenCongrats(node) {
     var s = $("#defScore", node);
-    if (s) s.textContent += " — отлично!";
+    if (s) s.textContent += " — perfect!";
   }
 
   /* ─────────────── 4–6. VIDEO ─────────────── */
@@ -370,7 +375,7 @@
     var playAll = false;
     var html = '<section class="card">' +
       head(stepNum, "Video " + (idx + 1) + " · " + v.country + " " + v.flag,
-        "Слушайте историю и отвечайте на вопросы") +
+        "Listen to the story, then answer the questions") +
       videoTabs(idx) +
       '<div class="player">' +
       '<div class="player-top"><span class="flag">' + v.flag + "</span>" +
@@ -384,18 +389,18 @@
       "</div>" +
       '<div class="subwrap"><div class="subtitle" id="sub"></div></div>' +
       '<div class="player-ctrl">' +
-      '<button class="btn primary" type="button" id="playBtn">▶ Слушать историю</button>' +
-      '<button class="btn" type="button" id="stopBtn">■ Стоп</button>' +
-      '<button class="btn soft" type="button" id="trBtn">📄 Текст</button>' +
-      '<button class="btn sm" type="button" id="rateBtn" title="Скорость речи">' + rateIcon(Speech.rate) + "</button>" +
+      '<button class="btn primary" type="button" id="playBtn">▶ Listen to the story</button>' +
+      '<button class="btn" type="button" id="stopBtn">■ Stop</button>' +
+      '<button class="btn soft" type="button" id="trBtn">📄 Transcript</button>' +
+      '<button class="btn sm" type="button" id="rateBtn" title="Speech speed">' + rateIcon(Speech.rate) + "</button>" +
       "</div>" +
       '<div class="transcript" id="tr"><div class="t-inner" id="trInner"></div></div>' +
       "</div>" +
       '<h3>Questions</h3><div class="qblock" id="qs"></div>' +
-      '<div class="answer"><b>Ключ:</b> ' + v.questions.map(function (q, i) {
+      '<div class="answer"><b>Key:</b> ' + v.questions.map(function (q, i) {
         return (i + 1) + " — " + "ABC"[q.answer];
       }).join(" · ") + "</div>" +
-      '<div class="actions"><button class="btn" type="button" id="qCheck">Проверить ответы</button>' +
+      '<div class="actions"><button class="btn" type="button" id="qCheck">Check answers</button>' +
       '<span class="muted" id="qScore" style="font-weight:800"></span></div>' +
       "</section>";
 
@@ -406,7 +411,7 @@
     v.transcript.forEach(function (line, i) {
       var row = el('<div class="line" data-i="' + i + '"><div class="who">' + esc(line.who) + "</div>" +
         '<div class="tx">' + esc(line.text) + "</div>" +
-        '<button class="say" type="button" title="Прослушать строку">▶</button></div>');
+        '<button class="say" type="button" title="Listen to this line">▶</button></div>');
       $(".say", row).addEventListener("click", function () {
         Speech.play([{ text: line.text, onStart: function () { row.classList.add("on"); }, onEnd: function () { row.classList.remove("on"); } }], { btn: this });
       });
@@ -416,7 +421,7 @@
     $("#trBtn", node).addEventListener("click", function () {
       var tr = $("#tr", node);
       var open = tr.classList.toggle("open");
-      this.textContent = open ? "📄 Скрыть текст" : "📄 Текст";
+      this.textContent = open ? "📄 Hide transcript" : "📄 Transcript";
     });
 
     var screen = $("#screen", node);
@@ -494,7 +499,7 @@
       var nx = seq[(at === -1 ? 0 : at + 1) % seq.length];
       Speech.setRate(nx);
       this.textContent = rateIcon(nx);
-      this.title = "Скорость: " + nx;
+      this.title = "Speed: " + nx;
       this.classList.add("on");
       var me = this;
       setTimeout(function () { me.classList.remove("on"); }, 500);
@@ -541,8 +546,8 @@
         if (res[qi] === Number(q.answer)) ok++;
       });
       $("#qScore", node).textContent = answered
-        ? ok + " / " + D.videos[idx].questions.length + " верно"
-        : "Сначала ответьте на вопросы";
+        ? ok + " / " + D.videos[idx].questions.length + " correct"
+        : "Answer the questions first";
     });
 
     return node;
@@ -560,29 +565,29 @@
   /* ─────────────── 7. TRUE / FALSE + таблица ─────────────── */
   function renderMix() {
     var html = '<section class="card">' +
-      head(7, "Put it together", "True or false — по всем трём историям") +
+      head(7, "Put it together", "True or false — all three stories") +
       '<div class="tf" id="tf">';
     D.trueFalse.forEach(function (t, i) {
       html += '<div class="tf-row" data-i="' + i + '"><div class="s">' + (i + 1) + ". " + esc(t.s) + "</div>" +
         '<div class="tf-btns"><button type="button" data-v="1">TRUE</button><button type="button" data-v="0">FALSE</button></div>' +
         '<div class="why"></div></div>';
     });
-    html += '</div><div class="answer"><b>Ключ:</b> ' + D.trueFalse.map(function (t, i) {
+    html += '</div><div class="answer"><b>Key:</b> ' + D.trueFalse.map(function (t, i) {
       return (i + 1) + " — " + (t.answer ? "T" : "F");
     }).join(" · ") + "<br>" + D.trueFalse.map(function (t, i) {
       return (i + 1) + ") " + esc(t.why);
     }).join("<br>") + "</div>" +
-      '<div class="actions"><button class="btn primary" type="button" id="tfCheck">Проверить</button>' +
-      '<button class="btn" type="button" id="tfReset">Сбросить</button>' +
+      '<div class="actions"><button class="btn primary" type="button" id="tfCheck">Check</button>' +
+      '<button class="btn" type="button" id="tfReset">Reset</button>' +
       '<span class="muted" id="tfScore" style="font-weight:800"></span></div>' +
-      '<h3>Что удивило каждого — и почему это важно</h3><div class="table-wrap"><table><thead><tr>' +
+      '<h3>What surprised each speaker — and why it matters</h3><div class="table-wrap"><table><thead><tr>' +
       D.comparison.columns.map(function (c) { return "<th>" + esc(c) + "</th>"; }).join("") +
       "</tr></thead><tbody>" +
       D.comparison.rows.map(function (r) {
         return "<tr><td><b>" + esc(r.speaker) + "</b></td><td>" + esc(r.what) + "</td><td>" + esc(r.why) + "</td></tr>";
       }).join("") +
       "</tbody></table></div>" +
-      '<div class="actions"><button class="btn" type="button" id="tableSay">🔊 Прочитать таблицу</button></div>' +
+      '<div class="actions"><button class="btn" type="button" id="tableSay">🔊 Read the table</button></div>' +
       "</section>";
 
     var node = el(html);
@@ -647,12 +652,12 @@
   /* ─────────────── 8. DIALOGUES ─────────────── */
   function renderDialogues() {
     var html = '<section class="card">' +
-      head(8, "Dialogues", "Заполните пропуски: некоторые слова подходят дважды") +
+      head(8, "Dialogues", "Complete the gaps — some words fit more than once") +
       '<div id="dlgs"></div>' +
-      '<div class="answer"><b>Ключ:</b> Dialogue 1 — ' + D.dialogues[0].gaps.join(", ") +
+      '<div class="answer"><b>Key:</b> Dialogue 1 — ' + D.dialogues[0].gaps.join(", ") +
       "; Dialogue 2 — " + D.dialogues[1].gaps.join(", ") + "</div>" +
-      '<div class="actions"><button class="btn primary" type="button" id="dlgCheck">Проверить</button>' +
-      '<button class="btn" type="button" id="dlgReset">Сбросить</button>' +
+      '<div class="actions"><button class="btn primary" type="button" id="dlgCheck">Check</button>' +
+      '<button class="btn" type="button" id="dlgReset">Reset</button>' +
       '<span class="muted" id="dlgScore" style="font-weight:800"></span></div></section>';
     var node = el(html);
     var host = $("#dlgs", node);
@@ -672,7 +677,7 @@
         box.appendChild(row);
       });
       // подсказка: список пропусков в порядке
-      box.appendChild(el('<div class="actions" style="margin:10px 0 0"><button class="btn sm" type="button" data-play="' + di + '">🔊 Слушать диалог</button></div>'));
+      box.appendChild(el('<div class="actions" style="margin:10px 0 0"><button class="btn sm" type="button" data-play="' + di + '">🔊 Listen to the dialogue</button></div>'));
       host.appendChild(box);
     });
 
@@ -720,17 +725,17 @@
   /* ─────────────── 9. COLLOCATIONS ─────────────── */
   function renderCollocations() {
     var html = '<section class="card">' +
-      head(9, "Collocations", "Соедините половины и допишите предложения") +
-      '<div class="cols"><div><div class="col-h">1-я часть</div><div id="left"></div></div>' +
-      '<div><div class="col-h">2-я часть</div><div id="right"></div></div></div>' +
+      head(9, "Collocations", "Match the halves, then complete the sentences") +
+      '<div class="cols"><div><div class="col-h">First half</div><div id="left"></div></div>' +
+      '<div><div class="col-h">Second half</div><div id="right"></div></div></div>' +
       '<div class="pairlist" id="pairs"></div>' +
-      '<div class="actions"><button class="btn" type="button" id="colReset">Сбросить пары</button>' +
+      '<div class="actions"><button class="btn" type="button" id="colReset">Reset pairs</button>' +
       '<span class="muted" id="colScore" style="font-weight:800"></span></div>' +
       '<h3>Use them in sentences</h3><div class="gapsent" id="gs"></div>' +
-      '<div class="answer"><b>Ключ:</b> ' + D.collocations.sentences.map(function (x, i) {
+      '<div class="answer"><b>Key:</b> ' + D.collocations.sentences.map(function (x, i) {
         return (i + 1) + " — " + esc(x.answer[0]);
       }).join(" · ") + "</div>" +
-      '<div class="actions"><button class="btn primary" type="button" id="gsCheck">Проверить</button>' +
+      '<div class="actions"><button class="btn primary" type="button" id="gsCheck">Check</button>' +
       '<span class="muted" id="gsScore" style="font-weight:800"></span></div></section>';
 
     var node = el(html);
@@ -812,20 +817,19 @@
   /* ─────────────── 10. DISCUSSION + SCENARIOS ─────────────── */
   function renderDiscussion() {
     var html = '<section class="card">' +
-      head(10, "Discussion", "Говорим: вопросы и три неловкие ситуации") +
+      head(10, "Discussion", "Questions and awkward cross-cultural situations") +
       '<div class="ql">' + D.discussion.map(function (q, i) {
         return '<div class="q"><b>' + (i + 1) + ". " + esc(q) + "</b></div>";
       }).join("") + "</div>" +
-      '<div class="actions"><button class="btn soft" type="button" id="discSay">🔊 Прочитать вопросы</button></div>' +
+      '<div class="actions"><button class="btn soft" type="button" id="discSay">🔊 Read the questions</button></div>' +
       '<h3>Scenarios · role-play</h3>' +
-      '<p class="muted" style="font-size:13.5px;margin-top:-4px">Выберите карточку, прочитайте ситуацию и разыграйте ответ. Полезные фразы — под ситуацией.</p>' +
       D.scenarios.map(function (s, i) {
         return '<div class="scen" data-i="' + i + '"><div class="scen-head" role="button" tabindex="0"><span>' + "🎭" + "</span>" +
           '<span class="t">' + esc(s.title) + '</span><span class="chev">▾</span></div>' +
           '<div class="scen-body"><p class="sit">' + esc(s.situation) + "</p>" +
           '<div class="useful">' + s.useful.map(function (u) { return "<span>" + esc(u) + "</span>"; }).join("") + "</div>" +
           '<p class="tip">💡 ' + esc(s.tips) + "</p>" +
-          '<div class="actions" style="margin:0"><button class="btn sm" type="button" data-say-scen="' + i + '">🔊 Прочитать ситуацию</button></div>' +
+          '<div class="actions" style="margin:0"><button class="btn sm" type="button" data-say-scen="' + i + '">🔊 Read the situation</button></div>' +
           "</div></div>";
       }).join("") + "</section>";
 
@@ -852,7 +856,7 @@
   /* ─────────────── 11. WRAP UP ─────────────── */
   function renderWrap() {
     var html = '<section class="card">' +
-      head(11, "Wrap up", "Проверьте себя и запишите домашнее задание") +
+      head(11, "Wrap up", "Check yourself, then note the homework") +
       '<div class="check" id="check">' +
       D.wrapUp.checklist.map(function (c, i) {
         var on = get("check_" + i, false);
@@ -860,9 +864,8 @@
       }).join("") + "</div>" +
       '<h3>Homework</h3><div class="hw"><ol>' +
       D.wrapUp.homework.map(function (h) { return "<li>" + esc(h) + "</li>"; }).join("") + "</ol></div>" +
-      '<div class="actions"><button class="btn primary" type="button" id="printBtn2">🖨 Распечатать worksheet</button>' +
-      '<button class="btn" type="button" id="restart">↺ Начать урок заново</button></div>' +
-      '<p class="muted" style="font-size:12.5px;margin-top:14px">Совет: worksheet печатается с ответами, если включён режим учителя, и без ответов — в обычном режиме.</p>' +
+      '<div class="actions"><button class="btn primary" type="button" id="printBtn2">🖨 Print the worksheet</button>' +
+      '<button class="btn" type="button" id="restart">↺ Start the lesson again</button></div>' +
       "</section>";
 
     var node = el(html);
@@ -874,7 +877,7 @@
     });
     $("#printBtn2", node).addEventListener("click", function () { window.print(); });
     $("#restart", node).addEventListener("click", function () {
-      if (!confirm("Очистить все ответы и начать урок сначала?")) return;
+      if (!confirm("Clear all answers and start the lesson again?")) return;
       try { localStorage.removeItem(KEY); } catch (e) {}
       store = {};
       cur = 0;
@@ -898,7 +901,7 @@
     host.appendChild(step.render(cur + 1));
     stepName.textContent = step.name;
     prevBtn.disabled = cur === 0;
-    nextBtn.textContent = cur === STEPS.length - 1 ? "Готово ✓" : "Дальше →";
+    nextBtn.textContent = cur === STEPS.length - 1 ? "Done ✓" : "Next →";
     nextBtn.disabled = cur === STEPS.length - 1;
     var visited = get("visited", {});
     visited[cur] = 1;
