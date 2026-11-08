@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maya · Funny Travel Stories</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c2236;--muted:#5d6478;--line:#e4ded3;--ok:#4f8a5f;--okbg:#e6efe7;--no:#a9443a;--nobg:#f6e7e3;--gold:#b8955a;--blue:#3e5c76;--accent:#8a3d2f}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:#f7f5f1;color:var(--ink);font-family:'PT Serif',Georgia,'Times New Roman',serif;font-size:17px;display:flex;flex-direction:column}
+button{font:inherit;cursor:pointer;color:inherit}
+.top{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:8px 14px;background:#fbf7f2;border-bottom:1px solid #eadfd2;flex-wrap:wrap}
+.top h1{margin:0;font-size:19px;font-weight:400;font-style:italic;flex:1;min-width:200px}
+.top .who{font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;color:#4f46c4;background:#ece9ff;border-radius:99px;padding:5px 10px}
+.pbtn{border:1px solid #d6c4b2;color:var(--accent);background:#fff;border-radius:99px;padding:6px 14px;font-size:15px;white-space:nowrap}
+.pbtn:hover{background:#fff6ef}
+.pbtn.main{background:var(--accent);color:#fff;border-color:var(--accent)}
+main{flex:1;min-height:0;overflow:auto;padding:12px}
+
+/* people */
+.people{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;max-width:1100px;margin:0 auto}
+.person{border:1px solid var(--line);background:#fff;border-radius:14px;padding:8px;text-align:left;transition:transform .15s,box-shadow .15s;position:relative}
+.person:hover{transform:translateY(-3px);box-shadow:0 8px 18px #1f2d3d1f}
+.person img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block}
+.person b{display:block;font-size:18px;margin-top:6px}
+.person small{color:var(--muted);font-size:14px}
+.person.done{border-color:var(--ok);box-shadow:inset 0 0 0 2px var(--ok)}
+.person.done::after{content:"Done";position:absolute;top:14px;left:14px;background:var(--ok);color:#fff;font:700 12px Arial,sans-serif;padding:3px 9px;border-radius:99px}
+
+/* story screen */
+.story{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:12px;max-width:1150px;margin:0 auto;align-items:start}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}
+.ph{position:relative}
+.ph img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;display:block}
+.ph .q{position:absolute;left:8px;right:8px;bottom:8px;background:rgba(20,22,34,.72);color:#fff;border-radius:8px;padding:7px 10px;font-size:16px;line-height:1.35}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+.txt{margin:10px 0 0;line-height:1.6;font-size:16px;background:#faf7f1;border-radius:10px;padding:10px 12px}
+.txt[hidden]{display:none}
+.lab{font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin:12px 0 6px}
+
+/* quizlet */
+.ql{perspective:1100px;cursor:pointer;height:150px;position:relative}
+.ql .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.ql.f .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px 44px}
+.front{background:#f3efe8;border:2px solid #e9d7ca}
+.front strong{font-size:26px}
+.back{transform:rotateY(180deg);background:#faf4ef;border:2px solid #d6a68f}
+.back .ru{font-size:20px;color:#7a3f2e;font-weight:700}
+.back .ex{font-size:16px;font-style:italic;color:#4a4f63;margin-top:6px}
+.qnav{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:8px}
+.arrow{width:44px;height:34px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:18px}
+.arrow:disabled{opacity:.35}
+.cnt{color:var(--muted);font-size:15px;min-width:54px;text-align:center}
+
+/* tasks */
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.tab{border:0;border-radius:12px;padding:10px 8px;text-align:left;color:var(--ink)}
+.tab small{display:block;font-family:Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;color:#5d6478}
+.tab strong{display:block;font-size:17px;margin-top:2px}
+.t1{background:#dcf4e7}.t2{background:#e4e6fb}.t3{background:#fde4ec}
+.tab.on{outline:3px solid #1f2d3d55}
+.tv{display:none}.tv.on{display:block}
+.qa{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;cursor:pointer;background:#fff}
+.qa:hover{background:#fcfaf6}
+.qa .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font:700 14px Arial,sans-serif}
+.qa .q{font-size:18px;font-weight:700}
+.qa .a{display:none;color:var(--ok);font-weight:700;margin-top:4px}
+.qa.open .a{display:block}
+.sent{background:#faf7f1;border-radius:12px;padding:18px;font-size:22px;text-align:center;min-height:96px;display:flex;align-items:center;justify-content:center;line-height:1.4;margin-bottom:10px}
+.sent u{text-decoration:none;border-bottom:2px solid var(--blue);padding:0 18px}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ans{border:1px solid #d6dbe4;background:#fff;border-radius:12px;padding:16px 10px;font-size:20px;min-height:64px}
+.ans:hover{background:#f6f8fb}
+.ans.ok{background:var(--okbg);border-color:var(--ok)}
+.ans.no{background:var(--nobg);border-color:var(--no)}
+.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:15px;margin-bottom:8px}
+.bar2{height:6px;background:#ece7de;border-radius:99px;overflow:hidden;margin-bottom:10px}
+.bar2 i{display:block;height:100%;background:var(--gold);transition:width .3s}
+.res{text-align:center;font-size:22px;padding:20px 0}
+.res small{display:block;font-size:15px;color:var(--muted);margin-top:6px}
+@media (max-width:820px){.people{grid-template-columns:repeat(2,minmax(0,1fr))}.story{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top">
+  <button class="pbtn" id="toLesson" hidden>‹ Lesson 2B</button>
+  <h1 id="ttl">Funny Travel Stories · Past Simple</h1>
+  <span class="who" id="who" hidden></span>
+  <button class="pbtn" id="toPeople" hidden>‹ All stories</button>
+  <button class="pbtn main" id="nextP" hidden>Next story ›</button>
+</div>
+<main id="main"></main>
+
+<script>
+const D=[{"k":"anna","n":"Anna","c":"Germany","t":"Rome","s":"Last summer I went to Rome with my sister. We lost our map, so we asked an old man for help. He smiled and walked with us for an hour. Finally we arrived at a small restaurant. It was his son's restaurant! We ate pasta for free and the whole family sang for us.","w":[["lose → lost","потерять"],["ask → asked","спросить"],["arrive → arrived","прибыть"],["sing → sang","петь"],["for free","бесплатно"]],"l":[["Where did Anna go?","She went to Rome."],["Who did she go with?","With her sister."],["What did they lose?","Their map."],["Why was dinner special?","It was free and the family sang."]],"ch":[["We ___ our map.",["lost","losed","lose"],0],["He ___ with us for an hour.",["walk","walked","walks"],1],["The family ___ for us.",["singed","sung","sang"],2],["We ___ pasta for free.",["ate","eated","eat"],0]],"gap":[["Last summer I ___ (go) to Rome.","went"],["We ___ (ask) an old man for help.","asked"],["He ___ (smile) at us.","smiled"],["We ___ (arrive) at a small restaurant.","arrived"],["We ___ (eat) pasta.","ate"]],"cmp":[["Anna travelled alone.",false],["An old man helped them.",true],["The restaurant belonged to the man's son.",true],["They paid a lot for dinner.",false]]},{"k":"jack","n":"Jack","c":"Australia","t":"Bangkok","s":"Two years ago I visited Bangkok. One morning I took a taxi to the airport, but I forgot my passport at the hotel! I ran back, grabbed it and jumped on a tuk-tuk. The driver drove very fast. I got to the airport five minutes before the gate closed and I felt like a movie hero.","w":[["forget → forgot","забыть"],["run → ran","бежать"],["grab → grabbed","схватить"],["gate","выход на посадку"],["hero","герой"]],"l":[["Where did Jack go?","He visited Bangkok."],["What did he forget?","His passport."],["How did he get to the airport?","By tuk-tuk."],["How did he feel?","Like a movie hero."]],"ch":[["I ___ my passport at the hotel.",["forgot","forgetted","forget"],0],["I ___ back to the hotel.",["runned","ran","run"],1],["The driver ___ very fast.",["drived","drove","drive"],1],["I ___ to the airport on time.",["got","getted","get"],0]],"gap":[["I ___ (visit) Bangkok two years ago.","visited"],["I ___ (take) a taxi.","took"],["I ___ (forget) my passport.","forgot"],["I ___ (jump) on a tuk-tuk.","jumped"],["The driver ___ (drive) fast.","drove"]],"cmp":[["Jack lost his phone.",false],["He went back to the hotel.",true],["He missed his flight.",false],["He arrived five minutes before the gate closed.",true]]},{"k":"mei","n":"Mei","c":"China","t":"Iceland","s":"Last winter I travelled to Iceland to see the Northern Lights. We waited outside for three hours in the cold. Nothing happened, so we went back to the hotel. Then I looked out of the window and saw the lights right above the building! I woke everybody up and we watched the sky in our pyjamas.","w":[["wait → waited","ждать"],["see → saw","видеть"],["wake up → woke up","разбудить"],["Northern Lights","северное сияние"],["pyjamas","пижама"]],"l":[["Why did Mei go to Iceland?","To see the Northern Lights."],["How long did they wait?","Three hours."],["Where did she see the lights?","From the hotel window."],["What did they wear?","Pyjamas."]],"ch":[["We ___ for three hours.",["waited","waiting","wait"],0],["We ___ back to the hotel.",["goed","went","gone"],1],["I ___ the lights above the hotel.",["seen","seed","saw"],2],["I ___ everybody up.",["waked","woke","wake"],1]],"gap":[["I ___ (travel) to Iceland.","travelled"],["We ___ (wait) outside.","waited"],["Nothing ___ (happen).","happened"],["I ___ (look) out of the window.","looked"],["I ___ (see) the lights.","saw"]],"cmp":[["It was summer.",false],["They waited for three hours.",true],["They saw the lights outside in the cold.",false],["They watched the sky in pyjamas.",true]]},{"k":"carlos","n":"Carlos","c":"Mexico","t":"Cairo","s":"Three years ago I rode a camel near the Pyramids. The camel didn't like me! It stopped, turned its head and ate my hat. Everybody laughed, and I laughed too. The guide gave me a new hat, and I bought a camel postcard to remember the day.","w":[["ride → rode","ездить верхом"],["camel","верблюд"],["laugh → laughed","смеяться"],["give → gave","дать"],["buy → bought","купить"]],"l":[["What did Carlos ride?","A camel."],["What did the camel do?","It ate his hat."],["Who gave him a new hat?","The guide."],["What did he buy?","A camel postcard."]],"ch":[["I ___ a camel.",["rided","rode","ride"],1],["The camel ___ my hat.",["ate","eated","eaten"],0],["The guide ___ me a new hat.",["gived","give","gave"],2],["I ___ a postcard.",["buyed","bought","buy"],1]],"gap":[["I ___ (ride) a camel.","rode"],["The camel ___ (stop).","stopped"],["It ___ (eat) my hat.","ate"],["Everybody ___ (laugh).","laughed"],["I ___ (buy) a postcard.","bought"]],"cmp":[["The camel liked Carlos.",false],["The camel ate his hat.",true],["Only Carlos laughed.",false],["The guide gave him a new hat.",true]]},{"k":"lena","n":"Lena","c":"Austria","t":"Café, Paris","s":"Last spring I went to a café in Paris. I wanted to order a coffee in French, so I said 'Je voudrais un café'. But the waiter heard something different and brought me a huge chocolate cake. I was too shy to say no, so I ate it all. The waiter smiled and gave me a free coffee.","w":[["order → ordered","заказывать"],["bring → brought","принести"],["huge","огромный"],["shy","стеснительный"],["waiter","официант"]],"l":[["Where did Lena go?","To a café in Paris."],["What language did she speak?","French."],["What did the waiter bring?","A huge chocolate cake."],["What did he give her?","A free coffee."]],"ch":[["I ___ to a café in Paris.",["goed","went","gone"],1],["The waiter ___ me a cake.",["brought","bringed","bring"],0],["I ___ it all.",["eated","eat","ate"],2],["He ___ and gave me a coffee.",["smiled","smile","smiling"],0]],"gap":[["I ___ (want) to order a coffee.","wanted"],["I ___ (say) 'Je voudrais un café'.","said"],["The waiter ___ (bring) a cake.","brought"],["I ___ (be) too shy.","was"],["He ___ (give) me a free coffee.","gave"]],"cmp":[["Lena ordered a coffee in French.",true],["The waiter brought a small sandwich.",false],["She ate the whole cake.",true],["She paid for the coffee.",false]]},{"k":"tom","n":"Tom","c":"USA","t":"Café, Istanbul","s":"Two years ago I visited a café in Istanbul. I drank a very small cup of Turkish coffee and spilled it on my white shirt. A man at the next table laughed and offered me his jacket. Later I found out he was the owner of the café! He refused my money and said, 'Welcome to Istanbul.'","w":[["drink → drank","пить"],["spill → spilled","пролить"],["offer → offered","предложить"],["owner","владелец"],["refuse → refused","отказаться"]],"l":[["What did Tom drink?","Turkish coffee."],["What did he spill it on?","His white shirt."],["What did the man offer?","His jacket."],["Who was the man?","The owner of the café."]],"ch":[["I ___ Turkish coffee.",["drinked","drank","drunk"],1],["I ___ it on my shirt.",["spilled","spill","spills"],0],["A man ___ me his jacket.",["offer","offering","offered"],2],["I ___ out he was the owner.",["finded","found","find"],1]],"gap":[["I ___ (visit) a café in Istanbul.","visited"],["I ___ (drink) Turkish coffee.","drank"],["I ___ (spill) it on my shirt.","spilled"],["A man ___ (laugh).","laughed"],["He ___ (refuse) my money.","refused"]],"cmp":[["Tom spilled tea.",false],["A man offered him a jacket.",true],["The man was a tourist.",false],["Tom didn't pay for the coffee.",true]]},{"k":"sofia","n":"Sofia","c":"Spain","t":"Hotel, Prague","s":"Last year I stayed in a hotel in Prague. At midnight I heard a strange noise in my room. I got out of bed, turned on the light and found a small cat under the bed! It came in through the open balcony door. I called reception, and the cat stayed with me all night.","w":[["stay → stayed","останавливаться"],["hear → heard","слышать"],["noise","шум"],["reception","ресепшен"],["balcony","балкон"]],"l":[["Where did Sofia stay?","In a hotel in Prague."],["When did she hear the noise?","At midnight."],["What did she find?","A small cat."],["How did the cat get in?","Through the balcony door."]],"ch":[["I ___ in a hotel in Prague.",["stayed","stay","stayd"],0],["I ___ a strange noise.",["hear","heared","heard"],2],["I ___ a cat under the bed.",["found","finded","find"],0],["I ___ reception.",["call","called","calling"],1]],"gap":[["I ___ (stay) in a hotel.","stayed"],["I ___ (hear) a noise.","heard"],["I ___ (turn) on the light.","turned"],["I ___ (find) a cat.","found"],["The cat ___ (come) in through the door.","came"]],"cmp":[["The noise was at midnight.",true],["Sofia found a dog.",false],["The balcony door was open.",true],["The cat left immediately.",false]]},{"k":"ben","n":"Ben","c":"UK","t":"Hotel, Dubai","s":"Three years ago I arrived at a hotel in Dubai very late. I went up in the lift, opened my room and saw a stranger sleeping in my bed! I shouted, he woke up and shouted too. We both ran to the reception. The manager checked the computer and said, 'Sorry, sir. We gave you the same room.' I got a better room with a sea view.","w":[["arrive → arrived","прибыть"],["shout → shouted","кричать"],["stranger","незнакомец"],["manager","менеджер"],["sea view","вид на море"]],"l":[["When did Ben arrive?","Very late."],["What did he see in his room?","A stranger in his bed."],["Where did they run?","To the reception."],["What was the new room like?","Better, with a sea view."]],"ch":[["I ___ at the hotel very late.",["arrived","arrive","arriving"],0],["I ___ a stranger in my bed.",["seed","saw","seen"],1],["We both ___ to reception.",["runned","run","ran"],2],["The manager ___ the computer.",["checked","checks","check"],0]],"gap":[["I ___ (arrive) very late.","arrived"],["I ___ (open) my room.","opened"],["I ___ (see) a stranger.","saw"],["I ___ (shout).","shouted"],["I ___ (get) a better room.","got"]],"cmp":[["Ben arrived early in the morning.",false],["A stranger was sleeping in his bed.",true],["The hotel gave the same room to two people.",true],["Ben left the hotel.",false]]}];
+
+/* sentences of a story, each short enough for one recording */
+const SENT=s=>s.match(/[^.!?]+[.!?]+['’]?/g).map(x=>x.trim());
+/* word card: "lose → lost" is shown as "lose · lost"; example = the story sentence with the past form */
+const shown=w=>w.replace(' → ',' · ');
+function example(p,w){const S=SENT(p.s),f=w.split(' → ').map(x=>x.toLowerCase()).reverse();for(const v of f){const r=S.find(x=>x.toLowerCase().includes(v));if(r)return r}return ''}
+/* verb exercise without typing: right form + base form + a wrong form */
+function reg(b){if(/e$/.test(b))return b+'d';if(/[^aeiou]y$/.test(b))return b.slice(0,-1)+'ied';return b+'ed'}
+function verbOpts(base,ans){
+  if(base==='be')return ['was','were','be'];
+  let wrong=reg(base);
+  if(wrong===ans||ans.replace(/(.)\1ed$/,'$1ed')===wrong||ans.replace(/ll/,'l')===wrong)wrong=base+'ing';
+  return [ans,base,wrong];
+}
+const shuf=a=>a.map(x=>[Math.random(),x]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+
+const $=s=>document.querySelector(s),M=$('#main');
+const done={};let cur=null;
+const say=(t,b)=>window.CardAudio&&CardAudio.sayList(t,b||null);
+const stop=()=>window.CardAudio&&CardAudio.stop();
+
+function people(){
+  stop();cur=null;
+  $('#ttl').textContent='Funny Travel Stories · Past Simple';$('#who').hidden=true;$('#toPeople').hidden=true;$('#nextP').hidden=true;
+  M.innerHTML='<div class="people">'+D.map((p,i)=>`<button class="person${done[i]?' done':''}" data-i="${i}"><img src="media/fts/${p.k}.jpg" alt=""><b>${p.n}</b><small>${p.c} · ${p.t}</small></button>`).join('')+'</div>';
+  M.querySelectorAll('.person').forEach(b=>b.onclick=()=>story(+b.dataset.i));
+}
+
+function story(i){
+  stop();cur=i;const p=D[i];M.scrollTop=0;
+  $('#ttl').textContent=p.n+' · '+p.t;$('#who').textContent=p.c.toUpperCase();$('#who').hidden=false;$('#toPeople').hidden=false;$('#nextP').hidden=false;
+  $('#nextP').textContent=i<D.length-1?'Next story ›':'Finish ›';
+  M.innerHTML=`<div class="story">
+   <div class="panel">
+     <div class="ph"><img src="media/fts/${p.k}.jpg" alt=""><div class="q">Look at ${p.n}. What happened in ${p.t.split(', ').pop()}?</div></div>
+     <div class="row"><button class="pbtn main" id="play">Listen</button><button class="pbtn" id="stopA">Stop</button><button class="pbtn" id="showT">Show text</button></div>
+     <p class="txt" id="txt" hidden>${p.s}</p>
+     <div class="lab">WORDS</div>
+     <div class="ql" id="ql"><div class="in"><div class="face front"><strong id="qf"></strong></div><div class="face back"><div class="ru" id="qr"></div><div class="ex" id="qb"></div></div></div></div>
+     <div class="qnav"><button class="arrow" id="wPrev">‹</button><span class="cnt" id="wCnt"></span><button class="arrow" id="wNext">›</button></div>
+   </div>
+   <div class="panel">
+     <div class="tabs">
+       <button class="tab t1 on" data-t="0"><small>01 · SPEAKING</small><strong>Questions</strong></button>
+       <button class="tab t2" data-t="1"><small>02 · GRAMMAR</small><strong>Past Simple</strong></button>
+       <button class="tab t3" data-t="2"><small>03 · READING</small><strong>True or false?</strong></button>
+     </div>
+     <div class="tv on" id="v0"></div><div class="tv" id="v1"></div><div class="tv" id="v2"></div>
+   </div></div>`;
+  /* listening */
+  $('#play').onclick=()=>say(SENT(p.s),$('#play'));
+  $('#stopA').onclick=stop;
+  $('#showT').onclick=()=>{const t=$('#txt');t.hidden=!t.hidden;$('#showT').textContent=t.hidden?'Show text':'Hide text'};
+  /* words: one Quizlet card */
+  let w=0;const card=$('#ql');
+  const drawW=()=>{card.classList.remove('f');const x=p.w[w];$('#qf').textContent=shown(x[0]);$('#qr').textContent=x[1];$('#qb').textContent=example(p,x[0]);
+    $('#wCnt').textContent=(w+1)+' / '+p.w.length;$('#wPrev').disabled=w===0;$('#wNext').disabled=w===p.w.length-1};
+  card.onclick=()=>card.classList.toggle('f');
+  $('#wPrev').onclick=()=>{if(w>0){w--;drawW()}};$('#wNext').onclick=()=>{if(w<p.w.length-1){w++;drawW()}};drawW();
+  /* tabs */
+  M.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{M.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t));M.querySelectorAll('.tv').forEach((v,k)=>v.classList.toggle('on',k==t.dataset.t))});
+  /* 01 questions: answer out loud, tap to check */
+  $('#v0').innerHTML=p.l.map((q,k)=>`<div class="qa"><span class="n">${k+1}</span><div><div class="q">${q[0]}</div><div class="a">${q[1]}</div></div></div>`).join('');
+  $('#v0').querySelectorAll('.qa').forEach(r=>r.onclick=()=>r.classList.toggle('open'));
+  /* 02 past simple: choose + verb forms, one at a time */
+  const G=p.ch.map(q=>({s:q[0],o:shuf(q[1].slice()),a:q[1][q[2]]}))
+    .concat(p.gap.map(q=>{const m=q[0].match(/\(([^)]+)\)/);return {s:q[0].replace(/\s*\([^)]+\)/,''),o:shuf(verbOpts(m[1],q[1])),a:q[1]}}));
+  quiz('#v1',G,()=>{});
+  /* 03 true / false */
+  quiz('#v2',p.cmp.map(q=>({s:q[0],o:['True','False'],a:q[1]?'True':'False',plain:1})),()=>{done[i]=1});
+}
+
+function quiz(sel,items,onEnd){
+  const box=$(sel);let k=0,score=0;
+  const draw=()=>{
+    if(k>=items.length){box.innerHTML=`<div class="res">${score} / ${items.length}<small>${score===items.length?'All correct.':'Look again at the story.'}</small></div><div style="text-align:center"><button class="pbtn" id="again">Again</button></div>`;
+      box.querySelector('#again').onclick=()=>{k=0;score=0;draw()};onEnd();return}
+    const it=items[k];
+    box.innerHTML=`<div class="meta"><span>${k+1} / ${items.length}</span><span>${score} correct</span></div><div class="bar2"><i style="width:${k/items.length*100}%"></i></div>
+      <div class="sent">${it.plain?it.s:it.s.replace('___','<u>&nbsp;</u>')}</div><div class="opts">${it.o.map(o=>`<button class="ans">${o}</button>`).join('')}</div>`;
+    let lock=false;
+    box.querySelectorAll('.ans').forEach(b=>b.onclick=()=>{if(lock)return;lock=true;const ok=b.textContent===it.a;
+      if(ok){score++;b.classList.add('ok')}else{b.classList.add('no');box.querySelectorAll('.ans').forEach(x=>{if(x.textContent===it.a)x.classList.add('ok')})}
+      setTimeout(()=>{k++;draw()},ok?800:1500)});
+  };
+  draw();
+}
+
+$('#toPeople').onclick=people;
+if(window.parent!==window){$('#toLesson').hidden=false;$('#toLesson').onclick=()=>{stop();parent.postMessage('fts-close','*')}}
+$('#nextP').onclick=()=>{done[cur]=1;cur<D.length-1?story(cur+1):people()};
+people();
+{const h=location.hash.slice(1),i=D.findIndex(p=>p.k===h);if(i>=0)story(i)}
+</script>
+<script src="../card-audio.js?v=20261108fts"></script>
+</body>
+</html>

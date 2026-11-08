@@ -138,32 +138,50 @@ main{display:block;padding:10px;max-width:none}
 .mq{display:flex;align-items:center;gap:8px}
 .th{width:54px;height:40px;object-fit:cover;border-radius:6px;flex:none}
 .hero img{width:100%;height:100%;object-fit:cover}
+
+/* v5 · Funny Travel Stories (Past Simple) — открывается поверх урока */
+.c8{background:#f3e9dc}
+.fts{flex:1;min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:1fr;gap:6px}
+.ftsp{border:0;padding:0;border-radius:9px;overflow:hidden;position:relative;background:#ddd;min-height:0}
+.ftsp img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}
+.ftsp:hover img{transform:scale(1.06)}
+.ftsp span{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,#000a);color:#fff;font-size:13px;font-weight:700;padding:10px 4px 3px}
+.ftsgo{align-self:center}
+#ftsLayer{position:fixed;inset:0;z-index:50;background:#f7f5f1;display:flex;flex-direction:column;border-top:1px solid #eadfd2}
+#ftsLayer[hidden]{display:none}
+#ftsLayer .fbar{display:flex;justify-content:flex-end;padding:6px 12px;background:#fbf7f2}
+#ftsLayer iframe{flex:1;border:0;width:100%}
 </style>
 </head>
 <body>
 <div class="bar">
   <span class="name">Maya · 2B On top of the world</span>
-  <span class="pill">ONE SCREEN · 7 ACTIVITIES</span>
+  <span class="pill">ONE SCREEN · 8 ACTIVITIES</span>
 </div>
 <main>
 <div class="board">
 
-<section class="card c1"><header><b>01</b><span>Warm-up · Фото и вопросы</span></header>
+<section class="card c8"><header><b>01</b><span>Past Simple · Funny Travel Stories</span></header>
+  <div class="fts" id="ftsGrid"><button class="ftsp" data-k="anna"><img src="media/fts/anna.jpg" alt=""><span>Anna</span></button><button class="ftsp" data-k="jack"><img src="media/fts/jack.jpg" alt=""><span>Jack</span></button><button class="ftsp" data-k="mei"><img src="media/fts/mei.jpg" alt=""><span>Mei</span></button><button class="ftsp" data-k="carlos"><img src="media/fts/carlos.jpg" alt=""><span>Carlos</span></button><button class="ftsp" data-k="lena"><img src="media/fts/lena.jpg" alt=""><span>Lena</span></button><button class="ftsp" data-k="tom"><img src="media/fts/tom.jpg" alt=""><span>Tom</span></button><button class="ftsp" data-k="sofia"><img src="media/fts/sofia.jpg" alt=""><span>Sofia</span></button><button class="ftsp" data-k="ben"><img src="media/fts/ben.jpg" alt=""><span>Ben</span></button></div>
+  <button class="rbtn ftsgo" id="ftsOpen">Open all stories</button>
+</section>
+
+<section class="card c1"><header><b>02</b><span>Warm-up · Фото и вопросы</span></header>
   <div class="qz" id="warmCard"><div class="in"><div class="face front"><strong id="warmQ"></strong><small>нажмите, чтобы увидеть подсказку</small></div><div class="face back"><div class="ex" id="warmA"></div></div></div></div>
   <div class="qnav"><button class="arrow" id="warmPrev">‹</button><span class="counter" id="warmCount"></span><button class="arrow" id="warmNext">›</button></div>
 </section>
 
-<section class="card c2"><header><b>02</b><span>Vocabulary · Quizlet</span></header>
+<section class="card c2"><header><b>03</b><span>Vocabulary · Quizlet</span></header>
   <div class="qz" id="vocabCard"><div class="in"><div class="face front"><strong id="vW"></strong><small>нажмите на карточку</small></div><div class="face back"><img class="vimg" id="vImg" alt="" hidden><div class="en" id="vEn"></div><div class="ru" id="vRu"></div><div class="ex" id="vEx"></div></div></div></div>
   <div class="qnav"><button class="arrow" id="vPrev">‹</button><span class="counter" id="vCount"></span><button class="arrow" id="vNext">›</button></div>
 </section>
 
-<section class="card c3"><header><b>03</b><span>Prepositions · at · in · on</span></header>
+<section class="card c3"><header><b>04</b><span>Prepositions · at · in · on</span></header>
   <div class="mlist" id="pList"></div>
   <div class="qnav"><button class="arrow" id="pPrev">‹</button><span class="counter" id="pCnt"></span><button class="arrow" id="pNext">›</button></div>
 </section>
 
-<section class="card c4"><header><b>04</b><span>Grammar · Past continuous</span><button class="rbtn" id="ruleBtn">Правило</button></header>
+<section class="card c4"><header><b>05</b><span>Grammar · Past continuous</span><button class="rbtn" id="ruleBtn">Правило</button></header>
   <div class="rulebox" id="ruleBox" hidden>
     <div><b>was / were + глагол с -ing</b> — действие в конкретный момент в прошлом или фон для истории. I <b>was studying</b>. We <b>were riding</b>. It <b>wasn't raining</b>.</div>
     <div>Прерывание: We <b>were having</b> lunch <b>when</b> it started to rain.</div>
@@ -173,13 +191,13 @@ main{display:block;padding:10px;max-width:none}
   <div class="qnav"><button class="arrow" id="gPrev">‹</button><span class="counter" id="gCnt"></span><button class="arrow" id="gNext">›</button></div>
 </section>
 
-<section class="card c5"><header><b>05</b><span>Pronunciation · was, were</span></header>
+<section class="card c5"><header><b>06</b><span>Pronunciation · was, were</span></header>
   <div class="hint">В утверждениях слабо (/wəz/, /wə/), в вопросах и коротких ответах — сильно (/wɒz/, /wɜː/).</div>
   <div class="mlist" id="wList"></div>
   <div class="qnav"><button class="arrow" id="wPrev">‹</button><span class="counter" id="wCnt"></span><button class="arrow" id="wNext">›</button></div>
 </section>
 
-<section class="card c6"><header><b>06</b><span>Speed Game</span></header>
+<section class="card c6"><header><b>07</b><span>Speed Game</span></header>
   <div class="timer"><i id="gmBar"></i></div>
   <div class="score" id="gmScore">15 секунд на вопрос</div>
   <div class="sent" id="gmSent"></div>
@@ -188,12 +206,11 @@ main{display:block;padding:10px;max-width:none}
   <div style="text-align:center"><button class="back" id="gmStart">Старт</button></div>
 </section>
 
-<section class="card c7"><header><b>07</b><span>Speaking · Фото на телефоне</span></header>
+<section class="card c7"><header><b>08</b><span>Speaking · Фото на телефоне</span></header>
   <div class="qz" id="spkCard"><div class="in"><div class="face front"><strong id="spkQ"></strong><small>нажмите, чтобы увидеть образец</small></div><div class="face back"><div class="ex" id="spkA"></div></div></div></div>
   <div class="qnav"><button class="arrow" id="spkPrev">‹</button><span class="counter" id="spkCount"></span><button class="arrow" id="spkNext">›</button></div>
 </section>
 
-<section class="hero"><img src="media/2b-hero.jpg" alt="Swing on the edge of a mountain" onerror="this.remove()"><span class="tag">REAL PHOTO · ECUADOR</span></section>
 
 </div>
 </main>
@@ -392,6 +409,14 @@ $('#gmStart').onclick=()=>{clearInterval(gmT);gmStart()};
 $('#ruleBtn').onclick=()=>{const b=$('#ruleBox');b.hidden=!b.hidden};
 const gmStartOrig=gmStart;
 })();
+</script>
+<div id="ftsLayer" hidden><iframe id="ftsFrame" title="Funny Travel Stories"></iframe></div>
+<script>
+(()=>{const L=document.getElementById('ftsLayer'),F=document.getElementById('ftsFrame');
+const open=k=>{F.src='funny-travel-stories.html?v=20261108a'+(k?'#'+k:'');L.hidden=false};
+document.querySelectorAll('.ftsp').forEach(b=>b.onclick=()=>open(b.dataset.k));
+document.getElementById('ftsOpen').onclick=()=>open('');
+addEventListener('message',e=>{if(e.data==='fts-close'){L.hidden=true;F.src='about:blank'}});})();
 </script>
 <script src="../shared/page-label.js?v=20261104"></script>
 </body>
