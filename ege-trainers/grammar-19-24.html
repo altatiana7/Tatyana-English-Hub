@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ЕГЭ — Грамматика 19–24/25 | Интерактивный тренажёр</title>
+<style>
+:root{
+  --bg:#f4f6f7;
+  --paper:#ffffff;
+  --ink:#111111;
+  --muted:#6b7280;
+  --line:#d9dee3;
+  --soft:#f2f4f5;
+  --soft2:#e9eef0;
+  --accent:#59c0d1;
+  --accent-dark:#2e9caf;
+  --accent-pale:#e8f8fb;
+  --good:#18864b;
+  --bad:#b42318;
+  --shadow:0 8px 24px rgba(17,24,39,.06);
+  --radius:10px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:1320px;margin:0 auto;padding:14px}
+.top{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:12px 14px;
+  margin-bottom:10px;
+}
+.brand{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px;letter-spacing:.02em;text-transform:uppercase;
+}
+.logo-mark{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--accent);
+  display:grid;place-items:center;
+  color:white;font-weight:800;font-size:13px;
+}
+h1{
+  margin:8px 0 3px;
+  font-size:22px;
+  font-weight:700;
+  line-height:1.15;
+}
+.sub{margin:0;color:var(--muted);font-size:13px;line-height:1.35}
+.small-note{font-size:12px;color:var(--muted);line-height:1.35;margin-top:4px}
+.top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--line);
+  background:var(--soft);
+  border-radius:999px;
+  padding:6px 9px;
+  font-size:12px;
+  color:#222;
+}
+.layout{
+  display:grid;
+  grid-template-columns:285px 1fr;
+  gap:10px;
+  align-items:start;
+}
+.panel{
+  position:sticky;top:10px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:12px;
+  max-height:calc(100vh - 20px);
+  overflow:auto;
+}
+.panel h2{
+  margin:0 0 8px;
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+.control{margin-bottom:10px}
+.label{
+  display:block;
+  font-size:12px;
+  color:var(--muted);
+  margin:0 0 5px;
+}
+select,.search{
+  width:100%;
+  border:1px solid var(--line);
+  background:white;
+  border-radius:8px;
+  padding:8px 9px;
+  color:var(--ink);
+}
+.mode{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+}
+.btn{
+  border:1px solid var(--line);
+  background:var(--paper);
+  color:#111;
+  padding:8px 9px;
+  border-radius:8px;
+  font-weight:600;
+  transition:.15s ease;
+}
+.btn:hover{border-color:var(--accent);background:var(--accent-pale)}
+.btn.active,.btn.primary{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+}
+.btn.primary:hover{background:var(--accent-dark);border-color:var(--accent-dark)}
+.btn.ghost{background:var(--soft);font-weight:500}
+.variant-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:5px;
+}
+.vbtn{
+  border:1px solid var(--line);
+  background:white;
+  color:#111;
+  border-radius:6px;
+  min-height:30px;
+  font-size:12px;
+  font-weight:600;
+}
+.vbtn:hover{border-color:var(--accent);background:var(--accent-pale)}
+.vbtn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.content{
+  min-width:0;
+}
+.toolbar{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:10px;
+  margin-bottom:10px;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.score{
+  margin-left:auto;
+  display:flex;
+  gap:6px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.score-box{
+  border:1px solid var(--line);
+  background:var(--soft);
+  border-radius:8px;
+  padding:7px 9px;
+  font-size:13px;
+}
+.heading{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  margin-bottom:10px;
+  padding:10px 12px;
+}
+.heading h2{
+  margin:0 0 3px;
+  font-size:17px;
+  line-height:1.25;
+  font-weight:700;
+}
+.heading p{
+  margin:0;color:var(--muted);font-size:12px;line-height:1.35;
+}
+.paper{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.exam-head{
+  padding:10px 12px;
+  border-bottom:1px solid var(--line);
+  background:var(--soft);
+}
+.exam-head .rule{
+  margin:0;
+  font-size:12.5px;
+  line-height:1.45;
+  color:#333;
+}
+.exam-table{
+  width:100%;
+}
+.task{
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr) 112px;
+  border-bottom:1px solid var(--line);
+  min-height:48px;
+}
+.task:last-child{border-bottom:none}
+.num{
+  border-right:1px solid var(--line);
+  background:#fafafa;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:12px;
+  font-weight:700;
+  font-size:14px;
+}
+.text{
+  padding:9px 10px;
+  line-height:1.45;
+  font-size:15px;
+}
+.blank{
+  display:inline-flex;
+  vertical-align:baseline;
+  min-width:145px;
+  max-width:220px;
+  margin:0 4px;
+}
+.blank input{
+  width:100%;
+  border:0;
+  border-bottom:1.5px solid #111;
+  background:#fff;
+  border-radius:0;
+  padding:2px 4px 1px;
+  outline:none;
+  font-size:15px;
+}
+.blank input:focus{
+  border-bottom-color:var(--accent-dark);
+  background:var(--accent-pale);
+}
+.blank input.correct{border-bottom-color:var(--good);background:#f0fff7}
+.blank input.wrong{border-bottom-color:var(--bad);background:#fff4f2}
+.stem-cell{
+  border-left:1px solid var(--line);
+  background:#fafafa;
+  padding:7px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  min-width:0;
+}
+.stem-btn{
+  width:100%;
+  border:1px solid var(--line);
+  background:#fff;
+  color:#111;
+  border-radius:7px;
+  padding:7px 5px;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.02em;
+  line-height:1.15;
+  word-break:break-word;
+}
+.stem-btn:hover,.stem-btn.revealed{
+  border-color:var(--accent);
+  background:var(--accent-pale);
+}
+.answer-pop{
+  display:none;
+  margin-top:5px;
+  background:var(--accent);
+  color:#fff;
+  border-radius:7px;
+  padding:6px 7px;
+  font-size:12px;
+  font-weight:700;
+  text-align:center;
+  word-break:break-word;
+}
+.stem-cell.open{
+  display:block;
+}
+.stem-cell.open .answer-pop{display:block}
+.feedback{
+  display:none;
+  margin-top:5px;
+  font-size:12px;
+  line-height:1.25;
+}
+.feedback.good{display:block;color:var(--good)}
+.feedback.bad{display:block;color:var(--bad)}
+.mix-separator{
+  padding:7px 10px;
+  background:var(--soft);
+  border-bottom:1px solid var(--line);
+  font-size:12px;
+  font-weight:700;
+  color:#333;
+}
+.footer{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.4;
+  padding:10px 2px 0;
+}
+mark{
+  background:var(--accent-pale);
+  color:#111;
+  padding:0 2px;
+}
+@media(max-width:960px){
+  .layout{grid-template-columns:1fr}
+  .panel{position:static;max-height:none}
+  .task{grid-template-columns:36px minmax(0,1fr) 96px}
+  .text{font-size:14px}
+  .blank{min-width:120px}
+  .score{margin-left:0}
+}
+@media(max-width:640px){
+  .app{padding:8px}
+  h1{font-size:19px}
+  .task{grid-template-columns:34px 1fr}
+  .stem-cell{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}
+  .blank{min-width:110px;max-width:160px}
+  .toolbar{align-items:stretch}
+  .toolbar .btn{flex:1 1 45%}
+}
+@media print{
+  body{background:#fff}
+  .top,.panel,.toolbar,.footer{display:none!important}
+  .app{max-width:none;padding:0}
+  .layout{display:block}
+  .heading,.paper{box-shadow:none;border-color:#999;border-radius:0}
+  .heading{border-bottom:0;margin:0}
+  .task{break-inside:avoid;grid-template-columns:36px 1fr 84px;min-height:42px}
+  .text{font-size:12px;padding:6px 8px}
+  .num{font-size:12px;padding-top:8px}
+  .stem-btn{border:0;background:transparent;padding:0;font-size:11px}
+  .answer-pop,.feedback{display:none!important}
+  .blank input{border-bottom:1px solid #000;background:#fff;padding:0}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <div>
+        <div class="logo"><span class="logo-mark">ЕГЭ</span><span>Английский язык · ФИПИ-стиль</span></div>
+        <h1>Грамматика · задания 19–24/25</h1>
+        <p class="sub">Интерактивный тренажёр по загруженному банку: 51 вариант, компактный вид «как на распечатке». Нажмите на слово справа, чтобы сразу открыть ответ.</p>
+      </div>
+      <div class="top-actions">
+        <span class="pill" id="variantCount">51 вариант</span>
+        <span class="pill" id="taskCount">344 задания</span>
+      </div>
+    </div>
+    <div class="small-note">Палитра: белый фон, светло-серые блоки и бирюзовые акценты.</div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel">
+      <h2>Управление</h2>
+      <div class="control">
+        <span class="label">Режим</span>
+        <div class="mode">
+          <button class="btn active" id="modeVariant" type="button">Вариант</button>
+          <button class="btn" id="modeMix" type="button">Микс 30</button>
+        </div>
+      </div>
+      <div class="control">
+        <span class="label">Выбор варианта</span>
+        <select id="variantSelect"></select>
+      </div>
+      <div class="control">
+        <span class="label">Поиск варианта</span>
+        <input class="search" id="search" type="search" placeholder="номер или название">
+      </div>
+      <div class="control">
+        <span class="label">Все варианты</span>
+        <div class="variant-grid" id="variantGrid"></div>
+      </div>
+    </aside>
+
+    <section class="content">
+      <div class="toolbar">
+        <button class="btn primary" id="checkBtn" type="button">Проверить</button>
+        <button class="btn ghost" id="showBtn" type="button">Показать все ответы</button>
+        <button class="btn ghost" id="hideBtn" type="button">Скрыть ответы</button>
+        <button class="btn ghost" id="resetBtn" type="button">Сбросить</button>
+        <button class="btn ghost" id="nextBtn" type="button">Следующий вариант</button>
+        <div class="score">
+          <div class="score-box" id="scoreBox">Результат: —</div>
+        </div>
+      </div>
+
+      <div class="heading">
+        <h2 id="heading">Вариант 1</h2>
+        <p id="subheading">Прочитайте приведённые ниже тексты. Преобразуйте слова так, чтобы они грамматически соответствовали содержанию текста.</p>
+      </div>
+
+      <div id="taskList"></div>
+
+      <p class="footer">Автономный HTML-файл: можно открыть без интернета, отправить ученикам или загрузить на GitHub Pages. Ответы открываются по клику на исходное слово справа.</p>
+    </section>
+  </main>
+</div>
+
+<script type="application/json" id="bank-data">{"meta": {"title": "ЕГЭ Английский — Грамматика 19–24/25", "source": "Открытый банк ФИПИ: грамматика", "variants": 51, "tasks": 344, "note": "Вариант 1, задание 21: в файле ответов указано 'will come', в тренажёре показывается грамматически корректное 'will become' и принимаются обе формы."}, "variants": [{"variant": 1, "title": "Tasty furniture / A street with a record", "tasks": [{"num": 19, "stem": "EAT", "text": "Everybody likes sweets. Children are the ones who enjoy __________________ all kinds of sweets.", "answer": "eating", "accept": ["eating"]}, {"num": 20, "stem": "MANY", "text": "Now they have even __________________ reasons to be happy because they can have party furniture made of sweets.", "answer": "more", "accept": ["more"]}, {"num": 21, "stem": "BECOME", "text": "Such furniture looks bright and attractive. The producers hope that soon such furniture __________________ popular all over the world.", "answer": "will become", "accept": ["will become", "will come"]}, {"num": 22, "stem": "SHORT", "text": "Have you ever been to Scotland? There are a lot of wonderful attractions there, including the __________________ street in the world.", "answer": "shortest", "accept": ["shortest"]}, {"num": 23, "stem": "CALL", "text": "It __________________ Ebenezer Place in the town of Wick. It is only 2.06 metres long.", "answer": "is called", "accept": ["is called"]}, {"num": 24, "stem": "BUILD", "text": "It appeared when the Mackeys Hotel __________________ there in 1883 and has only this building.", "answer": "was built", "accept": ["was built"]}, {"num": 25, "stem": "ONE", "text": "So, if you come to Wick, the __________________ thing on your must-do list should be to visit this place.", "answer": "first", "accept": ["first"]}]}, {"variant": 2, "title": "Antiseptics / Living octopus", "tasks": [{"num": 19, "stem": "INTRODUCE", "text": "We cannot imagine our life without antiseptics. This invention __________________ in 1850 by a Hungarian physician.", "answer": "was introduced", "accept": ["was introduced"]}, {"num": 20, "stem": "ONE", "text": "He was the __________________ prominent doctor to make a strong link between the use of antiseptics and improving survival rates of wounded people.", "answer": "first", "accept": ["first"]}, {"num": 21, "stem": "BECOME", "text": "His work was taken up by others, such as Joseph Lister, who __________________ a pioneer of antiseptic surgery.", "answer": "became", "accept": ["became"]}, {"num": 22, "stem": "BE", "text": "In countries which are located near sea coasts, seafood is an important part of national cuisine. Since ancient times, different kinds of fish and seafood __________________ staple diets near the coast or near certain rivers and lakes.", "answer": "have been", "accept": ["have been"]}, {"num": 23, "stem": "USE", "text": "From Indonesia to India, seafood __________________ throughout the region both as foodstuffs and as seasonings.", "answer": "is used", "accept": ["is used"]}, {"num": 24, "stem": "NOT WANT", "text": "It’s important to eat seafood fresh as people __________________ to risk food poisoning.", "answer": "do not want", "accept": ["do not want"]}, {"num": 25, "stem": "GOOD", "text": "Many people think that exotic seafood dishes are the __________________.", "answer": "best", "accept": ["best"]}]}, {"variant": 3, "title": "What do you know about Australia? / The cat, the rooster, and the young mouse", "tasks": [{"num": 19, "stem": "SPEAK", "text": "Here are some interesting facts about Australia. Over 200 different languages and dialects __________________ in Australia including 45 indigenous languages.", "answer": "are spoken", "accept": ["are spoken"]}, {"num": 20, "stem": "HIGH", "text": "Australia has the world’s __________________ proportion of migrant settlers in a developed nation with over 25% of Australians born in another country.", "answer": "highest", "accept": ["highest"]}, {"num": 21, "stem": "ONE", "text": "The __________________ Australian Friendly Society with the motto of “Advance Australia” was formed in Victoria in 1871.", "answer": "first", "accept": ["first"]}, {"num": 22, "stem": "SEE", "text": "A very young mouse made his first trip out of the hole and into the world. He returned to tell his mother of the wonderful creatures he __________________.", "answer": "saw", "accept": ["saw"]}, {"num": 23, "stem": "TALK", "text": "“Oh, Mother,” said the mouse, “I met some curious animals. There was one beautiful animal with fluffy fur, a long winding tail and a tender voice. I met another animal, a terrible looking monster. He had raw meat on his head and on his chin that wiggled and shook as he walked. He gave such a powerful and frightening cry, that I ran away in fear, without __________________ to the kind beautiful animal.”", "answer": "talking", "accept": ["talking"]}, {"num": 24, "stem": "MOUSE", "text": "Mother Mouse smiled, “My dear, that horrible creature was a harmless bird, but that beautiful animal with the fluffy fur was a cat who eats __________________.", "answer": "mice", "accept": ["mice"]}, {"num": 25, "stem": "NOT HAVE", "text": "You are lucky she __________________ you for dinner.”", "answer": "did not have", "accept": ["did not have"]}]}, {"variant": 4, "title": "A school photo / The most famous book for kids", "tasks": [{"num": 19, "stem": "GO", "text": "My son and I were checking out a house he was interested in buying. When the owner came to the door, she looked at me and said, “Larry? I know you. We __________________ to school together. I’m Elaine. Don’t you recognize me?”", "answer": "went", "accept": ["went"]}, {"num": 20, "stem": "YOU", "text": "I failed to remember her. She took out our old yearbook and showed me her graduation picture – still nothing. “Let’s look at __________________ picture,” she said.", "answer": "your", "accept": ["your"]}, {"num": 21, "stem": "NOT FORGET", "text": "She flipped the pages until she came to me. Under my photo I read, “Elaine, I __________________ you. Never!”", "answer": "will not forget", "accept": ["will not forget"]}, {"num": 22, "stem": "CHILD", "text": "Have you read Mary Poppins? It is a series of eight books for __________________ written by P.L.Travers and published over the period from 1934 to 1988.", "answer": "children", "accept": ["children"]}, {"num": 23, "stem": "BRING", "text": "The books centre on magical English nanny Mary Poppins. She __________________ by the East wind to Number 17 Cherry Tree Lane, London, and into the Banks’s household to care for their children.", "answer": "was brought", "accept": ["was brought"]}, {"num": 24, "stem": "ONE", "text": "Various adventures follow until Mary Poppins abruptly leaves. Only the __________________ three of the eight books feature Mary Poppins arriving and leaving.", "answer": "first", "accept": ["first"]}, {"num": 25, "stem": "LATE", "text": "The __________________ five books recount previously unrecorded adventures from her original three visits.", "answer": "later", "accept": ["later"]}]}, {"variant": 5, "title": "A smart cat / Creative thinking", "tasks": [{"num": 19, "stem": "HEAR", "text": "My Snowball is a wonderful cat. I don’t know of any other cat that loves to watch Sesame Street. He will also come running up to the TV if he __________________ a baby crying or little kids playing. He can’t stand TV commercials!", "answer": "hears", "accept": ["hears"]}, {"num": 20, "stem": "NOT HAVE", "text": "Anytime a commercial comes on he turns his head to the side and so he ____________________ to watch the commercial. When the show is back on the air, he will start watching the show again.", "answer": "does not have", "accept": ["does not have"]}, {"num": 21, "stem": "FIND", "text": "It was then that I __________________ out that when a commercial is on, the volume goes up a bit, and this is his signal to turn away. When the volume goes down then the commercial is over. Smart cat, I started to do the same thing.", "answer": "found", "accept": ["found"]}, {"num": 22, "stem": "WORK", "text": "Percy Spencer was an American physicist and inventor. He was the chief of the power tube division of the Raytheon Company. Once he noticed that microwaves from the radar set he __________________ on had melted the candy bar in his pocket.", "answer": "was working", "accept": ["was working"]}, {"num": 23, "stem": "ONE", "text": "It had been known that microwaves generate heat. But he was the __________________ one to think of using this heat to cook food.", "answer": "first", "accept": ["first"]}, {"num": 24, "stem": "FAR", "text": "He received a patent in 1950, and Raytheon developed the idea __________________ for commercial and industrial use.", "answer": "further", "accept": ["further"]}, {"num": 25, "stem": "HE", "text": "In a sign of things to come, popcorn was what Spencer and __________________ colleagues cooked with microwaves. Spencer’s creative thinking turned a routine observation into a technological breakthrough.", "answer": "his", "accept": ["his"]}]}, {"variant": 6, "title": "Apollo / Guinness record for gadgets", "tasks": [{"num": 19, "stem": "WOLF", "text": "Apollo was one of the ancient Greek gods. He was the god of music, the god of healing, and is also seen as a pastoral god, protecting flocks of sheep from __________________.", "answer": "wolves", "accept": ["wolves"]}, {"num": 20, "stem": "HE", "text": "One of Apollo’s most important daily tasks was to harness __________________ four-horse chariot, in order to move the Sun across the sky.", "answer": "his", "accept": ["his"]}, {"num": 21, "stem": "HOLD", "text": "Apollo was an oracle and people from all over the world travelled there to learn what the future __________________ for them.", "answer": "held", "accept": ["held"]}, {"num": 22, "stem": "MANY", "text": "A dedicated Batman fan created the most impressive costume and earned a Guinness World Record for it. His costume had __________________ gadgets on it than anyone could imagine.", "answer": "more", "accept": ["more"]}, {"num": 23, "stem": "INSPIRE", "text": "Julian Checkley, a lifelong player, said his suit __________________ by a character in a video game. He tricked out the batsuit with 23 functioning gadgets.", "answer": "was inspired", "accept": ["was inspired"]}, {"num": 24, "stem": "SPEND", "text": "“I __________________ many long hours finding ways to store gadgets on the suit. They are classic gadgets but also some are specific to Batman.", "answer": "spent", "accept": ["spent"]}, {"num": 25, "stem": "GOOD", "text": "I think I’ve found the __________________ way to place the gadgets on the suit. I am immensely proud of my Guinness World Records title,” Checkley said.", "answer": "best", "accept": ["best"]}]}, {"variant": 7, "title": "Elephants / The role of art", "tasks": [{"num": 19, "stem": "CALL", "text": "Elephants form deep family bonds and live in tight family groups. The herd is led by the oldest and often largest female in the herd, __________________ a matriarch.", "answer": "called", "accept": ["called"]}, {"num": 20, "stem": "RAISE", "text": "When a calf is born, it __________________ and protected by the whole matriarchal herd.", "answer": "is raised", "accept": ["is raised"]}, {"num": 21, "stem": "LIFE", "text": "Males leave the family unit between the ages of 12-15 and may lead solitary __________________ or live temporarily with other males", "answer": "lives", "accept": ["lives"]}, {"num": 22, "stem": "TWO", "text": "Massachusetts Institute of Technology (MIT) is one of the most famous in the world. This year, MIT jumped from the fourth to the __________________ highest globally ranked university in art and design.", "answer": "second", "accept": ["second"]}, {"num": 23, "stem": "NAME", "text": "It __________________ the top university in the world for architecture some years ago.", "answer": "was named", "accept": ["was named"]}, {"num": 24, "stem": "LEAD", "text": "The hard work of the faculty, staff, and students __________________ to that recognition.", "answer": "led", "accept": ["led"]}, {"num": 25, "stem": "GOOD", "text": "Though it is called the Institute of Technology, the arts are essential to MIT’s mission to build a __________________ society and meet the challenges of the 21st century.", "answer": "better", "accept": ["better"]}]}, {"variant": 8, "title": "Archeology / Sports in Victorian times", "tasks": [{"num": 19, "stem": "IT", "text": "What is archeology? It is the study of human activity, primarily through the study of __________________ material remains.", "answer": "its", "accept": ["its"]}, {"num": 20, "stem": "WRITE", "text": "Most human activity is in the past, and most past human activity occurred before any __________________ record.", "answer": "written", "accept": ["written"]}, {"num": 21, "stem": "IMPORTANT", "text": "That is why archaeology is the __________________ method for the study of human pre-history.", "answer": "most important", "accept": ["most important"]}, {"num": 22, "stem": "ONE", "text": "Sports became extremely popular in Victorian times. Traditional sports like football, cricket and boxing had been played for centuries but now they were given proper rules for the __________________ time.", "answer": "first", "accept": ["first"]}, {"num": 23, "stem": "MEAN", "text": "This was the time when many football clubs were set up. Football __________________ to keep people healthy and to encourage a sense of fair play.", "answer": "was meant", "accept": ["was meant"]}, {"num": 24, "stem": "NOT BE", "text": "It __________________ that successful and free kicks and penalty kicks had to be brought in to stop foul play. International matches started in 1880s.", "answer": "was not", "accept": ["was not"]}, {"num": 25, "stem": "BECOME", "text": "The organized matches drew large crowds and watching sport __________________ a hobby.", "answer": "became", "accept": ["became"]}]}, {"variant": 9, "title": "Strange but true / The camera", "tasks": [{"num": 19, "stem": "SHAKE", "text": "When President Lincoln was ready to sign the Emancipation Proclamation, his hands __________________ because he was very nervous.", "answer": "were shaking", "accept": ["were shaking"]}, {"num": 20, "stem": "PUT", "text": "So he __________________ the pen down. He decided to wait to sign the document until he could do this with a steady hand.", "answer": "put", "accept": ["put"]}, {"num": 21, "stem": "HE", "text": "He was afraid that his critics would accuse __________________ of hesitating if they saw a shaky signature.", "answer": "him", "accept": ["him"]}, {"num": 22, "stem": "CONSIDER", "text": "The camera is a miraculous invention. Some people treat it as a time machine. It helps people capture any moment in history and in the present. Alexander Walcott __________________ to have invented it.", "answer": "is considered", "accept": ["is considered"]}, {"num": 23, "stem": "ONE", "text": "The __________________ camera appeared in 1840.", "answer": "first", "accept": ["first"]}, {"num": 24, "stem": "GOOD", "text": "The improvement in the camera technology has helped bring motion pictures. Today, we enjoy our __________________ images and get time to interact with our own past.", "answer": "best", "accept": ["best"]}, {"num": 25, "stem": "STAY", "text": "It __________________ with us forever in our photos and home videos.", "answer": "will stay", "accept": ["will stay"]}]}, {"variant": 10, "title": "An honest answer / E-books", "tasks": [{"num": 19, "stem": "INVITE", "text": "George Bernard Shaw was an outstanding British literary figure and a man with a good sense of humour. When he was still a young critic, he __________________ as a guest to a family party.", "answer": "was invited", "accept": ["was invited"]}, {"num": 20, "stem": "PLAY", "text": "When he entered the room, the daughter of the host __________________ the piano and her performance was no good. She said, “People say you are fond of music. Are you?”", "answer": "was playing", "accept": ["was playing"]}, {"num": 21, "stem": "BE", "text": "“I __________________ fond of music for a long time, but never mind, go on playing,” was Shaw’s answer.", "answer": "have been", "accept": ["have been"]}, {"num": 22, "stem": "A UNDERSTAND", "text": "People of the 21st century have to think about living green. long time ago we __________________ that we should protect our forests.", "answer": "understood", "accept": ["understood"]}, {"num": 23, "stem": "THEY", "text": "That is why today people try to avoid printing photos and keep __________________ all on computers. E-books are another example of people wishing not to waste paper.", "answer": "them", "accept": ["them"]}, {"num": 24, "stem": "ONE", "text": "The __________________ e-book appeared in 1998 and attracted everybody’s attention immediately.", "answer": "first", "accept": ["first"]}, {"num": 25, "stem": "SAFE", "text": "Modern e-books are much __________________ for your eyes than they used to be in the past and are very affordable now.", "answer": "safer", "accept": ["safer"]}]}, {"variant": 11, "title": "The two crabs / Emoji", "tasks": [{"num": 19, "stem": "WALK", "text": "One fine day two crabs came out of their home to take a stroll on the sand. “Child,” said the mother, “you __________________ very ungracefully. You should get yourself used to walking straight forward without twisting from side to side.”", "answer": "walk", "accept": ["walk"]}, {"num": 20, "stem": "CAN", "text": "The young crab asked his mother to show how to do it so that he __________________ copy it.", "answer": "could", "accept": ["could"]}, {"num": 21, "stem": "GOOD", "text": "You see, setting an example is the __________________ way of teaching.", "answer": "best", "accept": ["best"]}, {"num": 22, "stem": "THIS", "text": "Emoji is a Japanese word to denote ideograms and smileys. People often put __________________ emoticons in their electronic messages and Web pages.", "answer": "these", "accept": ["these"]}, {"num": 23, "stem": "INTRODUCE", "text": "They __________________ in the 1990s.", "answer": "were introduced", "accept": ["were introduced"]}, {"num": 24, "stem": "BECOME", "text": "Since that time they __________________ immensely popular worldwide, much thanks to their international inclusion in smartphones.", "answer": "have become", "accept": ["have become"]}, {"num": 25, "stem": "CONTINUE", "text": "There is no doubt that people __________________ using Emoji in the future.", "answer": "will continue", "accept": ["will continue"]}]}, {"variant": 12, "title": "A solution for drivers / Meteora", "tasks": [{"num": 19, "stem": "NOT HELP", "text": "It’s a problem for any driver to drive in sunny weather. Wearing sunglasses __________________ much – it’s still very hard to see anything in front of you.", "answer": "does not help", "accept": ["does not help"]}, {"num": 20, "stem": "LCD              INVENT", "text": "Now there is a solution to this problem. In 2011 sunglasses __________________.", "answer": "were invented", "accept": ["were invented"]}, {"num": 21, "stem": "USE", "text": "They dynamically block direct sunlight. There’s no doubt that in the future more drivers __________________ them.", "answer": "will use", "accept": ["will use"]}, {"num": 22, "stem": "SITUATE", "text": "Meteora is an area that attracts thousands of tourists from all over the world. Meteora __________________ in Greece.", "answer": "is situated", "accept": ["is situated"]}, {"num": 23, "stem": "BUILD", "text": "It is famous for the ancient monasteries __________________ right on the eroded rocks.", "answer": "built", "accept": ["built"]}, {"num": 24, "stem": "VISIT", "text": "Now tourists enjoy __________________ them and they take numerous pictures.", "answer": "visiting", "accept": ["visiting"]}, {"num": 25, "stem": "GOOD", "text": "The __________________ way to reach this amazing place is to take a bus from Athens.", "answer": "best", "accept": ["best"]}]}, {"variant": 13, "title": "A hungry wolf / The invention of the light bulb", "tasks": [{"num": 19, "stem": "TELL", "text": "An old nurse was putting a baby to bed. She __________________ the boy to be quiet otherwise she would give him to a wolf.", "answer": "told", "accept": ["told"]}, {"num": 20, "stem": "SCREAM", "text": "But the child __________________ even more and more loudly.", "answer": "was screaming", "accept": ["was screaming"]}, {"num": 21, "stem": "NOT HAVE", "text": "The wolf heard the screams and thought to himself, “I __________________ any lunch yet. This boy is just what I need.” But the old nurse shut the door and all the windows, and the wolf had to go away. Never trust enemies’ promises.", "answer": "have not had", "accept": ["have not had"]}, {"num": 22, "stem": "INVENT", "text": "Every person in the world knows about Thomas Edison. The electric light bulb __________________ by this famous scientist.", "answer": "was invented", "accept": ["was invented"]}, {"num": 23, "stem": "ILLUMINATE", "text": "The electrification of the modern world profoundly changed human life, __________________ the night.", "answer": "illuminating", "accept": ["illuminating"]}, {"num": 24, "stem": "ONE", "text": "The __________________ electric bulb made it possible for people to continue their usual day activities after dark.", "answer": "first", "accept": ["first"]}, {"num": 25, "stem": "LIFE", "text": "Edison started with a 40-hour life light bulb and finally made a bulb that lasted for 1500 hours. This certainly revolutionized human __________________ at that time.", "answer": "lives", "accept": ["lives"]}]}, {"variant": 14, "title": "Live green! / Where’s our teacher?", "tasks": [{"num": 19, "stem": "RECYCLE", "text": "The Oriental Development Company is an enterprise in Japan. It specializes in green inventions. One of their newest inventions is connected with __________________ paper.", "answer": "recycling", "accept": ["recycling"]}, {"num": 20, "stem": "INTRODUCE", "text": "The machine can recycle waste paper. It __________________ to the public several months ago.", "answer": "was introduced", "accept": ["was introduced"]}, {"num": 21, "stem": "NOT PRODUCE", "text": "A big advantage is that this machine __________________ any harmful emissions.", "answer": "does not produce", "accept": ["does not produce"]}, {"num": 22, "stem": "WALK", "text": "One school had a very strict head teacher. Once he __________________ around the school when he heard a terrible noise coming from one of the classrooms.", "answer": "was walking", "accept": ["was walking"]}, {"num": 23, "stem": "SEE", "text": "Opening the door, the teacher __________________ a noisy young man in the centre of the classroom.", "answer": "saw", "accept": ["saw"]}, {"num": 24, "stem": "TALL", "text": "He was __________________ than the others and he was making the most noise. The head teacher ordered him to leave the classroom immediately.", "answer": "taller", "accept": ["taller"]}, {"num": 25, "stem": "CHILD", "text": "“Any more questions?” he asked the students. “Yes, sir,” the __________________ replied. “Can we have our teacher back?”", "answer": "children", "accept": ["children"]}]}, {"variant": 15, "title": "The Thorn Birds / GPS functions", "tasks": [{"num": 19, "stem": "WE", "text": "The Thorn Birds is a 1977 bestselling novel by the Australian author Colin McCullough. The story gives __________________ information about life on Australian sheep stations, but it also includes a dramatic love story.", "answer": "us", "accept": ["us"]}, {"num": 20, "stem": "BRING", "text": "The book __________________ the writer international fame as soon as it was published.", "answer": "brought", "accept": ["brought"]}, {"num": 21, "stem": "STAR", "text": "In 1983 it was adapted into a TV miniseries __________________ Richard Chamberlain and Rachel Ward.", "answer": "starring", "accept": ["starring"]}, {"num": 22, "stem": "LATE", "text": "Car GPS Tracking appears a lot in new vehicles, offering drivers tracking and navigation. Yet, the __________________ inventions are even more modern and sophisticated, offering extra opportunities to people.", "answer": "latest", "accept": ["latest"]}, {"num": 23, "stem": "GPS               USE", "text": "Smart box technology is one example of how car tracking systems __________________ to lower car insurance.", "answer": "are used", "accept": ["are used"]}, {"num": 24, "stem": "NOT BREAK", "text": "If the driver __________________ the rules, he gets a discount or an insurance premium.", "answer": "does not break", "accept": ["does not break"]}, {"num": 25, "stem": "BECOME", "text": "Without doubt, this new technology __________________ popular among drivers very soon.", "answer": "will become", "accept": ["will become"]}]}, {"variant": 16, "title": "How the Nobel Prize started / Antarctica", "tasks": [{"num": 19, "stem": "GIVE", "text": "Everybody knows about Alfred Nobel. He was the man who __________________ the world a great invention – dynamite.", "answer": "gave", "accept": ["gave"]}, {"num": 20, "stem": "USE", "text": "However, Nobel saw that people started __________________ it for military purposes.", "answer": "using", "accept": ["using"]}, {"num": 21, "stem": "HE", "text": "That is why the scientist changed his will and introduced the Nobel Prize. The scientist’s wish was that people would remember something good about __________________.", "answer": "him", "accept": ["him"]}, {"num": 22, "stem": "COLD", "text": "Many people think that Antarctica is just a block of thin ice. It is, indeed, the __________________ place on Earth.", "answer": "coldest", "accept": ["coldest"]}, {"num": 23, "stem": "NOT SET", "text": "However, during the summer the sun __________________ in Antarctica.", "answer": "does not set", "accept": ["does not set"]}, {"num": 24, "stem": "MUCH", "text": "It means that Antarctica receives __________________ sunlight than the equator during that period of time.", "answer": "more", "accept": ["more"]}, {"num": 25, "stem": "CONCENTRATE", "text": "Another interesting fact about Antarctica is that 90% of the world’s fresh water __________________ there. Isn’t it amazing?", "answer": "is concentrated", "accept": ["is concentrated"]}]}, {"variant": 17, "title": "Yakutia / The print brush", "tasks": [{"num": 19, "stem": "COLD", "text": "Yakutia is right in the middle of Russia’s far eastern region. Probably Yakutia is one of the __________________ parts of Russia. Still, it’s a beautiful place.", "answer": "coldest", "accept": ["coldest"]}, {"num": 20, "stem": "VISIT", "text": "Tourists love __________________ Yakutia because it is a perfect place for photography tours and spending quality time outdoors.", "answer": "visiting", "accept": ["visiting"]}, {"num": 21, "stem": "NOT BE", "text": "You only have to remember that winter __________________ a good time to visit the area as winters here are very cold there.", "answer": "is not", "accept": ["is not"]}, {"num": 22, "stem": "DEMONSTRATE", "text": "As its name suggests, the print brush is a printer that acts like a paint brush. The print brush __________________ to public in 2011.", "answer": "was demonstrated", "accept": ["was demonstrated"]}, {"num": 23, "stem": "CATCH", "text": "It immediately __________________ the attention of designers.", "answer": "caught", "accept": ["caught"]}, {"num": 24, "stem": "INSTALL", "text": "If you want to use it, you just swipe it over any flat surface and in less than 10 seconds it prints over it. It is very small and has a digital camera __________________.", "answer": "installed", "accept": ["installed"]}, {"num": 25, "stem": "BUY", "text": "You can connect it to your laptop and literally print any image from it. Isn’t it amazing? Since 2011 a lot of people __________________ the print brush and are happy with it.", "answer": "have bought", "accept": ["have bought"]}]}, {"variant": 18, "title": "Clever plants / Yuri Lysyansky", "tasks": [{"num": 19, "stem": "LEARN", "text": "The flora of our planet is simply amazing. There are a lot of things plants __________________ to do since they appeared on our planet.", "answer": "have learned", "accept": ["have learned"]}, {"num": 20, "stem": "THEY", "text": "Some of them produce dangerous chemicals so that herbivores cannot eat __________________.", "answer": "them", "accept": ["them"]}, {"num": 21, "stem": "GOOD", "text": "There are even plants which attract predators. This is one of the __________________ survival mechanisms developed by plants in the process of evolution.", "answer": "best", "accept": ["best"]}, {"num": 22, "stem": "ONE", "text": "July 22 is a special day in Russian history. In 1806 on this day the __________________ Russian round-the-world trip ended.", "answer": "first", "accept": ["first"]}, {"num": 23, "stem": "MAKE", "text": "The trip led by the Russian navy officer Yuri Lysyansky __________________ a great contribution to the study of the oceans.", "answer": "made", "accept": ["made"]}, {"num": 24, "stem": "CALL", "text": "His ship __________________ The Neva.", "answer": "was called", "accept": ["was called"]}, {"num": 25, "stem": "LATE", "text": "__________________, Lysyansky wrote his memoirs about the journey around the world. Russian people are certainly proud of this outstanding man.", "answer": "later", "accept": ["later"]}]}, {"variant": 19, "title": "Languages of the world / Slavery in North America", "tasks": [{"num": 19, "stem": "SPEAK", "text": "What do you think is the most difficult language to learn? Chinese? Japanese? No, it is Basque, the language which __________________ in northwestern Spain and southwestern France.", "answer": "is spoken", "accept": ["is spoken"]}, {"num": 20, "stem": "NOT RELATE", "text": "It __________________ to any other language in the world. In Basque, the name of the language is officially “Euskara”.", "answer": "is not related", "accept": ["is not related"]}, {"num": 21, "stem": "GREAT", "text": "In French, the language is normally called “basque”, though in recent times “euskara” has become common. Spanish has a __________________ variety of names for the language than French. Today, it is most commonly referred to as “el vasco”, ”la lengua vasca” or “el euskera”.", "answer": "greater", "accept": ["greater"]}, {"num": 22, "stem": "BUY", "text": "August 13, 1619 is the date when two and a half centuries of slavery in North America began. On this day the first Africans kidnapped by the Portuguese arrived in the British colony of Virginia and __________________ by English colonists.", "answer": "were bought", "accept": ["were bought"]}, {"num": 23, "stem": "FOUND", "text": "__________________ at Jamestown in 1607, the Virginia Colony was home to about 700 people by 1619.", "answer": "founded", "accept": ["founded"]}, {"num": 24, "stem": "KNOW", "text": "The first enslaved Africans to arrive there disembarked at Point Comfort, in what __________________ today as Hampton Roads.", "answer": "is known", "accept": ["is known"]}, {"num": 25, "stem": "THEY", "text": "Most of __________________ names, as well as the exact number of those who remained at Point Comfort, have been lost to history, but much is known about their journey.", "answer": "their", "accept": ["their"]}]}, {"variant": 20, "title": "Languages in the USA / The Brownings", "tasks": [{"num": 19, "stem": "SPEAK", "text": "The most commonly used language in the United States is English, which is the de facto national language. Nonetheless, many other languages __________________ in the United States.", "answer": "are spoken", "accept": ["are spoken"]}, {"num": 20, "stem": "THIS", "text": "__________________ include indigenous languages, languages brought to the country by colonists, enslaved people and immigrants from Europe, Africa and Asia.", "answer": "these", "accept": ["these"]}, {"num": 21, "stem": "TWO", "text": "Spanish, of course, is the __________________ most commonly spoken language in the United States. However, few people realise that after English and Spanish Chinese is spoken regularly in more American homes than any other language.", "answer": "second", "accept": ["second"]}, {"num": 22, "stem": "WRITE", "text": "On January 10, 1845, Robert Browning, a little-known poet and playwright, sent a letter to Elizabeth Barrett, an internationally renowned poet, an invalid, after reading her volume of poetry. Over the course of the next 20 months, they __________________ each other close to 600 letters.", "answer": "wrote", "accept": ["wrote"]}, {"num": 23, "stem": "GREAT", "text": "It is one of the __________________ literary correspondences of all time.", "answer": "greatest", "accept": ["greatest"]}, {"num": 24, "stem": "LEAVE", "text": "The couple’s last letter was exchanged on September 18, 1846, the night before the two __________________ for a trip to Italy and two weeks after their secret marriage.", "answer": "left", "accept": ["left"]}, {"num": 25, "stem": "THEY", "text": "__________________ romance, which Elizabeth credited with saving her life, lasted for 15 years and spawned some of the world’s most beautiful poetry.", "answer": "their", "accept": ["their"]}]}, {"variant": 21, "title": "Oleg Protopopov / The Rosetta Stone", "tasks": [{"num": 19, "stem": "GOOD", "text": "Have you heard about Oleg Protopopov? He was born in 1932 and he was one of the __________________ figure skaters of his time.", "answer": "best", "accept": ["best"]}, {"num": 20, "stem": "WIN", "text": "He __________________ two Olympic gold medals.", "answer": "won", "accept": ["won"]}, {"num": 21, "stem": "ONE", "text": "He was also the __________________ sportsman to show a lyrical programme in figure skating. Russian people are certainly proud of this outstanding sportsman.", "answer": "first", "accept": ["first"]}, {"num": 22, "stem": "FIND", "text": "We learn about our past thanks to the findings of archaeologists. The Rosetta stone is one of them. It __________________ in 1799.", "answer": "was found", "accept": ["was found"]}, {"num": 23, "stem": "STUDY", "text": "Thanks to this finding, scientists could start __________________ the language of ancient Egyptians.", "answer": "studying", "accept": ["studying"]}, {"num": 24, "stem": "THIS", "text": "This happened so because there were texts on the stone. __________________ texts were both in Greek and the ancient Egyptian language.", "answer": "these", "accept": ["these"]}, {"num": 25, "stem": "SEE", "text": "Now the Rosetta stone is in the British museum. Millions of visitors to the museum __________________ it so far.", "answer": "have seen", "accept": ["have seen"]}]}, {"variant": 22, "title": "A strange story / A tasty cup", "tasks": [{"num": 19, "stem": "COME", "text": "Boris Kustodiev was a famous Soviet painter. One day two young scientists __________________ to see him.", "answer": "came", "accept": ["came"]}, {"num": 20, "stem": "ONE", "text": "They wanted to have their portraits painted. Kustodiev painted portraits of famous people only and his __________________ wish was to refuse them.", "answer": "first", "accept": ["first"]}, {"num": 21, "stem": "BE", "text": "Still, the scientists insisted they __________________ famous in the near future. They were P. Kapitsa and N. Semenov, who both later got the Nobel Prizes.", "answer": "would be", "accept": ["would be"]}, {"num": 22, "stem": "GOOD", "text": "Can you imagine a person who drinks his cup of coffee, then has his empty cup for dessert and leaves the café? A lot of Italian restaurants now serve the __________________ coffee in the country in the cups which one can eat.", "answer": "best", "accept": ["best"]}, {"num": 23, "stem": "COVER", "text": "The cup __________________ with a substance which keeps the liquid inside.", "answer": "is covered", "accept": ["is covered"]}, {"num": 24, "stem": "NOT NEED", "text": "You __________________ to put extra sugar in your coffee in such a cup because it is sweet.", "answer": "do not need", "accept": ["do not need"]}, {"num": 25, "stem": "BECOME", "text": "There is no doubt that soon such cups __________________ popular all over the world.", "answer": "will become", "accept": ["will become"]}]}, {"variant": 23, "title": "Animal friends / Magical metals", "tasks": [{"num": 19, "stem": "PLAY", "text": "Few people know that dolphins and whales can make good friends. They really enjoy __________________ with each other.", "answer": "playing", "accept": ["playing"]}, {"num": 20, "stem": "FUNNY", "text": "It is one of the __________________ things to see in the animal world. Scientists believe that whales think that dolphins are their babies.", "answer": "funniest", "accept": ["funniest"]}, {"num": 21, "stem": "FIND", "text": "In 2011 people even __________________ a dolphin brought up by whales. Isn’t it amazing?", "answer": "found", "accept": ["found"]}, {"num": 22, "stem": "THIS", "text": "Do you know why people use silver and copper in medicine? __________________ metals can kill dangerous bacteria and viruses.", "answer": "these", "accept": ["these"]}, {"num": 23, "stem": "KNOW", "text": "People __________________ about it for a long time.", "answer": "have known", "accept": ["have known"]}, {"num": 24, "stem": "MAKE", "text": "The door handles __________________ of copper can even clean themselves.", "answer": "made", "accept": ["made"]}, {"num": 25, "stem": "FIND", "text": "Maybe in the future we __________________ more useful qualities of silver and copper.", "answer": "will find", "accept": ["will find"]}]}, {"variant": 24, "title": "The lost speech / Bread", "tasks": [{"num": 19, "stem": "GIVE", "text": "Abraham Lincoln was famous as a great public speaker. In 1865 he __________________ a very emotional speech at the Bloomington Convention.", "answer": "gave", "accept": ["gave"]}, {"num": 20, "stem": "ONE", "text": "The speech was so captivating that for the __________________ time in their lives the reporters forgot to take notes.", "answer": "first", "accept": ["first"]}, {"num": 21, "stem": "BAD", "text": "The __________________ thing about it is that it was a very important speech – the one that led to the founding of the Republican Party in the USA.", "answer": "worst", "accept": ["worst"]}, {"num": 22, "stem": "NOT KNOW", "text": "Bread is always on our table like many other products. However, we __________________ who invented it.", "answer": "do not know", "accept": ["do not know"]}, {"num": 23, "stem": "CHANGE", "text": "Since that time bread __________________ in many ways.", "answer": "has changed", "accept": ["has changed"]}, {"num": 24, "stem": "INTRODUCE", "text": "For example, sliced bread __________________ in 1930.", "answer": "was introduced", "accept": ["was introduced"]}, {"num": 25, "stem": "CONTINUE", "text": "New varieties of bread appear every day. There is no doubt that people __________________ to experiment with flavours and tastes of bread in the future.", "answer": "will continue", "accept": ["will continue"]}]}, {"variant": 25, "title": "Strange but true / A great joke", "tasks": [{"num": 19, "stem": "DO", "text": "Do you like walking along snowy streets? Many people enjoy __________________ it.", "answer": "doing", "accept": ["doing"]}, {"num": 20, "stem": "FOOT", "text": "It is because they love the sound of the snow creaking under their __________________ .", "answer": "feet", "accept": ["feet"]}, {"num": 21, "stem": "NOT CAN", "text": "It is interesting that you can hear this sound only if it is around -5 because of the snow structure. If it is warmer or colder, you __________________ hear it.", "answer": "cannot", "accept": ["cannot"]}, {"num": 22, "stem": "GOOD", "text": "On April 1 British media always play jokes on their audience. One of the __________________ media jokes is definitely the one of the BBC.", "answer": "best", "accept": ["best"]}, {"num": 23, "stem": "SHOW", "text": "On April 1, 1957 British people __________________ a fake film about growing spaghetti in Switzerland.", "answer": "were shown", "accept": ["were shown"]}, {"num": 24, "stem": "TELL", "text": "The presenter __________________ the surprised viewers that Swiss farmers gathered spaghetti right from spaghetti trees.", "answer": "told", "accept": ["told"]}, {"num": 25, "stem": "BE", "text": "The BBC received many phone calls from people who hoped they __________________ able to grow spaghetti in the UK and asked for spaghetti seeds.", "answer": "would be", "accept": ["would be"]}]}, {"variant": 26, "title": "Kenneth Graham / A Walking House", "tasks": [{"num": 19, "stem": "HE", "text": "Kenneth Graham (1859–1932) was a Scottish writer. Life was very hard on __________________ but he remained an optimistic person.", "answer": "him", "accept": ["him"]}, {"num": 20, "stem": "CHILD", "text": "His books are classics of literature for __________________ .", "answer": "children", "accept": ["children"]}, {"num": 21, "stem": "MAKE", "text": "Recently the Disney studio __________________ some films based on his books, for example, The Reluctant Dragon. These films are certainly worth watching.", "answer": "has made", "accept": ["has made"]}, {"num": 22, "stem": "INTRODUCE", "text": "Can you imagine a house that can walk? An innovative prototype of a walking house __________________ last year in England.", "answer": "was introduced", "accept": ["was introduced"]}, {"num": 23, "stem": "GOOD", "text": "The __________________ thing about it is that this eco-friendly house has everything necessary – a kitchen, a composting toilet, a method to collect rain water, and so on.", "answer": "best", "accept": ["best"]}, {"num": 24, "stem": "ATTRACT", "text": "Without a doubt, such houses __________________ enthusiastic travellers in the near future.", "answer": "will attract", "accept": ["will attract"]}, {"num": 25, "stem": "ONE", "text": "The __________________ samples are already on sale.", "answer": "first", "accept": ["first"]}]}, {"variant": 27, "title": "Detective Stories / Pot plants", "tasks": [{"num": 19, "stem": "READ", "text": "Do you like detective stories? Many people enjoy __________________ them. We all have our favourite detective writers.", "answer": "reading", "accept": ["reading"]}, {"num": 20, "stem": "LOVE", "text": "Books by A.C. Doyle, E.A. Poe and J.H. Chase __________________ by numerous readers all over the world.", "answer": "are loved", "accept": ["are loved"]}, {"num": 21, "stem": "GOOD", "text": "Still, Agatha Christie is the __________________ detective writer of all times – at least by the number of books published.", "answer": "best", "accept": ["best"]}, {"num": 22, "stem": "UNDERSTAND", "text": "You can find a pot plant in almost every house. A long time ago people __________________ that it was useful to have them at home.", "answer": "understood", "accept": ["understood"]}, {"num": 23, "stem": "BRING", "text": "They hoped a pot plant __________________ them good luck.", "answer": "would bring", "accept": ["would bring"]}, {"num": 24, "stem": "WOMAN", "text": "It is usually __________________ who take care of pot plants.", "answer": "women", "accept": ["women"]}, {"num": 25, "stem": "NOT GET", "text": "They water them and set them out so that they can get some sunshine. People believe that if you have certain pot plants at home, you __________________ many illnesses.", "answer": "do not get", "accept": ["do not get"]}]}, {"variant": 28, "title": "The secret of success / Ladybirds", "tasks": [{"num": 19, "stem": "GIVE", "text": "Thomas A. Edison was a famous American inventor. He __________________ the world a lot of useful inventions.", "answer": "gave", "accept": ["gave"]}, {"num": 20, "stem": "CONSIDER", "text": "He __________________ to be a genius by his contemporaries, However, Edison himself didn’t think so.", "answer": "was considered", "accept": ["was considered"]}, {"num": 21, "stem": "NOT ACHIEVE", "text": "He knew that if he didn’t work hard, he __________________ any further success.", "answer": "would not achieve", "accept": ["would not achieve"]}, {"num": 22, "stem": "CHILD", "text": "Ladybirds are beautiful creatures. Farmers love them as they help the crops to stay healthy. __________________ look for them because they believe if you catch a ladybird and let it go free, it will bring good luck and happiness.", "answer": "children", "accept": ["children"]}, {"num": 23, "stem": "NOT BE", "text": "They also love counting spots on ladybirds. They think that the number of spots defines the age of ladybirds. However, it __________________ true.", "answer": "is not", "accept": ["is not"]}, {"num": 24, "stem": "THIS", "text": "Ladybirds need __________________ spots to scare predators away.", "answer": "these", "accept": ["these"]}]}, {"variant": 29, "title": "New Year around the world / A treasure in a chair", "tasks": [{"num": 19, "stem": "CELEBRATE", "text": "Everybody loves New Year. It is a holiday which __________________ all over the world.", "answer": "is celebrated", "accept": ["is celebrated"]}, {"num": 20, "stem": "WOMAN", "text": "In Scandinavia __________________ cook rice with nuts and not turkey for New Year.", "answer": "women", "accept": ["women"]}, {"num": 21, "stem": "THROW", "text": "Italian people enjoy __________________ old things out of the windows on New Year’s Day. It is interesting to learn about these traditions.", "answer": "throwing", "accept": ["throwing"]}, {"num": 22, "stem": "BUY", "text": "The Browns from Manchester, the UK, are a very lucky family. Some years ago, Mr Brown __________________ a chair on sale.", "answer": "bought", "accept": ["bought"]}, {"num": 23, "stem": "NOT LIKE", "text": "However, Mrs Brown __________________ it.", "answer": "did not like", "accept": ["did not like"]}, {"num": 24, "stem": "SELL", "text": "Mr Brown took it to the attic thinking he __________________ it later. While cleaning it before a spring garage sale, he broke it by accident and found expensive jewellery inside.", "answer": "would sell", "accept": ["would sell"]}, {"num": 25, "stem": "GOOD", "text": "Mrs Brown says it’s the __________________ surprise in her life!", "answer": "best", "accept": ["best"]}]}, {"variant": 30, "title": "Wallpaper / I saw it in a dream!", "tasks": [{"num": 19, "stem": "SELL", "text": "Many people prefer to decorate their rooms with wallpaper. It __________________ in rolls and is relatively inexpensive.", "answer": "is sold", "accept": ["is sold"]}, {"num": 20, "stem": "GOOD", "text": "Wallpaper is __________________ than paint because it comes in all sorts of patterns and colours.", "answer": "better", "accept": ["better"]}, {"num": 21, "stem": "LOOK", "text": "You can even buy wallpaper with a photo of a landscape and enjoy __________________ at beautiful views every day.", "answer": "looking", "accept": ["looking"]}, {"num": 22, "stem": "FIND", "text": "When scientists think about something very hard, their minds work all the time. Many scientists didn’t expect that they __________________ a solution to their problem in their sleep.", "answer": "would find", "accept": ["would find"]}, {"num": 23, "stem": "HAVE", "text": "For instance, Niels Bohr __________________ an idea about the atomic structure while sleeping.", "answer": "had", "accept": ["had"]}, {"num": 24, "stem": "HEAR", "text": "Some great musical pieces of Richard Wagner __________________ by him in his dreams.", "answer": "were heard", "accept": ["were heard"]}, {"num": 25, "stem": "MANY", "text": "There are __________________ examples of it than you can imagine, so next time you have a hard problem to solve, just have a good night’s sleep!", "answer": "more", "accept": ["more"]}]}, {"variant": 31, "title": "Winston Churchill / Clouds", "tasks": [{"num": 19, "stem": "NOT BE", "text": "Winston Churchill was a great political leader and a very clever man. Many British people think since then there __________________ a prime minister better than him.", "answer": "has not been", "accept": ["has not been"]}, {"num": 20, "stem": "WIN", "text": "He even __________________ the Nobel Prize in Literature in 1953.", "answer": "won", "accept": ["won"]}, {"num": 21, "stem": "FAMOUS", "text": "His __________________ work was a six-volume memoir about WW2, but he wrote some science fiction books as well.", "answer": "most famous", "accept": ["most famous"]}, {"num": 22, "stem": "DO", "text": "Do you like to watch clouds? Many people all over the world enjoy __________________ it.", "answer": "doing", "accept": ["doing"]}, {"num": 23, "stem": "NOT BE", "text": "There are a lot of different kinds of clouds but they all look white as they reflect the Sun’s light – just like the Moon. It is interesting to know that clouds __________________ unique to our planet.", "answer": "are not", "accept": ["are not"]}, {"num": 24, "stem": "THEY", "text": "In fact, any planet with an atmosphere has __________________.", "answer": "them", "accept": ["them"]}, {"num": 25, "stem": "LITTLE", "text": "It takes an hour or __________________ to form a cloud. That is why the weather can change so quickly.", "answer": "less", "accept": ["less"]}]}, {"variant": 32, "title": "Scandinavian walking / Maria Callas", "tasks": [{"num": 19, "stem": "NOT HAVE", "text": "It is necessary to go in for sports. If you __________________ enough time to go to the gym, you might take up Scandinavian walking.", "answer": "do not have", "accept": ["do not have"]}, {"num": 20, "stem": "DO", "text": "Many people enjoy __________________ this kind of sport. It is a very cheap hobby – all you need is a pair of walking sticks and comfortable shoes.", "answer": "doing", "accept": ["doing"]}, {"num": 21, "stem": "GOOD", "text": "Still, the __________________ thing is to take several lessons of Scandinavian walking to avoid traumas.", "answer": "best", "accept": ["best"]}, {"num": 22, "stem": "CAN", "text": "Maria Callas was the world-famous opera singer. She __________________ sing anything – from operas by Rossini to Wagner’s music dramas.", "answer": "could", "accept": ["could"]}, {"num": 23, "stem": "EDUCATE", "text": "Maria __________________ in Greece.", "answer": "was educated", "accept": ["was educated"]}, {"num": 24, "stem": "LATE", "text": "__________________ she moved to Italy and started her musical career there.", "answer": "later", "accept": ["later"]}, {"num": 25, "stem": "BE", "text": "She sang in the most prestigious opera houses and theatres and people adored her. In fact, her voice was so unique that it __________________ the golden standard ever since she started to perform.", "answer": "has been", "accept": ["has been"]}]}, {"variant": 33, "title": "Snakes / A lucky chance", "tasks": [{"num": 19, "stem": "LISTEN", "text": "Snakes are beautiful but dangerous animals. That is why there are a lot of myths about them and their behaviour. Many people think snakes enjoy __________________ to music.", "answer": "listening", "accept": ["listening"]}, {"num": 20, "stem": "BELIEVE", "text": "People __________________ this myth for a long time.", "answer": "have believed", "accept": ["have believed"]}, {"num": 21, "stem": "NOT HEAR", "text": "In fact, snakes __________________ music or sounds and react only to your movements. Isn’t it amazing?", "answer": "do not hear", "accept": ["do not hear"]}, {"num": 22, "stem": "ONE", "text": "Everybody knows Sofia Kovalevskaya. She was the __________________ woman to become the professor of mathematics.", "answer": "first", "accept": ["first"]}, {"num": 23, "stem": "GET", "text": "However, few people know that Sofia __________________ interested in mathematics at a very early age.", "answer": "got", "accept": ["got"]}, {"num": 24, "stem": "NOT BE", "text": "There __________________ enough wallpaper for her room and her parents put some sheets of paper instead.", "answer": "was not", "accept": ["was not"]}, {"num": 25, "stem": "THIS", "text": "__________________ sheets turned out to be notes of lectures of a famous Russian mathematician.", "answer": "these", "accept": ["these"]}]}, {"variant": 34, "title": "Lies, lies / Horoscopes", "tasks": [{"num": 19, "stem": "FIND", "text": "People usually want to know the truth. However, it can be hard to understand if a person is telling the truth or a lie. So far scientists __________________ some ways to do it.", "answer": "have found", "accept": ["have found"]}, {"num": 20, "stem": "WOMAN", "text": "One way is to use special devices. Still, __________________ can see a lie without any gadgets.", "answer": "women", "accept": ["women"]}, {"num": 21, "stem": "LONG", "text": "They notice if the answer takes a person __________________ than usual. It is a sign of a lie.", "answer": "longer", "accept": ["longer"]}, {"num": 22, "stem": "DO", "text": "Do you read your horoscope online or in newspapers and magazines? Many people enjoy __________________ so.", "answer": "doing", "accept": ["doing"]}, {"num": 23, "stem": "ONE", "text": "The __________________ horoscopes appeared around 2000 BC in ancient Babylon.", "answer": "first", "accept": ["first"]}, {"num": 24, "stem": "BECOME", "text": "Still, people __________________ seriously interested in horoscopes only in the 17th century.", "answer": "became", "accept": ["became"]}, {"num": 25, "stem": "IT", "text": "Every country had __________________ own special system and used either star signs or animal or plant horoscopes. Astronomy as a science developed from astrology.", "answer": "its", "accept": ["its"]}]}, {"variant": 35, "title": "Animal sleep / Vincent van Gogh", "tasks": [{"num": 19, "stem": "BIG", "text": "Sleep is as important for animals as for human beings. Ferrets, for instance, can sleep the __________________ part of the day – about 20 hours.", "answer": "biggest", "accept": ["biggest"]}, {"num": 20, "stem": "WAKE", "text": "Snakes may sleep for three years without __________________ up to get some food.", "answer": "walking", "accept": ["walking"]}, {"num": 21, "stem": "NOT STOP", "text": "Dolphins always sleep with one eye open whereas sharks __________________ moving during their sleep as they breathe only while moving.", "answer": "do not stop", "accept": ["do not stop"]}, {"num": 22, "stem": "NOT CAN", "text": "Vincent van Gogh was a Dutch Post-Impressionist painter. In his lifetime he __________________ sell any pictures.", "answer": "could not", "accept": ["could not"]}, {"num": 23, "stem": "NOT BECOME", "text": "People often made fun of him and his works. They used to tell him that he __________________ a real painter.", "answer": "would not become", "accept": ["would not become"]}, {"num": 24, "stem": "CONSIDER", "text": "However, van Gogh never stopped painting. He preferred to listen to his heart and follow his dream. Now his pictures __________________ masterpieces and cost a lot of money.", "answer": "are considered", "accept": ["are considered"]}]}, {"variant": 36, "title": "A tasty doctor / The Dead Sea", "tasks": [{"num": 19, "stem": "KNOW", "text": "Food can help you to stay healthy. Even in ancient times people __________________ how important it was to eat the right food.", "answer": "knew", "accept": ["knew"]}, {"num": 20, "stem": "TOOTH", "text": "For example, one should eat apples and carrots to keep their __________________ healthy.", "answer": "teeth", "accept": ["teeth"]}, {"num": 21, "stem": "EAT", "text": "If you often feel tired, you should give up __________________ junk food and eat more fruit and nuts because wrong food can damage your health.", "answer": "eating", "accept": ["eating"]}, {"num": 22, "stem": "NOT BE", "text": "Do you know anything about the Dead Sea? In fact, it __________________ a sea, it is a lake.", "answer": "is not", "accept": ["is not"]}, {"num": 23, "stem": "CALL", "text": "It __________________ a sea because it has a lot of salt in it.", "answer": "is called", "accept": ["is called"]}, {"num": 24, "stem": "MUCH", "text": "It actually has nine times __________________ salt than any other natural body of water, and nothing can live in it.", "answer": "more", "accept": ["more"]}, {"num": 25, "stem": "KNOW", "text": "People __________________ about it since the 2nd century BC. Now this place is in danger because of tourism and mining.", "answer": "have known", "accept": ["have known"]}]}, {"variant": 37, "title": "Forest therapy / Snow", "tasks": [{"num": 19, "stem": "BE", "text": "The Japanese are a very wise nation. Many Japanese people lead a very busy life and they need effective means to fight stress. Forest therapy __________________ one of them for a long time.", "answer": "has been", "accept": ["has been"]}, {"num": 20, "stem": "GO", "text": "The Japanese enjoy __________________ to local forests at the weekend.", "answer": "going", "accept": ["going"]}, {"num": 21, "stem": "LITTLE", "text": "They spend there no __________________ than three hours walking and listening to birds singing. Scientists consider this kind of therapy very good.", "answer": "less", "accept": ["less"]}, {"num": 22, "stem": "CHILD", "text": "Snow is beautiful. People all over the world, especially __________________ , love looking at it or even playing with it.", "answer": "children", "accept": ["children"]}, {"num": 23, "stem": "LEARN", "text": "There are many interesting facts about snow. For instance, snow is colourless – it just looks white to us. A long time ago people __________________ to make artificial snow.", "answer": "learnt", "accept": ["learnt", "learned"]}, {"num": 24, "stem": "ONE", "text": "The __________________ snow maker was patented in 1961 by Alden Hanson.", "answer": "first", "accept": ["first"]}]}, {"variant": 38, "title": "An important discovery / The Flam railway", "tasks": [{"num": 19, "stem": "ONE", "text": "Crimea is not only a popular holiday destination for tourists, it is also a place where history comes alive. There is much for archeologists to do there. Scientists used to think that the __________________ men came to the Crimean lands about 100,000 years ago.", "answer": "first", "accept": ["first"]}, {"num": 20, "stem": "MAKE", "text": "However, some months ago they __________________ a surprising discovery which baffled many archeologists worldwide.", "answer": "made", "accept": ["made"]}, {"num": 21, "stem": "FIND", "text": "There __________________ some tools that were approximately 800,000 years old and could belong to Neanderthals.", "answer": "were found", "accept": ["were found"]}, {"num": 22, "stem": "GOOD", "text": "If you like to look at picturesque landscapes but are not too keen on hiking, a beautiful railway journey may be just what you need. One of such scenic routes can be found in Norway – it’s the Flam railway. It is thought to be one of the __________________ in the world.", "answer": "best", "accept": ["best"]}, {"num": 23, "stem": "LOOK", "text": "The journey lasts 1 hour. The train passes through 20 tunnels and enables the passengers to enjoy __________________ at the idyllic mountain scenery.", "answer": "looking", "accept": ["looking"]}, {"num": 24, "stem": "TRY", "text": "Thousands of tourists __________________ this exciting route so far.", "answer": "have tried", "accept": ["have tried"]}]}, {"variant": 39, "title": "The land of ice and fire / The Louvre", "tasks": [{"num": 19, "stem": "MANY", "text": "People often call Iceland ‘the land of ice and fire’. That is so because this country has __________________ volcanoes than most other countries in the world.", "answer": "more", "accept": ["more"]}, {"num": 20, "stem": "THIS", "text": "Some of __________________ volcanoes are still active while others can wake up any time.", "answer": "these", "accept": ["these"]}, {"num": 21, "stem": "COVER", "text": "Much of Iceland __________________ in lava as eruptions happen about every four years.", "answer": "is covered", "accept": ["is covered"]}, {"num": 22, "stem": "LARGE", "text": "The Louvre is a famous museum in Paris. It is the __________________ art museum in the world.", "answer": "largest", "accept": ["largest"]}, {"num": 23, "stem": "TAKE", "text": "If you wanted to spend 30 seconds looking at each piece of art there, it __________________ you 100 days to see the entire museum.", "answer": "would take", "accept": ["would take"]}, {"num": 24, "stem": "TURN", "text": "Originally the Louvre was a fortress and then it became a royal palace. After the French Revolution the building __________________ into a museum which is a must-see for any tourist who goes to Paris.", "answer": "was turned", "accept": ["was turned"]}]}, {"variant": 40, "title": "A cleaning wand / Robert Heinlein", "tasks": [{"num": 19, "stem": "ONE", "text": "A cleaning wand is a totally new invention. It features the advanced UV-C technology that helps to kill bacteria and germs. It’s the __________________ ever cleaning device you can literally take anywhere.", "answer": "first", "accept": ["first"]}, {"num": 20, "stem": "GOOD", "text": "The __________________ thing about it is that it can clean anything.", "answer": "best", "accept": ["best"]}, {"num": 21, "stem": "WOMAN", "text": "There’s no doubt that __________________ are going to like this invention very much.", "answer": "women", "accept": ["women"]}, {"num": 22, "stem": "THINK", "text": "Robert A. Heinlein was a US science fiction author. He was among those writers who emphasized scientific accuracy in their fiction. He also __________________ it was necessary to challenge the readers.", "answer": "thought", "accept": ["thought"]}, {"num": 23, "stem": "THEY", "text": "He pointed out it was necessary to develop __________________ critical thinking.", "answer": "their", "accept": ["their"]}, {"num": 24, "stem": "BE", "text": "He pointed out that any science fiction book __________________ a success if the author followed these two important principles.", "answer": "would be", "accept": ["would be"]}]}, {"variant": 41, "title": "From the history of skirts / The English language", "tasks": [{"num": 19, "stem": "INVENT", "text": "Skirts are a popular item of clothing. They __________________ around 3900 BC.", "answer": "were invented", "accept": ["were invented"]}, {"num": 20, "stem": "WOMAN", "text": "Now mostly __________________ wear skirts of different colours, styles and length.", "answer": "women", "accept": ["women"]}, {"num": 21, "stem": "WEAR", "text": "However, you may be surprised to learn that in ancient Greece only men __________________ skirts. In some cultures, skirts are still a part of male outfits. Isn’t that amazing?", "answer": "wore", "accept": ["wore"]}, {"num": 22, "stem": "BE", "text": "You are lucky to know English! It __________________ one of the most popular languages in the world for many years.", "answer": "has been", "accept": ["has been"]}, {"num": 23, "stem": "BAD", "text": "However, learning English can be hard because some linguists say it has the __________________ grammar of all European languages.", "answer": "worst", "accept": ["worst"]}, {"num": 24, "stem": "THEY", "text": "There are many grammar rules and even more exceptions to __________________ .", "answer": "them", "accept": ["them"]}, {"num": 25, "stem": "NOT BE", "text": "Spelling __________________ easy either. So, if you have mastered English, you are a highly intelligent person!", "answer": "is not", "accept": ["is not"]}]}, {"variant": 42, "title": "No more selfies! / Oranges", "tasks": [{"num": 19, "stem": "GOOD", "text": "Modern social media is full of people’s selfies. People use various filters to look __________________ than they really are, but is it worth it?", "answer": "better", "accept": ["better"]}, {"num": 20, "stem": "TAKE", "text": "Psychologists point out that dealing too much with selfies can ruin a person’s self-esteem. We should all stop __________________ so many selfies.", "answer": "taking", "accept": ["taking"]}, {"num": 21, "stem": "NOT NEED", "text": "We __________________ to create a false image of ourselves to be loved by others.", "answer": "do not need", "accept": ["do not need"]}, {"num": 22, "stem": "COME", "text": "Do you like oranges? This bright fruit is very popular all over the world. Oranges __________________ to the West from Asian countries only in the 15th century.", "answer": "came", "accept": ["came"]}, {"num": 23, "stem": "THAT", "text": "You may be surprised to know that __________________ oranges were not in fact orange – they were green.", "answer": "those", "accept": ["those"]}, {"num": 24, "stem": "LEARN", "text": "Since that time people __________________ to make many things from oranges – from orange juice to tasty marmalade.", "answer": "have learnt", "accept": ["have learnt", "have learned"]}]}, {"variant": 43, "title": "The driest place in the world / New Year postcards", "tasks": [{"num": 19, "stem": "SITUATE", "text": "Many people think that the Sahara Desert is the driest place in the world. However, this place _________________ in Antarctica.", "answer": "is situated", "accept": ["is situated"]}, {"num": 20, "stem": "NOT LIE", "text": "Snow and ice _________________ there because the winds are too strong.", "answer": "do not lie", "accept": ["do not lie"]}, {"num": 21, "stem": "BE", "text": "There __________________ no rain here for two million years. Can you imagine that?", "answer": "has been", "accept": ["has been"]}, {"num": 22, "stem": "SPEND", "text": "People love New Year. They enjoy __________________ this time with their family and friends.", "answer": "spending", "accept": ["spending"]}, {"num": 23, "stem": "GOOD", "text": "It is also one of the _________________ occasions to give somebody a present or send a card.", "answer": "best", "accept": ["best"]}, {"num": 24, "stem": "BEGIN", "text": "In fact, the tradition to send New Year cards __________________ only in the 19th century in England.", "answer": "began", "accept": ["began"]}, {"num": 25, "stem": "CHILD", "text": "Now everybody sends New Year cards. __________________ love making New Year cards and giving them to their parents.", "answer": "children", "accept": ["children"]}]}, {"variant": 44, "title": "Cats / Omar Khayyam", "tasks": [{"num": 19, "stem": "MANY", "text": "Cats are amazing creatures. They have __________________ bones than a human.", "answer": "more", "accept": ["more"]}, {"num": 20, "stem": "NOT HAVE", "text": "However, they __________________ collar bones, so they are incredibly flexible and can get through really small holes.", "answer": "do not have", "accept": ["do not have"]}, {"num": 21, "stem": "USE", "text": "They are also able to produce a lot of sounds, which __________________ by them to express a huge variety of feelings and emotions.", "answer": "are used", "accept": ["are used"]}, {"num": 22, "stem": "BECOME", "text": "Omar Khayyam was a famous Persian philosopher and poet. Many people all over the world enjoy reading his works. His poetry __________________ known to Europeans only in the 19th century.", "answer": "became", "accept": ["became"]}, {"num": 23, "stem": "GOOD", "text": "His __________________ works are quatrains where one can find words of wisdom suitable practically for any occasion.", "answer": "best", "accept": ["best"]}, {"num": 24, "stem": "HELP", "text": "Omar Khayyam hoped his poems __________________ people to get happy and not to concentrate on their problems too much.", "answer": "would help", "accept": ["would help"]}]}, {"variant": 45, "title": "From the history of Smolensk / Norway", "tasks": [{"num": 19, "stem": "FOUND", "text": "Smolensk is one of the oldest cities in Russia. No one knows exactly when Smolensk ________________________. The first mentioning of it refers to the middle of the 9th century.", "answer": "was founded", "accept": ["was founded"]}, {"num": 20, "stem": "DEFEND", "text": "Smolensk is often called the shield of Russia because in the past it ______________________ the western borders of our country.", "answer": "defended", "accept": ["defended"]}, {"num": 21, "stem": "VISIT", "text": "Despite this, there are a lot of historical buildings preserved in Smolensk, and tourists can enjoy _____________________ the beautiful Kremlin made of red brick and ancient churches there.", "answer": "visiting", "accept": ["visiting"]}, {"num": 22, "stem": "NOT HAVE", "text": "Norway, officially the Kingdom of Norway, is a country in Northern Europe. Despite the fact that the country is a monarchy, the king there plays only a ceremonial role and _______________________ any real power.", "answer": "does not have", "accept": ["does not have"]}, {"num": 23, "stem": "IT", "text": "The country’s capital and largest city is Oslo, and ____________ official language is Norwegian.", "answer": "its", "accept": ["its"]}, {"num": 24, "stem": "CONSIDER", "text": "Norway ________________________ to be a highly developed country. It is important to mention that now Norway is ranked number one in prosperity index though it stood lower in 2016.", "answer": "is considered", "accept": ["is considered"]}]}, {"variant": 46, "title": "Beginnings of Russian railways / White nights in Norway", "tasks": [{"num": 19, "stem": "ONE", "text": "In the middle of the 19th century, the Russian Empire was so big that the necessity of creating a railway system to connect the central regions with the eastern territories became obvious. The __________________ public railway in Russia connected Saint Petersburg with the Emperor’s residence in Tsarskoe Selo.", "answer": "first", "accept": ["first"]}, {"num": 20, "stem": "TAKE", "text": "It was 27 kilometers long and it __________________ about two years to build it.", "answer": "took", "accept": ["took"]}, {"num": 21, "stem": "HAVE", "text": "At that time nobody knew that in the future Russia ____________ one of the longest and best railway systems in the world.", "answer": "would have", "accept": ["would have"]}, {"num": 22, "stem": "NOT SET", "text": "Daylight in Norway varies greatly. Though winters are quite dark and gloomy, summers make up for it by the season of white nights. From May to July the sun _________________ below the horizon. Thus, there is only twilight instead of complete darkness.", "answer": "does not set", "accept": ["does not set"]}, {"num": 23, "stem": "CALL", "text": "This phenomenon ____________________ white nights.", "answer": "is called", "accept": ["is called"]}, {"num": 24, "stem": "HAVE", "text": "It is interesting that in summers many Norwegians enjoy ________________ a four-week holiday which gives them plenty of time to hunt, fish or simply walk.", "answer": "having", "accept": ["having"]}]}, {"variant": 47, "title": "Altai / Mayflower", "tasks": [{"num": 19, "stem": "MANY", "text": "Altai is a truly unique place in Russia. There one can find everything from picturesque mountain ranges to valleys. It also has _________________ than 400 caves of various shapes. Some of these caves have labyrinths which can be quite dangerous for an inexperienced tourist.", "answer": "more", "accept": ["more"]}, {"num": 20, "stem": "VISIT", "text": "Still, Altai caves are worth ______________ as they allow people to understand how beautiful the underground world can be.", "answer": "visiting", "accept": ["visiting"]}, {"num": 21, "stem": "BE", "text": "Millions of tourists __________________ to Altai so far, and a lot of them want to come back to Altai again.", "answer": "have been", "accept": ["have been"]}, {"num": 22, "stem": "PROTECT", "text": "People all over the world love mayflowers because when they appear, it means that spring is coming. According to English legends, if you once plant mayflowers near your house, they _____________________ you from evil spirits forever.", "answer": "will protect", "accept": ["will protect"]}, {"num": 23, "stem": "CONSIDER", "text": "Sorry to say, not all people remember that mayflowers _____________________ to be endangered, so you may look at them, but you shouldn’t pick them.", "answer": "are considered", "accept": ["are considered"]}, {"num": 24, "stem": "CHILDREN", "text": "We must take care of them so that our __________________ can see these beautiful flowers.", "answer": "children", "accept": ["children"]}]}, {"variant": 48, "title": "Fishing in Kamchatka / The Olympics in Sydney", "tasks": [{"num": 19, "stem": "BE", "text": "Kamchatka region is famous for being a true paradise for fishing enthusiasts. This area _________________ one of the best fishing spots in Russia for many years.", "answer": "has been", "accept": ["has been"]}, {"num": 20, "stem": "THIS", "text": "You can get a license and go fishing on your own or you can take a fishing tour. __________________ tours include a guide and all the necessary equipment.", "answer": "these", "accept": ["these"]}, {"num": 21, "stem": "BEAUTIFUL", "text": "Kamchatka is a great place to enjoy fishing in clean waters of the local lakes and some of the _______________________ locations in the world.", "answer": "most beautiful", "accept": ["most beautiful"]}, {"num": 22, "stem": "SEE", "text": "The Olympic Games of 2000 were very special as Sydney, the host city, did a great job meeting the spectators’ numerous expectations. Anticipation was certainly high for the first Games of the new millennium. The year 2000 also __________________ new additions to the sporting line-up – triathlon and taekwondo.", "answer": "saw", "accept": ["saw"]}, {"num": 23, "stem": "WOMAN", "text": "Furthermore, it was the first time when ________________ could compete in weightlifting and modern pentathlon.", "answer": "women", "accept": ["women"]}, {"num": 24, "stem": "TWO", "text": "Russia took the ________________ place in Sydney 2000, which was a great result.", "answer": "second", "accept": ["second"]}]}, {"variant": 49, "title": "Yaroslavl / From the history of sweaters", "tasks": [{"num": 19, "stem": "LOCATE", "text": "Yaroslavl is one of the most beautiful and ancient cities of Russia, the capital of the Russian Golden Ring. It __________________ on the Volga River and has a lot of old churches, cathedrals and monasteries as well as museums and historical monuments.", "answer": "is located", "accept": ["is located"]}, {"num": 20, "stem": "WALK", "text": "Tourists also enjoy _____________________ along its wonderful embankment which offers its visitors picturesque views of the Volga.", "answer": "walking", "accept": ["walking"]}, {"num": 21, "stem": "VISIT", "text": "Millions of tourists ____________________ Yaroslavl so far, and a lot of them want to come to this city again.", "answer": "have visited", "accept": ["have visited"]}, {"num": 22, "stem": "CHILD", "text": "Probably every person in the world has at least one sweater. It is a very popular item of clothing now, especially for ____________, who don’t like buttons and zips.", "answer": "children", "accept": ["children"]}, {"num": 23, "stem": "CREATE", "text": "It is interesting to know why a sweater is called so. In fact, a knitted woolen sweater as we know it today _________________ in Europe in the 19th century.", "answer": "was created", "accept": ["was created"]}, {"num": 24, "stem": "WEAR", "text": "Overweight people _________________ sweaters in order to lose some weight. They sweated profusely in warm sweaters, that is why this item of clothing got such a name.", "answer": "wore", "accept": ["wore"]}]}, {"variant": 50, "title": "Did you know? / The wolf and the goat", "tasks": [{"num": 19, "stem": "CHOOSE", "text": "Here are some interesting facts about Australia. Canberra _____ as the capital because Sydney and Melbourne could not stop arguing which city should be the capital of Australia.", "answer": "was chosen", "accept": ["was chosen"]}, {"num": 20, "stem": "IT", "text": "The sports capital of the world has 70 percent of ________ total population participating at least once a week in a particular recreational activity or sport.", "answer": "its", "accept": ["its"]}, {"num": 21, "stem": "ORGANISE", "text": "80 % of Australians believe Australia has a strong culture and identity characterised by honesty, sports and multiculturalism based on research _______ by the Australia Day Council of NSW in 2008.", "answer": "organised", "accept": ["organised", "organized"]}, {"num": 22, "stem": "SEE", "text": "A hungry wolf was out searching for a meal. He ______ a goat feeding on grass on top of a high cliff. The wolf wished to get the goat to climb down from the rock and into his grasp and he called out to her.", "answer": "saw", "accept": ["saw"]}, {"num": 23, "stem": "GREEN", "text": "“Excuse me, dear Goat,” he said in a friendly voice, “It is very dangerous for you to be at such a height. Do come down before you injure yourself. Besides, the grass is much ________ down here. Take my advice, and please come down from that high cliff.”", "answer": "greener", "accept": ["greener"]}, {"num": 24, "stem": "NOT CARE", "text": "But the goat knew too well of the wolf’s intent. “You _______ if I eat good grass or bad.", "answer": "do not care", "accept": ["do not care"]}, {"num": 25, "stem": "EAT", "text": "What you care about is ______ me.”", "answer": "eating", "accept": ["eating"]}]}, {"variant": 51, "title": "About fables / An important discovery", "tasks": [{"num": 19, "stem": "MOUSE", "text": "A fable is a fictional story. It often features animals like __________________ and lions, mythical creatures or forces of nature.", "answer": "mice", "accept": ["mice"]}, {"num": 20, "stem": "GIVE", "text": "These creatures __________________ human qualities as they can talk, think and act like humans.", "answer": "are given", "accept": ["are given"]}, {"num": 21, "stem": "ILLUSTRATE", "text": "The creatures are often stereotypes of human characteristics, __________________ some important idea or message.", "answer": "illustrating", "accept": ["illustrating"]}, {"num": 22, "stem": "ADAPT", "text": "Writers __________________ many fables into fairy-tales for small kids so that the moral of the story is interesting and attractive for them.", "answer": "have adapted", "accept": ["have adapted"]}, {"num": 23, "stem": "ONE", "text": "Crimea is not only a popular holiday destination for tourists, it is also a place where history comes alive. There is much for archeologists to do there. Scientists used to think that the __________________ men came to the Crimean lands about 100,000 years ago.", "answer": "first", "accept": ["first"]}, {"num": 24, "stem": "MAKE", "text": "However, some months ago they __________________ a surprising discovery which baffled many archeologists worldwide.", "answer": "made", "accept": ["made"]}, {"num": 25, "stem": "FIND", "text": "There __________________ some tools that were approximately 800,000 years old and could belong to Neanderthals.", "answer": "were found", "accept": ["were found"]}]}]}</script>
+<script>
+const BANK = JSON.parse(document.getElementById('bank-data').textContent);
+const state = { mode:'variant', variant:1, mix:[], visibleAnswers:new Set() };
+
+const els = {
+  variantCount: document.getElementById('variantCount'),
+  taskCount: document.getElementById('taskCount'),
+  modeVariant: document.getElementById('modeVariant'),
+  modeMix: document.getElementById('modeMix'),
+  variantSelect: document.getElementById('variantSelect'),
+  search: document.getElementById('search'),
+  variantGrid: document.getElementById('variantGrid'),
+  checkBtn: document.getElementById('checkBtn'),
+  showBtn: document.getElementById('showBtn'),
+  hideBtn: document.getElementById('hideBtn'),
+  resetBtn: document.getElementById('resetBtn'),
+  nextBtn: document.getElementById('nextBtn'),
+  scoreBox: document.getElementById('scoreBox'),
+  heading: document.getElementById('heading'),
+  subheading: document.getElementById('subheading'),
+  taskList: document.getElementById('taskList'),
+};
+
+function norm(s){
+  return String(s || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[’‘`]/g,"'")
+    .replace(/\s+/g,' ');
+}
+function esc(s){
+  return String(s).replace(/[&<>"']/g, ch => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  })[ch]);
+}
+function getVariant(n){
+  return BANK.variants.find(v => v.variant === Number(n));
+}
+function allTasks(){
+  const arr=[];
+  BANK.variants.forEach(v => v.tasks.forEach((t,i) => arr.push({...t, variant:v.variant, title:v.title, index:i})));
+  return arr;
+}
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function makeMix(){
+  state.mix = shuffle(allTasks()).slice(0,30);
+}
+function fillSelect(){
+  els.variantSelect.innerHTML='';
+  BANK.variants.forEach(v => {
+    const opt=document.createElement('option');
+    opt.value=v.variant;
+    opt.textContent=`Вариант ${v.variant} — ${v.title}`;
+    els.variantSelect.appendChild(opt);
+  });
+  els.variantSelect.value=state.variant;
+}
+function filteredVariants(){
+  const q=norm(els.search.value);
+  if(!q) return BANK.variants;
+  return BANK.variants.filter(v => String(v.variant).includes(q) || norm(v.title).includes(q));
+}
+function renderVariantGrid(){
+  const items=filteredVariants();
+  els.variantGrid.innerHTML='';
+  if(!items.length){
+    els.variantGrid.innerHTML='<div style="grid-column:1/-1;color:var(--muted);font-size:12px;padding:8px;">Ничего не найдено</div>';
+    return;
+  }
+  items.forEach(v => {
+    const b=document.createElement('button');
+    b.type='button';
+    b.className='vbtn' + (state.mode==='variant' && state.variant===v.variant ? ' active':'');
+    b.textContent=v.variant;
+    b.title=`Вариант ${v.variant} — ${v.title}`;
+    b.onclick=() => {
+      state.mode='variant';
+      state.variant=v.variant;
+      state.visibleAnswers.clear();
+      els.variantSelect.value=v.variant;
+      render();
+      window.scrollTo({top:0,behavior:'smooth'});
+    };
+    els.variantGrid.appendChild(b);
+  });
+}
+function setMode(mode){
+  state.mode=mode;
+  els.modeVariant.classList.toggle('active',mode==='variant');
+  els.modeMix.classList.toggle('active',mode==='mix');
+  if(mode==='mix') makeMix();
+  state.visibleAnswers.clear();
+  render();
+}
+function textWithInput(text, id, value=''){
+  const safe=esc(text);
+  const parts=safe.split(/_{3,}/);
+  if(parts.length === 1) return safe;
+  let out='';
+  parts.forEach((p,i)=>{
+    out += p;
+    if(i < parts.length-1){
+      out += `<span class="blank"><input data-input-id="${id}" autocomplete="off" spellcheck="false" value="${esc(value)}"></span>`;
+    }
+  });
+  return out;
+}
+function taskId(t, idx){
+  return `${t.variant || state.variant}-${t.num}-${idx}`;
+}
+function renderTask(t, idx){
+  const id=taskId(t, idx);
+  const open=state.visibleAnswers.has(id);
+  return `
+    <div class="task" data-task-id="${esc(id)}" data-answer="${esc(t.answer)}" data-accept="${esc(JSON.stringify(t.accept || [t.answer]))}">
+      <div class="num">${t.num}</div>
+      <div class="text">
+        ${textWithInput(t.text, id, open ? t.answer : '')}
+        <div class="feedback"></div>
+      </div>
+      <div class="stem-cell ${open?'open':''}">
+        <button class="stem-btn ${open?'revealed':''}" type="button" data-reveal="${esc(id)}" title="Нажмите, чтобы подставить ответ в текст">${esc(t.stem)}</button>
+      </div>
+    </div>
+  `;
+}
+function renderVariant(v){
+  els.heading.textContent=`Вариант ${v.variant} — ${v.title}`;
+  els.subheading.textContent='Прочитайте приведённые ниже тексты. Преобразуйте слова, напечатанные заглавными буквами справа, так, чтобы они грамматически соответствовали содержанию текста.';
+  const html=`
+    <section class="paper">
+      <div class="exam-head">
+        <p class="rule">Каждый пропуск соответствует отдельному заданию. Нажмите на слово справа, чтобы сразу подставить ответ в текст.</p>
+      </div>
+      <div class="exam-table">
+        ${v.tasks.map((t,i)=>renderTask({...t, variant:v.variant}, i)).join('')}
+      </div>
+    </section>`;
+  els.taskList.innerHTML=html;
+}
+function renderMix(){
+  els.heading.textContent='Смешанный тренинг — 30 заданий';
+  els.subheading.textContent='Случайная подборка из всех вариантов. Нажмите «Микс 30» ещё раз, чтобы обновить набор.';
+  const grouped = state.mix.map((t,i)=>renderTask(t,i)).join('');
+  els.taskList.innerHTML=`
+    <section class="paper">
+      <div class="exam-head"><p class="rule">Случайные задания из банка. Нажмите на слово справа, чтобы сразу подставить ответ в текст.</p></div>
+      <div class="exam-table">${grouped}</div>
+    </section>`;
+}
+function render(){
+  els.variantCount.textContent=`${BANK.meta.variants} вариант`;
+  els.taskCount.textContent=`${BANK.meta.tasks} заданий`;
+  els.modeVariant.classList.toggle('active', state.mode==='variant');
+  els.modeMix.classList.toggle('active', state.mode==='mix');
+  if(state.mode==='variant'){
+    renderVariant(getVariant(state.variant));
+  } else {
+    if(!state.mix.length) makeMix();
+    renderMix();
+  }
+  renderVariantGrid();
+  els.scoreBox.textContent='Результат: —';
+  bindRevealButtons();
+}
+function setTaskReveal(task, reveal){
+  if(!task) return;
+  const id = task.dataset.taskId;
+  const input = task.querySelector('input');
+  const btn = task.querySelector('.stem-btn');
+  const cell = task.querySelector('.stem-cell');
+  const fb = task.querySelector('.feedback');
+  if(reveal){
+    state.visibleAnswers.add(id);
+    cell.classList.add('open');
+    btn.classList.add('revealed');
+    if(input){
+      input.value = task.dataset.answer || '';
+      input.dataset.revealed = '1';
+      input.classList.remove('correct','wrong');
+    }
+    if(fb){
+      fb.className='feedback';
+      fb.textContent='';
+    }
+  } else {
+    state.visibleAnswers.delete(id);
+    cell.classList.remove('open');
+    btn.classList.remove('revealed');
+    if(input && input.dataset.revealed === '1'){
+      input.value = '';
+      delete input.dataset.revealed;
+      input.classList.remove('correct','wrong');
+    }
+    if(fb){
+      fb.className='feedback';
+      fb.textContent='';
+    }
+  }
+}
+function bindRevealButtons(){
+  document.querySelectorAll('[data-reveal]').forEach(btn=>{
+    btn.onclick=()=>{
+      const task = btn.closest('.task');
+      const id = btn.dataset.reveal;
+      setTaskReveal(task, !state.visibleAnswers.has(id));
+    };
+  });
+}
+function checkAnswers(){
+  let total=0, ok=0;
+  document.querySelectorAll('.task').forEach(task=>{
+    const input=task.querySelector('input');
+    const fb=task.querySelector('.feedback');
+    if(!input) return;
+    total++;
+    let accepted=[];
+    try{ accepted=JSON.parse(task.dataset.accept || '[]'); } catch(e){ accepted=[task.dataset.answer]; }
+    const good=accepted.some(a => norm(a)===norm(input.value));
+    input.classList.remove('correct','wrong');
+    fb.className='feedback';
+    if(!input.value.trim()){
+      fb.textContent='Введите ответ или нажмите на слово справа, чтобы открыть ключ.';
+      fb.classList.add('bad');
+    } else if(good){
+      ok++;
+      input.classList.add('correct');
+      fb.textContent='Верно';
+      fb.classList.add('good');
+    } else {
+      input.classList.add('wrong');
+      fb.textContent=`Неверно. Ответ: ${task.dataset.answer}`;
+      fb.classList.add('bad');
+    }
+  });
+  els.scoreBox.textContent=`Результат: ${ok}/${total}`;
+}
+function showAllAnswers(){
+  document.querySelectorAll('.task').forEach(task=>setTaskReveal(task,true));
+}
+function hideAllAnswers(){
+  document.querySelectorAll('.task').forEach(task=>setTaskReveal(task,false));
+  state.visibleAnswers.clear();
+}
+function resetAll(){
+  document.querySelectorAll('input').forEach(i=>{
+    i.value='';
+    i.classList.remove('correct','wrong');
+    delete i.dataset.revealed;
+  });
+  document.querySelectorAll('.feedback').forEach(f=>{
+    f.className='feedback';
+    f.textContent='';
+  });
+  document.querySelectorAll('.stem-cell').forEach(c=>c.classList.remove('open'));
+  document.querySelectorAll('.stem-btn').forEach(b=>b.classList.remove('revealed'));
+  state.visibleAnswers.clear();
+  els.scoreBox.textContent='Результат: —';
+}
+els.modeVariant.onclick=()=>setMode('variant');
+els.modeMix.onclick=()=>setMode('mix');
+els.variantSelect.onchange=()=>{
+  state.mode='variant';
+  state.variant=Number(els.variantSelect.value);
+  state.visibleAnswers.clear();
+  render();
+};
+els.search.oninput=renderVariantGrid;
+els.checkBtn.onclick=checkAnswers;
+els.showBtn.onclick=showAllAnswers;
+els.hideBtn.onclick=hideAllAnswers;
+els.resetBtn.onclick=resetAll;
+els.nextBtn.onclick=()=>{
+  if(state.mode==='mix'){
+    makeMix();
+  } else {
+    state.variant = state.variant >= BANK.variants.length ? 1 : state.variant + 1;
+    els.variantSelect.value=state.variant;
+  }
+  state.visibleAnswers.clear();
+  render();
+};
+fillSelect();
+render();
+</script>
+</body>
+</html>

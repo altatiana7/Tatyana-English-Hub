@@ -1,0 +1,1091 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ЕГЭ — Словообразование 25–29 | Интерактивный тренажёр</title>
+<style>
+:root {
+  --bg: #f5f1e8;
+  --paper: #fffdf8;
+  --ink: #1f2a35;
+  --muted: #667085;
+  --line: #d8d0c2;
+  --navy: #20364c;
+  --sage: #7d9271;
+  --sage-dark: #596d50;
+  --gold: #b08b4f;
+  --red: #b65d55;
+  --green: #4f7d5c;
+  --shadow: 0 16px 50px rgba(32,54,76,.10);
+  --radius: 22px;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(125,146,113,.18), transparent 34rem),
+    linear-gradient(135deg, #f7f2e8 0%, #efe7d8 100%);
+  min-height: 100vh;
+}
+
+button, input, select { font: inherit; }
+
+.app {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 20px;
+  align-items: stretch;
+  margin-bottom: 18px;
+}
+
+.hero-card {
+  background: linear-gradient(135deg, rgba(255,253,248,.96), rgba(255,250,239,.91));
+  border: 1px solid rgba(216,208,194,.8);
+  border-radius: 30px;
+  box-shadow: var(--shadow);
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-card::after {
+  content: "";
+  position: absolute;
+  right: -85px;
+  top: -85px;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(176,139,79,.18), rgba(176,139,79,0) 70%);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ede3d0;
+  border: 1px solid #dacdb7;
+  color: var(--navy);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 750;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(30px, 5vw, 56px);
+  line-height: .98;
+  letter-spacing: -.035em;
+  margin: 18px 0 12px;
+  color: var(--navy);
+}
+
+.sub {
+  font-size: 17px;
+  line-height: 1.55;
+  color: #465363;
+  max-width: 760px;
+  margin: 0;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  height: 100%;
+}
+
+.stat {
+  background: rgba(255,253,248,.83);
+  border: 1px solid rgba(216,208,194,.84);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 12px 36px rgba(32,54,76,.07);
+}
+
+.stat .num {
+  display: block;
+  font-size: 31px;
+  font-weight: 850;
+  color: var(--navy);
+  line-height: 1;
+}
+.stat .label {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 330px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.panel {
+  position: sticky;
+  top: 18px;
+  background: rgba(255,253,248,.94);
+  border: 1px solid rgba(216,208,194,.9);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  max-height: calc(100vh - 36px);
+  overflow: auto;
+}
+
+.panel h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--navy);
+  margin: 0 0 12px;
+  font-size: 25px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: .06em;
+  margin: 14px 0 8px;
+}
+
+.select, .search {
+  width: 100%;
+  border: 1px solid #d8d0c2;
+  border-radius: 14px;
+  background: #fffaf0;
+  color: var(--ink);
+  padding: 11px 12px;
+  outline: none;
+}
+
+.search:focus, .select:focus, .answer-input:focus {
+  border-color: rgba(125,146,113,.95);
+  box-shadow: 0 0 0 4px rgba(125,146,113,.13);
+}
+
+.segment {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  background: #eee5d7;
+  border-radius: 16px;
+  padding: 5px;
+}
+
+.segment button {
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 8px;
+  color: #54606d;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 750;
+  font-size: 13px;
+}
+
+.segment button.active {
+  background: var(--paper);
+  color: var(--navy);
+  box-shadow: 0 6px 18px rgba(32,54,76,.09);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.btn {
+  border: 1px solid transparent;
+  border-radius: 15px;
+  padding: 11px 13px;
+  cursor: pointer;
+  font-weight: 800;
+  transition: transform .1s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.btn:hover { transform: translateY(-1px); }
+.btn.primary {
+  background: var(--navy);
+  color: #fff;
+  box-shadow: 0 12px 24px rgba(32,54,76,.2);
+}
+.btn.sage { background: var(--sage); color: #fff; }
+.btn.ghost {
+  background: #fffaf0;
+  color: var(--navy);
+  border-color: #d8d0c2;
+}
+.btn.warn {
+  background: #efe0d6;
+  color: #7e3e38;
+  border-color: #dec1b6;
+}
+
+.progress-wrap {
+  margin: 15px 0 6px;
+  background: #e9dfcf;
+  border-radius: 999px;
+  height: 12px;
+  overflow: hidden;
+  border: 1px solid #d7c8b3;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--sage), var(--gold));
+  transition: width .35s ease;
+}
+
+.progress-text {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.variant-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.vbtn {
+  border: 1px solid #d8d0c2;
+  background: #fffaf0;
+  color: #35465a;
+  border-radius: 12px;
+  padding: 9px 0;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.vbtn.active {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+}
+
+.main {
+  min-width: 0;
+}
+
+.toolbar {
+  background: rgba(255,253,248,.94);
+  border: 1px solid rgba(216,208,194,.9);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+
+.toolbar-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.kicker {
+  color: var(--sage-dark);
+  font-weight: 850;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+#heading {
+  font-family: Georgia, "Times New Roman", serif;
+  margin: 6px 0 5px;
+  color: var(--navy);
+  font-size: clamp(27px, 3vw, 38px);
+}
+
+#subtitle {
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.score-pill {
+  white-space: nowrap;
+  background: #edf2e9;
+  color: var(--sage-dark);
+  border: 1px solid #ccd9c5;
+  border-radius: 999px;
+  padding: 10px 13px;
+  font-weight: 850;
+}
+
+.instructions {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--gold);
+  background: #fff7e8;
+  border-radius: 14px;
+  color: #5b5145;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.group-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 20px 0 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(216,208,194,.9);
+}
+
+.group-title h3 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--navy);
+  font-size: 24px;
+}
+
+.group-title span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.task-list {
+  display: grid;
+  gap: 12px;
+}
+
+.task {
+  background: rgba(255,253,248,.96);
+  border: 1px solid rgba(216,208,194,.92);
+  border-radius: 22px;
+  padding: 18px;
+  box-shadow: 0 10px 32px rgba(32,54,76,.07);
+  transition: border .2s ease, transform .2s ease, background .2s ease;
+}
+
+.task.correct {
+  border-color: rgba(79,125,92,.75);
+  background: linear-gradient(135deg, #fffdf8, #f4f9f1);
+}
+
+.task.wrong {
+  border-color: rgba(182,93,85,.75);
+  background: linear-gradient(135deg, #fffdf8, #fff1ee);
+}
+
+.task-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.task-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 46px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: var(--navy);
+  color: #fff;
+  font-weight: 900;
+}
+
+.stem {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: #efe7d8;
+  color: #5b5145;
+  border: 1px solid #dacdb7;
+  font-weight: 900;
+  letter-spacing: .04em;
+  padding: 8px 11px;
+  font-size: 13px;
+}
+
+.task-text {
+  font-size: 18px;
+  line-height: 1.72;
+  color: #273440;
+}
+
+.answer-input {
+  display: inline-block;
+  vertical-align: baseline;
+  width: min(210px, 100%);
+  margin: 0 5px;
+  border: 0;
+  border-bottom: 2px solid var(--navy);
+  background: #fffaf0;
+  color: var(--navy);
+  padding: 5px 9px 4px;
+  border-radius: 10px 10px 0 0;
+  font-weight: 800;
+  outline: none;
+  text-align: center;
+}
+
+.answer-input.correct-field {
+  border-bottom-color: var(--green);
+  background: #eef6ed;
+}
+
+.answer-input.wrong-field {
+  border-bottom-color: var(--red);
+  background: #fff0ed;
+}
+
+.feedback {
+  margin-top: 13px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: #f2eadb;
+  color: #4d443b;
+  display: none;
+  line-height: 1.45;
+  font-size: 14px;
+}
+
+.task.correct .feedback, .task.wrong .feedback, .task.revealed .feedback {
+  display: block;
+}
+
+.correct-word {
+  font-weight: 900;
+  color: var(--sage-dark);
+}
+
+.wrong-word {
+  font-weight: 900;
+  color: #934941;
+}
+
+.empty {
+  background: rgba(255,253,248,.9);
+  border: 1px dashed #c9bca8;
+  border-radius: 20px;
+  padding: 26px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.footer {
+  color: #71685c;
+  font-size: 13px;
+  margin-top: 18px;
+  padding: 18px 4px 10px;
+  line-height: 1.55;
+}
+
+kbd {
+  background: #eae0cf;
+  border: 1px solid #d7c8b3;
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  padding: 1px 5px;
+  font-size: 12px;
+}
+
+@media (max-width: 980px) {
+  .hero { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(3, 1fr); }
+  .layout { grid-template-columns: 1fr; }
+  .panel { position: relative; top: 0; max-height: none; }
+}
+
+@media (max-width: 650px) {
+  .app { padding: 14px; }
+  .hero-card { padding: 20px; border-radius: 24px; }
+  .stats { grid-template-columns: 1fr; }
+  .toolbar-top { flex-direction: column; }
+  .variant-grid { grid-template-columns: repeat(4, 1fr); }
+  .task-text { font-size: 16px; line-height: 1.7; }
+  .answer-input { width: 150px; }
+}
+
+@media print {
+  body { background: #fff; }
+  .panel, .hero, .actions, .instructions, .footer { display:none !important; }
+  .layout { display:block; }
+  .app { max-width: none; padding:0; }
+  .toolbar, .task { box-shadow:none; border-color:#ddd; break-inside: avoid; }
+  .answer-input { border:0; border-bottom:1px solid #111; background:#fff; }
+}
+
+
+/* FIPI-style printout layout override */
+:root {
+  --bg: #eef3f8;
+  --paper: #ffffff;
+  --ink: #1b2430;
+  --muted: #5e6a78;
+  --line: #cfd8e3;
+  --navy: #003b73;
+  --sage: #0057a6;
+  --sage-dark: #003b73;
+  --gold: #d71920;
+  --red: #d71920;
+  --green: #0f7b4f;
+  --shadow: 0 8px 24px rgba(0, 57, 115, .10);
+  --radius: 10px;
+}
+body { font-family: Arial, "Helvetica Neue", sans-serif; background: linear-gradient(180deg,#f5f8fb 0%,#eef3f8 100%); }
+.app { max-width: 1320px; padding: 18px; }
+.hero { grid-template-columns: minmax(0,1fr) 360px; gap: 14px; margin-bottom: 14px; }
+.hero-card { background:#fff; border:1px solid var(--line); border-top:7px solid #0057a6; border-radius:10px; padding:18px 22px; box-shadow:var(--shadow); }
+.hero-card::before { content:""; position:absolute; left:0; top:0; width:128px; height:7px; background:#d71920; }
+.hero-card::after { display:none; }
+.eyebrow { background:#eaf3ff; border:1px solid #c8dfff; color:#003b73; border-radius:3px; padding:6px 10px; font-size:12px; letter-spacing:.04em; }
+h1 { font-size:clamp(28px,4vw,44px); line-height:1.05; margin:12px 0 8px; color:#003b73; }
+.sub { font-size:15px; color:#5e6a78; line-height:1.48; }
+.stats { grid-template-columns:1fr; gap:8px; }
+.stat { background:#fff; border:1px solid var(--line); border-left:5px solid #0057a6; border-radius:10px; padding:12px 14px; box-shadow:0 6px 18px rgba(0,57,115,.07); }
+.stat:nth-child(2) { border-left-color:#d71920; }
+.stat .num { display:inline-block; min-width:68px; font-size:25px; color:#003b73; }
+.stat .label { display:inline; margin-left:8px; font-size:13px; color:#5e6a78; }
+.layout { grid-template-columns:285px 1fr; gap:14px; }
+.panel { background:#fff; border:1px solid var(--line); border-top:5px solid #0057a6; border-radius:10px; padding:14px; box-shadow:var(--shadow); }
+.panel h2 { color:#003b73; font-size:22px; }
+.label { font-size:11px; color:#5e6a78; margin:12px 0 6px; }
+.select,.search { background:#fff; border:1px solid var(--line); border-radius:6px; padding:9px 10px; }
+.search:focus,.select:focus,.answer-input:focus { border-color:#0057a6; box-shadow:0 0 0 3px rgba(0,87,166,.14); }
+.segment { background:#edf2f7; border:1px solid var(--line); border-radius:8px; padding:4px; gap:4px; }
+.segment button { border-radius:5px; padding:8px 5px; font-size:12px; }
+.segment button.active { background:#0057a6; color:#fff; box-shadow:none; }
+.btn { border-radius:6px; padding:9px 10px; }
+.btn.primary { background:#0057a6; box-shadow:0 8px 18px rgba(0,87,166,.18); }
+.btn.sage { background:#d71920; }
+.btn.ghost { background:#fff; color:#003b73; border-color:var(--line); }
+.btn.warn { background:#fff3f3; color:#a90f16; border-color:#f1b8bb; }
+.progress-wrap { background:#edf2f7; border:1px solid var(--line); height:10px; }
+.progress-bar { background:linear-gradient(90deg,#0057a6,#d71920); }
+.progress-text { font-size:12px; color:#5e6a78; }
+.variant-grid { grid-template-columns:repeat(5,1fr); gap:5px; }
+.vbtn { background:#fff; color:#003b73; border:1px solid var(--line); border-radius:5px; padding:7px 0; }
+.vbtn.active { background:#d71920; border-color:#d71920; color:#fff; }
+.toolbar { background:#fff; border:1px solid var(--line); border-top:5px solid #d71920; border-radius:10px; padding:14px 16px; margin-bottom:10px; box-shadow:var(--shadow); }
+.kicker { color:#0057a6; font-size:12px; }
+#heading { color:#003b73; font-size:clamp(18px,2vw,24px); margin:2px 0; font-weight:600; }
+#subtitle { font-size:14px; color:#5e6a78; }
+.score-pill { background:#eaf3ff; color:#003b73; border:1px solid #c8dfff; border-radius:4px; padding:8px 11px; }
+.instructions { border-left:4px solid #0057a6; background:#f7fbff; border-radius:4px; color:#455160; font-size:13px; }
+.task-list { display:grid; gap:14px; }
+.variant-sheet { background:#fff; border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow); overflow:hidden; }
+.sheet-head { padding:13px 16px; border-bottom:1px solid var(--line); background:linear-gradient(90deg,#f8fbff 0%,#fff 70%); position:relative; }
+.sheet-head::before { content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:#d71920; }
+.sheet-head h3 { margin:0 0 4px; color:#003b73; font:700 22px Georgia,"Times New Roman",serif; }
+.sheet-head p { margin:0; color:#5e6a78; font-size:13px; line-height:1.4; }
+.exam-table { display:grid; gap:0; }
+.task { display:grid; grid-template-columns:42px minmax(0,1fr) 112px; column-gap:10px; align-items:start; background:#fff; border:0; border-bottom:1px solid #e2e8f0; border-radius:0; padding:9px 14px; box-shadow:none; transition:background .15s ease; }
+.task:last-child { border-bottom:0; }
+.task:hover { background:#f9fcff; transform:none; }
+.task.correct { background:#f0fbf6; border-color:#e2e8f0; }
+.task.wrong { background:#fff4f4; border-color:#e2e8f0; }
+.task.revealed { background:#f7fbff; }
+.task-no { display:inline-block; min-width:0; height:auto; padding:0; border-radius:0; background:transparent; color:#003b73; font-weight:800; font-size:15px; line-height:1.65; text-align:right; }
+.stem { display:inline-block; min-width:0; border:1px solid var(--line); border-radius:4px; background:#f4f7fa; color:#003b73; font-weight:800; letter-spacing:.04em; padding:5px 7px; font-size:12px; text-align:center; white-space:nowrap; }
+.task-text { font-size:15.5px; line-height:1.62; color:#202a36; }
+.answer-input { width:150px; margin:0 4px; border:1px solid transparent; border-bottom:2px solid #0057a6; background:#f7fbff; color:#003b73; padding:3px 7px 2px; border-radius:3px 3px 0 0; font-weight:700; }
+.answer-input.correct-field { border-bottom-color:#0f7b4f; background:#eaf8f0; }
+.answer-input.wrong-field { border-bottom-color:#b42318; background:#fff0f0; }
+.feedback { grid-column:2 / 4; margin-top:6px; padding:6px 8px; border-radius:4px; background:#eef4fb; color:#415165; font-size:13px; line-height:1.35; }
+.correct-word { color:#0f7b4f; }
+.wrong-word { color:#b42318; }
+.footer { color:#657385; font-size:12px; margin-top:12px; }
+@media (max-width:980px){ .hero{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.layout{grid-template-columns:1fr}.panel{position:relative;top:0;max-height:none} }
+@media (max-width:650px){ .app{padding:10px}.hero-card{padding:16px}.stats{grid-template-columns:1fr}.toolbar-top{flex-direction:column}.task{grid-template-columns:34px minmax(0,1fr)}.stem{grid-column:2/3;margin-top:4px;width:max-content}.feedback{grid-column:2/3}.task-text{font-size:14.5px;line-height:1.55}.answer-input{width:128px} }
+@media print { body{background:#fff}.panel,.hero,.actions,.instructions,.footer,.score-pill{display:none!important}.layout{display:block}.app{max-width:none;padding:0}.toolbar,.variant-sheet{box-shadow:none;border-color:#aaa;border-radius:0}.task{break-inside:avoid;padding:6px 10px;grid-template-columns:36px 1fr 86px}.answer-input{border:0;border-bottom:1px solid #111;background:#fff}.feedback{display:none!important} }
+
+/* Final FIPI-like compact interaction */
+.hero-card { border-top-color:#0057a6; border-radius:6px; }
+.hero-card::before { background:#d71920; height:5px; }
+.toolbar, .panel, .variant-sheet { border-radius:6px; }
+.sheet-head h3 { font-size:18px; font-family:Arial,"Helvetica Neue",sans-serif; font-weight:700; }
+.stem.answer-toggle {
+  cursor:pointer;
+  font-family:Arial,"Helvetica Neue",sans-serif;
+  transition:background .15s ease, border-color .15s ease, color .15s ease;
+}
+.stem.answer-toggle:hover {
+  background:#eaf3ff;
+  border-color:#0057a6;
+  color:#0057a6;
+  text-decoration:underline;
+}
+.task.revealed .stem.answer-toggle {
+  background:#fff3f3;
+  border-color:#d71920;
+  color:#a90f16;
+}
+.feedback {
+  border-left:3px solid #0057a6;
+}
+.task.revealed .feedback {
+  display:block;
+}
+@media print {
+  .answer-toggle { pointer-events:none; }
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="hero">
+    <div class="hero-card">
+      <div class="eyebrow">ЕГЭ • Английский язык • Словообразование</div>
+      <h1>Тренажёр заданий 25–29</h1>
+      <p class="sub">Интерактивная отработка словообразования в формате распечатки: номер задания, текст с пропуском и исходное слово справа. Цветовая схема — строгая сине‑красная, близкая к оформлению ФИПИ.</p>
+    </div>
+    <div class="stats" aria-label="Статистика банка заданий">
+      <div class="stat"><span class="num" id="statVariants">50</span><span class="label">вариантов в тренажёре</span></div>
+      <div class="stat"><span class="num" id="statTasks">286</span><span class="label">пропусков для проверки</span></div>
+      <div class="stat"><span class="num">A+</span><span class="label">самопроверка и ключи</span></div>
+    </div>
+  </section>
+
+  <section class="layout">
+    <aside class="panel">
+      <h2>Управление</h2>
+
+      <div class="label">Режим</div>
+      <div class="segment" role="tablist">
+        <button id="modeVariant" class="active" type="button">Вариант</button>
+        <button id="modeAll" type="button">Весь банк</button>
+        <button id="modeRandom" type="button">Микс 30</button>
+      </div>
+
+      <div class="label">Выбрать вариант</div>
+      <select id="variantSelect" class="select" aria-label="Выбор варианта"></select>
+
+      <div class="label">Поиск по теме</div>
+      <input id="search" class="search" placeholder="Например: Uluru, Tretyak, Museum">
+
+      <div class="label">Быстрый выбор</div>
+      <div id="variantGrid" class="variant-grid"></div>
+
+      <div class="actions">
+        <button id="checkBtn" class="btn primary" type="button">Проверить ответы</button>
+        <button id="showBtn" class="btn sage" type="button">Показать все ответы</button>
+        <button id="nextBtn" class="btn ghost" type="button">Следующий вариант</button>
+        <button id="randomBtn" class="btn ghost" type="button">Случайный вариант</button>
+        <button id="resetBtn" class="btn warn" type="button">Сбросить</button>
+      </div>
+
+      <div class="progress-wrap"><div id="progressBar" class="progress-bar"></div></div>
+      <div id="progressText" class="progress-text">Пока ничего не проверено.</div>
+      <p class="progress-text" style="margin-top:12px;">Подсказка: после ввода ответа нажмите <kbd>Enter</kbd>, чтобы перейти к следующему полю.</p>
+    </aside>
+
+    <main class="main">
+      <div class="toolbar">
+        <div class="toolbar-top">
+          <div>
+            <div class="kicker" id="modeLabel">Режим по вариантам</div>
+            <h2 id="heading">Вариант 1 — Anatoly Karpov</h2>
+            <p id="subtitle">Заполните пропуски однокоренными словами. Регистр не важен, орфография важна.</p>
+          </div>
+          <div class="score-pill" id="scorePill">0 / 0</div>
+        </div>
+        <div class="instructions">
+          Формат как на распечатке ФИПИ: номер, текст с пропуском и исходное слово справа. Ответ можно открыть сразу — нажмите на слово справа.
+        </div>
+      </div>
+      <div id="taskList" class="task-list"></div>
+      <div class="footer">
+        Автономный HTML-файл: можно открыть на компьютере, отправить ученикам или загрузить на сайт/GitHub Pages. Варианты и ключи встроены внутрь файла.
+      </div>
+    </main>
+  </section>
+</div>
+
+<script type="application/json" id="bank-data">{"meta": {"title": "ЕГЭ Английский — Словообразование 25–29/30/31", "source": "Открытый банк ФИПИ: словообразование", "variants": 50, "tasks": 286, "note": "В очевидных опечатках ключей тренажёр принимает обе формы: accommodation/accomodation, various/varios."}, "variants": [{"variant": 1, "title": "Anatoly Karpov", "tasks": [{"num": 25, "stem": "PLAY", "text": "Anatoly Karpov is a Russian chess grandmaster. He is considered to be one of the greatest __________ of all time.", "answer": "players", "accept": ["players"], "display_answer": "players"}, {"num": 26, "stem": "EXCITE", "text": "Karpov started playing chess when he was only four. Recognizing his talent, Karpov’s parents did everything possible to help him master this __________ game.", "answer": "exciting", "accept": ["exciting"], "display_answer": "exciting"}, {"num": 27, "stem": "POSSIBLE", "text": "Karpov quickly became the national master and went on to receive the title of a grandmaster at the age of 19. It may sound __________ but Karpov successfully combined playing chess with being an excellent student.", "answer": "impossible", "accept": ["impossible"], "display_answer": "impossible"}, {"num": 28, "stem": "NATIONAL", "text": "He proceeded to win a series of __________ tournaments, becoming the official world champion in 1975.", "answer": "international", "accept": ["international"], "display_answer": "international"}, {"num": 29, "stem": "CHAMPION", "text": "His reign as the world champion came to an end only when he was defeated by Garry Kasparov in 1985. The two men then had many more matches at various __________ , proving to be equally good chess masters. Karpov is now actively involved in humanitarian activities.", "answer": "championships", "accept": ["championships"], "display_answer": "championships"}]}, {"variant": 2, "title": "Sergey Bezrukov", "tasks": [{"num": 25, "stem": "ARTIST", "text": "Sergey Bezrukov is a Russian screen and stage actor and singer. He was born in an __________ family as his father was an actor at the Moscow Satire Theatre.", "answer": "artistic", "accept": ["artistic"], "display_answer": "artistic"}, {"num": 26, "stem": "QUICK", "text": "On graduating from the Moscow Art Theatre School Sergey was immediately accepted into the troupe of the Moscow Theatre Studio under Oleg Tabakov. At that time, he also started to do voice-over for TV programmes and __________ got noticed by TV producers.", "answer": "quickly", "accept": ["quickly"], "display_answer": "quickly"}, {"num": 27, "stem": "VARY", "text": "Due to his excellent acting in __________ films, Sergey soon became a household name in Russia.", "answer": "various", "accept": ["various"], "display_answer": "various"}, {"num": 28, "stem": "IMPRESS", "text": "The range of his roles is truly __________ .", "answer": "impressive", "accept": ["impressive"], "display_answer": "impressive"}, {"num": 29, "stem": "EXCITE", "text": "He seems to be able to play anybody – from Russian poets Pushkin and Yesenin to comical figures in funny remakes of old Soviet comedies. Bezrukov is a prolific actor and director, and his fans are waiting for new __________ films and plays starring him.", "answer": "exciting", "accept": ["exciting"], "display_answer": "exciting"}]}, {"variant": 3, "title": "Denis Matsuev", "tasks": [{"num": 25, "stem": "COMPOSE", "text": "Denis Matsuev is a Russian classical pianist. Born in Irkutsk in 1975, Matsuev is the only child of two musicians. His mother is a piano teacher and his father is a pianist and a __________ .", "answer": "composer", "accept": ["composer"], "display_answer": "composer"}, {"num": 26, "stem": "PRODUCE", "text": "Matsuev’s talent became obvious in his early childhood. He was only three years old when he managed to __________ on his piano at home a melody which he had heard on television.", "answer": "reproduce", "accept": ["reproduce"], "display_answer": "reproduce"}, {"num": 27, "stem": "COMPETE", "text": "In 1990 young Denis won a prize at the New Names Charitable Foundation __________ in Irkutsk and got a scholarship from the foundation to study music in Moscow.", "answer": "competition", "accept": ["competition"], "display_answer": "competition"}, {"num": 28, "stem": "NATIONAL", "text": "Matsuev toured the world with other young gifted musicians from Russia discovered by the foundation. In 1994 he took part in his first __________ piano contest in Johannesburg, South Africa, where he was awarded the Grand Prix.", "answer": "international", "accept": ["international"], "display_answer": "international"}, {"num": 29, "stem": "VARY", "text": "His musical career quickly progressed. He is now a world-famous pianist with __________ awards and a massive fan base.", "answer": "various", "accept": ["various"], "display_answer": "various"}]}, {"variant": 4, "title": "Ivan Sechenov", "tasks": [{"num": 25, "stem": "VARY", "text": "Ivan Sechenov was an outstanding Russian scientist. He was born in 1829 in a noble family. His parents inspired young Ivan to continue his education throughout his entire life, and the boy followed their advice. At the age of 14 he chose to become a military engineer and studied __________ technical subjects.", "answer": "various", "accept": ["various"], "display_answer": "various"}, {"num": 26, "stem": "AWARE", "text": "However, his heart was not really in it. In 1850 Sechenov entered Moscow Medical University with a full __________ of the goals of his life.", "answer": "awareness", "accept": ["awareness"], "display_answer": "awareness"}, {"num": 27, "stem": "WILL", "text": "Sechenov was a __________ student, which enabled him to graduate among top students.", "answer": "willing", "accept": ["willing"], "display_answer": "willing"}, {"num": 28, "stem": "PERFECT", "text": "He mastered biology, anatomy, surgery and physiology to __________.", "answer": "perfection", "accept": ["perfection"], "display_answer": "perfection"}, {"num": 29, "stem": "PRINT", "text": "After a short period of studying and working abroad Sechenov returned to Russia where he made numerous discoveries in psychology, physiology and anatomy, many of which we still use today. Publishing houses __________ his scientific works every year.", "answer": "reprint", "accept": ["reprint"], "display_answer": "reprint"}]}, {"variant": 5, "title": "Alexander Blok", "tasks": [{"num": 25, "stem": "HIGH", "text": "Alexander Blok was a Russian lyrical poet, writer, publicist, playwright, translator and literary critic. He was born in 1880 in Saint Petersburg in a __________ educated family.", "answer": "highly", "accept": ["highly"], "display_answer": "highly"}, {"num": 26, "stem": "BOTANY", "text": "His father was a professor of law, and his grandfather was a famous __________ and the rector of Saint Petersburg State University.", "answer": "botanist", "accept": ["botanist"], "display_answer": "botanist"}, {"num": 27, "stem": "AMAZE", "text": "The __________ images of his early poetry established him as a major figure of the Russian Symbolism style.", "answer": "amazing", "accept": ["amazing"], "display_answer": "amazing"}, {"num": 28, "stem": "INSPIRE", "text": "Poetic __________ came naturally to him.", "answer": "inspiration", "accept": ["inspiration"], "display_answer": "inspiration"}, {"num": 29, "stem": "SURROUND", "text": "Blok often produced unforgettable and otherworldly images out of the most banal __________ and trivial events, though his most beautiful poems were still devoted to his wife. Blok greeted the 1905 Russian Revolution enthusiastically, but later became disillusioned with it and couldn’t write any more, although he still gave lectures on literature.", "answer": "surroundings", "accept": ["surroundings"], "display_answer": "surroundings"}]}, {"variant": 6, "title": "Pavel Yablochkov", "tasks": [{"num": 25, "stem": "INVENT", "text": "Pavel Yablochkov was a Russian electrical engineer and businessman. He was also the __________ of the Yablochkov candle – a type of electric carbon arc lamp – and the transformer.", "answer": "inventor", "accept": ["inventor"], "display_answer": "inventor"}, {"num": 26, "stem": "DEMONSTRATE", "text": "A Yablochkov candle was much easier to use than other kinds of lamps. The first public use of a Yablochkov candle took place in Paris in 1877. The Paris Exposition of 1878 gave Yablochkov a great opportunity to make a spectacular __________ of his candle to the world audience.", "answer": "demonstration", "accept": ["demonstration"], "display_answer": "demonstration"}, {"num": 27, "stem": "SUCCESS", "text": "It was so __________ that many contemporary businessmen got interested in Yablochkov candles.", "answer": "successful", "accept": ["successful"], "display_answer": "successful"}, {"num": 28, "stem": "QUICK", "text": "They __________ set up companies licensing Yablochkov’s patents.", "answer": "quickly", "accept": ["quickly"], "display_answer": "quickly"}, {"num": 29, "stem": "SCIENCE", "text": "From the mid-1880s, Yablochkov started to devote more of his time to the problems of generating electrical energy. Many of Yablochkov’s further inventions were much ahead of his time. Modern __________ still use his ideas in their work.", "answer": "scientists", "accept": ["scientists"], "display_answer": "scientists"}]}, {"variant": 7, "title": "Vladislav Tretyak", "tasks": [{"num": 25, "stem": "NATURE", "text": "Vladislav Tretyak is an outstanding Russian hockey player. He is considered to be one of the best goaltenders in the history of ice hockey. He was born in 1952 in a family of a military pilot and a PE teacher. So, it was only __________ that Tretyak did much sport in his early childhood.", "answer": "natural", "accept": ["natural"], "display_answer": "natural"}, {"num": 26, "stem": "VARY", "text": "He tried __________ sports and wanted to excel in all of them, but fell in love with ice hockey at the age of 11.", "answer": "various", "accept": ["various"], "display_answer": "various"}, {"num": 27, "stem": "ACTUAL", "text": "He entered the Children and Youth Sports School of the CSKA, where he began playing goaltender when he saw that, __________, no one else had the desire or courage to play the position.", "answer": "actually", "accept": ["actually"], "display_answer": "actually"}, {"num": 28, "stem": "NATIONAL", "text": "By the age of 19, Tretyak was already famous not only in Russia, but also on the __________ level.", "answer": "international", "accept": ["international"], "display_answer": "international"}, {"num": 29, "stem": "PERFORM", "text": "His great __________ in the Summit Series in 1972 earned him a massive fan base all over the world. Tretyak retired at the age of 32 to spend more time with his family. He is the current president of the Ice Hockey Federation in Russia.", "answer": "performance", "accept": ["performance"], "display_answer": "performance"}]}, {"variant": 8, "title": "Visiting Tasmania", "tasks": [{"num": 25, "stem": "TOUR", "text": "Are you planning a trip to Tasmania? Without a doubt, any __________ will find some things to do there.", "answer": "tourist", "accept": ["tourist"], "display_answer": "tourist"}, {"num": 26, "stem": "MEMORY", "text": "To begin with, driving up the east coast of Tasmania is one of the most __________ things you can do there.", "answer": "memorable", "accept": ["memorable"], "display_answer": "memorable"}, {"num": 27, "stem": "REAL", "text": "Tasmania’s east coast is __________ spectacular and along the way you’ll be able to stop for walks along cliff tops and swim in gorgeous beaches.", "answer": "really", "accept": ["really"], "display_answer": "really"}, {"num": 28, "stem": "NATION", "text": "One more opportunity is to camp out at __________ parks and do other cool activities.", "answer": "national", "accept": ["national"], "display_answer": "national"}, {"num": 29, "stem": "ATTRACT", "text": "One of the biggest __________ along the east coast of Tasmania is Freycinet Park, renowned for the stunning Wineglass Bay and many routes for day walks, bird watching and mountaineering.", "answer": "attractions", "accept": ["attractions"], "display_answer": "attractions"}, {"num": 30, "stem": "FORGET", "text": "Besides climbing and hiking, there you can also eat a fresh oyster lunch at the “Freycinet Marine Farm”. It will certainly be an __________ experience for you, so don’t miss a chance to visit Tasmania.", "answer": "unforgettable", "accept": ["unforgettable"], "display_answer": "unforgettable"}]}, {"variant": 9, "title": "Boston Public Library", "tasks": [{"num": 25, "stem": "VISIT", "text": "Dating from 1852, Boston Public Library contributes much to Boston’s reputation as the “Athens of America”. The old building is notable for its magnificent facade and interior art. __________ can pick up a free brochure.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 26, "stem": "HELP", "text": "The brochure will be __________ to visitors.", "answer": "helpful", "accept": ["helpful"], "display_answer": "helpful"}, {"num": 27, "stem": "ALTERNATIVE", "text": "__________, free guided tours depart from the entrance hall at various times.", "answer": "alternatively", "accept": ["alternatively"], "display_answer": "alternatively"}, {"num": 28, "stem": "ORIGIN", "text": "This __________ building, inspired by Italian Renaissance, can boast of enormous bronze doorways, iron gates and lanterns. From there a marble staircase leads the guests inside.", "answer": "original", "accept": ["original"], "display_answer": "original"}, {"num": 29, "stem": "AMAZE", "text": "Besides this __________ artistry, the library holds untold treasures in its special collections, including John Adams’ personal library.", "answer": "amazing", "accept": ["amazing"], "display_answer": "amazing"}, {"num": 30, "stem": "POSSIBLE", "text": "If you visit this place once, it will be __________ for you to forget it.", "answer": "impossible", "accept": ["impossible"], "display_answer": "impossible"}]}, {"variant": 10, "title": "Texas Rodeo", "tasks": [{"num": 25, "stem": "COMPETE", "text": "The rodeo is a really exciting event. It is a thrilling __________ between cowboys from all over the country.", "answer": "competition", "accept": ["competition"], "display_answer": "competition"}, {"num": 26, "stem": "PROFESSION", "text": "It has a long tradition and even today there are rodeo schools which keep it alive and __________.", "answer": "professional", "accept": ["professional"], "display_answer": "professional"}, {"num": 27, "stem": "VISIT", "text": "The rodeo is a spectacular sight. If a __________ has a place in the first row of the arena, he or she may even be sprinkled with sand by the passing horses.", "answer": "visitor", "accept": ["visitor"], "display_answer": "visitor"}, {"num": 28, "stem": "PERFORM", "text": "The __________ usually starts with an opening ceremony by horsemen dressed in bright colours and carrying flags.", "answer": "performance", "accept": ["performance"], "display_answer": "performance"}, {"num": 29, "stem": "CONSTANT", "text": "All through the show the master of the ceremony __________ jokes with special clowns.", "answer": "constantly", "accept": ["constantly"], "display_answer": "constantly"}, {"num": 30, "stem": "POSSIBLE", "text": "A rodeo in Texas is certainly an exciting experience which is practically __________ for a tourist to forget.", "answer": "impossible", "accept": ["impossible"], "display_answer": "impossible"}]}, {"variant": 11, "title": "New England Aquarium", "tasks": [{"num": 26, "stem": "CERTAIN", "text": "The New England Aquarium has sea creatures of all sizes, shapes and colors. This place is __________ the centerpiece of downtown Boston’s waterfront.", "answer": "certainly", "accept": ["certainly"], "display_answer": "certainly"}, {"num": 27, "stem": "ATTRACT", "text": "Its main __________ is the newly renovated, three-story Giant Ocean Tank. It literally swirls with thousands of creatures, including turtles and sharks.", "answer": "attraction", "accept": ["attraction"], "display_answer": "attraction"}, {"num": 28, "stem": "COUNT", "text": "__________ side exhibits explore the lives and habitats of other underwater species, as well as penguins and marine mammals.", "answer": "countless", "accept": ["countless"], "display_answer": "countless"}, {"num": 29, "stem": "VISIT", "text": "__________ to the aquarium can watch training sessions.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 30, "stem": "INTELLIGENT", "text": "These animals show off their __________ and athleticism. Note that some animal rights groups make a strong case that marine mammals should not be kept in captivity, so from time to time the aquarium has to face these protests.", "answer": "intelligence", "accept": ["intelligence"], "display_answer": "intelligence"}, {"num": 31, "stem": "FORGETTABLE", "text": "The New England Aquarium is really a beautiful place and an __________ experience for anybody.", "answer": "unforgettable", "accept": ["unforgettable"], "display_answer": "unforgettable"}]}, {"variant": 12, "title": "Central Park", "tasks": [{"num": 25, "stem": "NATURAL", "text": "One of the world’s most well-known green spaces, Central Park in New York occupies 843 acres of land with European-style gardens, a lake and a reservoir. __________, among Central Park sights one should also mention an outdoor theater, a memorial to John Lennon and a very famous statue of Alice in Wonderland.", "answer": "naturally", "accept": ["naturally"], "display_answer": "naturally"}, {"num": 26, "stem": "BEAUTY", "text": "Many tourists consider Central Park to be a truly __________ place.", "answer": "beautiful", "accept": ["beautiful"], "display_answer": "beautiful"}, {"num": 27, "stem": "REGARD", "text": "It is important to say that this huge park was designed as a leisure space for all New Yorkers, __________ of color or class.", "answer": "regardless", "accept": ["regardless"], "display_answer": "regardless"}, {"num": 28, "stem": "ATTRACT", "text": "Today, this “people’s park” is still one of the city’s most popular __________.", "answer": "attractions", "accept": ["attractions"], "display_answer": "attractions"}, {"num": 29, "stem": "JOG", "text": "It is also a very popular place for numerous __________.", "answer": "joggers", "accept": ["joggers"], "display_answer": "joggers"}, {"num": 30, "stem": "SKI", "text": "Even in winter with its snow storms there is something to do there, like cross-country __________. If you plan to visit New York, Central Park is an absolute must for you.", "answer": "skiing", "accept": ["skiing"], "display_answer": "skiing"}]}, {"variant": 13, "title": "The Met", "tasks": [{"num": 25, "stem": "COLLECT", "text": "The Met is an encyclopedic museum, founded in 1870. It has one of the biggest art __________ in the world with more than two million individual objects.", "answer": "collections", "accept": ["collections"], "display_answer": "collections"}, {"num": 26, "stem": "PAINT", "text": "Among them you can find anything from Egyptian temples to American __________.", "answer": "paintings", "accept": ["paintings"], "display_answer": "paintings"}, {"num": 27, "stem": "VISIT", "text": "The museum attracts over six million __________ a year to its 17 acres of galleries making it the largest single-site attraction in New York City. In other words, plan on spending some time here.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 28, "stem": "WONDER", "text": "The museum has __________ examples of ancient Egyptian art, some of which date back to the Paleolithic era. The 27 galleries devoted to classical antiquity are illuminated by natural daylight.", "answer": "wonderful", "accept": ["wonderful"], "display_answer": "wonderful"}, {"num": 29, "stem": "VARY", "text": "In the northwest corner, the American galleries demonstrate a wide __________ of decorative and fine art from throughout US history.", "answer": "variety", "accept": ["variety"], "display_answer": "variety"}, {"num": 30, "stem": "REAL", "text": "The Met is __________ worth visiting. If you go to New York, do not miss a chance of going there.", "answer": "really", "accept": ["really"], "display_answer": "really"}]}, {"variant": 14, "title": "Washington National Cathedral", "tasks": [{"num": 25, "stem": "BEAUTY", "text": "Washington National Cathedral is a dramatic Gothic building. It is so __________ that it is considered to be one of the greatest architectural treasures of the world.", "answer": "beautiful", "accept": ["beautiful"], "display_answer": "beautiful"}, {"num": 26, "stem": "SPECIAL", "text": "There are various excursions to the cathedral. The best idea is to go online to check the guides’ schedules as they __________ in different aspects of the building’s history.", "answer": "specialise", "accept": ["specialise"], "display_answer": "specialise"}, {"num": 27, "stem": "CONSTRUCT", "text": "It took 82 years to build the cathedral – Theodore Roosevelt laid the cornerstone in 1908, and the cathedral’s __________ didn’t technically stop until 1990.", "answer": "construction", "accept": ["construction"], "display_answer": "construction"}, {"num": 28, "stem": "ARGUE", "text": "The cathedral provoked strong opposition early on, but later the numerous __________ calmed down.", "answer": "arguments", "accept": ["arguments"], "display_answer": "arguments"}, {"num": 29, "stem": "PEACE", "text": "It is great to have a walk around the cathedral through the __________ paths in the garden.", "answer": "peaceful", "accept": ["peaceful"], "display_answer": "peaceful"}, {"num": 30, "stem": "VISIT", "text": "The 2011 earthquake caused an estimated $26 million in damages to the cathedral. Repairs are underway, but nevertheless, __________ still have full access to the key areas of interest inside the cathedral.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}]}, {"variant": 15, "title": "Millennium Park", "tasks": [{"num": 25, "stem": "BEAUTY", "text": "Rising by the lakefront, Millennium Park is a great place to spend a day. It is a complex of __________ examples of modern architecture.", "answer": "beautiful", "accept": ["beautiful"], "display_answer": "beautiful"}, {"num": 26, "stem": "VISIT", "text": "One can say it is an outdoor modern design gallery. Most elements of this outstanding park are free for __________.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 27, "stem": "FAME", "text": "The park is especially __________ for its connection with music.", "answer": "famous", "accept": ["famous"], "display_answer": "famous"}, {"num": 28, "stem": "OFFICIAL", "text": "In summer, Millennium Park __________ hosts free concerts at lunchtime and at 6.30 pm.", "answer": "officially", "accept": ["officially"], "display_answer": "officially"}, {"num": 29, "stem": "DAY", "text": "For the latter, bring a picnic basket and enjoy new music on Mondays, jazz and world music on Thursdays, and classical music on a __________ basis.", "answer": "daily", "accept": ["daily"], "display_answer": "daily"}, {"num": 30, "stem": "ACTIVE", "text": "Each Saturday free exercise classes (yoga at 8 am, Pilates at 9 am and dance at 10 am) take place in the park as well. The Family Fun Tent provides free __________ for kids on Sundays between 10 am and 3 pm. Free walking tours take place on Sundays, or you may do it yourself with a downloadable tour from the website.", "answer": "activities", "accept": ["activities"], "display_answer": "activities"}]}, {"variant": 16, "title": "Visiting Uluru", "tasks": [{"num": 26, "stem": "VISIT", "text": "If you are thinking of making the journey to witness the incredible red rock Uluru in person, here are some facts you should know before you leave. Thousands of __________ to Australia go to see Uluru.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 27, "stem": "ACTUAL", "text": "Uluru is located west of the Simpson Desert 335 km southwest of Alice Springs. While some people believe it to be the largest monolith in the world, this title is __________ held by Mount Augustus in Western Australia.", "answer": "actually", "accept": ["actually"], "display_answer": "actually"}, {"num": 28, "stem": "DIFFER", "text": "Uluru is known to undergo a series of colour changes. These can be just subtle __________ when it rains.", "answer": "differences", "accept": ["differences"], "display_answer": "differences"}, {"num": 29, "stem": "TRANSFORM", "text": "However, the view undergoes amazing __________ when caught by the spectacular sunset rays.", "answer": "transformations", "accept": ["transformations"], "display_answer": "transformations"}, {"num": 30, "stem": "USUAL", "text": "This is so partially because the surface of Uluru is full of __________ caves and holes due to millions of years of erosion.", "answer": "unusual", "accept": ["unusual"], "display_answer": "unusual"}, {"num": 31, "stem": "COURAGE", "text": "Uluru is a sacred site to the indigenous people of the area, and guides __________ tourists from climbing the rock.", "answer": "discourage", "accept": ["discourage"], "display_answer": "discourage"}]}, {"variant": 17, "title": "Ferapontov Monastery in Vologda", "tasks": [{"num": 25, "stem": "BEAUTY", "text": "Ferapontov monastery was founded in 1398. This was when Ferapont the Reverend established a new settlement on a lake not far from Vologda. There were many villages around this __________ place and soon people started to come to him for advice.", "answer": "beautiful", "accept": ["beautiful"], "display_answer": "beautiful"}, {"num": 26, "stem": "ACTUAL", "text": "Then some people decided to stay with him as monks. That’s __________ how the monastery was started.", "answer": "actually", "accept": ["actually"], "display_answer": "actually"}, {"num": 27, "stem": "CONSTRUCT", "text": "Later Ferapont built a wooden church and other __________. He left the monastery to build another one but never returned.", "answer": "constructions", "accept": ["constructions"], "display_answer": "constructions"}, {"num": 28, "stem": "FAME", "text": "However, the monastery remained both a __________ and popular place even without him.", "answer": "famous", "accept": ["famous"], "display_answer": "famous"}, {"num": 29, "stem": "AMAZE", "text": "Now tourists can enjoy its __________ frescoes, created in 1502.", "answer": "amazing", "accept": ["amazing"], "display_answer": "amazing"}, {"num": 30, "stem": "POSSIBLE", "text": "It may seem __________, but these frescoes have remained safe without restoration till the present day. Now the monastery is a museum. In 2000 the Ensemble of the Ferapontov Monastery was included in UNESCO’s World Heritage List.", "answer": "impossible", "accept": ["impossible"], "display_answer": "impossible"}]}, {"variant": 18, "title": "Natural sights of Queensland", "tasks": [{"num": 25, "stem": "TYPICAL", "text": "Apart from cultural experiences, Queensland makes it possible for you to enjoy the beauty of nature to the full. For instance, tourists are __________ very interested in the Daintree Rainforest which is the oldest rainforest in the world.", "answer": "typically", "accept": ["typically"], "display_answer": "typically"}, {"num": 26, "stem": "VISIT", "text": "It offers __________ spectacular beauty and extraordinary diversity of flora and fauna.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 27, "stem": "COMFORT", "text": "An hour’s drive north of Cairns, it can be explored on expert guided tours, and you can even have a __________ one-night stay in tree-house style eco-lodges.", "answer": "comfortable", "accept": ["comfortable"], "display_answer": "comfortable"}, {"num": 28, "stem": "DIVE", "text": "One more must-see is the Great Barrier Reef. To see it go all the way up to the very northern tip of Queensland. There are many ways underwater life can be experienced there, for example, scuba __________.", "answer": "diving", "accept": ["diving"], "display_answer": "diving"}, {"num": 29, "stem": "FORGET", "text": "The Great Barrier Reef will give you __________ and breathtaking insights into the beauty and magic of this incredible biosphere.", "answer": "unforgettable", "accept": ["unforgettable"], "display_answer": "unforgettable"}, {"num": 30, "stem": "NATURE", "text": "One should also mention that it’s the only __________ wonder visible from space.", "answer": "natural", "accept": ["natural"], "display_answer": "natural"}]}, {"variant": 19, "title": "St. Isaac’s Cathedral", "tasks": [{"num": 25, "stem": "GREAT", "text": "St. Isaac’s Cathedral is one of the biggest Orthodox churches in Russia. The Cathedral was named in honour of St. Isaac of Dalmatia, who was __________ respected by Peter I as he was born on St. Isaac’s day.", "answer": "greatly", "accept": ["greatly"], "display_answer": "greatly"}, {"num": 26, "stem": "CONSTRUCT", "text": "The first wooden church was built in 1710. Later the __________ of a new cathedral began.", "answer": "construction", "accept": ["construction"], "display_answer": "construction"}, {"num": 27, "stem": "FAME", "text": "A lot of __________ architects took part in creating the cathedral which was opened to public in 1858.", "answer": "famous", "accept": ["famous"], "display_answer": "famous"}, {"num": 28, "stem": "TOUR", "text": "__________ from all over the world come to see the cathedral every day.", "answer": "tourists", "accept": ["tourists"], "display_answer": "tourists"}, {"num": 29, "stem": "AMAZE", "text": "They can go inside and enjoy the __________ interiors of the building. Little do they know how much the cathedral suffered during the bomb attacks of the Second World War.", "answer": "amazing", "accept": ["amazing"], "display_answer": "amazing"}, {"num": 30, "stem": "RELIGION", "text": "The services were revived in the cathedral in 1990 and take place regularly on big __________ holidays and Sundays.", "answer": "religious", "accept": ["religious"], "display_answer": "religious"}]}, {"variant": 20, "title": "Uluru", "tasks": [{"num": 25, "stem": "VISIT", "text": "Uluru (often called Ayers Rock) is located deep in the outback in central Australia. It’s considered a sacred site by the Aborigines. __________ can reach the area by a 200 km car trip after flying into Alice Springs, Darwin or Adelaide.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 26, "stem": "NATURE", "text": "The area includes many breathtaking __________ wonders and reveals much about the legends and mysteries of Aboriginal people.", "answer": "natural", "accept": ["natural"], "display_answer": "natural"}, {"num": 27, "stem": "FORGET", "text": "Located in the Red Centre, Uluru is one the most __________ sights in Australia.", "answer": "unforgettable", "accept": ["unforgettable"], "display_answer": "unforgettable"}, {"num": 28, "stem": "SIGNIFICANT", "text": "Here you can learn more about the cultural __________ of the area, you can do a base walk and meet some of the local wildlife (get ready for the Australian face fly), and you can take more photos than you thought possible.", "answer": "significance", "accept": ["significance"], "display_answer": "significance"}, {"num": 29, "stem": "ACCOMMODATE", "text": "__________ ranges from budget to luxury.", "answer": "accommodation", "accept": ["accommodation", "accomodation"], "display_answer": "accommodation"}, {"num": 30, "stem": "CAMP", "text": "There are even __________ opportunities if you’re brave enough for that!", "answer": "camping", "accept": ["camping"], "display_answer": "camping"}]}, {"variant": 21, "title": "Murmansk", "tasks": [{"num": 25, "stem": "POPULATE", "text": "The city of Murmansk was founded in 1916. At present Murmansk is the largest city situated above the Polar circle but its __________ is still quite small.", "answer": "population", "accept": ["population"], "display_answer": "population"}, {"num": 26, "stem": "TOUR", "text": "Murmansk has severe climatic conditions. Summers are short and cold there. The polar night lasts from December 2 to January 11. Still, many __________ come to visit Murmansk.", "answer": "tourists", "accept": ["tourists"], "display_answer": "tourists"}, {"num": 27, "stem": "ATTRACT", "text": "The city can boast of several major __________.", "answer": "attractions", "accept": ["attractions"], "display_answer": "attractions"}, {"num": 28, "stem": "EXCITE", "text": "Among them you will find Lenin nuclear icebreaker, which is the first of its kind in the world. Now it is an __________ museum which demonstrates the history of the exploration of the Arctic. There are some other really important museums in Murmansk – the Museum of Regional Studies, the Navy Museum of the Northern Fleet and so on.", "answer": "exciting", "accept": ["exciting"], "display_answer": "exciting"}, {"num": 29, "stem": "REAL", "text": "If you are lucky to see the Northern lights, you will be __________ impressed.", "answer": "really", "accept": ["really"], "display_answer": "really"}, {"num": 30, "stem": "POSSIBLE", "text": "It’s __________ to forget this splendid view.", "answer": "impossible", "accept": ["impossible"], "display_answer": "impossible"}]}, {"variant": 22, "title": "Auckland", "tasks": [{"num": 25, "stem": "POPULATE", "text": "Auckland is the largest and most populous city in New Zealand. The __________ of Auckland is getting close to 1.4 million residents.", "answer": "population", "accept": ["population"], "display_answer": "population"}, {"num": 26, "stem": "CONVENIENT", "text": "It is __________ situated in the North Island of the country, between the Waitakere Ranges and the Hauraki Gulf.", "answer": "conveniently", "accept": ["conveniently"], "display_answer": "conveniently"}, {"num": 27, "stem": "COMPARE", "text": "The city enjoys an oceanic climate, which is __________ to the climate in most of Europe.", "answer": "comparable", "accept": ["comparable"], "display_answer": "comparable"}, {"num": 28, "stem": "APPOINT", "text": "Nothing can __________ you about Auckland, which is why it is a popular destination for numerous immigrants to New Zealand.", "answer": "disappoint", "accept": ["disappoint"], "display_answer": "disappoint"}, {"num": 29, "stem": "FRIEND", "text": "Expats have an overall good experience when staying in Auckland. Most expats find it very easy to communicate with the locals, who are very __________.", "answer": "friendly", "accept": ["friendly"], "display_answer": "friendly"}, {"num": 30, "stem": "LOCATE", "text": "Another positive thing about Auckland is the amount of nature and free space, which is appreciated a lot, especially by those coming from more densely inhabited __________.", "answer": "location", "accept": ["location"], "display_answer": "location"}]}, {"variant": 23, "title": "The Altai Mountains", "tasks": [{"num": 25, "stem": "BEAUTY", "text": "The Altai Mountains are located in Russia on the border with Mongolia, Kazakhstan and China. They are considered one of the most __________ mountain ranges in Russia.", "answer": "beautiful", "accept": ["beautiful"], "display_answer": "beautiful"}, {"num": 26, "stem": "POSSIBLE", "text": "The panoramic views from the mountain tops are __________ to forget.", "answer": "impossible", "accept": ["impossible"], "display_answer": "impossible"}, {"num": 27, "stem": "GREAT", "text": "The colour pallet of the landscape changes __________ with each season so you will never get tired of it.", "answer": "greatly", "accept": ["greatly"], "display_answer": "greatly"}, {"num": 28, "stem": "ATTRACT", "text": "What makes the Altai Mountains even more __________ is that they are not easy to get to.", "answer": "attractive", "accept": ["attractive"], "display_answer": "attractive"}, {"num": 29, "stem": "VISIT", "text": "__________ feel like they are the first to see this wild landscape.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 30, "stem": "NATURE", "text": "The __________ parks around the mountains are quite different; some areas are very cold and covered with snow year-round, while other areas are located near the low-lying Russian Taiga where the climate is mild.", "answer": "natural", "accept": ["natural"], "display_answer": "natural"}]}, {"variant": 24, "title": "Auckland University", "tasks": [{"num": 25, "stem": "ACTUAL", "text": "The University of Auckland is New Zealand’s leading university. __________, it’s among the top 200 universities of the world.", "answer": "actually", "accept": ["actually"], "display_answer": "actually"}, {"num": 26, "stem": "BUSY", "text": "The University of Auckland has a strong focus on legal and __________ programmes welcoming students from all parts of the world.", "answer": "business", "accept": ["business"], "display_answer": "business"}, {"num": 27, "stem": "POPULATE", "text": "The student __________ of the University of Auckland is 40,000, about 4,000 of whom have come to study from abroad.", "answer": "population", "accept": ["population"], "display_answer": "population"}, {"num": 28, "stem": "EMPLOY", "text": "The University of Auckland also offers postgraduate studies, which will certainly broaden your academic and __________ horizons.", "answer": "employment", "accept": ["employment"], "display_answer": "employment"}, {"num": 29, "stem": "VALUE", "text": "It will be __________ for your CV with specialist skills and knowledge provided.", "answer": "valuable", "accept": ["valuable"], "display_answer": "valuable"}, {"num": 30, "stem": "LAW", "text": "Whether you plan to join the next generation of leading __________ in New Zealand or in your native country, the University of Auckland will help you to make your mark on the world.", "answer": "lawyers", "accept": ["lawyers"], "display_answer": "lawyers"}]}, {"variant": 25, "title": "Sakhalin", "tasks": [{"num": 25, "stem": "SCIENCE", "text": "The island of Sakhalin is situated in the Far East of Russia in the North Pacific, between the Sea of Okhotsk and the Sea of Japan. __________ say that it is the largest island in Russia with a length of 948 km, and a width of 25 to 170 km, and a total area of about 78,000 square kilometers.", "answer": "scientists", "accept": ["scientists"], "display_answer": "scientists"}, {"num": 26, "stem": "BEAUTY", "text": "Nearly two-thirds of Sakhalin is mountainous. Two parallel ranges of __________ mountains separate the island from north to south.", "answer": "beautiful", "accept": ["beautiful"], "display_answer": "beautiful"}, {"num": 27, "stem": "GOVERN", "text": "The __________ of Sakhalin region is in Yuzhno-Sakhalinsk, which was founded in 1882.", "answer": "government", "accept": ["government"], "display_answer": "government"}, {"num": 28, "stem": "POPULATE", "text": "It is located in the southern part of the island and the __________ of the modern city comes to about 180 thousand people.", "answer": "population", "accept": ["population"], "display_answer": "population"}, {"num": 29, "stem": "VISIT", "text": "__________ to the area can enjoy watching gorgeous nature as well as go fishing and rock climbing.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 30, "stem": "CERTAIN", "text": "It may take you long to get there, but this will __________ be an unforgettable experience.", "answer": "certainly", "accept": ["certainly"], "display_answer": "certainly"}]}, {"variant": 26, "title": "The Blue Mountains National Park", "tasks": [{"num": 25, "stem": "VISIT", "text": "When people come to Australia, they typically wish to enjoy the outstanding nature of the continent. If you are a __________ to Australia with this very goal on your mind, try The Blue Mountains National Park.", "answer": "visitor", "accept": ["visitor"], "display_answer": "visitor"}, {"num": 26, "stem": "AMAZE", "text": "It is located in New South Wales, approximately 80 km west of Sydney. Its proximity to the biggest city in Australia has made this __________ park a popular day trip for both tourists and locals alike.", "answer": "amazing", "accept": ["amazing"], "display_answer": "amazing"}, {"num": 27, "stem": "PROBABLE", "text": "The park is __________ best known for the Three Sisters, a rock formation that towers 900 m above the Jamison Valley.", "answer": "probably", "accept": ["probably"], "display_answer": "probably"}, {"num": 28, "stem": "NATURE", "text": "The Blue Mountains National Park features miles of trails for hikers and mountain bikers, and it is also a popular __________ playground for adventurers who enjoy adrenaline sports.", "answer": "natural", "accept": ["natural"], "display_answer": "natural"}, {"num": 29, "stem": "CLIMB", "text": "Among such sports the top one is rock __________.", "answer": "climbing", "accept": ["climbing"], "display_answer": "climbing"}, {"num": 30, "stem": "FORGET", "text": "Your day in The Blue Mountains National Park will certainly be __________.", "answer": "unforgettable", "accept": ["unforgettable"], "display_answer": "unforgettable"}]}, {"variant": 27, "title": "The Crown", "tasks": [{"num": 25, "stem": "ACTUAL", "text": "Even those people who are not fans of the royal family enjoy the series The Crown. This is __________ a palace drama based on a true story. In fact, one of the show’s great strengths is that the viewers understand that this story is real.", "answer": "actually", "accept": ["actually"], "display_answer": "actually"}, {"num": 26, "stem": "RELATION", "text": "The first season caught everybody’s attention, but The Crown’s second season went even deeper into its characters and their __________.", "answer": "relationships", "accept": ["relationships"], "display_answer": "relationships"}, {"num": 27, "stem": "INTEREST", "text": "The most __________ episodes are undoubtedly the ones devoted to Elizabeth II as a monarch.", "answer": "interesting", "accept": ["interesting"], "display_answer": "interesting"}, {"num": 28, "stem": "GOVERN", "text": "She has to deal with her prime ministers and the __________, with the press, and with the Kennedys.", "answer": "government", "accept": ["government"], "display_answer": "government"}, {"num": 29, "stem": "BEAUTY", "text": "You can also enjoy the __________ settings and the costumes created for the show.", "answer": "beautiful", "accept": ["beautiful"], "display_answer": "beautiful"}, {"num": 30, "stem": "POSSIBLE", "text": "And it’s __________ to forget some of the scenes from the Second World War history – you won’t believe some of the facts presented in the film.", "answer": "impossible", "accept": ["impossible"], "display_answer": "impossible"}]}, {"variant": 28, "title": "Whistler", "tasks": [{"num": 25, "stem": "FAME", "text": "Have you ever been to Whistler? It’s just a two-hour drive from Vancouver and is a __________ ski resort.", "answer": "famous", "accept": ["famous"], "display_answer": "famous"}, {"num": 26, "stem": "REAL", "text": "Whistler has always been a __________ important winter sports area.", "answer": "really", "accept": ["really"], "display_answer": "really"}, {"num": 27, "stem": "POPULAR", "text": "Recently it has also gained __________ as a summer destination for golf and mountain biking.", "answer": "popularity", "accept": ["popularity"], "display_answer": "popularity"}, {"num": 28, "stem": "TOUR", "text": "So in Whistler __________ can enjoy a lively town atmosphere throughout the year.", "answer": "tourists", "accept": ["tourists"], "display_answer": "tourists"}, {"num": 29, "stem": "NATIONAL", "text": "The village gained __________ attention in 2010 when it became one of the locations for the 2010 Winter Olympic Games.", "answer": "international", "accept": ["international"], "display_answer": "international"}, {"num": 30, "stem": "VARY", "text": "The area offers world class skiing, hotels, and dining, as well as a __________ of outdoor recreational opportunities and beautiful mountain scenery.", "answer": "variety", "accept": ["variety"], "display_answer": "variety"}]}, {"variant": 29, "title": "Ottawa’s Parliament Hill", "tasks": [{"num": 25, "stem": "CERTAIN", "text": "Have you ever been to Ottawa? It’s __________ a very beautiful city.", "answer": "certainly", "accept": ["certainly"], "display_answer": "certainly"}, {"num": 26, "stem": "ATTRACT", "text": "One of its main __________ is Parliament Hill standing high above the Ottawa River.", "answer": "attractions", "accept": ["attractions"], "display_answer": "attractions"}, {"num": 27, "stem": "BUILD", "text": "There you can see the Neo-Gothic-style Parliament __________ of the last half of the 19th century.", "answer": "building", "accept": ["building"], "display_answer": "building"}, {"num": 28, "stem": "IMPRESS", "text": "The most __________ construction is the Peace Tower, which divides the House of Commons and the Senate on either side.", "answer": "impressive", "accept": ["impressive"], "display_answer": "impressive"}, {"num": 29, "stem": "TOUR", "text": "There __________ can also see the Centennial Flame.", "answer": "tourists", "accept": ["tourists"], "display_answer": "tourists"}, {"num": 30, "stem": "SYMBOL", "text": "It was lit in 1966 to __________ the centenary of the Canadian Confederation. There is also a sculpture garden. Below Parliament Hill, a lovely walk runs alongside the Ottawa River.", "answer": "symbolise", "accept": ["symbolise"], "display_answer": "symbolise"}]}, {"variant": 30, "title": "The Vancouver Aquarium", "tasks": [{"num": 25, "stem": "CONVENIENT", "text": "The Vancouver Aquarium is a public aquarium. It is __________ located in Stanley Park, a popular area.", "answer": "conveniently", "accept": ["conveniently"], "display_answer": "conveniently"}, {"num": 26, "stem": "ATTRACT", "text": "In addition to being a major __________ for Vancouver, the aquarium is a centre for marine research and conservation.", "answer": "attraction", "accept": ["attraction"], "display_answer": "attraction"}, {"num": 27, "stem": "SCIENCE", "text": "It was one of the first facilities to invite __________ into the galleries to interpret animal behaviour.", "answer": "scientists", "accept": ["scientists"], "display_answer": "scientists"}, {"num": 28, "stem": "EDUCATION", "text": "So a visit to the aquarium is not only pleasant, but also __________.", "answer": "educational", "accept": ["educational"], "display_answer": "educational"}, {"num": 29, "stem": "OWN", "text": "The aquarium remains a nonprofit organisation. Its __________ is the City of Vancouver.", "answer": "owner", "accept": ["owner"], "display_answer": "owner"}, {"num": 30, "stem": "TOUR", "text": "The aquarium has been rented for $40,000 a year since 1991. This money and the entrance fees paid by __________ support the aquarium financially.", "answer": "tourists", "accept": ["tourists"], "display_answer": "tourists"}]}, {"variant": 31, "title": "Stanley Park", "tasks": [{"num": 25, "stem": "AMAZE", "text": "Stanley Park is a 1,001-acre public park that borders the downtown of Vancouver, Canada. This __________ place is almost entirely surrounded by the waters of the Pacific Ocean.", "answer": "amazing", "accept": ["amazing"], "display_answer": "amazing"}, {"num": 26, "stem": "TOUR", "text": "It is one of the main sights of Vancouver to be explored by __________.", "answer": "tourists", "accept": ["tourists"], "display_answer": "tourists"}, {"num": 27, "stem": "ORIGINAL", "text": "The park has a long history. The land was __________ used by indigenous peoples for thousands of years.", "answer": "originally", "accept": ["originally"], "display_answer": "originally"}, {"num": 28, "stem": "COLONY", "text": "Then the British decided to __________ this place during the 1858 Fraser Canyon Gold Rush.", "answer": "colonise", "accept": ["colonise"], "display_answer": "colonise"}, {"num": 29, "stem": "GOVERN", "text": "The land was later turned into Vancouver’s first park. It was named after Lord Stanley, a British politician who had recently been appointed __________ general.", "answer": "governor", "accept": ["governor"], "display_answer": "governor"}, {"num": 30, "stem": "CREATE", "text": "Unlike other large urban parks, Stanley Park is not the __________ of a landscape architect, but rather the evolution of a forest and urban space over many years.", "answer": "creation", "accept": ["creation"], "display_answer": "creation"}]}, {"variant": 32, "title": "Signal Hill", "tasks": [{"num": 25, "stem": "BEAUTY", "text": "Do you know about Signal Hill? This __________ place is located in Canada, at the entrance to St. John’s harbour.", "answer": "beautiful", "accept": ["beautiful"], "display_answer": "beautiful"}, {"num": 26, "stem": "ATTRACT", "text": "This is an important historical __________ of Canada.", "answer": "attraction", "accept": ["attraction"], "display_answer": "attraction"}, {"num": 27, "stem": "EXACT", "text": "It was __________ here, in 1901, that the first wireless transatlantic signal was received.", "answer": "exactly", "accept": ["exactly"], "display_answer": "exactly"}, {"num": 28, "stem": "BUILD", "text": "The Cabot Tower is one of the key __________ of Signal Hill.", "answer": "buildings", "accept": ["buildings"], "display_answer": "buildings"}, {"num": 29, "stem": "SYMBOL", "text": "It was constructed in 1897 to __________ the 400th anniversary of the discovery of Newfoundland. It also commemorates now G. Marconi’s reception of the first transatlantic radio telegraphy signal, transmitted over a distance of 2,700 kilometres from England.", "answer": "symbolise", "accept": ["symbolise"], "display_answer": "symbolise"}, {"num": 30, "stem": "TOUR", "text": "__________ can enjoy exhibitions on the history of Signal Hill and the history of communications (with a special section on Marconi).", "answer": "tourists", "accept": ["tourists"], "display_answer": "tourists"}]}, {"variant": 33, "title": "Evgenia Medvedeva", "tasks": [{"num": 25, "stem": "MEDAL", "text": "Evgeniya Medvedeva is an outstanding Russian figure skater. She is a two-time European and World champion and a two-time Olympic silver __________ (2018 ladies’ singles and 2018 team event).", "answer": "medalist", "accept": ["medalist"], "display_answer": "medalist"}, {"num": 26, "stem": "CHAMPION", "text": "She has many more prizes in important __________ and competitions. Medvedeva is famous for having set the world record score 13 times.", "answer": "championships", "accept": ["championships"], "display_answer": "championships"}, {"num": 27, "stem": "SUCCESS", "text": "She spent her most __________ seasons with her coach Eteri Tutberidze.", "answer": "successful", "accept": ["successful"], "display_answer": "successful"}, {"num": 28, "stem": "REAL", "text": "After taking only the second place in the 2018 Olympics Medvedeva was __________ upset and decided to change the coach.", "answer": "really", "accept": ["really"], "display_answer": "really"}, {"num": 29, "stem": "FORTUNATELY", "text": "She moved to Canada to train in Toronto Cricket Club with Brian Orser. In March 2021 she returned to Eteri Tutberidze. __________ , she hasn’t competed for a year but the world still remembers her as one of the most prominent female figure skaters in the world.", "answer": "unfortunately", "accept": ["unfortunately"], "display_answer": "unfortunately"}, {"num": 30, "stem": "RETIRE", "text": "Evgenia Medvedeva plans to coach young skaters after __________ .", "answer": "retirement", "accept": ["retirement"], "display_answer": "retirement"}]}, {"variant": 34, "title": "The Lantern Festival", "tasks": [{"num": 25, "stem": "COLOUR", "text": "The Lantern Festival is one of the most popular events in Taiwan. It has no fixed date but must be held on the first full moon of a lunar year. This __________ celebration is definitely a spectacular sight.", "answer": "colourful", "accept": ["colourful"], "display_answer": "colourful"}, {"num": 26, "stem": "VISIT", "text": "It’s not surprising that it attracts crowds of __________ from all over the world.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 27, "stem": "COUNT", "text": "During the festival people can enjoy looking at __________ lanterns in the dark sky.", "answer": "countless", "accept": ["countless"], "display_answer": "countless"}, {"num": 28, "stem": "VARY", "text": "The big lanterns come in shapes of __________ animals and birds.", "answer": "various", "accept": ["various"], "display_answer": "various"}, {"num": 29, "stem": "CERTAIN", "text": "__________ , the main lantern at the festival has the Chinese zodiac sign of the respective year.", "answer": "certainly", "accept": ["certainly"], "display_answer": "certainly"}, {"num": 30, "stem": "CREATE", "text": "The smaller lanterns represent some most important historical events. The festival includes fireworks displays and __________ activities like lantern making and lantern riddle games. You can also try delicious food right from the street stalls. This festival is an unforgettable experience for anyone.", "answer": "creative", "accept": ["creative"], "display_answer": "creative"}]}, {"variant": 35, "title": "Anton Shipulin", "tasks": [{"num": 25, "stem": "VARY", "text": "Anton Shipulin is an outstanding retired Russian biathlete. In his long career he won __________ international competitions and was considered to be among the strongest biathletes of his time.", "answer": "various", "accept": ["various"], "display_answer": "various"}, {"num": 26, "stem": "CERTAIN", "text": "In 2010 he was even awarded an order by the Russian President. Among his best achievements is __________ the gold medal in the men’s relay at the 2014 Winter Olympics in Sochi.", "answer": "certainly", "accept": ["certainly"], "display_answer": "certainly"}, {"num": 27, "stem": "SUCCESS", "text": "His sister Anastasia Kuzmina is also a __________ biathlete. She lives in Slovakia.", "answer": "successful", "accept": ["successful"], "display_answer": "successful"}, {"num": 28, "stem": "MEDAL", "text": "She is also an Olympic gold __________ .", "answer": "medalist", "accept": ["medalist"], "display_answer": "medalist"}, {"num": 29, "stem": "RETIRE", "text": "In December 2018 Shipulin announced his __________ from sports after the World Team Challenge, which is also called the Christmas Race.", "answer": "retirement", "accept": ["retirement"], "display_answer": "retirement"}, {"num": 30, "stem": "POLITICS", "text": "He is now a __________ serving in the State Duma. He has been serving there since 2019. Russia is really proud of Anton Shipulin and his victories and hopes that there will be many more sportsmen like him in the future.", "answer": "politician", "accept": ["politician"], "display_answer": "politician"}]}, {"variant": 36, "title": "Carnival of Venice", "tasks": [{"num": 25, "stem": "BEAUTY", "text": "Have you ever been to Venice? It’s a __________ Italian city with a lot of historical buildings.", "answer": "beautiful", "accept": ["beautiful"], "display_answer": "beautiful"}, {"num": 26, "stem": "ATTRACT", "text": "Still, the main __________ of Venice is not its architecture or canals, but its Carnival.", "answer": "attraction", "accept": ["attraction"], "display_answer": "attraction"}, {"num": 27, "stem": "VISIT", "text": "This festival was started in 1162, but in the 17th century this festival declined in popularity under the rule of the King of Austria and reappeared only in the 19th century. Now the Carnival of Venice is one the biggest festivals in Italy and attracts huge crowds of __________ .", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 28, "stem": "COLOUR", "text": "This event is well-known for its __________ and elaborate masks.", "answer": "colourful", "accept": ["colourful"], "display_answer": "colourful"}, {"num": 29, "stem": "ACTUAL", "text": "Masking is an important carnival tradition and can __________ be considered the main feature of the event. The Venetian mask makers also have a special position in the community.", "answer": "actually", "accept": ["actually"], "display_answer": "actually"}, {"num": 30, "stem": "PERFORM", "text": "Other activities of the Carnival of Venice include various concerts, different types of street __________ and even an unforgettable candle-lit boat parade.", "answer": "performances", "accept": ["performances"], "display_answer": "performances"}]}, {"variant": 37, "title": "Daniil Medvedev", "tasks": [{"num": 25, "stem": "CURRENT", "text": "Daniil Medvedev is a Russian professional tennis player. He is __________ ranked by the Association of Tennis Professionals (ATP) as world No 2.", "answer": "currently", "accept": ["currently"], "display_answer": "currently"}, {"num": 26, "stem": "CHILD", "text": "He was born in Moscow. In his early __________ he was interested in music.", "answer": "childhood", "accept": ["childhood"], "display_answer": "childhood"}, {"num": 27, "stem": "ADVERTISE", "text": "However, when he was 9 years old, his mother saw an __________ for group tennis lessons, and Daniil decided to try them.", "answer": "advertisement", "accept": ["advertisement"], "display_answer": "advertisement"}, {"num": 28, "stem": "IMPRESS", "text": "His first tennis coach was Ekaterina Kryuchkova, a former coach of the famous professional tennis player Vera Zvonareva. When he was 18, his results were so __________ that Medvedev even had to drop out of college to focus on tennis.", "answer": "impressive", "accept": ["impressive"], "display_answer": "impressive"}, {"num": 29, "stem": "PREDICTABLE", "text": "Medvedev is known for mirroring his opponent’s play. His play style incorporates strong returns with as few mistakes as possible and making games __________ .", "answer": "unpredictable", "accept": ["unpredictable"], "display_answer": "unpredictable"}, {"num": 30, "stem": "REAL", "text": "He has won many tournaments, and Russia __________ hopes for his new victories.", "answer": "really", "accept": ["really"], "display_answer": "really"}]}, {"variant": 38, "title": "Alexey Savrasov", "tasks": [{"num": 25, "stem": "CREATE", "text": "Alexey Savrasov is an outstanding Russian painter. He is considered to be the __________ of the lyrical landscape style.", "answer": "creator", "accept": ["creator"], "display_answer": "creator"}, {"num": 26, "stem": "VARY", "text": "Savrasov was born into the family of a merchant. He became interested in painting very early and tried __________ styles and techniques.", "answer": "various", "accept": ["various"], "display_answer": "various"}, {"num": 27, "stem": "SPECIAL", "text": "He graduated from the Moscow School of Painting, Sculpture and Architecture (MSPSA) in 1850 and began to __________ in landscape painting.", "answer": "specialise", "accept": ["specialise"], "display_answer": "specialise"}, {"num": 28, "stem": "INTEREST", "text": "In 1857 Savrasov became a teacher in the MSPSA, and his best students there were Isaac Levitan and Konstantin Korovin. After his marriage his home became one of the most __________ places for artists and collectors.", "answer": "interesting", "accept": ["interesting"], "display_answer": "interesting"}, {"num": 29, "stem": "FORTUNATELY", "text": "__________ , Savrasov sank into depression after some tragic events in his personal life.", "answer": "unfortunately", "accept": ["unfortunately"], "display_answer": "unfortunately"}, {"num": 30, "stem": "DRAMATIC", "text": "His work suffered __________ and he spent the last years of his life in poverty. Still, we admire his works and will never forget him.", "answer": "dramatically", "accept": ["dramatically"], "display_answer": "dramatically"}]}, {"variant": 39, "title": "The Ice and Snow Sculpture Festival", "tasks": [{"num": 25, "stem": "USUAL", "text": "China is famous all over the world for its exotic festivals, and the Ice and Snow Sculpture Festival is one of them. It is celebrated in Harbin. Located in the northeast of China, Harbin has very cold winter winds blowing from Siberia. The average daily temperature in Harbin in winter is __________ around 1.8 ºF.", "answer": "usually", "accept": ["usually"], "display_answer": "usually"}, {"num": 26, "stem": "VISIT", "text": "Still, despite the cold weather, __________ come to the festival to look at the largest ice sculptures in the world.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 27, "stem": "DARK", "text": "The event starts on January 5 at night. In the __________ you can still see the huge ice sculptures very well.", "answer": "darkness", "accept": ["darkness"], "display_answer": "darkness"}, {"num": 28, "stem": "COLOUR", "text": "It is so because they are illuminated with numerous __________ lights.", "answer": "colourful", "accept": ["colourful"], "display_answer": "colourful"}, {"num": 29, "stem": "COUNT", "text": "The __________ sculptures produce a lasting impression on viewers.", "answer": "countless", "accept": ["countless"], "display_answer": "countless"}, {"num": 30, "stem": "ACTIVE", "text": "Other __________ in the area during the festival include alpine skiing, touring ice lantern exhibitions in various local parks, and even swimming in the river’s icy waters.", "answer": "activities", "accept": ["activities"], "display_answer": "activities"}]}, {"variant": 40, "title": "Mikhail Vrubel", "tasks": [{"num": 25, "stem": "CHILD", "text": "Mikhail Vrubel is a renowned Russian painter who worked in almost all genres of art, including graphics and sculpture. He was born in Omsk to an ordinary family. In his early __________ Vrubel was very weak because of the harsh Siberian climate.", "answer": "children", "accept": ["children"], "display_answer": "children"}, {"num": 26, "stem": "FORTUNATE", "text": "__________ , his family moved to warmer regions, where Vrubel quickly got better.", "answer": "fortunately", "accept": ["fortunately"], "display_answer": "fortunately"}, {"num": 27, "stem": "ARTIST", "text": "Mikhail Vrubel showed his __________ talent at the age of 10.", "answer": "artistic", "accept": ["artistic"], "display_answer": "artistic"}, {"num": 28, "stem": "TEACH", "text": "That is why his father hired a private __________ so that he could learn the advanced painting techniques.", "answer": "teacher", "accept": ["teacher"], "display_answer": "teacher"}, {"num": 29, "stem": "ILLUSTRATE", "text": "Still, after finishing school Vrubel decided to study law. While studying at university, Vrubel practised art only through making __________ for books.", "answer": "illustrations", "accept": ["illustrations"], "display_answer": "illustrations"}, {"num": 30, "stem": "USUAL", "text": "He didn’t finish university and entered the Imperial Academy of Arts and made friends with Serov. His most famous works are the __________ pictures The Swan Princess and Demon Downcast.", "answer": "unusual", "accept": ["unusual"], "display_answer": "unusual"}]}, {"variant": 41, "title": "WOMAD", "tasks": [{"num": 25, "stem": "VARY", "text": "Have you heard about WOMAD? It is one of the most famous musical festivals which is held in late July. The abbreviation WOMAD stands for the World of Music, Arts and Dance. It was founded in 1980, and since then it has been focusing on embracing the world’s __________ of cultures.", "answer": "variety", "accept": ["variety"], "display_answer": "variety"}, {"num": 26, "stem": "NATIONAL", "text": "The festival encourages __________ friendship and breaking down the boundaries through art, music, and movement.", "answer": "international", "accept": ["international"], "display_answer": "international"}, {"num": 27, "stem": "CREATE", "text": "Besides musical performances, WOMAD offers __________ workshops for children, including circus skills, painting and storytelling.", "answer": "creative", "accept": ["creative"], "display_answer": "creative"}, {"num": 28, "stem": "VISIT", "text": "For adults __________ there are workshops on dancing and playing exotic musical instruments.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 29, "stem": "COUNT", "text": "There are __________ other activities like lessons of exotic cuisines conducted by musicians themselves or discussions of global concerns.", "answer": "countless", "accept": ["countless"], "display_answer": "countless"}, {"num": 30, "stem": "CERTAIN", "text": "Going to this festival will __________ be an unforgettable experience for anyone.", "answer": "certainly", "accept": ["certainly"], "display_answer": "certainly"}]}, {"variant": 42, "title": "Capilano Suspension Bridge", "tasks": [{"num": 25, "stem": "CERTAIN", "text": "Canada can boast of many sights. Capilano Suspension Bridge is __________ one of them.", "answer": "certainly", "accept": ["certainly"], "display_answer": "certainly"}, {"num": 26, "stem": "BEAUTY", "text": "It is a __________ bridge in Canada, located near Vancouver. It is located at an altitude of 70 meters above the Capilano River.", "answer": "beautiful", "accept": ["beautiful"], "display_answer": "beautiful"}, {"num": 27, "stem": "TOUR", "text": "It was originally built as a shorter path to the local mill to make life easier for employees. Going over this bridge is quite an adventure for __________ .", "answer": "tourists", "accept": ["tourists"], "display_answer": "tourists"}, {"num": 28, "stem": "WIND", "text": "If the weather is __________ , the bridge sways from side to side. Despite this, it is always crowded.", "answer": "windy", "accept": ["windy"], "display_answer": "windy"}, {"num": 29, "stem": "VARY", "text": "People come here for the fresh and clean air, the scent of pine needles and __________ attractions on the other side of the bridge.", "answer": "various", "accept": ["various", "varios"], "display_answer": "various"}, {"num": 30, "stem": "SHOP", "text": "There is a park there with all sorts of entertainment and great boutiques for enthusiastic __________ .", "answer": "shoppers", "accept": ["shoppers"], "display_answer": "shoppers"}]}, {"variant": 43, "title": "Vladislav Tretyak", "tasks": [{"num": 25, "stem": "NATURE", "text": "Vladislav Tretyak is an outstanding Russian hockey player. He is considered to be one of the best goaltenders in the history of ice hockey. He was born in 1952 in a family of a military pilot and a PE teacher. So, it was only __________ that Tretyak did much sport in his early childhood.", "answer": "natural", "accept": ["natural"], "display_answer": "natural"}, {"num": 26, "stem": "VARY", "text": "He tried __________ sports and wanted to excel in all of them, but fell in love with ice hockey at the age of 11.", "answer": "various", "accept": ["various"], "display_answer": "various"}, {"num": 27, "stem": "ACTUAL", "text": "He entered the Children and Youth Sports School of the CSKA, where he began playing goaltender when he saw that, __________, no one else had the desire or courage to play the position.", "answer": "actually", "accept": ["actually"], "display_answer": "actually"}, {"num": 28, "stem": "NATIONAL", "text": "By the age of 19, Tretyak was already famous not only in Russia, but also on the __________ level.", "answer": "international", "accept": ["international"], "display_answer": "international"}, {"num": 29, "stem": "PERFORM", "text": "His great __________ in the Summit Series in 1972 earned him a massive fan base all over the world. Tretyak retired at the age of 32 to spend more time with his family. He is the current president of the Ice Hockey Federation in Russia.", "answer": "performance", "accept": ["performance"], "display_answer": "performance"}]}, {"variant": 44, "title": "The Ice and Snow Sculpture Festival", "tasks": [{"num": 25, "stem": "USUAL", "text": "China is famous all over the world for its exotic festivals, and the Ice and Snow Sculpture Festival is one of them. It is celebrated in Harbin. Located in the northeast of China, Harbin has very cold winter winds blowing from Siberia. The average daily temperature in Harbin in winter is __________ around 1.8 ºF.", "answer": "usually", "accept": ["usually"], "display_answer": "usually"}, {"num": 26, "stem": "VISIT", "text": "Still, despite the cold weather, __________ come to the festival to look at the largest ice sculptures in the world.", "answer": "visitors", "accept": ["visitors"], "display_answer": "visitors"}, {"num": 27, "stem": "DARK", "text": "The event starts on January 5 at night. In the __________ you can still see the huge ice sculptures very well.", "answer": "darkness", "accept": ["darkness"], "display_answer": "darkness"}, {"num": 28, "stem": "COLOUR", "text": "It is so because they are illuminated with numerous __________ lights.", "answer": "colourful", "accept": ["colourful"], "display_answer": "colourful"}, {"num": 29, "stem": "COUNT", "text": "The __________ sculptures produce a lasting impression on viewers.", "answer": "countless", "accept": ["countless"], "display_answer": "countless"}, {"num": 30, "stem": "ACTIVE", "text": "Other __________ in the area during the festival include alpine skiing, touring ice lantern exhibitions in various local parks, and even swimming in the river’s icy waters.", "answer": "activities", "accept": ["activities"], "display_answer": "activities"}]}, {"variant": 45, "title": "GeoSure Global", "tasks": [{"num": 25, "stem": "CERTAIN", "text": "GeoSure Global is a great mobile app for travellers. It is __________ a revolutionary safety service aimed at ensuring that your trips involve fewer risks.", "answer": "certainly", "accept": ["certainly"], "display_answer": "certainly"}, {"num": 26, "stem": "COUNT", "text": "GeoSure Global provides safety ratings for __________ neighborhoods all over the world.", "answer": "countless", "accept": ["countless"], "display_answer": "countless"}, {"num": 27, "stem": "TOUR", "text": "These ratings offer a general view of how safe an area is and are broken down into lots of smaller categories, each with their own scores. Examples include health and medical care, theft and so on. If you’re travelling to a foreign country as a __________, you may be at greater risk of crimes like pickpocketing.", "answer": "tourist", "accept": ["tourist"], "display_answer": "tourist"}, {"num": 28, "stem": "AMAZE", "text": "The __________ app updates as you move around, letting you explore a city.", "answer": "amazing", "accept": ["amazing"], "display_answer": "amazing"}, {"num": 29, "stem": "LOCATE", "text": "Thus, you will have constant up-to-date readings on the security and safety of the area around you and the neighbouring __________. It’s a great tool for any traveller to have.", "answer": "location", "accept": ["location"], "display_answer": "location"}]}, {"variant": 46, "title": "Arenal Volcano", "tasks": [{"num": 25, "stem": "IMPRESS", "text": "Costa Rica is a country that has a lot of volcanoes. Even so, Arenal Volcano is one of the greatest natural wonders of this country. It is one of the most __________ volcanoes in the world. It is a stratovolcano whose height is 5,437 feet.", "answer": "impressive", "accept": ["impressive"], "display_answer": "impressive"}, {"num": 26, "stem": "VIOLENT", "text": "After a long dormant period, Arenal erupted __________ in 1968, covering a vast area of over 15 km in lava, rocks and ash.", "answer": "violently", "accept": ["violently"], "display_answer": "violently"}, {"num": 27, "stem": "ERUPT", "text": "Several minor __________ followed. Since that time Arenal Volcano has been a popular tourist attraction.", "answer": "eruptions", "accept": ["eruptions"], "display_answer": "eruptions"}, {"num": 28, "stem": "HIKE", "text": "The volcano is located in a beautiful national park which is a perfect place for both amateur and professional __________.", "answer": "hikers", "accept": ["hikers"], "display_answer": "hikers"}, {"num": 29, "stem": "ACTIVE", "text": "Among numerous outdoor __________, visitors to the Arenal Volcano National Park can enjoy adventure tours to the rainforest there or just relax in a natural geothermal hot spring.", "answer": "activities", "accept": ["activities"], "display_answer": "activities"}]}, {"variant": 47, "title": "Candles", "tasks": [{"num": 25, "stem": "VARY", "text": "If you have an active profile in any social media, you may have noticed how often candles feature in people’s posts and stories. In fact, there are __________ reasons why people use candles at home.", "answer": "various", "accept": ["various"], "display_answer": "various"}, {"num": 26, "stem": "HEAVY", "text": "To begin with, candles create a cozy atmosphere. It is so nice to burn a candle when it is raining __________ outdoors.", "answer": "heavily", "accept": ["heavily"], "display_answer": "heavily"}, {"num": 27, "stem": "STRESS", "text": "It gives soft and pleasant light which is especially good for people after a __________ day at school or at work.", "answer": "stressful", "accept": ["stressful"], "display_answer": "stressful"}, {"num": 28, "stem": "CELEBRATE", "text": "You may light a candle at your evening mealtime and have a quiet conversation with your nearest and dearest. Moreover, we burn candles when we have an important __________ like a birthday or on seasonal holidays. It creates a festive feeling in us.", "answer": "celebration", "accept": ["celebration"], "display_answer": "celebration"}, {"num": 29, "stem": "AMAZE", "text": "Finally, candles simply look __________ and are a great decoration.", "answer": "amazing", "accept": ["amazing"], "display_answer": "amazing"}]}, {"variant": 48, "title": "Rovos Rail", "tasks": [{"num": 25, "stem": "POSSIBLE", "text": "If you dislike travelling by train, you will probably change your mind after trying one of the scenic rides the world has to offer. One of such rides which are __________ to forget is the Rovos Rail in South Africa.", "answer": "impossible", "accept": ["impossible"], "display_answer": "impossible"}, {"num": 26, "stem": "DIVERSE", "text": "The train has several routes. You will pass through a number of African countries and admire the __________ of their landscapes.", "answer": "diversity", "accept": ["diversity"], "display_answer": "diversity"}, {"num": 27, "stem": "FASCINATE", "text": "You will see wildlife national parks, historical battlefields and __________ cities.", "answer": "fascinating", "accept": ["fascinating"], "display_answer": "fascinating"}, {"num": 28, "stem": "ENTERTAIN", "text": "Onboard, the passengers can use various facilities like a dining car, luxury sleeping cabins and themed __________.", "answer": "entertainment", "accept": ["entertainment"], "display_answer": "entertainment"}, {"num": 29, "stem": "EXCEPTION", "text": "All types of cabins have ensuite showers, sinks and restrooms, and some of them even have bathtubs. With its __________ service, Rovos Rail is truly one of the greatest train journeys in the world.", "answer": "exceptional", "accept": ["exceptional"], "display_answer": "exceptional"}]}, {"variant": 49, "title": "Sketching", "tasks": [{"num": 25, "stem": "DEFINITE", "text": "Hobbies are a great way to relax and unwind after a busy day at school or at work. One of the most popular hobbies nowadays is sketching. It is __________ a good hobby for you if you want to start thinking in a different way.", "answer": "definitely", "accept": ["definitely"], "display_answer": "definitely"}, {"num": 26, "stem": "CREATE", "text": "Sketching develops your __________.", "answer": "creativity", "accept": ["creativity"], "display_answer": "creativity"}, {"num": 27, "stem": "DEVELOP", "text": "It can be very helpful for your personal __________.", "answer": "development", "accept": ["development"], "display_answer": "development"}, {"num": 28, "stem": "ILLUSTRATE", "text": "Besides, you can apply the skills you learn through sketching in a number ways in your life. To begin with, you may become interested in a career of an __________.", "answer": "illustrator", "accept": ["illustrator"], "display_answer": "illustrator"}, {"num": 29, "stem": "COMMUNICATE", "text": "Moreover, you will never need a camera when you are on holiday because your drawings will be the best memories about your trip. Finally, while sketching you learn to notice your feelings and emotions and thus improve your __________ skills.", "answer": "communicative", "accept": ["communicative"], "display_answer": "communicative"}]}, {"variant": 50, "title": "The Galapagos Islands", "tasks": [{"num": 25, "stem": "AMAZE", "text": "The world-renowned Galapagos archipelago is located in the Pacific Ocean, approximately 1,000 km off the coast of Ecuador. The remote islands are one of the world’s most __________ wildlife viewing destinations. Thus, they feature on the bucket", "answer": "amazing", "accept": ["amazing"], "display_answer": "amazing"}, {"num": 26, "stem": "ADVENTURE", "text": "lists of many __________. The waters around the", "answer": "adventures", "accept": ["adventures"], "display_answer": "adventures"}, {"num": 27, "stem": "COLLECT", "text": "islands are home to a vast __________ of marine life, which makes scuba diving in the area one of the highlights of any visit.", "answer": "collection", "accept": ["collection"], "display_answer": "collection"}, {"num": 28, "stem": "INHABITED", "text": "You can either explore the islands on a boat or go on day trips to the more remote __________ islands where no one lives.", "answer": "uninhabited", "accept": ["uninhabited"], "display_answer": "uninhabited"}, {"num": 29, "stem": "CAREFUL", "text": "As the islands are home to such an exceptional diversity of wildlife, much of which is found nowhere else on Earth, tourism is very __________ controlled to protect the fragile environment.", "answer": "carefully", "accept": ["carefully"], "display_answer": "carefully"}]}]}</script>
+<script>
+const BANK = JSON.parse(document.getElementById('bank-data').textContent);
+const state = {
+  mode: 'variant',
+  variant: 1,
+  search: '',
+  randomSet: []
+};
+
+const els = {
+  variantSelect: document.getElementById('variantSelect'),
+  variantGrid: document.getElementById('variantGrid'),
+  taskList: document.getElementById('taskList'),
+  heading: document.getElementById('heading'),
+  subtitle: document.getElementById('subtitle'),
+  modeLabel: document.getElementById('modeLabel'),
+  scorePill: document.getElementById('scorePill'),
+  progressBar: document.getElementById('progressBar'),
+  progressText: document.getElementById('progressText'),
+  search: document.getElementById('search'),
+  modeVariant: document.getElementById('modeVariant'),
+  modeAll: document.getElementById('modeAll'),
+  modeRandom: document.getElementById('modeRandom'),
+  checkBtn: document.getElementById('checkBtn'),
+  showBtn: document.getElementById('showBtn'),
+  nextBtn: document.getElementById('nextBtn'),
+  randomBtn: document.getElementById('randomBtn'),
+  resetBtn: document.getElementById('resetBtn')
+};
+
+function norm(value) {
+  return (value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[’‘`]/g, "'")
+    .replace(/\s+/g, ' ');
+}
+
+function getVariant(n) {
+  return BANK.variants.find(v => v.variant === Number(n));
+}
+
+function allTasksFlat() {
+  const arr = [];
+  BANK.variants.forEach(v => {
+    v.tasks.forEach((t, idx) => arr.push({...t, variant: v.variant, title: v.title, index: idx}));
+  });
+  return arr;
+}
+
+function filteredVariants() {
+  const q = norm(state.search);
+  if (!q) return BANK.variants;
+  return BANK.variants.filter(v => 
+    norm(v.title).includes(q) || String(v.variant).includes(q)
+  );
+}
+
+function initControls() {
+  BANK.variants.forEach(v => {
+    const opt = document.createElement('option');
+    opt.value = v.variant;
+    opt.textContent = `Вариант ${v.variant} — ${v.title}`;
+    els.variantSelect.appendChild(opt);
+  });
+  els.variantSelect.value = state.variant;
+  renderVariantGrid();
+
+  els.variantSelect.addEventListener('change', () => {
+    state.variant = Number(els.variantSelect.value);
+    state.mode = 'variant';
+    setModeButtons();
+    render();
+  });
+
+  els.search.addEventListener('input', () => {
+    state.search = els.search.value;
+    renderVariantGrid();
+  });
+
+  els.modeVariant.addEventListener('click', () => setMode('variant'));
+  els.modeAll.addEventListener('click', () => setMode('all'));
+  els.modeRandom.addEventListener('click', () => {
+    state.randomSet = pickRandom(30);
+    setMode('random');
+  });
+
+  els.checkBtn.addEventListener('click', checkAnswers);
+  els.showBtn.addEventListener('click', revealAnswers);
+  els.resetBtn.addEventListener('click', resetAnswers);
+  els.nextBtn.addEventListener('click', () => {
+    state.variant = state.variant >= BANK.variants.length ? 1 : state.variant + 1;
+    state.mode = 'variant';
+    els.variantSelect.value = state.variant;
+    setModeButtons();
+    render();
+  });
+  els.randomBtn.addEventListener('click', () => {
+    state.variant = Math.floor(Math.random() * BANK.variants.length) + 1;
+    state.mode = 'variant';
+    els.variantSelect.value = state.variant;
+    setModeButtons();
+    render();
+  });
+}
+
+function renderVariantGrid() {
+  els.variantGrid.innerHTML = '';
+  const list = filteredVariants();
+  if (!list.length) {
+    els.variantGrid.innerHTML = '<div class="empty" style="grid-column:1/-1;padding:12px;">Ничего не найдено</div>';
+    return;
+  }
+  list.forEach(v => {
+    const b = document.createElement('button');
+    b.className = 'vbtn' + (state.variant === v.variant && state.mode === 'variant' ? ' active' : '');
+    b.type = 'button';
+    b.textContent = v.variant;
+    b.title = v.title;
+    b.addEventListener('click', () => {
+      state.variant = v.variant;
+      state.mode = 'variant';
+      els.variantSelect.value = state.variant;
+      setModeButtons();
+      render();
+    });
+    els.variantGrid.appendChild(b);
+  });
+}
+
+function setMode(mode) {
+  state.mode = mode;
+  setModeButtons();
+  render();
+}
+
+function setModeButtons() {
+  els.modeVariant.classList.toggle('active', state.mode === 'variant');
+  els.modeAll.classList.toggle('active', state.mode === 'all');
+  els.modeRandom.classList.toggle('active', state.mode === 'random');
+  renderVariantGrid();
+}
+
+function pickRandom(count) {
+  const flat = allTasksFlat();
+  for (let i = flat.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [flat[i], flat[j]] = [flat[j], flat[i]];
+  }
+  return flat.slice(0, count);
+}
+
+function currentGroups() {
+  if (state.mode === 'variant') {
+    const v = getVariant(state.variant);
+    return [{variant: v.variant, title: v.title, tasks: v.tasks}];
+  }
+  if (state.mode === 'all') {
+    return BANK.variants.map(v => ({variant: v.variant, title: v.title, tasks: v.tasks}));
+  }
+  if (!state.randomSet.length) state.randomSet = pickRandom(30);
+  const grouped = new Map();
+  state.randomSet.forEach(t => {
+    const key = t.variant;
+    if (!grouped.has(key)) grouped.set(key, {variant: t.variant, title: t.title, tasks: []});
+    grouped.get(key).tasks.push(t);
+  });
+  return Array.from(grouped.values()).sort((a,b) => a.variant - b.variant);
+}
+
+function render() {
+  els.taskList.innerHTML = '';
+  const groups = currentGroups();
+
+  if (state.mode === 'variant') {
+    const v = getVariant(state.variant);
+    els.heading.textContent = `Вариант ${v.variant} — ${v.title}`;
+    els.modeLabel.textContent = 'Режим по вариантам';
+    els.subtitle.textContent = `Заданий в варианте: ${v.tasks.length}. Нажмите на исходное слово справа, чтобы сразу открыть ответ.`;
+  } else if (state.mode === 'all') {
+    els.heading.textContent = 'Весь банк заданий';
+    els.modeLabel.textContent = 'Полный режим';
+    els.subtitle.textContent = `Открыты все ${BANK.meta.tasks} заданий из 50 вариантов. Каждый вариант оформлен отдельным листом.`;
+  } else {
+    els.heading.textContent = 'Смешанный тренинг';
+    els.modeLabel.textContent = 'Рандом 30';
+    els.subtitle.textContent = 'Случайная подборка из всего банка. Нажмите «Микс 30» ещё раз, чтобы обновить набор.';
+  }
+
+  groups.forEach(group => {
+    const sheet = document.createElement('section');
+    sheet.className = 'variant-sheet';
+    sheet.innerHTML = `
+      <div class="sheet-head">
+        <h3>Вариант ${group.variant} — ${escapeHtml(group.title)}</h3>
+        <p>Прочитайте текст. Образуйте от слова справа однокоренное слово так, чтобы оно грамматически и лексически соответствовало содержанию текста.</p>
+      </div>
+      <div class="exam-table"></div>
+    `;
+    const body = sheet.querySelector('.exam-table');
+    group.tasks.forEach((task, i) => {
+      const row = createTaskCard(group, task, i);
+      body.appendChild(row);
+    });
+    els.taskList.appendChild(sheet);
+  });
+
+  attachInputNav();
+  updateProgress();
+  renderVariantGrid();
+}
+
+function createTaskCard(group, task, localIndex) {
+  const globalKey = `${group.variant}-${task.num}-${localIndex}`;
+  const div = document.createElement('div');
+  div.className = 'task';
+  div.dataset.answer = task.answer;
+  div.dataset.accept = JSON.stringify(task.accept || [task.answer]);
+  div.dataset.key = globalKey;
+  div.dataset.variant = group.variant;
+  div.dataset.num = task.num;
+
+  const parts = String(task.text).split('__________');
+  const inputHtml = `<input class="answer-input" data-task-key="${globalKey}" autocomplete="off" spellcheck="false" aria-label="Ответ задания ${task.num}">`;
+  const textHtml = parts.map(escapeHtml).join(inputHtml);
+
+  div.innerHTML = `
+    <span class="task-no">${task.num}</span>
+    <div class="task-text">${textHtml}</div>
+    <button class="stem answer-toggle" type="button" title="Нажмите, чтобы показать ответ">${escapeHtml(task.stem)}</button>
+    <div class="feedback" aria-live="polite"></div>
+  `;
+  return div;
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function attachInputNav() {
+  const inputs = [...document.querySelectorAll('.answer-input')];
+  inputs.forEach((inp, idx) => {
+    inp.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (idx + 1 < inputs.length) inputs[idx+1].focus();
+        else checkAnswers();
+      }
+    });
+    inp.addEventListener('input', () => {
+      inp.classList.remove('correct-field','wrong-field');
+      const task = inp.closest('.task');
+      task.classList.remove('correct','wrong','revealed');
+      const fb = task.querySelector('.feedback');
+      fb.innerHTML = '';
+      updateProgress(false);
+    });
+  });
+
+  document.querySelectorAll('.answer-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const task = btn.closest('.task');
+      const fb = task.querySelector('.feedback');
+      task.classList.remove('correct','wrong');
+      task.classList.add('revealed');
+      fb.innerHTML = `Ответ: <span class="correct-word">${escapeHtml(task.dataset.answer)}</span>`;
+    });
+  });
+}
+
+function checkAnswers() {
+  const tasks = [...document.querySelectorAll('.task')];
+  let done = 0, correct = 0;
+  tasks.forEach(task => {
+    const input = task.querySelector('.answer-input');
+    const user = norm(input.value);
+    const accepts = JSON.parse(task.dataset.accept).map(norm);
+    const answer = task.dataset.answer;
+    const fb = task.querySelector('.feedback');
+    task.classList.remove('correct','wrong','revealed');
+    input.classList.remove('correct-field','wrong-field');
+
+    if (!user) {
+      fb.innerHTML = 'Ответ не введён.';
+      return;
+    }
+    done++;
+    if (accepts.includes(user)) {
+      correct++;
+      task.classList.add('correct');
+      input.classList.add('correct-field');
+      fb.innerHTML = `Верно: <span class="correct-word">${escapeHtml(answer)}</span>`;
+    } else {
+      task.classList.add('wrong');
+      input.classList.add('wrong-field');
+      fb.innerHTML = `Ваш ответ: <span class="wrong-word">${escapeHtml(input.value.trim())}</span>. Правильно: <span class="correct-word">${escapeHtml(answer)}</span>`;
+    }
+  });
+  updateProgress(true, correct, tasks.length, done);
+  if (tasks.length) {
+    const firstWrong = document.querySelector('.task.wrong');
+    if (firstWrong) firstWrong.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+
+function revealAnswers() {
+  const tasks = [...document.querySelectorAll('.task')];
+  tasks.forEach(task => {
+    const fb = task.querySelector('.feedback');
+    task.classList.add('revealed');
+    task.classList.remove('correct','wrong');
+    const stem = task.querySelector('.stem').textContent;
+    fb.innerHTML = `Основа: <b>${escapeHtml(stem)}</b> → ответ: <span class="correct-word">${escapeHtml(task.dataset.answer)}</span>`;
+  });
+  updateProgress(false);
+}
+
+function resetAnswers() {
+  document.querySelectorAll('.answer-input').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct-field','wrong-field');
+  });
+  document.querySelectorAll('.task').forEach(task => {
+    task.classList.remove('correct','wrong','revealed');
+    task.querySelector('.feedback').innerHTML = '';
+  });
+  updateProgress(false);
+  const firstInput = document.querySelector('.answer-input');
+  if (firstInput) firstInput.focus();
+}
+
+function updateProgress(afterCheck=false, checkedCorrect=0, totalOverride=null, doneOverride=null) {
+  const tasks = [...document.querySelectorAll('.task')];
+  const total = totalOverride ?? tasks.length;
+  let correct = checkedCorrect;
+  let done = doneOverride ?? 0;
+
+  if (!afterCheck) {
+    correct = document.querySelectorAll('.task.correct').length;
+    done = [...document.querySelectorAll('.answer-input')].filter(i => i.value.trim()).length;
+  }
+
+  const pct = total ? Math.round((correct / total) * 100) : 0;
+  els.progressBar.style.width = `${pct}%`;
+  els.scorePill.textContent = `${correct} / ${total}`;
+  if (afterCheck) {
+    els.progressText.textContent = `Проверено: ${done} из ${total}. Верно: ${correct}. Результат: ${pct}%.`;
+  } else {
+    els.progressText.textContent = `Заполнено: ${done} из ${total}. Верно после проверки: ${correct}.`;
+  }
+}
+
+initControls();
+render();
+</script>
+</body>
+</html>
