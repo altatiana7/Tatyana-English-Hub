@@ -803,6 +803,14 @@ function lesson(P,U,k,bi){
   const doneSet=new Set();
   function overview(){
     clearTimers();stopAudio();stg.innerHTML='';
+    if(L.book){ /* lesson path: one row per stage, steps numbered in teaching order, the next step is highlighted */
+      const path=h('div','path');let g0=null,row=null,si=0;let next=L.blocks.findIndex((b,j)=>!doneSet.has(j));
+      L.blocks.forEach((b,j)=>{
+        if(!row||b.grp!==g0){g0=b.grp;si++;const r=h('div','srow s'+((si-1)%7));r.append(h('div','slab',`<i>${si}</i><span>${esc(g0||'Lesson')}</span>`));row=h('div','stiles');r.append(row);path.append(r);}
+        const x=h('button','stile'+(doneSet.has(j)?' done':'')+(j===next?' next':''),`<i>${doneSet.has(j)?'✓':j+1}</i><span>${esc(b.title)}</span>${b.tag&&!/^(Game|Finish|Warm-up|Predict|Speaking|Start|Reading|Speed)$/.test(b.tag)?`<small>${esc(b.tag)}</small>`:''}`);
+        x.title=b.title+(b.mech?' · '+b.mech:'');x.onclick=()=>open(j);row.append(x);});
+      stg.append(path);return;
+    }
     const t=h('div','tiles'+(L.book?' book':''));let g=null;
     L.blocks.forEach((b,j)=>{if(b.grp&&b.grp!==g){g=b.grp;t.append(h('div','tgrp',esc(g)));}
       const th=(b.img||(b.items&&b.items[0]&&b.items[0].img)||'').replace(/^book\//,'');

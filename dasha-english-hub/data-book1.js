@@ -452,4 +452,15 @@ const T={
    'Workbook: Ex 1 — aunt, father, brother, daughter, granny. Ex 2 — garden, American, school, France, home. Ex 3 — are, is, aren’t, are, ’m not. Ex 4 — His, Freddie’s, her, Nadia’s, Clara’s. Ex 5 — is, Hi, Nice, meet, too.<br><b>Finishing:</b> Check yourself! — ученик отмечает, что умеет.'+hw('14–15')}
 };
 Object.keys(T).forEach(id=>{const L=find(id);if(!L)return;const t=T[id];L.blocks=t.blocks.filter(Boolean);L.teach=t.teach;L.name=t.name;L.short=t.short;L.book=true;});
+
+/* ---------- Reading stage in every textbook lesson: sounds and letter teams from the Reading Lab, step by step ---------- */
+const RD='Reading · sounds';
+const RMAP={'0.1':'R1','0.2':'R2','0.3':'R3','1.1':'R4','1.2':'R7','1.3':'R8','1.4':'R9','1.5':'R10','1.6':'R13','1.7':'R9'};
+const rfind=id=>{let r=null;D.paths.forEach(P=>{if(P.id==='read')P.units.forEach(U=>U.lessons.forEach(L=>{if(L.id===id)r=L;}));});return r;};
+Object.keys(RMAP).forEach(id=>{const L=find(id),R=rfind(RMAP[id]);if(!L||!R)return;
+  const pick=(title,nt)=>{const b=R.blocks.find(o=>o.title===title);return b?Object.assign({},b,{grp:RD,tag:'Reading',title:nt,hl:b.hl||R.hl}):null;};
+  const add=[pick('Sound of the day','Sounds: '+R.short),pick('Read the words','Read the words'),pick('Sort by sound','Sort by sound'),pick('Speed game','Speed reading')].filter(Boolean);
+  let k=0;while(k<L.blocks.length&&L.blocks[k].grp===WU)k++;
+  L.blocks=L.blocks.slice(0,k).concat(add,L.blocks.slice(k));
+  L.teach=(L.teach||'')+'<br><b>Reading · sounds:</b> блок чтения из Reading Lab — '+R.name+'. Полный урок по этим звукам открывается с главного экрана (плитки с буквами).';});
 })();
