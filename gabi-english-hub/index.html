@@ -157,7 +157,7 @@ button{font:inherit}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 .dock.mod{justify-content:start}.dock.mod .tile{flex-direction:column;align-items:stretch;gap:4px;padding:5px 5px 7px;min-height:0;border-radius:14px}.dock.mod .th{width:100%;height:clamp(44px,7.5vh,70px);align-self:auto;border-radius:9px}.dock.mod .th.num{display:grid;place-items:center;background:linear-gradient(135deg,#1787cf,#0a315f)}.dock.mod .th.num u{text-decoration:none;color:#ffd23f;font:800 26px/1 Montserrat,sans-serif}.dock.mod .tile b{font-size:clamp(11.5px,.9vw,13.5px);line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.dock.mod .tile small{font-size:clamp(8px,.6vw,10px);letter-spacing:.1em}
 </style>
-<style>.sidebar a.hwBtn{display:flex;align-items:center;min-height:38px;margin:0 0 10px;padding:0 10px;border-radius:12px;background:linear-gradient(135deg,#15845b,#2fae7a);color:#fff;font:800 13px Arial,sans-serif;letter-spacing:.04em;text-decoration:none;box-shadow:0 6px 14px rgba(21,132,91,.25)}.sidebar a.hwBtn:hover{filter:brightness(1.07)}</style>
+<style>.sidebar a.hwBtn{display:flex;align-items:center;min-height:38px;margin:0 0 10px;padding:0 10px;border-radius:12px;background:linear-gradient(135deg,#15845b,#2fae7a);color:#fff;font:800 13px Arial,sans-serif;letter-spacing:.04em;text-decoration:none;box-shadow:0 6px 14px rgba(21,132,91,.25)}.sidebar a.hwBtn:hover{filter:brightness(1.07)}.hwBtn .hwNew{margin-left:auto;white-space:nowrap;background:#e8a317;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;letter-spacing:0}</style>
 </head>
 <body>
 <main class="board" id="board" aria-label="Gabi English Hub Gateway to the World B1 interactive board">
@@ -185,7 +185,7 @@ button{font:inherit}
   <aside class="sidebar" aria-label="Modules">
     <div class="brand"><b>GABI</b><span>GATEWAY B1 + FOCUS 2</span></div>
     <button class="homeBtn" id="homeBtn">HOME</button>
-    <a class="hwBtn" id="hwBtn" href="../gabi-homework/teacher-check.html?v=20261108">HOMEWORK GABI</a>
+    <a class="hwBtn" id="hwBtn" href="../gabi-homework/teacher-check.html?v=20261109">HOMEWORK GABI</a>
     <div id="moduleNav"></div>
   </aside>
 </main>
@@ -379,5 +379,12 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
 </script>
 <script src="fullscreen-open.js?v=20261019-b"></script>
 <script src="../shared/page-label.js?v=20261104"></script>
+<script>/* HOMEWORK GABI: число новых присланных работ Габи (из общей базы, без запроса пароля) */
+(function(){const btn=document.getElementById('hwBtn');if(!btn)return;let c='';try{c=localStorage.getItem('arina-teacher-code')||''}catch(e){}if(!c)return;
+const DB='https://lzxcmrlubhjfdhtqvqzt.supabase.co',KEY='sb_publishable_PmyZRwzWne8lqprej4XJQA_XiujtjEI';
+fetch(DB+'/rest/v1/rpc/get_arina_homework',{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json'},body:JSON.stringify({p_teacher_code:c})})
+.then(r=>r.ok?r.json():[]).then(rows=>{let seen;try{seen=new Set(JSON.parse(localStorage.getItem('hw-seen-keys')||'[]'))}catch(e){seen=new Set()}
+ const pages=new Set();(rows||[]).forEach(x=>{const t=String(x&&x.test_id||'');if(t.indexOf('gabi:')===0&&!seen.has(String(x.id||x.created_at)))pages.add(t.slice(5).split('~p')[0])});
+ if(pages.size){const s=document.createElement('span');s.className='hwNew';s.textContent=pages.size+' NEW';btn.appendChild(s)}}).catch(()=>{})})();</script>
 </body>
 </html>

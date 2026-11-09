@@ -144,18 +144,6 @@
     border: 1px solid rgba(255,255,255,0.22);
   }
 
-  /* Входящие: домашки, которые ученики отправили */
-  .inbox{margin:6px 0 14px;border-radius:14px;background:#fff;border:2px solid #d9d6cc;padding:10px 12px}
-  .inbox.has{border-color:#2f9e6b;background:#f0faf4;box-shadow:0 0 0 3px rgba(47,158,107,.18)}
-  .inbox h2{font-size:.95rem;margin:0 0 6px;display:flex;align-items:center;gap:8px}
-  .inbox .cnt{background:#2f9e6b;color:#fff;border-radius:999px;font-size:.75rem;padding:1px 9px;font-weight:800}
-  .inbox .r{display:flex;gap:8px;align-items:center;font-size:.82rem;padding:5px 0;border-top:1px solid #e6e3d9}
-  .inbox .r.new{font-weight:800}
-  .inbox .r .nw{background:#e8a317;color:#fff;border-radius:6px;font-size:.62rem;padding:1px 6px;letter-spacing:.06em}
-  .inbox .r .t{margin-left:auto;color:var(--muted);font-weight:500;font-size:.74rem;white-space:nowrap}
-  .inbox button{font:inherit;font-size:.78rem;padding:4px 10px;border-radius:8px;border:1px solid #c9c5b8;background:#fff;cursor:pointer}
-  .inbox .inhead{display:flex;width:100%;align-items:center;gap:8px;font:inherit;font-weight:800;font-size:.95rem;background:none;border:0;padding:0;cursor:pointer;color:var(--ink)}
-  .inbox .arch{margin-top:8px;border-top:1px solid #e6e3d9;padding-top:6px}.inbox summary{cursor:pointer;font-weight:700;font-size:.82rem;padding:3px 0}.inbox .arch2{margin-left:10px}
 </style>
 
 <div class="page-header">
@@ -163,28 +151,6 @@
 </div>
 
 
-<div class="inbox" id="inbox"><button type="button" id="inToggle" class="inhead"><span>Входящие домашки</span> <span class="cnt" id="inCnt" hidden></span> <span id="inArrow" style="margin-left:auto">▾</span></button>
-<div id="inPanel" hidden>
-<div id="inList" style="font-size:.82rem;color:var(--muted)">Загружаю…</div>
-<div style="margin-top:8px;display:flex;gap:8px"><button type="button" id="inRefresh">Обновить</button><button type="button" id="inSeen">Отметить всё просмотренным</button></div></div></div>
-<script src="shared/hw-sent.js?v=4"></script>
-<script>(function(){const L=document.getElementById('inList'),C=document.getElementById('inCnt'),B=document.getElementById('inbox'),P=document.getElementById('inPanel'),T=document.getElementById('inToggle'),A=document.getElementById('inArrow');let rows=[];
-const MON=['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
-function esc(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-const LINK={gabi:p=>'gabi-homework/teacher-check.html?open='+encodeURIComponent(p),maya:()=>'maya-teacher-r7k2/'};
-function row(r,n){const u=LINK[r.student]&&LINK[r.student](r.page);return (u?'<a href="'+u+'" target="_blank" style="color:inherit;text-decoration:none">':'')+'<div class="r'+(n?' new':'')+'">'+(n?'<span class="nw">NEW</span>':'<span>✓</span>')+'<span>'+esc(HWSent.NAMES[r.student]||r.student)+' · '+esc(r.title)+'</span><span class="t">'+new Date(r.at).toLocaleString('ru-RU',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+(u?' · открыть':'')+'</span></div>'+(u?'</a>':'')}
-function draw(){const seen=HWSent.seen();const nw=rows.filter(r=>!seen.has(r.key)),old=rows.filter(r=>seen.has(r.key));
- C.hidden=!nw.length;C.textContent=nw.length?nw.length+' новых':'';B.classList.toggle('has',nw.length>0);
- let h=nw.length?nw.map(r=>row(r,true)).join(''):'<div style="padding:4px 0">Новых работ нет.</div>';
- const by={};old.forEach(r=>{const d=new Date(r.at),k=d.getFullYear()*100+d.getMonth();(by[k]=by[k]||[]).push(r)});
- const ks=Object.keys(by).sort((a,b)=>b-a);
- if(ks.length)h+='<details class="arch"><summary>Архив · просмотренные ('+old.length+')</summary>'+ks.map(k=>{const y=Math.floor(k/100),m=k%100;return '<details class="arch2"><summary>'+MON[m]+' '+y+' · '+by[k].length+'</summary>'+by[k].map(r=>row(r,false)).join('')+'</details>'}).join('')+'</details>';
- L.innerHTML=h}
-async function load(ask){L.textContent='Загружаю…';try{const res=await HWSent.list(ask);if(res.need){L.innerHTML=res.bad?'Неверный пароль.':'Нужен пароль учителя. Нажмите «Обновить».';return}rows=res.rows;draw()}catch(e){L.textContent='Не удалось загрузить. Проверьте интернет.'}}
-T.onclick=()=>{P.hidden=!P.hidden;A.textContent=P.hidden?'▾':'▴'};
-document.getElementById('inRefresh').onclick=()=>load(true);
-document.getElementById('inSeen').onclick=()=>{HWSent.markSeen(rows.map(r=>r.key));draw()};
-load(false);})();</script>
 <!-- ИНСТРУМЕНТЫ И ИГРЫ — ВВЕРХУ -->
 <div class="group">
   <div class="group-label">Инструменты и игры</div>
