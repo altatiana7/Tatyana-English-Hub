@@ -654,22 +654,45 @@ h1 { font-size:clamp(28px,4vw,44px); line-height:1.05; margin:12px 0 8px; color:
   .answer-toggle { pointer-events:none; }
 }
 
+/* Compact one-screen layout (Nov 2026): slim top bar, no toolbar panel, task fits the screen */
+html, body { height:100%; }
+.app { max-width:1320px; padding:6px 14px 8px; height:100vh; display:flex; flex-direction:column; }
+.topbar { display:flex; align-items:center; gap:12px; flex:0 0 auto; background:#fff; border:1px solid #d9e2ec; border-top:3px solid #0057a6; border-radius:6px; padding:5px 12px; margin-bottom:8px; position:relative; box-shadow:0 2px 8px rgba(0,59,115,.06); }
+.topbar::before { content:""; position:absolute; left:-1px; top:-3px; width:110px; height:3px; background:#d71920; border-radius:6px 0 0 0; }
+.tb-tag { background:#003b73; color:#fff; font:700 12px Arial,sans-serif; letter-spacing:.06em; text-transform:uppercase; padding:4px 9px; border-radius:3px; }
+.tb-kicker { color:#0057a6; font:700 12px Arial,sans-serif; letter-spacing:.05em; text-transform:uppercase; }
+.topbar .tb-title { margin:0 auto 0 4px !important; font:700 22px Georgia,"Times New Roman",serif !important; color:#003b73 !important; letter-spacing:0 !important; line-height:1.2 !important; }
+.tb-chip { font:13px Arial,sans-serif; color:#5e6a78; background:#f4f7fa; border:1px solid #d9e2ec; border-radius:4px; padding:4px 9px; white-space:nowrap; }
+.tb-chip b { color:#003b73; }
+.topbar .score-pill { margin-left:4px; }
+.toolbar, .footer { display:none !important; }
+.layout { flex:1 1 auto; min-height:0; align-items:stretch; }
+.panel { position:relative; top:0; max-height:none; height:100%; overflow-y:auto; }
+.main { min-height:0; overflow-y:auto; }
+.variant-sheet { margin-top:0 !important; }
+.sheet-head { padding:9px 16px; }
+.sheet-head h3 { margin-bottom:2px; }
+.task { padding:7px 14px; }
+.task { grid-template-columns:42px minmax(0,1fr) 132px; }
+.task-no { grid-row:1 / span 2; }
+.task-text { grid-column:2; grid-row:1 / span 2; }
+.task .stem { grid-column:3; grid-row:1; }
+.task .feedback { grid-column:3; grid-row:2; align-self:start; margin:5px 0 0; padding:3px 7px; font-size:13px; line-height:1.3; word-break:break-word; }
+.task .feedback:empty { display:none !important; }
+@media (max-width:980px){ .app{height:auto} .topbar{flex-wrap:wrap} .panel{height:auto} }
+@media print { .topbar{display:none!important} .app{height:auto} }
 </style>
 </head>
 <body>
 <div class="app">
-  <section class="hero">
-    <div class="hero-card">
-      <div class="eyebrow">ЕГЭ • Английский язык • Словообразование</div>
-      <h1>Тренажёр заданий 25–29</h1>
-      <p class="sub">Интерактивная отработка словообразования в формате распечатки: номер задания, текст с пропуском и исходное слово справа. Цветовая схема — строгая сине‑красная, близкая к оформлению ФИПИ.</p>
-    </div>
-    <div class="stats" aria-label="Статистика банка заданий">
-      <div class="stat"><span class="num" id="statVariants">50</span><span class="label">вариантов в тренажёре</span></div>
-      <div class="stat"><span class="num" id="statTasks">286</span><span class="label">пропусков для проверки</span></div>
-      <div class="stat"><span class="num">A+</span><span class="label">самопроверка и ключи</span></div>
-    </div>
-  </section>
+  <header class="topbar">
+    <span class="tb-tag">Teacher</span>
+    <span class="tb-kicker">ЕГЭ · Словообразование</span>
+    <h1 class="tb-title">Тренажёр заданий 25–29</h1>
+    <span class="tb-chip"><b id="statVariants">50</b> вариантов</span>
+    <span class="tb-chip"><b id="statTasks">286</b> пропусков</span>
+    <div class="score-pill" id="scorePill">0 / 0</div>
+  </header>
 
   <section class="layout">
     <aside class="panel">
@@ -712,7 +735,6 @@ h1 { font-size:clamp(28px,4vw,44px); line-height:1.05; margin:12px 0 8px; color:
             <h2 id="heading">Вариант 1 — Anatoly Karpov</h2>
             <p id="subtitle">Заполните пропуски однокоренными словами. Регистр не важен, орфография важна.</p>
           </div>
-          <div class="score-pill" id="scorePill">0 / 0</div>
         </div>
         <div class="instructions">
           Формат как на распечатке ФИПИ: номер, текст с пропуском и исходное слово справа. Ответ можно открыть сразу — нажмите на слово справа.
@@ -997,7 +1019,7 @@ function attachInputNav() {
       const fb = task.querySelector('.feedback');
       task.classList.remove('correct','wrong');
       task.classList.add('revealed');
-      fb.innerHTML = `Ответ: <span class="correct-word">${escapeHtml(task.dataset.answer)}</span>`;
+      fb.innerHTML = `<span class="correct-word">${escapeHtml(task.dataset.answer)}</span>`;
     });
   });
 }
@@ -1015,7 +1037,7 @@ function checkAnswers() {
     input.classList.remove('correct-field','wrong-field');
 
     if (!user) {
-      fb.innerHTML = 'Ответ не введён.';
+      fb.innerHTML = '—';
       return;
     }
     done++;
@@ -1023,11 +1045,11 @@ function checkAnswers() {
       correct++;
       task.classList.add('correct');
       input.classList.add('correct-field');
-      fb.innerHTML = `Верно: <span class="correct-word">${escapeHtml(answer)}</span>`;
+      fb.innerHTML = `<span class="correct-word">${escapeHtml(answer)}</span>`;
     } else {
       task.classList.add('wrong');
       input.classList.add('wrong-field');
-      fb.innerHTML = `Ваш ответ: <span class="wrong-word">${escapeHtml(input.value.trim())}</span>. Правильно: <span class="correct-word">${escapeHtml(answer)}</span>`;
+      fb.innerHTML = `<span class="correct-word">${escapeHtml(answer)}</span>`;
     }
   });
   updateProgress(true, correct, tasks.length, done);
@@ -1044,7 +1066,7 @@ function revealAnswers() {
     task.classList.add('revealed');
     task.classList.remove('correct','wrong');
     const stem = task.querySelector('.stem').textContent;
-    fb.innerHTML = `Основа: <b>${escapeHtml(stem)}</b> → ответ: <span class="correct-word">${escapeHtml(task.dataset.answer)}</span>`;
+    fb.innerHTML = `<span class="correct-word">${escapeHtml(task.dataset.answer)}</span>`;
   });
   updateProgress(false);
 }
