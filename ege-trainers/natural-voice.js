@@ -7,7 +7,7 @@
 (function(){
   'use strict';
   var me = document.currentScript;
-  var BASE = new URL('../card-audio/', me ? me.src : location.href).href;
+  var BASE = 'https://altatiana7.github.io/EGE-train-for-teacher/voice/';
   var VER = (me && /[?&]v=([^&]+)/.exec(me.src) || [])[1] || '1';
 
   function clean(s){ return String(s == null ? '' : s).replace(/\s+/g, ' ').trim(); }
