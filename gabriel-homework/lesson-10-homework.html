@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Homework · Watch and listen again · Phrasal verbs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../gabi-english-hub/skills.css?v=20261104p1">
+<style>
+/* video / recording panel: the film or the recording only, no script on the screen */
+.clip{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.clip video{display:block;width:100%;flex:1;min-height:0;max-height:100%;object-fit:contain;background:#0b1727;border-radius:12px}
+.clip .pre{margin:0;padding:8px 12px;border-radius:10px;background:#fff6cf;border:2px solid #ffd23f;font-weight:700;font-size:16.5px;line-height:1.3;color:#10233f}
+.clip .shot{flex:1;min-height:0;border-radius:12px;overflow:hidden;background:#dfe8f3}
+.clip .shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 22%}
+.clip .pl .eq{display:none}
+/* answer buttons: four calm colours, two columns, not tall squares */
+.act.panel .opts{grid-template-columns:1fr 1fr;gap:10px;flex:0 0 auto;grid-auto-rows:auto;align-content:start}
+.act.panel .opts button{min-height:52px;padding:8px 12px;font-size:18px;border-width:3px;font-weight:800}
+.act.panel .opts button:nth-child(1){background:#e4eefb;border-color:#8fb1dd}
+.act.panel .opts button:nth-child(2){background:#e5f3ea;border-color:#8cc3a0}
+.act.panel .opts button:nth-child(3){background:#fbf0d4;border-color:#dfc06f}
+.act.panel .opts button:nth-child(4){background:#f7e4e7;border-color:#d79fa9}
+.act.panel .opts button.ok{background:#d3efdc;border-color:#2f9e5f}
+.act.panel .opts button.no{background:#f9d9d6;border-color:#d9534f}
+.act.panel .opts button.dim{opacity:.55}
+/* writing inside a panel: the text box on top, the checklist under it */
+.act.panel .write{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.act.panel .write textarea{flex:1;min-height:120px;width:100%}
+.act.panel .write .wside{flex:none}
+.act.panel [data-copy],.act.panel #copied{display:none}
+/* ten typed sentences fit without scrolling */
+.act.panel ol.gaps li{font-size:16px;line-height:1.25;margin:0;padding:1px 0}
+.act.panel ol.gaps input{padding:3px 8px;width:138px;font-size:16px}
+.act.panel ol.gaps{gap:3px}
+.act.panel ol.gaps,.act.panel ol.hunt{padding-left:32px}
+.act.panel ol.hunt li{font-size:17px;margin:0;padding:0}
+.once [data-again],.once [data-fagain],.once [data-show]{display:none!important}
+</style>
+</head>
+<body>
+<script src="../shared/hw-sent.js?v=2"></script><script src="../shared/hw-parts.js?v=1"></script>
+<script src="../gabi-english-hub/skills.js?v=20261104p2"></script>
+<script>
+/* Homework 10, after Module 2 lesson 5 (Crime Revision). Two activities per screen.
+   1 Watch again: the course video "Hacked!" + 10 questions
+   2 Listen again: Track 15 (Sherlock in real life) + 10 questions; only the recording, no script
+   3 Phrasal verbs, meaning: Quizlet-style cards + match the verb with its English definition
+   4 Phrasal verbs, choose: which verb fits + error hunter (the wrong particle)
+   5 Phrasal verbs, from memory: type the verb + a short detective story */
+Lesson.ACT.clip={
+ view(a){const E=Lesson.esc;
+  return `<div class="clip">${a.pre?`<p class="pre">${E(a.pre)}</p>`:''}${a.video?`<video controls preload="metadata" playsinline ${a.poster?`poster="${E(a.poster)}"`:''} src="${E(a.video)}"></video>`:`<div class="shot"><img src="${E(a.img)}" alt=""></div>${Lesson.player({src:a.audio,label:a.label},'c',false)}`}</div>`}};
+const R='../gabi-english-hub/assets/u2/revision/';
+const PV=[
+ /\blook(s|ed|ing)?\s+into\b/i,/\bc[oa]m(e|es|ing)\s+across\b/i,/\bwork(s|ed|ing)?\s+(\w+\s+){0,2}out\b/i,/\blook(s|ed|ing)?\s+for\b/i,
+ /\b(find|finds|finding|found)\s+(\w+\s+){0,2}out\b/i,/\bturn(s|ed|ing)?\s+up\b/i,/\blook(s|ed|ing)?\s+(\w+\s+){0,2}up\b/i,/\bc[oa]m(e|es|ing)\s+up\s+with\b/i];
+Lesson.boot({once:true,kicker:'Module 2 · Homework · 10 November',hub:'./',steps:[
+{stage:'Watch',title:'Hacked! · watch again',hint:'Watch the video again. <small>Then answer 10 questions from memory. You can watch a part again if you need to. One try for each question.</small>',cols:'1.15fr 1fr',
+ acts:[
+ {type:'clip',title:'Hacked!',video:R+'hacked.mp4',poster:R+'hacked-130.jpg',pre:'Before you watch: what do you remember about Mat? What did the hackers take?'},
+ {type:'quiz',title:'After the video',label:'Question',cols:2,shuffle:false,items:[
+  {q:'What was Mat Honan’s job?',o:['A police detective','A technology journalist','A computer teacher','A bank manager'],a:'A technology journalist'},
+  {q:'How long did the hackers need?',o:['About 45 minutes','About five hours','Two days','A whole week'],a:'About 45 minutes'},
+  {q:'What did Mat lose?',o:['Only his phone','His car and his house keys','His whole digital life','Money from his wallet'],a:'His whole digital life'},
+  {q:'Where did the hackers get information about him?',o:['From his neighbours','From an online shopping service','From his diary','From a newspaper'],a:'From an online shopping service'},
+  {q:'Which information helped the hackers?',o:['His credit card information','His school report','His home address only','His date of birth only'],a:'His credit card information'},
+  {q:'How many of his accounts could the hackers open?',o:['None of them','Only his email','Only one game account','Several online accounts'],a:'Several online accounts'},
+  {q:'Who were the hackers?',o:['Adults from a security company','Teenagers','Police officers','Mat’s colleagues'],a:'Teenagers',why:'They were not adults from a security company.'},
+  {q:'How did Mat feel?',o:['Calm and happy','Bored','Angry, scared and concerned','Proud'],a:'Angry, scared and concerned'},
+  {q:'What did the hackers do later?',o:['They contacted Mat and explained how they did it','They went to the police','They sent all his files back','They never spoke to him'],a:'They contacted Mat and explained how they did it'},
+  {q:'What is the message of the video?',o:['Passwords are never dangerous','Only journalists get hacked','Hacking takes years','Our online accounts are not always safe'],a:'Our online accounts are not always safe'}]}]},
+{stage:'Listen',title:'Sherlock in real life · listen again',hint:'Listen to Ava and Tom again. <small>Then answer 10 questions. Only the recording: listen for the details. One try for each question.</small>',cols:'1fr 1.15fr',
+ acts:[
+ {type:'clip',title:'Track 15',audio:R+'listening15.mp3',label:'Ava and Tom',img:R+'sherlock.jpg',pre:'Before you listen: who is this actor? What happened to him in London?'},
+ {type:'quiz',title:'After the recording',label:'Question',cols:2,shuffle:false,items:[
+  {q:'Where was Benedict Cumberbatch when he saw the attack?',o:['In his own car','In a taxi','On a bus','On his bike'],a:'In a taxi'},
+  {q:'How many muggers were there?',o:['Two','Three','Four','Five'],a:'Four'},
+  {q:'Who were they attacking?',o:['A young cyclist','An old man with a bag','A taxi driver','A tourist'],a:'A young cyclist'},
+  {q:'Where did it happen?',o:['In New York','In Oxford','In London, close to Baker Street','At a railway station'],a:'In London, close to Baker Street'},
+  {q:'Who was in the taxi with Benedict?',o:['His brother','A journalist','Nobody','His wife, Sophie Hunter'],a:'His wife, Sophie Hunter'},
+  {q:'What did Sophie Hunter do?',o:['She stayed in the taxi','She helped the cyclist outside','She called a newspaper','She ran after the muggers'],a:'She stayed in the taxi',why:'She did not help the cyclist outside the taxi.'},
+  {q:'What did the taxi driver do?',o:['He drove away','He helped too','He took photos','He was texting'],a:'He helped too'},
+  {q:'How did the taxi driver describe Benedict?',o:['As a detective','As a superhero','As a police officer','As a tourist'],a:'As a superhero'},
+  {q:'Did the cyclist need to go to hospital?',o:['Yes, for a week','Yes, for one night','No, he didn’t','Nobody knows'],a:'No, he didn’t'},
+  {q:'What did Benedict do after the incident?',o:['He gave an interview to the newspapers','He wrote a book about it','He made a film about it','He didn’t give an interview'],a:'He didn’t give an interview'}]}]},
+{stage:'Learn',title:'Phrasal verbs · the meaning',hint:'Eight verbs again. Say each one aloud before you turn the card. <small>Then match every verb with its definition in English.</small>',cols:'1fr 1.1fr',
+ acts:[
+ {type:'cards',title:'Flashcards',items:[
+  {w:'look into',ru:'расследовать, изучать',d:'investigate',ex:'The officers will look into the disappearance.'},
+  {w:'come across',ru:'наткнуться на, случайно найти',d:'find by accident',ex:'I came across an old photograph when I opened the drawer.'},
+  {w:'work out',ru:'разобраться, решить',d:'solve a problem by considering the facts',ex:'We managed to work out the code on the door.'},
+  {w:'look for',ru:'искать',d:'try to find',ex:'The police were looking for fingerprints on the window.'},
+  {w:'find out',ru:'выяснить, узнать',d:'discover',ex:'The detective finally found out who had taken the painting.'},
+  {w:'turn up',ru:'появиться, объявиться',d:'arrive or appear unexpectedly',ex:'The suspect didn’t turn up for the interview.'},
+  {w:'look up',ru:'посмотреть, найти (в справочнике)',d:'try to find information in a book, a list or on a computer',ex:'Could you look up the meaning of this word in a dictionary?'},
+  {w:'come up with',ru:'придумать',d:'think of an idea or a plan',ex:'Mia came up with a clever plan to catch the thief.'}]},
+ {type:'match',title:'Verb · definition',tip:'Tap a phrasal verb, then its definition.',items:[
+  {l:'look into',r:'investigate'},
+  {l:'come across',r:'find by accident'},
+  {l:'work out',r:'solve a problem by considering the facts'},
+  {l:'look for',r:'try to find'},
+  {l:'find out',r:'discover'},
+  {l:'turn up',r:'arrive or appear unexpectedly'},
+  {l:'look up',r:'try to find information in a book, a list or on a computer'},
+  {l:'come up with',r:'think of an idea or a plan'}]}]},
+{stage:'Practise',title:'Phrasal verbs · which one?',hint:'<b>Exercise 1:</b> choose the phrasal verb that fits. <small>Then <b>exercise 2</b> (error hunter): one small word is wrong in every sentence. Find it.</small>',cols:'1fr 1fr',
+ acts:[
+ {type:'quiz',title:'Exercise 1 · which verb?',label:'Sentence',cols:2,items:[
+  {q:'Someone broke a window at school last night. The head teacher will ___ it.',o:['look into','look up','turn up','come across'],a:'look into',why:'look into = investigate'},
+  {q:'Dad is ___ his glasses. He can’t see them anywhere.',o:['looking into','working out','looking for','looking up'],a:'looking for',why:'look for = try to find'},
+  {q:'I didn’t know what “alibi” meant, so I ___ the word in a dictionary.',o:['came up with','looked up','turned up','worked out'],a:'looked up',why:'look up = find information'},
+  {q:'While I was tidying my room, I ___ my old diary under the bed.',o:['looked up','came up with','turned up','came across'],a:'came across',why:'come across = find by accident'},
+  {q:'We invited twenty people to the party, but only six ___.',o:['turned up','came across','found out','looked up'],a:'turned up',why:'turn up = arrive, appear'},
+  {q:'My sister ___ a brilliant idea for Mum’s birthday.',o:['came across','looked into','came up with','turned up'],a:'came up with',why:'come up with = think of an idea'},
+  {q:'It took the detective a week to ___ who the burglar was.',o:['turn up','work out','look for','come across'],a:'work out',why:'work out = solve'},
+  {q:'I’ve just ___ that our maths teacher used to be a police officer!',o:['looked for','turned up','come up with','found out'],a:'found out',why:'find out = discover'},
+  {q:'The puzzle was hard, but after an hour of thinking I ___ how to open the box.',o:['worked out','turned up','looked into','came across'],a:'worked out',why:'work out = solve'},
+  {q:'The police are ___ the robbery at the jewellery shop.',o:['looking up','turning up','looking into','coming across'],a:'looking into',why:'look into = investigate'},
+  {q:'Two officers are ___ the missing dog in the park.',o:['looking up','looking for','finding out','coming up with'],a:'looking for',why:'look for = try to find'},
+  {q:'Can anyone ___ a better name for our team?',o:['come across','turn up','look into','come up with'],a:'come up with',why:'come up with = think of an idea'}]},
+ {type:'hunt',title:'Exercise 2 · error hunter',tip:'Click the wrong word.',items:[
+  {s:'The police are looking onto the fire at the school.',bad:4,fix:'into'},
+  {s:'I came over an old photo of my grandfather.',bad:2,fix:'across'},
+  {s:'She looked on the word in her dictionary.',bad:2,fix:'up'},
+  {s:'We waited for Tom, but he never turned in.',bad:8,fix:'up'},
+  {s:'Did you find off who took your bike?',bad:3,fix:'out'},
+  {s:'I can’t work up the answer to question five.',bad:3,fix:'out'},
+  {s:'Mia came up for a clever plan.',bad:3,fix:'with'},
+  {s:'I am looking to my phone. Have you seen it?',bad:3,fix:'for'},
+  {s:'The detective will look in the case tomorrow.',bad:4,fix:'into'},
+  {s:'A strange man turned on at the party and nobody knew him.',bad:4,fix:'up'}]}]},
+{stage:'Use',title:'Phrasal verbs · from memory',hint:'<b>Exercise 3:</b> type the phrasal verb in the right form. The word in brackets helps. <small>Then write a detective story of 50–80 words with at least five of the eight phrasal verbs.</small>',cols:'1.35fr 1fr',
+ acts:[
+ {type:'gaps',title:'Exercise 3 · type the verb',dense:true,test:true,items:[
+  {pre:'The police promised to',post:'the theft. (investigate)',ans:['look into']},
+  {pre:'Yesterday I',post:'a ten-euro note in an old jacket. (found by accident)',ans:['came across']},
+  {pre:'Sherlock always',post:'who the criminal is. (solves)',ans:['works out']},
+  {pre:'I can’t find my phone. Can you help me',post:'it? (try to find)',ans:['look for','to look for']},
+  {pre:'How did you',post:'about the surprise party? (discover)',ans:['find out']},
+  {pre:'The witness didn’t',post:'at the police station. (appear)',ans:['turn up']},
+  {pre:'She',post:'the phone number online. (found the information)',ans:['looked up']},
+  {pre:'We need to',post:'a plan before Friday. (think of)',ans:['come up with']},
+  {pre:'Last week the detectives',post:'that the thief worked at the bank. (discovered)',ans:['found out']},
+  {pre:'Nobody knew what to do, but Mia',post:'a great idea. (thought of)',ans:['came up with']}]},
+ {type:'write',title:'A laptop disappeared at school. Who took it?',min:50,max:80,ph:'Last Monday a laptop disappeared from the computer room …',checks:[
+  {label:'At least five phrasal verbs',test:t=>PV.filter(r=>r.test(t)).length>=5},
+  {label:'What was happening (was / were …ing)',test:t=>/\b(was|were)\s+(not\s+)?\w+ing\b/i.test(t)},
+  {label:'The ending (finally / in the end)',test:t=>/\b(finally|in the end|at last)\b/i.test(t)}]}]},
+{stage:'Send',title:'Send your homework',hint:'Press <b>Send finished tasks</b> to send what you have done. You can send the rest later. One try for each task.',
+ act:{type:'report',name:'Gabi · Homework · Watch and listen again · Phrasal verbs',assignment:'gabi-hw-2026-11-10',prefix:'G10'}}
+]});
+</script>
+<script src="../shared/hw-lock.js?v=20261104b"></script><script>HWLock.page({id:'gabi:gabi-hw-2026-11-10',home:'index.html',links:[{href:'vocabulary.html?from=hub',label:'Vocabulary cards'}]});</script>
+<script src="../shared/page-label.js?v=20261104"></script>
+</body>
+</html>
