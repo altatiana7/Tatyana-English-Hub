@@ -125,7 +125,7 @@ function predict(box){box.append(el('div','inst','<b>Look at the photos and pred
     const ph=()=>{const d=el('div','ph','Photo '+i);img.replaceWith(d);};
     img.onerror=()=>{x++;if(x<ex.length)img.src='img/family-'+i+'.'+ex[x];else ph();};img.src='img/family-'+i+'.'+ex[0];f.append(img);g.append(f);}
   box.append(g);
-  box.append(el('ol','pq','<li>Who are these people? What is the relationship between them?</li><li>What do you think today’s topic is?</li><li>What problems can people like these have with each other?</li><li>Which words from the cards could you hear?</li>'));
+  box.append(el('ol','pq','<li>Who are these people? Speculate: they might be… / they can’t be… / they must be…</li><li>What could be the source of tension or closeness in each situation?</li><li>What do you think today’s topic is, and which problem could it lead to in the exam (Task 3, 4 or 37)?</li><li>Which words and collocations from the cards could you hear in this topic?</li>'));
 }
 
 function speak(box){const st=S.sp,set=SETS[st.set];let left=40,t=null;
