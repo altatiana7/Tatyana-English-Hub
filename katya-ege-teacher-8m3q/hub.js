@@ -72,7 +72,7 @@
     setTimeout(()=>{try{f.focus();}catch(e){}},50);}
 
   /* сайт учителя: проверка домашки – работы Кати приходят из базы сами */
-  const PAGE={'family-week4-homework':'family-week4-review.html?v=20261106','family-hw':'family-hw.html?v=1',mock1:'mock1.html?v=2',home1:'home1.html?v=41',lesson1:'lesson1.html?v=94#9',lessonw1:'lessonw1.html?v=74'};
+  const PAGE={'write-hw1113':'write-hw1113.html?v=1','family-week4-homework':'family-week4-review.html?v=20261106','family-hw':'family-hw.html?v=1',mock1:'mock1.html?v=2',home1:'home1.html?v=41',lesson1:'lesson1.html?v=94#9',lessonw1:'lessonw1.html?v=74'};
   function openWork(page,data,raw=false){
     sessionStorage.setItem('katya-review',JSON.stringify({page:page,data:data}));
     open(raw?'review-answers.html?v=20261106':(PAGE[page]||'review-answers.html?v=20261106'));
