@@ -128,12 +128,25 @@ button:focus-visible{outline:3px solid var(--teal); outline-offset:2px}
 .pr.done{border-color:var(--ok); background:var(--ok-soft)}
 .pr.done .ru{color:var(--ok); font-weight:700}
 .note{font-size:.85rem; color:var(--muted); margin-top:10px}
+.sets{display:flex; flex:none; border:1.5px solid var(--line); border-radius:8px; overflow:hidden; background:var(--card)}
+.sets button{border:0; background:none; padding:5px 12px; font-size:.9rem; white-space:nowrap}
+.sets button.on{background:var(--pink-soft); color:var(--pink); font-weight:700}
+.def{margin-top:6px; font-size:1rem}
+.def span{display:block; color:var(--muted); font-size:.92rem}
+.areas{display:flex; flex-wrap:wrap; gap:5px; margin-top:7px}
+.areas i{font-style:normal; font-size:.82rem; background:var(--teal-soft); color:var(--teal); border-radius:999px; padding:2px 9px}
+.face .sec{position:absolute; top:10px; left:14px; font-size:.78rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--pink)}
+.tab[hidden]{display:none}
+.btn.ca-on{background:var(--pink); border-color:var(--pink); color:#fff}
+.btn.ca-err,.btn.main.ca-err{background:var(--bad-soft); border-color:var(--bad); color:var(--bad)}
+@media (max-height:640px){ .card{height:196px} .ql{margin-top:5px} .def{margin-top:3px; font-size:.95rem; line-height:1.3} .def span{font-size:.88rem} .areas{margin-top:5px} .panel{min-height:0} .face .term{font-size:1.5rem} .top{padding-block:6px 4px} .tab{padding:7px 10px} .pbody{padding:8px 14px} .task{margin-bottom:6px} .match .col{gap:5px} .tile{padding:3px 10px; font-size:.94rem} .pager{margin-top:6px} .round{width:38px; height:38px} .ql-nav{margin-top:6px} .ql-tools{margin-top:5px} .stage{padding-block:4px 8px} }
 @media (prefers-reduced-motion:reduce){ .card-in,.fact-in{transition:none} .tile.err{animation:none} }
 </style>
 
 <header class="top">
-  <a class="tohub" href="index.html" title="На главную">&larr; Teacher&#39;s Hub</a>
+  <a class="tohub" id="tohub" href="index.html" title="На главную">&larr; Teacher&#39;s Hub</a>
   <div class="brand">ЕГЭ <span>·</span> Лексика</div>
+  <div class="sets"><button id="setF" class="on">Темы ФИПИ</button><button id="setM">Памятки</button></div>
   <nav class="chips" id="chips" aria-label="Блоки"></nav>
 </header>
 
@@ -150,7 +163,7 @@ button:focus-visible{outline:3px solid var(--teal); outline-offset:2px}
       </div>
       <div class="card" id="card" role="button" tabindex="0" aria-label="Перевернуть карточку">
         <div class="card-in">
-          <div class="face front"><div class="term" id="cFront"></div><div class="hint">перевернуть</div></div>
+          <div class="face front"><div class="sec" id="cSec"></div><div class="term" id="cFront"></div><div class="hint">перевернуть</div></div>
           <div class="face back"><div class="tr" id="cBack"></div><div class="ex" id="cEx"></div></div>
         </div>
       </div>
@@ -160,6 +173,8 @@ button:focus-visible{outline:3px solid var(--teal); outline-offset:2px}
         <button class="round" id="next" aria-label="Вперёд">›</button>
       </div>
       <div class="ql-tools">
+        <button class="btn main" id="say">Listen</button>
+        <button class="btn" id="sayEx">Example</button>
         <button class="btn" id="shuffle">Перемешать</button>
         <button class="btn" id="restart">С начала</button>
       </div>
@@ -168,6 +183,7 @@ button:focus-visible{outline:3px solid var(--teal); outline-offset:2px}
 
   <section class="panel">
     <div class="tabs" id="tabs">
+      <button class="tab" data-t="pairs">Перевод <small id="s-pairs"></small></button>
       <button class="tab on" data-t="col">Коллокации <small id="s-col"></small></button>
       <button class="tab" data-t="facts">Важное <small id="s-facts"></small></button>
       <button class="tab" data-t="text">Текст <small id="s-text"></small></button>
@@ -177,8 +193,10 @@ button:focus-visible{outline:3px solid var(--teal); outline-offset:2px}
   </section>
 </main>
 
+<script src="../shared/lexika-fipi.js?v=20261115"></script>
+<script src="../card-audio.js?v=1"></script>
 <script>
-const B = [
+const MEMO = [
 {t:"Семья и домашние обязанности", short:"Семья", src:"ФИПИ: повседневная жизнь семьи · памятка Household chores",
 cards:[
 ["household chores","домашние обязанности","We share the household chores in our family."],
@@ -706,6 +724,7 @@ text:{title:"Choose the correct punctuation (AmE)", s:[
 pron:[["quotation","/kwəʊˈteɪ.ʃən/","квоу-ТЕЙ-шн"],["punctuation","/ˌpʌŋk.tʃuˈeɪ.ʃən/","пан-кчу-ЕЙ-шн"],["apostrophe","/əˈpɒs.trə.fi/","э-ПОС-трэ-фи"],["exclamation","/ˌek.skləˈmeɪ.ʃən/","эк-склэ-МЕЙ-шн"],["italics","/ɪˈtæl.ɪks/","и-ТЭ-ликс"],["parentheses","/pəˈren.θə.siːz/","пэ-РЕН-сэ-сиз"],["semicolon","/ˌsem.iˈkəʊ.lən/","се-ми-КОУ-лэн"],["question","/ˈkwes.tʃən/","КВЕС-чэн"],["hyphen","/ˈhaɪ.fən/","ХАЙ-фн"],["colon","/ˈkəʊ.lən/","КОУ-лэн"]]}
 ];
 
+let B = (window.FIPI && window.FIPI.length) ? window.FIPI : MEMO;
 const $ = id => document.getElementById(id);
 const shuffle = a => { a=[...a]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; };
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
@@ -713,16 +732,16 @@ const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
 let bi=0, order=[], ci=0, dir="en", tab="col", state={};
 
 function chips(){
-  $("chips").innerHTML = B.map((b,i)=>`<button class="chip${i===bi?" on":""}" data-i="${i}"><b>${i+1}</b>${b.short}</button>`).join("");
+  $("chips").innerHTML = B.map((b,i)=>`<button class="chip${i===bi?" on":""}" data-i="${i}"><b>${b.letter||i+1}</b>${b.short}</button>`).join("");
   $("chips").querySelectorAll(".chip").forEach(c=>c.onclick=()=>pick(+c.dataset.i));
 }
 function pick(i){
   bi=i; const b=B[i];
   $("bTitle").textContent=b.t;
-  $("bMeta").innerHTML=`<em>Блок ${i+1}</em> · ${b.src}`;
+  $("bMeta").innerHTML=`<em>${b.letter?"ФИПИ · тема "+b.letter:"Блок "+(i+1)}</em>${b.letter?"":" · "+b.src}`+(b.def?`<div class="def">${b.def[0]}<span>${b.def[1]}</span></div>`:"")+(b.areas?`<div class="areas">${b.areas.map(a=>`<i>${a}</i>`).join("")}</div>`:"");
   order=b.cards.map((_,k)=>k); ci=0;
-  state={col:{done:0}, facts:{page:0, ans:{}, right:0}, text:{right:0, done:0}, pron:{right:0, done:0}};
-  chips(); showCard(false); renderTab(); scores();
+  state={pairs:{done:0}, col:{done:0}, facts:{page:0, ans:{}, right:0}, text:{right:0, done:0}, pron:{right:0, done:0}};
+  tabsFor(b); stopSpeak(); chips(); showCard(false); renderTab(); scores();
   document.querySelector(".chip.on")?.scrollIntoView({block:"nearest", inline:"center"});
 }
 
@@ -733,6 +752,8 @@ function showCard(keepFlip){
   $("cFront").textContent = dir==="en"?c[0]:c[1];
   $("cBack").textContent = dir==="en"?c[1]:c[0];
   $("cEx").textContent = c[2]||"";
+  $("cSec").textContent = (b.cols && c[3]!=null) ? b.cols[c[3]] : "";
+  $("sayEx").hidden = !(window.CardAudio && CardAudio.isEn(c[2]||""));
   $("count").textContent = `${ci+1} / ${order.length}`;
 }
 $("card").onclick=()=>$("card").classList.toggle("flip");
@@ -755,12 +776,55 @@ document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
 });
 function scores(){
   const b=B[bi];
-  $("s-col").textContent=`${state.col.done}/${b.col.length}`;
-  $("s-facts").textContent=`${Object.keys(state.facts.ans).length}/${b.facts.length}`;
-  $("s-text").textContent=`${state.text.done}/${b.text.s.length}`;
-  $("s-pron").textContent=`${state.pron.done}/${b.pron.length}`;
+  $("s-pairs").textContent=`${state.pairs.done}/${Math.min(10,b.cards.length)}`;
+  $("s-col").textContent=b.col?`${state.col.done}/${b.col.length}`:"";
+  $("s-facts").textContent=b.facts?`${Object.keys(state.facts.ans).length}/${b.facts.length}`:"";
+  $("s-text").textContent=b.text?`${state.text.done}/${b.text.s.length}`:"";
+  $("s-pron").textContent=b.pron?`${state.pron.done}/${b.pron.length}`:"";
 }
-function renderTab(){ ({col:renderCol, facts:renderFacts, text:renderText, pron:renderPron})[tab](); }
+function renderTab(){ ({pairs:renderPairs, col:renderCol, facts:renderFacts, text:renderText, pron:renderPron})[tab](); }
+
+/* какие вкладки есть у блока: «Перевод» — у всех, остальные — только если в блоке есть данные */
+function tabsFor(b){
+  const has=t=>t==="pairs"||!!b[t];
+  if(!has(tab)) tab="pairs";
+  if(tab==="pairs" && b.col) tab="col";
+  document.querySelectorAll(".tab").forEach(x=>{ x.hidden=!has(x.dataset.t); x.classList.toggle("on",x.dataset.t===tab); });
+}
+
+/* Наборы: темы ФИПИ и прежние блоки-памятки */
+function useSet(fipi){
+  B = (fipi && window.FIPI && window.FIPI.length) ? window.FIPI : MEMO;
+  $("setF").classList.toggle("on",B!==MEMO); $("setM").classList.toggle("on",B===MEMO);
+  pick(0);
+}
+$("setF").onclick=()=>useSet(true);
+$("setM").onclick=()=>useSet(false);
+if(B===MEMO){ $("setF").classList.remove("on"); $("setM").classList.add("on"); }
+
+/* Озвучка: записанный естественный британский голос (card-audio), без синтезатора браузера */
+function stopSpeak(){ try{ window.CardAudio && CardAudio.stop(); }catch(e){} }
+function speak(txt,btn){ try{ if(window.CardAudio && txt) CardAudio.say(txt,btn); }catch(e){} }
+$("say").onclick=e=>speak(B[bi].cards[order[ci]][0], e.currentTarget);
+$("sayEx").onclick=e=>speak(B[bi].cards[order[ci]][2], e.currentTarget);
+
+/* Перевод: соединить фразу и перевод, 10 случайных карточек блока */
+function renderPairs(){
+  const b=B[bi], P=$("pbody"), n=Math.min(10,b.cards.length); state.pairs.done=0; scores();
+  const ten=shuffle(b.cards.map((_,i)=>i)).slice(0,n), L=shuffle(ten), R=shuffle(ten);
+  P.innerHTML=`<div class="task"><h3>Соедини фразу и перевод</h3><span class="score" id="prScore">0 / ${n}</span></div>
+  <div class="match"><div class="col" id="mL">${L.map(i=>`<button class="tile" data-i="${i}">${esc(b.cards[i][0])}</button>`).join("")}</div>
+  <div class="col" id="mR">${R.map(i=>`<button class="tile" data-i="${i}">${esc(b.cards[i][1])}</button>`).join("")}</div></div>
+  <div class="pager"><button class="btn" id="prAgain">Другие 10</button></div>`;
+  let sel=null;
+  P.querySelectorAll("#mL .tile").forEach(t=>t.onclick=()=>{ if(t.classList.contains("done"))return; P.querySelectorAll("#mL .tile").forEach(x=>x.classList.remove("sel")); t.classList.add("sel"); sel=t; });
+  P.querySelectorAll("#mR .tile").forEach(t=>t.onclick=()=>{
+    if(t.classList.contains("done")||!sel) return;
+    if(sel.dataset.i===t.dataset.i){ sel.classList.remove("sel"); sel.classList.add("done"); t.classList.add("done"); sel=null; state.pairs.done++; $("prScore").textContent=`${state.pairs.done} / ${n}`; scores(); }
+    else { [sel,t].forEach(x=>{x.classList.remove("err"); void x.offsetWidth; x.classList.add("err");}); }
+  });
+  $("prAgain").onclick=renderPairs;
+}
 
 /* Matching */
 function renderCol(){
@@ -844,6 +908,7 @@ function renderPron(){
   $("pAgain").onclick=renderPron;
 }
 
+try{ if(/\/my-hub\.html/.test(document.referrer)){ const h=$("tohub"); h.href="../my-hub.html"; h.innerHTML="&larr; My Hub"; } }catch(e){}
 pick(0);
 </script>
 <script src="../shared/page-label.js?v=20261104"></script>
