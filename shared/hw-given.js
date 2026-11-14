@@ -42,7 +42,7 @@
   document.head.appendChild(st);
 
   const badge=(e,tile)=>{const s=document.createElement('span');s.className='hwg';s.textContent='✓ В ДЗ'+(e.d&&!tile?' · '+e.d:'');
-    s.title='Отправлено в домашку'+(e.d?' ('+e.d+')':'')+(e.n?': '+e.n:'');return s;};
+    s.title='Отправлено в Homework'+(e.d?' ('+e.d+')':'')+(e.n?': '+e.n:'');return s;};
   const pageOf=h=>String(h||'').split('#')[0].split('?')[0].split('/').pop();
   function put(el,e){if(!e||el.dataset.hwg)return;el.dataset.hwg='1';el.appendChild(badge(e,el.classList.contains('tile')));}
   function apply(){

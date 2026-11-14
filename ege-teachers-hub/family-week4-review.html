@@ -28,7 +28,7 @@ document.addEventListener('change',e=>{if(e.target&&e.target.dataset&&e.target.d
 (function(){
   const packet=JSON.parse(sessionStorage.getItem('katya-review')||'null');
   if(!window.TEACHER||!packet||packet.page!=='family-week4-homework'){
-    document.querySelector('main').innerHTML='<div class="card"><h2>Откройте работу через Teacher Hub → Проверка домашки</h2></div>';return;
+    document.querySelector('main').innerHTML='<div class="card"><h2>Откройте работу через Teacher Hub → Homework Check</h2></div>';return;
   }
   sessionStorage.removeItem('katya-review');
   const responses=packet.data?.responses||{};

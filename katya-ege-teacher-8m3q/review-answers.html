@@ -22,7 +22,7 @@ details summary{cursor:pointer;font-weight:700}#json{white-space:pre-wrap;overfl
   const store=sessionStorage.getItem('katya-review');
   let rec=null;try{rec=store?JSON.parse(store):null}catch(e){}
   const main=document.getElementById('answers'),meta=document.getElementById('meta');
-  if(!rec){meta.textContent='Работа не выбрана. Откройте раздел «Проверка домашки» и нажмите «Ответы».';return;}
+  if(!rec){meta.textContent='Работа не выбрана. Откройте раздел «Homework Check» и нажмите «Ответы».';return;}
   const data=rec.data||{},page=rec.page||'';
   document.getElementById('title').textContent='Работа: '+page;
   meta.textContent='Отправлено: '+(data._at||'дата не указана')+' · Все ответы приведены без изменений.';

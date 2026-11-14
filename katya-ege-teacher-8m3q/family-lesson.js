@@ -208,7 +208,7 @@ function teacher(){overlay('Учителю · урок Family',
 '<li><b>Cards</b> (10 мин): 12 коллокаций и 12 phrasal verbs, по одной карточке. Сначала ученица пытается вспомнить значение сама.</li>'+
 '<li><b>Choose the word</b> (10 мин): 16 вопросов, по одному на экране. Ошибки разберите в конце.</li>'+
 '<li><b>EGE 30–36</b> (10 мин): сплошной текст, пропуск открывается нажатием.</li>'+
-'<li>Домашку («Translate &amp; tense», письмо 37 и 38, Speaking 3) открывайте на сайте Кати, когда скажете «выполнить».</li></ol>'+
+'<li>Homework («Translate &amp; tense», письмо 37 и 38, Speaking 3) открывайте на сайте Кати, когда скажете «выполнить».</li></ol>'+
 '<p><b>Промпты для фото</b> (положить в папку img как family-1, family-2, family-3 с расширением jpg, png или webp):</p><ol>'+
 '<li>Candid photo of a modern three-generation family having Sunday lunch at a big table at home, grandmother, parents, two teenagers, natural light, realistic photograph, no text</li>'+
 '<li>Two teenage girls laughing together on a school staircase, one showing something on her phone, contemporary clothes, realistic candid photograph, natural light</li>'+
