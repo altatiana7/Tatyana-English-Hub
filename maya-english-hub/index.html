@@ -56,8 +56,17 @@ function moveDeck(step){if(!vocabDeck.length)return;deckIndex=(deckIndex+step+vo
 qs('#deckNext').onclick=()=>moveDeck(1);qs('#deckPrev').onclick=()=>moveDeck(-1);
 function openVocab(){qs('#workspace').classList.remove('open');qs('#vocabPanel').classList.add('open');qs('#sideVocab').classList.add('active');renderVocab('all');qs('#vocabPanel').scrollIntoView({behavior:'smooth',block:'start'})}
 const homeworkArchive={
+  'maya-2b-2026-11-15':{
+    module:'2B',date:'15 NOV 2026',title:'Photo stories: Past Simple + Past Continuous',sub:'Rule · test · three photos: tell the story the photo doesn’t reveal',href:'homework-2b-photo-stories.html?from=hub&v=20261115a',current:true,
+    expressions:[
+      ['while','пока / в то время как','While the crowd was waiting, he took a picture.'],
+      ['when suddenly','когда вдруг','We were walking when suddenly an owl escaped.'],
+      ['at that moment','в этот момент','At that moment the photographer took a picture.']
+    ],
+    useful:[['in fact','на самом деле'],['a few minutes later','через несколько минут'],['set the scene','описать место и время'],['in the background','на заднем плане']]
+  },
   'maya-2b-2026-11-08':{
-    module:'2B',date:'08 NOV 2026',title:'On top of the world: reading + collocations',sub:'Article “That’s me in the picture” · 29 cards · 2 practice tests · listening: Anna and Jack',href:'homework-2b-on-top-of-the-world.html?from=hub&v=2',current:true,
+    module:'2B',date:'08 NOV 2026',title:'On top of the world: reading + collocations',sub:'Article “That’s me in the picture” · 29 cards · 2 practice tests · listening: Anna and Jack',href:'homework-2b-on-top-of-the-world.html?from=hub&v=2',current:false,
     expressions:[
       ['take turns','делать по очереди','It was dangerous, but we all took turns.'],
       ['in the background','на заднем плане','…with the volcano in the background.'],
@@ -103,5 +112,5 @@ function openModule(id){qsa('.moduleCard,.sideModule').forEach(x=>x.classList.to
 qsa('.moduleCard,.sideModule').forEach(x=>x.onclick=()=>openModule(x.dataset.module));qs('#sideVocab').onclick=openVocab;qs('#closeVocab').onclick=()=>{qs('#vocabPanel').classList.remove('open');qs('#sideVocab').classList.remove('active')};qs('#currentHomework').onclick=qs('#sideHomework').onclick=()=>openModule(homeworkArchive[currentHomeworkId].module);qs('#closeWorkspace').onclick=()=>qs('#workspace').classList.remove('open');qs('#byToggle').onclick=()=>qs('#byBank').classList.toggle('open');renderHome();
 </script>
 <script src="../shared/hw-lock.js?v=20261104b"></script><script>/* Отправленная домашка закрывается; карточки остаются. Остальные домашки Майи пока без отправки – не закрываются. */
-HWLock.hub([{sel:'a.openTask[href*="homework-2a-past-simple"]',id:'maya:hw2a',card:'.lessonBlock',cards:true},{sel:'a.openTask[href*="homework-2b-on-top"]',id:'maya:hw2b',card:'.lessonBlock',cards:true}]);</script><script src="../shared/page-label.js?v=20261104"></script>
+HWLock.hub([{sel:'a.openTask[href*="homework-2a-past-simple"]',id:'maya:hw2a',card:'.lessonBlock',cards:true},{sel:'a.openTask[href*="homework-2b-on-top"]',id:'maya:hw2b',card:'.lessonBlock',cards:true},{sel:'a.openTask[href*="homework-2b-photo-stories"]',id:'maya:hw2bphoto',card:'.lessonBlock'}]);</script><script src="../shared/page-label.js?v=20261104"></script>
 </body></html>

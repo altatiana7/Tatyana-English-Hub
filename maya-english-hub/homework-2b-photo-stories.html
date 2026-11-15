@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<title>Maya Homework 2B · Photo Stories</title>
+<style>
+:root{--p:#4b35ae;--p2:#7458cc;--pink:#ef5f91;--ink:#201a45;--line:#e2dbf0;--ok:#15845b;--okbg:#e7f6ef;--bad:#c4435d;--badbg:#fbeaee}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:linear-gradient(135deg,#f3efff,#effaff 55%,#f5fff1)}
+.app{height:100vh;max-width:1280px;margin:auto;padding:24px 10px 8px;display:grid;grid-template-rows:auto 1fr;gap:6px}
+.bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.bar h1{margin:0;font-size:18px;color:var(--p);font-family:Arial,sans-serif}.bar h1 small{font-weight:400;color:#6b6880;font-size:13px;margin-left:6px}
+.home{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:7px 14px;font:900 14px Arial,sans-serif;color:#513aad;text-decoration:none}
+.tabs{display:flex;gap:6px;margin-left:auto}
+.tab{border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:7px 14px;font:900 14px Arial,sans-serif;color:#513aad;cursor:pointer}
+.tab.active{background:var(--p2);color:#fff;border-color:var(--p2)}
+.screen{display:none;min-height:0}.screen.active{display:grid}
+.pane{min-height:0;overflow:auto;background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:16px;padding:10px 14px;box-shadow:0 8px 22px rgba(70,49,135,.08)}
+.pane h2{margin:0 0 4px;color:var(--p);font:900 17px Arial,sans-serif}
+.once{font:700 12px Arial,sans-serif;color:#9a5671;margin-left:6px}
+
+/* 1 · rule + test */
+#s1{grid-template-rows:auto 1fr;gap:8px}
+.memo{display:grid;grid-template-columns:1fr 1fr 1.05fr;gap:8px}
+.mc{border-radius:14px;padding:8px 14px;font-size:17px;line-height:1.4;border:1px solid var(--line)}
+.mc b.t{display:block;font:900 15px Arial,sans-serif;margin-bottom:2px}
+.mc.ps{background:#fff1e6}.mc.ps b.t{color:#a2531a}
+.mc.pc{background:#e9f3ff}.mc.pc b.t{color:#1f5c9c}
+.mc.ww{background:#f1edff}.mc.ww b.t{color:var(--p)}
+.mc s{color:var(--bad)}
+.test{display:flex;flex-direction:column}
+.counter{text-align:center;font:900 14px Arial,sans-serif;color:var(--p);margin-bottom:6px}
+.stem{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;font-size:22px;text-align:center;min-height:74px;display:flex;align-items:center;justify-content:center;line-height:1.4;margin-bottom:10px}
+.stem u{text-decoration:none;border-bottom:2px solid var(--p2);padding:0 22px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{border:1px solid #d9d0ef;background:#fbfaff;border-radius:12px;padding:12px 8px;font:700 19px Georgia,serif;color:var(--ink);cursor:pointer}
+.opt:hover{background:#f3efff}.opt.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok)}.opt.bad{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.result{text-align:center;font:900 17px Arial,sans-serif;color:var(--p);margin-top:8px}
+
+/* 2 · photos */
+#s2{grid-template-columns:1fr 1.1fr;gap:10px}
+.left{display:flex;flex-direction:column;gap:8px}
+.prow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.ptab{border:1px solid #d9d0ef;background:#fff;border-radius:10px;padding:6px 14px;font:900 14px Arial,sans-serif;color:#513aad;cursor:pointer}
+.ptab.on{background:var(--p);color:#fff;border-color:var(--p)}.ptab.sent{background:var(--okbg);border-color:#b9dcc9;color:#1e6b4a}.ptab.sent.on{outline:2px solid var(--ok)}
+.pq{font:900 17px Arial,sans-serif;color:var(--pink);margin-left:6px}
+.photo{flex:1;min-height:150px;position:relative;border-radius:14px;overflow:hidden;background:#ece8f7}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.photo .ph{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:17px;color:#6b6880}
+.photo.err img{display:none}.photo.err .ph{display:flex}
+.cred{position:absolute;right:8px;bottom:6px;font:12px Arial,sans-serif;color:#fff;background:rgba(0,0,0,.45);border-radius:6px;padding:2px 7px}
+.think{font-size:16.5px;line-height:1.4;background:#fff8dc;border-radius:12px;padding:7px 12px}
+.right{display:flex;flex-direction:column;gap:7px}
+.plan{margin:0;padding-left:22px;font-size:16.5px;line-height:1.38}
+.plan b{color:var(--p)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid #d9d0ef;background:#f7f4ff;border-radius:999px;padding:5px 11px;font:700 14.5px Georgia,serif;color:#44358f;cursor:pointer}
+.chip:hover{background:#ece6ff}
+textarea{flex:1;min-height:96px;width:100%;resize:none;border:1px solid #bfb3e6;border-radius:12px;padding:9px 12px;font:17px/1.45 Georgia,serif;color:var(--ink);background:#fff}
+textarea:disabled{background:#f3f6f4;color:#3c4a44}
+.foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font:700 14px Arial,sans-serif;color:#6b6880}
+.wc.ok{color:var(--ok)}
+.mbtn{margin-left:auto;border:1px solid #d9d0ef;background:#fff;border-radius:999px;padding:6px 13px;font:900 13.5px Arial,sans-serif;color:#513aad;cursor:pointer}
+.model{display:none;font-size:16px;line-height:1.45;background:#f8f6ff;border-left:5px solid #b7a9ee;border-radius:10px;padding:8px 12px}
+.model.show{display:block}.model small{display:block;font:700 12.5px Arial,sans-serif;color:#6b6880;margin-bottom:2px}
+@media(max-height:620px){
+ .mc{font-size:15.5px;padding:6px 12px}.stem{font-size:20px;min-height:60px;padding:8px}.opt{padding:9px 8px;font-size:18px}
+ .plan{font-size:15.5px;line-height:1.3}.think{font-size:15.5px;padding:5px 10px}.chip{font-size:13.5px;padding:4px 9px}textarea{font-size:16px;min-height:74px}
+}
+@media(max-width:900px){.app{height:auto}.screen.active{display:block}.pane{margin-bottom:10px}.tabs{margin-left:0}.memo{grid-template-columns:1fr}.photo{height:240px;flex:none}textarea{min-height:200px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar">
+    <a class="home" href="index.html">← Home</a>
+    <h1>Maya · Homework 2B<small>Photo stories · Past Simple and Past Continuous</small></h1>
+    <div class="tabs">
+      <button class="tab active" data-s="s1">1 · Rule + Test</button>
+      <button class="tab" data-s="s2">2 · Three Photos</button>
+    </div>
+    <span id="sendSlot"></span>
+  </div>
+
+  <div class="screen active" id="s1">
+    <div class="memo">
+      <div class="mc ps"><b class="t">PAST SIMPLE · finished action, the main event</b>verb-<b>ed</b> / irregular: She <b>met</b> a Frenchman.<br>did / didn’t + verb: He <b>didn’t have</b> a pass.<br>One action after another: We <b>arrived</b>, <b>paid</b> and <b>left</b>.</div>
+      <div class="mc pc"><b class="t">PAST CONTINUOUS · action in progress, the background</b>was / were + verb-<b>ing</b>: She <b>was living</b> in London.<br>I / he / she / it <b>was</b> · you / we / they <b>were</b><br>At a moment in the past: At 8.00 I <b>was driving</b> home.</div>
+      <div class="mc ww"><b class="t">TOGETHER · when / while</b><b>While</b> the crowd <b>was waiting</b>, he <b>took</b> a picture.<br>We <b>were walking</b> <b>when</b> an owl <b>escaped</b>.<br>know, like, want, understand: I <b>knew</b> him (<s>was knowing</s>).</div>
+    </div>
+    <section class="pane test">
+      <h2>Past Simple or Past Continuous? <span class="once">one try</span></h2>
+      <div class="counter" id="gCount"></div>
+      <div class="stem" id="gStem"></div>
+      <div class="opts" id="gOpts"></div>
+      <div class="result" id="gRes"></div>
+    </section>
+  </div>
+
+  <div class="screen" id="s2">
+    <section class="pane left">
+      <div class="prow"><button class="ptab on" data-p="a">Photo A</button><button class="ptab" data-p="b">Photo B</button><button class="ptab" data-p="c">Photo C</button><span class="pq" id="pQ"></span></div>
+      <div class="photo" id="pBox"><img id="pImg" alt=""><div class="ph">The photo did not load. Check the internet and open the page again.</div><span class="cred" id="pCred"></span></div>
+      <div class="think">The photo never tells the whole story. What happened <b>just before</b>? What were the people <b>feeling</b>? What happened <b>afterwards</b>?</div>
+    </section>
+    <section class="pane right">
+      <h2>Tell the story the photo doesn’t reveal <span class="once">60–80 words · one try</span></h2>
+      <ol class="plan">
+        <li>Set the scene: <b>where, when, who?</b></li>
+        <li>Two <b>Past Continuous</b> clauses: what was happening?</li>
+        <li>Three <b>Past Simple</b> actions: what happened suddenly, and next?</li>
+        <li>Two details the <b>camera could not capture</b>.</li>
+        <li>Give the photo a <b>surprising title</b>.</li>
+      </ol>
+      <div class="chips" id="chips"></div>
+      <textarea id="txt" spellcheck="false" placeholder="Title: …"></textarea>
+      <div class="foot"><span class="wc" id="wc"></span><span id="pState"></span><button class="mbtn" id="mBtn">Model from the lesson</button></div>
+      <div class="model" id="model"><small>Chicago, November 2008</small>In November 2008, a crowd was waiting in Chicago. People were watching the results when they heard the news. Some began crying while others were celebrating. A photographer took a picture of their faces. They were looking at something important that the camera couldn’t show.</div>
+    </section>
+  </div>
+</div>
+
+<script src="../shared/hw-parts.js?v=1"></script><script src="send.js?v=20261115a"></script>
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const KEY='maya-hw-2bphoto-v1',MIN=40;
+let st={g:[],w:{a:'',b:'',c:''}};
+try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&typeof x==='object'){if(Array.isArray(x.g))st.g=x.g;if(x.w&&typeof x.w==='object')st.w=Object.assign(st.w,x.w)}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}try{P.refresh()}catch(e){}}
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const words=t=>(String(t||'').trim().match(/[A-Za-z’'-]+/g)||[]).length;
+
+const TEST=[
+ ["While we ___ dinner, the lights suddenly went out.",["were having","had","was having","are having"],"were having"],
+ ["I was walking home when I ___ an old friend.",["met","was meeting","meet","were meeting"],"met"],
+ ["The children were playing on the beach when she suddenly ___ a photo of them.",["took","was taking","takes","were taking"],"took"],
+ ["This time yesterday I ___ on the beach.",["was lying","lay","were lying","am lying"],"was lying"],
+ ["He ___ his passport, so he couldn’t get on the plane.",["lost","was losing","were losing","loses"],"lost"],
+ ["It ___ when we left the hotel, so we took our umbrellas.",["was raining","rained","were raining","rains"],"was raining"],
+ ["I ___ the answer, but I didn’t say anything.",["knew","was knowing","were knowing","know"],"knew"],
+ ["We arrived at the station, ___ tickets and got on the train.",["bought","were buying","was buying","buy"],"bought"],
+ ["The tourists ___ photos of the cathedral, so they didn’t hear the guide.",["were taking","was taking","take","taked"],"were taking"],
+ ["She wasn’t listening, so she ___ the question.",["didn’t hear","wasn’t hearing","weren’t hearing","doesn’t hear"],"didn’t hear"],
+ ["While I was waiting for the bus, it ___ to snow.",["started","was starting","were starting","starts"],"started"],
+ ["___ you sleeping when I called?",["Were","Did","Was","Do"],"Were"]
+];
+const PH={
+ a:{q:'Late — or simply happy?',src:'https://images.unsplash.com/photo-1450897918656-527057db59d3?auto=format&fit=crop&w=1200&q=70',cred:'Andy Beales · Unsplash',label:'Photo A'},
+ b:{q:'Waiting — or hiding?',src:'https://images.unsplash.com/photo-1521585388242-6ea794e761ad?auto=format&fit=crop&w=1200&q=70',cred:'Ant Rozetsky · Unsplash',label:'Photo B'},
+ c:{q:'What were they looking at?',src:'https://images.unsplash.com/photo-1690957748517-fe8b3172208d?auto=format&fit=crop&w=1200&q=70',cred:'Dillen M · Unsplash',label:'Photo C'}
+};
+const CHIPS=['Title: ','It was … and ','While … was …ing, ','… was …ing when suddenly ','At that moment ','A few minutes later ','The camera didn’t show that ','In fact, '];
+
+const gScore=()=>st.g.filter((a,i)=>a===TEST[i][2]).length;
+const P=KS.parts('hw2bphoto',{lang:'en',
+  units:()=>[{id:'g',label:'Grammar test',done:st.g.length>=TEST.length,errors:TEST.length-gScore()},
+             ...['a','b','c'].map(k=>({id:'p'+k,label:PH[k].label,done:words(st.w[k])>=MIN,errors:null}))],
+  snapshot:()=>getData(),onUpdate:()=>{gDraw();pDraw()}});
+
+$$('.tab').forEach(t=>t.onclick=()=>{$$('.tab').forEach(x=>x.classList.toggle('active',x===t));$$('.screen').forEach(p=>p.classList.toggle('active',p.id===t.dataset.s))});
+
+/* test: one question at a time, one try */
+function gEnd(){$('#gStem').innerHTML=P.isSent('g')?'Sent to your teacher':'Finished. Now send it to your teacher.';$('#gOpts').innerHTML='';$('#gCount').textContent='';$('#gRes').textContent='Grammar test: '+gScore()+' / '+TEST.length}
+function gDraw(){
+  const i=st.g.length;if(i>=TEST.length||P.isSent('g')){gEnd();return}
+  const [q,opts,right]=TEST[i];let locked=false;
+  $('#gRes').textContent='';$('#gCount').textContent=(i+1)+' / '+TEST.length;
+  $('#gStem').innerHTML=q.replace('___','<u>&nbsp;</u>');
+  $('#gOpts').innerHTML=shuffle(opts).map(o=>`<button class="opt" data-v="${o}">${o}</button>`).join('');
+  $$('#gOpts .opt').forEach(b=>b.onclick=()=>{
+    if(locked||P.isSent('g'))return;locked=true;
+    const ok=b.dataset.v===right;st.g.push(b.dataset.v);save();
+    b.classList.add(ok?'ok':'bad');
+    if(!ok)$$('#gOpts .opt').forEach(x=>{if(x.dataset.v===right)x.classList.add('ok')});
+    setTimeout(gDraw,ok?650:1400);
+  });
+}
+
+/* photos */
+let cur='a';
+function pDraw(){
+  const d=PH[cur],sent=P.isSent('p'+cur),box=$('#pBox'),t=$('#txt');
+  $$('.ptab').forEach(b=>{b.classList.toggle('on',b.dataset.p===cur);b.classList.toggle('sent',P.isSent('p'+b.dataset.p))});
+  $('#pQ').textContent=d.q;$('#pCred').textContent='Photo: '+d.cred;
+  if($('#pImg').dataset.k!==cur){box.classList.remove('err');$('#pImg').dataset.k=cur;$('#pImg').src=d.src}
+  t.value=st.w[cur]||'';t.disabled=sent;$('#chips').style.display=sent?'none':'';
+  wDraw();
+}
+function wDraw(){const n=words(st.w[cur]),sent=P.isSent('p'+cur);$('#wc').textContent=n+' words';$('#wc').classList.toggle('ok',n>=MIN);
+  $('#pState').textContent=sent?'✓ Sent · your teacher will check it':(n>=MIN?'Ready to send':'Write at least '+MIN+' words to send');}
+$('#pImg').onerror=()=>$('#pBox').classList.add('err');
+$$('.ptab').forEach(b=>b.onclick=()=>{cur=b.dataset.p;$('#model').classList.remove('show');pDraw()});
+$('#txt').oninput=()=>{if(P.isSent('p'+cur))return;st.w[cur]=$('#txt').value;save();wDraw()};
+$('#chips').innerHTML=CHIPS.map(c=>`<button class="chip" type="button">${c.trim()}</button>`).join('');
+$$('.chip').forEach((b,i)=>b.onclick=()=>{if(P.isSent('p'+cur))return;const t=$('#txt'),v=t.value;const add=(v&&!/\s$/.test(v)?(i===0?'\n':' '):'')+CHIPS[i];t.value=v+add;st.w[cur]=t.value;save();wDraw();t.focus()});
+$('#mBtn').onclick=()=>$('#model').classList.toggle('show');
+
+function getData(){
+  const sections=[{name:'Past Simple or Past Continuous',score:gScore(),max:TEST.length,items:TEST.map((q,i)=>({n:i+1,q:q[0].replace('___','_____'),a:st.g[i]===undefined?'':st.g[i],right:q[2]}))}]
+    .concat(['a','b','c'].map(k=>({name:PH[k].label+' · '+PH[k].q,text:true,words:words(st.w[k]),score:0,max:0,items:[{n:1,q:words(st.w[k])+' words',a:st.w[k]||'',right:st.w[k]||''}]})));
+  return {summary:'Test '+gScore()+'/'+TEST.length+' · stories: '+['a','b','c'].map(k=>words(st.w[k])+' w').join(', '),total:gScore(),max:TEST.length,sections};
+}
+$('#sendSlot').appendChild(P.bar(null,{compact:true}));
+gDraw();pDraw();window.scrollTo(0,0);
+})();
+</script>
+<script src="../shared/hw-lock.js?v=20261104b"></script><script>HWLock.page({id:'maya:hw2bphoto',home:'index.html'});</script><script src="../shared/page-label.js?v=20261104"></script>
+</body>
+</html>
