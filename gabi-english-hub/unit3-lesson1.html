@@ -74,7 +74,7 @@ ol.hunt{padding-left:2.1em}
 </style>
 </head>
 <body>
-<script src="../card-audio.js?v=20261115"></script>
+<script src="../card-audio.js?v=20261115b"></script>
 <script src="skills.js?v=20261104a"></script>
 <script>
 /* Module 3 (Plurilingual), lesson 1 · Gateway B1, SB p.32 Vocabulary in context + the teacher's Airport Mystery case (screens 9-14). Same engine and look as Module 2. Two activities per screen:
@@ -95,7 +95,7 @@ const MSGS=[
  {from:'Kenji',where:'Café · 09:17',text:'I am Japanese and I speak Japanese and English. While I was buying a drink at the airport café, I came across a blue suitcase near my table. It had a white plane sticker. A passenger in a yellow jacket was reading a map beside it. I noticed a luggage tag with the name ELENA on it. I told the passenger that the bag probably belonged to someone else. They said they had picked it up by mistake and took it straight to the information desk. I stayed at the café and called the desk to check.'},
  {from:'Amira',where:'Information desk · 09:21',text:'I work at the information desk. I am Egyptian, and Arabic is my native language. I also speak fluent English. At 09:19, a Turkish passenger called Deniz brought us a blue suitcase. Deniz was wearing a yellow jacket and explained that the bag looked exactly like theirs. Deniz had a different suitcase with a green ribbon, which was still on the airport bus. I checked the luggage tag and called Elena. The bag is safe at the information desk. No one stole it: it was an honest mistake.'}];
 const AUDIO_TEXTS=IV1.concat(IV2,COUNTRY.flatMap(c=>[c[0],c[1]]),LEARN.map(c=>c[0]),LAB.map(c=>c[0]));
-const clip=t=>CardAudio.base+CardAudio.key(t)+'.mp3?v=20261115';
+const clip=t=>CardAudio.base+CardAudio.key(t)+'.mp3?v=20261115b';
 const COURT=(t,s)=>`<div class="court"><h4>${t}</h4><span class="stamp">${s||'RULE'}</span></div>`;
 const RULE1=COURT('Nationalities and languages')+`<ul class="say">
 <li>Languages, countries and nationalities <b>always begin with a capital letter</b>.</li>
@@ -144,7 +144,7 @@ Lesson.ACT.timed={
 const BOARD=`<div class="air"><div class="brd"><h5>AIRPORT DEPARTURES · 09:10</h5><div><span>FLIGHT</span><span>FROM</span><span>GATE</span></div><div><span>OS 211</span><span>VIENNA</span><span>12</span></div><div><span>TK 414</span><span>ISTANBUL</span><span>08</span></div><div><span>JL 790</span><span>TOKYO</span><span>06</span></div></div>
 <div class="lost"><span><small>MISSING ITEM</small>Blue suitcase</span><span><small>LAST SEEN</small>Gate 12 · 09:14</span></div></div>`;
 const SAY=['We say it','We don’t say it'];
-Lesson.boot({kicker:'Module 3 · Lesson 1',steps:[
+const STEPS=[
 {stage:'Check-in',title:'Your homework: Workbook page 16',hint:'These sentences are from your homework. Find the mistake in each one. <small>Then the Speed Game: 15 seconds for each question.</small>',cols:'1.1fr 1fr',
  acts:[
  {type:'hunt',title:'Error hunter · your homework',tip:'Click the word with the mistake.',items:[
@@ -334,7 +334,11 @@ Lesson.boot({kicker:'Module 3 · Lesson 1',steps:[
   {q:'What language would you like to learn, and why?',sub:'Use two expressions from today.'},
   {q:'Was your prediction about the suitcase right? What was different?'},
   {q:'Which three new words will you remember tomorrow?'}]}]}
-]});
+];
+/* every spoken question is only heard (recorded voice): Play / Replay / Stop, the text is on the back of the card.
+   Sentence starters (… at the end) and gap sentences stay visible. */
+STEPS.forEach(st=>st.acts.forEach(a=>{if(a.type!=='talk')return;a.cards=a.cards.map(c=>{if(c.say||/___|…\s*$/.test(c.q))return c;AUDIO_TEXTS.push(c.q);return Object.assign({},c,{say:c.q,audio:clip(c.q)})})}));
+Lesson.boot({kicker:'Module 3 · Lesson 1',steps:STEPS});
 </script>
 </body>
 </html>
