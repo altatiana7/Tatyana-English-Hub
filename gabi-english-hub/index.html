@@ -215,7 +215,7 @@ const modules=[
    {title:'Reading & Grammar · Surprising true crimes',note:'Speed Game · stories from memory · error hunter · past simple · all past tenses · phrasal verbs · Kahoot revision of Module 2'},
    {title:'Revision · Crime Revision',note:'Crime words · phrasal verbs · Hacked! video · Sherlock listening · past tenses & used to · The Final Case'}]},
  {title:'Plurilingual',lessons:[
-   {title:'Vocabulary · Plurilingual',note:'Speed Game · hello in 12 languages · countries and nationalities · learning languages · do or make'},
+   {title:'Vocabulary · Plurilingual',note:'Speed Game · hello in 12 languages · nationalities · learning languages · do or make · Airport Mystery'},
    {title:'Reading & Grammar',note:'International English · quantifiers · relative clauses'},
    {title:'Listening & Speaking',note:'Toki Pona · language learning · review'}]},
  {title:'Take care!',lessons:[
@@ -316,7 +316,7 @@ function openLesson(n,i){
   if(n===2 && i===2){ gabiOpenTask('unit2-lesson3.html?v=20261014-b'); return; }
   if(n===2 && i===3){ gabiOpenTask('unit2-lesson4.html?v=20261104-b'); return; }
   if(n===2 && i===4){ gabiOpenTask('unit2-lesson5.html?v=20261109-c'); return; }
-  if(n===3 && i===0){ gabiOpenTask('unit3-lesson1.html?v=20261115-b'); return; }
+  if(n===3 && i===0){ gabiOpenTask('unit3-lesson1.html?v=20261115-c'); return; }
   const m=modules[n-1];
   document.getElementById('crumb').textContent='MODULE '+n+' · '+m.title.toUpperCase();
   document.getElementById('lessonHeading').textContent=m.lessons[i].title;
@@ -349,7 +349,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
   window.bindWord=()=>{document.getElementById('wodWord').textContent=w[0];document.getElementById('wodWord2').textContent=w[0].toUpperCase();document.getElementById('wodDef').textContent=w[1];const tile=document.getElementById('wordTile');tile.onclick=()=>{tile.classList.toggle('flip');
     try{if(tile.classList.contains('flip')){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w[0]);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}catch(e){}}};bindWord();
   const h=d.getHours();document.getElementById('hi').textContent=(h<12?'GOOD MORNING':h<18?'GOOD AFTERNOON':'GOOD EVENING')+', GABI';
-  document.getElementById('progText').textContent='7 screens · 60 minutes';
+  document.getElementById('progText').textContent='14 screens · book page 32 + Airport Mystery';
   document.getElementById('continueBtn').onclick=()=>openLesson(3,0);
 })();
 

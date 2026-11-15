@@ -43,6 +43,30 @@ ol.hunt{padding-left:2.1em}
 .tagsrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
 .tagsrow span{font:800 clamp(19px,2vw,26px)/1 Figtree,sans-serif;color:#fff;padding:9px 16px;border-radius:9px;background:#169be5;transform:rotate(-2deg)}
 .tagsrow span:nth-child(4n+2){background:#0f9d8a;transform:rotate(1.5deg)}.tagsrow span:nth-child(4n+3){background:#e2459b}.tagsrow span:nth-child(4n+4){background:#7a5bd0;transform:rotate(2deg)}
+/* picture / video panel */
+.media{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.media .frame{flex:1;min-height:0;display:grid;place-items:center;background:#0d1526;border-radius:12px;overflow:hidden}
+.media .frame img,.media .frame video{max-width:100%;max-height:100%;width:auto;height:100%;object-fit:contain;display:block}
+.media .row{flex:none;flex-wrap:wrap}.media .row .on{background:#ffd23f;border-color:#e0b400}
+/* airport departures board */
+.air{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;justify-content:center}
+.air .brd{background:#0d1b33;border-radius:14px;padding:10px 16px;color:#fff;font:700 clamp(17px,1.6vw,22px)/1.2 Figtree,sans-serif}
+.air .brd h5{margin:0 0 6px;font:800 13px Montserrat,sans-serif;letter-spacing:.14em;color:#8fd0ff}
+.air .brd div{display:grid;grid-template-columns:1fr 1.2fr .6fr;gap:8px;padding:7px 0;border-bottom:1px solid #2c4263}.air .brd div:last-child{border:0}
+.air .brd div:first-of-type{color:#ffd23f;font-size:.8em;letter-spacing:.08em}
+.air .lost{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.air .lost span{background:#eef4fb;border:2px solid #c5d3e6;border-radius:12px;padding:8px 12px;font:800 clamp(17px,1.6vw,21px) Figtree,sans-serif;color:#10233f}
+.air .lost small{display:block;font:700 12px Montserrat,sans-serif;letter-spacing:.1em;color:#566b84}
+/* three messages, each open for 30 seconds */
+.msg{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.msg .pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:none}
+.msg .pick button{border:2px solid #c5d3e6;border-radius:12px;background:#fff;padding:6px 10px;text-align:left;font:inherit;cursor:pointer}
+.msg .pick b{display:block;font-size:18px;color:#10233f}.msg .pick small{font-size:13.5px;color:#566b84;font-weight:600}
+.msg .pick .on{border-color:#ffd23f;background:#fff6cf}
+.msg .page{flex:1;min-height:0;overflow:auto;border-radius:12px;padding:10px 14px;background:#f3f7fc;border:2px dashed #c5d3e6;font-size:clamp(16px,1.45vw,20px);line-height:1.5;color:#10233f}
+.msg .page.idle{display:grid;place-items:center;text-align:center;font-weight:700;color:#3a5070}
+.msg .row{flex:none}.msg .clock{font:800 26px Montserrat,sans-serif;color:#169be5;font-variant-numeric:tabular-nums;margin-left:auto}.msg .clock.hot{color:#e2574c}
+@media(max-height:640px){.act.panel .tcard{padding:6px 12px}.act.panel .tcard .q{font-size:18px}.act.panel .tcard .sub{font-size:14px}.act.panel .chips{gap:4px}.act.panel .chips button{font-size:13.5px;padding:2px 9px}.act.panel .order.compact button{font-size:13.5px;padding:0 8px;min-height:0;line-height:1.15}.act.panel .order.compact>div{gap:2px}.act.panel .opts.c1 button{min-height:38px;padding:3px 10px;font-size:16px}.act.panel .opts.c1{gap:5px}.act.panel .q{font-size:19px}.act.panel .order.compact .lab{font-size:13px}.msg .page{font-size:14.5px;line-height:1.38;padding:6px 10px}.msg .pick b{font-size:15px}.msg .pick button{padding:3px 8px}.air .brd{font-size:15px;padding:6px 12px}.air .brd div{padding:4px 0}}
 /* twelve pairs fit without scrolling */
 .act.panel .match button{font-size:16.5px;padding:4px 10px;min-height:0;line-height:1.25}.act.panel .match>div{gap:5px}
 .act.panel .hunt{font-size:18.5px;gap:1px}.act.panel .hunt li{line-height:1.5}.act.panel .hunt em{font-size:.9em}
@@ -53,7 +77,7 @@ ol.hunt{padding-left:2.1em}
 <script src="../card-audio.js?v=20261115"></script>
 <script src="skills.js?v=20261104a"></script>
 <script>
-/* Module 3 (Plurilingual), lesson 1 · Gateway B1, SB p.32 Vocabulary in context. Same engine and look as Module 2. Two activities per screen:
+/* Module 3 (Plurilingual), lesson 1 · Gateway B1, SB p.32 Vocabulary in context + the teacher's Airport Mystery case (screens 9-14). Same engine and look as Module 2. Two activities per screen:
    1 homework: error hunter (his Workbook p.16 sentences) + Speed Game (15 s) -> 2 spoken warm-up questions (ex 4) + prediction
    -> 3 hello in 12 languages (match) + country flashcards -> 4 sort the endings + quiz with traps (rule under a button)
    -> 5 learning-languages flashcards + Advice for learning English (ex 5a) -> 6 floor is lava: do or make + ex 7 (rule under a button)
@@ -64,7 +88,13 @@ const IV2=['How do you study English after school?','How do you revise before an
 const HELLO=[['hola','Spanish'],['bonjour','French'],['marhabaan','Arabic'],['privet','Russian'],['hallo','German'],['cześć','Polish'],['merhaba','Turkish'],['olá','Portuguese'],['zdraveĭte','Bulgarian'],['śwaṣdī','Thai'],['kon’nichiwa','Japanese'],['ciao','Italian']];
 const COUNTRY=[['Argentina','Argentinian','Spanish'],['Austria','Austrian','German'],['Brazil','Brazilian','Portuguese'],['Bulgaria','Bulgarian','Bulgarian'],['Egypt','Egyptian','Arabic'],['Japan','Japanese','Japanese'],['Mexico','Mexican','Spanish'],['Poland','Polish','Polish'],['Russia','Russian','Russian'],['Switzerland','Swiss','French, German, Italian'],['Thailand','Thai','Thai'],['Turkey','Turkish','Turkish']];
 const LEARN=[['accuracy','noun','точность','accuracy (n.) · accurate (adj.)'],['accurate','adjective','точный, правильный','accurate (adj.) · accuracy (n.)'],['essay','noun','сочинение, эссе','do an essay · write an essay · read an essay'],['exam','noun','экзамен','do an exam · take an exam · pass an exam · fail an exam'],['exercise','noun','упражнение','do an exercise · check an exercise · correct an exercise'],['fluency','noun','беглость речи','fluency (n.) · fluent (adj.)'],['fluent','adjective','бегло говорящий','fluent (adj.) · fluency (n.)'],['homework','noun','домашняя работа','do homework · check homework'],['memorisation','noun','запоминание','memorisation (n.) · memorise (v.)'],['memorise','verb','запоминать, учить наизусть','memorise (v.) · memorisation (n.)'],['mistake','noun','ошибка','make a mistake · correct a mistake'],['practice','noun','практика','practice (n.) · practise (v.)'],['practise','verb','практиковаться','practise (v.) · practice (n.)'],['revise','verb','повторять','revise (v.) · revision (n.)'],['revision','noun','повторение','revision (n.) · revise (v.)'],['study','verb','учить, изучать','do English · study English · learn English'],['translate','verb','переводить','translate (v.) · translation (n.)'],['translation','noun','перевод','translation (n.) · translate (v.)']];
-const AUDIO_TEXTS=IV1.concat(IV2,COUNTRY.flatMap(c=>[c[0],c[1]]),LEARN.map(c=>c[0]));
+/* Airport Mystery (the teacher's own case for Unit 3) */
+const LAB=[["native language","the language you learn first as a child","родной язык","My native language is Turkish."],["fluent","able to speak a language easily and accurately","бегло говорящий","She is fluent in Italian."],["bilingual","able to speak two languages","двуязычный","He is bilingual in Arabic and English."],["nationality","the country a person belongs to","национальность","What is your nationality?"],["foreign language","a language from another country","иностранный язык","I am learning a foreign language."],["translate","to change words into another language","переводить","Can you translate this sign?"],["pronunciation","the way a word is spoken","произношение","My pronunciation is improving."],["make progress","to improve at something","делать успехи","I make progress when I practise."],["pick up a language","to learn a language naturally through use","освоить язык в общении","He picked up Spanish while travelling."],["look up","to search for information in a dictionary or online","искать значение","Look up the word before you answer."],["get by","to manage with limited knowledge of a language","как-то объясняться","I can get by in French."],["come across","to find or meet something unexpectedly","случайно встретить","I came across a note in Japanese."],["official language","a language recognised by a country or government","официальный язык","Arabic is an official language of Egypt."],["language barrier","difficulty communicating because of different languages","языковой барьер","A translation app can help with a language barrier."]];
+const MSGS=[
+ {from:'Elena',where:'Gate 12 · 09:14',text:'I have just arrived from Vienna. My nationality is Austrian, and my native language is German. I can get by in English, but I often look up unfamiliar words. I was carrying a small blue suitcase with a white plane sticker. At Gate 12, I helped a Japanese passenger translate an announcement. When I turned around, my suitcase was gone. I saw someone in a yellow jacket walking towards the café with a blue suitcase. I did not see their face.'},
+ {from:'Kenji',where:'Café · 09:17',text:'I am Japanese and I speak Japanese and English. While I was buying a drink at the airport café, I came across a blue suitcase near my table. It had a white plane sticker. A passenger in a yellow jacket was reading a map beside it. I noticed a luggage tag with the name ELENA on it. I told the passenger that the bag probably belonged to someone else. They said they had picked it up by mistake and took it straight to the information desk. I stayed at the café and called the desk to check.'},
+ {from:'Amira',where:'Information desk · 09:21',text:'I work at the information desk. I am Egyptian, and Arabic is my native language. I also speak fluent English. At 09:19, a Turkish passenger called Deniz brought us a blue suitcase. Deniz was wearing a yellow jacket and explained that the bag looked exactly like theirs. Deniz had a different suitcase with a green ribbon, which was still on the airport bus. I checked the luggage tag and called Elena. The bag is safe at the information desk. No one stole it: it was an honest mistake.'}];
+const AUDIO_TEXTS=IV1.concat(IV2,COUNTRY.flatMap(c=>[c[0],c[1]]),LEARN.map(c=>c[0]),LAB.map(c=>c[0]));
 const clip=t=>CardAudio.base+CardAudio.key(t)+'.mp3?v=20261115';
 const COURT=(t,s)=>`<div class="court"><h4>${t}</h4><span class="stamp">${s||'RULE'}</span></div>`;
 const RULE1=COURT('Nationalities and languages')+`<ul class="say">
@@ -88,6 +118,31 @@ Lesson.ACT.tags={
   return `<div class="tagsbox"><p class="q">${all?Lesson.esc(a.answer):Lesson.esc(a.q)}</p><div class="tagsrow">${a.items.slice(0,s.n).map(t=>`<span>${Lesson.esc(t)}</span>`).join('')}</div></div>
    <div class="row nav3"><button class="ghost" data-tall>Show all</button><span class="muted">${Math.min(s.n,a.items.length)} / ${a.items.length}</span><button class="main" data-tmore ${all?'disabled':''}>${s.n>=a.items.length?'Show the title':'One more word'}</button></div>`},
  click(a,s,d){if(d.tmore!==undefined){s.n++;return Lesson.redraw()}if(d.tall!==undefined){s.n=a.items.length+1;return Lesson.redraw()}}};
+/* a picture or a short video with buttons to switch between them */
+Lesson.ACT.media={
+ init(a,s){s.k=0;s.hide=false},
+ view(a,s){const m=a.items[s.k];
+  return `<div class="media"><div class="frame">${s.hide?'':m.video?`<video src="${m.video}" controls playsinline preload="metadata"></video>`:`<img src="${m.img}" alt="">`}</div>
+   <div class="row">${a.items.map((x,k)=>`<button class="ghost${k===s.k&&!s.hide?' on':''}" data-mk="${k}">${Lesson.esc(x.label)}</button>`).join('')}<button class="ghost${s.hide?' on':''}" data-mhide>Hide</button></div></div>`},
+ click(a,s,d){if(d.mk!==undefined){s.k=+d.mk;s.hide=false;return Lesson.redraw()}if(d.mhide!==undefined){s.hide=!s.hide;return Lesson.redraw()}}};
+Lesson.ACT.read={view(a){return a.html}};
+/* three witness messages: each one is visible for 30 seconds, then it disappears; it can be opened again */
+let MSGT=0;
+Lesson.ACT.timed={
+ init(a,s){s.i=0;s.open=false},
+ view(a,s){const m=a.items[s.i];
+  return `<div class="msg"><div class="pick">${a.items.map((x,k)=>`<button data-msg="${k}" class="${k===s.i?'on':''}"><b>${Lesson.esc(x.from)}</b><small>${Lesson.esc(x.where)}</small></button>`).join('')}</div>
+   <div class="page${s.open?'':' idle'}" id="msgPage">${s.open?Lesson.esc(m.text):(s.up?'Time is up. What do you remember?':'Choose a message and open it.')}</div>
+   <div class="row"><button class="main" data-mopen>${s.open?'Start the 30 seconds again':'Open for 30 seconds'}</button><button class="ghost" data-mclose>Close the text</button><b class="clock" id="msgClock">${s.open?'00:'+(a.secs||30):''}</b></div></div>`},
+ click(a,s,d){const secs=a.secs||30;
+  if(d.msg!==undefined){clearInterval(MSGT);s.i=+d.msg;s.open=false;s.up=false;return Lesson.redraw()}
+  if(d.mclose!==undefined){clearInterval(MSGT);s.open=false;s.up=false;return Lesson.redraw()}
+  if(d.mopen!==undefined){clearInterval(MSGT);s.open=true;s.up=false;Lesson.redraw();let left=secs;
+   MSGT=setInterval(()=>{const c=document.getElementById('msgClock'),p=document.getElementById('msgPage');if(!c||!p){clearInterval(MSGT);s.open=false;return}
+    left--;c.textContent='00:'+String(Math.max(0,left)).padStart(2,'0');c.classList.toggle('hot',left<=10);
+    if(left<=0){clearInterval(MSGT);s.open=false;s.up=true;p.className='page idle';p.textContent='Time is up. What do you remember?';c.textContent=''}},1000)}}};
+const BOARD=`<div class="air"><div class="brd"><h5>AIRPORT DEPARTURES · 09:10</h5><div><span>FLIGHT</span><span>FROM</span><span>GATE</span></div><div><span>OS 211</span><span>VIENNA</span><span>12</span></div><div><span>TK 414</span><span>ISTANBUL</span><span>08</span></div><div><span>JL 790</span><span>TOKYO</span><span>06</span></div></div>
+<div class="lost"><span><small>MISSING ITEM</small>Blue suitcase</span><span><small>LAST SEEN</small>Gate 12 · 09:14</span></div></div>`;
 const SAY=['We say it','We don’t say it'];
 Lesson.boot({kicker:'Module 3 · Lesson 1',steps:[
 {stage:'Check-in',title:'Your homework: Workbook page 16',hint:'These sentences are from your homework. Find the mistake in each one. <small>Then the Speed Game: 15 seconds for each question.</small>',cols:'1.1fr 1fr',
@@ -117,6 +172,22 @@ Lesson.boot({kicker:'Module 3 · Lesson 1',steps:[
   {sec:'Your story',q:'In the end, we FOUND OUT the truth.',o:['hid','discovered','looked for'],a:'discovered'},
   {sec:'Your story',q:'My friends and I started to LOOK FOR clues.',o:['try to find','look after','look at'],a:'try to find'},
   {sec:'Your story',q:'We found out that a younger boy ___ it by mistake.',o:['has taken','was taking','had taken'],a:'had taken',why:'earlier than “found out”: past perfect'}]}]},
+{stage:'Warm-up',title:'What happened here?',hint:'Watch and look. What happened? What were the people doing? <small>Then answer the questions.</small>',cols:'1.25fr 1fr',
+ acts:[
+ {type:'media',title:'Evidence from Module 2',items:[{label:'Video',video:'assets/u3/street-mystery.mp4'},{label:'Street picture',img:'assets/u3/street-picture.jpg'},{label:'Four photos',img:'assets/u3/four-photos.jpg'},{label:'Blog post',img:'assets/u3/blog.jpg'}]},
+ {type:'talk',title:'Quick recall',label:'Question',secs:40,cards:[
+  {tag:'Story',q:'Look at the four photos. What happened first?'},
+  {tag:'Story',q:'What was the police officer doing while the children were playing?'},
+  {tag:'Story',q:'Was the burglar caught? How?'},
+  {tag:'Grammar',q:'While the children ___ (play) basketball, the burglar ___ (ride) away.'},
+  {tag:'Grammar',q:'The police officer ___ (run) after the burglar when the ball ___ (hit) him.'},
+  {tag:'Grammar',q:'Police officers ___ (not / use) mobile phones in the nineteenth century.'},
+  {tag:'Decisions',q:'You find money in a classroom. What do you do?'},
+  {tag:'Decisions',q:'Your friend asks to copy your homework. What do you say?'},
+  {tag:'Decisions',q:'Your friend asks you to lie to their parents. What is the right thing to do?'},
+  {tag:'Online safety',q:'What do you use passwords for?'},
+  {tag:'Online safety',q:'How do you keep your passwords safe?'},
+  {tag:'Online safety',q:'What should you do if a suspicious message asks for your password?'}]}]},
 {stage:'Warm-up',title:'Countries and languages',hint:'Listen to the question and answer. <small>Then predict: what is Module 3 about?</small>',cols:'1fr 1fr',
  acts:[
  {type:'talk',title:'Ask and answer',label:'Question',secs:40,cards:IV1.map(q=>({q,say:q,audio:clip(q)}))},
@@ -152,16 +223,26 @@ Lesson.boot({kicker:'Module 3 · Lesson 1',steps:[
   {pre:'the new vocabulary and grammar and store it in your brain.',opts:['Translate','Fluency','Homework','Translation'],ans:['Translation']},
   {pre:'can be useful sometimes, but remember that grammar and vocabulary don’t usually work in exactly the same way in different languages. And, finally, when we talk about speaking, there are two main goals:',opts:['accurate','accuracy','fluent','fluency'],ans:['accuracy']},
   {pre:'is good because it means what you are saying is correct and being',opts:['fluency','accuracy','accurate','fluent'],ans:['fluent']}]}]},
-{stage:'Words',title:'Do or make?',hint:'Do we say it? Three wrong answers and the floor is lava. <small>Then choose the correct alternative.</small>',cols:'1.15fr 1fr',help:{label:'Do or make',html:RULE2},
+{stage:'Words',title:'Do or make?',hint:'Do we say it? Three wrong answers and the floor is lava. <small>Then choose the best expression: 13 questions.</small>',cols:'1.15fr 1fr',help:{label:'Do or make',html:RULE2},
  acts:[
  {type:'quiz',title:'Floor is lava · do or make?',label:'Phrase',lives:3,cols:2,opts:SAY,items:[
   {q:'do an essay',a:SAY[0]},{q:'make an exam',a:SAY[1],why:'do / take an exam'},{q:'take an exam',a:SAY[0]},{q:'make a mistake',a:SAY[0]},{q:'do a mistake',a:SAY[1],why:'make a mistake'},{q:'do an exercise',a:SAY[0]},
   {q:'make homework',a:SAY[1],why:'do homework'},{q:'pass an exam',a:SAY[0]},{q:'make English',a:SAY[1],why:'do / study / learn English'},{q:'correct a mistake',a:SAY[0]},{q:'do homework',a:SAY[0]},
   {q:'make an exercise',a:SAY[1],why:'do an exercise'},{q:'fail an exam',a:SAY[0]},{q:'write an essay',a:SAY[0]},{q:'do English',a:SAY[0]},{q:'check homework',a:SAY[0]}]},
- {type:'quiz',title:'Exercise 7 · choose',label:'Question',cols:2,shuffle:false,items:[
+ {type:'quiz',title:'Choose the best expression',label:'Question',cols:2,shuffle:false,items:[
   {q:'How do you ___ English after school?',o:['make','study'],a:'study'},
   {q:'How do you ___ before an exam?',o:['revise','revision'],a:'revise'},
-  {q:'How do you feel when you ___ a mistake in English?',o:['do','make'],a:'make'}]}]},
+  {q:'How do you feel when you ___ a mistake in English?',o:['do','make'],a:'make'},
+  {q:'He speaks Spanish and English equally well. He is ___.',o:['national','bilingual','foreign'],a:'bilingual'},
+  {q:'She speaks Japanese easily. She is ___ in Japanese.',o:['fluent','native','official'],a:'fluent'},
+  {q:'Please ___ the word in the dictionary.',o:['get by','come across','look up'],a:'look up'},
+  {q:'What is your ___? I am Brazilian.',o:['pronunciation','nationality','language'],a:'nationality'},
+  {q:'The airport announcement was in two ___ languages.',o:['different','differently','difference'],a:'different'},
+  {q:'My ___ language is Russian.',o:['national','foreign','native'],a:'native'},
+  {q:'I can ___ in Italian but I cannot discuss difficult topics.',o:['look up','get by','translate into'],a:'get by'},
+  {q:'During the trip, I ___ some interesting German expressions.',o:['came across','looked for','got by'],a:'came across'},
+  {q:'Regular speaking practice helps learners ___.',o:['do progress','take progress','make progress'],a:'make progress'},
+  {q:'We could not understand each other because of the language ___.',o:['border','barrier','mistake'],a:'barrier'}]}]},
 {stage:'Speak',title:'Use it … don’t lose it!',hint:'Listen to the question and answer. <small>Then Module 3 Jeopardy: choose a box and answer aloud.</small>',cols:'1fr 1.2fr',
  acts:[
  {type:'talk',title:'Interview',label:'Question',secs:40,cards:IV2.map(q=>({q,say:q,audio:clip(q)}))},
@@ -170,7 +251,89 @@ Lesson.boot({kicker:'Module 3 · Lesson 1',steps:[
   {name:'Nationality',qs:[{q:'Poland',a:'Polish'},{q:'Thailand',a:'Thai'},{q:'Switzerland',a:'Swiss'}]},
   {name:'Language',qs:[{q:'Mexico',a:'Spanish'},{q:'Brazil',a:'Portuguese'},{q:'Egypt',a:'Arabic'}]},
   {name:'Word family',qs:[{q:'The noun from TRANSLATE',a:'translation'},{q:'The adjective from FLUENCY',a:'fluent'},{q:'The verb from MEMORISATION',a:'memorise'}]},
-  {name:'Do or make',qs:[{q:'___ homework',a:'do'},{q:'___ a mistake',a:'make'},{q:'___ an exam (three verbs)',a:'do / take / pass / fail'}]}]}]}
+  {name:'Do or make',qs:[{q:'___ homework',a:'do'},{q:'___ a mistake',a:'make'},{q:'___ an exam (three verbs)',a:'do / take / pass / fail'}]}]}]},
+{stage:'Case',title:'Airport Mystery · Lost in Translation',hint:'A passenger has lost a blue suitcase. Three people speak different languages. What do you think happened? <small>At least three sentences with might, could, perhaps.</small>',cols:'1fr 1fr',
+ acts:[
+ {type:'read',title:'Airport departures',html:BOARD},
+ {type:'talk',title:'Prediction',label:'Question',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['I think …','The person might have …','Perhaps …','It could be a mistake because …'],cards:[
+  {q:'What do you think happened?'},{q:'Who owned the suitcase?'},{q:'Why might someone take it?'},{q:'Which languages could help?'},{q:'Could this be a crime?'},{q:'Where is the suitcase now?'},{q:'What should the passenger do first?'}]}]},
+{stage:'Case',title:'Vocabulary Lab',hint:'Guess the meaning first, then turn the card over. <small>Then complete the sentences aloud.</small>',cols:'1fr 1fr',
+ acts:[
+ {type:'cards',title:'Flashcards · 14 words and phrases',items:LAB.map(c=>({w:c[0],ru:c[2],d:c[1],ex:c[3]}))},
+ {type:'talk',title:'Use it to solve a case',label:'Sentence',secs:40,cards:[
+  {q:'My native language is …'},{q:'I would like to be fluent in … because …'},{q:'I look up words when …'},{q:'I came across a foreign word when …'},{q:'I can get by in …'},{q:'The language barrier can be difficult when …'},{q:'I make progress when …'},{q:'Being bilingual is useful because …'}]}]},
+{stage:'Case',title:'Three messages',hint:'Each message is visible for 30 seconds. Who is the owner? Which suitcase? What happened first? <small>Then answer from memory.</small>',cols:'1.2fr 1fr',
+ acts:[
+ {type:'timed',title:'Evidence archive',secs:30,items:MSGS},
+ {type:'quiz',title:'What do you remember?',label:'Question',cols:1,shuffle:false,items:[
+  {q:'Where did Elena arrive from?',o:['Vienna','Istanbul','Tokyo'],a:'Vienna'},
+  {q:'What is Elena’s native language?',o:['English','Austrian','German'],a:'German'},
+  {q:'Which suitcase disappeared?',o:['A blue suitcase with a green ribbon','A small blue suitcase with a white plane sticker','A yellow suitcase with a name tag'],a:'A small blue suitcase with a white plane sticker'},
+  {q:'Why did Elena stop watching her suitcase?',o:['She was helping a passenger translate an announcement','She was buying a drink','She was reading a map'],a:'She was helping a passenger translate an announcement'},
+  {q:'What was Kenji doing when he came across the suitcase?',o:['Waiting at Gate 12','Buying a drink at the café','Working at the information desk'],a:'Buying a drink at the café'},
+  {q:'What evidence links the café suitcase to Elena?',o:['A green ribbon','A yellow jacket','The sticker and the tag with her name'],a:'The sticker and the tag with her name'},
+  {q:'What is Amira’s nationality?',o:['Egyptian','Turkish','Arabic'],a:'Egyptian'},
+  {q:'Who was wearing a yellow jacket?',o:['Kenji','Deniz','Amira'],a:'Deniz'},
+  {q:'Where was Deniz’s own suitcase?',o:['At the café','At Gate 8','On the airport bus'],a:'On the airport bus'},
+  {q:'Where is Elena’s bag now?',o:['At the information desk','On the airport bus','At the café'],a:'At the information desk'}]}]},
+{stage:'Case',title:'Detective work',hint:'Reconstruct the truth and compare it with your prediction. <small>Then give your verdict.</small>',cols:'1.15fr 1fr',
+ acts:[
+ {type:'order',title:'The timeline',compact:true,reveal:true,from:'Tap the events in the right order',items:[
+  'Elena arrives from Vienna with a small blue suitcase.',
+  'She helps a Japanese passenger translate an announcement.',
+  'Deniz picks up her suitcase by mistake.',
+  'Elena turns around: the suitcase is gone.',
+  'Kenji comes across the suitcase at the café.',
+  'He notices the tag with the name ELENA.',
+  'Deniz takes the bag to the information desk.',
+  'Amira checks the tag and calls Elena.']},
+ {type:'quiz',title:'Final deduction',label:'Evidence',cols:1,shuffle:false,items:[
+  {q:'Clue 1: the sticker on Elena’s suitcase was …',o:['a white plane','a green ribbon','a red lock'],a:'a white plane'},
+  {q:'Clue 2: the jacket of the person with the suitcase was …',o:['blue','yellow','green'],a:'yellow'},
+  {q:'Clue 3: the name on the luggage tag was …',o:['DENIZ','AMIRA','ELENA'],a:'ELENA'},
+  {q:'Who noticed the luggage tag at the café?',o:['Kenji','Amira','Elena'],a:'Kenji'},
+  {q:'Who took Elena’s suitcase from Gate 12?',o:['Kenji','Deniz','Amira'],a:'Deniz'},
+  {q:'Why did Deniz take it?',o:['Deniz wanted to sell it','Kenji asked for it','It looked exactly like Deniz’s bag'],a:'It looked exactly like Deniz’s bag'},
+  {q:'Who returned the bag to the information desk?',o:['Kenji','Elena','Deniz'],a:'Deniz'},
+  {q:'Was it a theft?',o:['Yes, someone stole it.','No, it was a mix-up.','We don’t know.'],a:'No, it was a mix-up.',why:'Amira: “No one stole it: it was an honest mistake.”'}]}]},
+{stage:'Speak',title:'Information desk',hint:'Gabi is the passenger who lost a bag, the teacher is the airport officer. <small>Then the grammar booster: three wrong answers and the floor is lava.</small>',cols:'1fr 1.1fr',
+ acts:[
+ {type:'talk',title:'Role-play · ask for information',label:'Mission',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['Could you tell me where …?','I’m looking for …','I was waiting at … when …','I can get by in …','It’s a bag which has …'],cards:[
+  {q:'Excuse me, I need help. I can’t find my …'},
+  {q:'What nationality are you, and which languages do you speak?'},
+  {q:'Where were you waiting when the suitcase disappeared?'},
+  {q:'Describe the suitcase using which / that.'},
+  {q:'Which flight did you arrive on, and where from?'},
+  {q:'How do you deal with a language barrier while travelling?'},
+  {q:'Why is being bilingual useful at an international airport?'}]},
+ {type:'quiz',title:'Floor is lava · grammar booster',label:'Sentence',lives:3,cols:3,items:[
+  {q:'There ___ a lot of luggage at the airport.',o:['is','are','were'],a:'is',why:'luggage is uncountable'},
+  {q:'We do not have ___ information about the missing bag.',o:['many','much','a few'],a:'much',why:'information is uncountable'},
+  {q:'There are ___ passengers waiting at Gate 8.',o:['a little','much','a few'],a:'a few',why:'passengers is countable'},
+  {q:'The student ___ speaks Arabic is standing over there.',o:['who','which','where'],a:'who',why:'who refers to people'},
+  {q:'This is the suitcase ___ disappeared yesterday.',o:['who','that','where'],a:'that',why:'that refers to things'},
+  {q:'It was ___ to read the damaged sign.',o:['unpossible','dispossible','impossible'],a:'impossible',why:'possible → impossible'},
+  {q:'Leaving a bag unattended is ___.',o:['irresponsible','inresponsible','unresponsible'],a:'irresponsible',why:'responsible → irresponsible'},
+  {q:'The information on this ticket is ___.',o:['uncorrect','incorrect','imcorrect'],a:'incorrect',why:'correct → incorrect'},
+  {q:'The officer was ___ because the passenger had no ID.',o:['inhappy','dishappy','unhappy'],a:'unhappy',why:'happy → unhappy'},
+  {q:'Speaking to passengers without listening is ___.',o:['impolite','inpolite','unpolite'],a:'impolite',why:'polite → impolite'}]}]},
+{stage:'Final',title:'Can you close the case?',hint:'Ten questions, 15 seconds each. <small>Then the exit ticket.</small>',cols:'1.2fr 1fr',
+ acts:[
+ {type:'bomb',speed:true,secs:15,label:'Detective certification',title:'Speed Game · final challenge',items:[
+  {sec:'Languages',q:'Which language is usually spoken in Brazil?',o:['Spanish','Portuguese','Italian'],a:'Portuguese'},
+  {sec:'Languages',q:'A person from Austria is …',o:['Austrian','Australian','Australish'],a:'Austrian'},
+  {sec:'Words',q:'Which is a natural collocation?',o:['do progress','make a progress','make progress'],a:'make progress'},
+  {sec:'Words',q:'Someone who speaks two languages is …',o:['monolingual','bilingual','illiterate'],a:'bilingual'},
+  {sec:'Words',q:'Which phrase means “manage with limited language”?',o:['get by','look up','give up'],a:'get by'},
+  {sec:'Grammar',q:'How ___ information do we have?',o:['many','a few','much'],a:'much'},
+  {sec:'The case',q:'Elena’s suitcase had …',o:['a green ribbon','a white plane sticker','a red lock'],a:'a white plane sticker'},
+  {sec:'The case',q:'Who noticed the luggage tag at the café?',o:['Kenji','Amira','Elena'],a:'Kenji'},
+  {sec:'The case',q:'Who returned the bag to the information desk?',o:['Kenji','Elena','Deniz'],a:'Deniz'},
+  {sec:'The case',q:'Which statement is supported by the messages?',o:['Kenji stole the bag.','It was a mix-up, not a theft.','The bag was never found.'],a:'It was a mix-up, not a theft.'}]},
+ {type:'talk',title:'Exit ticket',label:'Question',secs:40,cards:[
+  {q:'What language would you like to learn, and why?',sub:'Use two expressions from today.'},
+  {q:'Was your prediction about the suitcase right? What was different?'},
+  {q:'Which three new words will you remember tomorrow?'}]}]}
 ]});
 </script>
 </body>
