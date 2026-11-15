@@ -46,9 +46,9 @@ body{font-family:Georgia,"Times New Roman",serif;color:var(--ink);background:lin
 .ptab{border:1px solid #d9d0ef;background:#fff;border-radius:10px;padding:6px 14px;font:900 14px Arial,sans-serif;color:#513aad;cursor:pointer}
 .ptab.on{background:var(--p);color:#fff;border-color:var(--p)}.ptab.sent{background:var(--okbg);border-color:#b9dcc9;color:#1e6b4a}.ptab.sent.on{outline:2px solid var(--ok)}
 .pq{font:900 17px Arial,sans-serif;color:var(--pink);margin-left:6px}
-.photo{flex:1;min-height:150px;position:relative;border-radius:14px;overflow:hidden;background:#ece8f7}
-.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.photo .ph{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:17px;color:#6b6880}
+.photo{flex:1;min-height:150px;position:relative;border-radius:14px;overflow:hidden;background:#1d1b26}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.photo .ph{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:17px;color:#d8d4e6}
 .photo.err img{display:none}.photo.err .ph{display:flex}
 .cred{position:absolute;right:8px;bottom:6px;font:12px Arial,sans-serif;color:#fff;background:rgba(0,0,0,.45);border-radius:6px;padding:2px 7px}
 .think{font-size:16.5px;line-height:1.4;background:#fff8dc;border-radius:12px;padding:7px 12px}
@@ -148,8 +148,8 @@ const TEST=[
  ["___ you sleeping when I called?",["Were","Did","Was","Do"],"Were"]
 ];
 const PH={
- a:{q:'Late — or simply happy?',src:'https://images.unsplash.com/photo-1450897918656-527057db59d3?auto=format&fit=crop&w=1200&q=70',cred:'Andy Beales · Unsplash',label:'Photo A'},
- b:{q:'Waiting — or hiding?',src:'https://images.unsplash.com/photo-1521585388242-6ea794e761ad?auto=format&fit=crop&w=1200&q=70',cred:'Ant Rozetsky · Unsplash',label:'Photo B'}
+ a:{q:'Why is the street empty?',src:'https://commons.wikimedia.org/wiki/Special:FilePath/Boulevard_du_Temple_by_Daguerre.jpg?width=1280',cred:'public domain · Wikimedia Commons',label:'Photo A'},
+ b:{q:'Who are these men?',src:'https://commons.wikimedia.org/wiki/Special:FilePath/Elephant_island_party.jpg?width=1280',cred:'public domain · Wikimedia Commons',label:'Photo B'}
 };
 const CHIPS=['Title: ','It was … and ','While … was …ing, ','… was …ing when suddenly ','At that moment ','A few minutes later ','The camera didn’t show that ','In fact, '];
 
