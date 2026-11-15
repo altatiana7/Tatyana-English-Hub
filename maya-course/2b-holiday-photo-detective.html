@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Maya · Holiday Photo Detective - Teacher</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c2236;--muted:#5d6478;--line:#e1e3ee;--ok:#3f7f52;--okbg:#e3f0e6;--no:#a9443a;--nobg:#f8e5e1;--accent:#6b4fe4;--navy:#1f2d3d;--bg:#f5f7fb}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:'PT Serif',Georgia,'Times New Roman',serif;font-size:17px;overflow:hidden}
+button{font:inherit;cursor:pointer;color:inherit}
+button:disabled{cursor:default}
+.shell{height:100%;display:grid;grid-template-rows:auto 1fr;overflow:hidden}
+.top{display:flex;align-items:center;gap:12px;padding:7px 16px;background:#fff;border-bottom:1px solid var(--line)}
+.top h1{font-size:19px;margin:0;flex:1}
+.top h1 small{font-weight:400;font-size:15px;color:var(--muted);margin-left:10px}
+.badge{font:700 12px Arial,sans-serif;letter-spacing:.14em;padding:5px 12px;border-radius:99px;background:#44508f;color:#fff}
+.home{min-height:0;padding:10px 16px 12px;display:grid;grid-template-rows:auto 1fr;gap:10px;overflow:auto}
+.hero{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:stretch}
+.heroText{background:linear-gradient(125deg,#5a4bc4,#8672d8 60%,#c98aa6);color:#fff;border-radius:16px;padding:14px 20px;display:flex;flex-direction:column;justify-content:center}
+.heroText .eyebrow{font:700 12px Arial,sans-serif;letter-spacing:.14em;opacity:.9}
+.heroText h2{font-size:30px;line-height:1.1;margin:5px 0 4px}
+.heroText p{margin:0;font-size:17px;font-style:italic}
+.heroPhotos{display:flex;gap:8px}
+.heroPhotos img{height:118px;width:150px;object-fit:cover;border-radius:16px;display:block}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(118px,1fr);gap:10px;min-height:0}
+.tile{border:0;border-radius:16px;padding:14px 18px;text-align:left;color:#15213a;position:relative;overflow:hidden;box-shadow:0 5px 16px #2a335414;transition:.18s transform,.18s box-shadow}
+.tile:hover{transform:translateY(-2px);box-shadow:0 9px 24px #2a335424}
+.tile b{display:block;font-size:22px;margin-bottom:6px}
+.tile small{display:block;font-size:16px;line-height:1.35;max-width:86%;color:#3a4560}
+.tile .n{position:absolute;right:14px;top:6px;font:900 36px Arial,sans-serif;opacity:.14}
+.t1{background:#fff1a8}.t2{background:#dff7ef}.t3{background:#e4edff}.t4{background:#ffe6ef}.t5{background:#ece6ff}.t6{background:#dff7ff}
+
+.overlay{position:fixed;inset:0;z-index:20;background:#f7f9fc;display:none;grid-template-rows:auto 1fr}
+.overlay.show{display:grid}
+.ovTop{display:flex;gap:10px;align-items:center;padding:6px 12px;background:#fff;border-bottom:1px solid var(--line)}
+.ovTop h2{font-size:19px;margin:0;flex:1}
+.close{border:0;background:var(--navy);color:#fff;border-radius:99px;padding:6px 16px;font-size:15px;font-weight:700}
+.nextBlock{border:1px solid #cfd5df;background:#fff;border-radius:99px;padding:6px 16px;font-size:15px}
+.nextBlock:hover{border-color:var(--accent);color:var(--accent)}
+.content{min-height:0;padding:10px 46px 10px 14px;overflow:auto}
+.panel{max-width:1240px;margin:0 auto;height:100%;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:12px}
+.col{min-height:0;display:flex;flex-direction:column;gap:8px}
+.box{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.go,.go2{border:0;border-radius:9px;background:var(--navy);color:#fff;padding:7px 16px;font-size:16px;font-weight:700}
+.go2{background:#fff;color:var(--ink);border:1px solid #cfd5df;font-weight:400}
+.go2.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.go:disabled{opacity:.4}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tabs{display:flex;gap:7px;flex-wrap:wrap}
+.tab{border:1px solid #cfd5df;background:#fff;border-radius:99px;padding:6px 16px;font-size:16px}
+.tab.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pane{display:none;flex:1;min-height:0;flex-direction:column;gap:8px}
+.pane.on{display:flex}
+.hide{display:none!important}
+.lead{font-size:21px;line-height:1.35;font-weight:700}
+.ql{display:grid;gap:7px}
+.ql div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 14px;font-size:20px;line-height:1.3}
+.support{background:#fff8dc;border-radius:12px;padding:9px 14px;font-size:19px;line-height:1.5;font-style:italic}
+
+/* photo reveal */
+.pr{position:relative;flex:1;min-height:200px;border-radius:14px;overflow:hidden;background:#141b2b}
+.pr img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.pr .mk{position:absolute;background:linear-gradient(135deg,#5a4bc4,#b98aa8);transition:.4s}
+.pr .m1{inset:0 55% 0 0}.pr .m2{inset:0 0 0 62%}.pr .m3{left:45%;right:38%;bottom:0;height:58%}
+.pr.s1 .m1{right:72%}.pr.s1 .m2{left:80%}.pr.s1 .m3{height:0}
+.pr.s2 .mk{opacity:0}
+.plain{flex:1;min-height:160px;border-radius:14px;background:#141b2b;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.plain img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+
+/* ring timer */
+.ring{width:58px;height:58px;position:relative;flex:none}
+.ring svg{width:58px;height:58px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:5}
+.ring .bg{stroke:#e3e6ef}.ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font:700 17px Arial,sans-serif}
+
+/* quizlet */
+.fl{height:250px;max-width:520px;width:100%;margin:0 auto;perspective:1200px;cursor:pointer;flex:none}
+.fl .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.fl.f .in{transform:rotateY(180deg)}
+.fc{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16px 24px;gap:8px}
+.fc.fr{background:#f3efe8;border:2px solid #e9d7ca}
+.fc.bk{transform:rotateY(180deg);background:#f1f7f2;border:2px solid #9cc2a6}
+.fc .w{font-size:30px;font-weight:700;line-height:1.25}
+.fc .df{font-size:22px;line-height:1.3}
+.fc .ru{font-size:19px;color:#7a3f2e}
+.fc .ex{font-size:19px;font-style:italic;color:#1f4d2e}
+.arrow{width:46px;height:36px;border:1px solid #cfd5df;border-radius:8px;background:#fff;font-size:20px}
+.cnt{color:var(--muted);font-size:16px;min-width:64px;text-align:center}
+.mnav{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+
+/* quiz */
+.qz{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.qtop{display:flex;justify-content:space-between;color:var(--muted);font-size:16px}
+.qtop b{color:#3e5c76}
+.qq{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 20px;font-size:25px;line-height:1.35;text-align:center;min-height:92px;display:flex;align-items:center;justify-content:center}
+u.bl{display:inline-block;width:86px;border-bottom:2px solid #3e5c76;text-decoration:none}
+.qo{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ob{border:1px solid #cfd5df;background:#eef2f8;border-radius:12px;padding:12px 10px;font-size:21px;min-height:58px}
+.ob:nth-child(2){background:#f4efe6}
+.ob:hover:not(:disabled){border-color:#3e5c76}
+.ob.ok{background:var(--okbg);border-color:var(--ok);font-weight:700}
+.ob.no{background:var(--nobg);border-color:var(--no)}
+.qf{min-height:26px;font-size:19px;text-align:center;font-weight:700}
+.okt{color:var(--ok)}.not{color:var(--no)}
+.res{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;min-height:0}
+.res .big{font:700 42px Arial,sans-serif;color:#3e5c76}
+.rl{background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 16px;font-size:18px;line-height:1.5;width:100%;overflow:auto;min-height:0}
+.rl b{color:var(--ok)}
+
+/* listening */
+audio{width:100%;height:40px;display:block}
+/* story */
+.story{flex:1;min-height:0;overflow:auto;background:#fff;border:1px solid var(--line);border-left:5px solid #b7a9ee;border-radius:12px;padding:10px 18px;font-size:20px;line-height:1.55}
+.story p{margin:0}
+/* grammar */
+table.gr{width:100%;border-collapse:collapse;font-size:18px;background:#fff;border-radius:12px;overflow:hidden}
+table.gr th,table.gr td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top;line-height:1.35}
+table.gr th{background:#ece6ff;font-size:17px}
+.ex1{font-size:21px;line-height:1.4;background:#f2f0ff;border-left:5px solid var(--accent);border-radius:8px;padding:8px 14px}
+.watch{background:#fff8dc;border-radius:12px;padding:8px 14px;font-size:18px;line-height:1.45}
+/* final */
+.mission{background:#eaf1ff;border-radius:14px;padding:12px 16px;font-size:20px;line-height:1.45}
+.tick{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 14px;font-size:19px}
+.tick i{flex:none;width:24px;height:24px;border:2px solid #9aa3b5;border-radius:6px;display:grid;place-items:center;font-style:normal;font-weight:700;color:#fff}
+.tick.on{background:var(--okbg);border-color:var(--ok)}.tick.on i{background:var(--ok);border-color:var(--ok)}
+@media(max-height:620px){
+ .heroPhotos img{height:92px}.heroText h2{font-size:25px}.heroText{padding:9px 18px}.grid{grid-auto-rows:minmax(104px,1fr)}
+ .qq{font-size:22px;min-height:70px;padding:9px 16px}.ob{min-height:50px;font-size:20px;padding:8px}.fl{height:200px}
+ .ql div{font-size:18px;padding:6px 12px}.story{font-size:18px}.lead{font-size:19px}
+ table.gr th,table.gr td{padding:4px 9px;font-size:16.5px}.ex1{font-size:19px;padding:6px 12px}.watch{font-size:16.5px;padding:6px 12px}
+ .mission{font-size:18px;padding:9px 14px}.tick{padding:6px 12px;font-size:18px}
+}
+@media(max-width:860px){.panel{grid-template-columns:1fr;height:auto}.grid{grid-template-columns:repeat(2,1fr)}.heroPhotos{display:none}.pr,.plain{min-height:260px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <h1>Maya · Holiday Photo Detective <small>English File Pre-Intermediate · 2A–2B</small></h1>
+    <span class="badge">TEACHER</span>
+  </header>
+  <main class="home">
+    <div class="hero">
+      <section class="heroText">
+        <div class="eyebrow">SPEAKING · LISTENING · PAST SIMPLE &amp; PAST CONTINUOUS</div>
+        <h2>The photo never tells the whole story</h2>
+        <p>Two holidays, two photos, and what was really happening.</p>
+      </section>
+      <div class="heroPhotos"><img src="media/2b-photo-paris.jpg" alt="A couple in a park in autumn"><img src="media/2b-photo-chicago.jpg" alt="A crowd looking up at night"></div>
+    </div>
+    <section class="grid">
+      <button class="tile t1" data-open="warm"><span class="n">01</span><b>Two Photos</b><small>Speaking · predict from parts of a photo</small></button>
+      <button class="tile t2" data-open="vocab"><span class="n">02</span><b>Vocabulary Lab</b><small>12 cards · collocations · speaking</small></button>
+      <button class="tile t3" data-open="listen"><span class="n">03</span><b>Two Sides of a Holiday</b><small>Listening · Mia · Linda</small></button>
+      <button class="tile t4" data-open="stories"><span class="n">04</span><b>Behind the Photo</b><small>Reading · Paris · Chicago</small></button>
+      <button class="tile t5" data-open="grammar"><span class="n">05</span><b>Grammar Lab</b><small>Past Simple or Past Continuous</small></button>
+      <button class="tile t6" data-open="final"><span class="n">06</span><b>Photo Trial</b><small>Final speaking · 90 seconds</small></button>
+    </section>
+  </main>
+</div>
+
+<!-- 01 -->
+<section class="overlay" id="warm"><div class="ovTop"><button class="close">← Menu</button><h2>01 · Two Photos</h2><button class="nextBlock" data-open="vocab">Vocabulary Lab →</button></div><div class="content"><div class="panel">
+  <div class="col">
+    <div class="row"><div class="tabs" id="warmTabs"><button class="tab on" data-ph="a">Photo A</button><button class="tab" data-ph="b">Photo B</button></div><button class="go" id="warmMore">Reveal more</button><span class="cnt" id="warmStage"></span></div>
+    <div class="pr" id="warmPr"><img id="warmImg" src="media/2b-photo-paris.jpg" alt=""><div class="mk m1"></div><div class="mk m2"></div><div class="mk m3"></div></div>
+  </div>
+  <div class="col">
+    <div class="lead">Can we trust a photograph?</div>
+    <div class="ql">
+      <div>1. What do you think happened just before the photo was taken?</div>
+      <div>2. What might the people have been feeling?</div>
+      <div>3. What might have happened afterwards?</div>
+      <div>4. Could the same photo tell two completely different stories?</div>
+    </div>
+    <div class="row"><div class="ring" id="warmRing"></div><button class="go" data-timer="warmRing" data-sec="40">Start 40 sec</button><button class="go2" data-toggle="warmSupport">Useful language</button></div>
+    <div class="support hide" id="warmSupport">It looks as if… · They might have been… · While they were…, somebody… · I suppose… because…</div>
+  </div>
+</div></div></section>
+
+<!-- 02 -->
+<section class="overlay" id="vocab"><div class="ovTop"><button class="close">← Menu</button><h2>02 · Vocabulary Lab</h2><button class="nextBlock" data-open="listen">Listening →</button></div><div class="content"><div class="panel">
+  <div class="col" style="justify-content:center">
+    <div class="fl" id="vcard"><div class="in"><div class="fc fr"><div class="w" id="vw"></div></div><div class="fc bk"><div class="df" id="vd"></div><div class="ru" id="vr"></div><div class="ex" id="ve"></div></div></div></div>
+    <div class="mnav"><button class="arrow" id="vprev">‹</button><span class="cnt" id="vcount"></span><button class="arrow" id="vnext">›</button><button class="go2" id="vflip">Flip</button></div>
+  </div>
+  <div class="col">
+    <div class="tabs" data-tabs="voc"><button class="tab on" data-tab="colloc">Collocations · 10</button><button class="tab" data-tab="speak">Speaking</button></div>
+    <div class="pane on" data-pane="colloc"><div class="qz" id="qzColloc"></div></div>
+    <div class="pane" data-pane="speak">
+      <div class="ql">
+        <div>1. Who do you <b>get on</b> well with on holiday?</div>
+        <div>2. What <b>irritates</b> you when you travel with other people?</div>
+        <div>3. A <b>cheap hostel</b> or a <b>comfortable room</b> — which do you choose?</div>
+        <div>4. Do you <b>take hundreds of photos</b> or just <b>enjoy the sights</b>?</div>
+      </div>
+      <div class="row"><div class="ring" id="vocRing"></div><button class="go" data-timer="vocRing" data-sec="40">Start 40 sec</button></div>
+    </div>
+  </div>
+</div></div></section>
+
+<!-- 03 -->
+<section class="overlay" id="listen"><div class="ovTop"><button class="close">← Menu</button><h2>03 · Two Sides of a Holiday</h2><button class="nextBlock" data-open="stories">Behind the Photo →</button></div><div class="content"><div class="panel">
+  <div class="col">
+    <div class="tabs" data-tabs="lis"><button class="tab on" data-tab="mia">Listening 1 · Mia</button><button class="tab" data-tab="linda">Listening 2 · Linda</button></div>
+    <div class="pane on" data-pane="mia">
+      <audio controls preload="metadata" src="media/2b-photo-mia.mp3"></audio>
+      <div class="lead">Did Mia and Joe enjoy their holiday together?</div>
+      <div class="ql"><div>Give two reasons.</div><div>Who is to blame for the disaster?</div></div>
+    </div>
+    <div class="pane" data-pane="linda">
+      <audio controls preload="metadata" src="media/2b-photo-linda.mp3"></audio>
+      <div class="lead">How did Linda feel about the trip? Why?</div>
+      <div class="ql"><div>The same story — or a completely different one?</div></div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="pane on" data-pane="mia"><div class="qz" id="qzMia"></div></div>
+    <div class="pane" data-pane="linda"><div class="qz" id="qzLinda"></div></div>
+  </div>
+</div></div></section>
+
+<!-- 04 -->
+<section class="overlay" id="stories"><div class="ovTop"><button class="close">← Menu</button><h2>04 · Behind the Photo</h2><button class="nextBlock" data-open="grammar">Grammar Lab →</button></div><div class="content"><div class="panel">
+  <div class="col">
+    <div class="row"><div class="tabs" data-tabs="st"><button class="tab on" data-tab="paris">Paris</button><button class="tab" data-tab="chicago">Chicago</button></div>
+      <button class="go" id="stShow">Show the story</button><button class="go2" id="stRead">30-second reading</button><div class="ring hide" id="stRing"></div></div>
+    <div class="pane on" data-pane="paris">
+      <div class="plain" data-photo><img src="media/2b-photo-paris.jpg" alt="A couple in a park in autumn"></div>
+      <div class="story hide" data-story><p><b>That's me in the picture!</b> In 1972, Jane was living in London. She was working for an advertising agency when she met a young Frenchman, and they fell in love. Later she moved to France, where she worked at UNESCO. On Sundays the couple went to the zoo, and she often fed the animals. One weekend, they went for a walk in a Paris park. While they were walking, an owl escaped from the zoo. It also escaped a photographer's camera. The photographer was looking for pictures for a magazine. Years later, Jane's boyfriend found the photograph, and the two met the photographer.</p></div>
+    </div>
+    <div class="pane" data-pane="chicago">
+      <div class="plain" data-photo><img src="media/2b-photo-chicago.jpg" alt="A crowd looking up at night"></div>
+      <div class="story hide" data-story><p><b>A moment in history.</b> On 4 November 2008, photographer Tom Pilston arrived in Chicago to photograph Barack Obama and his family. He couldn't enter the park because he didn't have a pass. He walked outside and waited for the announcement. A huge crowd was watching the results. When it became clear that Obama had won, people started celebrating, hugging and crying. The photographer captured their faces while everyone was waiting for Obama to speak.</p></div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="pane on" data-pane="paris"><div class="qz" id="qzParis"></div></div>
+    <div class="pane" data-pane="chicago"><div class="qz" id="qzChicago"></div></div>
+  </div>
+</div></div></section>
+
+<!-- 05 -->
+<section class="overlay" id="grammar"><div class="ovTop"><button class="close">← Menu</button><h2>05 · Grammar Lab · Past Simple or Past Continuous</h2><button class="nextBlock" data-open="final">Photo Trial →</button></div><div class="content"><div class="panel">
+  <div class="col">
+    <div class="ex1">While the crowd <b>was waiting</b>, the photographer <b>took</b> a picture.</div>
+    <table class="gr">
+      <tr><th>Past Continuous</th><th>Past Simple</th></tr>
+      <tr><td>was / were + verb-<b>ing</b></td><td>verb-<b>ed</b> / irregular form</td></tr>
+      <tr><td>an action in progress, the background</td><td>a finished action, the main event</td></tr>
+      <tr><td>She <b>was living</b> in London.</td><td>She <b>met</b> a Frenchman.</td></tr>
+      <tr><td><b>while</b> + past continuous</td><td><b>when</b> + past simple</td></tr>
+    </table>
+    <button class="go2" data-toggle="grWatch" style="align-self:flex-start">Watch out</button>
+    <div class="watch hide" id="grWatch">I <b>was</b> / he <b>was</b> — you / we / they <b>were</b>. &nbsp;·&nbsp; No continuous with <i>know, like, want, understand</i>: I <b>knew</b> him (not <s>was knowing</s>). &nbsp;·&nbsp; Two finished actions one after another — both Past Simple.</div>
+  </div>
+  <div class="col"><div class="qz" id="qzGrammar"></div></div>
+</div></div></section>
+
+<!-- 06 -->
+<section class="overlay" id="final"><div class="ovTop"><button class="close">← Menu</button><h2>06 · Photo Trial</h2></div><div class="content"><div class="panel">
+  <div class="col">
+    <div class="mission"><b>Tell a story the photo doesn't reveal.</b> Choose Paris or Chicago. Describe what was happening, what happened suddenly, and what happened next. Add two details that the camera could not capture.</div>
+    <div class="ql">
+      <div>1. Set the scene: where, when, who?</div>
+      <div>2. Use <b>two Past Continuous</b> clauses.</div>
+      <div>3. Use <b>three Past Simple</b> actions.</div>
+      <div>4. Include <b>two collocations</b> from the Vocabulary Lab.</div>
+      <div>5. Give the photo a surprising title.</div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row"><div class="ring" id="finRing"></div><button class="go" data-timer="finRing" data-sec="90">Start 90 sec</button>
+      <div class="tabs" data-tabs="fin" data-collapsible><button class="tab on" data-tab="check">Checklist</button><button class="tab" data-tab="model">Model answer</button><button class="tab" data-tab="hw">Homework</button></div></div>
+    <div class="pane on" data-pane="check">
+      <button class="tick"><i>✓</i>Clear narrative sequence</button>
+      <button class="tick"><i>✓</i>Two correct Past Continuous forms</button>
+      <button class="tick"><i>✓</i>Three correct Past Simple forms</button>
+      <button class="tick"><i>✓</i>Two natural collocations</button>
+      <button class="tick"><i>✓</i>One inference with evidence</button>
+    </div>
+    <div class="pane" data-pane="model"><div class="story" style="flex:none">In November 2008, a crowd was waiting in Chicago. People were watching the results when they heard the news. Some began crying while others were celebrating. A photographer took a picture of their faces. They were looking at something important that the camera couldn't show.</div></div>
+    <div class="pane" data-pane="hw"><div class="story" style="flex:none">Take one personal photo and write 80–100 words explaining the story behind it. Use <b>when</b> / <b>while</b> and at least five phrases from the Vocabulary Lab.</div></div>
+  </div>
+</div></div></section>
+
+<script>
+'use strict';
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const IMG={a:$('.heroPhotos img:nth-child(1)').src,b:$('.heroPhotos img:nth-child(2)').src};
+
+/* open / close blocks */
+function stopAll(){$$('audio').forEach(a=>a.pause());Object.keys(timers).forEach(stopTimer)}
+function openBlock(id){stopAll();$$('.overlay').forEach(o=>o.classList.toggle('show',o.id===id))}
+$$('[data-open]').forEach(b=>b.onclick=()=>openBlock(b.dataset.open));
+$$('.close').forEach(b=>b.onclick=()=>openBlock(''));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')openBlock('')});
+
+/* tabs: every pane inside the same overlay with the same name follows the tab */
+$$('[data-tabs]').forEach(tabs=>$$('.tab',tabs).forEach(tab=>tab.onclick=()=>{
+  const ov=tabs.closest('.overlay'),names=$$('.tab',tabs).map(t=>t.dataset.tab);
+  stopAll();
+  $$('.tab',tabs).forEach(t=>t.classList.toggle('on',t===tab));
+  $$('.pane',ov).filter(p=>names.includes(p.dataset.pane)).forEach(p=>p.classList.toggle('on',p.dataset.pane===tab.dataset.tab));
+  if(tabs.dataset.tabs==='st')resetStory();
+}));
+$$('[data-toggle]').forEach(b=>b.onclick=()=>{const x=$('#'+b.dataset.toggle);x.classList.toggle('hide');b.classList.toggle('on',!x.classList.contains('hide'))});
+$$('.tick').forEach(b=>b.onclick=()=>b.classList.toggle('on'));
+
+/* ring timers */
+const timers={},C=2*Math.PI*24;
+function drawRing(el,left,total){el.innerHTML='<svg viewBox="0 0 58 58"><circle class="bg" cx="29" cy="29" r="24"/><circle class="fg" cx="29" cy="29" r="24" stroke-dasharray="'+C+'" stroke-dashoffset="'+(C*(1-left/total))+'"/></svg><b>'+left+'</b>'}
+function stopTimer(id){if(timers[id]){clearInterval(timers[id].t);const b=timers[id].btn;if(b)b.textContent='Start '+timers[id].total+' sec';drawRing($('#'+id),timers[id].total,timers[id].total);delete timers[id]}}
+function startTimer(id,total,btn,done){stopTimer(id);const el=$('#'+id);let left=total;drawRing(el,left,total);if(btn)btn.textContent='Stop';
+  timers[id]={total,btn,t:setInterval(()=>{left--;$('b',el).textContent=left;$('.fg',el).setAttribute('stroke-dashoffset',C*(1-left/total));if(left<=0){clearInterval(timers[id].t);const b=timers[id].btn;delete timers[id];if(b)b.textContent='Start '+total+' sec';$('b',el).textContent="Time";if(done)done()}},1000)}}
+$$('[data-timer]').forEach(b=>{const id=b.dataset.timer,sec=+b.dataset.sec;drawRing($('#'+id),sec,sec);b.onclick=()=>timers[id]?stopTimer(id):startTimer(id,sec,b)});
+
+/* 01 photo reveal by parts */
+let wPh='a',wSt=0;
+function drawWarm(){$('#warmImg').src=IMG[wPh];$('#warmPr').className='pr'+(wSt===1?' s1':wSt===2?' s2':'');$('#warmStage').textContent='Part '+(wSt+1)+' of 3';$('#warmMore').textContent=wSt===2?'Hide again':'Reveal more'}
+$('#warmMore').onclick=()=>{wSt=(wSt+1)%3;drawWarm()};
+$$('#warmTabs .tab').forEach(t=>t.onclick=()=>{wPh=t.dataset.ph;wSt=0;$$('#warmTabs .tab').forEach(x=>x.classList.toggle('on',x===t));drawWarm()});
+drawWarm();
+
+/* 02 Quizlet-style cards */
+const vocab=[
+['get on with someone','to have a good relationship with somebody','ладить с кем-то','Joe and Mia didn’t get on very well.'],
+['irritate someone','to make someone annoyed','раздражать','Mia found Joe really irritating.'],
+['a cheap hostel','a low-cost place to stay','дешёвый хостел','Joe booked very cheap hostels.'],
+['a comfortable room','a pleasant place where you feel relaxed','удобная комната','Mia wanted to stay somewhere comfortable.'],
+['be jealous','to feel unhappy because of another person’s attention','ревновать','Joe was jealous when Mia talked to other men.'],
+['take hundreds of photos','to take a very large number of pictures','делать сотни фотографий','Joe wanted to take hundreds of photos.'],
+['enjoy the sights','to take pleasure in seeing tourist attractions','наслаждаться достопримечательностями','Mia wanted to enjoy the sights.'],
+['go on a gondola','to ride in a traditional Venetian boat','кататься на гондоле','Linda went on a gondola.'],
+['quite reasonable','fairly priced; not too expensive','вполне приемлемый','The price was quite reasonable.'],
+['take a photograph','to capture an image with a camera','сделать фотографию','The photographer took a photograph of the crowd.'],
+['wait for the results','to expect the outcome of an event','ждать результатов','People were waiting for the results.'],
+['burst into tears','to suddenly start crying','расплакаться','Some people burst into tears.']];
+let vi=0;const vcard=$('#vcard');
+function drawWord(){vcard.classList.remove('f');const v=vocab[vi];$('#vw').textContent=v[0];$('#vd').textContent=v[1];$('#vr').textContent=v[2];$('#ve').textContent=v[3];$('#vcount').textContent=(vi+1)+' / '+vocab.length}
+vcard.onclick=$('#vflip').onclick=()=>vcard.classList.toggle('f');
+$('#vprev').onclick=()=>{vi=(vi+vocab.length-1)%vocab.length;drawWord()};
+$('#vnext').onclick=()=>{vi=(vi+1)%vocab.length;drawWord()};
+drawWord();
+
+/* quiz engine: one question at a time, two large answer buttons */
+const bank={
+colloc:[['Joe and Mia didn’t ___ very well.','get on','take on'],['Mia wanted to stay somewhere ___.','comfortable','irritating'],['Joe booked very cheap ___.','hostels','sights'],['Mia wanted to ___ the sights.','enjoy','wait'],['Linda went ___ a gondola.','on','at'],['It wasn’t expensive. The price was quite ___.','reasonable','jealous'],['Joe wanted to ___ hundreds of photos.','take','make'],['Mia found Joe really ___.','irritating','irritated'],['People were waiting ___ the results.','for','to'],['Some people ___ into tears.','burst','fell']],
+mia:[['Mia and Joe stayed in…','cheap hostels','luxury hotels'],['Mia says their rooms were…','very small','spacious'],['Joe was jealous when Mia…','talked to other men','talked to the guide'],['Mia disliked…','being photographed','sightseeing'],['Mia wanted to enjoy…','the sights','luxury shopping']],
+linda:[['Linda’s opinion of Venice was…','very positive','very negative'],['They travelled by…','gondola','quad bike'],['They visited…','museums','volcanoes'],['The holiday cost was…','reasonable','extremely high'],['Linda plans to travel again with…','Isabella and Laura','Joe and Mia']],
+paris:[['Jane was living in…','London','Chicago'],['She met a…','Frenchman','photographer'],['She later worked at…','UNESCO','a zoo'],['On Sundays they often…','went to the zoo','went to Chicago'],['In the park they saw…','an owl','a gondola']],
+chicago:[['The event took place in…','Chicago','Paris'],['The date was…','4 November 2008','4 November 2018'],['Tom couldn’t enter because…','he had no pass','he was late'],['People were waiting for…','election results','a concert'],['The photographer captured…','the crowd’s reactions','a hotel']],
+grammar:[['While Jane ___ in London, she met a Frenchman.','was living','lived'],['While they ___ in the park, they saw an owl.','were walking','walked'],['People ___ for the results when the news arrived.','were waiting','waited'],['While Tom ___ around, he noticed the crowd.','was walking','walked'],['Suddenly, somebody ___ crying.','started','was starting'],['Mia ___ to another man when Joe came back.','was talking','talked'],['They ___ a gondola and enjoyed the city.','took','were taking'],['When the rain ___, we were walking home.','started','was starting'],['I ___ at the photo when I recognised my friend.','was looking','looked'],['While everyone ___, the photographer took a picture.','was celebrating','celebrated']]};
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const gap=s=>esc(s).replace('___','<u class="bl">&nbsp;</u>');
+function quiz(root,items){
+  let i=0,score=0,wrong=[];
+  function show(){
+    const q=items[i],opts=Math.random()<.5?[q[1],q[2]]:[q[2],q[1]];
+    root.innerHTML='<div class="qtop"><span>Question '+(i+1)+' of '+items.length+'</span><b>Score '+score+'</b></div><div class="qq"><span>'+gap(q[0])+'</span></div><div class="qo"></div><div class="qf"></div><div class="mnav"><button class="go" disabled></button></div>';
+    const next=$('.go',root);next.textContent=i===items.length-1?'See result':'Next question';
+    opts.forEach(o=>{const b=document.createElement('button');b.className='ob';b.textContent=o;b.onclick=()=>{
+      const ok=o===q[1];$$('.ob',root).forEach(x=>{x.disabled=true;if(x.textContent===q[1])x.classList.add('ok')});
+      if(ok)score++;else{b.classList.add('no');wrong.push(q)}
+      $('.qf',root).innerHTML=ok?'<span class="okt">Correct</span>':'<span class="not">Not quite — '+esc(q[1])+'</span>';
+      $('.qtop b',root).textContent='Score '+score;next.disabled=false};$('.qo',root).append(b)});
+    next.onclick=()=>{i++;i<items.length?show():result()};
+  }
+  function result(){
+    root.innerHTML='<div class="res"><div class="big">'+score+' / '+items.length+'</div>'+(wrong.length?'<div class="rl">'+wrong.map(q=>'<div>'+esc(q[0]).replace('___','<b>'+esc(q[1])+'</b>')+(q[0].includes('___')?'':' <b>'+esc(q[1])+'</b>')+'</div>').join('')+'</div>':'<div class="qf okt">All correct</div>')+'<button class="go">Play again</button></div>';
+    $('.go',root).onclick=()=>{i=0;score=0;wrong=[];show()};
+  }
+  show();
+}
+quiz($('#qzColloc'),bank.colloc);quiz($('#qzMia'),bank.mia);quiz($('#qzLinda'),bank.linda);quiz($('#qzParis'),bank.paris);quiz($('#qzChicago'),bank.chicago);quiz($('#qzGrammar'),bank.grammar);
+
+/* 04 story: photo first, text under the button, 30-second reading */
+function stPane(){return $('#stories .col .pane.on')}
+function setStory(show){const p=stPane();$('[data-photo]',p).classList.toggle('hide',show);$('[data-story]',p).classList.toggle('hide',!show);$('#stShow').textContent=show?'Back to the photo':'Show the story'}
+function resetStory(){stopTimer('stRing');$('#stRing').classList.add('hide');$$('#stories [data-photo]').forEach(x=>x.classList.remove('hide'));$$('#stories [data-story]').forEach(x=>x.classList.add('hide'));$('#stShow').textContent='Show the story'}
+$('#stShow').onclick=()=>{stopTimer('stRing');$('#stRing').classList.add('hide');setStory($('[data-story]',stPane()).classList.contains('hide'))};
+$('#stRead').onclick=()=>{setStory(true);$('#stRing').classList.remove('hide');startTimer('stRing',30,null,()=>{setStory(false);$('#stRing').classList.add('hide')})};
+</script>
+</body></html>
