@@ -79,7 +79,7 @@ textarea:disabled{background:#f3f6f4;color:#3c4a44}
     <h1>Maya · Homework 2B<small>Photo stories · Past Simple and Past Continuous</small></h1>
     <div class="tabs">
       <button class="tab active" data-s="s1">1 · Rule + Test</button>
-      <button class="tab" data-s="s2">2 · Three Photos</button>
+      <button class="tab" data-s="s2">2 · Two Photos</button>
     </div>
     <span id="sendSlot"></span>
   </div>
@@ -101,7 +101,7 @@ textarea:disabled{background:#f3f6f4;color:#3c4a44}
 
   <div class="screen" id="s2">
     <section class="pane left">
-      <div class="prow"><button class="ptab on" data-p="a">Photo A</button><button class="ptab" data-p="b">Photo B</button><button class="ptab" data-p="c">Photo C</button><span class="pq" id="pQ"></span></div>
+      <div class="prow"><button class="ptab on" data-p="a">Photo A</button><button class="ptab" data-p="b">Photo B</button><span class="pq" id="pQ"></span></div>
       <div class="photo" id="pBox"><img id="pImg" alt=""><div class="ph">The photo did not load. Check the internet and open the page again.</div><span class="cred" id="pCred"></span></div>
       <div class="think">The photo never tells the whole story. What happened <b>just before</b>? What were the people <b>feeling</b>? What happened <b>afterwards</b>?</div>
     </section>
@@ -149,15 +149,14 @@ const TEST=[
 ];
 const PH={
  a:{q:'Late — or simply happy?',src:'https://images.unsplash.com/photo-1450897918656-527057db59d3?auto=format&fit=crop&w=1200&q=70',cred:'Andy Beales · Unsplash',label:'Photo A'},
- b:{q:'Waiting — or hiding?',src:'https://images.unsplash.com/photo-1521585388242-6ea794e761ad?auto=format&fit=crop&w=1200&q=70',cred:'Ant Rozetsky · Unsplash',label:'Photo B'},
- c:{q:'What were they looking at?',src:'https://images.unsplash.com/photo-1690957748517-fe8b3172208d?auto=format&fit=crop&w=1200&q=70',cred:'Dillen M · Unsplash',label:'Photo C'}
+ b:{q:'Waiting — or hiding?',src:'https://images.unsplash.com/photo-1521585388242-6ea794e761ad?auto=format&fit=crop&w=1200&q=70',cred:'Ant Rozetsky · Unsplash',label:'Photo B'}
 };
 const CHIPS=['Title: ','It was … and ','While … was …ing, ','… was …ing when suddenly ','At that moment ','A few minutes later ','The camera didn’t show that ','In fact, '];
 
 const gScore=()=>st.g.filter((a,i)=>a===TEST[i][2]).length;
 const P=KS.parts('hw2bphoto',{lang:'en',
   units:()=>[{id:'g',label:'Grammar test',done:st.g.length>=TEST.length,errors:TEST.length-gScore()},
-             ...['a','b','c'].map(k=>({id:'p'+k,label:PH[k].label,done:words(st.w[k])>=MIN,errors:null}))],
+             ...['a','b'].map(k=>({id:'p'+k,label:PH[k].label,done:words(st.w[k])>=MIN,errors:null}))],
   snapshot:()=>getData(),onUpdate:()=>{gDraw();pDraw()}});
 
 $$('.tab').forEach(t=>t.onclick=()=>{$$('.tab').forEach(x=>x.classList.toggle('active',x===t));$$('.screen').forEach(p=>p.classList.toggle('active',p.id===t.dataset.s))});
@@ -200,8 +199,8 @@ $('#mBtn').onclick=()=>$('#model').classList.toggle('show');
 
 function getData(){
   const sections=[{name:'Past Simple or Past Continuous',score:gScore(),max:TEST.length,items:TEST.map((q,i)=>({n:i+1,q:q[0].replace('___','_____'),a:st.g[i]===undefined?'':st.g[i],right:q[2]}))}]
-    .concat(['a','b','c'].map(k=>({name:PH[k].label+' · '+PH[k].q,text:true,words:words(st.w[k]),score:0,max:0,items:[{n:1,q:words(st.w[k])+' words',a:st.w[k]||'',right:st.w[k]||''}]})));
-  return {summary:'Test '+gScore()+'/'+TEST.length+' · stories: '+['a','b','c'].map(k=>words(st.w[k])+' w').join(', '),total:gScore(),max:TEST.length,sections};
+    .concat(['a','b'].map(k=>({name:PH[k].label+' · '+PH[k].q,text:true,words:words(st.w[k]),score:0,max:0,items:[{n:1,q:words(st.w[k])+' words',a:st.w[k]||'',right:st.w[k]||''}]})));
+  return {summary:'Test '+gScore()+'/'+TEST.length+' · stories: '+['a','b'].map(k=>words(st.w[k])+' w').join(', '),total:gScore(),max:TEST.length,sections};
 }
 $('#sendSlot').appendChild(P.bar(null,{compact:true}));
 gDraw();pDraw();window.scrollTo(0,0);
