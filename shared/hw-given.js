@@ -11,6 +11,7 @@
 (function(){
   const GIVEN={
     katya:[
+      {k:'hw1118.html',d:'15 ноября',n:'Vocabulary 30–36: A new family, Sandy; Phrasal verbs & linkers (12); Reading 12–18: iGeneration, What volunteering taught me; Word formation 25–29: Anatoly Karpov, Sergey Bezrukov'},
       {k:'write-hw1113.html',d:'13 ноября',n:'3 письма (задание 37) и 3 эссе (задание 38): Family, Household Chores, Conflicts and Stress, Traits of Character'},
       {k:'family-variant.html',d:'4 ноября',n:'чтение 10–18, грамматика 19–24, словообразование 25–29, лексика 30–36'},
       {k:'family-variant.html:r10',d:'4 ноября'},
