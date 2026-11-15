@@ -1,5 +1,5 @@
 /* «Отправить учителю на проверку»: одна попытка, ответы не показываются.
-   Работа уходит учителю сразу (как у Арины) – без кода и без чата.
+   Работа уходит учителю сразу – без кода и без чата.
    Учитель видит её на своём сайте: Teacher's Hub ЕГЭ → «Проверка домашки».
    Если в момент отправки нет интернета, работа ждёт в браузере и уходит сама, как только связь появится. */
 window.KS=(function(){
@@ -34,7 +34,7 @@ window.KS=(function(){
   /* сайт учителя: список работ Кати из базы */
   async function list(ask){
     let code='';try{code=localStorage.getItem('arina-teacher-code')||'';}catch(e){}
-    if(!code&&ask){code=(prompt('Пароль учителя к результатам (тот же, что для работ Арины):')||'').trim();if(code)try{localStorage.setItem('arina-teacher-code',code);}catch(e){}}
+    if(!code&&ask){code=(prompt('Пароль учителя к результатам:')||'').trim();if(code)try{localStorage.setItem('arina-teacher-code',code);}catch(e){}}
     if(!code)return {need:true};
     const r=await fetch(DB+'/rest/v1/rpc/get_arina_homework',{method:'POST',headers:H,body:JSON.stringify({p_teacher_code:code})});
     if(r.status===400||r.status===401||r.status===403){try{localStorage.removeItem('arina-teacher-code');}catch(e){}return {need:true,bad:true};}
