@@ -5,305 +5,173 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache">
 <title>Gabi · Module 3 · Lesson 1 · Plurilingual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="skills.css?v=20261015big">
+<link rel="stylesheet" href="case.css?v=20261015big">
 <style>
-:root{--ink:#1c2b45;--soft:#5a6b85;--line:#cfd9e8;--paper:#f6f3ec;--navy:#17304f;--gold:#e9b949;--ok:#2f8f63;--bad:#c2564d;
- --c1:#3f7cac;--c2:#4f9d8f;--c3:#b9773f;--c4:#7b68a8;--c5:#b0596f;--serif:Georgia,'Times New Roman',serif;--sans:Arial,Helvetica,sans-serif}
-*{box-sizing:border-box}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#e9eef5;color:var(--ink);font-family:var(--serif)}
-button{font:inherit;color:inherit;cursor:pointer}
-button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-.app{height:100dvh;display:flex;flex-direction:column}
-.bar{flex:none;height:34px;display:flex;align-items:center;gap:12px;padding:0 12px;background:var(--navy);color:#fff;font:700 14px var(--sans)}
-.bar a{color:#17304f;background:#e9b949;text-decoration:none;border-radius:7px;padding:4px 12px;font-weight:800}
-.bar b{letter-spacing:.06em}.bar span{opacity:.8;font-weight:400}
-.home{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:clamp(8px,2vh,16px);padding:clamp(8px,2vh,18px) clamp(10px,2vw,28px);
- background:linear-gradient(160deg,#dfeaf5,#f3ece0)}
-.head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
-.head h1{margin:0;font-size:clamp(26px,3.2vw,42px);letter-spacing:.02em}
-.head p{margin:0;font-size:clamp(15px,1.4vw,19px);color:var(--soft)}
-.tiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,1vw,14px)}
-.tile{position:relative;display:flex;flex-direction:column;justify-content:flex-end;text-align:left;border:0;border-radius:16px;padding:12px 14px;height:clamp(104px,21vh,150px);
- color:#fff;background:var(--c1);box-shadow:0 5px 0 rgba(0,0,0,.18),0 10px 22px rgba(23,48,79,.16);transition:transform .12s}
-.tile:hover{transform:translateY(-3px)}
-.tile i{position:absolute;left:12px;top:8px;font:800 30px/1 var(--sans);font-style:normal;opacity:.35}
-.tile small{font:800 11.5px var(--sans);letter-spacing:.12em;opacity:.9}
-.tile b{font-size:clamp(17px,1.55vw,22px);line-height:1.12;margin-top:3px}
-.tile.k2{background:var(--c2)}.tile.k3{background:var(--c3)}.tile.k4{background:var(--c4)}.tile.k5{background:var(--c5)}
-.tile.done::after{content:"✓";position:absolute;right:10px;top:8px;width:24px;height:24px;border-radius:50%;background:#fff;color:var(--ok);font:800 15px/24px var(--sans);text-align:center}
-/* window */
-.ov{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;background:rgba(15,28,48,.72);padding:26px 10px 8px}
-.ov.on{display:flex}
-.win{width:min(1120px,100%);height:min(600px,100%);display:grid;grid-template-rows:auto minmax(0,1fr) auto;background:var(--paper);border-radius:18px;overflow:hidden;box-shadow:0 20px 70px rgba(0,0,0,.45)}
-.ov.big .win{width:100%;height:100%}
-.wh{display:flex;align-items:center;gap:10px;padding:7px 12px 7px 18px;background:var(--navy);color:#fff}
-.wh h2{margin:0;font-size:clamp(18px,1.8vw,23px);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.wh button,.tabs button{border:0;border-radius:8px;padding:6px 12px;font:800 13.5px var(--sans);background:#e3ebf6;color:#17304f}
-.wh .x{background:var(--gold)}
-.tabs{display:flex;gap:6px}.tabs button.on{background:var(--gold)}
-.wb{min-height:0;overflow:auto;padding:clamp(8px,1.8vh,16px) clamp(12px,2vw,24px);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:clamp(8px,1.6vh,14px);text-align:center}
-.wf{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 14px;background:#fff;border-top:1px solid var(--line);font:700 15px var(--sans);color:var(--soft);min-height:50px}
-.btn{border:0;border-radius:10px;padding:9px 18px;background:var(--navy);color:#fff;font:800 16px var(--sans)}
-.btn.l{background:#e3ebf6;color:#17304f}.btn:disabled{opacity:.35;cursor:default}
-.row{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
-.q{font-size:clamp(21px,2.3vw,30px);line-height:1.25;font-weight:700;max-width:960px;margin:0}
-.q u{text-decoration:none;border-bottom:3px solid var(--gold);padding:0 .25em}
-.sub{font:700 14px var(--sans);letter-spacing:.1em;color:var(--soft);text-transform:uppercase;margin:0}
-.why{font-size:18px;color:#33506e;min-height:24px;margin:0;max-width:900px}
-.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:min(860px,100%)}
-.opts.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.opts button{border:2px solid #c9d5e4;border-radius:13px;background:#fff;padding:12px;min-height:56px;font-size:clamp(18px,1.7vw,21px);font-weight:700}
-.opts button:nth-child(4n+1){background:#e6eff7}.opts button:nth-child(4n+2){background:#e5f2ee}.opts button:nth-child(4n+3){background:#f5ecdf}.opts button:nth-child(4n+4){background:#ece8f4}
-.opts button.good{background:#cfeedd;border-color:var(--ok)}.opts button.bad{background:#f8d9d5;border-color:var(--bad)}
-.opts.lock button{cursor:default}
-.ring{position:relative;width:74px;height:74px;flex:none}
-.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
-.ring circle{fill:none;stroke-width:8}.ring .t{stroke:#dbe3ee}.ring .p{stroke:var(--c1);stroke-linecap:round;transition:stroke-dashoffset 1s linear}
-.ring.hot .p{stroke:var(--bad)}
-.ring b{position:absolute;inset:0;display:grid;place-items:center;font:800 22px var(--sans)}
-/* flip card */
-.card{width:min(560px,100%);height:clamp(190px,36vh,260px);perspective:1200px;border:0;background:none;padding:0}
-.card .in{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
-.card.f .in{transform:rotateY(180deg)}
-.card .a,.card .b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px 24px;
- background:#fff;border:2px solid #c9d5e4;box-shadow:0 10px 24px rgba(23,48,79,.14)}
-.card .b{transform:rotateY(180deg);background:#fdf6e3;border-color:#e2c97c}
-.card .w{font-size:clamp(28px,3.4vw,42px);font-weight:700;line-height:1.1}
-.card .m{font-size:clamp(21px,2.2vw,28px);font-weight:700}
-.card .e{font-size:clamp(17px,1.6vw,21px);color:#44597a;font-style:italic;line-height:1.3}
-.spk{border:0;border-radius:50%;width:42px;height:42px;background:var(--navy);color:#fff;display:grid;place-items:center;padding:0}
-.spk svg{width:22px;height:22px}.spk.on{background:var(--c5)}
-.nums{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-.nums button{width:38px;height:38px;border-radius:50%;border:2px solid #c9d5e4;background:#fff;font:800 16px var(--sans)}
-.nums button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-/* tags, match */
-.tags{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:900px}
-.tag{font-size:clamp(20px,2.2vw,28px);font-weight:700;color:#fff;padding:7px 16px;border-radius:8px;background:var(--c1);transform:rotate(-2deg)}
-.tag:nth-child(5n+2){background:var(--c2);transform:rotate(1.5deg)}.tag:nth-child(5n+3){background:var(--c3)}.tag:nth-child(5n+4){background:var(--c4);transform:rotate(2deg)}.tag:nth-child(5n+5){background:var(--c5)}
-.match{display:grid;grid-template-columns:1fr 1fr;gap:10px 26px;width:min(900px,100%)}
-.match>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-content:start}
-.match button{border:2px solid #c9d5e4;border-radius:11px;background:#fff;padding:8px 6px;font-size:clamp(17px,1.6vw,20px);font-weight:700;min-height:46px}
-.match .L button{background:#eef3f9}.match button.sel{border-color:var(--gold);background:#fff3cf}
-.match button.ok{background:#cfeedd;border-color:var(--ok);cursor:default}.match button.no{background:#f8d9d5;border-color:var(--bad)}
-/* sort */
-.bins{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%}
-.bin{border:2px solid #c9d5e4;border-radius:14px;background:#fff;padding:8px;min-height:clamp(120px,24vh,170px);display:flex;flex-direction:column;gap:6px;align-items:stretch}
-.bin>b{font:800 20px var(--sans);color:#fff;border-radius:9px;padding:7px;background:var(--c1)}
-.bin:nth-child(2)>b{background:var(--c2)}.bin:nth-child(3)>b{background:var(--c3)}.bin:nth-child(4)>b{background:var(--c4)}
-.bin p{margin:0;display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
-.bin span{font-size:16.5px;font-weight:700;background:#edf2f8;border-radius:7px;padding:2px 8px}
-.bin span.w{background:#f8d9d5}
-.bin.flash{border-color:var(--bad)}.bin.hit{border-color:var(--ok)}
-/* cloze */
-.cloze{font-size:clamp(17.5px,1.65vw,21px);line-height:1.75;text-align:left;max-width:1010px;margin:0}
-.gap{display:inline-block;min-width:108px;border:0;border-bottom:3px solid var(--c1);background:#e6eff7;border-radius:6px 6px 0 0;padding:0 8px;font-weight:700;line-height:1.3;text-align:center}
-.gap.sel{background:#fff3cf;border-color:var(--gold)}.gap.good{background:#cfeedd;border-color:var(--ok);cursor:default}
-.bank{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;min-height:46px}
-.bank button{border:2px solid #c9d5e4;border-radius:10px;background:#fff;padding:7px 15px;font-size:19px;font-weight:700}
-.bank button.no{background:#f8d9d5;border-color:var(--bad)}
-.lives{font:800 17px var(--sans);color:var(--bad);letter-spacing:.1em}
-.res{list-style:none;margin:0;padding:0;display:grid;gap:5px;text-align:left;max-height:100%;overflow:auto;width:min(860px,100%)}
-.res li{background:#fff;border-left:5px solid var(--bad);border-radius:8px;padding:5px 11px;font-size:17px}
-.res b{color:var(--ok)}
-.rule{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;text-align:left}
-.rule section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px 13px}
-.rule h3{margin:0 0 4px;font:800 14px var(--sans);letter-spacing:.1em;color:var(--c1);text-transform:uppercase}
-.rule p{margin:2px 0;font-size:clamp(15.5px,1.4vw,18px);line-height:1.35}.rule b{color:#a2551f}
-table.t{border-collapse:collapse;width:100%;font-size:clamp(15px,1.35vw,17.5px)}table.t td,table.t th{border:1px solid var(--line);padding:3px 8px;text-align:left}table.t th{background:#eef3f9;font-family:var(--sans);font-size:13px}
-@media(max-height:600px){.card{height:170px}.ring{width:60px;height:60px}.opts button{min-height:46px;padding:8px}.wf{min-height:44px}.bin{min-height:100px}}
+/* Speed Game: round timer instead of a bomb (same as Module 2, lesson 4) */
+.bombsvg path,.bombsvg rect,.bombsvg .spark,.bombsvg circle:nth-of-type(2){display:none}
+.bombsvg circle:nth-of-type(1){fill:#169be5}
+.bomb-box.hot .bombsvg circle:nth-of-type(1){fill:#e2574c}
+ol.hunt{padding-left:2.1em}
+.sheet:not(.two) .scols:has(> :nth-child(4)){grid-template-columns:repeat(4,minmax(0,1fr))}
+.act.panel .opts{flex:0 0 auto;grid-auto-rows:auto;align-content:start;gap:8px}
+.act.panel .opts button{min-height:52px;padding:8px 12px;font-size:19px}
+.act.panel .opts.c3 button{font-size:18px}
+.act.panel .opts{flex:0 0 auto;grid-auto-rows:auto;align-content:start;gap:8px}
+.act.panel .opts button{min-height:52px;padding:8px 12px;font-size:19px}
+.act.panel .opts.c3 button{font-size:18px}
+/* grammar help hidden under a button */
+.work{position:relative}
+.helpbtn{position:absolute;right:14px;top:10px;z-index:20}
+.helpbtn>summary{list-style:none;cursor:pointer;background:#ffd23f;color:#1b2333;font:800 16px/1 Figtree,sans-serif;padding:10px 16px;border-radius:12px;border:2px solid #e0b400;user-select:none}
+.helpbtn>summary::-webkit-details-marker{display:none}
+.helpbtn[open]>summary{background:#fff;border-color:#ffd23f}
+.helppop{position:absolute;right:0;top:46px;width:min(520px,86vw);max-height:min(430px,70vh);overflow:auto;background:#121826;color:#e8edf6;border:2px solid #ffd23f;border-radius:14px;padding:12px 14px;box-shadow:0 14px 34px rgba(0,0,0,.4)}
+.helppop .court{display:flex;align-items:center;gap:12px;margin:0 0 8px}
+.helppop .court h4{margin:0;font:800 22px/1.1 Montserrat,sans-serif;color:#fff}
+.helppop .stamp{flex:none;border:2px solid #ffd23f;color:#ffd23f;font:800 11px/1 Montserrat,sans-serif;letter-spacing:.14em;padding:5px 7px;border-radius:5px;transform:rotate(-3deg)}
+.helppop .say{margin:0;padding:0;list-style:none;display:grid;gap:5px}.helppop .say li{background:rgba(255,255,255,.08);border-radius:9px;padding:6px 10px;font-size:16.5px}.helppop .say b{color:#ffd23f}
+.helppop .words{margin:9px 0 0;font-size:15px;color:#aebbd0;line-height:1.4}.helppop .words b{color:#ffd23f}
+.work:has(.helpbtn) .hint{padding-right:150px}
+
+.helppop table{border-collapse:collapse;width:100%;margin-top:6px;font-size:15.5px}.helppop td,.helppop th{border:1px solid rgba(255,255,255,.22);padding:4px 8px;text-align:left}.helppop th{color:#ffd23f}
+/* prediction: the greetings appear one by one */
+.tagsbox{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center}
+.tagsbox .q{margin:0}
+.tagsrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.tagsrow span{font:800 clamp(19px,2vw,26px)/1 Figtree,sans-serif;color:#fff;padding:9px 16px;border-radius:9px;background:#169be5;transform:rotate(-2deg)}
+.tagsrow span:nth-child(4n+2){background:#0f9d8a;transform:rotate(1.5deg)}.tagsrow span:nth-child(4n+3){background:#e2459b}.tagsrow span:nth-child(4n+4){background:#7a5bd0;transform:rotate(2deg)}
+/* twelve pairs fit without scrolling */
+.act.panel .match button{font-size:16.5px;padding:4px 10px;min-height:0;line-height:1.25}.act.panel .match>div{gap:5px}
+.act.panel .hunt{font-size:18.5px;gap:1px}.act.panel .hunt li{line-height:1.5}.act.panel .hunt em{font-size:.9em}
+@media(max-height:640px){.act.panel .match button{font-size:15px;padding:1px 9px;line-height:1.15}.act.panel .match>div{gap:2px}.act.panel .hunt{font-size:16.5px;gap:0}.act.panel .hunt li{line-height:1.32}.act.panel .hunt button{padding-top:0;padding-bottom:0}.act.panel .sortpool{gap:4px;padding:4px}.act.panel .sortpool button,.act.panel .scol button{font-size:14px;padding:1px 8px;min-height:0}.act.panel .row .main,.act.panel .row .ghost{padding-top:5px;padding-bottom:5px}.act.panel .cloze{font-size:15.5px;line-height:1.6}.act.panel .cloze select{font-size:15px;padding:1px 4px}.act.panel .scol{min-height:44px}.tagsrow span{font-size:17px;padding:6px 11px}}
 </style>
 </head>
 <body>
-<div class="app">
- <div class="bar"><a href="index.html">Home</a><b>GABI · MODULE 3 · LESSON 1</b><span>Gateway to the World B1 · page 32</span></div>
- <main class="home">
-  <div class="head"><h1>Plurilingual</h1><p>Languages, countries and nationalities · Learning languages</p></div>
-  <div class="tiles" id="tiles"></div>
- </main>
-</div>
-<div class="ov" id="ov"><div class="win">
- <div class="wh"><h2 id="wt"></h2><div class="tabs" id="tabs"></div><button id="grow">Expand</button><button class="x" id="close">Close</button></div>
- <div class="wb" id="wb"></div>
- <div class="wf" id="wf"></div>
-</div></div>
 <script src="../card-audio.js?v=20261115"></script>
+<script src="skills.js?v=20261104a"></script>
 <script>
-/* Module 3 (Plurilingual), lesson 1 · SB p.32 Vocabulary in context. Home screen = ten blocks, each opens in a window.
-   Nothing is saved between visits. Audio: natural recordings from ../card-audio (AUDIO_TEXTS is collected by tools/card-audio-collect.mjs). */
-const HW=[
- {s:'Workbook · past simple',q:'Sam: Really? What <u>&nbsp;?&nbsp;</u>',o:['happened','did happen','did happened','was happen'],why:'What is the subject of the question, so there is no did.'},
- {s:'Workbook · the robbery',q:'It took them two days because their equipment <u>&nbsp;?&nbsp;</u> the first time they tried.',o:['broke','didn’t last','not last','breaked']},
- {s:'Workbook · the robbery',q:'However, their happiness <u>&nbsp;?&nbsp;</u> long.',o:['didn’t last','not last','broke','wasn’t last'],why:'Negative past simple: didn’t + infinitive.'},
- {s:'Workbook · the robbery',q:'First, they <u>&nbsp;?&nbsp;</u> down the vertical tunnel used by the lift.',o:['climbed','climb','arrived','needed']},
- {s:'Workbook · the robbery',q:'They <u>&nbsp;?&nbsp;</u> to penetrate a wall 50 cm thick!',o:['needed','need','climbed','arrived']},
- {s:'Workbook · the robbery',q:'CCTV cameras <u>&nbsp;?&nbsp;</u> the whole robbery!',o:['recorded','record','were record','recording']},
- {s:'Workbook · questions',q:'What was <u>&nbsp;?&nbsp;</u> really hard part of the job?',o:['the','a','an','(nothing)'],why:'the really hard part: there is only one.'},
- {s:'Your story',q:'In the end, we found out that a younger boy <u>&nbsp;?&nbsp;</u> it by mistake.',o:['had taken','took','was taking','has taken'],why:'He took it before you found out: past perfect.'},
- {s:'Your story · phrasal verbs',q:'Our teacher decided to <u>look into</u> the mystery.',o:['investigate','look inside','watch','forget'],},
- {s:'Your story · phrasal verbs',q:'Suddenly, I <u>came across</u> a blue backpack.',o:['found by chance','crossed','lost','carried']},
- {s:'Your story · phrasal verbs',q:'First, we <u>came up with</u> a plan.',o:['thought of','arrived with','changed','followed']},
- {s:'Your story · phrasal verbs',q:'In the end, we <u>found out</u> the truth.',o:['discovered','went out','hid','looked for']},
- {s:'Your story · phrasal verbs',q:'My friends and I started to <u>look for</u> clues.',o:['try to find','look after','look at','wait for']}
-];
+/* Module 3 (Plurilingual), lesson 1 · Gateway B1, SB p.32 Vocabulary in context. Same engine and look as Module 2. Two activities per screen:
+   1 homework: error hunter (his Workbook p.16 sentences) + Speed Game (15 s) -> 2 spoken warm-up questions (ex 4) + prediction
+   -> 3 hello in 12 languages (match) + country flashcards -> 4 sort the endings + quiz with traps (rule under a button)
+   -> 5 learning-languages flashcards + Advice for learning English (ex 5a) -> 6 floor is lava: do or make + ex 7 (rule under a button)
+   -> 7 interview (ex 7-8) + Module 3 Jeopardy.
+   Audio: natural recordings in ../card-audio (AUDIO_TEXTS is collected by tools/card-audio-collect.mjs). */
 const IV1=['Which of these countries do you already know?','Which of these countries would you like to visit? Why?','Which of these languages can you speak? How well?','Which of these languages would you like to learn? Why?','Can you speak any other languages? Which?'];
 const IV2=['How do you study English after school?','How do you revise before an exam?','How do you feel when you make a mistake in English?','What are different ways to study English outside the classroom?'];
 const HELLO=[['hola','Spanish'],['bonjour','French'],['marhabaan','Arabic'],['privet','Russian'],['hallo','German'],['cześć','Polish'],['merhaba','Turkish'],['olá','Portuguese'],['zdraveĭte','Bulgarian'],['śwaṣdī','Thai'],['kon’nichiwa','Japanese'],['ciao','Italian']];
 const COUNTRY=[['Argentina','Argentinian','Spanish'],['Austria','Austrian','German'],['Brazil','Brazilian','Portuguese'],['Bulgaria','Bulgarian','Bulgarian'],['Egypt','Egyptian','Arabic'],['Japan','Japanese','Japanese'],['Mexico','Mexican','Spanish'],['Poland','Polish','Polish'],['Russia','Russian','Russian'],['Switzerland','Swiss','French, German, Italian'],['Thailand','Thai','Thai'],['Turkey','Turkish','Turkish']];
 const LEARN=[['accuracy','noun','точность','accuracy (n.) · accurate (adj.)'],['accurate','adjective','точный, правильный','accurate (adj.) · accuracy (n.)'],['essay','noun','сочинение, эссе','do an essay · write an essay · read an essay'],['exam','noun','экзамен','do an exam · take an exam · pass an exam · fail an exam'],['exercise','noun','упражнение','do an exercise · check an exercise · correct an exercise'],['fluency','noun','беглость речи','fluency (n.) · fluent (adj.)'],['fluent','adjective','бегло говорящий','fluent (adj.) · fluency (n.)'],['homework','noun','домашняя работа','do homework · check homework'],['memorisation','noun','запоминание','memorisation (n.) · memorise (v.)'],['memorise','verb','запоминать, учить наизусть','memorise (v.) · memorisation (n.)'],['mistake','noun','ошибка','make a mistake · correct a mistake'],['practice','noun','практика','practice (n.) · practise (v.)'],['practise','verb','практиковаться','practise (v.) · practice (n.)'],['revise','verb','повторять','revise (v.) · revision (n.)'],['revision','noun','повторение','revision (n.) · revise (v.)'],['study','verb','учить, изучать','do English · study English · learn English'],['translate','verb','переводить','translate (v.) · translation (n.)'],['translation','noun','перевод','translation (n.) · translate (v.)']];
-const BINS=['-(i)an','-ish','-ese','other'];
-const SORT=[['Argentina','Argentinian',0],['Poland','Polish',1],['Japan','Japanese',2],['Switzerland','Swiss',3],['Austria','Austrian',0],['Turkey','Turkish',1],['Thailand','Thai',3],['Brazil','Brazilian',0],['the language of Brazil','Portuguese',2],['Egypt','Egyptian',0],['the language of Egypt','Arabic',3],['Bulgaria','Bulgarian',0],['the language of Mexico','Spanish',1],['Mexico','Mexican',0],['bonjour: the language','French',3],['Russia','Russian',0],['the language of Austria','German',0],['ciao: the language','Italian',0]];
-const QUIZ=[
- {q:'What language do people speak in <u>Brazil</u>?',o:['Portuguese','Brazilian','Spanish','Brazilish']},
- {q:'A person from <u>Switzerland</u> is …',o:['Swiss','Switzerlandish','Swissian','Switzer']},
- {q:'What language do people speak in <u>Egypt</u>?',o:['Arabic','Egyptian','Turkish','Egyptish']},
- {q:'A person from <u>Thailand</u> is …',o:['Thai','Thailandese','Thailish','Thaian']},
- {q:'What language do people speak in <u>Austria</u>?',o:['German','Austrian','Polish','Italian']},
- {q:'A person from <u>Argentina</u> is …',o:['Argentinian','Argentinish','Argentinese','Argentian']},
- {q:'What language do people speak in <u>Mexico</u>?',o:['Spanish','Mexican','Portuguese','Italian']},
- {q:'A person from <u>Poland</u> is …',o:['Polish','Polandish','Polian','Polandese']},
- {q:'Which language is NOT spoken in <u>Switzerland</u>?',o:['Spanish','French','German','Italian'],why:'Switzerland: French, German, Italian.'},
- {q:'A person from <u>Japan</u> is …',o:['Japanese','Japanian','Japanish','Japanic']},
- {q:'A person from <u>Turkey</u> is …',o:['Turkish','Turkeyan','Turkese','Turkian']},
- {q:'Two countries on the list speak <u>Spanish</u>. Which?',o:['Argentina and Mexico','Brazil and Mexico','Argentina and Brazil','Mexico and Egypt']}
-];
-const ADVICE=['When you learn English, remember that making ',0,' is natural – the important thing is to learn from the things you do wrong. It’s also important to ',1,' as much as possible – use the language in lots of different situations. Frequent ',2,' is essential, too – look back at new language regularly. This will help you to ',3,' the new vocabulary and grammar and store it in your brain. ',4,' can be useful sometimes, but remember that grammar and vocabulary don’t usually work in exactly the same way in different languages. And, finally, when we talk about speaking, there are two main goals: ',5,' is good because it means what you are saying is correct and being ',6,' means that you can keep talking without frequently stopping.'];
-const GAPS=[['mistakes','mistake','exercises','exams'],['practise','practice','translate','memorise'],['revision','revise','fluency','memorisation'],['memorise','memorisation','mistake','accurate'],['Translation','Translate','Fluency','Homework'],['accuracy','accurate','fluency','fluent'],['fluent','fluency','accurate','accuracy']];
-const ALT=[
- {q:'How do you <u>&nbsp;?&nbsp;</u> English after school?',o:['study','make']},
- {q:'How do you <u>&nbsp;?&nbsp;</u> before an exam?',o:['revise','revision']},
- {q:'How do you feel when you <u>&nbsp;?&nbsp;</u> a mistake in English?',o:['make','do']}];
-const DM=[['do an essay',1],['make an exam',0],['take an exam',1],['make a mistake',1],['do a mistake',0],['do an exercise',1],['make homework',0],['pass an exam',1],['make English',0],['correct a mistake',1],['do homework',1],['make an exercise',0],['fail an exam',1],['write an essay',1],['do English',1],['check homework',1]];
 const AUDIO_TEXTS=IV1.concat(IV2,COUNTRY.flatMap(c=>[c[0],c[1]]),LEARN.map(c=>c[0]));
-
-const $=s=>document.querySelector(s),wb=$('#wb'),wf=$('#wf'),ov=$('#ov');
-const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
-const SPK='<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
-let tick=null,timers=[];
-function later(f,ms){timers.push(setTimeout(f,ms))}
-function stopAll(){clearInterval(tick);tick=null;timers.forEach(clearTimeout);timers=[];try{CardAudio.stop()}catch(e){}}
-function say(t,btn,done){try{CardAudio.say(t,btn||null,done)}catch(e){if(done)done()}}
-function ring(secs,left){const c=2*Math.PI*32;return `<div class="ring${left<=5?' hot':''}" id="ring"><svg viewBox="0 0 74 74"><circle class="t" cx="37" cy="37" r="32"/><circle class="p" cx="37" cy="37" r="32" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-left/secs)}"/></svg><b>${left}</b></div>`}
-function runRing(secs,onEnd){let left=secs;clearInterval(tick);const draw=()=>{const r=$('#ring');if(!r)return clearInterval(tick);r.outerHTML=ring(secs,left)};draw();
- tick=setInterval(()=>{left--;draw();if(left<=0){clearInterval(tick);tick=null;onEnd&&onEnd()}},1000)}
-function result(title,ok,n,miss,again){stopAll();
- wb.innerHTML=`<p class="sub">${title}</p><p class="q">${ok} / ${n}</p>`+(miss.length?`<ul class="res">${miss.map(m=>`<li>${m[0]} → <b>${m[1]}</b></li>`).join('')}</ul>`:'<p class="why">No mistakes.</p>');
- wf.innerHTML=`<span>Finished</span><button class="btn" id="again">Play again</button>`;$('#again').onclick=again}
-
-/* one question at a time, big answer buttons; secs = Speed Game */
-function quiz(items,o){o=o||{};const list=o.keep?items:shuffle(items);let i=0,ok=0,miss=[];
- function show(){stopAll();const it=list[i],right=it.o[0],opts=shuffle(it.o);let done=false;
-  wb.innerHTML=`<div class="row">${o.secs?ring(o.secs,o.secs):''}<p class="sub">${it.s||o.label||''}</p></div><p class="q">${it.q}</p><div class="opts" id="opts">${opts.map(x=>`<button>${x}</button>`).join('')}</div><p class="why" id="why"></p>`;
-  wf.innerHTML=`<span>${i+1} / ${list.length} · score ${ok}</span><button class="btn" id="next" disabled>${i+1<list.length?'Next':'See result'}</button>`;
-  const fin=pick=>{if(done)return;done=true;stopAll();const good=pick===right;if(good)ok++;else miss.push([it.q.replace(/<u>(&nbsp;)?\?(&nbsp;)?<\/u>/,'…').replace(/<\/?u>/g,''),right]);
-   $('#opts').classList.add('lock');[...$('#opts').children].forEach(b=>{if(b.textContent===right)b.classList.add('good');else if(b.textContent===pick)b.classList.add('bad')});
-   $('#why').textContent=(pick===null?'Time is up. ':'')+(it.why||'');$('#next').disabled=false};
-  [...$('#opts').children].forEach(b=>b.onclick=()=>fin(b.textContent));
-  $('#next').onclick=()=>{i++;if(i<list.length)show();else result(o.title||'Result',ok,list.length,miss,()=>quiz(items,o))};
-  if(o.secs)runRing(o.secs,()=>fin(null))}
- show()}
-
-/* interview: one card, the question only sounds; text on the back */
-function interview(qs){let i=0,flip=false;
- function show(auto){stopAll();
-  wb.innerHTML=`<div class="nums">${qs.map((_,k)=>`<button class="${k===i?'on':''}" data-k="${k}">${k+1}</button>`).join('')}</div>
-  <div class="card${flip?' f':''}" id="card"><div class="in"><div class="a"><p class="sub">Question ${i+1}</p><div class="row"><button class="btn" id="play">Play</button><button class="btn l" id="stop">Stop</button>${ring(40,40)}</div></div><div class="b"><p class="sub">Question ${i+1}</p><div class="m">${qs[i]}</div></div></div></div>`;
-  wf.innerHTML=`<button class="btn l" id="back" ${i?'':'disabled'}>Back</button><button class="btn" id="flip">Flip the card</button><button class="btn l" id="fwd" ${i<qs.length-1?'':'disabled'}>Forward</button>`;
-  wb.querySelectorAll('.nums button').forEach(b=>b.onclick=()=>{i=+b.dataset.k;flip=false;show()});
-  $('#play').onclick=()=>{$('#play').textContent='Replay';clearInterval(tick);const r=$('#ring');if(r)r.outerHTML=ring(40,40);say(qs[i],null,()=>runRing(40))};
-  $('#stop').onclick=()=>{stopAll();const r=$('#ring');if(r)r.outerHTML=ring(40,40)};
-  $('#flip').onclick=()=>{flip=!flip;$('#card').classList.toggle('f',flip)};
-  $('#back').onclick=()=>{i--;flip=false;show()};$('#fwd').onclick=()=>{i++;flip=false;show()}}
- show()}
-
-/* Quizlet-style deck: one card, word on the front, meaning and example on the back */
-function deck(cards){let i=0,flip=false;
- function show(){stopAll();const c=cards[i];
-  wb.innerHTML=`<div class="card${flip?' f':''}" id="card" role="button" tabindex="0"><div class="in"><div class="a"><div class="w">${c.f}</div>${c.fs?`<p class="sub">${c.fs}</p>`:''}</div><div class="b"><div class="m">${c.b}</div><div class="e">${c.e}</div></div></div></div><button class="spk" id="spk" title="Listen">${SPK}</button>`;
-  wf.innerHTML=`<button class="btn l" id="back" ${i?'':'disabled'}>←</button><span>${i+1} / ${cards.length}</span><button class="btn l" id="fwd">${i<cards.length-1?'→':'Start again'}</button>`;
-  $('#card').onclick=()=>{flip=!flip;$('#card').classList.toggle('f',flip)};
-  $('#spk').onclick=()=>say(flip&&c.sb?c.sb:c.f,$('#spk'));
-  $('#back').onclick=()=>{i--;flip=false;show()};$('#fwd').onclick=()=>{i=i<cards.length-1?i+1:0;flip=false;show()}}
- show()}
-
-function predict(){let n=1;const tags=shuffle(HELLO.map(h=>h[0]));
- function show(){const all=n>tags.length;
-  wb.innerHTML=`<p class="q">${all?'Module 3 · Plurilingual':'What is Module 3 about?'}</p><div class="tags">${tags.slice(0,n).map(t=>`<span class="tag">${t}</span>`).join('')}</div>`;
-  wf.innerHTML=`<span>${Math.min(n,tags.length)} / ${tags.length}</span><div class="row"><button class="btn l" id="all">Show all</button><button class="btn" id="more" ${all?'disabled':''}>${n===tags.length?'Show the title':'One more word'}</button></div>`;
-  $('#more').onclick=()=>{n++;show()};$('#all').onclick=()=>{n=tags.length+1;show()}}
- show()}
-
-function match(pairs){const L=shuffle(pairs.map((p,i)=>i)),R=shuffle(L);let sel=null,done={},miss=0;
- function show(){
-  wb.innerHTML=`<div class="match"><div class="L">${L.map(i=>`<button data-l="${i}" class="${done[i]?'ok':sel===i?'sel':''}">${pairs[i][0]}</button>`).join('')}</div><div class="R">${R.map(i=>`<button data-r="${i}" class="${done[i]?'ok':''}">${pairs[i][1]}</button>`).join('')}</div></div>`;
-  const k=Object.keys(done).length;
-  wf.innerHTML=`<span>${k} / ${pairs.length} pairs · mistakes ${miss}</span>${k===pairs.length?'<button class="btn" id="again">Play again</button>':''}`;
-  if($('#again'))$('#again').onclick=()=>match(pairs);
-  wb.querySelectorAll('[data-l]').forEach(b=>b.onclick=()=>{if(done[b.dataset.l])return;sel=+b.dataset.l;show()});
-  wb.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{const r=+b.dataset.r;if(sel===null||done[r])return;if(r===sel){done[r]=1;sel=null;show()}else{miss++;b.classList.add('no');later(show,450)}})}
- show()}
-
-function sort(){const list=shuffle(SORT);let i=0,ok=0,miss=[],placed=[[],[],[],[]],lock=false;
- function show(){if(i>=list.length)return result('Endings',ok,list.length,miss,sort);const it=list[i];
-  wb.innerHTML=`<p class="sub">Nationality or language · which ending?</p><p class="q"><u>${it[0]}</u></p><div class="bins">${BINS.map((b,k)=>`<button class="bin" data-b="${k}"><b>${b}</b><p>${placed[k].map(w=>`<span class="${w[1]?'':'w'}">${w[0]}</span>`).join('')}</p></button>`).join('')}</div>`;
-  wf.innerHTML=`<span>${i+1} / ${list.length} · score ${ok}</span><span></span>`;
-  wb.querySelectorAll('.bin').forEach(b=>b.onclick=()=>{if(lock)return;lock=true;const k=+b.dataset.b,good=k===it[2];if(good)ok++;else miss.push([it[0],it[1]+' ('+BINS[it[2]]+')']);
-   placed[it[2]].push([it[1],good]);b.classList.add(good?'hit':'flash');wb.querySelector('.q').innerHTML=`${it[0]} → <u>${it[1]}</u>`;later(()=>{lock=false;i++;show()},good?700:1500)})}
- show()}
-
-function cloze(){let sel=null,got={},miss=0;
- function show(){
-  wb.innerHTML=`<p class="sub">Advice for learning English</p><p class="cloze">${ADVICE.map(x=>typeof x==='number'?`<button class="gap ${got[x]?'good':sel===x?'sel':''}" data-g="${x}">${got[x]?GAPS[x][0]:'('+'abcdefg'[x]+')'}</button>`:x).join('')}</p><div class="bank" id="bank"></div>`;
-  const k=Object.keys(got).length;
-  wf.innerHTML=`<span>${k} / ${GAPS.length} gaps · mistakes ${miss}</span>${k===GAPS.length?'<button class="btn" id="again">Play again</button>':''}`;
-  if($('#again'))$('#again').onclick=cloze;
-  if(sel!==null)$('#bank').innerHTML=shuffle(GAPS[sel]).map(w=>`<button>${w}</button>`).join('');
-  wb.querySelectorAll('.gap').forEach(b=>b.onclick=()=>{const g=+b.dataset.g;if(got[g])return;sel=g;show()});
-  [...$('#bank').children].forEach(b=>b.onclick=()=>{if(b.textContent===GAPS[sel][0]){got[sel]=1;sel=null;show()}else{miss++;b.classList.add('no');b.disabled=true}})}
- show()}
-
-function doMake(){const list=shuffle(DM);let i=0,ok=0,lives=3,miss=[];
- function show(){if(i>=list.length||lives<=0)return result(lives<=0?'No lives left':'Do or make?',ok,list.length,miss,doMake);const it=list[i];let done=false;
-  wb.innerHTML=`<p class="lives">LIVES ${'● '.repeat(lives)}${'○ '.repeat(3-lives)}</p><p class="q">${it[0]}</p><div class="opts" id="opts"><button>We say it</button><button>We don’t say it</button></div><p class="why" id="why"></p>`;
-  wf.innerHTML=`<span>${i+1} / ${list.length} · score ${ok}</span><button class="btn" id="next" disabled>Next</button>`;
-  [...$('#opts').children].forEach((b,k)=>b.onclick=()=>{if(done)return;done=true;const good=(k===0)===!!it[1];if(good)ok++;else{lives--;miss.push([it[0],it[1]?'we say it':'we don’t say it'])}
-   $('#opts').classList.add('lock');b.classList.add(good?'good':'bad');$('#why').textContent=it[1]?'We say: '+it[0]+'.':'We don’t say: '+it[0]+'.';$('#next').disabled=false});
-  $('#next').onclick=()=>{i++;show()}}
- show()}
-
-const RULE1=`<div class="rule"><section><h3>Capital letters</h3><p>Languages, countries and nationalities <b>always begin with a capital letter</b>: Poland, Polish.</p>
-<h3 style="margin-top:8px">Endings and stress</h3><table class="t"><tr><th>Ending</th><th>Stress</th><th>Examples</th></tr>
-<tr><td><b>-(i)an</b></td><td>before -(i)an</td><td>Argen<b>ti</b>nian, Bra<b>zi</b>lian, Bul<b>ga</b>rian, E<b>gyp</b>tian, <b>Ger</b>man, I<b>ta</b>lian, <b>Ru</b>ssian</td></tr>
-<tr><td><b>-ish</b></td><td>first syllable</td><td><b>Po</b>lish, <b>Spa</b>nish, <b>Tur</b>kish</td></tr>
-<tr><td><b>-ese</b></td><td>on -ese</td><td>Japa<b>nese</b>, Portu<b>guese</b></td></tr></table></section>
-<section><h3>Pay attention</h3><p><b>Aus</b>trian and <b>Me</b>xican: stress on the first syllable.</p><p>Irregular: <b>Arabic</b>, <b>French</b> (France), <b>Swiss</b> (Switzerland), <b>Thai</b> (Thailand).</p>
-<p>Switzerland has more than one language: French, German, Italian.</p><p>Spanish: Argentina and Mexico. German: Austria. Portuguese: Brazil. Arabic: Egypt.</p></section></div>`;
-const RULE2=`<div class="rule"><section><h3>Do or make</h3><p><b>do</b>: an action, an activity or some kind of work.</p><p><b>make</b>: constructing, building or creating something, or preparing food.</p><p>There are many exceptions.</p>
-<table class="t"><tr><td><b>do</b> an exam, an exercise, English, homework, an essay</td></tr><tr><td><b>make</b> a mistake</td></tr><tr><td>take / pass / fail an exam · check / correct an exercise · correct a mistake · study / learn English · check homework · write / read an essay</td></tr></table></section>
-<section><h3>Pay attention</h3><p><b>practice</b> (noun) and <b>practise</b> (verb): different spelling, the same pronunciation.</p><p><b>memorise</b> (verb) and <b>memorisation</b> (noun): the stress moves.</p><p><b>revise</b> /rɪˈvaɪz/ and <b>revision</b> /rɪˈvɪʒən/: the sound of “i” changes.</p><p><b>accuracy</b> (noun) and <b>accurate</b> (adjective); <b>fluency</b> (noun) and <b>fluent</b> (adjective).</p></section></div>`;
-function page(html){wb.innerHTML=html;wf.innerHTML='<span></span><span></span>'}
-
-const BLOCKS=[
- {k:'k5',l:'Check-in',t:'Speed Game',h:'Speed Game · homework',tabs:[['15 seconds',()=>quiz(HW,{secs:15,keep:true,title:'Speed Game'})]]},
- {k:'k4',l:'Speaking',t:'Warm-up questions',h:'Speaking · warm-up',tabs:[['Questions',()=>interview(IV1)]]},
- {k:'k1',l:'Prediction',t:'What is it about?',h:'Prediction',tabs:[['Predict',predict]]},
- {k:'k2',l:'Matching',t:'Hello in 12 languages',h:'Hello in 12 languages',tabs:[['Match',()=>match(HELLO)]]},
- {k:'k3',l:'Flashcards',t:'Countries and nationalities',h:'Flashcards',tabs:[['Countries',()=>deck(COUNTRY.map(c=>({f:c[0],b:c[1],e:'Language: '+c[2],sb:c[1]})))],['Learning languages',()=>deck(LEARN.map(c=>({f:c[0],fs:c[1],b:c[2],e:c[3]})))]]},
- {k:'k1',l:'Sorting',t:'Which ending?',h:'Which ending?',tabs:[['Sort',sort],['Rule',()=>page(RULE1)]]},
- {k:'k2',l:'Quiz',t:'Country, nationality, language',h:'Country, nationality, language',tabs:[['Quiz',()=>quiz(QUIZ,{title:'Quiz'})]]},
- {k:'k3',l:'Text',t:'Advice for learning English',h:'Learning languages',tabs:[['Text',cloze],['Choose',()=>quiz(ALT,{keep:true,title:'Choose'})]]},
- {k:'k5',l:'Lives game',t:'Do or make?',h:'Do or make?',tabs:[['Game',doMake],['Rule',()=>page(RULE2)]]},
- {k:'k4',l:'Speaking',t:'Use it, don’t lose it',h:'Speaking · interview',tabs:[['Interview',()=>interview(IV2)]]}
-];
-$('#tiles').innerHTML=BLOCKS.map((b,i)=>`<button class="tile ${b.k}" data-i="${i}"><i>${i+1}</i><small>${b.l.toUpperCase()}</small><b>${b.t}</b></button>`).join('');
-function open(i){const b=BLOCKS[i];$('#wt').textContent=b.h;ov.classList.add('on');
- const tabs=$('#tabs');tabs.innerHTML=b.tabs.length>1?b.tabs.map((t,k)=>`<button data-t="${k}">${t[0]}</button>`).join(''):'';
- const go=k=>{stopAll();[...tabs.children].forEach((x,j)=>x.classList.toggle('on',j===k));wb.scrollTop=0;b.tabs[k][1]()};
- [...tabs.children].forEach((x,k)=>x.onclick=()=>go(k));go(0);
- document.querySelector(`.tile[data-i="${i}"]`).classList.add('done')}
-function close(){stopAll();ov.classList.remove('on','big');$('#grow').textContent='Expand';wb.innerHTML='';wf.innerHTML=''}
-document.querySelectorAll('.tile').forEach(t=>t.onclick=()=>open(+t.dataset.i));
-$('#close').onclick=close;
-$('#grow').onclick=()=>{$('#grow').textContent=ov.classList.toggle('big')?'Smaller':'Expand'};
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('on'))close()});
+const clip=t=>CardAudio.base+CardAudio.key(t)+'.mp3?v=20261115';
+const COURT=(t,s)=>`<div class="court"><h4>${t}</h4><span class="stamp">${s||'RULE'}</span></div>`;
+const RULE1=COURT('Nationalities and languages')+`<ul class="say">
+<li>Languages, countries and nationalities <b>always begin with a capital letter</b>.</li>
+<li><b>-(i)an</b> stress before the ending: Argen<b>ti</b>nian, Bra<b>zi</b>lian, Bul<b>ga</b>rian, E<b>gyp</b>tian, <b>Ger</b>man, I<b>ta</b>lian, <b>Ru</b>ssian</li>
+<li><b>-ish</b> stress on the first syllable: <b>Po</b>lish, <b>Spa</b>nish, <b>Tur</b>kish</li>
+<li><b>-ese</b> stress on -ese: Japa<b>nese</b>, Portu<b>guese</b></li></ul>
+<p class="words"><b>Watch out:</b> <b>Aus</b>trian and <b>Me</b>xican have the stress on the first syllable. Irregular: <b>Arabic</b>, <b>French</b>, <b>Swiss</b>, <b>Thai</b>. Switzerland: French, German, Italian.</p>`;
+const RULE2=COURT('Do or make')+`<ul class="say">
+<li><b>do</b> an action, an activity or some kind of work: do an exam, do an exercise, do English, do homework, do an essay</li>
+<li><b>make</b> constructing, building or creating something: make a mistake</li>
+<li><b>other verbs</b> take / pass / fail an exam · check / correct an exercise · correct a mistake · study / learn English · check homework · write / read an essay</li></ul>
+<p class="words"><b>Watch out:</b> <b>practice</b> (noun) and <b>practise</b> (verb) sound the same. <b>memorise</b> – <b>memorisation</b>: the stress moves. <b>revise</b> /rɪˈvaɪz/ – <b>revision</b> /rɪˈvɪʒən/. <b>accuracy</b> (noun) – <b>accurate</b> (adjective), <b>fluency</b> – <b>fluent</b>.</p>`;
+/* flashcards: a Listen button with the recorded British voice */
+(function(){const C=Lesson.ACT.cards,v=C.view;C.view=(a,s)=>v(a,s).replace('<div class="row nav3">',`<div class="row nav3"><button class="ghost" data-listen="${Lesson.esc(a.items[s.i].w)}">Listen</button>`);
+ document.addEventListener('click',e=>{const b=e.target.closest('[data-listen]');if(b){e.stopPropagation();CardAudio.say(b.dataset.listen)}},true)})();
+/* prediction: the greetings appear one by one, then the title of the module */
+Lesson.ACT.tags={
+ init(a,s){s.n=1},
+ view(a,s){const all=s.n>a.items.length;
+  return `<div class="tagsbox"><p class="q">${all?Lesson.esc(a.answer):Lesson.esc(a.q)}</p><div class="tagsrow">${a.items.slice(0,s.n).map(t=>`<span>${Lesson.esc(t)}</span>`).join('')}</div></div>
+   <div class="row nav3"><button class="ghost" data-tall>Show all</button><span class="muted">${Math.min(s.n,a.items.length)} / ${a.items.length}</span><button class="main" data-tmore ${all?'disabled':''}>${s.n>=a.items.length?'Show the title':'One more word'}</button></div>`},
+ click(a,s,d){if(d.tmore!==undefined){s.n++;return Lesson.redraw()}if(d.tall!==undefined){s.n=a.items.length+1;return Lesson.redraw()}}};
+const SAY=['We say it','We don’t say it'];
+Lesson.boot({kicker:'Module 3 · Lesson 1',steps:[
+{stage:'Check-in',title:'Your homework: Workbook page 16',hint:'These sentences are from your homework. Find the mistake in each one. <small>Then the Speed Game: 15 seconds for each question.</small>',cols:'1.1fr 1fr',
+ acts:[
+ {type:'hunt',title:'Error hunter · your homework',tip:'Click the word with the mistake.',items:[
+  {s:'Really? What did happen?',bad:2,fix:'What happened?',why:'What is the subject: no did'},
+  {s:'However, their happiness not last long.',bad:3,fix:'didn’t last',why:'negative past simple: didn’t + base verb'},
+  {s:'First, they climb down the vertical tunnel.',bad:2,fix:'climbed',why:'past simple'},
+  {s:'CCTV cameras record the whole robbery!',bad:2,fix:'recorded',why:'past simple'},
+  {s:'What was hard part of the job?',bad:2,fix:'the hard part',why:'there is only one: the'},
+  {s:'We found out that a younger boy took it by mistake.',bad:7,fix:'had taken',why:'he took it before you found out: past perfect'},
+  {s:'Ronnie Biggs has become famous in 1963.',bad:2,fix:'became',why:'in 1963: past simple'},
+  {s:'A gang of criminals steal 2.6 million pounds from a train.',bad:4,fix:'stole',why:'past simple'},
+  {s:'The police catches him.',bad:2,fix:'caught',why:'past simple'},
+  {s:'In 1970 he is leaving France.',bad:3,fix:'left',why:'in 1970: past simple'}]},
+ {type:'bomb',speed:true,secs:15,label:'Homework check',title:'Speed Game · the robbery and your story',items:[
+  {sec:'The £200 million robbery',q:'It took them two days because their equipment ___ the first time.',o:['didn’t last','broke','breaked'],a:'broke'},
+  {sec:'The £200 million robbery',q:'However, their happiness ___ long.',o:['didn’t last','not last','broke'],a:'didn’t last'},
+  {sec:'The £200 million robbery',q:'They ___ to penetrate a wall 50 cm thick!',o:['need','climbed','needed'],a:'needed'},
+  {sec:'The £200 million robbery',q:'The police ___ them very quickly.',o:['catched','caught','catch'],a:'caught'},
+  {sec:'The £200 million robbery',q:'CCTV cameras ___ the whole robbery!',o:['recorded','record','were record'],a:'recorded'},
+  {sec:'Questions',q:'The men met in a pub. → Where ___?',o:['the men met','did the men met','did the men meet'],a:'did the men meet',why:'did + base verb'},
+  {sec:'Questions',q:'Someone broke into our house. → Who ___ into your house?',o:['broke','did break','did broke'],a:'broke',why:'Who is the subject: no did'},
+  {sec:'Your story',q:'Our teacher decided to LOOK INTO the mystery.',o:['look inside','investigate','forget'],a:'investigate'},
+  {sec:'Your story',q:'Suddenly, I CAME ACROSS a blue backpack.',o:['found by chance','lost','crossed'],a:'found by chance'},
+  {sec:'Your story',q:'First, we CAME UP WITH a plan.',o:['followed','changed','thought of'],a:'thought of'},
+  {sec:'Your story',q:'In the end, we FOUND OUT the truth.',o:['hid','discovered','looked for'],a:'discovered'},
+  {sec:'Your story',q:'My friends and I started to LOOK FOR clues.',o:['try to find','look after','look at'],a:'try to find'},
+  {sec:'Your story',q:'We found out that a younger boy ___ it by mistake.',o:['has taken','was taking','had taken'],a:'had taken',why:'earlier than “found out”: past perfect'}]}]},
+{stage:'Warm-up',title:'Countries and languages',hint:'Listen to the question and answer. <small>Then predict: what is Module 3 about?</small>',cols:'1fr 1fr',
+ acts:[
+ {type:'talk',title:'Ask and answer',label:'Question',secs:40,cards:IV1.map(q=>({q,say:q,audio:clip(q)}))},
+ {type:'tags',title:'Predict · what is Module 3 about?',q:'What is Module 3 about?',answer:'Module 3 · Plurilingual',items:['hallo','ciao','privet','bonjour','merhaba','hola','olá','cześć','kon’nichiwa','marhabaan','zdraveĭte','śwaṣdī']}]},
+{stage:'Words',title:'Hello in twelve languages',hint:'Which language is each “hello”? <small>Then the countries: say the nationality and the language before you turn the card over.</small>',cols:'1.25fr 1fr',
+ acts:[
+ {type:'match',title:'Hello · match the language',tip:'Tap a word, then its language.',items:HELLO.map(h=>({l:h[0],r:h[1]}))},
+ {type:'cards',title:'Flashcards · 12 countries',items:COUNTRY.map(c=>({w:c[0],ru:c[1],d:'Language: '+c[2]}))}]},
+{stage:'Words',title:'Nationalities',hint:'Sort the nationalities and languages by their endings. <small>Then the quiz: be careful, some answers are traps.</small>',cols:'1.15fr 1fr',help:{label:'Rule',html:RULE1},
+ acts:[
+ {type:'sort',title:'Sort the endings',cols:['-(i)an','-ish','-ese','other'],items:[{t:'Argentinian',c:0},{t:'Polish',c:1},{t:'Japanese',c:2},{t:'Swiss',c:3},{t:'Austrian',c:0},{t:'Turkish',c:1},{t:'Thai',c:3},{t:'Brazilian',c:0},{t:'Portuguese',c:2},{t:'Egyptian',c:0},{t:'Arabic',c:3},{t:'Bulgarian',c:0},{t:'Spanish',c:1},{t:'Mexican',c:0},{t:'French',c:3},{t:'Russian',c:0},{t:'German',c:0},{t:'Italian',c:0}]},
+ {type:'quiz',title:'Country · nationality · language',label:'Question',cols:2,items:[
+  {q:'What language do people speak in Brazil?',o:['Portuguese','Brazilian','Spanish','Brazilish'],a:'Portuguese'},
+  {q:'A person from Switzerland is …',o:['Switzerlandish','Swiss','Swissian','Switzer'],a:'Swiss'},
+  {q:'What language do people speak in Egypt?',o:['Egyptian','Turkish','Arabic','Egyptish'],a:'Arabic'},
+  {q:'A person from Thailand is …',o:['Thailandese','Thailish','Thaian','Thai'],a:'Thai'},
+  {q:'What language do people speak in Austria?',o:['Austrian','German','Polish','Italian'],a:'German'},
+  {q:'A person from Argentina is …',o:['Argentinish','Argentinese','Argentinian','Argentian'],a:'Argentinian'},
+  {q:'What language do people speak in Mexico?',o:['Mexican','Portuguese','Italian','Spanish'],a:'Spanish'},
+  {q:'A person from Poland is …',o:['Polish','Polandish','Polian','Polandese'],a:'Polish'},
+  {q:'Which language is NOT spoken in Switzerland?',o:['French','Spanish','German','Italian'],a:'Spanish',why:'Switzerland: French, German, Italian'},
+  {q:'A person from Japan is …',o:['Japanian','Japanish','Japanese','Japanic'],a:'Japanese'},
+  {q:'A person from Turkey is …',o:['Turkeyan','Turkese','Turkian','Turkish'],a:'Turkish'},
+  {q:'Two countries on the list speak Spanish. Which?',o:['Brazil and Mexico','Argentina and Mexico','Argentina and Brazil','Mexico and Egypt'],a:'Argentina and Mexico'}]}]},
+{stage:'Words',title:'Learning languages',hint:'Guess the meaning first, then turn the card over. <small>Then complete the advice with the correct form of the words.</small>',cols:'1fr 1.3fr',
+ acts:[
+ {type:'cards',title:'Flashcards · 18 words',items:LEARN.map(c=>({w:c[0],ru:c[2],d:c[1],ex:c[3]}))},
+ {type:'gaps',title:'Advice for learning English',inline:true,tail:' means that you can keep talking without frequently stopping.',items:[
+  {pre:'When you learn English, remember that making',opts:['exams','mistake','mistakes','exercises'],ans:['mistakes']},
+  {pre:'is natural – the important thing is to learn from the things you do wrong. It’s also important to',opts:['practice','practise','translate','memorise'],ans:['practise']},
+  {pre:'as much as possible – use the language in lots of different situations. Frequent',opts:['revise','fluency','revision','memorisation'],ans:['revision']},
+  {pre:'is essential, too – look back at new language regularly. This will help you to',opts:['memorisation','memorise','mistake','accurate'],ans:['memorise']},
+  {pre:'the new vocabulary and grammar and store it in your brain.',opts:['Translate','Fluency','Homework','Translation'],ans:['Translation']},
+  {pre:'can be useful sometimes, but remember that grammar and vocabulary don’t usually work in exactly the same way in different languages. And, finally, when we talk about speaking, there are two main goals:',opts:['accurate','accuracy','fluent','fluency'],ans:['accuracy']},
+  {pre:'is good because it means what you are saying is correct and being',opts:['fluency','accuracy','accurate','fluent'],ans:['fluent']}]}]},
+{stage:'Words',title:'Do or make?',hint:'Do we say it? Three wrong answers and the floor is lava. <small>Then choose the correct alternative.</small>',cols:'1.15fr 1fr',help:{label:'Do or make',html:RULE2},
+ acts:[
+ {type:'quiz',title:'Floor is lava · do or make?',label:'Phrase',lives:3,cols:2,opts:SAY,items:[
+  {q:'do an essay',a:SAY[0]},{q:'make an exam',a:SAY[1],why:'do / take an exam'},{q:'take an exam',a:SAY[0]},{q:'make a mistake',a:SAY[0]},{q:'do a mistake',a:SAY[1],why:'make a mistake'},{q:'do an exercise',a:SAY[0]},
+  {q:'make homework',a:SAY[1],why:'do homework'},{q:'pass an exam',a:SAY[0]},{q:'make English',a:SAY[1],why:'do / study / learn English'},{q:'correct a mistake',a:SAY[0]},{q:'do homework',a:SAY[0]},
+  {q:'make an exercise',a:SAY[1],why:'do an exercise'},{q:'fail an exam',a:SAY[0]},{q:'write an essay',a:SAY[0]},{q:'do English',a:SAY[0]},{q:'check homework',a:SAY[0]}]},
+ {type:'quiz',title:'Exercise 7 · choose',label:'Question',cols:2,shuffle:false,items:[
+  {q:'How do you ___ English after school?',o:['make','study'],a:'study'},
+  {q:'How do you ___ before an exam?',o:['revise','revision'],a:'revise'},
+  {q:'How do you feel when you ___ a mistake in English?',o:['do','make'],a:'make'}]}]},
+{stage:'Speak',title:'Use it … don’t lose it!',hint:'Listen to the question and answer. <small>Then Module 3 Jeopardy: choose a box and answer aloud.</small>',cols:'1fr 1.2fr',
+ acts:[
+ {type:'talk',title:'Interview',label:'Question',secs:40,cards:IV2.map(q=>({q,say:q,audio:clip(q)}))},
+ {type:'jeopardy',title:'Module 3 Jeopardy',cats:[
+  {name:'Hello',qs:[{q:'bonjour',a:'French'},{q:'merhaba',a:'Turkish'},{q:'zdraveĭte',a:'Bulgarian'}]},
+  {name:'Nationality',qs:[{q:'Poland',a:'Polish'},{q:'Thailand',a:'Thai'},{q:'Switzerland',a:'Swiss'}]},
+  {name:'Language',qs:[{q:'Mexico',a:'Spanish'},{q:'Brazil',a:'Portuguese'},{q:'Egypt',a:'Arabic'}]},
+  {name:'Word family',qs:[{q:'The noun from TRANSLATE',a:'translation'},{q:'The adjective from FLUENCY',a:'fluent'},{q:'The verb from MEMORISATION',a:'memorise'}]},
+  {name:'Do or make',qs:[{q:'___ homework',a:'do'},{q:'___ a mistake',a:'make'},{q:'___ an exam (three verbs)',a:'do / take / pass / fail'}]}]}]}
+]});
 </script>
 </body>
 </html>
