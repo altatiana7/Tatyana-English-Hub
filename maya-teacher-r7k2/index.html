@@ -43,7 +43,7 @@ async function load(){
   if(!rows.length){out.innerHTML='<div class="msg">Работ Майи пока нет.</div>';return}
   out.innerHTML=rows.map((x,k)=>{const d=Object.assign({},x.answers||{}),P=d._parts;let secs=d.sections||[];
     /* работа отправлена по частям: в каждой записи только блоки, ушедшие в этой части */
-    if(P){const ix={v:0,t:1,s:2};secs=secs.filter((s,i)=>(P.ids||[]).some(id=>ix[id]===i));d.total=secs.reduce((a,s)=>a+s.score,0);d.max=secs.reduce((a,s)=>a+s.max,0);d.summary='часть '+P.k+(P.final?' · всё отправлено':': сделано '+(P.all||[]).length+' из '+P.total);}
+    if(P){const base=String(x.test_id||'').split('~p')[0];const maps={'maya:hw2a':{v:0,t:1,s:2},'maya:hw2b':{a:0,b:1,l:2}};const ix=maps[base]||{};secs=secs.filter((section,i)=>(P.ids||[]).some(id=>ix[id]===i));d.total=secs.reduce((a,section)=>a+Number(section.score||0),0);d.max=secs.reduce((a,section)=>a+Number(section.max||0),0);d.summary='часть '+P.k+(P.final?' · всё отправлено':': отправлено '+(P.all||[]).length+' из '+P.total)+' · в этой части '+(P.ids||[]).length+' блок(а)';}
     const at=d._at||new Date(x.created_at).toLocaleString('ru-RU',{day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
     const body=secs.map(s=>`<div class="sec"><h3>${esc(s.name)} · ${s.score} / ${s.max}</h3><div class="items">${(s.items||[]).map(it=>{const ok=it.a===it.right;
       return `<div class="it ${ok?'ok':'bad'}"><span class="n">${it.n}</span>${esc(it.q)}<br><span class="a">${esc(it.a||'нет ответа')}</span>${ok?'':`<span class="r">${esc(it.right)}</span>`}</div>`}).join('')}</div></div>`).join('')||'<div class="msg">Нет подробностей.</div>';
