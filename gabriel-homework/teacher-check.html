@@ -234,12 +234,7 @@ const hw11=[
 {title:'7 · Do or make? (sort)',kind:'sort'},
 {title:'8 · Exercise 3 · type the verb',kind:'exact',items:[['Everybody can ___ a mistake.',['make']],['We have to ___ an essay about our favourite book.',['do','write']],['I hope I ___ the exam. (= not fail)',['pass']],['If you practise every day, you will ___ progress quickly.',['make']],['I always ___ my homework after dinner.',['do']],['Our teacher will ___ our exercises tomorrow.',['check','correct']],['Please ___ the mistakes in red.',['correct']],['He didn’t study, so he ___ the test.',['failed']],['Yesterday we ___ three grammar exercises in class.',['did']],['Last year my brother ___ great progress in German.',['made']]]},
 {title:'9 · Airport Mystery · flashcards',kind:'cards'},
-{title:'10 · Word · definition',kind:'match',slabel:'MATCH WORD · DEFINITION'},
-{title:'11 · Answer aloud',kind:'talk'},
-{title:'12 · Languages in my life',kind:'write',wlabel:'WORDS IN THE TEXT',min:50,max:80,checks:[
- ['Your native language and a foreign language',t=>/\bnative\b/i.test(t)&&/\b(foreign|fluent|bilingual|get by)\b/i.test(t)],
- ['A language with a capital letter',t=>/\b(English|Russian|German|French|Spanish|Italian|Polish|Turkish|Japanese|Arabic|Portuguese|Chinese|Thai|Bulgarian)\b/.test(t)],
- ['do or make (do homework, make a mistake …)',t=>/\b(do|does|did|doing|make|makes|made|making)\s+(my\s+|an?\s+|the\s+|a lot of\s+|some\s+)?(homework|exercises?|exams?|essays?|mistakes?|progress|English)\b/i.test(t)]]}];
+{title:'10 · Word · definition',kind:'match',slabel:'MATCH WORD · DEFINITION'}];
 const HW67={'gabi-hw-2026-10-07':{defs:hw6,meta:'Module 1 · Lesson 6 · Homework · Teen Talk Time'},'gabi-hw-2026-10-12':{defs:hw7,meta:'Module 1 · Homework 7 · Email to Maya'},'gabi-hw-2026-10-14':{defs:hw8,meta:'Module 2 · Homework 8 · Crime words'},'gabi-hw-2026-11-04':{defs:hw9,meta:'Module 2 · Homework 9 · Police station and phrasal verbs'},'gabi-hw-2026-11-10':{defs:hw10,meta:'Module 2 · Homework 10 · Watch and listen again · Phrasal verbs'},'gabi-hw-2026-11-17':{defs:hw11,meta:'Module 3 · Homework 1 · Countries, languages, do or make'}};
 const escT=t=>String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const nz6=s=>String(s||'').toLowerCase().replace(/[’‘`´]/g,"'").replace(/[-–—]/g,' ').replace(/[^a-z0-9' ]/g,' ').replace(/\s+/g,' ').trim();
