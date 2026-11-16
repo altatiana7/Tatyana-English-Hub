@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Homework · Module 3 · Plurilingual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../gabi-english-hub/skills.css?v=20261104p1">
+<style>
+/* answer buttons: four calm colours, two columns (as in Homework 10) */
+.act.panel .opts{grid-template-columns:1fr 1fr;gap:10px;flex:0 0 auto;grid-auto-rows:auto;align-content:start}
+.act.panel .opts button{min-height:52px;padding:8px 12px;font-size:18px;border-width:3px;font-weight:800}
+.act.panel .opts button:nth-child(1){background:#e4eefb;border-color:#8fb1dd}
+.act.panel .opts button:nth-child(2){background:#e5f3ea;border-color:#8cc3a0}
+.act.panel .opts button:nth-child(3){background:#fbf0d4;border-color:#dfc06f}
+.act.panel .opts button:nth-child(4){background:#f7e4e7;border-color:#d79fa9}
+.act.panel .opts button.ok{background:#d3efdc;border-color:#2f9e5f}
+.act.panel .opts button.no{background:#f9d9d6;border-color:#d9534f}
+.act.panel .opts button.dim{opacity:.55}
+.act.panel .write{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+.act.panel .write textarea{flex:1;min-height:120px;width:100%}
+.act.panel .write .wside{flex:none}
+.act.panel [data-copy],.act.panel #copied{display:none}
+.act.panel ol.gaps li{font-size:16px;line-height:1.25;margin:0;padding:1px 0}
+.act.panel ol.gaps input{padding:3px 8px;width:138px;font-size:16px}
+.act.panel ol.gaps{gap:3px}
+.act.panel ol.gaps,.act.panel ol.hunt{padding-left:32px}
+.act.panel ol.hunt li{font-size:17px;margin:0;padding:0}
+.act.panel .match button{font-size:16px;padding:4px 10px;min-height:0;line-height:1.25}.act.panel .match>div{gap:5px}
+.act.panel .sortpool button,.act.panel .scol button{font-size:15.5px;padding:3px 9px;min-height:0}
+@media(max-height:640px){.act.panel ol.gaps li{font-size:15px;line-height:1.1}.act.panel ol.gaps input{padding:1px 6px;font-size:15px;height:26px}.act.panel ol.gaps{gap:1px}.act.panel .match button{font-size:14.5px;padding:1px 9px;line-height:1.15}.act.panel .match>div{gap:2px}.act.panel ol.hunt li{font-size:15.5px;line-height:1.3}.act.panel .opts button{min-height:40px;font-size:16px;padding:4px 10px}}
+.once [data-again],.once [data-fagain],.once [data-show]{display:none!important}
+</style>
+</head>
+<body>
+<script src="../card-audio.js?v=20261115b"></script>
+<script src="../shared/hw-sent.js?v=2"></script><script src="../shared/hw-parts.js?v=1"></script>
+<script src="../gabi-english-hub/skills.js?v=20261104p2"></script>
+<script>
+/* Homework 11, after Module 3 lesson 1 (Plurilingual, SB p.32 + Airport Mystery). Two activities per screen.
+   1 Countries: Quizlet-style cards (British voice) + match country · nationality
+   2 Nationalities: quiz with traps + error hunter
+   3 Learning languages: cards + which form (noun / verb / adjective)
+   4 Do or make: sort the expressions + type the verb from memory
+   5 Airport Mystery words: cards + match the word with its definition
+   6 Speak and write: the lesson questions (recorded voice) + a short text about languages in my life */
+const C=[['Argentina','Argentinian','Spanish'],['Austria','Austrian','German'],['Brazil','Brazilian','Portuguese'],['Bulgaria','Bulgarian','Bulgarian'],['Egypt','Egyptian','Arabic'],['Japan','Japanese','Japanese'],['Mexico','Mexican','Spanish'],['Poland','Polish','Polish'],['Russia','Russian','Russian'],['Switzerland','Swiss','French, German, Italian'],['Thailand','Thai','Thai'],['Turkey','Turkish','Turkish']];
+const LEARN=[['accuracy','noun','точность','accuracy (n.) · accurate (adj.)'],['accurate','adjective','точный, правильный','accurate (adj.) · accuracy (n.)'],['essay','noun','сочинение, эссе','do an essay · write an essay · read an essay'],['exam','noun','экзамен','do an exam · take an exam · pass an exam · fail an exam'],['exercise','noun','упражнение','do an exercise · check an exercise · correct an exercise'],['fluency','noun','беглость речи','fluency (n.) · fluent (adj.)'],['fluent','adjective','бегло говорящий','fluent (adj.) · fluency (n.)'],['homework','noun','домашняя работа','do homework · check homework'],['memorisation','noun','запоминание','memorisation (n.) · memorise (v.)'],['memorise','verb','запоминать, учить наизусть','memorise (v.) · memorisation (n.)'],['mistake','noun','ошибка','make a mistake · correct a mistake'],['practice','noun','практика','practice (n.) · practise (v.)'],['practise','verb','практиковаться','practise (v.) · practice (n.)'],['revise','verb','повторять','revise (v.) · revision (n.)'],['revision','noun','повторение','revision (n.) · revise (v.)'],['study','verb','учить, изучать','do English · study English · learn English'],['translate','verb','переводить','translate (v.) · translation (n.)'],['translation','noun','перевод','translation (n.) · translate (v.)']];
+const LAB=[["native language","the language you learn first as a child","родной язык","My native language is Turkish."],["fluent","able to speak a language easily and accurately","бегло говорящий","She is fluent in Italian."],["bilingual","able to speak two languages","двуязычный","He is bilingual in Arabic and English."],["nationality","the country a person belongs to","национальность","What is your nationality?"],["foreign language","a language from another country","иностранный язык","I am learning a foreign language."],["translate","to change words into another language","переводить","Can you translate this sign?"],["pronunciation","the way a word is spoken","произношение","My pronunciation is improving."],["make progress","to improve at something","делать успехи","I make progress when I practise."],["pick up a language","to learn a language naturally through use","освоить язык в общении","He picked up Spanish while travelling."],["look up","to search for information in a dictionary or online","искать значение","Look up the word before you answer."],["get by","to manage with limited knowledge of a language","как-то объясняться","I can get by in French."],["come across","to find or meet something unexpectedly","случайно встретить","I came across a note in Japanese."],["official language","a language recognised by a country or government","официальный язык","Arabic is an official language of Egypt."],["language barrier","difficulty communicating because of different languages","языковой барьер","A translation app can help with a language barrier."]];
+const IV=['Which of these languages can you speak? How well?','Which of these languages would you like to learn? Why?','Can you speak any other languages? Which?','How do you study English after school?','How do you revise before an exam?','How do you feel when you make a mistake in English?','What are different ways to study English outside the classroom?'];
+const clip=t=>CardAudio.base+CardAudio.key(t)+'.mp3?v=20261115b';
+/* flashcards: a Listen button with the recorded British voice */
+(function(){const A=Lesson.ACT.cards,v=A.view;A.view=(a,s)=>v(a,s).replace('<div class="row nav3">',`<div class="row nav3"><button class="ghost" data-listen="${Lesson.esc(a.items[s.i].w)}">Listen</button>`);
+ document.addEventListener('click',e=>{const b=e.target.closest('[data-listen]');if(b){e.stopPropagation();CardAudio.say(b.dataset.listen)}},true)})();
+Lesson.boot({once:true,kicker:'Module 3 · Homework · 17 November',hub:'./',steps:[
+{stage:'Countries',title:'Countries, nationalities, languages',hint:'Before you turn each card: say the nationality and the language. <small>Then match every country with its nationality. One try.</small>',cols:'1fr 1.15fr',
+ acts:[
+ {type:'cards',title:'Flashcards · 12 countries',items:C.map(c=>({w:c[0],ru:c[1],d:'Language: '+c[2]}))},
+ {type:'match',title:'Country · nationality',tip:'Tap a country, then the nationality.',items:C.map(c=>({l:c[0],r:c[1]}))}]},
+{stage:'Nationalities',title:'Careful: traps!',hint:'<b>Exercise 1:</b> choose the right answer. <small>Then <b>exercise 2</b> (error hunter): one word in every sentence is wrong. Find it.</small>',cols:'1fr 1fr',
+ acts:[
+ {type:'quiz',title:'Exercise 1 · country, nationality, language',label:'Question',cols:2,items:[
+  {q:'My friend is from Cairo. He is ___.',o:['Egyptian','Arabic','Egyptish','Cairian'],a:'Egyptian'},
+  {q:'People in Vienna speak ___.',o:['Austrian','German','Viennese','Swiss'],a:'German'},
+  {q:'Sushi is a ___ dish.',o:['Japan','Japanish','Japanese','Japanian'],a:'Japanese'},
+  {q:'In Rio de Janeiro people speak ___.',o:['Brazilian','Spanish','Portuguese','Brazilish'],a:'Portuguese'},
+  {q:'Pad thai is a famous dish from ___.',o:['Thai','Thailand','Taiwan','Thailish'],a:'Thailand',why:'the country: Thailand; the nationality and the language: Thai'},
+  {q:'In Buenos Aires people speak ___.',o:['Argentinian','Portuguese','Spanish','Italian'],a:'Spanish'},
+  {q:'Warsaw is the capital of ___.',o:['Polish','Poland','Polan','Poleland'],a:'Poland'},
+  {q:'Istanbul is a big ___ city.',o:['Turkey','Turkian','Turkese','Turkish'],a:'Turkish'},
+  {q:'Swiss chocolate is from ___.',o:['Sweden','Swiss','Switzerland','Swissland'],a:'Switzerland'},
+  {q:'A person from Sofia is ___.',o:['Bulgarian','Sofian','Bulgarish','Bulgarese'],a:'Bulgarian'},
+  {q:'Which word needs a capital letter?',o:['language','spanish','country','nationality'],a:'spanish',why:'Spanish: languages and nationalities always begin with a capital letter'},
+  {q:'Which word has the stress on the first syllable?',o:['Japanese','Brazilian','Mexican','Egyptian'],a:'Mexican',why:'MEXican; but JapaNESE, BraZILian, EGYPtian'}]},
+ {type:'hunt',title:'Exercise 2 · error hunter',tip:'Click the wrong word.',items:[
+  {s:'My cousin lives in Madrid and speaks perfect spanish.',bad:8,fix:'Spanish',why:'capital letter'},
+  {s:'Paulo is from Brazil, so his native language is Brazilian.',bad:9,fix:'Portuguese'},
+  {s:'In Egypt most people speak Egyptian.',bad:5,fix:'Arabic'},
+  {s:'I love Japan food, especially sushi.',bad:2,fix:'Japanese',why:'an adjective: Japanese food'},
+  {s:'Our new neighbours are from Poland. They are Poland.',bad:8,fix:'Polish'},
+  {s:'The capital of Switzerland is Bern, and the people are Switzerlandish.',bad:10,fix:'Swiss'},
+  {s:'Ana is mexican and her brother lives in Texas.',bad:2,fix:'Mexican',why:'capital letter'},
+  {s:'Bangkok is the capital of Thai.',bad:5,fix:'Thailand',why:'the country'},
+  {s:'People in Austria speak Austrian.',bad:4,fix:'German'},
+  {s:'He is from Istanbul, so he is Turkey.',bad:7,fix:'Turkish'}]}]},
+{stage:'Learning',title:'Learning languages',hint:'Guess the meaning, then turn the card over. <small>Then choose the right form: noun, verb or adjective.</small>',cols:'1fr 1.2fr',
+ acts:[
+ {type:'cards',title:'Flashcards · 18 words',items:LEARN.map(c=>({w:c[0],ru:c[2],d:c[1],ex:c[3]}))},
+ {type:'quiz',title:'Which form?',label:'Sentence',cols:2,items:[
+  {q:'My sister speaks French very well. She is ___.',o:['fluency','fluent','fluently','flue'],a:'fluent'},
+  {q:'In speaking exams, ___ is as important as accuracy.',o:['fluent','fluency','fluence','fluently'],a:'fluency'},
+  {q:'You need to ___ every day if you want to speak well.',o:['practice','practise','practical','practising'],a:'practise',why:'verb: practise; noun: practice'},
+  {q:'Football ___ is on Tuesdays and Fridays.',o:['practise','practising','practice','practised'],a:'practice',why:'noun: practice'},
+  {q:'I always ___ the night before a test.',o:['revision','revise','revisor','revised'],a:'revise'},
+  {q:'Regular ___ helps you to remember new words.',o:['revise','revising','revision','revisal'],a:'revision'},
+  {q:'Can you ___ this message into English?',o:['translation','translate','translator','translated'],a:'translate'},
+  {q:'This ___ isn’t very good. Some words are wrong.',o:['translate','translating','translation','translates'],a:'translation'},
+  {q:'It is hard to ___ twenty new words in one evening.',o:['memorisation','memory','memorise','memorised'],a:'memorise'},
+  {q:'Songs can help with the ___ of new phrases.',o:['memorise','memorising','memorisation','memorised'],a:'memorisation'},
+  {q:'Your answer is ___. There are no mistakes.',o:['accuracy','accurately','accurate','accure'],a:'accurate'},
+  {q:'Teachers check the ___ of your grammar.',o:['accurate','accuracy','accurately','accurates'],a:'accuracy'}]}]},
+{stage:'Do or make',title:'Do or make?',hint:'Sort the words: do or make? <small>Then <b>exercise 3</b>: type the verb from memory. One try.</small>',cols:'1fr 1.2fr',
+ acts:[
+ {type:'sort',title:'Do or make?',cols:['do','make'],items:[
+  {t:'homework',c:0},{t:'a mistake',c:1},{t:'an exercise',c:0},{t:'progress',c:1},{t:'an essay',c:0},{t:'a decision',c:1},{t:'an exam',c:0},
+  {t:'a plan',c:1},{t:'English',c:0},{t:'friends',c:1},{t:'a test',c:0},{t:'a noise',c:1},{t:'a project',c:0},{t:'a cake',c:1}]},
+ {type:'gaps',title:'Exercise 3 · type the verb',dense:true,test:true,items:[
+  {pre:'Everybody can',post:'a mistake. It’s normal.',ans:['make']},
+  {pre:'We have to',post:'an essay about our favourite book.',ans:['do','write']},
+  {pre:'I hope I',post:'the exam. I studied a lot! (= not fail)',ans:['pass']},
+  {pre:'If you practise every day, you will',post:'progress quickly.',ans:['make']},
+  {pre:'I always',post:'my homework after dinner.',ans:['do']},
+  {pre:'Our teacher will',post:'our exercises tomorrow.',ans:['check','correct']},
+  {pre:'Please',post:'the mistakes in red.',ans:['correct']},
+  {pre:'He didn’t study, so he',post:'the test.',ans:['failed']},
+  {pre:'Yesterday we',post:'three grammar exercises in class.',ans:['did']},
+  {pre:'Last year my brother',post:'great progress in German.',ans:['made']}]}]},
+{stage:'Airport',title:'Airport Mystery · the words',hint:'Remember the case at the airport? Say each word aloud before you turn the card. <small>Then match the words with their definitions.</small>',cols:'1fr 1.25fr',
+ acts:[
+ {type:'cards',title:'Flashcards · 14 words',items:LAB.map(c=>({w:c[0],ru:c[2],d:c[1],ex:c[3]}))},
+ {type:'match',title:'Word · definition',tip:'Tap a word, then its definition.',items:LAB.filter((c,k)=>![1,5,6,13].includes(k)).map(c=>({l:c[0],r:c[1]}))}]},
+{stage:'Speak & write',title:'Languages in my life',hint:'Listen to each question and answer aloud. <small>Then write 50–80 words about the languages in your life.</small>',cols:'1fr 1.25fr',
+ acts:[
+ {type:'talk',title:'Answer aloud',label:'Question',secs:40,cards:IV.map(q=>({q,say:q,audio:clip(q)}))},
+ {type:'write',title:'Languages in my life',min:50,max:80,ph:'My native language is …',checks:[
+  {label:'Your native language and a foreign language',test:t=>/\bnative\b/i.test(t)&&/\b(foreign|fluent|bilingual|get by)\b/i.test(t)},
+  {label:'A language with a capital letter',test:t=>/\b(English|Russian|German|French|Spanish|Italian|Polish|Turkish|Japanese|Arabic|Portuguese|Chinese|Thai|Bulgarian)\b/.test(t)},
+  {label:'do or make (do homework, make a mistake …)',test:t=>/\b(do|does|did|doing|make|makes|made|making)\s+(my\s+|an?\s+|the\s+|a lot of\s+|some\s+)?(homework|exercises?|exams?|essays?|mistakes?|progress|English)\b/i.test(t)}]}]},
+{stage:'Send',title:'Send your homework',hint:'Press <b>Send finished tasks</b> to send what you have done. You can send the rest later. One try for each task.',
+ act:{type:'report',name:'Gabi · Homework · Module 3 · Plurilingual',assignment:'gabi-hw-2026-11-17',prefix:'G11'}}
+]});
+</script>
+<script src="../shared/hw-lock.js?v=20261104b"></script><script>HWLock.page({id:'gabi:gabi-hw-2026-11-17',home:'index.html',links:[{href:'vocabulary.html?from=hub',label:'Vocabulary cards'}]});</script>
+<script src="../shared/page-label.js?v=20261104"></script>
+</body>
+</html>
