@@ -2100,6 +2100,45 @@ const EGE_GAIN_COLLOC_Q=[
  {q:'___ high grades',opts:['perceive','obtain','achieve','receive'],a:'achieve',after:'achieve high grades'}
 ];
 
+
+/* Новые материалы встроены в существующие готовые комплекты ЕГЭ 30–36.
+   Не создаём дополнительных стикеров: всё в Лексика / Confusing words / Collocations. */
+const EGE_NEW_VERB_GROUP='get / gain / obtain / attain / achieve / receive / perceive';
+if (!LEX.some(g=>g.g===EGE_NEW_VERB_GROUP)) {
+  LEX.push({g:EGE_NEW_VERB_GROUP,t:'Collocations',
+    trap:'gain experience / confidence; obtain permission / a visa; achieve success / a goal; attain a high level; receive an award; perceive somebody as…',
+    w:EGE_GAIN_WORDS.map(w=>[w[0],w[1],w[2],w[3]])});
+  LEXG.push(EGE_NEW_VERB_GROUP);
+}
+const EGE_GAIN_NEW_SENT=EGE_GAIN_Q.map(q=>({...q,group:EGE_NEW_VERB_GROUP}));
+const EGE_GAIN_NEW_COLLOC=EGE_GAIN_COLLOC_Q.map(q=>({...q,group:EGE_NEW_VERB_GROUP}));
+LEX_SENT.push(...EGE_GAIN_NEW_SENT);
+LEX_TRAPS.push(...EGE_GAIN_NEW_COLLOC);
+LEX_ALL.push(...EGE_GAIN_NEW_SENT,...EGE_GAIN_NEW_COLLOC);
+
+const EGE_EXISTING_CW=new Set(CONFUSING.flatMap(g=>g.w.map(w=>w[0].toLowerCase())));
+for(const [name,words] of EGE_PAR_GROUPS){
+  const unique=words.filter(w=>!EGE_EXISTING_CW.has(w[0].toLowerCase()));
+  if(unique.length){
+    CONFUSING.push({g:name,w:unique.map(w=>[w[0],w[1]+' · '+w[2]]),s:[]});
+    unique.forEach(w=>EGE_EXISTING_CW.add(w[0].toLowerCase()));
+  }
+}
+const EGE_EXISTING_CW_Q=new Set(CW_Q.map(q=>q.q));
+for(const q of EGE_PAR_Q){if(!EGE_EXISTING_CW_Q.has(q.q)){CW_Q.push(q);EGE_EXISTING_CW_Q.add(q.q)}}
+
+const EGE_EXISTING_COLLOC=new Set(COLLOC.map(c=>c[1].replace(/^to /,'').trim().toLowerCase()));
+for(const w of EGE_GAIN_WORDS){
+  for(const p of w[2].split('; ')){
+    if(!EGE_EXISTING_COLLOC.has(p.toLowerCase())){
+      COLLOC.push([w[0],'to '+p,w[1]+' · '+w[3]]);
+      EGE_EXISTING_COLLOC.add(p.toLowerCase());
+    }
+  }
+}
+const EGE_EXISTING_CO_Q=new Set(CO_Q.map(q=>q.q));
+for(const q of EGE_GAIN_COLLOC_Q){if(!EGE_EXISTING_CO_Q.has(q.q)){CO_Q.push(q);EGE_EXISTING_CO_Q.add(q.q)}}
+
 const SECTIONS=[
  {id:'articles', title:'Артикли', tag:'задания 19–24', img:'pamyatki-img/articles.jpg',
   cards:ART_CARDS.map(c=>({f:c[0],b:c[1],ex:c[2]})),
@@ -2125,26 +2164,7 @@ const SECTIONS=[
    {n:'Speed Game', type:'bomb', items:tenseChoice},
   ]},
 
- {id:'paronyms-3036', title:'Паронимы: 15 ловушек', tag:'задания 30–36', thumb:'affect / effect<br>adopt / adapt',
-  memoHtml:"<h3>Как различать похожие слова</h3><p>В заданиях 30–36 проверяются значения, грамматическая форма и устойчивые сочетания. Вначале прочитай пары в карточках Quizlet, затем выполняй задания.</p><div class=\"tw\"><table class=\"tbl\"><tr><th>Пара</th><th>Как различать</th></tr><tr><td>affect / effect</td><td>affect: влиять на что-то; effect: эффект, результат (сущ.); infect: заражать; afflict: поражать, причинять страдание</td></tr><tr><td>adopt / adapt</td><td>adopt: принять (правила, подход); усыновить; adapt: адаптировать(ся); adept: умелый, искусный; adjust: подкорректировать, приспособить</td></tr><tr><td>principle / principal</td><td>principle: принцип; principal: главный; директор; principally: главным образом; prince: принц</td></tr><tr><td>sensible / sensitive</td><td>sensible: разумный, практичный; sensitive: чувствительный, восприимчивый; sensual: чувственный; sensational: сенсационный</td></tr><tr><td>advice / advise</td><td>advice: совет, рекомендации (неисчисл.); advise: советовать; devise: разработать, придумать план; revise: пересмотреть; повторять к экзамену</td></tr><tr><td>ensure / insure / assure</td><td>ensure: обеспечить; проследить, чтобы; insure: застраховать; assure: заверить кого-то; reassure: успокоить, уверить повторно</td></tr><tr><td>considerate / considerable</td><td>considerate: внимательный, тактичный; considerable: значительный; considered: обдуманный; consideration: рассмотрение; забота</td></tr><tr><td>historic / historical</td><td>historic: знаменательный, исторически важный; historical: относящийся к истории; historian: историк; history: история</td></tr><tr><td>council / counsel</td><td>council: совет, коллегиальный орган; counsel: совет; консультировать; consul: консул; cancel: отменять</td></tr><tr><td>economical / economic</td><td>economical: экономичный, бережливый; economic: экономический; economics: экономика (наука); economist: экономист</td></tr><tr><td>rise / raise</td><td>rise — rose — risen: подниматься, расти (без объекта); raise — raised — raised: поднимать что-то (с объектом); arise — arose — arisen: возникать; arouse — aroused — aroused: вызывать чувство, интерес</td></tr><tr><td>except / accept / expect</td><td>except: кроме, за исключением; accept: принимать; expect: ожидать; excerpt: выдержка, отрывок</td></tr><tr><td>continuous / continual</td><td>continuous: непрерывный; continual: постоянно повторяющийся (возможны паузы); contagious: заразный; contiguous: соприкасающийся, смежный</td></tr><tr><td>compliment / complement</td><td>compliment: комплимент; complement: дополнять; дополнение; complaint: жалоба; implement: осуществить, внедрить</td></tr><tr><td>realise / release</td><td>realise: осознавать, понимать; release: выпустить, освободить; relieve: облегчить, избавить от боли; receive: получить</td></tr></table></div>",
-  cards:EGE_PAR_GROUPS.flatMap(g=>g[1].map(w=>({f:w[0],b:w[1],ex:w[2],group:g[0]}))), groups:EGE_PAR_GROUPS.map(g=>g[0]),
-  acts:[
-   {n:'15 экзаменационных вопросов',type:'choice',items:EGE_PAR_Q,all:true},
-   {n:'Доктор Грамматика',type:'doctor',items:EGE_PAR_Q,all:true},
-   {n:'Объясни различие',type:'flip',items:EGE_PAR_GROUPS.map(g=>({f:g[0],b:g[1].map(w=>w[0]+' — '+w[1]).join('<br>')}))},
-   {n:'Speed Game',type:'bomb',items:EGE_PAR_Q}
-  ]},
- {id:'gain-obtain-3036',title:'Get · gain · obtain',tag:'задания 30–36',thumb:'achieve / attain<br>receive / perceive',
-  memoHtml:"<h3>Get · gain · obtain · attain · achieve · receive · perceive</h3><p>Перевод не всегда помогает: решающую роль играет <b>collocation</b> (сочетаемость). Сначала изучи карточки с примерами, затем переходи к практике.</p><div class=\"tw\"><table class=\"tbl\"><tr><th>Глагол</th><th>Значение</th><th>Типичные сочетания</th><th>Особенность</th></tr><tr><td>get</td><td>получить, стать, добраться (разговорное)</td><td>get a letter; get a job; get better; get home; get ready; get rid of</td><td>get используется широко в повседневной речи.</td></tr><tr><td>gain</td><td>приобрести постепенно, накопить</td><td>gain experience; gain knowledge; gain weight; gain popularity; gain confidence; gain access to</td><td>gain experience, а не obtain experience в обычном контексте.</td></tr><tr><td>obtain</td><td>официально получить (формальное)</td><td>obtain a visa; obtain a permit; obtain information; obtain permission; obtain a degree</td><td>Для разрешений, документов, официальных сведений.</td></tr><tr><td>attain</td><td>достичь высокого уровня, положения (формальное)</td><td>attain a level; attain independence; attain a goal</td><td>Обычно акцент на уровне, статусе, состоянии.</td></tr><tr><td>achieve</td><td>добиться результата усилиями</td><td>achieve a goal; achieve success; achieve results; achieve an ambition; achieve high grades</td><td>achieve success; но receive / win a prize.</td></tr><tr><td>receive</td><td>получить то, что дали, прислали</td><td>receive a letter; receive a gift; receive an award; receive treatment; receive a warm welcome</td><td>Подарок, награду и письмо можно receive.</td></tr><tr><td>perceive</td><td>воспринимать, замечать, считать</td><td>perceive a difference; perceive something as a threat; how people perceive you</td><td>Не значит «получать». Управление: perceive X as Y.</td></tr></table></div><p><b>Типичные ошибки:</b> gain experience (обычнее, чем obtain experience); achieve success; receive / win a prize; perceive somebody as + adjective / noun. Achieve и attain иногда оба возможны — зависит от контекста.</p>",
-  cards:EGE_GAIN_WORDS.map(w=>({f:w[0],b:w[1],ex:'<b>Collocations:</b> '+w[2]+'<br>'+w[3],raw:true})),
-  acts:[
-   {n:'10 экзаменационных вопросов',type:'choice',items:EGE_GAIN_Q,all:true},
-   {n:'Впиши слово',type:'type',items:EGE_GAIN_T},
-   {n:'Collocations · 10',type:'choice',items:EGE_GAIN_COLLOC_Q,all:true},
-   {n:'Доктор Грамматика',type:'doctor',items:EGE_GAIN_Q,all:true},
-   {n:'Speed Game',type:'bomb',items:EGE_GAIN_Q}
-  ]},
-  {id:'lexis', title:'Лексика 30–36', tag:'задания 30–36', img:null,
+ {id:'lexis', memoHtml:"<h3>Get · gain · obtain · attain · achieve · receive · perceive</h3><p>Перевод не всегда помогает: решающую роль играет <b>collocation</b> (сочетаемость). Сначала изучи карточки с примерами, затем переходи к практике.</p><div class=\"tw\"><table class=\"tbl\"><tr><th>Глагол</th><th>Значение</th><th>Типичные сочетания</th><th>Особенность</th></tr><tr><td>get</td><td>получить, стать, добраться (разговорное)</td><td>get a letter; get a job; get better; get home; get ready; get rid of</td><td>get используется широко в повседневной речи.</td></tr><tr><td>gain</td><td>приобрести постепенно, накопить</td><td>gain experience; gain knowledge; gain weight; gain popularity; gain confidence; gain access to</td><td>gain experience, а не obtain experience в обычном контексте.</td></tr><tr><td>obtain</td><td>официально получить (формальное)</td><td>obtain a visa; obtain a permit; obtain information; obtain permission; obtain a degree</td><td>Для разрешений, документов, официальных сведений.</td></tr><tr><td>attain</td><td>достичь высокого уровня, положения (формальное)</td><td>attain a level; attain independence; attain a goal</td><td>Обычно акцент на уровне, статусе, состоянии.</td></tr><tr><td>achieve</td><td>добиться результата усилиями</td><td>achieve a goal; achieve success; achieve results; achieve an ambition; achieve high grades</td><td>achieve success; но receive / win a prize.</td></tr><tr><td>receive</td><td>получить то, что дали, прислали</td><td>receive a letter; receive a gift; receive an award; receive treatment; receive a warm welcome</td><td>Подарок, награду и письмо можно receive.</td></tr><tr><td>perceive</td><td>воспринимать, замечать, считать</td><td>perceive a difference; perceive something as a threat; how people perceive you</td><td>Не значит «получать». Управление: perceive X as Y.</td></tr></table></div><p><b>Типичные ошибки:</b> gain experience (обычнее, чем obtain experience); achieve success; receive / win a prize; perceive somebody as + adjective / noun. Achieve и attain иногда оба возможны — зависит от контекста.</p>", title:'Лексика 30–36', tag:'задания 30–36', img:null,
   cards:LEX.flatMap(g=>g.w.map(e=>({f:e[0],b:e[1],ex:e[2]+(e[3]?'<br><i>'+esc(e[3])+'</i>':''),raw:true,group:g.g}))), groups:LEX.map(g=>g.g),
   acts:[
    {n:'Сочетания в предложениях', type:'choice', items:LEX_SENT, groups:LEXG, all:true},
@@ -2177,7 +2197,7 @@ const SECTIONS=[
    {n:'О чём вопрос?', type:'match', pairs:EMAIL.flatMap(e=>e.q.filter(q=>q!=='Is it big?').map(q=>[q,e.topic]))},
    {n:'Speed Game', type:'bomb', items:EMAIL.flatMap(e=>e.q.filter(q=>q!=='Is it big?').map(q=>({q, opts:shuffle([e.topic,...shuffle(EMAIL.filter(x=>x!==e).map(x=>x.topic)).slice(0,3)]), a:e.topic})))},
   ]},
- {id:'confusing', title:'Confusing words', tag:'задания 30–36', thumb:'accident / incident<br>rise / raise',
+ {id:'confusing', memoHtml:"<h3>Как различать похожие слова</h3><p>В заданиях 30–36 проверяются значения, грамматическая форма и устойчивые сочетания. Вначале прочитай пары в карточках Quizlet, затем выполняй задания.</p><div class=\"tw\"><table class=\"tbl\"><tr><th>Пара</th><th>Как различать</th></tr><tr><td>affect / effect</td><td>affect: влиять на что-то; effect: эффект, результат (сущ.); infect: заражать; afflict: поражать, причинять страдание</td></tr><tr><td>adopt / adapt</td><td>adopt: принять (правила, подход); усыновить; adapt: адаптировать(ся); adept: умелый, искусный; adjust: подкорректировать, приспособить</td></tr><tr><td>principle / principal</td><td>principle: принцип; principal: главный; директор; principally: главным образом; prince: принц</td></tr><tr><td>sensible / sensitive</td><td>sensible: разумный, практичный; sensitive: чувствительный, восприимчивый; sensual: чувственный; sensational: сенсационный</td></tr><tr><td>advice / advise</td><td>advice: совет, рекомендации (неисчисл.); advise: советовать; devise: разработать, придумать план; revise: пересмотреть; повторять к экзамену</td></tr><tr><td>ensure / insure / assure</td><td>ensure: обеспечить; проследить, чтобы; insure: застраховать; assure: заверить кого-то; reassure: успокоить, уверить повторно</td></tr><tr><td>considerate / considerable</td><td>considerate: внимательный, тактичный; considerable: значительный; considered: обдуманный; consideration: рассмотрение; забота</td></tr><tr><td>historic / historical</td><td>historic: знаменательный, исторически важный; historical: относящийся к истории; historian: историк; history: история</td></tr><tr><td>council / counsel</td><td>council: совет, коллегиальный орган; counsel: совет; консультировать; consul: консул; cancel: отменять</td></tr><tr><td>economical / economic</td><td>economical: экономичный, бережливый; economic: экономический; economics: экономика (наука); economist: экономист</td></tr><tr><td>rise / raise</td><td>rise — rose — risen: подниматься, расти (без объекта); raise — raised — raised: поднимать что-то (с объектом); arise — arose — arisen: возникать; arouse — aroused — aroused: вызывать чувство, интерес</td></tr><tr><td>except / accept / expect</td><td>except: кроме, за исключением; accept: принимать; expect: ожидать; excerpt: выдержка, отрывок</td></tr><tr><td>continuous / continual</td><td>continuous: непрерывный; continual: постоянно повторяющийся (возможны паузы); contagious: заразный; contiguous: соприкасающийся, смежный</td></tr><tr><td>compliment / complement</td><td>compliment: комплимент; complement: дополнять; дополнение; complaint: жалоба; implement: осуществить, внедрить</td></tr><tr><td>realise / release</td><td>realise: осознавать, понимать; release: выпустить, освободить; relieve: облегчить, избавить от боли; receive: получить</td></tr></table></div>", title:'Confusing words', tag:'задания 30–36', thumb:'accident / incident<br>rise / raise',
   cards:CONFUSING.flatMap(g=>g.w.map(([w,e])=>({f:w,b:e,ex:cwExample(g,w)||'',group:g.g}))), groups:CONFUSING.map(g=>g.g),
   acts:[
    {n:'Выбери слово', type:'choice', items:CW_Q},
@@ -2196,7 +2216,7 @@ const SECTIONS=[
    {n:'Доктор Грамматика', type:'doctor', items:PH_Q, hints:true},
    {n:'Speed Game', type:'bomb', items:PH_Q.concat(PH_TR)},
   ]},
- {id:'colloc', title:'Устойчивые выражения', tag:'задания 30–36', thumb:'make a decision<br>keep a secret', imgs:['pamyatki-img/colloc1.jpg'],
+ {id:'colloc', memoHtml:"<h3>Get · gain · obtain · attain · achieve · receive · perceive</h3><p>Перевод не всегда помогает: решающую роль играет <b>collocation</b> (сочетаемость). Сначала изучи карточки с примерами, затем переходи к практике.</p><div class=\"tw\"><table class=\"tbl\"><tr><th>Глагол</th><th>Значение</th><th>Типичные сочетания</th><th>Особенность</th></tr><tr><td>get</td><td>получить, стать, добраться (разговорное)</td><td>get a letter; get a job; get better; get home; get ready; get rid of</td><td>get используется широко в повседневной речи.</td></tr><tr><td>gain</td><td>приобрести постепенно, накопить</td><td>gain experience; gain knowledge; gain weight; gain popularity; gain confidence; gain access to</td><td>gain experience, а не obtain experience в обычном контексте.</td></tr><tr><td>obtain</td><td>официально получить (формальное)</td><td>obtain a visa; obtain a permit; obtain information; obtain permission; obtain a degree</td><td>Для разрешений, документов, официальных сведений.</td></tr><tr><td>attain</td><td>достичь высокого уровня, положения (формальное)</td><td>attain a level; attain independence; attain a goal</td><td>Обычно акцент на уровне, статусе, состоянии.</td></tr><tr><td>achieve</td><td>добиться результата усилиями</td><td>achieve a goal; achieve success; achieve results; achieve an ambition; achieve high grades</td><td>achieve success; но receive / win a prize.</td></tr><tr><td>receive</td><td>получить то, что дали, прислали</td><td>receive a letter; receive a gift; receive an award; receive treatment; receive a warm welcome</td><td>Подарок, награду и письмо можно receive.</td></tr><tr><td>perceive</td><td>воспринимать, замечать, считать</td><td>perceive a difference; perceive something as a threat; how people perceive you</td><td>Не значит «получать». Управление: perceive X as Y.</td></tr></table></div><p><b>Типичные ошибки:</b> gain experience (обычнее, чем obtain experience); achieve success; receive / win a prize; perceive somebody as + adjective / noun. Achieve и attain иногда оба возможны — зависит от контекста.</p>", title:'Устойчивые выражения', tag:'задания 30–36', thumb:'make a decision<br>keep a secret', imgs:['pamyatki-img/colloc1.jpg'],
   cards:COLLOC.map(c=>({f:c[1],b:c[2],group:c[0]})), groups:[...new Set(COLLOC.map(c=>c[0]))],
   acts:[
    {n:'Какой глагол?', type:'choice', items:CO_Q},
