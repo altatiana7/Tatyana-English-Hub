@@ -223,6 +223,42 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
   .items{gap:7px}.mb{min-height:38px;padding:6px 9px;font-size:17px}.match{gap:8px}.mcol{gap:6px}
   .qz-card{min-height:150px}
 }
+
+/* Категории готовых комплектов: крупные стикеры вместо 7 узких колонок */
+.hub{gap:10px;padding-block:10px 12px;overflow:hidden}
+.hub-head{gap:10px}
+.hub .title-card{padding:8px 16px 7px;transform:rotate(-.5deg)}
+.hub .title-card h1{font-size:clamp(21px,2.1vw,27px)}
+.hub .title-card p{font-size:13px}
+.hub .legend{gap:6px;align-items:center}
+.hub-filter{border:1px solid rgba(80,50,15,.25);background:var(--c);color:var(--ink);padding:8px 12px;box-shadow:var(--shadow);border-radius:3px;font-size:15px;font-weight:700;white-space:nowrap}
+.hub-filter.active{outline:3px solid #6c4326;outline-offset:0;filter:saturate(1.08)}
+.hub-filter:hover{filter:brightness(1.04)}
+.hub-caption{padding:2px 4px;font-size:15px;font-weight:700;color:#36291a}
+.hub .tiles{grid-template-columns:repeat(var(--tilecols,4),minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:14px;overflow:hidden;padding:6px 3px 10px}
+.hub .tile{min-height:0;padding:18px 17px 12px;border-radius:1px;transform:rotate(var(--r,0deg));gap:7px}
+.hub .tile h2{font-size:clamp(18px,1.55vw,23px);line-height:1.12;overflow-wrap:normal;hyphens:auto}
+.hub .tile .tag{font-size:14px;line-height:1.25}
+.hub .tile .meta{font-size:13px;line-height:1.3}
+.hub .tile .pin{top:4px}
+@media (max-width:1050px){
+ .hub{overflow:visible}
+ .hub .tiles{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(135px,auto);overflow:visible}
+ .hub .tile{min-height:135px}
+}
+@media (max-width:620px){
+ .hub .tiles{grid-template-columns:1fr}
+ .hub .tile{min-height:120px}
+ .hub-filter{font-size:13px;padding:7px 9px}
+}
+@media (max-height:600px) and (min-width:1051px){
+ .hub .tiles{gap:10px}
+ .hub .tile{padding:13px 12px 8px;gap:4px}
+ .hub .tile h2{font-size:18px}
+ .hub .tile .tag{font-size:12px}
+ .hub .tile .meta{font-size:12px}
+}
+
 @media (prefers-reduced-motion:reduce){.qz-in{transition:none}.boom,.shake{animation:none}.tile{transition:none}}
 </style>
 
@@ -2346,22 +2382,47 @@ const ONLY=((location.search.match(/[?&]only=([^&]+)/)||[])[1]||'').split(',').f
 const app=$('#app');
 let cleanups=[];
 function clean(){cleanups.forEach(f=>f());cleanups=[]}
+
+const HUB_CATEGORIES=[
+ ['lex','30–36','var(--n-yellow)'],
+ ['grammar','19–29','var(--n-lilac)'],
+ ['writing','Письмо 37–38','var(--n-pink)'],
+ ['oral','Устная часть','var(--n-mint)'],
+ ['extra','Числа','var(--n-peach)']
+];
+let hubFilter=ONLY.length?'all':'lex';
+function hubCategory(s) {
+ const tag=s.tag||'';
+ if(/30–36/.test(tag))return 'lex';
+ if(/19–24|25–29/.test(tag))return 'grammar';
+ if(/письмо|задани[ея] 37|задани[ея] 38/.test(tag))return 'writing';
+ if(/устная|устной/.test(tag))return 'oral';
+ return 'extra';
+}
 function hub(){
   clean();
-  const col=t=>/30–36/.test(t)?'var(--n-yellow)':/19–24|25–29/.test(t)?'var(--n-lilac)':/37|38|письмо/.test(t)&&!/устная/.test(t)?'var(--n-pink)':/устная/.test(t)?'var(--n-mint)':'var(--n-peach)';
-  const rot=i=>[-2.2,1.4,-0.8,2,-1.5,0.9,-2.6,1.8,-0.5,2.4,-1.2,0.6,-1.9,1.1][i%14];
+  const visible=SECTIONS.filter(s=>!ONLY.length||ONLY.includes(s.id));
+  const list=ONLY.length?visible:visible.filter(s=>hubCategory(s)===hubFilter);
+  const color=cat=>(HUB_CATEGORIES.find(x=>x[0]===cat)||HUB_CATEGORIES[4])[2];
+  const rot=i=>[-1.2,.8,-.6,1.1,-.8,.6,-1.1,.8][i%8];
   const pins=['#d2453c','#2f6fd1','#2f9a63','#e0a12b','#8a4fd1'];
+  const cols=list.length>12?5:list.length>4?4:Math.min(4,Math.max(1,list.length));
+  const filterNav=ONLY.length
+    ?'<div class="legend"><span style="--c:var(--n-yellow)">Готовые комплекты · 30–36</span></div>'
+    :'<div class="legend" role="group" aria-label="Разделы памяток">'+HUB_CATEGORIES.map(([id,label,c])=>
+       '<button class="hub-filter '+(hubFilter===id?'active':'')+'" type="button" data-filter="'+id+'" aria-pressed="'+(hubFilter===id?'true':'false')+'" style="--c:'+c+'">'+label+'</button>').join('')+'</div>';
   app.innerHTML=`<div class="hub">
-   <div class="hub-head"><div class="title-card"><span class="tape"></span><h1>Памятки ЕГЭ</h1><p>Английский язык · карточки, игры, проверка</p></div>
-   <div class="legend"><span style="--c:var(--n-yellow)">30–36</span><span style="--c:var(--n-lilac)">19–29</span><span style="--c:var(--n-pink)">письмо 37–38</span><span style="--c:var(--n-mint)">устная часть</span></div>
+   <div class="hub-head"><div class="title-card"><span class="tape"></span><h1>Памятки ЕГЭ</h1><p>Карточки Quizlet · правила · интерактивная практика</p></div>
+   ${filterNav}
    <button class="btn" id="teach">Для учителя</button></div>
-   <div class="tiles">${SECTIONS.filter(s=>!ONLY.length||ONLY.includes(s.id)).map((s,i)=>`<button class="tile" data-id="${s.id}" style="--c:${col(s.tag)};--r:${rot(i)}deg"><span class="pin" style="--pc:${pins[i%5]}"></span>
-     <h2>${esc(s.title)}</h2><div><div class="tag">${esc(s.tag)}</div><div class="meta">${s.cards.length} карточек · ${s.acts.length} игр</div></div></button>`).join('')}
-     <button class="tile" id="teach2" style="--c:var(--kraft);--r:1.6deg"><span class="pin" style="--pc:#2f6fd1"></span><h2>Маршрутная карта</h2><div><div class="tag">для учителя</div><div class="meta">план по месяцам</div></div></button>
+   <div class="hub-caption">Готовые комплекты · ${list.length} ${list.length===1?'тема':list.length>=2&&list.length<=4?'темы':'тем'}</div>
+   <div class="tiles" style="--tilecols:${cols}">${list.map((s,i)=>`<button class="tile" data-id="${s.id}" style="--c:${color(hubCategory(s))};--r:${rot(i)}deg"><span class="pin" style="--pc:${pins[i%5]}"></span>
+    <h2>${esc(s.title)}</h2><div><div class="tag">${esc(s.tag)}</div><div class="meta">${s.cards.length} карточек · ${s.acts.length} игр</div></div></button>`).join('')}
    </div></div>`;
   app.querySelectorAll('.tile[data-id]').forEach(b=>b.onclick=()=>openSec(b.dataset.id));
-  if(/[?&]student=1/.test(location.search)){$('#teach').remove();$('#teach2').remove();const th=$('#tohub');if(th)th.remove()}
-  else $('#teach').onclick=$('#teach2').onclick=teacher;
+  app.querySelectorAll('.hub-filter').forEach(b=>b.onclick=()=>{hubFilter=b.dataset.filter;hub()});
+  if(/[?&]student=1/.test(location.search)){$('#teach').remove();const th=$('#tohub');if(th)th.remove()}
+  else $('#teach').onclick=teacher;
 }
 
 /* ====== раздел ====== */
