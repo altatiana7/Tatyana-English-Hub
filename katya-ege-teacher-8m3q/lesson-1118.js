@@ -1,4 +1,4 @@
-/* Урок 18 ноября · Катя ЕГЭ: тест по «Семье» → блок Education (урок 1). Каркас – как в family-lesson.js. Ничего не сохраняется: страница каждый раз открывается с начала. */
+/* Урок 18 ноября · Катя ЕГЭ: тест по «Семье» → блок Education, Lesson 1 Крыловой (задания ФИПИ). Каркас – как в family-lesson.js. Ничего не сохраняется: страница каждый раз открывается с начала. */
 const main=$('#main');
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 
@@ -45,158 +45,253 @@ function speak(box){const st=S.sp,set=SETS[st.set];let left=40,t=null;
 
 function seg(items,cur,onPick){const s=el('div','seg');items.forEach(([v,l])=>{const b=el('button','segb'+(v===cur?' on':''),l);b.type='button';b.onclick=()=>onPick(v);s.append(b);});return s;}
 let cleanR=null;const drawLeft=()=>H.render(),drawRight=()=>H.render();
-const S={sp:{set:0,q:0,flip:false},c:{i:0,order:null,shuf:false,flip:false},ft:{i:0,picks:{},done:false},ch:{i:0,picks:{},done:false},g30:{ans:{},open:null},wf:{t:0,open:{}}};
+const S={sp:{set:0,q:0,flip:false},c:{i:0,order:null,shuf:false,flip:false},ft:{i:0,picks:{},done:false},c1:{i:0,picks:{},done:false},c2:{i:0,picks:{},done:false},lk:{i:0,picks:{},done:false},ls:{i:0,picks:{},done:false},r11:{cur:'A',a:{},chk:false},r12:{i:0,picks:{},done:false},wf:{t:0,open:{}}};
 
 /* ---------- данные ---------- */
-const SETS=[
- {name:'Task 3 · Education and learning',q:['What school subjects do you find most useful for your future, and why?','How do you usually prepare for important exams?','Would you prefer to study at a university in your home town or in another city? Why?','What do you think about distance learning?','Do you think taking a gap year is a good idea for school leavers?']},
- {name:'Opinions · Education',q:['Should every student learn a foreign language at school? Why?','Is it better to learn things by heart or to understand how they work?','Should higher education be free for everyone?','What makes a really good teacher?','How do you think schools will change in the next twenty years?']}];
+/* Speaking: задание 3 ФИПИ со страницы тренажёров (ege-trainers/task3-interview-voice-1), озвучка – natural-voice.js */
+const SETS=[{"name": "Task 3 · Schools", "q": ["What do you think schools will look like in some twenty years?", "What kind of teachers will work at these schools?", "What subjects will be taught at these schools?", "How different will these schools be from today's school?", "Will it be boring or fun to study at the school of the future? Why?"]}, {"name": "Task 3 · Studying online", "q": ["Do you have any experience in studying online?", "What do you think are the main advantages of studying online?", "Do you see any disadvantages of online education?", "What subjects can be studied online with good results?", "Would you prefer to study at university online? Or do you think traditional offline education is still better? Why?"]}, {"name": "Task 3 · School subject", "q": ["What`s your favourite school subject? When did you get interested in it?", "Is your future profession connected with this subject? In what way?", "When did you start learning English? What tasks did you like doing at your English classes?", "Did you do anything outside English classes to master the language?", "In what way can your knowledge of English help you in the future?"]}, {"name": "Task 3 · Foreign languages", "q": ["Do you think it`s important to know foreign languages? Why yes or no?", "What foreign languages did you study at school? For how many years?", "Did you enjoy studying a foreign language at school? What was the most difficult aspect for you?", "What do you think is the best way to master a foreign language? How do you study English outside school?", "What foreign languages would you like to learn in the future?"]}];
 
-const FT=[
- ['Collocations','My parents are strict, but I know they ______ my best interests at heart.',['have','keep','take','hold'],'have'],
- ['Phrasal verbs','Sophie ______ her grandmother: she has the same sense of humour and the same stubbornness.',['takes after','looks after','looks like','takes up'],'takes after'],
- ['Collocations','After years of not ______ speaking terms, the brothers finally made up.',['being on','keeping in','staying at','having on'],'being on'],
- ['Prepositions','Teenagers often clash ______ their parents over curfews and pocket money.',['with','against','to','at'],'with'],
- ['Idioms','The twins are so alike: Mia is the spitting ______ of her sister.',['image','picture','copy','mirror'],'image'],
- ['Collocations','Living with three generations under one roof can put a ______ on relationships.',['strain','pressure','weight','load'],'strain'],
- ['Phrasal verbs','It was a risky decision, but his family ______ him all the way.',['stood by','stood for','stood out','stood up'],'stood by'],
- ['Word formation','Their ______ has always been based on mutual trust. (RELATE)',['relationship','relation','relative','relativity'],'relationship'],
- ['Word formation','Despite their differences, the siblings remain very ______ of each other. (SUPPORT)',['supportive','supported','supporting','supportable'],'supportive'],
- ['Word formation','Many young adults want to be financially ______ of their parents. (DEPEND)',['independent','dependent','independence','undependable'],'independent'],
- ['Word formation','She felt completely ______ for all the housework she did. (APPRECIATE)',['unappreciated','inappreciated','disappreciated','misappreciated'],'unappreciated'],
- ['Phrasal verbs','After a heated argument, the sisters soon ______ things up.',['patched','fixed','mended','repaired'],'patched'],
- ['Collocations','The generation ______ means that parents and teens often see things differently.',['gap','gulf','split','distance'],'gap'],
- ['Idioms','My uncle is the black ______ of the family: he never follows the rules.',['sheep','horse','cat','crow'],'sheep'],
- ['Confusables','She was ______ by her aunt after her parents moved abroad.',['raised','grown','risen','arisen'],'raised']];
+/* Family test: вопросы из урока Family на этом сайте (family-lesson.js) */
+const WHO=['a role model','feel down','spouses','grow up','the breadwinner','take after','an only child','close resemblance','the spitting image'];
+const CH=[
+ ['Phrasal verbs','My cousin and I used to be close, but after moving away we slowly ______.',['drifted apart','broke up','took after','grew up'],'drifted apart'],
+ ['Phrasal verbs','Mia and I ______ immediately; we talked for hours at our first meeting.',['fell out','hit it off','let down','brought up'],'hit it off'],
+ ['Phrasal verbs','You look so much like your grandfather. You really ______ him.',['make up with','take after','fit in','go out with'],'take after'],
+ ['Phrasal verbs','After the argument, they apologised and ______.',['grew up','made up','drifted apart','fell for'],'made up'],
+ ['In context','My older sister always ______ me when I need advice.',['supports','breaks up','falls out','lets down'],'supports'],
+ ['In context',"He felt isolated because he couldn't ______ with his new classmates.",['take after','fit in','make up','grow up'],'fit in'],
+ ['In context','Sophie was ______ by her grandparents in a small town.',['let down','brought up','fallen out','drifted apart'],'brought up'],
+ ['In context','I can always ______ my best friend when things go wrong.',['get over','rely on','go out','take after'],'rely on'],
+ ['Who am I? What is it?','This person earns money for the family.',WHO,'the breadwinner'],
+ ['Who am I? What is it?','To look exactly like someone else.',WHO,'the spitting image'],
+ ['Who am I? What is it?','A wife and a husband.',WHO,'spouses'],
+ ['Who am I? What is it?','A child with no brothers or sisters.',WHO,'an only child'],
+ ['Who am I? What is it?','To feel sad and depressed.',WHO,'feel down'],
+ ['Who am I? What is it?','A perfect example for others.',WHO,'a role model'],
+ ['Who am I? What is it?','To be very similar in appearance.',WHO,'close resemblance'],
+ ['Who am I? What is it?','To resemble an older family member.',WHO,'take after']];
 
+/* ЕГЭ 30–36: сплошной текст, [n] – пропуск */
+
+/* Education: Vocabulary Education and learning (курс Крыловой, папка 07) */
 const EDU=[
- ['to sit / take an exam','to do an exam (the process)','Thousands of students sit the EGE every June.'],
- ['to pass / fail an exam','to succeed / not succeed in an exam','She passed with flying colours.'],
- ['to resit an exam','to take an exam again after failing','If you fail, you can resit it in the autumn.'],
- ['to cram for an exam','to study very hard just before an exam','Cramming the night before rarely works.'],
- ['to fall behind with','to fail to keep up with work','He fell behind with his coursework after the illness.'],
- ['to catch up on / with','to do work you have missed','I need to catch up on the lectures I missed.'],
- ['to drop out of','to leave school or university before finishing','She dropped out of university to start a business.'],
- ['to enrol on a course','to officially join a course','I have enrolled on an online coding course.'],
- ['to apply for / to','to ask officially for a place (for a course / to a university)','He applied to three universities.'],
- ['to graduate from','to complete a university degree','My sister graduated from MSU last year.'],
- ['tuition fees','money paid for teaching','Tuition fees have risen sharply.'],
- ['a scholarship','money given to a student for good results','She won a full scholarship to Oxford.'],
- ['a gap year','a year off between school and university','Many school leavers take a gap year.'],
- ['higher education','education at university or college','Higher education should be accessible to all.'],
- ['distance learning','studying from home online','Distance learning suits self-disciplined students.'],
- ['a heavy workload','a large amount of work','The final year comes with a heavy workload.'],
- ['to meet a deadline','to finish work on time','I worked all weekend to meet the deadline.'],
- ['to do research','to study a subject in detail','Students are expected to do research on their own.'],
- ['rote learning','memorising without understanding','Rote learning is still common in some schools.'],
- ['a well-rounded education','an education that develops many abilities','Sport and art are part of a well-rounded education.'],
- ['compulsory / optional subjects','subjects you must / may choose to study','Maths is compulsory; drama is optional.'],
- ['to major in','to study as your main subject at university','She is majoring in economics.']];
+ ['think over','to consider something carefully before deciding'],
+ ['sail through','to pass an exam or test very easily'],
+ ['get on with','to continue doing something, especially work'],
+ ['drop out (of)','to leave school or a course before finishing it'],
+ ['deal with','to take action to solve a problem'],
+ ['cross out','to draw a line through a word or sentence'],
+ ['come round','to change your opinion and agree'],
+ ['set out','to explain ideas clearly; to start with a clear aim'],
+ ['keep up with','to stay at the same level or speed as others'],
+ ['give in','to stop resisting and accept defeat'],
+ ['get at','to mean or suggest something indirectly'],
+ ['dawn on','to become clear to somebody for the first time'],
+ ['catch on','to understand; to become popular'],
+ ['sit / take / do an exam','to be examined (the process)'],
+ ['pass / fail an exam','to succeed / not succeed in an exam'],
+ ['pay attention to','to watch, listen to or think about carefully'],
+ ['draw attention to','to make people notice something'],
+ ['make / accept a suggestion','to offer / agree to an idea'],
+ ['make up your mind','to decide'],
+ ['be in two minds about','to be unable to decide'],
+ ['cross your mind','to come into your thoughts'],
+ ['bear in mind','to remember a fact when deciding'],
+ ['see the point (of)','to understand the reason for something'],
+ ['make sense of','to understand something difficult'],
+ ['learn a lesson / teach sb a lesson','to understand a mistake / to punish so that sb learns']];
 
-const CHQ=[
- ['Phrasal verbs','Students who ______ behind with their studies often struggle in the final year.',['fall','drop','get','stay'],'fall'],
- ['Collocations','He failed the maths exam and has to ______ it in August.',['resit','replay','return','review'],'resit'],
- ['Collocations','Most of us were up all night ______ for the history test.',['cramming','stuffing','filling','packing'],'cramming'],
- ['Phrasal verbs','She ______ out of university after the first year to start a business.',['dropped','fell','left','gave'],'dropped'],
- ['Confusables','The university offers a full ______ to students with outstanding results.',['scholarship','salary','fee','wage'],'scholarship'],
- ['Collocations','Lecturers expect first-year students to ______ research independently.',['do','make','take','have'],'do'],
- ['Collocations',"I'm afraid I won't be able to ______ the deadline for the essay.",['meet','catch','keep','win'],'meet'],
- ['Prepositions','To be considered, you must apply ______ the course before 1 March.',['for','to','on','at'],'for'],
- ['Confusables','Only those who ______ the entrance exam will be admitted.',['pass','succeed','achieve','win'],'pass'],
- ['Confusables','Tuition ______ at British universities have risen sharply.',['fees','prices','payments','costs'],'fees'],
- ['Prepositions','My brother graduated ______ Moscow State University last year.',['from','at','in','of'],'from'],
- ['Collocations','Many teachers criticise ______ learning, where facts are memorised without understanding.',['rote','heart','head','mind'],'rote'],
- ['Collocations','She is taking a ______ year to travel before going to university.',['gap','free','break','spare'],'gap'],
- ['Confusables','Students can choose ______ subjects in addition to the core curriculum.',['optional','voluntary','free','chosen'],'optional']];
+/* Topic vocabulary in contrast (Lesson 1, Task 9) */
+const CF1=[
+ ['take · pass · study · teach · learn · read','Next term we will ______ plants and how they grow.',['study','learn','teach','read'],'study'],
+ ['take · pass · study · teach · learn · read','She ______ English to foreign students.',['teaches','learns','studies','passes'],'teaches'],
+ ['take · pass · study · teach · learn · read','They ______ Russian at school.',['learn','teach','pass','take'],'learn'],
+ ['take · pass · study · teach · learn · read','Bob has decided to ______ the geography exam.',['take','pass','study','learn'],'take'],
+ ['take · pass · study · teach · learn · read',"Your handwriting is so untidy I can't ______ it.",['read','learn','study','take'],'read'],
+ ['take · pass · study · teach · learn · read','The exam is so hard that only five percent of applicants ______.',['pass','take','learn','study'],'pass'],
+ ['boast · admire · fail · count · measure','"Will the table fit in here?" "I don\'t know – let\'s ______ it."',['measure','count','admire','fail'],'measure'],
+ ['boast · admire · fail · count · measure','We stood for a few moments, ______ the view.',['admiring','boasting','measuring','counting'],'admiring'],
+ ['boast · admire · fail · count · measure','He didn\'t talk about his exam results in case people thought he was ______.',['boasting','admiring','failing','counting'],'boasting'],
+ ['boast · admire · fail · count · measure','She moved to London in the hope of finding work as a model, but ______.',['failed','boasted','counted','measured'],'failed'],
+ ['boast · admire · fail · count · measure',"Let's ______ out loud from one to ten.",['count','measure','admire','boast'],'count'],
+ ['test · exam · assignment · subject · lesson · task · effort','I failed my physics ______, but I passed chemistry.',['exam','lesson','task','subject'],'exam'],
+ ['test · exam · assignment · subject · lesson · task · effort','How can we make science ______ more interesting?',['lessons','tasks','efforts','tests'],'lessons'],
+ ['test · exam · assignment · subject · lesson · task · effort','Making these pastries is no easy ______.',['task','effort','test','subject'],'task'],
+ ['test · exam · assignment · subject · lesson · task · effort','I have a lot of reading ______ to complete before the end of term.',['assignments','subjects','lessons','efforts'],'assignments'],
+ ['test · exam · assignment · subject · lesson · task · effort',"I've made an ______ to drink less tea and coffee.",['effort','task','assignment','exam'],'effort'],
+ ['test · exam · assignment · subject · lesson · task · effort','The class are having a spelling ______ today.',['test','lesson','subject','effort'],'test']];
+const CF2=[
+ ['test · exam · assignment · subject · lesson · task · effort','My favourite ______ at school were history and English.',['subjects','lessons','tasks','exams'],'subjects'],
+ ['colleague · classmate · student · pupil','She discovered that her male ______ were earning more than she was.',['colleagues','classmates','pupils','students'],'colleagues'],
+ ['colleague · classmate · student · pupil',"Students were given a list of all their ______' names and a list of descriptions of roles.",['classmates','colleagues','pupils','students'],'classmates'],
+ ['colleague · classmate · student · pupil','The painting is believed to be by a ______ of Titian.',['pupil','student','classmate','colleague'],'pupil'],
+ ['colleague · classmate · student · pupil','There are plenty of job opportunities for engineering ______.',['students','pupils','classmates','colleagues'],'students'],
+ ['qualifications · qualities · skills · degree · certificate · results','We\'re looking for someone who loves children and has the ______ of a good teacher.',['qualities','qualifications','skills','results'],'qualities'],
+ ['qualifications · qualities · skills · degree · certificate · results',"He has a master's ______ in history from Yale.",['degree','certificate','qualification','result'],'degree'],
+ ['qualifications · qualities · skills · degree · certificate · results','Ruth had great writing ______.',['skills','qualities','qualifications','results'],'skills'],
+ ['qualifications · qualities · skills · degree · certificate · results','Do you have any academic ______?',['qualifications','qualities','skills','certificates'],'qualifications'],
+ ['qualifications · qualities · skills · degree · certificate · results','British Airways has announced disappointing ______ for the first half of the year.',['results','qualities','skills','degrees'],'results'],
+ ['qualifications · qualities · skills · degree · certificate · results',"You can get a medical ______ that shows which vaccinations you've had.",['certificate','degree','qualification','result'],'certificate'],
+ ['speak · talk · know · recognise · tell · say','Would you mind ______ more slowly, please?',['speaking','talking','saying','telling'],'speaking'],
+ ['speak · talk · know · recognise · tell · say','She ______ to her mother on the phone every week.',['talks','says','tells','speaks'],'talks'],
+ ['speak · talk · know · recognise · tell · say',"I hadn't seen her for 20 years, but I ______ her immediately.",['recognised','knew','told','said'],'recognised'],
+ ['speak · talk · know · recognise · tell · say','Can your child ______ the time yet?',['tell','say','speak','know'],'tell'],
+ ['speak · talk · know · recognise · tell · say','Small children find it difficult to ______ long words.',['say','tell','talk','speak'],'say'],
+ ['achieve · reach · get · arrive',"I've been working all day, but I feel as if I've ______ nothing.",['achieved','reached','got','arrived'],'achieved'],
+ ['achieve · reach · get · arrive','If you ______ to the restaurant before us, just wait at the bar.',['get','reach','arrive','achieve'],'get'],
+ ['achieve · reach · get · arrive','She ______ the conclusion that there was no more she could do.',['reached','achieved','arrived','got'],'reached'],
+ ['achieve · reach · get · arrive','We ______ in Prague later that day.',['arrived','reached','got','achieved'],'arrived']];
 
-const T30="For many school leavers in the UK, a gap year has become a popular way to [30] a break between school and university. Some students use it to [31] money for their tuition fees, while others travel or volunteer abroad. Critics argue that a year away from studying makes it harder to [32] back into the academic routine. However, research suggests that students who take a gap year are less likely to [33] out of university later. Admissions officers also say that such applicants often show greater maturity and a clearer sense of [34]. Of course, a gap year does not [35] success: it all depends on how the time is spent. Students who simply stay at home are unlikely to gain much, so careful planning is [36] to making the year worthwhile.";
-const K30={30:[['take','make','do','get'],'take'],31:[['earn','win','gain','profit'],'earn'],32:[['get','turn','put','set'],'get'],33:[['drop','fall','leave','give'],'drop'],34:[['direction','way','route','course'],'direction'],35:[['guarantee','warrant','assure','insure'],'guarantee'],36:[['key','main','chief','major'],'key']};
-Object.keys(K30).forEach(n=>{K30[n][0]=shuffle(K30[n][0]);});
-const WHY30={30:'take a break – a fixed collocation',31:'earn money; gain experience / weight',32:'get back into a routine',33:'drop out of school or university',34:'a sense of direction – knowing where you are going',35:'guarantee success; assure somebody',36:'be key to doing something'};
+/* Linking words (Lesson 1, Task 8) */
+const LW=['otherwise','nonetheless','furthermore','generally','besides','whereas','therefore'];
+const LK=[["I'd better write it down, ______ I'll forget it.",'otherwise'],
+ ['There are serious problems in our country. ______, we feel this is a good time to return.','nonetheless'],
+ ["The house is beautiful. ______, it's in a great location.",'furthermore'],
+ ['______, they don’t have a bad life and they have no desire to change it for anything more adventurous.','generally'],
+ ['Do you play any other sports ______ basketball?','besides'],
+ ['He must be about 60, ______ his wife looks about 30.','whereas'],
+ ['Doctors are short of time to listen and ______ tend to prescribe drugs whenever they can.','therefore']]
+ .map(([q,a])=>['Linking words',q,[a,...shuffle(LW.filter(x=>x!==a)).slice(0,3)],a]);
 
+/* Listening 3–9 (Lesson 1, Task 4): First weeks at university */
+const LS=[
+ ['Question 1','What advice does Leanne give about getting to know people in the first weeks at university?',['A) Join lots of different sports clubs.','B) Avoid judging people on first impressions.','C) Make friends with people studying the same subject as you.'],'B) Avoid judging people on first impressions.'],
+ ['Question 2','What does she regret about her first week at university?',['A) not having more fun','B) not doing more work','C) not saving her money'],'A) not having more fun'],
+ ['Question 3','Leanne chose not to live at home because',['A) her parents discouraged her.','B) it was too far to travel every day.','C) she wanted to be independent.'],'C) she wanted to be independent.'],
+ ['Question 4','Leanne was able to manage financially at university by',['A) cutting down on her social life.','B) getting an evening job.','C) finding ways of economizing.'],'C) finding ways of economizing.'],
+ ['Question 5','What is Leanne’s opinion on attending lectures?',['A) It’s not worth going.','B) They are useful as an introduction to the subject.','C) You should make detailed notes.'],'B) They are useful as an introduction to the subject.'],
+ ['Question 6','What did Leanne find difficult about working without supervision?',['A) managing her time','B) motivating herself','C) understanding the task'],'A) managing her time'],
+ ['Question 7','What did she find difficult about university life?',['A) being away from her family','B) having to cook for herself','C) getting stressed by work'],'C) getting stressed by work']];
+const LS_WHY=['Try to be open-minded: people who don’t speak to you may just be shy. A – not only sports clubs. C – a fact, not a tip.',
+ '“I wish I’d taken more advantage of social life in that first week.” B – work shouldn’t be a priority at first. C – spending more is OK.',
+ '“It was important to stand on my own two feet” = be independent. B – it wasn’t far. A – the family is close.',
+ 'Sharing books, charity shops, eating cheaply = economizing. B – an evening job would mean cutting down on social life (A).',
+ 'A lecture gives a basic overview and shows what to read around, so it’s worth going. C – notes are on the internet.',
+ 'It’s easy to waste time unless you’re disciplined = managing time. B / C – she is interested in the subject.',
+ 'She gets totally stressed at exam times. B – cooking wasn’t too bad. A – she appreciated her mum in the holidays.'];
+
+/* Reading 11 (Lesson 1, Task 2, Открытый банк ФИПИ) */
+const R11_TXT='It is a source of national embarrassment – despite hours of lessons and listening to foreign language tapes, most of us [A]. However, a new study suggests there may be hope for those who have difficulty with a foreign language – they should try singing it instead.\nResearch found that adults who sang words or short phrases from a foreign language while learning were twice as good at speaking it later. It is thought that by listening to words that are sung, and by singing them back, the technique takes advantage of the strong links between music and memory.\nAlthough not clearly understood, music is known to help students [B] recall.\nDr Overy said singing could lead to new approaches to learning a foreign language. She said: “Most people [C] from songs they have heard and songs are sometimes used by language teachers with young children.”\nDr Overy and her colleagues used recordings of Hungarian words to teach 60 adults. They chose Hungarian as the participants [D] language.\nThe participants either listened to words that were spoken and then had to repeat them back, much like a standard teach-yourself tape, or the words were said rhythmically or sung.\nAfter a 15-minute learning period, they were then given several tests to see how well they had learned the words. Those [E] scored highest. They were also better at recalling the words correctly in tests of long term memory. Interestingly, they did not sing the words when they recalled them.\nDr Ludke said the findings could help those [F].';
+const R11_OPT=['when studying and can help to start memory','who struggle to learn foreign languages','had no experience of learning this','have experience of remembering words','who had used the “listen and sing” approach','can barely order a simple drink while abroad','facilitate verbatim memory for foreign languages'];
+const R11_KEY={A:6,B:1,C:4,D:3,E:5,F:2};
+
+/* Reading 12–18 training (Lesson 1, Task 7, Открытый банк ФИПИ) */
+const R12_TXT=`For any student, moving away from home can be a bit scary. But I did not expect student life in Scotland to be all that different from my home of the Netherlands. After all, we get the same news and TV shows online. Many students find the northwest climate can affect them a lot. You may find the grayness and dampness, especially during the winter months, difficult to get used to. However, when I moved from Amsterdam to study at the University of Stirling, I began to realise that a few minor issues were catching me off balance. I was suffering a minor cultural shock.
+In my first year, I quickly found out my English was not as good as I had assumed. Most of my roommates were born and raised in Scotland, and I constantly found myself having to ask people to repeat themselves. Their Scottish accents did not help and I was mispronouncing names and places all the time. I also got confused about minor cultural things. Much to my flatmates’ amusement, it took me two Christmases to figure out that mince pies are not actually filled with minced beef.
+The linguistic barrier meant that public transport was tricky at first. I found the lack of information about bus prices and how and where to get tickets really surprising. It turned a simple 15-minute journey into a daunting task.
+Then I had to adjust to a new social life. I was surprised by the campus culture in the UK – in the Netherlands, most universities don’t have one main campus where you can attend university, as well as live and exercise all in the same place. But here, you never have to leave campus if you don’t want to. I had to adapt to everyone being so close to each other all the time.
+Parties are different here too. In the Netherlands, the less effort you put into getting ready, the better. I’d normally slip on my trusty Converse shoes, along with some clothes I could get away with wearing to class tomorrow, and wear minimal make-up. But, in my experience, partying is more formal in the UK. Your make-up needs to be flawless and your hair needs to be immaculate. You’ll preferably be wearing a dress and heels, too. I was constantly having to borrow clothes off my friends just to fit in. Parties finish early and everyone just wanders off, whereas in my country that would be the time I’d leave the house.
+But it is not all early closing times and strange pastries. Social behaviours may also confuse, surprise or offend you. For example, you may find people appear cold, distant or always in a hurry. Cultures are built on deeply-embedded sets of values, norms, assumptions and beliefs. It can be surprising and sometimes distressing to find that people do not share some of your most deeply held ideas, as most of us take our core values and beliefs for granted and assume they are universally held.
+However, I have found lots of pleasant surprises in the UK too – and so have many other international students I know. My friend Agnes was taken aback by how sociable people are. She says she was shocked when complete strangers started talking to her at the bus stop. I, personally, was surprised by how smartly male students in Stirling dress compared to my home country.
+Culture shock can knock your confidence in the beginning. But you are not alone in taking time to adapt, and soon you start to come to grips with all experiences. Studies suggest that taking a gap year or studying abroad can positively influence your brain to make you more outgoing and open to new ideas. Looking back, most of the ones I experienced made good stories to tell my friends.`;
+const R12=[
+ ['Question 1','When she moved to Scotland, the student was mostly confused by …',['1) small unexpected things.','2) television shows.','3) the weather.','4) the local food.'],'1) small unexpected things.',['Correct: “minor issues were catching me off balance”.','Wrong information: “we get the same news and TV shows”.','Mentioned, but the question is different: true for many students, not for her.','Not stated.']],
+ ['Question 2','In paragraph 4 “Then I had to adjust to …” the author stresses that it was difficult for her to get used to …',['1) living in the same place all the time.','2) doing sports where she lived.','3) always being around the same people.','4) having few social activities.'],'3) always being around the same people.',['Mentioned, but the question is about social life.','Not stated: it was all on the same campus, not where she lived.','Correct: “I had to adapt to everyone being so close to each other all the time.”','Not stated: the number of activities is not mentioned.']],
+ ['Question 3','According to the author, parties she got used to in the Netherlands …',['1) made her feel uncomfortable.','2) required greater expenses.','3) started and finished earlier.','4) allowed for casual clothing.'],'4) allowed for casual clothing.',['Not stated about parties in general.','Wrong: she wore everyday clothes.','Wrong: parties in the Netherlands start when UK parties finish.','Correct: “the less effort you put into getting ready, the better”.']],
+ ['Question 4','Which of the following statements, according to the author, is TRUE about international students in Stirling?',['1) They don’t dress up as well as locals.','2) They may experience many positive cultural surprises.','3) They don’t talk to strangers.','4) Their eating habits are different.'],'2) They may experience many positive cultural surprises.',['Wrong: she compares male students to her home country, not to locals.','Correct: “I have found lots of pleasant surprises … and so have many other international students”.','Wrong: strangers talked to her friend, not the other way round.','Not stated.']]];
+
+/* Word formation 25–29: Remembering for exams (Lesson 1, Task 5) + Auckland University (ФИПИ, страница тренажёров) */
 const WF=[
- {name:'Online learning',rows:[
-  ['In recent years, online courses have become an [25] alternative to traditional classes.','ATTRACT','attractive'],
-  ['Many learners appreciate the [26] to study at their own pace.','FREE','freedom'],
-  ['However, some find it hard to stay motivated without the [27] of a teacher.','SUPERVISE','supervision'],
-  ['Experts warn that the lack of face-to-face contact can make students feel [28].','ISOLATE','isolated'],
-  ['Nevertheless, the number of people taking online degrees continues to grow [29].','STEADY','steadily']]},
- {name:'University life',rows:[
-  ['Moving away from home to study can be a truly [25] experience.','CHALLENGE','challenging'],
-  ['First-year students often struggle with their sudden [26].','INDEPENDENT','independence'],
-  ['Universities offer support to help them cope with stress and [27].','LONELY','loneliness'],
-  ['Those who fail to plan their time are at risk of becoming [28].','ORGANISE','disorganised'],
-  ['With the right attitude, most students adapt [29] to their new life.','SUCCESS','successfully']]}];
+ {name:'Remembering for exams',rows:[
+  ['It’s frustrating for everybody not to be able to remember things but having a bad memory can be a particular [1] for students at exam time.',['ADVANTAGE'],['disadvantage']],
+  ['Anyway, I did a search on the internet and found [2] ideas for improving your memory.',['COUNT'],['countless']],
+  ['One idea I thought particularly [3] was that we should try and use all our senses when given information to learn.',['VALUE'],['valuable']],
+  ['So, for example, instead of reading [4], we should record the material and then listen to it.',['SILENT'],['silently']],
+  ['Apparently, the [5] of speaking and listening helps reinforce the [6] text.',['COMBINE','WRITE'],['combination','written']],
+  ['Another theory, which some people might find [7], is that there is a greater [8] of our memorising something successfully if we do it when the house is [9] and, preferably, just before bedtime.',['LIKELY','POSSIBLE','PEACE'],['unlikely','possibility','peaceful']]]},
+ {name:'Auckland University',rows:[
+  ['The University of Auckland is New Zealand’s leading university. [25], it’s among the top 200 universities of the world.',['ACTUAL'],['actually']],
+  ['The University of Auckland has a strong focus on legal and [26] programmes welcoming students from all parts of the world.',['BUSY'],['business']],
+  ['The student [27] of the University of Auckland is 40,000, about 4,000 of whom have come to study from abroad.',['POPULATE'],['population']],
+  ['The University of Auckland also offers postgraduate studies, which will certainly broaden your academic and [28] horizons.',['EMPLOY'],['employment']],
+  ['It will be [29] for your CV with specialist skills and knowledge provided.',['VALUE'],['valuable']],
+  ['Whether you plan to join the next generation of leading [30] in New Zealand or in your native country, the University of Auckland will help you to make your mark on the world.',['LAW'],['lawyers']]]}];
 
 /* ---------- прогноз по фото ---------- */
 function predict(box){box.append(el('div','inst','<b>Look at the photos and predict.</b>'));
   const g=el('div','pic3');for(let i=1;i<=3;i++){const f=el('figure');const img=new Image();const ex=['jpg','png','webp'];let x=0;img.alt='Photo '+i;
     img.onerror=()=>{x++;if(x<ex.length)img.src='img/edu-'+i+'.'+ex[x];else img.replaceWith(el('div','ph','Photo '+i));};img.src='img/edu-'+i+'.'+ex[0];f.append(img);g.append(f);}
   box.append(g);
-  box.append(el('ol','pq','<li>Where are these people and what are they doing? They might be… / They must be…</li><li>How do you think each of them feels about studying?</li><li>Which of these ways of learning works best for you, and why?</li><li>What problems connected with education could come up in the exam (Task 3, 4, 37 or 38)?</li>'));}
+  box.append(el('ol','pq','<li>Where are these people and what are they doing? They might be… / They must be…</li><li>What could make things easy or hard to remember when you study?</li><li>What do you think will be the hardest thing about being a university student?</li>'));}
 
 /* ---------- выбор ответа: по одному вопросу, можно листать без ответа ---------- */
-function mcqFree(box,st,data){const n=data.length,wrap=el('div','chq');box.append(wrap);
+function mcqFree(box,st,data,o){o=o||{};const n=data.length,wrap=el('div','chq');box.append(wrap);
   const score=()=>data.filter((x,k)=>st.picks[k]===x[3]).length;
   if(st.done){const e=el('div','end');e.append(el('div','score',score()+' / '+n));
     const bad=data.map((x,k)=>k).filter(k=>st.picks[k]!==data[k][3]);
-    if(bad.length){e.append(el('div','tag','Check these'));const ul=el('ul','errs');bad.forEach(k=>ul.append(el('li',null,esc(data[k][1]).replace('______','<b>'+esc(data[k][3])+'</b>'))));e.append(ul);}
+    if(bad.length){const ul=el('ul','errs');bad.forEach(k=>ul.append(el('li',null,data[k][1].includes('______')?esc(data[k][1]).replace('______','<b>'+esc(data[k][3])+'</b>'):esc(data[k][1])+' <b>'+esc(data[k][3])+'</b>')));e.append(ul);}
     else e.append(el('div','fb','No mistakes.'));
     e.append(btn('Back to questions',()=>{st.done=false;st.i=0;H.render();},'main'));wrap.append(e);return;}
   const k=st.i,it=data[k],pick=st.picks[k];
-  if(!st.opts)st.opts={};if(!st.opts[k])st.opts[k]=shuffle(it[2]);
+  if(!st.opts)st.opts={};
+  if(!st.opts[k]){let op=it[2];if(op.length>4)op=[it[3],...shuffle(op.filter(x=>x!==it[3])).slice(0,3)];st.opts[k]=o.keep?op:shuffle(op);}
   const meta=el('div','meta'),bar=el('div','qzbar');bar.innerHTML='<i style="width:'+(Object.keys(st.picks).length/n*100)+'%"></i>';
   meta.append(el('span',null,(k+1)+' / '+n),bar,el('span',null,'Score '+score()));wrap.append(meta);
   const dots=el('div','qdots');data.forEach((x,j)=>{const d=el('button','qd'+(j===k?' on':'')+(st.picks[j]!==undefined?(st.picks[j]===x[3]?' ok':' no'):''),String(j+1));d.type='button';d.onclick=()=>{st.i=j;H.render();};dots.append(d);});wrap.append(dots);
-  wrap.append(el('div','tag',esc(it[0])),el('div','qtxt',esc(it[1])));
-  const og=el('div','opts');st.opts[k].forEach(o=>{const b=el('button',null,esc(o));b.type='button';b.disabled=pick!==undefined;
-    if(pick!==undefined){if(o===it[3])b.classList.add('ok');else if(o===pick)b.classList.add('no');}
-    b.onclick=()=>{st.picks[k]=o;H.render();};og.append(b);});wrap.append(og);
-  const fb=el('div','fb',pick===undefined?'':(pick===it[3]?'Correct.':'The answer is: <b>'+esc(it[3])+'</b>.'));
+  wrap.append(el('div','tag',esc(it[0])),el('div','qtxt'+(o.small?' sm':''),esc(it[1])));
+  const og=el('div','opts'+(o.one?' one':''));st.opts[k].forEach(x=>{const b=el('button',null,esc(x));b.type='button';b.disabled=pick!==undefined;
+    if(pick!==undefined){if(x===it[3])b.classList.add('ok');else if(x===pick)b.classList.add('no');}
+    b.onclick=()=>{st.picks[k]=x;H.render();};og.append(b);});wrap.append(og);
+  let f='';if(pick!==undefined){f=pick===it[3]?'Correct.':'The answer is: <b>'+esc(it[3])+'</b>.';if(o.why)f+=' <span class="why">'+esc(o.why[k])+'</span>';}
+  if(pick!==undefined&&it[4]){f='<ul class="whyo">'+it[2].map((x,j)=>'<li class="'+(x===it[3]?'okw':'')+'"><b>'+esc(x.split(')')[0])+')</b> '+esc(it[4][j])+'</li>').join('')+'</ul>';}
+  const fb=el('div','fb',f);
   const pv=btn('← Previous',()=>{st.i--;H.render();},'sm');pv.disabled=k===0;
   const nx=k===n-1?btn('See result',()=>{st.done=true;H.render();},'main sm'):btn('Next →',()=>{st.i++;H.render();},'main sm');
   const foot=el('div','foot');foot.append(fb,pv,nx);wrap.append(foot);}
 
-/* ---------- ЕГЭ 30–36: сплошной текст, пропуск открывается нажатием ---------- */
-function ege30(box){const st=S.g30;box.append(el('div','inst','<b>Gap year.</b> Read the text and choose the best option for each gap (30–36).'));
-  const w=el('div','egew');
-  T30.split(/\[(\d+)\]/).forEach((p,i)=>{if(i%2===0){w.append(document.createTextNode(p));return;}
-    const n=+p,ans=K30[n][1],cur=st.ans[n];
-    const g=el('span','gap'+(cur?(cur===ans?' ok':' no'):''),cur?esc(cur):String(n));
-    g.onclick=e=>{e.stopPropagation();st.open=st.open===n?null:n;H.render();};
-    if(st.open===n){const pop=el('div','gpop');K30[n][0].forEach((o,j)=>{const b=el('button',null,(j+1)+') '+esc(o));b.type='button';b.onclick=ev=>{ev.stopPropagation();st.ans[n]=o;st.open=null;H.render();};pop.append(b);});g.append(pop);}
-    w.append(g);});
-  box.append(w);
-  const ok=Object.keys(K30).filter(n=>st.ans[n]===K30[n][1]).length,all=Object.keys(st.ans).length===7;
-  const bar=el('div','fbar');bar.append(el('b',null,ok+' / 7'),btn('Show answers',()=>{Object.keys(K30).forEach(n=>st.ans[n]=K30[n][1]);st.open=null;H.render();},'sm'),btn('Reset',()=>{st.ans={};st.open=null;H.render();},'sm'));box.append(bar);
-  if(all){const ul=el('ul','whyl');Object.keys(K30).forEach(n=>ul.append(el('li',null,'<b>'+n+'</b> '+esc(WHY30[n]))));box.append(ul);}
-  const close=()=>{if(st.open!==null){st.open=null;H.render();}};document.addEventListener('click',close);cleanR=()=>document.removeEventListener('click',close);}
+/* ---------- аудирование 3–9: аудио + вопросы, текст записи не показывается ---------- */
+function listening(box){const a=el('audio');a.controls=true;a.preload='auto';a.src='audio/edu-first-weeks.mp3';a.className='aud';
+  box.append(el('div','inst','<b>First weeks at university.</b> You will hear a radio interview with a student called Leanne Wilson. Choose the correct option (A, B or C). You will hear the recording twice.'),a);
+  mcqFree(box,S.ls,LS,{keep:true,one:true,small:true,why:LS_WHY});
+  cleanR=()=>{try{a.pause();}catch(e){}};}
 
-/* ---------- ЕГЭ 25–29: как на сайте ФИПИ, слово справа, ответ по нажатию на пропуск ---------- */
+/* ---------- чтение 11: пропуски A–F, справа части предложений ---------- */
+function read11(box){const st=S.r11;box.append(el('div','inst','<b>Singing can help when learning a foreign language.</b> Fill in the gaps A–F with parts of sentences 1–7. There is one extra part.'));
+  const rd=el('div','rd11');box.append(rd);
+  const tx=el('div','rtext');
+  R11_TXT.split('\n').forEach(par=>{const p=el('p');par.split(/\[([A-F])\]/).forEach((x,i)=>{if(i%2===0){p.append(document.createTextNode(x));return;}
+    const cur=st.a[x];const g=el('span','gap'+(cur&&st.chk?(cur===R11_KEY[x]?' ok':' no'):'')+(st.cur===x?' cur':''),cur?x+' · '+cur:x);g.onclick=()=>{st.cur=x;H.render();};p.append(g);});tx.append(p);});
+  const op=el('div','r11o');op.append(el('div','tag','Gap '+st.cur));
+  R11_OPT.forEach((o,k)=>{const n=k+1,used=Object.entries(st.a).some(([g,v])=>v===n&&g!==st.cur);const b=el('button',(st.a[st.cur]===n?'on':'')+(used?' used':''),n+'. '+esc(o));b.type='button';
+    b.onclick=()=>{if(st.chk)return;st.a[st.cur]=n;const nx='ABCDEF'.split('').find(g=>!st.a[g]);if(nx)st.cur=nx;H.render();};op.append(b);});
+  rd.append(tx,op);
+  const ok=Object.keys(R11_KEY).filter(g=>st.a[g]===R11_KEY[g]).length;
+  const bar=el('div','fbar');bar.append(btn('Check',()=>{st.chk=true;H.render();},'main sm'),btn('Show answers',()=>{st.a={...R11_KEY};st.chk=true;H.render();},'sm'),btn('Reset',()=>{S.r11={cur:'A',a:{},chk:false};H.render();},'sm'),el('b',null,st.chk?ok+' / 6':''));box.append(bar);}
+
+/* ---------- чтение 12–18: текст слева, вопрос справа, разбор каждого варианта ---------- */
+function read12(box){box.append(el('div','inst','<b>The culture shock of being an international student.</b> Read the text and choose the correct option. Then check why the other options are wrong.'));
+  const rd=el('div','rd12');const tx=el('div','rtext r12t');R12_TXT.split('\n').forEach((p,i)=>tx.append(el('p',null,'<b class="pn">'+(i+1)+'</b> '+esc(p))));
+  const q=el('div');rd.append(tx,q);box.append(rd);mcqFree(q,S.r12,R12,{keep:true,one:true,small:true});}
+
+/* ---------- 25–29: как на сайте ФИПИ, слово справа, ответ по нажатию на пропуск ---------- */
 function wordForm(box){const st=S.wf,T=WF[st.t];
-  const top=el('div','fbar');top.append(seg(WF.map((x,k)=>[k,'Text '+(k+1)+' · '+x.name]),st.t,v=>{st.t=v;st.open={};H.render();}),
-    btn('Show all',()=>{T.rows.forEach((r,k)=>st.open[k]=true);H.render();},'sm'),btn('Hide',()=>{st.open={};H.render();},'sm'));box.append(top);
+  const top=el('div','fbar');top.append(seg(WF.map((x,k)=>[k,x.name]),st.t,v=>{st.t=v;st.open={};H.render();}),
+    btn('Show all',()=>{T.rows.forEach((r,k)=>r[2].forEach((a,j)=>st.open[k+'-'+j]=true));H.render();},'sm'),btn('Hide',()=>{st.open={};H.render();},'sm'));box.append(top);
   box.append(el('div','inst','Read the text. Form a word that fits each gap from the word in capitals.'));
-  const tb=el('table','wft');T.rows.forEach((r,k)=>{const tr=el('tr');const td=el('td');
+  const tb=el('table','wft');T.rows.forEach((r,k)=>{const tr=el('tr');const td=el('td');let j=0;
     r[0].split(/\[(\d+)\]/).forEach((p,i)=>{if(i%2===0){td.append(document.createTextNode(p));return;}
-      const g=el('span','gap wfg'+(st.open[k]?' ok':''),st.open[k]?esc(r[2]):p);g.onclick=()=>{st.open[k]=!st.open[k];H.render();};td.append(g);});
-    tr.append(el('td','wfn',String(25+k)),td,el('td','wfw',esc(r[1])));tb.append(tr);});
+      const id=k+'-'+(j++),ans=r[2][j-1];const g=el('span','gap wfg'+(st.open[id]?' ok':''),st.open[id]?esc(ans):p);g.onclick=()=>{st.open[id]=!st.open[id];H.render();};td.append(g);});
+    tr.append(td,el('td','wfw',r[1].map(esc).join('<br>')));tb.append(tr);});
   box.append(tb);}
 
-const H=Hub({title:'18 November · Family → Education',sub:'Тест по теме «Семья» и первый урок блока Education.',
+const H=Hub({title:'18 November · Family → Education',sub:'Тест по теме «Семья» и Lesson 1 блока Education.',
  clean:()=>{if(cleanR){cleanR();cleanR=null;}},
  groups:[
  {name:'Разминка',color:'#c8553d',items:[
   {id:'predict',t:'Predict',sub:'Фото: о чём тема?',run:predict},
-  {id:'speak',t:'Speaking',sub:'Task 3 · Education',run:speak}]},
+  {id:'speak',t:'Speaking',sub:'Task 3 · 4 интервью',run:speak}]},
  {name:'Family · тест',color:'#8f4d7c',items:[
-  {id:'ftest',t:'Family test',sub:'15 вопросов',run:b=>mcqFree(b,S.ft,FT)}]},
+  {id:'ftest',t:'Family test',sub:CH.length+' вопросов',run:b=>mcqFree(b,S.ft,CH)}]},
  {name:'Education · лексика',color:'#2c7f78',items:[
-  {id:'cards',t:'Cards',sub:EDU.length+' карточек',run:b=>cards(b,S.c,EDU,k=>k<10?'Verb phrase':'Collocation')},
-  {id:'choose',t:'Choose',sub:CHQ.length+' вопросов',run:b=>mcqFree(b,S.ch,CHQ)}]},
+  {id:'cards',t:'Cards',sub:EDU.length+' карточек',run:b=>cards(b,S.c,EDU,k=>k<13?'Phrasal verb':'Collocation')},
+  {id:'cf1',t:'Words in contrast 1',sub:CF1.length+' вопросов',run:b=>mcqFree(b,S.c1,CF1)},
+  {id:'cf2',t:'Words in contrast 2',sub:CF2.length+' вопросов',run:b=>mcqFree(b,S.c2,CF2)},
+  {id:'lk',t:'Linking words',sub:'30–36 · '+LK.length+' вопросов',run:b=>mcqFree(b,S.lk,LK)}]},
  {name:'Education · ЕГЭ',color:'#2855d9',items:[
-  {id:'e30',t:'30–36 · Gap year',sub:'7 пропусков',run:ege30},
-  {id:'wf',t:'25–29 · Word formation',sub:'2 текста по 5',run:wordForm}]},
+  {id:'ls',t:'Listening 3–9',sub:'First weeks at university',run:listening},
+  {id:'r11',t:'Reading 11',sub:'Singing can help',run:read11},
+  {id:'r12',t:'Reading 12–18',sub:'Culture shock',run:read12},
+  {id:'wf',t:'Word formation 25–29',sub:'2 текста',run:wordForm}]},
  {name:'Ещё к теме',color:'#4a4f8f',items:[
   {t:'Family · вариант ЕГЭ',sub:'Семья и друзья: 1–38',href:'family-variant.html?v=2'},
   {t:'Family · урок',sub:'Карточки и тексты',href:'family-lesson.html?v=4'}]}
