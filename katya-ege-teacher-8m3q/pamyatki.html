@@ -2080,6 +2080,90 @@ const TPL_PH_M=[
  ['A family that plays together','stays together.'],['Family gives us the roots','to stand tall and strong.'],
 ];
 const TPL_Q=parseS(TPL_S), TPL37_Q=parseS(TPL37_S), TPL38_Q=parseS(TPL38_S), TPL_PH_Q=parseS(TPL_PH_S);
+
+/* ====== Уступка: although / though / despite / however (объединено из тренажёра concession) ====== */
+const CONC_CARDS=[
+ ['Although + подлежащее и сказуемое','хотя… — после although идёт полное предложение','Although it was raining, we went for a walk. — Хотя шёл дождь, мы пошли на прогулку.','+ предложение'],
+ ['Though + подлежащее и сказуемое','хотя… — то же, что although, звучит разговорнее','Though she had no formal training, her portfolio was outstanding. — Хотя у неё не было специального образования, её портфолио было превосходным.','+ предложение'],
+ ['Even though + подлежащее и сказуемое','хотя даже… — усиленная уступка','Even though he had walked seventy miles, he didn\u2019t complain once. — Хотя он прошёл семьдесят миль, он ни разу не пожаловался.','+ предложение'],
+ ['Despite + существительное / -ing','несмотря на… — никогда despite OF','Despite the rain, we went for a walk. — Несмотря на дождь, мы пошли на прогулку.','+ существительное / -ing'],
+ ['In spite of + существительное / -ing','несмотря на… — то же значение, три слова и of','In spite of being tired, she continued working. — Несмотря на усталость, она продолжала работать.','+ существительное / -ing'],
+ ['Despite / In spite of the fact that + предложение','способ поставить целое предложение после despite','Despite the fact that it was an old car, it was extremely reliable. — Несмотря на то что машина была старой, она была очень надёжной.','+ существительное / -ing'],
+ ['However, \u2026','однако… — начинает НОВОЕ предложение, после него запятая','The hotel had great reviews. However, our room was not clean. — У отеля были прекрасные отзывы. Однако наш номер был грязным.','Новое предложение'],
+ ['\u2026, however, \u2026','однако в середине предложения выделяется запятыми с двух сторон','I enjoyed the novel, however, I felt that the final chapter was rushed. — Роман мне понравился, однако последняя глава показалась скомканной.','Новое предложение'],
+ ['\u2026, though.','но / однако — though в самом конце предложения, после запятой','I don\u2019t really like seafood. I tried the grilled salmon, though. — Вообще морепродукты я не люблю. Но лосося на гриле всё-таки попробовал.','В конце предложения'],
+];
+const CONC_Q=[
+ ["___ the heavy rain, the soccer match continued until the final whistle.",["Although","In spite of"],1,"Дальше существительное (the heavy rain) → In spite of."],
+ ["She passed the driving test, ___ she had only practiced for a week.",["although","despite"],0,"Дальше полное предложение (she had only practiced) → although."],
+ ["The tablet was quite expensive. ___, it stopped working after three months.",["However","Despite"],0,"Новое предложение, «однако» → However."],
+ ["___ being exhausted after the hike, Liam helped cook dinner.",["Although","In spite of"],1,"Дальше герундий (being) → In spite of."],
+ ["I don't really like seafood. I tried the grilled salmon, ___.",["though","despite"],0,"Though в конце предложения = «но / однако»."],
+ ["___ he didn't study much, he managed to get an A on the test.",["Although","Despite"],0,"Дальше полное предложение (he didn't study) → Although."],
+ ["They decided to buy the house ___ the small backyard.",["despite","although"],0,"Дальше существительное (the small backyard) → despite."],
+ ["The hotel had great reviews. ___, our room was not clean.",["Although","However"],1,"Новое предложение, «однако» → However."],
+ ["___ her fear of heights, Sarah went skydiving last weekend.",["In spite of","Though"],0,"Дальше именная группа (her fear of heights) → In spite of."],
+ ["We went to the beach ___ the water was freezing.",["although","in spite of"],0,"Дальше полное предложение (the water was freezing) → although."],
+ ["___ arriving at the terminal early, they missed their flight.",["Although","Despite","However"],1,"Дальше герундий (arriving) → Despite."],
+ ["He loves living in the city center, ___, the rent is getting higher every year.",["Although","In spite of","However"],2,"Пропуск выделен запятыми, «однако» → However."],
+ ["___ she had no formal training in design, her portfolio was outstanding.",["Though","Despite","In spite of"],0,"Дальше полное предложение (she had no formal training) → Though."],
+ ["The restaurant was completely booked. We managed to get a table outside, ___.",["despite","though","in spite of"],1,"Though в конце предложения = «но / однако»."],
+ ["___ the fact that it was an old car, it was extremely reliable.",["Despite","Although","However"],0,"the fact that … — именная конструкция → Despite."],
+ ["David didn't get the promotion ___ working eighty hours a week.",["although","In spite of","however"],1,"Дальше герундий (working) → in spite of."],
+ ["The new phone has an incredible camera. ___, the battery life is quite disappointing.",["However","Although","In spite of"],0,"Новое предложение, «однако» → However."],
+ ["___ she was feeling sick, she attended the entire conference.",["Despite","In spite of","Although"],2,"Дальше полное предложение (she was feeling sick) → Although."],
+ ["They lost the championship match ___ playing much better than the other team.",["despite","although","however"],0,"Дальше герундий (playing) → despite."],
+ ["The movie received poor ratings from critics. It was a massive box office hit, ___.",["though","in spite of","despite"],0,"Though в конце предложения = «но / однако»."],
+ ["___ the warnings from the coast guard, several surfers went out into the storm.",["Although","In spite of","Though","However"],1,"Дальше именная группа (the warnings) → In spite of."],
+ ["We planned an outdoor wedding, ___, the sudden thunderstorm forced us indoors.",["Despite","In spite of","Although","However"],3,"Пропуск выделен запятыми, «однако» → However. Although не подходит по смыслу: свадьбу планировали не «несмотря на» грозу."],
+ ["___ the instructions were written in three languages, nobody understood them.",["Although","Despite","In spite of","However"],0,"Дальше полное предложение (the instructions were written) → Although."],
+ ["The coat was stylish and warm. It was rather heavy, ___.",["although","in spite of","though","despite"],2,"Though в конце предложения = «но / однако»."],
+ ["___ having lived in Tokyo for five years, he couldn't speak fluent Japanese.",["Although","Though","Despite","However"],2,"Дальше герундий (having lived) → Despite."],
+ ["I enjoyed the novel, ___, I felt that the final chapter was rushed.",["Although","However","in spite of","Despite"],1,"Пропуск выделен запятыми, «однако» → However."],
+ ["___ all her hard work and preparation, she failed the entrance examination.",["Although","in spite of","Though","However"],1,"Дальше именная группа (all her hard work) → in spite of."],
+ ["He didn't complain once, ___ he had walked over seventy miles with a heavy backpack.",["Although","despite","in spite of","however"],0,"Дальше полное предложение (he had walked) → although."],
+ ["The museum charged an expensive entry fee. It was definitely worth visiting, ___.",["in spite of","though","despite","although"],1,"Though в конце предложения = «но / однако»."],
+ ["___ his severe ankle injury, the captain refused to leave the field.",["Although","Though","in spite of","However"],2,"Дальше именная группа (his severe ankle injury) → in spite of."],
+ ["Many employees preferred working from home. ___, the CEO demanded a full return to the office.",["However","Although","In spite of","Despite"],0,"Новое предложение, «однако» → However."],
+ ["___ it was already past midnight, the streets of the city were packed with tourists.",["In spite of","Despite","Though","However"],2,"Дальше полное предложение (it was already past midnight) → Though."],
+ ["She managed to finish the marathon ___ suffering from severe dehydration.",["although","though","despite","however"],2,"Дальше герундий (suffering) → despite."],
+ ["The laptop is lightweight and sleek, ___, it lacks sufficient USB ports for daily use.",["in spite of","However","Although","Despite"],1,"Пропуск выделен запятыми, «однако» → However."],
+ ["___ the noise coming from the construction site next door, the baby slept soundly.",["Although","in spite of","Though","However"],1,"Дальше именная группа (the noise) → in spite of."],
+ ["He rarely reads fiction books. He finished that 600-page fantasy novel in two days, ___.",["though","despite","in spite of","although"],0,"Though в конце предложения = «но / однако»."],
+ ["___ she had set several reminders on her phone, she forgot the appointment.",["Despite","Although","in spite of","However"],1,"Дальше полное предложение (she had set) → Although."],
+ ["The team secured funding for the project ___ the tight economic climate.",["despite","although","though","however"],0,"Дальше именная группа (the tight economic climate) → despite."],
+ ["The flight was delayed for six hours. ___, the airline offered no compensation or vouchers.",["Although","Despite","in spite of","However"],3,"Новое предложение, «однако» → However."],
+ ["___ having no prior experience in sales, Marcus became the top-selling agent.",["in spite of","Although","Though","However"],0,"Дальше герундий (having) → in spite of."]
+];
+
+const CONC_SORT=[
+ ['the heavy rain','Despite / In spite of + \u2026'],
+ ['she had only practiced for a week','Although / Though + \u2026'],
+ ['being exhausted after the hike','Despite / In spite of + \u2026'],
+ ['he didn\u2019t study much','Although / Though + \u2026'],
+ ['her fear of heights','Despite / In spite of + \u2026'],
+ ['the water was freezing','Although / Though + \u2026'],
+ ['arriving at the terminal early','Despite / In spite of + \u2026'],
+ ['the instructions were written in three languages','Although / Though + \u2026'],
+ ['having lived in Tokyo for five years','Despite / In spite of + \u2026'],
+ ['it was already past midnight','Although / Though + \u2026'],
+ ['the tight economic climate','Despite / In spite of + \u2026'],
+ ['she had set several reminders','Although / Though + \u2026'],
+];
+const CONC_ERR=[
+ ['Despite of the noise, I fell asleep.','Despite the noise, I fell asleep. <i>despite \u2014 без of</i>'],
+ ['In spite the delay, we arrived on time.','In spite of the delay, we arrived on time. <i>in spite OF</i>'],
+ ['Although the heavy traffic, we were not late.','Despite the heavy traffic, we were not late. <i>после although нужно предложение</i>'],
+ ['Despite she was ill, she went to work.','Despite being ill, she went to work. <i>после despite \u2014 существительное или -ing</i>'],
+ ['Although it was cold. We swam in the sea.','Although it was cold, we swam in the sea. <i>although соединяет части одного предложения, точка не ставится</i>'],
+ ['The plan was risky. Although, it worked.','The plan was risky. However, it worked. <i>«однако» в начале нового предложения \u2014 however</i>'],
+ ['However I disagree with the author.','However, I disagree with the author. <i>после however нужна запятая</i>'],
+ ['Though of the warnings, the surfers went out.','Despite the warnings, the surfers went out. <i>though of не существует</i>'],
+ ['Despite the fact it was late, the streets were full.','Despite the fact that it was late, the streets were full. <i>the fact THAT</i>'],
+ ['I don\u2019t like seafood. Though I tried the salmon.','I don\u2019t like seafood. I tried the salmon, though. <i>though в конце предложения, после запятой</i>'],
+];
+const CONC_ITEMS=CONC_Q.map(([q,opts,c,r])=>({q,opts,a:opts[c],after:r}));
+
 const SECTIONS=[
  {id:'articles', title:'Артикли', tag:'задания 19–24', img:'pamyatki-img/articles.jpg',
   cards:ART_CARDS.map(c=>({f:c[0],b:c[1],ex:c[2]})),
@@ -2243,6 +2327,16 @@ const SECTIONS=[
    {n:'Контраст или следствие', type:'sort', bins:['Контраст','Следствие'], items:LINKERS.map(l=>[l[0],l[1]]), per:10},
    {n:'Значение', type:'match', pairs:LINKERS.map(l=>[l[0],l[2].replace(/ \(.*\)/,'')])},
    {n:'Speed Game', type:'bomb', items:LK_Q},
+  ]},
+ {id:'concession', title:'Уступка: although · despite · however', tag:'задания 19–24 · письмо 37–38',
+  cards:CONC_CARDS.map(c=>({f:c[0],b:c[1],ex:c[2],group:c[3]})), groups:['+ предложение','+ существительное / -ing','Новое предложение','В конце предложения'],
+  acts:[
+   {n:'2 варианта', type:'choice', items:CONC_ITEMS.slice(0,10), all:true},
+   {n:'3 варианта', type:'choice', items:CONC_ITEMS.slice(10,20), all:true},
+   {n:'4 варианта', type:'choice', items:CONC_ITEMS.slice(20,40), all:true},
+   {n:'Что идёт после союза', type:'sort', bins:['Although / Though + …','Despite / In spite of + …'], items:CONC_SORT, per:10},
+   {n:'Error hunter', type:'flip', items:CONC_ERR.map(x=>({f:x[0],b:x[1]}))},
+   {n:'Speed Game', type:'bomb', items:CONC_ITEMS.slice(10,40).map(i=>({q:i.q,opts:i.opts,a:i.a}))},
   ]},
 
   {id:'tpl-issue', title:'Issue · matter · relations', tag:'задания 30–36', thumb:'issue / matter<br>relationship / relations',
