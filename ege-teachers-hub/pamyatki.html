@@ -2314,7 +2314,7 @@ function hub(){
      <h2>${esc(s.title)}</h2><div><div class="tag">${esc(s.tag)}</div><div class="meta">${s.cards.length} карточек · ${s.acts.length} игр</div></div></button>`).join('')}`).join('')}
    </div></div>`;
   app.querySelectorAll('.tile[data-id]').forEach(b=>b.onclick=()=>openSec(b.dataset.id));
-  if(/[?&]student=1/.test(location.search)){$('#teach').remove();$('#teach2').remove();const th=$('#tohub');if(th)th.remove()}
+  if(/[?&]student=1/.test(location.search)){$('#teach').remove();const t2=$('#teach2');if(t2)t2.remove();const th=$('#tohub');if(th)th.remove()}
   else $('#teach').onclick=$('#teach2').onclick=teacher;
 }
 
