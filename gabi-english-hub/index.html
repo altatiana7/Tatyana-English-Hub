@@ -160,8 +160,11 @@ button{font:inherit}
 <style>.sidebar a.hwBtn{display:flex;align-items:center;min-height:38px;margin:0 0 10px;padding:0 10px;border-radius:12px;background:linear-gradient(135deg,#15845b,#2fae7a);color:#fff;font:800 13px Arial,sans-serif;letter-spacing:.04em;text-decoration:none;box-shadow:0 6px 14px rgba(21,132,91,.25)}.sidebar a.hwBtn:hover{filter:brightness(1.07)}.hwBtn .hwNew{margin-left:auto;white-space:nowrap;background:#e8a317;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;letter-spacing:0}</style>
 <style>.tile .th.num{display:grid;place-items:center;background:linear-gradient(135deg,#1787cf,#0a315f)}.tile .th.num u{text-decoration:none;color:#ffd23f;font:800 30px/1 Arial,sans-serif}.dock.mod{overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;padding-top:8px}</style>
 <style>
-.sidebar .wuBtn{display:flex;align-items:center;width:100%;min-height:38px;margin:0 0 7px;padding:0 10px;border:0;border-radius:12px;background:linear-gradient(135deg,#d98a1c,#e8a83a);color:#fff;font:800 13px Arial,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:0 6px 14px rgba(200,120,20,.25)}
-.sidebar .wuBtn:hover{filter:brightness(1.06)}
+.hero .wuBtn{position:absolute;top:clamp(150px,27vh,230px);right:clamp(150px,13.5vw,230px);pointer-events:auto;display:flex;align-items:center;gap:10px;min-height:clamp(46px,7vh,60px);padding:0 clamp(16px,1.8vw,26px) 0 clamp(8px,.8vw,12px);border:0;border-radius:999px;background:linear-gradient(135deg,#d98a1c,#f0b23f);color:#fff;font:900 clamp(15px,1.35vw,20px) Arial,sans-serif;letter-spacing:.08em;cursor:pointer;box-shadow:0 10px 26px rgba(0,25,60,.35),0 4px 0 #b06d12;transition:transform .14s ease}
+.hero .wuBtn:hover{transform:translateY(-3px);filter:brightness(1.05)}
+.hero .wuBtn i{width:clamp(30px,2.9vw,40px);height:clamp(30px,2.9vw,40px);border-radius:50%;background:#fff;position:relative;flex:none}
+.hero .wuBtn i:after{content:'';position:absolute;left:52%;top:50%;transform:translate(-40%,-50%);border-style:solid;border-width:8px 0 8px 13px;border-color:transparent transparent transparent #d98a1c}
+@media(max-width:1000px){.hero .wuBtn{top:auto;bottom:clamp(110px,18vh,150px);right:20px}}
 .wuLayer{position:absolute;z-index:30;inset:0;display:none;align-items:center;justify-content:center;background:rgba(6,34,70,.55);backdrop-filter:blur(3px)}
 .wuLayer.on{display:flex}
 .wuBox{width:min(980px,calc(100% - 40px));max-height:calc(100% - 40px);overflow:auto;background:#f3f9fe;border-radius:22px;padding:16px 18px 18px;box-shadow:0 24px 60px rgba(0,25,60,.45)}
@@ -181,6 +184,7 @@ button{font:inherit}
   <div class="loader" id="loader">LOADING GABI HUB…</div>
 
   <section class="hero" id="hero" aria-label="Home">
+    <button class="wuBtn" id="wuBtn" type="button"><i></i>WARM-UP</button>
     <div class="heroTop">
       <span class="hi" id="hi">WELCOME BACK, GABI</span>
       <h1>Your English <em>Hub</em></h1>
@@ -194,8 +198,6 @@ button{font:inherit}
 
   <aside class="sidebar" aria-label="Modules">
     <div class="brand"><b>GABI</b><span>GATEWAY B1 + FOCUS 2</span></div>
-    <button class="homeBtn" id="homeBtn">HOME</button>
-    <button class="wuBtn" id="wuBtn" type="button">WARM-UP</button>
     <a class="hwBtn" id="hwBtn" href="../gabi-homework/teacher-check.html?v=20261109">HOMEWORK GABI</a>
     <div id="moduleNav"></div>
   </aside>
@@ -323,7 +325,7 @@ function renderNav(){
 }
 renderNav();
 
-document.getElementById('homeBtn').onclick=()=>{
+(document.getElementById('homeBtn')||{}).onclick=()=>{
   openModule=-1;showDock(-1);
   nav.querySelectorAll('.moduleBtn').forEach(b=>b.classList.remove('open'));
   nav.querySelectorAll('.lessons').forEach(x=>x.classList.remove('open'));
@@ -377,7 +379,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
  document.getElementById('wuBtn').onclick=open;document.getElementById('wuX').onclick=close;
  L.addEventListener('click',e=>{if(e.target===L)close()});G.addEventListener('click',()=>setTimeout(close,300));
  document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
- document.getElementById('homeBtn').addEventListener('click',close);})();
+})();
 
 /* Interactive home */
 (function(){
