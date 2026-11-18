@@ -1929,6 +1929,24 @@ const PARTS1=['up','out','off','down'],PARTS2=['in','on','over','away'];
 const PH_SORT=PHR_ALL.filter(x=>x[1].split(' ').length===2).map(x=>({w:shortMean(x[2]),pre:x[1].split(' ')[1]+'-x',group:x[1].split(' ')[1],ph:x[1]}));
 const SHIB_Q=SHIB.flatMap(g=>g.w.map(e=>({q:e[2],hint:shortMean(e[1]),opts:shuffle(g.w.map(x=>x[3]||(g.g.startsWith('work as')||g.g.startsWith('set up')?x[0].split(' ')[1]:x[0]))),a:e[3]||e[0]})));
 const FS_Q=FALSE_SYN.flatMap(g=>g.filter(([w,m])=>g.filter(x=>x[1]===m).length===1).map(([w,m])=>({q:m,opts:shuffle(g.map(x=>x[0])),a:w})));
+
+/* ====== Лексика 30–36: объединено с «Ложные синонимы» и «Полезный файл 30–36» (повторы убраны) ====== */
+const FS_EX={"attend": "I attend English classes every day.", "admit": "He admitted his mistake.", "accept": "She accepted the invitation.", "approve": "My parents approve of my choice.", "amuse": "The clown amused the children.", "attract": "Bright colors attract attention.", "amaze": "Your progress amazes me.", "appeal": "This idea appeals to me.", "wonder": "I wonder why he is late.", "wander": "We wandered around the city.", "warn": "I warned you about the test.", "waste": "Don't waste your time.", "adapt": "You must adapt to new conditions.", "adopt": "They adopted a new method.", "assume": "I assume you are right.", "agree": "I agree with your opinion.", "allow": "My parents allow me to go out.", "consider": "I consider him a friend.", "confirm": "Please confirm your reservation.", "convince": "She convinced me to try.", "concern": "I'm concerned about your health.", "confess": "He confessed his love.", "pretend": "Don't pretend you don't know.", "prevent": "Rain prevented us from going.", "preserve": "We must preserve nature.", "predict": "It's hard to predict the future.", "deceive": "Appearances can deceive.", "develop": "We develop new skills.", "defend": "We must defend our country.", "demand": "The teacher demands effort from students.", "disappear": "The sun disappeared behind clouds.", "depart": "The train departs at 6.", "digress": "Let me digress for a moment.", "distract": "Don't distract me while I study.", "improve": "I want to improve my English.", "impress": "Your essay impressed the teacher.", "influence": "Music has a great influence on me.", "interested": "I'm interested in history.", "insist": "She insisted on going alone.", "install": "We installed a new program.", "involve": "The project involves many people.", "invade": "Enemies invaded the country.", "prepare": "I'm preparing for the exam.", "propose": "He proposed a new plan.", "persuade": "I persuaded him to come.", "receive": "I received your letter.", "regard": "I regard him as a genius.", "require": "This job requires experience.", "request": "They requested more information.", "resemble": "She resembles her mother.", "regain": "He regained his strength.", "remain": "Please remain seated.", "respect": "We must respect elders.", "resolve": "They resolved the conflict.", "remove": "Please remove your shoes.", "realise": "I realised my mistake.", "recognise": "I didn't recognise you!", "regret": "I regret my decision.", "reveal": "He revealed the secret.", "register": "I registered for the course.", "remind": "You remind me of my friend.", "rely": "You can rely on me.", "recall": "I can't recall his name.", "refer": "He referred to the book.", "reply": "Please reply to my email.", "submit": "Submit your essay on Friday.", "suggest": "I suggest we start now.", "supply": "We supply fresh products.", "suppose": "I suppose you're right.", "exception": "There is an exception to every rule.", "exchange": "We had an exchange of ideas.", "excellence": "She won an award for excellence.", "example": "Let me give you an example.", "destruction": "The storm caused great destruction.", "demonstration": "The demonstration was impressive.", "departure": "The departure time is 8 am.", "determination": "His determination is admirable."};
+const lexNorm=w=>String(w).toLowerCase().replace(/\s*\(.*?\)\s*/g,' ').replace(/\s+/g,' ').trim();
+const FS_GROUPS=FALSE_SYN.map(g=>g.map(x=>x[0].split(' ')[0]).join(' / '));
+const SHIB_GROUPS=SHIB.map(g=>g.g);
+const LEX_CARDS_ALL=(()=>{const seen=new Set(),out=[];
+  const add=c=>{const k=lexNorm(c.f);if(seen.has(k))return;seen.add(k);out.push(c)};
+  LEX.forEach(g=>g.w.forEach(e=>add({f:e[0],b:e[1],ex:e[2]+(e[3]?'<br><i>'+esc(e[3])+'</i>':''),raw:true,group:g.g})));
+  SHIB.forEach(g=>g.w.forEach(e=>add({f:e[0],b:esc(e[1]),ex:esc(e[2].replace('___',e[3]||e[0])),raw:true,group:g.g})));
+  FALSE_SYN.forEach((g,i)=>g.forEach(([w,m])=>{const k=lexNorm(w).split(' ')[0];add({f:w,b:esc(m),ex:esc(FS_EX[lexNorm(w)]||FS_EX[k]||''),raw:true,group:FS_GROUPS[i]})}));
+  return out})();
+const LEX_GROUPS_ALL=[...new Set(LEXG.concat(SHIB_GROUPS,FS_GROUPS))].filter(g=>LEX_CARDS_ALL.some(c=>c.group===g));
+const SHIB_QG=SHIB.flatMap((g,gi)=>g.w.map(()=>g.g)).map((g,i)=>Object.assign({},SHIB_Q[i],{group:g}));
+const fsStem=w=>{w=lexNorm(w).split(' ')[0];return w.slice(0,Math.max(4,w.length-2))};
+FS_SENT.forEach(it=>{const a=lexNorm(it.a);const gi=FALSE_SYN.findIndex(g=>g.some(x=>a.startsWith(fsStem(x[0]))));if(gi>=0)it.group=FS_GROUPS[gi]});
+const FS_QG=FALSE_SYN.flatMap((g,i)=>g.filter(([w,m])=>g.filter(x=>x[1]===m).length===1).map(()=>FS_GROUPS[i])).map((g,i)=>Object.assign({},FS_Q[i],{group:g}));
+const LEX_EVERYTHING=LEX_ALL.concat(FS_SENT,SHIB_QG);
 const LK_Q=LINKERS.map(([w,c,m,e])=>{const first=w.split(' = ')[0];const re=new RegExp(first.replace(/ /g,'\\s+'),'i');const q=re.test(e)?e.replace(re,'___'):e.replace(/In spite \/ despite/,'___');return {q,hint:m,opts:shuffle([first,...shuffle(LINKERS.filter(x=>x[0]!==w&&x[1]===c).map(x=>x[0].split(' = ')[0])).slice(0,3)]),a:first}});
 const SPK_Q=SPK_DATES.map(([d,r])=>({q:'How to say: '+d+'?',opts:shuffle([r,...shuffle(SPK_DATES.filter(x=>x[0]!==d).map(x=>x[1])).slice(0,3)]),a:r}));
 const SPK_B=SPK_NAMES.map(([n,t])=>({q:t,opts:shuffle([n,...shuffle(SPK_NAMES.filter(x=>x[0]!==n).map(x=>x[0])).slice(0,3)]),a:n}));
@@ -2104,15 +2122,19 @@ const SECTIONS=[
      {f:'Perfect Continuous',b:'действие началось в прошлом и длится до сих пор (или к определённому моменту)'}]},
    {n:'Speed Game', type:'bomb', items:tenseChoice},
   ]},
- {id:'lexis', title:'Лексика 30–36', tag:'задания 30–36', img:null,
-  cards:LEX.flatMap(g=>g.w.map(e=>({f:e[0],b:e[1],ex:e[2]+(e[3]?'<br><i>'+esc(e[3])+'</i>':''),raw:true,group:g.g}))), groups:LEX.map(g=>g.g),
+ {id:'lexis', title:'Лексика 30–36', tag:'задания 30–36', imgs:["pamyatki-img/falsesyn1.jpg", "pamyatki-img/falsesyn2.jpg", "pamyatki-img/shib1.jpg", "pamyatki-img/shib2.jpg", "pamyatki-img/shib3.jpg", "pamyatki-img/shib4.jpg", "pamyatki-img/shib5.jpg", "pamyatki-img/shib6.jpg", "pamyatki-img/shib7.jpg", "pamyatki-img/shib8.jpg"],
+  cards:LEX_CARDS_ALL, groups:LEX_GROUPS_ALL,
   acts:[
    {n:'Сочетания в предложениях', type:'choice', items:LEX_SENT, groups:LEXG, all:true},
    {n:'Ловушки', type:'choice', items:LEX_TRAPS, groups:LEXG, all:true},
-   {n:'Доктор Грамматика', type:'doctor', items:LEX_ALL, groups:LEXG, all:true},
+   {n:'Ложные синонимы в предложениях', type:'choice', items:FS_SENT, groups:FS_GROUPS, all:true},
+   {n:'Ложные синонимы: перевод → слово', type:'choice', items:FS_QG, groups:FS_GROUPS},
+   {n:'Полезный файл: выбери слово', type:'choice', items:SHIB_QG, groups:SHIB_GROUPS, all:true},
+   {n:'Значение', type:'match', byGroup:SHIB.map(g=>g.w.map(e=>[e[0],shortMean(e[1])])).concat(FALSE_SYN.map(g=>{const u=new Map();g.forEach(([w,m])=>{if(!u.has(lexNorm(w)))u.set(lexNorm(w),[w,m])});return [...u.values()]}))},
+   {n:'Доктор Грамматика', type:'doctor', items:LEX_EVERYTHING, groups:LEX_GROUPS_ALL, all:true},
    {n:'Короткие сочетания', type:'choice', items:LEXQ, groups:LEXG},
    {n:'Правила-ловушки', type:'flip', items:LEX.filter(g=>g.trap).map(g=>({f:g.g,b:g.trap})), lead:'Чем отличаются? Скажи вслух и переверни.'},
-   {n:'Speed Game', type:'bomb', items:LEX_ALL},
+   {n:'Speed Game', type:'bomb', items:LEX_EVERYTHING},
   ]},
  {id:'prefixes', title:'Отрицательные приставки', tag:'задания 25–29', img:'pamyatki-img/prefixes.jpg',
   cards:prefixWords.map(x=>({f:x.w,b:x.ru,ex:x.group+' · '+PREFIXES[x.group].m})),
@@ -2204,15 +2226,6 @@ const SECTIONS=[
    {n:'Закончи вопрос', type:'choice', items:HT_Q},
    {n:'Speed Game', type:'bomb', items:HT_Q},
   ]},
- {id:'falsesyn', title:'Ложные синонимы', tag:'задания 30–36', imgs:["pamyatki-img/falsesyn1.jpg", "pamyatki-img/falsesyn2.jpg"],
-  cards:FALSE_SYN.flatMap(g=>g.map(([w,m])=>({f:w,b:m,group:g.map(x=>x[0].split(' ')[0]).join(' / ')}))), groups:FALSE_SYN.map(g=>g.map(x=>x[0].split(' ')[0]).join(' / ')),
-  acts:[
-   {n:'Выбери слово', type:'choice', items:FS_Q},
-   {n:'Matching', type:'match', byGroup:FALSE_SYN.map(g=>g.map(([w,m])=>[w,m]))},
-   {n:'В предложениях', type:'choice', items:FS_SENT, all:true},
-   {n:'Доктор Грамматика', type:'doctor', items:FS_SENT, all:true},
-   {n:'Speed Game', type:'bomb', items:FS_Q},
-  ]},
  {id:'refer', title:'Реферирование местоимений', tag:'письмо 37–38 · устная', imgs:["pamyatki-img/refer1.jpg", "pamyatki-img/refer2.jpg"],
   cards:REF_RULES.map(r=>({f:r[0],b:r[1],ex:r[2]})),
   acts:[
@@ -2220,14 +2233,6 @@ const SECTIONS=[
    {n:'IT или THEY', type:'sort', bins:['IT','THEY'], items:REF_SORT, per:8},
    {n:'Правила', type:'flip', items:REF_RULES.map(r=>({f:r[0],b:r[2]}))},
    {n:'Speed Game', type:'bomb', items:REF_EX.map(x=>({q:x[0],opts:x[1],a:x[2]}))},
-  ]},
- {id:'shib', title:'Полезный файл 30–36', tag:'задания 30–36', imgs:["pamyatki-img/shib1.jpg", "pamyatki-img/shib2.jpg", "pamyatki-img/shib3.jpg", "pamyatki-img/shib4.jpg", "pamyatki-img/shib5.jpg", "pamyatki-img/shib6.jpg", "pamyatki-img/shib7.jpg", "pamyatki-img/shib8.jpg"],
-  cards:SHIB.flatMap(g=>g.w.map(e=>({f:e[0],b:e[1],ex:e[2].replace('___',e[3]||e[0]),group:g.g}))), groups:SHIB.map(g=>g.g),
-  acts:[
-   {n:'Выбери слово', type:'choice', items:SHIB_Q},
-   {n:'Значение', type:'match', byGroup:SHIB.map(g=>g.w.map(e=>[e[0],shortMean(e[1])]))},
-   {n:'Доктор Грамматика', type:'doctor', items:SHIB_Q},
-   {n:'Speed Game', type:'bomb', items:SHIB_Q},
   ]},
  {id:'punct', title:'Пунктуация ЕГЭ', tag:'письмо 37–38', imgs:["pamyatki-img/punct1.jpg", "pamyatki-img/punct2.jpg"],
   cards:PUNCT_RULES.map(r=>({f:r[0],b:r[1],ex:r[2]})),
