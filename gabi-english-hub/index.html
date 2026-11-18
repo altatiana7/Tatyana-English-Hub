@@ -159,6 +159,20 @@ button{font:inherit}
 </style>
 <style>.sidebar a.hwBtn{display:flex;align-items:center;min-height:38px;margin:0 0 10px;padding:0 10px;border-radius:12px;background:linear-gradient(135deg,#15845b,#2fae7a);color:#fff;font:800 13px Arial,sans-serif;letter-spacing:.04em;text-decoration:none;box-shadow:0 6px 14px rgba(21,132,91,.25)}.sidebar a.hwBtn:hover{filter:brightness(1.07)}.hwBtn .hwNew{margin-left:auto;white-space:nowrap;background:#e8a317;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;letter-spacing:0}</style>
 <style>.tile .th.num{display:grid;place-items:center;background:linear-gradient(135deg,#1787cf,#0a315f)}.tile .th.num u{text-decoration:none;color:#ffd23f;font:800 30px/1 Arial,sans-serif}.dock.mod{overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;padding-top:8px}</style>
+<style>
+.sidebar .wuBtn{display:flex;align-items:center;width:100%;min-height:38px;margin:0 0 7px;padding:0 10px;border:0;border-radius:12px;background:linear-gradient(135deg,#d98a1c,#e8a83a);color:#fff;font:800 13px Arial,sans-serif;letter-spacing:.04em;cursor:pointer;box-shadow:0 6px 14px rgba(200,120,20,.25)}
+.sidebar .wuBtn:hover{filter:brightness(1.06)}
+.wuLayer{position:absolute;z-index:30;inset:0;display:none;align-items:center;justify-content:center;background:rgba(6,34,70,.55);backdrop-filter:blur(3px)}
+.wuLayer.on{display:flex}
+.wuBox{width:min(980px,calc(100% - 40px));max-height:calc(100% - 40px);overflow:auto;background:#f3f9fe;border-radius:22px;padding:16px 18px 18px;box-shadow:0 24px 60px rgba(0,25,60,.45)}
+.wuHead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.wuHead b{font:700 clamp(20px,1.8vw,26px) Arial,sans-serif;color:#0a315f}
+.wuX{width:38px;height:38px;border:0;border-radius:12px;background:#0a315f;color:#fff;font-size:16px;cursor:pointer}
+.wuGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.wuGrid .tile{min-height:clamp(78px,12vh,104px);background:#fff;border:1px solid #d7e6f2;box-shadow:0 6px 16px rgba(0,25,60,.12)}
+.wuGrid .tile span{display:block}
+@media(max-width:900px){.wuGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
 </head>
 <body>
 <main class="board" id="board" aria-label="Gabi English Hub Gateway to the World B1 interactive board">
@@ -181,9 +195,16 @@ button{font:inherit}
   <aside class="sidebar" aria-label="Modules">
     <div class="brand"><b>GABI</b><span>GATEWAY B1 + FOCUS 2</span></div>
     <button class="homeBtn" id="homeBtn">HOME</button>
+    <button class="wuBtn" id="wuBtn" type="button">WARM-UP</button>
     <a class="hwBtn" id="hwBtn" href="../gabi-homework/teacher-check.html?v=20261109">HOMEWORK GABI</a>
     <div id="moduleNav"></div>
   </aside>
+  <div class="wuLayer" id="wuLayer" aria-hidden="true">
+    <div class="wuBox" role="dialog" aria-label="Warm-up">
+      <div class="wuHead"><b>Warm-up</b><button class="wuX" id="wuX" type="button" aria-label="Close">✕</button></div>
+      <div class="wuGrid" id="wuGrid"></div>
+    </div>
+  </div>
 </main>
 
 <section id="lessonView" aria-hidden="true">
@@ -249,7 +270,8 @@ const LESSON_PICS={1:['age-scenes/10.jpg','assets/book-selfie.jpg','assets/gradu
  3:['assets/u3/four-photos.jpg','assets/u3l2/fomo.jpg']};
 /* The home screen always shows the module Gabi is on now: change CUR when he moves on. */
 const CUR={m:3,l:1};
-const MODULE_GAMES={1:['<a class="tile" href="what-happens-next.html?v=20261007-b"><div class="th" style="background-image:url(assets/whn/lamp.jpg)"></div><div><small>WARM-UP</small><b>What Happens Next?</b><span>Watch, stop, predict with will</span></div></a>', '<a class="tile" href="word-walls-age.html?v=2"><div class="th bricks"><u></u><u></u><u></u><u></u><u></u><u></u></div><div><small>VOCABULARY GAME</small><b>Word Walls</b><span>15 adjectives, nouns are traps</span></div></a>', '<a class="tile" href="ten-faces.html"><div class="th faces"><u style="background-image:url(ten-faces/emma.jpg)"></u><u style="background-image:url(ten-faces/daniel.jpg)"></u><u style="background-image:url(ten-faces/chloe.jpg)"></u><u style="background-image:url(ten-faces/ethan.jpg)"></u></div><div><small>LISTEN AND SPEAK</small><b>Ten Faces</b><span>Ten people ask you questions</span></div></a>', '<a class="tile" href="rebel-files.html?v=20261007-rf"><div class="th rebel"><u>R</u></div><div><small>QUIZ GAME</small><b>Rebel Files</b><span>Six heroes, answer from memory</span></div></a>', '<a class="tile" href="who-dared.html?v=20261103-a"><div class="th faces"><u style="background-image:url(who-dared/p1.jpg)"></u><u style="background-image:url(who-dared/p2.jpg)"></u><u style="background-image:url(who-dared/p3.jpg)"></u><u style="background-image:url(who-dared/p4.jpg)"></u></div><div><small>QUIZ GAME</small><b>Who Dared?</b><span>Eight faces, clues and false facts</span></div></a>'],
+const WARMUPS=['<a class="tile" href="what-happens-next.html?v=20261007-b"><div class="th" style="background-image:url(assets/whn/lamp.jpg)"></div><div><small>WARM-UP</small><b>What Happens Next?</b><span>Watch, stop, predict with will</span></div></a>', '<a class="tile" href="word-walls-age.html?v=2"><div class="th bricks"><u></u><u></u><u></u><u></u><u></u><u></u></div><div><small>VOCABULARY GAME</small><b>Word Walls</b><span>15 adjectives, nouns are traps</span></div></a>', '<a class="tile" href="ten-faces.html"><div class="th faces"><u style="background-image:url(ten-faces/emma.jpg)"></u><u style="background-image:url(ten-faces/daniel.jpg)"></u><u style="background-image:url(ten-faces/chloe.jpg)"></u><u style="background-image:url(ten-faces/ethan.jpg)"></u></div><div><small>LISTEN AND SPEAK</small><b>Ten Faces</b><span>Ten people ask you questions</span></div></a>', '<a class="tile" href="rebel-files.html?v=20261007-rf"><div class="th rebel"><u>R</u></div><div><small>QUIZ GAME</small><b>Rebel Files</b><span>Six heroes, answer from memory</span></div></a>', '<a class="tile" href="who-dared.html?v=20261103-a"><div class="th faces"><u style="background-image:url(who-dared/p1.jpg)"></u><u style="background-image:url(who-dared/p2.jpg)"></u><u style="background-image:url(who-dared/p3.jpg)"></u><u style="background-image:url(who-dared/p4.jpg)"></u></div><div><small>QUIZ GAME</small><b>Who Dared?</b><span>Eight faces, clues and false facts</span></div></a>'];
+const MODULE_GAMES={1:[],
  2:[],
  3:[]};
 const dock=document.querySelector('.dock');const WORDTILE=dock.innerHTML;
@@ -348,6 +370,14 @@ function closeLesson(){
 document.getElementById('backBtn').onclick=closeLesson;
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
 
+/* Warm-up: games for any lesson, under one button */
+(function(){const L=document.getElementById('wuLayer'),G=document.getElementById('wuGrid');G.innerHTML=WARMUPS.join('');
+ function open(){L.classList.add('on');L.setAttribute('aria-hidden','false')}
+ function close(){L.classList.remove('on');L.setAttribute('aria-hidden','true')}
+ document.getElementById('wuBtn').onclick=open;document.getElementById('wuX').onclick=close;
+ L.addEventListener('click',e=>{if(e.target===L)close()});G.addEventListener('click',()=>setTimeout(close,300));
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
+ document.getElementById('homeBtn').addEventListener('click',close);})();
 
 /* Interactive home */
 (function(){
