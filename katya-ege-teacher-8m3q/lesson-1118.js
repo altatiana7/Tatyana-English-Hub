@@ -45,7 +45,7 @@ function speak(box){const st=S.sp,set=SETS[st.set];let left=40,t=null;
 
 function seg(items,cur,onPick){const s=el('div','seg');items.forEach(([v,l])=>{const b=el('button','segb'+(v===cur?' on':''),l);b.type='button';b.onclick=()=>onPick(v);s.append(b);});return s;}
 let cleanR=null;const drawLeft=()=>H.render(),drawRight=()=>H.render();
-const S={sp:{set:0,q:0,flip:false},c:{i:0,order:null,shuf:false,flip:false},ft:{i:0,picks:{},done:false},c1:{i:0,picks:{},done:false},c2:{i:0,picks:{},done:false},lk:{i:0,picks:{},done:false},ls:{i:0,picks:{},done:false},r11:{cur:'A',a:{},chk:false},r12:{i:0,picks:{},done:false},wf:{t:0,open:{}}};
+const S={sp:{set:0,q:0,flip:false},c:{i:0,order:null,shuf:false,flip:false},ft:{i:0,picks:{},done:false},c1:{i:0,picks:{},done:false},c2:{i:0,picks:{},done:false},lk:{i:0,picks:{},done:false},ls:{picks:{},done:false},r11:{cur:'A',a:{},chk:false},r12:{i:0,picks:{},done:false},wf:{t:0,open:{}}};
 
 /* ---------- данные ---------- */
 /* Speaking: задание 3 ФИПИ со страницы тренажёров (ege-trainers/task3-interview-voice-1), озвучка – natural-voice.js */
@@ -240,9 +240,24 @@ function mcqFree(box,st,data,o){o=o||{};const n=data.length,wrap=el('div','chq')
   const foot=el('div','foot');foot.append(fb,pv,nx);wrap.append(foot);}
 
 /* ---------- аудирование 3–9: аудио + вопросы, текст записи не показывается ---------- */
-function listening(box){const a=el('audio');a.controls=true;a.preload='auto';a.src='audio/edu-first-weeks.mp3';a.className='aud';
-  box.append(el('div','inst','<b>First weeks at university.</b> You will hear a radio interview with a student called Leanne Wilson. Choose the correct option (A, B or C). You will hear the recording twice.'),a);
-  mcqFree(box,S.ls,LS,{keep:true,one:true,small:true,why:LS_WHY});
+function listening(box){const st=S.ls;
+  /* всё на одном экране: аудио сверху не пересоздаётся, ответы отмечаются без перерисовки страницы */
+  const top=el('div','lstop');const a=el('audio');a.controls=true;a.preload='auto';a.src='audio/edu-first-weeks.mp3';a.className='aud';
+  top.append(el('div','lst','<b>First weeks at university.</b> Choose A, B or C.'),a);box.append(top);
+  const grid=el('div','lsg');box.append(grid);const cards=[];
+  const panel=el('div','lsq lsp'),res=el('div','lsres'),why=el('div','lsw');
+  LS.forEach((it,k)=>{const c=el('div','lsq');c.append(el('div','lsqt','<b>'+(k+1)+'</b> '+esc(it[1])));
+    const bs=it[2].map(o=>{const b=el('button',null,esc(o));b.type='button';b.onclick=e=>{if(st.done){showWhy(k);return;}st.picks[k]=o;bs.forEach(x=>x.classList.toggle('on',x===b));};
+      if(st.picks[k]===o)b.classList.add('on');c.append(b);return b;});
+    c.onclick=()=>{if(st.done)showWhy(k);};cards.push({c,bs,it,k});grid.append(c);});
+  function showWhy(k){cards.forEach(x=>x.c.classList.toggle('sel',x.k===k));why.innerHTML='<b>'+(k+1)+'</b> '+esc(LS_WHY[k]);}
+  function check(show){st.done=true;let ok=0;cards.forEach(({bs,it,k})=>{if(show)st.picks[k]=it[3];const p=st.picks[k];if(p===it[3])ok++;
+    bs.forEach(b=>{const t=b.textContent;b.classList.remove('on');b.classList.toggle('ok',t===it[3]);b.classList.toggle('no',t===p&&p!==it[3]);});});
+    res.textContent=ok+' / 7';why.textContent='Click a question to see why.';}
+  function reset(){st.done=false;st.picks={};cards.forEach(({c,bs})=>{c.classList.remove('sel');bs.forEach(b=>b.className='');});res.textContent='';why.textContent='';}
+  const bb=el('div','lsbtn');bb.append(btn('Check',()=>check(false),'main sm'),btn('Show answers',()=>check(true),'sm'),btn('Reset',reset,'sm'));
+  panel.append(bb,res,why);grid.append(panel);
+  if(st.done)check(false);
   cleanR=()=>{try{a.pause();}catch(e){}};}
 
 /* ---------- чтение 11: пропуски A–F, справа части предложений ---------- */
