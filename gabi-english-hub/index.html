@@ -158,6 +158,7 @@ button{font:inherit}
 .dock.mod{justify-content:start}.dock.mod .tile{flex-direction:column;align-items:stretch;gap:4px;padding:5px 5px 7px;min-height:0;border-radius:14px}.dock.mod .th{width:100%;height:clamp(44px,7.5vh,70px);align-self:auto;border-radius:9px}.dock.mod .th.num{display:grid;place-items:center;background:linear-gradient(135deg,#1787cf,#0a315f)}.dock.mod .th.num u{text-decoration:none;color:#ffd23f;font:800 26px/1 Montserrat,sans-serif}.dock.mod .tile b{font-size:clamp(11.5px,.9vw,13.5px);line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.dock.mod .tile small{font-size:clamp(8px,.6vw,10px);letter-spacing:.1em}
 </style>
 <style>.sidebar a.hwBtn{display:flex;align-items:center;min-height:38px;margin:0 0 10px;padding:0 10px;border-radius:12px;background:linear-gradient(135deg,#15845b,#2fae7a);color:#fff;font:800 13px Arial,sans-serif;letter-spacing:.04em;text-decoration:none;box-shadow:0 6px 14px rgba(21,132,91,.25)}.sidebar a.hwBtn:hover{filter:brightness(1.07)}.hwBtn .hwNew{margin-left:auto;white-space:nowrap;background:#e8a317;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;letter-spacing:0}</style>
+<style>.tile .th.num{display:grid;place-items:center;background:linear-gradient(135deg,#1787cf,#0a315f)}.tile .th.num u{text-decoration:none;color:#ffd23f;font:800 30px/1 Arial,sans-serif}.dock.mod{overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;padding-top:8px}</style>
 </head>
 <body>
 <main class="board" id="board" aria-label="Gabi English Hub Gateway to the World B1 interactive board">
@@ -173,11 +174,6 @@ button{font:inherit}
       <button class="go" id="continueBtn"><i></i><div><small>CONTINUE</small><b>Module 3 · Lesson 2 · The language that never sleeps</b><div class="prog"><span><u id="progFill" style="width:0"></u></span><em id="progText" style="font-style:normal"></em></div></div></button>
     </div>
     <div class="dock">
-      <a class="tile" href="what-happens-next.html?v=20261007-b"><div class="th" style="background-image:url(assets/whn/lamp.jpg)"></div><div><small>WARM-UP</small><b>What Happens Next?</b><span>Watch, stop, predict with will</span></div></a>
-      <a class="tile" href="word-walls-age.html?v=2"><div class="th bricks"><u></u><u></u><u></u><u></u><u></u><u></u></div><div><small>VOCABULARY GAME</small><b>Word Walls</b><span>15 adjectives, nouns are traps</span></div></a>
-      <a class="tile" href="ten-faces.html"><div class="th faces"><u style="background-image:url(ten-faces/emma.jpg)"></u><u style="background-image:url(ten-faces/daniel.jpg)"></u><u style="background-image:url(ten-faces/chloe.jpg)"></u><u style="background-image:url(ten-faces/ethan.jpg)"></u></div><div><small>LISTEN AND SPEAK</small><b>Ten Faces</b><span>Ten people ask you questions</span></div></a>
-      <a class="tile" href="rebel-files.html?v=20261007-rf"><div class="th rebel"><u>R</u></div><div><small>QUIZ GAME</small><b>Rebel Files</b><span>Six heroes, answer from memory</span></div></a>
-      <a class="tile" href="who-dared.html?v=20261103-a"><div class="th faces"><u style="background-image:url(who-dared/p1.jpg)"></u><u style="background-image:url(who-dared/p2.jpg)"></u><u style="background-image:url(who-dared/p3.jpg)"></u><u style="background-image:url(who-dared/p4.jpg)"></u></div><div><small>QUIZ GAME</small><b>Who Dared?</b><span>Eight faces, clues and false facts</span></div></a>
       <button class="tile word" id="wordTile" aria-label="Word of the day, tap to flip"><div class="fl"><div class="fa"><small>WORD OF THE DAY · TAP</small><b id="wodWord"></b><span>What does it mean?</span></div><div class="fb"><small id="wodWord2"></small><span id="wodDef"></span></div></div></button>
     </div>
   </section>
@@ -249,13 +245,24 @@ const modules=[
 ];
 
 const LESSON_PICS={1:['age-scenes/10.jpg','assets/book-selfie.jpg','assets/graduation.jpg','assets/l4/teens.jpg','assets/teen.jpg','assets/l5/maya.jpg','age-scenes/09.jpg'],
- 2:['assets/u2/crimes/p-burglary.jpg','assets/u2/mia.jpg','assets/u2/crimes/p-vandalism.jpg','assets/u2/crimes/p-robbery.jpg','assets/u2/crime-revision.jpg']};
-const dock=document.querySelector('.dock');const DOCK0=dock.innerHTML;
+ 2:['assets/u2/crimes/p-burglary.jpg','assets/u2/mia.jpg','assets/u2/crimes/p-vandalism.jpg','assets/u2/crimes/p-robbery.jpg','assets/u2/crime-revision.jpg'],
+ 3:['assets/u3/four-photos.jpg','assets/u3l2/fomo.jpg']};
+/* The home screen always shows the module Gabi is on now: change CUR when he moves on. */
+const CUR={m:3,l:1};
+const MODULE_GAMES={1:['<a class="tile" href="what-happens-next.html?v=20261007-b"><div class="th" style="background-image:url(assets/whn/lamp.jpg)"></div><div><small>WARM-UP</small><b>What Happens Next?</b><span>Watch, stop, predict with will</span></div></a>', '<a class="tile" href="word-walls-age.html?v=2"><div class="th bricks"><u></u><u></u><u></u><u></u><u></u><u></u></div><div><small>VOCABULARY GAME</small><b>Word Walls</b><span>15 adjectives, nouns are traps</span></div></a>', '<a class="tile" href="ten-faces.html"><div class="th faces"><u style="background-image:url(ten-faces/emma.jpg)"></u><u style="background-image:url(ten-faces/daniel.jpg)"></u><u style="background-image:url(ten-faces/chloe.jpg)"></u><u style="background-image:url(ten-faces/ethan.jpg)"></u></div><div><small>LISTEN AND SPEAK</small><b>Ten Faces</b><span>Ten people ask you questions</span></div></a>', '<a class="tile" href="rebel-files.html?v=20261007-rf"><div class="th rebel"><u>R</u></div><div><small>QUIZ GAME</small><b>Rebel Files</b><span>Six heroes, answer from memory</span></div></a>', '<a class="tile" href="who-dared.html?v=20261103-a"><div class="th faces"><u style="background-image:url(who-dared/p1.jpg)"></u><u style="background-image:url(who-dared/p2.jpg)"></u><u style="background-image:url(who-dared/p3.jpg)"></u><u style="background-image:url(who-dared/p4.jpg)"></u></div><div><small>QUIZ GAME</small><b>Who Dared?</b><span>Eight faces, clues and false facts</span></div></a>'],
+ 2:[],
+ 3:[]};
+const dock=document.querySelector('.dock');const WORDTILE=dock.innerHTML;
+function homeDock(){const mi=CUR.m-1,m=modules[mi],pics=LESSON_PICS[CUR.m]||[];
+  const lessons=m.lessons.map((l,i)=>`<button class="tile lt" data-lm="${mi}" data-li="${i}">${pics[i]?`<div class="th" style="background-image:url(${pics[i]})"></div>`:`<div class="th num"><u>${i+1}</u></div>`}<div><small>MODULE ${CUR.m} · LESSON ${i+1}</small><b>${l.title.split(' · ').pop()}</b>${l.title.includes(' · ')?`<span>${l.title.split(' · ')[0]}</span>`:''}</div></button>`);
+  const all=(MODULE_GAMES[CUR.m]||[]).concat(lessons);
+  dock.innerHTML=all.join('')+WORDTILE;dock.style.gridTemplateColumns='repeat('+(all.length+1)+',minmax(0,1fr))';
+  dock.querySelectorAll('.lt').forEach(b=>b.onclick=()=>openLesson(+b.dataset.lm+1,+b.dataset.li))}
 function showDock(mi){
-  if(mi<0){dock.innerHTML=DOCK0;dock.classList.remove('mod');dock.style.gridTemplateColumns='';bindWord();return}
+  if(mi<0){dock.classList.remove('mod');homeDock();if(window.bindWord)bindWord();return}
   const m=modules[mi],pics=LESSON_PICS[mi+1]||[],n=m.lessons.length;
-  dock.innerHTML=m.lessons.map((l,i)=>`<button class="tile lt" data-lm="${mi}" data-li="${i}" title="${l.title}">${pics[i]?`<div class="th" style="background-image:url(${pics[i]})"></div>`:`<div class="th num"><u>${i+1}</u></div>`}<div><small>LESSON ${i+1}</small><b>${l.title}</b></div></button>`).join('');
-  dock.classList.add('mod');dock.style.gridTemplateColumns='repeat('+n+',clamp(108px,10.5vw,150px))';
+  dock.innerHTML=m.lessons.map((l,i)=>`<button class="tile lt" data-lm="${mi}" data-li="${i}" title="${l.title}">${pics[i]?`<div class="th" style="background-image:url(${pics[i]})"></div>`:`<div class="th num"><u>${i+1}</u></div>`}<div><small>LESSON ${i+1}</small><b>${l.title}</b></div></button>`).join('')+(MODULE_GAMES[mi+1]||[]).join('');
+  dock.classList.add('mod');dock.style.gridTemplateColumns='repeat('+(n+(MODULE_GAMES[mi+1]||[]).length)+',clamp(108px,10.5vw,150px))';
   dock.querySelectorAll('.lt').forEach(b=>b.onclick=()=>openLesson(+b.dataset.lm+1,+b.dataset.li))}
 const nav=document.getElementById('moduleNav');
 let openModule=-1;
@@ -344,14 +351,15 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
 
 /* Interactive home */
 (function(){
-  const WOD=[['elderly','old (a polite word for people)'],['middle-aged','between about 40 and 60 years old'],['retired','no longer working because of your age'],['lonely','sad because you are alone'],['independent','able to live without help'],['confident','sure of yourself and your abilities'],['open-minded','ready to accept new, different ideas'],['unfair','not treating people equally'],['respectful','polite; showing that you value others'],['patient','able to wait without getting angry'],['stereotypical','based on a fixed idea about a group'],['argument','an angry discussion between people'],['independence','the freedom to do things without help'],['adolescence','the time when a child becomes an adult']];
+  const WOD=[['native language','the language you learn first as a child'],['fluent','able to speak a language easily and accurately'],['bilingual','able to speak two languages'],['nationality','the country a person belongs to'],['foreign language','a language from another country'],['translate','to change words into another language'],['pronunciation','the way a word is spoken'],['make progress','to improve at something'],['pick up a language','to learn a language naturally through use'],['look up','to search for information in a dictionary or online'],['get by','to manage with limited knowledge of a language'],['come across','to find or meet something unexpectedly'],['official language','a language recognised by a country or government'],['language barrier','difficulty communicating because of different languages'],['make a mistake','to do something wrong by accident'],['revise','to study again before a test'],['memorise','to learn something so that you remember it exactly'],['accurate','correct, with no mistakes']];
   const d=new Date(),w=WOD[(d.getFullYear()*366+d.getMonth()*31+d.getDate())%WOD.length];
   document.getElementById('wodWord').textContent=w[0];document.getElementById('wodWord2').textContent=w[0].toUpperCase();document.getElementById('wodDef').textContent=w[1];
   window.bindWord=()=>{document.getElementById('wodWord').textContent=w[0];document.getElementById('wodWord2').textContent=w[0].toUpperCase();document.getElementById('wodDef').textContent=w[1];const tile=document.getElementById('wordTile');tile.onclick=()=>{tile.classList.toggle('flip');
-    try{if(tile.classList.contains('flip')){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(w[0]);u.lang='en-GB';u.rate=.9;speechSynthesis.speak(u)}}catch(e){}}};bindWord();
+    try{if(tile.classList.contains('flip')&&window.CardAudio)CardAudio.say(w[0])}catch(e){}}};homeDock();bindWord();
+  {const m=modules[CUR.m-1],l=m.lessons[CUR.l];document.querySelector('.heroTop p').textContent='Gateway to the World B1 · Module '+CUR.m+' of '+modules.length+' · '+m.title;document.querySelector('#continueBtn b').textContent='Module '+CUR.m+' · Lesson '+(CUR.l+1)+' · '+l.title.split(' · ').pop()}
   const h=d.getHours();document.getElementById('hi').textContent=(h<12?'GOOD MORNING':h<18?'GOOD AFTERNOON':'GOOD EVENING')+', GABI';
   document.getElementById('progText').textContent='14 screens · book page 32 + Airport Mystery';
-  document.getElementById('continueBtn').onclick=()=>openLesson(3,1);
+  document.getElementById('continueBtn').onclick=()=>openLesson(CUR.m,CUR.l);
 })();
 
 (async function loadNewCover(){
@@ -381,6 +389,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLesson()});
   }
 })();
 </script>
+<script src="../card-audio.js?v=20261118"></script>
 <script src="fullscreen-open.js?v=20261019-b"></script>
 <script src="../shared/page-label.js?v=20261104"></script>
 <script>/* HOMEWORK GABI: число новых присланных работ Габи (из общей базы, без запроса пароля) */

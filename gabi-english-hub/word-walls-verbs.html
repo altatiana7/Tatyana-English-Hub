@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Word Walls · Phrasal verbs, do & make</title>
+<style>
+:root{--ink:#16384d;--muted:#536e7d;--blue:#1f78a5;--blueD:#155d80;--line:#c8dce8;--brick:#c4552f;--brickD:#8a3a22;--mortar:#5a2314;--sand:#fff3ce}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(180deg,#eef9ff 0,#f7fbff 52%,#fffaf1 100%);display:flex;flex-direction:column;min-height:100vh}
+button,a{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
+button:focus-visible,a:focus-visible{outline:3px solid #397baf;outline-offset:2px}
+button:disabled{cursor:default;opacity:.45}
+header{flex:none;display:flex;align-items:center;gap:14px;padding:7px 3%;background:#fff;border-bottom:2px solid #bcd7e6}
+header .brand{flex:1;min-width:0}
+header small{display:block;color:var(--muted);font-size:12px;letter-spacing:.06em}
+header strong{display:block;font-size:19px;font-weight:900;letter-spacing:.02em}
+.btn{border:2px solid var(--line);border-radius:12px;background:#fff;padding:8px 14px;font-weight:800;text-decoration:none;display:inline-block;white-space:nowrap}
+.btn:hover{background:#eaf2f7}
+.primary{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 4px 0 var(--blueD)}
+.primary:hover{background:#1b6c95}
+main{flex:1;min-height:0;display:flex;flex-direction:column;width:100%;max-width:1450px;margin:0 auto;padding:10px 3% 12px}
+
+/* menu */
+.menu{margin:auto;width:min(820px,100%);text-align:center}
+.kicker{font-size:12px;font-weight:900;letter-spacing:.16em;color:var(--blue)}
+.menu h1{margin:6px 0 4px;font-size:clamp(38px,5.4vw,66px);font-weight:900;letter-spacing:-.02em;line-height:1}
+.menu p{margin:8px auto 0;max-width:640px;font-size:18px;line-height:1.45;color:var(--muted)}
+.demo{display:flex;justify-content:center;gap:6px;margin:16px auto 6px;padding:8px;background:var(--mortar);border-radius:14px;width:fit-content;max-width:100%;flex-wrap:wrap}
+.demo span{background:linear-gradient(135deg,var(--brick),var(--brickD));color:#fff;font-weight:900;font-size:17px;padding:10px 16px;border-radius:7px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)}
+.demo span.trap{background:#fff;color:#9a3a2a;box-shadow:none;text-decoration:line-through}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 16px}
+.level{border:2px solid var(--line);border-radius:16px;background:#fff;padding:12px 10px;font-weight:900;font-size:19px}
+.level small{display:block;margin-top:5px;font-size:13px;font-weight:700;color:var(--muted)}
+.level[aria-pressed=true]{border-color:var(--blue);background:#e5f5ff;box-shadow:0 4px 0 #b8dced}
+.start{font-size:21px;padding:13px 30px;border-radius:16px}
+
+/* game bar */
+.bar{flex:none;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:7px 14px;background:#fff;border:2px solid var(--line);border-radius:16px}
+.bar h2{margin:0;font-size:clamp(18px,1.9vw,24px);font-weight:900;flex:1;min-width:200px}
+.bar h2 span{color:var(--muted);font-weight:700;font-size:.72em;margin-left:8px}
+.stat{border:2px solid var(--ink);border-radius:12px;padding:5px 12px;font-weight:900;font-size:17px;background:#fff;white-space:nowrap}
+.stat.lives{color:#c0392b;border-color:#e3b5ad;letter-spacing:2px}
+.meter{flex:none;height:10px;margin:7px 0;background:#d9eaf2;border-radius:999px;overflow:hidden}
+.meter>div{height:100%;width:0;background:linear-gradient(90deg,var(--brick),#e08a3a);transition:width .3s}
+
+/* tiles */
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:minmax(58px,1fr);gap:8px}
+.tile{position:relative;border:0;padding:0;background:none;perspective:800px;min-height:58px}
+.fl{position:absolute;inset:0;transition:transform .55s;transform-style:preserve-3d}
+.tile.ok .fl{transform:rotateY(180deg)}
+.fa,.fb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;border-radius:12px;padding:4px 8px}
+.fa{background:#fff;border:2px solid var(--line);font-size:clamp(16px,1.5vw,22px);font-weight:900;line-height:1.15}
+.tile:hover .fa{background:#eef9ff;border-color:#8fc3dc}
+.tile.hint .fa{border-color:#f0b92f;box-shadow:0 0 0 4px #ffe08a}
+.tile.bad .fa{background:#ffe6e0;border-color:#d9735c;animation:shake .4s}
+.fb{transform:rotateY(180deg);background:linear-gradient(135deg,var(--brick),var(--brickD));box-shadow:inset 0 -4px 0 rgba(0,0,0,.25);color:#fff}
+.fb b{font-size:clamp(15px,1.4vw,20px);font-weight:900;line-height:1.1}
+.fb span{margin-top:3px;font-size:clamp(12px,.95vw,14.5px);line-height:1.2;color:#ffe6cc}
+@keyframes shake{25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.toast{flex:none;min-height:28px;margin-top:7px;text-align:center;font-weight:800;font-size:17px;color:#873c2d}
+.toast.good{color:#225f40}
+
+/* finished wall */
+.wall{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:minmax(70px,1fr);gap:7px;padding:9px;background:var(--mortar);border-radius:18px;overflow:hidden}
+.brick{border:0;border-radius:9px;background:linear-gradient(135deg,var(--brick),var(--brickD));box-shadow:inset 0 -5px 0 rgba(0,0,0,.25);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6px 10px;animation:drop .45s backwards}
+.brick:hover{filter:brightness(1.1)}
+.brick b{font-size:clamp(17px,1.7vw,25px);font-weight:900;line-height:1.1}
+.brick span{margin-top:5px;font-size:clamp(12px,1.05vw,16px);line-height:1.25;color:#ffe6cc}
+.wall .brick:nth-child(n+6):nth-child(-n+10){transform:translateX(2.5%)}
+@keyframes drop{from{transform:translateY(-40px);opacity:0}}
+.after{flex:none;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.after .stat{white-space:normal;text-align:center}
+.fell{margin:auto;text-align:center}
+.fell h2{font-size:clamp(34px,5vw,56px);font-weight:900;margin:0 0 8px}
+.fell p{font-size:20px;color:var(--muted);margin:0 0 20px}
+
+/* stage 2: Kahoot-style, one sentence at a time */
+.dots{flex:none;display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:2px 0 8px}
+.dots button{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);background:#fff;font-weight:900;font-size:14px;padding:0}
+.dots button.cur{border-color:var(--blue);box-shadow:0 0 0 3px #bfe0f2}
+.dots button.r{background:#d6f0e2;border-color:#6dbb92;color:#1f6a45}
+.dots button.w{background:#fbe2dc;border-color:#d9735c;color:#8d3221}
+.qcard{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:16px;width:min(1080px,100%);margin:0 auto}
+.qtext{margin:0;text-align:center;font-size:clamp(23px,2.6vw,34px);font-weight:800;line-height:1.3;background:#fff;border:2px solid var(--line);border-radius:18px;padding:20px 24px}
+.qtext u{text-decoration:none;display:inline-block;min-width:4em;border-bottom:3px solid var(--blue);color:var(--blue)}
+.qtext u.ok{border-color:#2f8f6f;color:#2f8f6f}.qtext u.no{border-color:#c0392b;color:#c0392b}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{display:flex;align-items:center;gap:14px;border:2px solid transparent;border-radius:16px;padding:14px 18px;font-size:clamp(20px,2vw,27px);font-weight:800;text-align:left;min-height:72px;box-shadow:0 4px 0 rgba(22,56,77,.12)}
+.opt i{flex:none;width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.75);display:grid;place-items:center;font-style:normal;font-size:17px;color:var(--muted)}
+.opt:nth-child(1){background:#e3eefb}.opt:nth-child(2){background:#e6f4ea}.opt:nth-child(3){background:#fbf1dc}.opt:nth-child(4){background:#f4e6ee}
+.opt:hover:not(:disabled){filter:brightness(.97);border-color:#9fc4dc}
+.opt:disabled{opacity:1;cursor:default}
+.opt.right{background:#cdebd9!important;border-color:#2f8f6f}
+.opt.wrong{background:#f8d5cd!important;border-color:#c0392b}
+.why{min-height:30px;text-align:center;font-size:18px;font-weight:700;color:var(--muted)}
+.why b{color:var(--ink)}
+.qnav{flex:none;display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px}
+.review{flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:8px;margin-top:8px;align-content:start}
+.review div{background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 12px;font-size:16px;line-height:1.35}
+.review div.miss{background:#ffe6e0;border-color:#d9735c}
+.review div.skip{background:#f1f4f6}
+.review small{display:block;color:var(--muted);margin-top:2px}
+
+@media(max-width:950px){.grid{grid-template-columns:repeat(4,1fr)}.wall{grid-template-columns:repeat(3,1fr)}.wall .brick{transform:none!important}}
+@media(max-width:560px){header small{display:none}header strong{font-size:16px}.btn{padding:8px 10px;font-size:13px}.grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:66px}.wall{grid-template-columns:repeat(2,1fr)}.levels{grid-template-columns:1fr}.opts{grid-template-columns:1fr}}
+@media(max-height:620px){.qtext{padding:14px 18px}.opt{min-height:58px;padding:10px 16px}.qcard{gap:10px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+html.embed body>header{display:none!important}</style>
+<script>if(new URLSearchParams(location.search).has('embed')){document.documentElement.classList.add('embed')}</script></head>
+<body>
+<header>
+  <a class="btn" href="index.html">← HOME</a>
+  <div class="brand"><small>GABI · WARM-UP · MODULE 2 PHRASAL VERBS + MODULE 3 DO / MAKE</small><strong>WORD WALLS: PHRASAL VERBS, DO &amp; MAKE</strong></div>
+  <button class="btn" id="full">Full screen</button>
+</header>
+<main id="app"></main>
+<script src="../card-audio.js?v=20261118"></script>
+<script>
+/* Stage 1: 15 correct phrases from Module 2 (phrasal verbs, SB p.21) and Module 3 Lesson 1 (do / make, learning languages).
+   Traps are the typical mistakes: the wrong verb or the wrong particle. */
+const WORDS=[
+ ['do homework','school work you do at home'],
+ ['do an exam','sit a test (= take an exam)'],
+ ['do an exercise','complete a task in a book'],
+ ['do an essay','write a long piece of school work'],
+ ['make a mistake','do something wrong by accident'],
+ ['make progress','get better at something'],
+ ['look up a word','find it in a dictionary or online'],
+ ['look into','investigate'],
+ ['come across','find or meet by accident'],
+ ['find out','discover'],
+ ['work out','solve a problem'],
+ ['turn up','arrive or appear unexpectedly'],
+ ['come up with','think of an idea or a plan'],
+ ['pick up a language','learn it naturally, by using it'],
+ ['get by','manage with a little of a language']
+];
+const TRAPS={
+ 'make homework':'do homework','make an exam':'do an exam','make an exercise':'do an exercise','make an essay':'do an essay',
+ 'do a mistake':'make a mistake','do progress':'make progress','make English':'do English',
+ 'find up':'find out','look across':'look up / look into','work across':'work out','turn for':'turn up',
+ 'come up for':'come up with','pick in a language':'pick up a language','get on by':'get by','come across with':'come across'
+};
+/* Stage 2: one sentence at a time, four answers */
+const QS=[
+ {q:'I always ___ my homework before dinner.',o:['do','make','take','pass'],a:'do',why:'do homework: an activity, school work'},
+ {q:'Don\'t worry if you ___ a mistake. That\'s how we learn.',o:['make','do','have','take'],a:'make',why:'make a mistake'},
+ {q:'He practises every day, so he is ___ fast progress.',o:['making','doing','taking','getting'],a:'making',why:'make progress = get better'},
+ {q:'The teacher will ___ our mistakes in red.',o:['correct','make','do','pass'],a:'correct',why:'correct a mistake'},
+ {q:'I did the exercise, and then the teacher ___ it.',o:['checked','made','did','took'],a:'checked',why:'check / correct an exercise'},
+ {q:'Our teacher asked us to ___ an essay about our native language.',o:['write','make','take','say'],a:'write',why:'write / do an essay'},
+ {q:'I\'m nervous: tomorrow I ___ my English exam.',o:['take','make','say','get'],a:'take',why:'take / do an exam; then you pass or fail it'},
+ {q:'I didn\'t know the word, so I looked it ___ in a dictionary.',o:['up','for','into','across'],a:'up',why:'look up = find information'},
+ {q:'The police are looking ___ the strange case at the airport.',o:['into','up','across','out'],a:'into',why:'look into = investigate'},
+ {q:'While I was cleaning my room, I came ___ an old letter in Japanese.',o:['across','up','out','into'],a:'across',why:'come across = find by accident'},
+ {q:'Can you find ___ what time the plane lands?',o:['out','up','across','into'],a:'out',why:'find out = discover'},
+ {q:'It took me an hour to work ___ the answer to the puzzle.',o:['out','up','across','for'],a:'out',why:'work out = solve'},
+ {q:'Nobody invited him, but he turned ___ at the party anyway.',o:['up','out','into','for'],a:'up',why:'turn up = arrive unexpectedly'},
+ {q:'We need to come ___ a good name for our project.',o:['up with','across','out of','into'],a:'up with',why:'come up with = think of an idea'},
+ {q:'She picked ___ Spanish while she was living in Madrid.',o:['up','out','into','across'],a:'up',why:'pick up a language = learn it naturally'},
+ {q:'I don\'t speak French well, but I can get ___ in a café.',o:['by','up','out','across'],a:'by',why:'get by = manage'},
+ {q:'I\'m looking ___ my keys. Have you seen them?',o:['for','up','into','out'],a:'for',why:'look for = try to find'}
+];
+const full=x=>x.q.replace('___',x.a);
+const AUDIO_TEXTS=WORDS.map(w=>w[0]).concat(QS.map(full));
+const LEVELS={practice:['Practice','no limit'],standard:['Standard','5 lives'],challenge:['Challenge','3 lives']};
+const LIVES={practice:Infinity,standard:5,challenge:3};
+const DEF=Object.fromEntries(WORDS),GOOD=new Set(Object.keys(DEF)),N=WORDS.length;
+const A=document.getElementById('app'),$=s=>A.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let level='standard';
+function say(t){try{window.CardAudio&&CardAudio.say(t)}catch(e){}}
+
+function menu(){
+ A.innerHTML=`<div class="menu">
+  <div class="kicker">WARM-UP · PHRASAL VERBS · DO OR MAKE</div>
+  <h1>Word Walls</h1>
+  <p>Find the <b>15 correct phrases</b>. Every correct phrase becomes a brick. The <b>wrong verb</b> or the <b>wrong particle</b> is a trap.</p>
+  <div class="demo"><span>do homework</span><span class="trap">make homework</span><span>find out</span><span class="trap">find up</span></div>
+  <div class="levels">${Object.entries(LEVELS).map(([k,v])=>`<button class="level" data-level="${k}" aria-pressed="${k===level}">${v[0]}<small>${v[1]}</small></button>`).join('')}</div>
+  <button class="btn primary start" id="go">Start building →</button> <button class="btn start" id="sc">Stage 2 · Sentences</button>
+ </div>`;
+ A.querySelectorAll('[data-level]').forEach(b=>b.onclick=()=>{level=b.dataset.level;menu()});
+ $('#go').onclick=build;$('#sc').onclick=()=>quiz();
+}
+
+function build(){
+ let lives=LIVES[level],found=0,hints=3,missed=[];
+ const words=[...GOOD,...Object.keys(TRAPS)].sort(()=>Math.random()-.5);
+ A.innerHTML=`<div class="bar">
+   <h2>Tap the correct phrases<span>Wrong verb or wrong particle = trap.</span></h2>
+   <span class="stat" id="cnt">0 / ${N} bricks</span>
+   <span class="stat lives" id="hp"></span>
+   <button class="btn" id="hint">Hint · <b id="hn">3</b></button>
+   <button class="btn" id="exit">Menu</button>
+  </div>
+  <div class="meter"><div id="fill"></div></div>
+  <div class="grid">${words.map(w=>`<button class="tile" data-w="${esc(w)}"><div class="fl"><div class="fa">${esc(w)}</div><div class="fb"><b>${esc(w)}</b><span>${esc(DEF[w]||'')}</span></div></div></button>`).join('')}</div>
+  <div class="toast" id="toast" role="status"></div>`;
+ const hp=()=>{$('#hp').textContent=lives===Infinity?'∞':'♥'.repeat(lives)+'♡'.repeat(LIVES[level]-lives)};hp();
+ $('#exit').onclick=menu;
+ $('#hint').onclick=()=>{
+  if(!hints)return;
+  const el=[...A.querySelectorAll('.tile:not(.ok):not(.hint)')].find(e=>GOOD.has(e.dataset.w));
+  if(el){el.classList.add('hint');hints--;$('#hn').textContent=hints;if(!hints)$('#hint').disabled=true}
+ };
+ A.querySelectorAll('.tile').forEach(b=>b.onclick=()=>{
+  const w=b.dataset.w,toast=$('#toast');
+  if(b.classList.contains('ok')){say(w);return}
+  if(lives<=0)return;
+  if(GOOD.has(w)){
+   say(w);
+   b.classList.add('ok');b.classList.remove('hint');found++;
+   $('#cnt').textContent=found+' / '+N+' bricks';$('#fill').style.width=(found/N*100)+'%';
+   toast.className='toast good';toast.textContent=w+' = '+DEF[w];
+   if(found===N)setTimeout(()=>wall(missed),900);
+  }else{
+   b.classList.add('bad');setTimeout(()=>b.classList.remove('bad'),450);
+   if(!missed.includes(w))missed.push(w);
+   toast.className='toast';toast.textContent='Not “'+w+'”. We say “'+TRAPS[w]+'”.';
+   if(lives!==Infinity){lives--;hp();if(lives<=0)setTimeout(()=>fell(found,missed),700)}
+  }
+ });
+}
+
+function fell(found,missed){
+ A.innerHTML=`<div class="fell"><div class="kicker">OUT OF LIVES</div><h2>The wall fell down</h2>
+ <p>You placed ${found} of ${N} bricks.<br>${missed.map(w=>'<b>'+esc(TRAPS[w])+'</b>, not '+esc(w)).join(' · ')}</p>
+ <button class="btn primary start" id="again">Play again</button> <button class="btn start" id="sc">Stage 2 · Sentences</button> <button class="btn" id="m">Menu</button></div>`;
+ $('#again').onclick=build;$('#sc').onclick=()=>quiz();$('#m').onclick=menu;
+}
+
+function wall(missed){
+ A.innerHTML=`<div class="bar">
+   <h2>The wall stands<span>${missed.length?'Traps you hit: '+missed.map(esc).join(', '):'No traps hit. Perfect build.'}</span></h2>
+   <span class="stat">${N} / ${N} bricks</span>
+  </div>
+  <div class="meter"><div style="width:100%"></div></div>
+  <div class="wall">${WORDS.map((x,i)=>`<button class="brick" data-w="${esc(x[0])}" style="animation-delay:${i*45}ms"><b>${esc(x[0])}</b><span>${esc(x[1])}</span></button>`).join('')}</div>
+  <div class="after"><span class="stat" style="border-color:var(--line);font-weight:700">Tap a brick to hear it. Then use it in a sentence about learning English.</span>
+   <button class="btn primary" id="sc">Stage 2 · Sentences →</button><button class="btn" id="again">Play again</button><button class="btn" id="m">Menu</button></div>`;
+ $('#sc').onclick=()=>quiz();
+ A.querySelectorAll('.brick').forEach(b=>b.onclick=()=>say(b.dataset.w));
+ $('#again').onclick=build;$('#m').onclick=menu;
+}
+
+/* Stage 2: Kahoot-style. Gabi can move between questions without answering (he writes in his notebook first). One try per question. */
+function quiz(){
+ const order=QS.map((_,i)=>i).sort(()=>Math.random()-.5);
+ const ans=order.map(()=>null);let k=0,streak=0,best=0;
+ function score(){return ans.reduce((s,a,i)=>s+(a===QS[order[i]].a?1:0),0)}
+ function draw(){
+  const x=QS[order[k]],got=ans[k],done=got!==null;
+  const gap=done?`<u class="ok">${esc(x.a)}</u>`:'<u>&nbsp;</u>';
+  A.innerHTML=`<div class="bar"><h2>Sentences<span>Choose the missing word.</span></h2>
+    <span class="stat">${k+1} / ${order.length}</span><span class="stat">${score()*100} pts</span>
+    <button class="btn" id="exit">Menu</button></div>
+   <div class="meter"><div style="width:${ans.filter(a=>a!==null).length/order.length*100}%"></div></div>
+   <div class="dots">${order.map((id,i)=>`<button data-go="${i}" class="${i===k?'cur ':''}${ans[i]===null?'':ans[i]===QS[id].a?'r':'w'}">${i+1}</button>`).join('')}</div>
+   <div class="qcard">
+    <p class="qtext">${esc(x.q).replace('___',gap)}</p>
+    <div class="opts">${x.o.map((o,i)=>`<button class="opt${done&&o===x.a?' right':''}${done&&o===got&&o!==x.a?' wrong':''}" data-o="${esc(o)}" ${done?'disabled':''}><i>${'ABCD'[i]}</i>${esc(o)}</button>`).join('')}</div>
+    <div class="why" role="status">${done?(got===x.a?'<b>Correct.</b> ':'<b>The answer is “'+esc(x.a)+'”.</b> ')+esc(x.why)+(streak>=3&&got===x.a?' · streak '+streak:''):''}</div>
+   </div>
+   <div class="qnav"><button class="btn" id="prev" ${k?'':'disabled'}>← Back</button>
+    ${done?'<button class="btn" id="listen">Listen</button>':''}
+    ${k<order.length-1?'<button class="btn primary" id="next">Next →</button>':'<button class="btn primary" id="res">See result</button>'}</div>`;
+  $('#exit').onclick=menu;
+  $('#prev').onclick=()=>{k--;draw()};
+  if($('#next'))$('#next').onclick=()=>{k++;draw()};
+  if($('#res'))$('#res').onclick=result;
+  if($('#listen'))$('#listen').onclick=()=>say(full(x));
+  A.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{k=+b.dataset.go;draw()});
+  A.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(ans[k]!==null)return;ans[k]=b.dataset.o;
+   if(ans[k]===x.a){streak++;best=Math.max(best,streak)}else streak=0;draw();say(full(x))});
+ }
+ function result(){
+  const sc=score(),miss=order.filter((id,i)=>ans[i]!==null&&ans[i]!==QS[id].a),skip=order.filter((_,i)=>ans[i]===null);
+  A.innerHTML=`<div class="bar"><h2>Result<span>${sc===order.length?'Every answer correct.':'Red cards: read them aloud with the correct word.'}${skip.length?' Grey: not answered.':''}</span></h2>
+    <span class="stat">${sc} / ${order.length}</span><span class="stat">best streak ${best}</span>
+    <button class="btn primary" id="again">Play again</button><button class="btn" id="m">Menu</button></div>
+   <div class="review">${order.map((id,i)=>{const x=QS[id],a=ans[i];return `<div class="${a===null?'skip':a!==x.a?'miss':''}">${esc(x.q).replace('___','<b>'+esc(x.a)+'</b>')}<small>${a===null?'not answered':a!==x.a?'your answer: '+esc(a)+' · '+esc(x.why):esc(x.why)}</small></div>`}).join('')}</div>`;
+  $('#again').onclick=()=>quiz();$('#m').onclick=menu;
+ }
+ draw();
+}
+
+document.getElementById('full').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}};
+if(new URLSearchParams(location.search).get('stage')==='2')quiz();else menu();
+</script>
+<script src="../shared/page-label.js?v=20261104"></script>
+</body>
+</html>
