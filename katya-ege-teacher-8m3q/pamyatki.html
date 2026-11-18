@@ -223,42 +223,6 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
   .items{gap:7px}.mb{min-height:38px;padding:6px 9px;font-size:17px}.match{gap:8px}.mcol{gap:6px}
   .qz-card{min-height:150px}
 }
-
-/* Категории готовых комплектов: крупные стикеры вместо 7 узких колонок */
-.hub{gap:10px;padding-block:10px 12px;overflow:hidden}
-.hub-head{gap:10px}
-.hub .title-card{padding:8px 16px 7px;transform:rotate(-.5deg)}
-.hub .title-card h1{font-size:clamp(21px,2.1vw,27px)}
-.hub .title-card p{font-size:13px}
-.hub .legend{gap:6px;align-items:center}
-.hub-filter{border:1px solid rgba(80,50,15,.25);background:var(--c);color:var(--ink);padding:8px 12px;box-shadow:var(--shadow);border-radius:3px;font-size:15px;font-weight:700;white-space:nowrap}
-.hub-filter.active{outline:3px solid #6c4326;outline-offset:0;filter:saturate(1.08)}
-.hub-filter:hover{filter:brightness(1.04)}
-.hub-caption{padding:2px 4px;font-size:15px;font-weight:700;color:#36291a}
-.hub .tiles{grid-template-columns:repeat(var(--tilecols,4),minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:14px;overflow:hidden;padding:6px 3px 10px}
-.hub .tile{min-height:0;padding:18px 17px 12px;border-radius:1px;transform:rotate(var(--r,0deg));gap:7px}
-.hub .tile h2{font-size:clamp(18px,1.55vw,23px);line-height:1.12;overflow-wrap:normal;hyphens:auto}
-.hub .tile .tag{font-size:14px;line-height:1.25}
-.hub .tile .meta{font-size:13px;line-height:1.3}
-.hub .tile .pin{top:4px}
-@media (max-width:1050px){
- .hub{overflow:visible}
- .hub .tiles{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(135px,auto);overflow:visible}
- .hub .tile{min-height:135px}
-}
-@media (max-width:620px){
- .hub .tiles{grid-template-columns:1fr}
- .hub .tile{min-height:120px}
- .hub-filter{font-size:13px;padding:7px 9px}
-}
-@media (max-height:600px) and (min-width:1051px){
- .hub .tiles{gap:10px}
- .hub .tile{padding:13px 12px 8px;gap:4px}
- .hub .tile h2{font-size:18px}
- .hub .tile .tag{font-size:12px}
- .hub .tile .meta{font-size:12px}
-}
-
 @media (prefers-reduced-motion:reduce){.qz-in{transition:none}.boom,.shake{animation:none}.tile{transition:none}}
 </style>
 
@@ -2116,65 +2080,6 @@ const TPL_PH_M=[
  ['A family that plays together','stays together.'],['Family gives us the roots','to stand tall and strong.'],
 ];
 const TPL_Q=parseS(TPL_S), TPL37_Q=parseS(TPL37_S), TPL38_Q=parseS(TPL38_S), TPL_PH_Q=parseS(TPL_PH_S);
-
-/* 2026-11-17 · Новые памятки: 30–36. Из 15 вопросов на паронимы и 7 глаголов. */
-const EGE_PAR_GROUPS=[["affect / effect",[["affect","влиять на что-то","affect memory / performance"],["effect","эффект, результат (сущ.)","have an effect on"],["infect","заражать","infect a person with a virus"],["afflict","поражать, причинять страдание","be afflicted by/with"]]],["adopt / adapt",[["adopt","принять (правила, подход); усыновить","adopt stricter rules / adopt a policy"],["adapt","адаптировать(ся)","adapt to change / adapt a book"],["adept","умелый, искусный","be adept at"],["adjust","подкорректировать, приспособить","adjust the settings / adjust to"]]],["principle / principal",[["principle","принцип","in principle / a matter of principle"],["principal","главный; директор","principal reason / school principal"],["principally","главным образом","principally because of"],["prince","принц","a prince of the royal family"]]],["sensible / sensitive",[["sensible","разумный, практичный","a sensible decision"],["sensitive","чувствительный, восприимчивый","sensitive to the sun / sensitive skin"],["sensual","чувственный","sensual pleasure"],["sensational","сенсационный","sensational news"]]],["advice / advise",[["advice","совет, рекомендации (неисчисл.)","give some advice"],["advise","советовать","advise someone to do something"],["devise","разработать, придумать план","devise a plan"],["revise","пересмотреть; повторять к экзамену","revise for an exam"]]],["ensure / insure / assure",[["ensure","обеспечить; проследить, чтобы","ensure that / ensure safety"],["insure","застраховать","insure a car"],["assure","заверить кого-то","assure someone that"],["reassure","успокоить, уверить повторно","reassure someone about"]]],["considerate / considerable",[["considerate","внимательный, тактичный","considerate of someone"],["considerable","значительный","considerable progress"],["considered","обдуманный","a considered response"],["consideration","рассмотрение; забота","take into consideration"]]],["historic / historical",[["historic","знаменательный, исторически важный","a historic moment"],["historical","относящийся к истории","historical research"],["historian","историк","a distinguished historian"],["history","история","study history"]]],["council / counsel",[["council","совет, коллегиальный орган","city council"],["counsel","совет; консультировать","seek legal counsel"],["consul","консул","the British consul"],["cancel","отменять","cancel a meeting"]]],["economical / economic",[["economical","экономичный, бережливый","economical car / economical with fuel"],["economic","экономический","economic growth"],["economics","экономика (наука)","study economics"],["economist","экономист","a leading economist"]]],["rise / raise",[["rise — rose — risen","подниматься, расти (без объекта)","prices rise / have risen"],["raise — raised — raised","поднимать что-то (с объектом)","raise prices / raise a question"],["arise — arose — arisen","возникать","a problem arises"],["arouse — aroused — aroused","вызывать чувство, интерес","arouse interest"]]],["except / accept / expect",[["except","кроме, за исключением","everyone except Tom"],["accept","принимать","accept an offer"],["expect","ожидать","expect a reply"],["excerpt","выдержка, отрывок","an excerpt from a book"]]],["continuous / continual",[["continuous","непрерывный","continuous noise / continuous rain"],["continual","постоянно повторяющийся (возможны паузы)","continual interruptions"],["contagious","заразный","a contagious disease"],["contiguous","соприкасающийся, смежный","contiguous countries"]]],["compliment / complement",[["compliment","комплимент","pay someone a compliment"],["complement","дополнять; дополнение","complement the outfit"],["complaint","жалоба","make a complaint"],["implement","осуществить, внедрить","implement a policy"]]],["realise / release",[["realise","осознавать, понимать","realise how late it is"],["release","выпустить, освободить","release a report"],["relieve","облегчить, избавить от боли","relieve pain"],["receive","получить","receive a letter"]]]];
-const EGE_PAR_Q=[["Lack of sleep can seriously ______ your memory.",["effect","affect","infect","afflict"],"affect","affect your memory: affect — глагол «влиять»; effect чаще существительное «результат»."],["The school decided to ______ stricter rules about phones.",["adapt","adept","adopt","adjust"],"adopt","adopt stricter rules — принять более строгие правила; adapt — адаптировать."],["In ______, I agree with you, but it’s difficult in practice.",["principal","principle","principally","prince"],"principle","in principle — устойчивое выражение «в принципе»."],["Babies’ skin is very ______ to the sun.",["sensible","sensitive","sensual","sensational"],"sensitive","sensitive to the sun — чувствительный к солнцу; sensible — разумный."],["My doctor ______ me to drink more water.",["advice","advised","devised","revised"],"advised","advise someone to do something; advice — существительное."],["Please ______ that all windows are closed before you leave.",["insure","assure","ensure","reassure"],"ensure","ensure that + clause — проследить, чтобы; insure — застраховать."],["It was very ______ of you to bring me flowers in hospital.",["considerable","considerate","considered","consideration"],"considerate","considerate of you — заботливо с вашей стороны; considerable — значительный."],["The signing of the treaty was a ______ moment for both countries.",["historical","historian","historic","history"],"historic","historic moment — знаменательный момент; historical — связанный с историей."],["The city ______ has voted to build a new park.",["counsel","consul","cancel","council"],"council","city council — городской совет; counsel — совет или юридическая помощь."],["Small cars are more ______ than big ones because they use less fuel.",["economic","economical","economics","economist"],"economical","economical — экономичный; economic — экономический."],["Prices have ______ by 10% since January.",["raised","risen","aroused","arisen"],"risen","rise–rose–risen — расти самостоятельно; raise–raised–raised — поднимать что-либо."],["Everyone came to the party ______ Tom, who was ill.",["accept","expect","except","excerpt"],"except","except Tom — кроме Тома; accept — принять, expect — ожидать."],["We heard the ______ noise of traffic all night long.",["continual","continuous","contagious","contiguous"],"continuous","continuous noise — непрерывный шум; continual — повторяющийся."],["She paid me a lovely ______ on my new dress.",["complement","complaint","compliment","implement"],"compliment","pay a compliment — сделать комплимент; complement — дополнять."],["I didn’t ______ how late it was until I looked at my watch.",["realise","release","relieve","receive"],"realise","realise — осознать; receive — получить, release — выпустить."]].map(r=>({q:r[0].replace(/_{3,}/g,"___"),opts:r[1],a:r[2],after:r[3]}));
-const EGE_GAIN_WORDS=[["get","получить, стать, добраться (разговорное)","get a letter; get a job; get better; get home; get ready; get rid of","get используется широко в повседневной речи."],["gain","приобрести постепенно, накопить","gain experience; gain knowledge; gain weight; gain popularity; gain confidence; gain access to","gain experience, а не obtain experience в обычном контексте."],["obtain","официально получить (формальное)","obtain a visa; obtain a permit; obtain information; obtain permission; obtain a degree","Для разрешений, документов, официальных сведений."],["attain","достичь высокого уровня, положения (формальное)","attain a level; attain independence; attain a goal","Обычно акцент на уровне, статусе, состоянии."],["achieve","добиться результата усилиями","achieve a goal; achieve success; achieve results; achieve an ambition; achieve high grades","achieve success; но receive / win a prize."],["receive","получить то, что дали, прислали","receive a letter; receive a gift; receive an award; receive treatment; receive a warm welcome","Подарок, награду и письмо можно receive."],["perceive","воспринимать, замечать, считать","perceive a difference; perceive something as a threat; how people perceive you","Не значит «получать». Управление: perceive X as Y."]];
-const EGE_GAIN_Q=[["She ______ a lot of experience working abroad.",["gained","obtained","perceived","received"],"gained","gain experience — набраться опыта."],["You need to ______ a visa before you travel.",["gain","obtain","perceive","achieve"],"obtain","obtain a visa — официально получить визу."],["He ______ a prize for his science project.",["attained","perceived","received","achieved"],"received","receive a prize — получить награду."],["Teenagers often ______ adults as too strict.",["receive","obtain","achieve","perceive"],"perceive","perceive somebody as — воспринимать кого-либо как."],["After years of hard work, she finally ______ her goal.",["received","perceived","achieved","obtained"],"achieved","achieve a goal — добиться цели (attain a goal тоже возможно, но этого варианта здесь нет)."],["If you work hard, you can ______ anything you want.",["achieve","receive","perceive","obtain"],"achieve","achieve anything you want — добиться желаемого."],["We finally ______ home at midnight.",["gained","got","obtained","attained"],"got","get home — добраться домой; прошедшая форма got."],["She has ______ a lot of confidence since starting university.",["perceived","obtained","gained","attained"],"gained","gain confidence — обрести уверенность."],["You must ______ permission before entering the laboratory.",["attain","perceive","obtain","achieve"],"obtain","obtain permission — получить разрешение."],["The athlete hopes to ______ the highest level of competition.",["receive","attain","perceive","get"],"attain","attain the highest level — достичь высокого уровня."]].map(r=>({q:r[0].replace(/_{3,}/g,"___"),opts:r[1],a:r[2],after:r[3]}));
-const EGE_GAIN_T=[["She ___ a lot of experience working abroad.",["gained"],"gained","gain experience"],["You need to ___ a visa before you travel.",["obtain"],"obtain","obtain a visa"],["He ___ a prize for his science project.",["received"],"received","receive a prize"],["Teenagers often ___ adults as too strict.",["perceive"],"perceive","perceive X as Y"],["After years of hard work, she ___ her goal.",["achieved","attained"],"achieved / attained","achieve / attain a goal"],["If you work hard, you can ___ anything you want.",["achieve"],"achieve","achieve results"],["We finally ___ home at midnight.",["got"],"got","get home"],["She has ___ a lot of confidence since starting university.",["gained"],"gained","gain confidence"],["You must ___ permission before entering the laboratory.",["obtain"],"obtain","obtain permission"],["The athlete hopes to ___ the highest level of competition.",["attain","achieve"],"attain / achieve","attain / achieve a level"]].map(r=>({q:r[0],a:r[1],show:r[2],hint:r[3]}));
-const EGE_GAIN_COLLOC_Q=[
- {q:'___ experience',opts:['gain','obtain','perceive','receive'],a:'gain',after:'gain experience'},
- {q:'___ a visa',opts:['achieve','attain','obtain','perceive'],a:'obtain',after:'obtain a visa'},
- {q:'___ a goal',opts:['achieve','receive','perceive','get'],a:'achieve',after:'achieve a goal'},
- {q:'___ treatment',opts:['attain','gain','receive','perceive'],a:'receive',after:'receive treatment'},
- {q:'___ confidence',opts:['gain','obtain','receive','perceive'],a:'gain',after:'gain confidence'},
- {q:'___ a warm welcome',opts:['achieve','perceive','receive','attain'],a:'receive',after:'receive a warm welcome'},
- {q:'___ a difference',opts:['get','obtain','perceive','achieve'],a:'perceive',after:'perceive a difference'},
- {q:'___ independence',opts:['receive','perceive','attain','get'],a:'attain',after:'attain independence'},
- {q:'___ ready',opts:['gain','get','attain','perceive'],a:'get',after:'get ready'},
- {q:'___ high grades',opts:['perceive','obtain','achieve','receive'],a:'achieve',after:'achieve high grades'}
-];
-
-
-/* Новые материалы встроены в существующие готовые комплекты ЕГЭ 30–36.
-   Не создаём дополнительных стикеров: всё в Лексика / Confusing words / Collocations. */
-const EGE_NEW_VERB_GROUP='get / gain / obtain / attain / achieve / receive / perceive';
-if (!LEX.some(g=>g.g===EGE_NEW_VERB_GROUP)) {
-  LEX.push({g:EGE_NEW_VERB_GROUP,t:'Collocations',
-    trap:'gain experience / confidence; obtain permission / a visa; achieve success / a goal; attain a high level; receive an award; perceive somebody as…',
-    w:EGE_GAIN_WORDS.map(w=>[w[0],w[1],w[2],w[3]])});
-  LEXG.push(EGE_NEW_VERB_GROUP);
-}
-const EGE_GAIN_NEW_SENT=EGE_GAIN_Q.map(q=>({...q,group:EGE_NEW_VERB_GROUP}));
-const EGE_GAIN_NEW_COLLOC=EGE_GAIN_COLLOC_Q.map(q=>({...q,group:EGE_NEW_VERB_GROUP}));
-LEX_SENT.push(...EGE_GAIN_NEW_SENT);
-LEX_TRAPS.push(...EGE_GAIN_NEW_COLLOC);
-LEX_ALL.push(...EGE_GAIN_NEW_SENT,...EGE_GAIN_NEW_COLLOC);
-
-const EGE_EXISTING_CW=new Set(CONFUSING.flatMap(g=>g.w.map(w=>w[0].toLowerCase())));
-for(const [name,words] of EGE_PAR_GROUPS){
-  const unique=words.filter(w=>!EGE_EXISTING_CW.has(w[0].toLowerCase()));
-  if(unique.length){
-    CONFUSING.push({g:name,w:unique.map(w=>[w[0],w[1]+' · '+w[2]]),s:[]});
-    unique.forEach(w=>EGE_EXISTING_CW.add(w[0].toLowerCase()));
-  }
-}
-const EGE_EXISTING_CW_Q=new Set(CW_Q.map(q=>q.q));
-for(const q of EGE_PAR_Q){if(!EGE_EXISTING_CW_Q.has(q.q)){CW_Q.push(q);EGE_EXISTING_CW_Q.add(q.q)}}
-
-const EGE_EXISTING_COLLOC=new Set(COLLOC.map(c=>c[1].replace(/^to /,'').trim().toLowerCase()));
-for(const w of EGE_GAIN_WORDS){
-  for(const p of w[2].split('; ')){
-    if(!EGE_EXISTING_COLLOC.has(p.toLowerCase())){
-      COLLOC.push([w[0],'to '+p,w[1]+' · '+w[3]]);
-      EGE_EXISTING_COLLOC.add(p.toLowerCase());
-    }
-  }
-}
-const EGE_EXISTING_CO_Q=new Set(CO_Q.map(q=>q.q));
-for(const q of EGE_GAIN_COLLOC_Q){if(!EGE_EXISTING_CO_Q.has(q.q)){CO_Q.push(q);EGE_EXISTING_CO_Q.add(q.q)}}
-
 const SECTIONS=[
  {id:'articles', title:'Артикли', tag:'задания 19–24', img:'pamyatki-img/articles.jpg',
   cards:ART_CARDS.map(c=>({f:c[0],b:c[1],ex:c[2]})),
@@ -2199,8 +2104,7 @@ const SECTIONS=[
      {f:'Perfect Continuous',b:'действие началось в прошлом и длится до сих пор (или к определённому моменту)'}]},
    {n:'Speed Game', type:'bomb', items:tenseChoice},
   ]},
-
- {id:'lexis', memoHtml:"<h3>Get · gain · obtain · attain · achieve · receive · perceive</h3><p>Перевод не всегда помогает: решающую роль играет <b>collocation</b> (сочетаемость). Сначала изучи карточки с примерами, затем переходи к практике.</p><div class=\"tw\"><table class=\"tbl\"><tr><th>Глагол</th><th>Значение</th><th>Типичные сочетания</th><th>Особенность</th></tr><tr><td>get</td><td>получить, стать, добраться (разговорное)</td><td>get a letter; get a job; get better; get home; get ready; get rid of</td><td>get используется широко в повседневной речи.</td></tr><tr><td>gain</td><td>приобрести постепенно, накопить</td><td>gain experience; gain knowledge; gain weight; gain popularity; gain confidence; gain access to</td><td>gain experience, а не obtain experience в обычном контексте.</td></tr><tr><td>obtain</td><td>официально получить (формальное)</td><td>obtain a visa; obtain a permit; obtain information; obtain permission; obtain a degree</td><td>Для разрешений, документов, официальных сведений.</td></tr><tr><td>attain</td><td>достичь высокого уровня, положения (формальное)</td><td>attain a level; attain independence; attain a goal</td><td>Обычно акцент на уровне, статусе, состоянии.</td></tr><tr><td>achieve</td><td>добиться результата усилиями</td><td>achieve a goal; achieve success; achieve results; achieve an ambition; achieve high grades</td><td>achieve success; но receive / win a prize.</td></tr><tr><td>receive</td><td>получить то, что дали, прислали</td><td>receive a letter; receive a gift; receive an award; receive treatment; receive a warm welcome</td><td>Подарок, награду и письмо можно receive.</td></tr><tr><td>perceive</td><td>воспринимать, замечать, считать</td><td>perceive a difference; perceive something as a threat; how people perceive you</td><td>Не значит «получать». Управление: perceive X as Y.</td></tr></table></div><p><b>Типичные ошибки:</b> gain experience (обычнее, чем obtain experience); achieve success; receive / win a prize; perceive somebody as + adjective / noun. Achieve и attain иногда оба возможны — зависит от контекста.</p>", title:'Лексика 30–36', tag:'задания 30–36', img:null,
+ {id:'lexis', title:'Лексика 30–36', tag:'задания 30–36', img:null,
   cards:LEX.flatMap(g=>g.w.map(e=>({f:e[0],b:e[1],ex:e[2]+(e[3]?'<br><i>'+esc(e[3])+'</i>':''),raw:true,group:g.g}))), groups:LEX.map(g=>g.g),
   acts:[
    {n:'Сочетания в предложениях', type:'choice', items:LEX_SENT, groups:LEXG, all:true},
@@ -2233,7 +2137,7 @@ const SECTIONS=[
    {n:'О чём вопрос?', type:'match', pairs:EMAIL.flatMap(e=>e.q.filter(q=>q!=='Is it big?').map(q=>[q,e.topic]))},
    {n:'Speed Game', type:'bomb', items:EMAIL.flatMap(e=>e.q.filter(q=>q!=='Is it big?').map(q=>({q, opts:shuffle([e.topic,...shuffle(EMAIL.filter(x=>x!==e).map(x=>x.topic)).slice(0,3)]), a:e.topic})))},
   ]},
- {id:'confusing', memoHtml:"<h3>Как различать похожие слова</h3><p>В заданиях 30–36 проверяются значения, грамматическая форма и устойчивые сочетания. Вначале прочитай пары в карточках Quizlet, затем выполняй задания.</p><div class=\"tw\"><table class=\"tbl\"><tr><th>Пара</th><th>Как различать</th></tr><tr><td>affect / effect</td><td>affect: влиять на что-то; effect: эффект, результат (сущ.); infect: заражать; afflict: поражать, причинять страдание</td></tr><tr><td>adopt / adapt</td><td>adopt: принять (правила, подход); усыновить; adapt: адаптировать(ся); adept: умелый, искусный; adjust: подкорректировать, приспособить</td></tr><tr><td>principle / principal</td><td>principle: принцип; principal: главный; директор; principally: главным образом; prince: принц</td></tr><tr><td>sensible / sensitive</td><td>sensible: разумный, практичный; sensitive: чувствительный, восприимчивый; sensual: чувственный; sensational: сенсационный</td></tr><tr><td>advice / advise</td><td>advice: совет, рекомендации (неисчисл.); advise: советовать; devise: разработать, придумать план; revise: пересмотреть; повторять к экзамену</td></tr><tr><td>ensure / insure / assure</td><td>ensure: обеспечить; проследить, чтобы; insure: застраховать; assure: заверить кого-то; reassure: успокоить, уверить повторно</td></tr><tr><td>considerate / considerable</td><td>considerate: внимательный, тактичный; considerable: значительный; considered: обдуманный; consideration: рассмотрение; забота</td></tr><tr><td>historic / historical</td><td>historic: знаменательный, исторически важный; historical: относящийся к истории; historian: историк; history: история</td></tr><tr><td>council / counsel</td><td>council: совет, коллегиальный орган; counsel: совет; консультировать; consul: консул; cancel: отменять</td></tr><tr><td>economical / economic</td><td>economical: экономичный, бережливый; economic: экономический; economics: экономика (наука); economist: экономист</td></tr><tr><td>rise / raise</td><td>rise — rose — risen: подниматься, расти (без объекта); raise — raised — raised: поднимать что-то (с объектом); arise — arose — arisen: возникать; arouse — aroused — aroused: вызывать чувство, интерес</td></tr><tr><td>except / accept / expect</td><td>except: кроме, за исключением; accept: принимать; expect: ожидать; excerpt: выдержка, отрывок</td></tr><tr><td>continuous / continual</td><td>continuous: непрерывный; continual: постоянно повторяющийся (возможны паузы); contagious: заразный; contiguous: соприкасающийся, смежный</td></tr><tr><td>compliment / complement</td><td>compliment: комплимент; complement: дополнять; дополнение; complaint: жалоба; implement: осуществить, внедрить</td></tr><tr><td>realise / release</td><td>realise: осознавать, понимать; release: выпустить, освободить; relieve: облегчить, избавить от боли; receive: получить</td></tr></table></div>", title:'Confusing words', tag:'задания 30–36', thumb:'accident / incident<br>rise / raise',
+ {id:'confusing', title:'Confusing words', tag:'задания 30–36', thumb:'accident / incident<br>rise / raise',
   cards:CONFUSING.flatMap(g=>g.w.map(([w,e])=>({f:w,b:e,ex:cwExample(g,w)||'',group:g.g}))), groups:CONFUSING.map(g=>g.g),
   acts:[
    {n:'Выбери слово', type:'choice', items:CW_Q},
@@ -2252,7 +2156,7 @@ const SECTIONS=[
    {n:'Доктор Грамматика', type:'doctor', items:PH_Q, hints:true},
    {n:'Speed Game', type:'bomb', items:PH_Q.concat(PH_TR)},
   ]},
- {id:'colloc', memoHtml:"<h3>Get · gain · obtain · attain · achieve · receive · perceive</h3><p>Перевод не всегда помогает: решающую роль играет <b>collocation</b> (сочетаемость). Сначала изучи карточки с примерами, затем переходи к практике.</p><div class=\"tw\"><table class=\"tbl\"><tr><th>Глагол</th><th>Значение</th><th>Типичные сочетания</th><th>Особенность</th></tr><tr><td>get</td><td>получить, стать, добраться (разговорное)</td><td>get a letter; get a job; get better; get home; get ready; get rid of</td><td>get используется широко в повседневной речи.</td></tr><tr><td>gain</td><td>приобрести постепенно, накопить</td><td>gain experience; gain knowledge; gain weight; gain popularity; gain confidence; gain access to</td><td>gain experience, а не obtain experience в обычном контексте.</td></tr><tr><td>obtain</td><td>официально получить (формальное)</td><td>obtain a visa; obtain a permit; obtain information; obtain permission; obtain a degree</td><td>Для разрешений, документов, официальных сведений.</td></tr><tr><td>attain</td><td>достичь высокого уровня, положения (формальное)</td><td>attain a level; attain independence; attain a goal</td><td>Обычно акцент на уровне, статусе, состоянии.</td></tr><tr><td>achieve</td><td>добиться результата усилиями</td><td>achieve a goal; achieve success; achieve results; achieve an ambition; achieve high grades</td><td>achieve success; но receive / win a prize.</td></tr><tr><td>receive</td><td>получить то, что дали, прислали</td><td>receive a letter; receive a gift; receive an award; receive treatment; receive a warm welcome</td><td>Подарок, награду и письмо можно receive.</td></tr><tr><td>perceive</td><td>воспринимать, замечать, считать</td><td>perceive a difference; perceive something as a threat; how people perceive you</td><td>Не значит «получать». Управление: perceive X as Y.</td></tr></table></div><p><b>Типичные ошибки:</b> gain experience (обычнее, чем obtain experience); achieve success; receive / win a prize; perceive somebody as + adjective / noun. Achieve и attain иногда оба возможны — зависит от контекста.</p>", title:'Устойчивые выражения', tag:'задания 30–36', thumb:'make a decision<br>keep a secret', imgs:['pamyatki-img/colloc1.jpg'],
+ {id:'colloc', title:'Устойчивые выражения', tag:'задания 30–36', thumb:'make a decision<br>keep a secret', imgs:['pamyatki-img/colloc1.jpg'],
   cards:COLLOC.map(c=>({f:c[1],b:c[2],group:c[0]})), groups:[...new Set(COLLOC.map(c=>c[0]))],
   acts:[
    {n:'Какой глагол?', type:'choice', items:CO_Q},
@@ -2382,47 +2286,22 @@ const ONLY=((location.search.match(/[?&]only=([^&]+)/)||[])[1]||'').split(',').f
 const app=$('#app');
 let cleanups=[];
 function clean(){cleanups.forEach(f=>f());cleanups=[]}
-
-const HUB_CATEGORIES=[
- ['lex','30–36','var(--n-yellow)'],
- ['grammar','19–29','var(--n-lilac)'],
- ['writing','Письмо 37–38','var(--n-pink)'],
- ['oral','Устная часть','var(--n-mint)'],
- ['extra','Числа','var(--n-peach)']
-];
-let hubFilter=ONLY.length?'all':'lex';
-function hubCategory(s) {
- const tag=s.tag||'';
- if(/30–36/.test(tag))return 'lex';
- if(/19–24|25–29/.test(tag))return 'grammar';
- if(/письмо|задани[ея] 37|задани[ея] 38/.test(tag))return 'writing';
- if(/устная|устной/.test(tag))return 'oral';
- return 'extra';
-}
 function hub(){
   clean();
-  const visible=SECTIONS.filter(s=>!ONLY.length||ONLY.includes(s.id));
-  const list=ONLY.length?visible:visible.filter(s=>hubCategory(s)===hubFilter);
-  const color=cat=>(HUB_CATEGORIES.find(x=>x[0]===cat)||HUB_CATEGORIES[4])[2];
-  const rot=i=>[-1.2,.8,-.6,1.1,-.8,.6,-1.1,.8][i%8];
+  const col=t=>/30–36/.test(t)?'var(--n-yellow)':/19–24|25–29/.test(t)?'var(--n-lilac)':/37|38|письмо/.test(t)&&!/устная/.test(t)?'var(--n-pink)':/устная/.test(t)?'var(--n-mint)':'var(--n-peach)';
+  const rot=i=>[-2.2,1.4,-0.8,2,-1.5,0.9,-2.6,1.8,-0.5,2.4,-1.2,0.6,-1.9,1.1][i%14];
   const pins=['#d2453c','#2f6fd1','#2f9a63','#e0a12b','#8a4fd1'];
-  const cols=list.length>12?5:list.length>4?4:Math.min(4,Math.max(1,list.length));
-  const filterNav=ONLY.length
-    ?'<div class="legend"><span style="--c:var(--n-yellow)">Готовые комплекты · 30–36</span></div>'
-    :'<div class="legend" role="group" aria-label="Разделы памяток">'+HUB_CATEGORIES.map(([id,label,c])=>
-       '<button class="hub-filter '+(hubFilter===id?'active':'')+'" type="button" data-filter="'+id+'" aria-pressed="'+(hubFilter===id?'true':'false')+'" style="--c:'+c+'">'+label+'</button>').join('')+'</div>';
   app.innerHTML=`<div class="hub">
-   <div class="hub-head"><div class="title-card"><span class="tape"></span><h1>Памятки ЕГЭ</h1><p>Карточки Quizlet · правила · интерактивная практика</p></div>
-   ${filterNav}
+   <div class="hub-head"><div class="title-card"><span class="tape"></span><h1>Памятки ЕГЭ</h1><p>Английский язык · карточки, игры, проверка</p></div>
+   <div class="legend"><span style="--c:var(--n-yellow)">30–36</span><span style="--c:var(--n-lilac)">19–29</span><span style="--c:var(--n-pink)">письмо 37–38</span><span style="--c:var(--n-mint)">устная часть</span></div>
    <button class="btn" id="teach">Для учителя</button></div>
-   <div class="hub-caption">Готовые комплекты · ${list.length} ${list.length===1?'тема':list.length>=2&&list.length<=4?'темы':'тем'}</div>
-   <div class="tiles" style="--tilecols:${cols}">${list.map((s,i)=>`<button class="tile" data-id="${s.id}" style="--c:${color(hubCategory(s))};--r:${rot(i)}deg"><span class="pin" style="--pc:${pins[i%5]}"></span>
-    <h2>${esc(s.title)}</h2><div><div class="tag">${esc(s.tag)}</div><div class="meta">${s.cards.length} карточек · ${s.acts.length} игр</div></div></button>`).join('')}
+   <div class="tiles">${SECTIONS.filter(s=>!ONLY.length||ONLY.includes(s.id)).map((s,i)=>`<button class="tile" data-id="${s.id}" style="--c:${col(s.tag)};--r:${rot(i)}deg"><span class="pin" style="--pc:${pins[i%5]}"></span>
+     <h2>${esc(s.title)}</h2><div><div class="tag">${esc(s.tag)}</div><div class="meta">${s.cards.length} карточек · ${s.acts.length} игр</div></div></button>`).join('')}
+     <button class="tile" id="teach2" style="--c:var(--kraft);--r:1.6deg"><span class="pin" style="--pc:#2f6fd1"></span><h2>Маршрутная карта</h2><div><div class="tag">для учителя</div><div class="meta">план по месяцам</div></div></button>
    </div></div>`;
   app.querySelectorAll('.tile[data-id]').forEach(b=>b.onclick=()=>openSec(b.dataset.id));
-  app.querySelectorAll('.hub-filter').forEach(b=>b.onclick=()=>{hubFilter=b.dataset.filter;hub()});
-  if(/[?&]student=1/.test(location.search)){$('#teach').remove();const th=$('#tohub');if(th)th.remove()}
-  else $('#teach').onclick=teacher;
+  if(/[?&]student=1/.test(location.search)){$('#teach').remove();$('#teach2').remove();const th=$('#tohub');if(th)th.remove()}
+  else $('#teach').onclick=$('#teach2').onclick=teacher;
 }
 
 /* ====== раздел ====== */
@@ -2430,10 +2309,10 @@ function openSec(id){
   clean();
   const s=SECTIONS.find(x=>x.id===id);
   app.innerHTML=`<div class="top"><button class="btn sm" id="home">← Главная</button><div class="title-card"><h1>${esc(s.title)}</h1></div><span class="tag">${esc(s.tag)}</span><span class="spacer"></span>
-    ${(s.img||s.imgs||s.memoHtml)?'<button class="btn sm" id="memo">Памятка</button>':''}</div>
+    ${(s.img||s.imgs)?'<button class="btn sm" id="memo">Памятка</button>':''}</div>
     <div class="sec"><div class="panel" id="p0"></div><div class="panel" id="p1"></div><div class="panel" id="p2"></div></div>`;
   $('#home').onclick=hub;
-  if(s.img||s.imgs||s.memoHtml) $('#memo').onclick=()=>overlay(s.title,s.memoHtml||(s.imgs||[s.img]).map(u=>`<img src="${u}" alt="Памятка: ${esc(s.title)}" style="margin-bottom:10px">`).join(''));
+  if(s.img||s.imgs) $('#memo').onclick=()=>overlay(s.title,(s.imgs||[s.img]).map(u=>`<img src="${u}" alt="Памятка: ${esc(s.title)}" style="margin-bottom:10px">`).join(''));
   quizlet($('#p0'),s);
   const sel=[0,1];
   [1,2].forEach(pi=>{
