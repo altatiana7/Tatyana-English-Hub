@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="ru"><head><meta name="robots" content="noindex,nofollow"><meta charset=utf8><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Памятки ЕГЭ</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,15 +53,15 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
 .legend{display:flex;gap:8px;flex-wrap:wrap}
 .legend span{font-size:14px;padding:3px 10px;box-shadow:var(--shadow);background:var(--c)}
 .tiles{flex:1;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:16px 14px;min-height:0;padding-top:6px}
-.tile{position:relative;display:flex;flex-direction:column;justify-content:space-between;text-align:left;border:none;padding:16px 12px 10px;min-height:0;
+.tile{position:relative;display:flex;flex-direction:column;justify-content:space-between;text-align:left;border:none;padding:18px 14px 12px;min-height:0;
   background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 30%),var(--c);
   box-shadow:var(--shadow);transform:rotate(var(--r,0deg));transition:transform .15s ease,box-shadow .15s ease;
   clip-path:polygon(0 0,100% 0,100% 100%,9% 100%,0 91%)}
 .tile::after{content:"";position:absolute;left:0;bottom:0;width:9%;height:9%;background:linear-gradient(45deg,rgba(0,0,0,0) 50%,rgba(0,0,0,.12) 50%,rgba(255,255,255,.5))}
 .tile:hover{transform:rotate(0deg) scale(1.04);z-index:3}
-.tile h2{font-size:17px;line-height:1.15;color:var(--ink);overflow-wrap:anywhere;hyphens:auto}
-.tile .tag{font-size:13px;color:var(--muted);background:none;padding:0;box-shadow:none}
-.tile .meta{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tile h2{font-size:clamp(16px,1.5vw,20px);line-height:1.15;color:var(--ink);overflow-wrap:break-word;word-break:normal;-webkit-hyphens:manual;hyphens:manual}
+.tile .tag{font-size:14.5px;color:var(--muted);background:none;padding:0;box-shadow:none}
+.tile .meta{font-size:14.5px;color:var(--muted);font-variant-numeric:tabular-nums}
 .tile .pin{top:3px}
 .tag{display:inline-block;font-size:14px;padding:2px 10px;background:var(--paper);box-shadow:var(--shadow);color:var(--ink)}
 /* раздел */
@@ -2098,6 +2098,7 @@ const TPL_PH_M=[
  ['A family that plays together','stays together.'],['Family gives us the roots','to stand tall and strong.'],
 ];
 const TPL_Q=parseS(TPL_S), TPL37_Q=parseS(TPL37_S), TPL38_Q=parseS(TPL38_S), TPL_PH_Q=parseS(TPL_PH_S);
+const TPL_G='issue / matter / relations'; const TPL_QG=TPL_Q.map(x=>Object.assign({},x,{group:TPL_G}));
 const SECTIONS=[
  {id:'articles', title:'Артикли', tag:'задания 19–24', img:'pamyatki-img/articles.jpg',
   cards:ART_CARDS.map(c=>({f:c[0],b:c[1],ex:c[2]})),
@@ -2123,20 +2124,21 @@ const SECTIONS=[
    {n:'Speed Game', type:'bomb', items:tenseChoice},
   ]},
  {id:'lexis', title:'Лексика 30–36', tag:'задания 30–36', imgs:["pamyatki-img/falsesyn1.jpg", "pamyatki-img/falsesyn2.jpg", "pamyatki-img/shib1.jpg", "pamyatki-img/shib2.jpg", "pamyatki-img/shib3.jpg", "pamyatki-img/shib4.jpg", "pamyatki-img/shib5.jpg", "pamyatki-img/shib6.jpg", "pamyatki-img/shib7.jpg", "pamyatki-img/shib8.jpg"],
-  cards:LEX_CARDS_ALL, groups:LEX_GROUPS_ALL,
+  cards:LEX_CARDS_ALL.concat(TPL_WORDS.filter(w=>!LEX_CARDS_ALL.some(c=>lexNorm(c.f)===lexNorm(w[0]))).map(w=>({f:w[0],b:esc(w[1]),ex:esc(w[2]),raw:true,group:TPL_G}))), groups:LEX_GROUPS_ALL.concat([TPL_G]),
   acts:[
    {n:'Сочетания в предложениях', type:'choice', items:LEX_SENT, groups:LEXG, all:true},
    {n:'Ловушки', type:'choice', items:LEX_TRAPS, groups:LEXG, all:true},
    {n:'Ложные синонимы в предложениях', type:'choice', items:FS_SENT, groups:FS_GROUPS, all:true},
    {n:'Ложные синонимы: перевод → слово', type:'choice', items:FS_QG, groups:FS_GROUPS},
    {n:'Полезный файл: выбери слово', type:'choice', items:SHIB_QG, groups:SHIB_GROUPS, all:true},
-   {n:'Значение', type:'match', byGroup:SHIB.map(g=>g.w.map(e=>[e[0],shortMean(e[1])])).concat(FALSE_SYN.map(g=>{const u=new Map();g.forEach(([w,m])=>{if(!u.has(lexNorm(w)))u.set(lexNorm(w),[w,m])});return [...u.values()]}))},
-   {n:'Доктор Грамматика', type:'doctor', items:LEX_EVERYTHING, groups:LEX_GROUPS_ALL, all:true},
+   {n:'Issue · matter · relations', type:'choice', items:TPL_QG, all:true},
+   {n:'Значение', type:'match', byGroup:[TPL_WORDS.map(w=>[w[0],shortMean(w[1])])].concat(SHIB.map(g=>g.w.map(e=>[e[0],shortMean(e[1])])).concat(FALSE_SYN.map(g=>{const u=new Map();g.forEach(([w,m])=>{if(!u.has(lexNorm(w)))u.set(lexNorm(w),[w,m])});return [...u.values()]})))},
+   {n:'Доктор Грамматика', type:'doctor', items:LEX_EVERYTHING.concat(TPL_QG), groups:LEX_GROUPS_ALL, all:true},
    {n:'Короткие сочетания', type:'choice', items:LEXQ, groups:LEXG},
    {n:'Правила-ловушки', type:'flip', items:LEX.filter(g=>g.trap).map(g=>({f:g.g,b:g.trap})), lead:'Чем отличаются? Скажи вслух и переверни.'},
-   {n:'Speed Game', type:'bomb', items:LEX_EVERYTHING},
+   {n:'Speed Game', type:'bomb', items:LEX_EVERYTHING.concat(TPL_QG)},
   ]},
- {id:'prefixes', title:'Отрицательные приставки', tag:'задания 25–29', img:'pamyatki-img/prefixes.jpg',
+ {id:'prefixes', title:'Отрица\u00ADтельные приставки', tag:'задания 25–29', img:'pamyatki-img/prefixes.jpg',
   cards:prefixWords.map(x=>({f:x.w,b:x.ru,ex:x.group+' · '+PREFIXES[x.group].m})),
   acts:[
    {n:'Добавь приставку', type:'choice', items:prefixChoice},
@@ -2186,7 +2188,7 @@ const SECTIONS=[
    {n:'Доктор Грамматика', type:'doctor', items:CO_Q, hints:true},
    {n:'Speed Game', type:'bomb', items:CO_Q},
   ]},
- {id:'wordform', title:'Словообразование', tag:'задания 25–29', thumb:'happy → happiness<br>care → careful',
+ {id:'wordform', title:'Словообразо\u00ADвание', tag:'задания 25–29', thumb:'happy → happiness<br>care → careful',
   cards:WORDFORM.map(w=>({f:w[1],fs:'→ '+w[3],b:w[2],ex:w[0].replace(/ \(.*\)/,'')+' · '+w[3],group:w[0]})), groups:[...new Set(WORDFORM.map(w=>w[0]))],
   acts:[
    {n:'Впиши слово', type:'type', items:WF_T},
@@ -2226,7 +2228,7 @@ const SECTIONS=[
    {n:'Закончи вопрос', type:'choice', items:HT_Q},
    {n:'Speed Game', type:'bomb', items:HT_Q},
   ]},
- {id:'refer', title:'Реферирование местоимений', tag:'письмо 37–38 · устная', imgs:["pamyatki-img/refer1.jpg", "pamyatki-img/refer2.jpg"],
+ {id:'refer', title:'Рефериро\u00ADвание местоимений', tag:'письмо 37–38 · устная', imgs:["pamyatki-img/refer1.jpg", "pamyatki-img/refer2.jpg"],
   cards:REF_RULES.map(r=>({f:r[0],b:r[1],ex:r[2]})),
   acts:[
    {n:'Choose the pronoun', type:'choice', items:REF_EX.map(x=>({q:x[0],opts:x[1],a:x[2]}))},
@@ -2250,14 +2252,6 @@ const SECTIONS=[
    {n:'Speed Game', type:'bomb', items:LK_Q},
   ]},
 
-  {id:'tpl-issue', title:'Issue · matter · relations', tag:'задания 30–36', thumb:'issue / matter<br>relationship / relations',
-   cards:TPL_WORDS.map(w=>({f:w[0],b:w[1],ex:w[2]})),
-   acts:[
-    {n:'Выбери слово', type:'choice', items:TPL_Q, all:true},
-    {n:'Значение', type:'match', pairs:TPL_WORDS.map(w=>[w[0],shortMean(w[1])])},
-    {n:'Доктор Грамматика', type:'doctor', items:TPL_Q, all:true},
-    {n:'Speed Game', type:'bomb', items:TPL_Q},
-   ]},
   {id:'tpl-37', title:'Письмо 37: компьютер', tag:'задание 37', thumb:'silver surfer<br>instant access',
    cards:TPL37.map(w=>({f:w[0],b:w[1],ex:w[2]})),
    acts:[
