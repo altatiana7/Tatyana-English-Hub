@@ -219,8 +219,9 @@ h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0}
   .sec{gap:16px;padding-block:6px 10px}
   .ph{padding:9px 12px 2px}.ph .nm{font-size:18px}
   .pb{padding:2px 14px 10px;gap:8px}
-  .it{padding:5px 9px;gap:4px}.it .q{font-size:18px}.opt{font-size:17px;padding:2px 10px}
-  .items{gap:7px}.mb{min-height:38px;padding:6px 9px;font-size:17px}.match{gap:8px}.mcol{gap:6px}
+  .it{padding:4px 9px;gap:3px}.it .q{font-size:17px}.opt{font-size:16px;padding:2px 9px}
+  .items{gap:6px}.mb{min-height:38px;padding:6px 9px;font-size:17px}.match{gap:8px}.mcol{gap:6px}
+  .it .hintq{font-size:13.5px;line-height:1.2}
   .qz-card{min-height:150px}
 }
 @media (prefers-reduced-motion:reduce){.qz-in{transition:none}.boom,.shake{animation:none}.tile{transition:none}}
@@ -2320,26 +2321,21 @@ const SECTIONS=[
    {n:'Error hunter', type:'flip', items:PUNCT_ERR.map(x=>({f:x[0],b:x[1]})), lead:'Найди ошибку и переверни карточку.'},
    {n:'Speed Game', type:'bomb', items:PUNCT_SORT.map(x=>({q:x[0],opts:['Запятая нужна','Запятая не нужна'],a:x[1]}))},
   ]},
- {id:'linkers', title:'Вводные слова и фразы', tag:'письмо 37–38', imgs:["pamyatki-img/linkers1.jpg"],
-  cards:LINKERS.map(l=>({f:l[0],b:l[2],ex:l[3],group:l[1]})), groups:['Контраст','Следствие'],
+ {id:'linkers', title:'Вводные слова и уступка', tag:'письмо 37–38 · задания 19–24', imgs:["pamyatki-img/linkers1.jpg"],
+  cards:[...CONC_CARDS.map(c=>({f:c[0],b:c[1],ex:c[2],group:c[3]})), ...LINKERS.filter(l=>!/HOWEVER|ALTHOUGH|DESPITE/.test(l[0])).map(l=>({f:l[0],b:l[2],ex:l[3],group:l[1]}))],
+  groups:['+ предложение','+ существительное / -ing','Новое предложение','В конце предложения','Контраст','Следствие'],
   acts:[
-   {n:'Вставь слово', type:'choice', items:LK_Q},
-   {n:'Контраст или следствие', type:'sort', bins:['Контраст','Следствие'], items:LINKERS.map(l=>[l[0],l[1]]), per:10},
-   {n:'Значение', type:'match', pairs:LINKERS.map(l=>[l[0],l[2].replace(/ \(.*\)/,'')])},
-   {n:'Speed Game', type:'bomb', items:LK_Q},
-  ]},
- {id:'concession', title:'Уступка: although · despite · however', tag:'задания 19–24 · письмо 37–38',
-  cards:CONC_CARDS.map(c=>({f:c[0],b:c[1],ex:c[2],group:c[3]})), groups:['+ предложение','+ существительное / -ing','Новое предложение','В конце предложения'],
-  acts:[
-   {n:'2 варианта', type:'choice', items:CONC_ITEMS.slice(0,10), all:true},
-   {n:'3 варианта', type:'choice', items:CONC_ITEMS.slice(10,20), all:true},
-   {n:'4 варианта', type:'choice', items:CONC_ITEMS.slice(20,40), all:true},
+   {n:'Уступка · 2 варианта', type:'choice', items:CONC_ITEMS.slice(0,10), all:true},
+   {n:'Уступка · 3 варианта', type:'choice', items:CONC_ITEMS.slice(10,20), all:true},
+   {n:'Уступка · 4 варианта', type:'choice', items:CONC_ITEMS.slice(20,40), all:true},
    {n:'Что идёт после союза', type:'sort', bins:['Although / Though + …','Despite / In spite of + …'], items:CONC_SORT, per:10},
    {n:'Error hunter', type:'flip', items:CONC_ERR.map(x=>({f:x[0],b:x[1]}))},
-   {n:'Speed Game', type:'bomb', items:CONC_ITEMS.slice(10,40).map(i=>({q:i.q,opts:i.opts,a:i.a}))},
+   {n:'Вводные слова: вставь слово', type:'choice', items:LK_Q},
+   {n:'Контраст или следствие', type:'sort', bins:['Контраст','Следствие'], items:LINKERS.map(l=>[l[0],l[1]]), per:10},
+   {n:'Значение', type:'match', pairs:LINKERS.map(l=>[l[0],l[2].replace(/ \(.*\)/,'')])},
+   {n:'Speed Game', type:'bomb', items:[...CONC_ITEMS.slice(10,40).map(i=>({q:i.q,opts:i.opts,a:i.a})),...LK_Q]},
   ]},
-
-  {id:'tpl-issue', title:'Issue · matter · relations', tag:'задания 30–36', thumb:'issue / matter<br>relationship / relations',
+ {id:'tpl-issue', title:'Issue · matter · relations', tag:'задания 30–36', thumb:'issue / matter<br>relationship / relations',
    cards:TPL_WORDS.map(w=>({f:w[0],b:w[1],ex:w[2]})),
    acts:[
     {n:'Выбери слово', type:'choice', items:TPL_Q, all:true},
@@ -2492,7 +2488,7 @@ function choice(el,a){
     paged(el,a,items,4,(box,chunk,off)=>{
       chunk.forEach((it,k)=>{
         const d=document.createElement('div'); d.className='it';
-        d.innerHTML=`<div class="q">${it.html?fr(it.q):esc(it.q)}</div>${it.hint?`<div class="hintq">${esc(it.hint)}</div>`:''}<div class="opts${it.opts.some(o=>String(o).length>28)?' long':''}">${it.opts.map(o=>`<button class="opt">${esc(o)}</button>`).join('')}</div>`;
+        d.innerHTML=`<div class="q">${it.html?fr(it.q):esc(it.q)}</div>${it.hint?`<div class="hintq">${esc(it.hint)}</div>`:''}<div class="opts${it.opts.some(o=>String(o).length>28)?' long':''}">${it.opts.map(o=>`<button class="opt">${esc(o)}</button>`).join('')}</div>${it.after?`<div class="hintq expl" style="visibility:hidden">&rarr; ${esc(it.after)}</div>`:''}`;
         if(it.q.length>70) d.querySelector('.q').style.fontSize='17px';
         const id=off+k;
         d.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
@@ -2500,7 +2496,7 @@ function choice(el,a){
           const ok=norm(b.textContent)===norm(it.a);
           if(ok){right++}else b.classList.add('no');
           d.querySelectorAll('.opt').forEach(x=>{if(norm(x.textContent)===norm(it.a))x.classList.add('ok');x.disabled=true});
-          if(it.after){const h=document.createElement('div');h.className='hintq expl';h.textContent='→ '+it.after;d.appendChild(h)}
+          const ex=d.querySelector('.expl'); if(ex)ex.style.visibility='visible';
           el.querySelector('.score').textContent=a._score();
         });
         box.appendChild(d);
