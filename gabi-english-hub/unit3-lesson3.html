@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="robots" content="noindex,nofollow">
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Gabi · Module 3 · Lesson 3 · Why are there different languages?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Figtree:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="skills.css?v=20261015big">
+<link rel="stylesheet" href="case.css?v=20261015big">
+<style>
+/* Speed Game: round timer instead of a bomb (same as Module 2, lesson 4) */
+.bombsvg path,.bombsvg rect,.bombsvg .spark,.bombsvg circle:nth-of-type(2){display:none}
+.bombsvg circle:nth-of-type(1){fill:#169be5}
+.bomb-box.hot .bombsvg circle:nth-of-type(1){fill:#e2574c}
+ol.hunt{padding-left:2.1em}
+.sheet:not(.two) .scols:has(> :nth-child(4)){grid-template-columns:repeat(4,minmax(0,1fr))}
+.act.panel .opts{flex:0 0 auto;grid-auto-rows:auto;align-content:start;gap:8px}
+.act.panel .opts button{min-height:52px;padding:8px 12px;font-size:19px}
+.act.panel .opts.c3 button{font-size:18px}
+.act.panel .opts{flex:0 0 auto;grid-auto-rows:auto;align-content:start;gap:8px}
+.act.panel .opts button{min-height:52px;padding:8px 12px;font-size:19px}
+.act.panel .opts.c3 button{font-size:18px}
+/* grammar help hidden under a button */
+.work{position:relative}
+.helpbtn{position:absolute;right:14px;top:10px;z-index:20}
+.helpbtn>summary{list-style:none;cursor:pointer;background:#ffd23f;color:#1b2333;font:800 16px/1 Figtree,sans-serif;padding:10px 16px;border-radius:12px;border:2px solid #e0b400;user-select:none}
+.helpbtn>summary::-webkit-details-marker{display:none}
+.helpbtn[open]>summary{background:#fff;border-color:#ffd23f}
+.helppop{position:absolute;right:0;top:46px;width:min(520px,86vw);max-height:min(430px,70vh);overflow:auto;background:#121826;color:#e8edf6;border:2px solid #ffd23f;border-radius:14px;padding:12px 14px;box-shadow:0 14px 34px rgba(0,0,0,.4)}
+.helppop .court{display:flex;align-items:center;gap:12px;margin:0 0 8px}
+.helppop .court h4{margin:0;font:800 22px/1.1 Montserrat,sans-serif;color:#fff}
+.helppop .stamp{flex:none;border:2px solid #ffd23f;color:#ffd23f;font:800 11px/1 Montserrat,sans-serif;letter-spacing:.14em;padding:5px 7px;border-radius:5px;transform:rotate(-3deg)}
+.helppop .say{margin:0;padding:0;list-style:none;display:grid;gap:5px}.helppop .say li{background:rgba(255,255,255,.08);border-radius:9px;padding:6px 10px;font-size:16.5px}.helppop .say b{color:#ffd23f}
+.helppop .words{margin:9px 0 0;font-size:15px;color:#aebbd0;line-height:1.4}.helppop .words b{color:#ffd23f}
+.work:has(.helpbtn) .hint{padding-right:150px}
+
+.helppop table{border-collapse:collapse;width:100%;margin-top:6px;font-size:15.5px}.helppop td,.helppop th{border:1px solid rgba(255,255,255,.22);padding:4px 8px;text-align:left}.helppop th{color:#ffd23f}
+/* prediction: the greetings appear one by one */
+.tagsbox{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center}
+.tagsbox .q{margin:0}
+.tagsrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.tagsrow span{font:800 clamp(19px,2vw,26px)/1 Figtree,sans-serif;color:#fff;padding:9px 16px;border-radius:9px;background:#169be5;transform:rotate(-2deg)}
+.tagsrow span:nth-child(4n+2){background:#0f9d8a;transform:rotate(1.5deg)}.tagsrow span:nth-child(4n+3){background:#e2459b}.tagsrow span:nth-child(4n+4){background:#7a5bd0;transform:rotate(2deg)}
+/* picture / video panel */
+.media{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.media .frame{flex:1;min-height:0;display:grid;place-items:center;background:#0d1526;border-radius:12px;overflow:hidden}
+.media .frame img,.media .frame video{max-width:100%;max-height:100%;width:auto;height:100%;object-fit:contain;display:block}
+.media .row{flex:none;flex-wrap:wrap}.media .row .on{background:#ffd23f;border-color:#e0b400}
+/* airport departures board */
+.air{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;justify-content:center}
+.air .brd{background:#0d1b33;border-radius:14px;padding:10px 16px;color:#fff;font:700 clamp(17px,1.6vw,22px)/1.2 Figtree,sans-serif}
+.air .brd h5{margin:0 0 6px;font:800 13px Montserrat,sans-serif;letter-spacing:.14em;color:#8fd0ff}
+.air .brd div{display:grid;grid-template-columns:1fr 1.2fr .6fr;gap:8px;padding:7px 0;border-bottom:1px solid #2c4263}.air .brd div:last-child{border:0}
+.air .brd div:first-of-type{color:#ffd23f;font-size:.8em;letter-spacing:.08em}
+.air .lost{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.air .lost span{background:#eef4fb;border:2px solid #c5d3e6;border-radius:12px;padding:8px 12px;font:800 clamp(17px,1.6vw,21px) Figtree,sans-serif;color:#10233f}
+.air .lost small{display:block;font:700 12px Montserrat,sans-serif;letter-spacing:.1em;color:#566b84}
+/* three messages, each open for 30 seconds */
+.msg{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.msg .pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;flex:none}
+.msg .pick button{border:2px solid #c5d3e6;border-radius:12px;background:#fff;padding:6px 10px;text-align:left;font:inherit;cursor:pointer}
+.msg .pick b{display:block;font-size:18px;color:#10233f}.msg .pick small{font-size:13.5px;color:#566b84;font-weight:600}
+.msg .pick .on{border-color:#ffd23f;background:#fff6cf}
+.msg .page{flex:1;min-height:0;overflow:auto;border-radius:12px;padding:10px 14px;background:#f3f7fc;border:2px dashed #c5d3e6;font-size:clamp(16px,1.45vw,20px);line-height:1.5;color:#10233f}
+.msg .page.idle{display:grid;place-items:center;text-align:center;font-weight:700;color:#3a5070}
+.msg .row{flex:none}.msg .clock{font:800 26px Montserrat,sans-serif;color:#169be5;font-variant-numeric:tabular-nums;margin-left:auto}.msg .clock.hot{color:#e2574c}
+@media(max-height:640px){.act.panel .tcard{padding:6px 12px}.act.panel .tcard .q{font-size:18px}.act.panel .tcard .sub{font-size:14px}.act.panel .chips{gap:4px}.act.panel .chips button{font-size:13.5px;padding:2px 9px}.act.panel .order.compact button{font-size:13.5px;padding:0 8px;min-height:0;line-height:1.15}.act.panel .order.compact>div{gap:2px}.act.panel .opts.c1 button{min-height:38px;padding:3px 10px;font-size:16px}.act.panel .opts.c1{gap:5px}.act.panel .q{font-size:19px}.act.panel .order.compact .lab{font-size:13px}.msg .page{font-size:14.5px;line-height:1.38;padding:6px 10px}.msg .pick b{font-size:15px}.msg .pick button{padding:3px 8px}.air .brd{font-size:15px;padding:6px 12px}.air .brd div{padding:4px 0}}
+/* twelve pairs fit without scrolling */
+.act.panel .match button{font-size:16.5px;padding:4px 10px;min-height:0;line-height:1.25}.act.panel .match>div{gap:5px}
+.act.panel .hunt{font-size:18.5px;gap:1px}.act.panel .hunt li{line-height:1.5}.act.panel .hunt em{font-size:.9em}
+@media(max-height:640px){.act.panel .match button{font-size:15px;padding:1px 9px;line-height:1.15}.act.panel .match>div{gap:2px}.act.panel .hunt{font-size:16.5px;gap:0}.act.panel .hunt li{line-height:1.32}.act.panel .hunt button{padding-top:0;padding-bottom:0}.act.panel .sortpool{gap:4px;padding:4px}.act.panel .sortpool button,.act.panel .scol button{font-size:14px;padding:1px 8px;min-height:0}.act.panel .row .main,.act.panel .row .ghost{padding-top:5px;padding-bottom:5px}.act.panel .cloze{font-size:15.5px;line-height:1.6}.act.panel .cloze select{font-size:15px;padding:1px 4px}.act.panel .scol{min-height:44px}.tagsrow span{font-size:17px;padding:6px 11px}}
+
+/* ---------- Lesson 2: the article, photo reveal, culture exchange ---------- */
+.reveal{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.reveal .frame{position:relative;flex:1;min-height:0;border-radius:12px;overflow:hidden;background:#0d1526}
+.reveal .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.reveal .tiles{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:3px}
+.reveal .tiles button{border:0;border-radius:6px;background:#1e3a66;color:#8fd0ff;font:800 clamp(22px,2.4vw,34px) Montserrat,sans-serif;cursor:pointer}
+.reveal .tiles button:nth-child(2n){background:#24467a}
+.reveal .tiles button.off{visibility:hidden}
+.reveal .row{flex:none;flex-wrap:wrap}.reveal .row .on{background:#ffd23f;border-color:#e0b400}
+.titlecard{position:absolute;inset:0;display:grid;place-items:center;background:#3bbfd6;text-align:center;padding:20px}
+.titlecard b{display:block;font:800 clamp(44px,6vw,86px)/1 Montserrat,sans-serif;color:#fff;letter-spacing:.02em}
+.titlecard span{display:block;margin-top:10px;font:800 clamp(18px,2vw,28px)/1.1 Montserrat,sans-serif;color:#0b3550}
+.art{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.art .page{flex:1;min-height:0;overflow:auto;border-radius:12px;padding:10px 16px;background:#fff;border:3px solid #3bbfd6;color:#10233f;font:500 clamp(15.5px,1.32vw,19px)/1.5 Figtree,sans-serif}
+.art .page h5{margin:0 0 4px;font:800 clamp(22px,2vw,30px)/1 Montserrat,sans-serif;color:#0b3550}
+.art .page h5 small{display:block;font-size:.5em;letter-spacing:.06em;color:#169be5;margin-top:3px}
+.art .page p{margin:0 0 6px}
+.art .page .gap{color:#0f9d8a;font-weight:800}
+.art .page .fill{background:#fff6cf;border-radius:5px;padding:0 3px;font-weight:700}
+.art .page .note{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.86em;color:#33465f}
+.art .page .note div{background:#e8f7fa;border-radius:8px;padding:4px 8px}.art .page .note b{color:#169be5}
+.art .page.idle{display:grid;place-items:center;text-align:center;background:#e8f7fa;border-style:dashed}
+.art .page.idle b{display:block;font:800 clamp(20px,2vw,28px) Montserrat,sans-serif;color:#0b3550;margin-bottom:6px}
+.art .row{flex:none;flex-wrap:wrap}.art .row .on{background:#ffd23f;border-color:#e0b400}
+.art .eq{display:inline-flex;gap:3px;align-items:flex-end;height:18px;margin-left:6px;vertical-align:middle}
+.art .eq i{width:4px;background:#169be5;border-radius:2px;animation:eq 1s ease-in-out infinite}.art .eq i:nth-child(2){animation-delay:.2s}.art .eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{0%,100%{height:4px}50%{height:18px}}
+@media(max-height:640px){#act-1 p.q{font-size:20px}.act.panel .hunt em{font-size:.85em}.act.panel .cloze{font-size:14.5px;line-height:1.5}.act.panel .cloze select{font-size:14px;padding:0 3px}.art .page{font-size:14.5px;line-height:1.38;padding:6px 12px}.art .page h5{font-size:20px}.titlecard b{font-size:42px}}
+
+/* ---------- Lesson 3: advice text, true / false predictions, airport signs ---------- */
+.adv{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.adv .page{flex:1;min-height:0;overflow:auto;border-radius:12px;padding:10px 16px;background:#eaf6ef;border:3px solid #3aa676;color:#10233f;font:500 clamp(16px,1.4vw,20px)/1.62 Figtree,sans-serif}
+.adv .page h5{margin:0 0 4px;font:800 clamp(20px,1.9vw,27px)/1 Montserrat,sans-serif;color:#0d5a3a;letter-spacing:.02em}
+.adv .page p{margin:0}
+.adv .ag{display:inline-block;min-width:96px;border:0;border-bottom:3px solid #0d5a3a;background:#fff;border-radius:6px 6px 0 0;padding:0 8px;margin:0 2px;font:800 1em/1.35 Figtree,sans-serif;color:#c8452f;cursor:pointer}
+.adv .ag.open{color:#0d5a3a;background:#d3f0df}
+.adv .row{flex:none;flex-wrap:wrap}
+.tf{flex:1;min-height:0;display:flex;flex-direction:column;gap:6px}
+.tf ol{margin:0;padding:0;list-style:none;display:grid;gap:6px;flex:1;min-height:0;overflow:auto;align-content:start}
+.tf li{display:grid;grid-template-columns:30px 1fr auto;gap:10px;align-items:center;background:#fff;border:2px solid #c5d3e6;border-radius:12px;padding:6px 10px;font:600 clamp(16px,1.35vw,19.5px)/1.3 Figtree,sans-serif;color:#10233f}
+.tf li>i{font:800 15px Montserrat,sans-serif;color:#169be5;font-style:normal}
+.tf li span small{display:block;font-size:.78em;color:#1f8a5b;font-weight:700}
+.tf li.no span small{color:#c8452f}
+.tf .b{display:flex;gap:5px}
+.tf .b button{width:64px;padding:6px 0;border:2px solid #c5d3e6;border-radius:9px;background:#f3f7fc;font:800 15px Montserrat,sans-serif;color:#10233f;cursor:pointer}
+.tf .b button.on{background:#ffd23f;border-color:#e0b400}
+.tf li.ok{border-color:#1f8a5b;background:#e2f5ea}.tf li.no{border-color:#c8452f;background:#fdeae5}
+.tf .row{flex:none;flex-wrap:wrap}.tf .row .on{background:#ffd23f;border-color:#e0b400}
+.signs{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;gap:8px}
+.signs div{min-width:0;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:4px;background:#1b2333;border-radius:10px;padding:6px 10px;border-left:8px solid #ffd23f}
+.signs b{font:800 clamp(17px,1.65vw,24px)/1.05 Montserrat,sans-serif;color:#ffd23f;letter-spacing:.03em}
+.signs small{font:700 12.5px Montserrat,sans-serif;letter-spacing:.12em;color:#9fb4d0}
+.plur{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:8px;color:#10233f;font:500 clamp(16px,1.35vw,19.5px)/1.45 Figtree,sans-serif}
+.plur .big{background:#7a5bd0;color:#fff;border-radius:12px;padding:10px 14px}
+.plur .big b{display:block;font:800 clamp(22px,2.1vw,30px)/1.05 Montserrat,sans-serif;margin-bottom:4px}
+.plur .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.plur .two div{background:#fff;border:2px solid #c5d3e6;border-radius:12px;padding:8px 12px}
+.plur .two b{color:#7a5bd0}
+.plur p{margin:0}
+@media(max-height:640px){.adv .page{font-size:15.5px;line-height:1.48;padding:5px 12px}.adv .page h5{font-size:19px}.tf li{font-size:16px;padding:3px 8px}.tf .b button{width:56px;padding:4px 0;font-size:14px}.tf ol{gap:5px}.signs b{font-size:17px}.signs small{font-size:11px}.plur{font-size:16px;line-height:1.4}.plur .big b{font-size:21px}}
+</style>
+</head>
+<body>
+<script src="../card-audio.js?v=20261119a"></script>
+<script src="skills.js?v=20261104a"></script>
+<script>
+/* Module 3 (Plurilingual), lesson 3 · Why are there different languages?
+   Same engine and look as lessons 1 and 2. Two activities per screen:
+   1 check-in: Advice for learning English (gaps from memory) + Speed Game -> 2 warm-up questions + prediction from frames of the video
+   -> 3 video «Why are there different languages?» + questions from memory -> 4 What is plurilingualism? + speaking
+   -> 5 Airport Mystery · Language Radar (airport signs) -> 6 Language twins or traps (false friends)
+   -> 7 15 facts about languages: true or false before the video, then check -> 8 numbers from memory + speaking
+   -> 9 English: true or false (floor is lava) + words English borrowed -> 10 The Wrong Gate + The Polyglot Help Desk
+   -> 11 Toki Pona Challenge -> 12 Critical thinkers + Speed Game.
+   Audio: natural recordings in ../card-audio (AUDIO_TEXTS is collected by tools/card-audio-collect.mjs). */
+const ADV=[
+ ['When you learn English, remember that making','mistakes'],
+ ['is natural – the important thing is to learn from the things you do wrong. It’s also important to','practise'],
+ ['as much as possible – use the language in lots of different situations. Frequent','revision'],
+ ['is essential, too – look back at new language regularly. This will help you to','memorise'],
+ ['the new vocabulary and grammar and store it in your brain.','Translation'],
+ ['can be useful sometimes, but remember that grammar and vocabulary don’t usually work in exactly the same way in different languages. And, finally, when we talk about speaking, there are two main goals:','accuracy'],
+ ['is good because it means what you are saying is correct and being','fluent']];
+const ADV_TAIL='means that you can keep talking without frequently stopping.';
+const ADV_FULL=ADV.map(x=>x[0]+' '+x[1]).join(' ')+' '+ADV_TAIL;
+const ADV_SPOKEN=ADV_FULL.match(/[^.!?]+[.!?]+/g).map(x=>x.trim());
+const WARM=['How many languages can you say hello in?','Why do you think there are so many languages in the world?','Which language would you like to learn next? Why?','Do you know any words that are the same in Russian and English?'];
+const PLUR=['Which languages do you know a few words in?','Have you ever understood a sign in a language you never studied? How?','When you don’t know a word in English, what do you do?','Is it useful to know a few words in many languages, or is it better to speak one language perfectly?'];
+const FACTQ=['Which fact surprised you most? Why?','Why do you think Papua New Guinea has so many languages?','Would you like to learn a language with click sounds? Why or why not?','Why do you think all pilots must speak English?'];
+const DESK=['A passenger from Spain keeps saying “equipaje” and points to the belts. What does he need? Help him.','A French girl is looking for the “sortie”. Show her the way.','A German man asks for the “Toiletten”. Help him.','An Italian woman says her flight to Rome leaves from “uscita 24”. Explain where she must go.','A family from Turkey has missed their flight to Istanbul. What can they do?','A passenger doesn’t understand the word “delayed”. Explain it in other words.','A tourist doesn’t know the words “boarding pass”. Explain them without translating.','A passenger has lost his phone. He speaks only a little English. Ask him simple questions.'];
+const FINALQ=['Is a language easier when it has fewer words? Why or why not?','Explain the word “airport” using only very simple words.','Explain the word “passport” using only very simple words.','Why do some languages disappear?','Should everyone in the world speak one language? What makes you say that?'];
+const AUDIO_TEXTS=ADV_SPOKEN.concat(WARM,PLUR,FACTQ,DESK,FINALQ);
+const clip=t=>CardAudio.base+CardAudio.key(t)+'.mp3?v=20261119a';
+/* prediction from frames of the video: six tiles cover each picture, open them one by one */
+Lesson.ACT.reveal={
+ init(a,s){s.k=0;s.off=a.items.map(()=>[])},
+ view(a,s){const m=a.items[s.k],off=s.off[s.k];
+  const pic=m.title?`<div class="titlecard"><div><b>${Lesson.esc(m.title)}</b><span>${Lesson.esc(m.sub||'')}</span></div></div>`:`<img src="${m.img}" alt="">`;
+  return `<div class="reveal"><div class="frame">${pic}<div class="tiles">${[1,2,3,4,5,6].map(n=>`<button data-tile="${n}" class="${off.includes(n)?'off':''}">${n}</button>`).join('')}</div></div>
+   <div class="row">${a.items.map((x,k)=>`<button class="ghost${k===s.k?' on':''}" data-rk="${k}">${Lesson.esc(x.label)}</button>`).join('')}<button class="main" data-rall>Show all</button></div></div>`},
+ click(a,s,d){if(d.rk!==undefined){s.k=+d.rk;return Lesson.redraw()}
+  if(d.tile!==undefined){const o=s.off[s.k],n=+d.tile;if(!o.includes(n))o.push(n);return Lesson.redraw()}
+  if(d.rall!==undefined){s.off[s.k]=[1,2,3,4,5,6];return Lesson.redraw()}}};
+/* a video with a Hide button */
+Lesson.ACT.media={
+ init(a,s){s.k=0;s.hide=false},
+ view(a,s){const m=a.items[s.k];
+  return `<div class="media"><div class="frame">${s.hide?'':m.video?`<video src="${m.video}" controls playsinline preload="metadata"></video>`:`<img src="${m.img}" alt="">`}</div>
+   <div class="row">${a.items.length>1?a.items.map((x,k)=>`<button class="ghost${k===s.k&&!s.hide?' on':''}" data-mk="${k}">${Lesson.esc(x.label)}</button>`).join(''):''}<button class="ghost${s.hide?' on':''}" data-mhide>${s.hide?'Show the video':'Hide the video'}</button></div></div>`},
+ click(a,s,d){if(d.mk!==undefined){s.k=+d.mk;s.hide=false;return Lesson.redraw()}if(d.mhide!==undefined){s.hide=!s.hide;return Lesson.redraw()}}};
+Lesson.ACT.read={view(a){return a.html}};
+/* Advice for learning English: Gabi says the missing word from memory, a tap on the gap shows it; then listen and check */
+let ADV_ON=false;
+document.addEventListener('click',e=>{if(e.target.closest('#steps,#prev,#next,.home')&&ADV_ON){ADV_ON=false;CardAudio.stop()}},true);
+Lesson.ACT.advice={
+ init(a,s){s.open={}},
+ view(a,s){const L='abcdefg';
+  const body=ADV.map((x,i)=>`${Lesson.esc(x[0])} <button class="ag${s.open[i]?' open':''}" data-ag="${i}">${s.open[i]?Lesson.esc(x[1]):'('+L[i]+')'}</button>`).join(' ')+' '+Lesson.esc(ADV_TAIL);
+  return `<div class="adv"><div class="page"><h5>ADVICE FOR LEARNING ENGLISH</h5><p>${body}</p></div>
+   <div class="row"><button class="main" data-aplay>${ADV_ON?'Stop':'Listen and check'}</button>${ADV_ON?'<span class="eq"><i></i><i></i><i></i></span>':''}<button class="ghost" data-aall>${Object.keys(s.open).length===ADV.length?'Hide the words':'Show all the words'}</button></div></div>`},
+ click(a,s,d){
+  if(d.ag!==undefined){const i=+d.ag;if(s.open[i])delete s.open[i];else s.open[i]=1;return Lesson.redraw()}
+  if(d.aall!==undefined){if(Object.keys(s.open).length===ADV.length)s.open={};else ADV.forEach((x,i)=>s.open[i]=1);return Lesson.redraw()}
+  if(d.aplay!==undefined){if(ADV_ON){ADV_ON=false;CardAudio.stop();return Lesson.redraw()}ADV_ON=true;ADV.forEach((x,i)=>s.open[i]=1);Lesson.redraw();CardAudio.sayList(ADV_SPOKEN,null,()=>{ADV_ON=false;Lesson.redraw()});return}}};
+/* true or false: Gabi decides first (no feedback), watches the video, then checks */
+Lesson.ACT.tf={
+ init(a,s){s.v={};s.checked=false;s.p=0},
+ view(a,s){const per=a.per||6,pages=Math.ceil(a.items.length/per),from=s.p*per,list=a.items.slice(from,from+per);let ok=0;
+  if(s.checked)a.items.forEach((it,i)=>{if(s.v[i]===it.a)ok++});
+  const rows=list.map((it,k)=>{const i=from+k,v=s.v[i];let st='';if(s.checked)st=v===it.a?'ok':'no';
+   return `<li class="${st}"><i>${i+1}</i><span>${Lesson.esc(it.s)}${s.checked?`<small>${it.a?'True':'False'}${it.why?' · '+Lesson.esc(it.why):''}</small>`:''}</span><div class="b"><button data-tv="${i}" data-val="1" class="${v===true?'on':''}" ${s.checked?'disabled':''}>TRUE</button><button data-tv="${i}" data-val="0" class="${v===false?'on':''}" ${s.checked?'disabled':''}>FALSE</button></div></li>`}).join('');
+  const done=Object.keys(s.v).length;
+  return `<div class="tf"><ol>${rows}</ol><div class="row">${Array.from({length:pages},(_,p)=>`<button class="ghost${p===s.p?' on':''}" data-tp="${p}">${p*per+1}–${Math.min((p+1)*per,a.items.length)}</button>`).join('')}
+   ${s.checked?`<b class="score">${ok} of ${a.items.length} correct</b><button class="ghost" data-tagain>Again</button>`:`<button class="main" data-tcheck ${done<a.items.length?'disabled':''}>${a.checkLabel||'Check'}</button><span class="muted">${done} of ${a.items.length}</span>`}</div></div>`},
+ click(a,s,d){if(d.tp!==undefined){s.p=+d.tp;return Lesson.redraw()}
+  if(d.tagain!==undefined){s.v={};s.checked=false;s.p=0;return Lesson.redraw()}
+  if(d.tcheck!==undefined){s.checked=true;return Lesson.redraw()}
+  if(d.tv!==undefined&&!s.checked){s.v[+d.tv]=d.val==='1';const per=a.per||6,from=s.p*per,last=Math.min(from+per,a.items.length);
+   let full=true;for(let i=from;i<last;i++)if(s.v[i]===undefined)full=false;
+   const pg=s.p;if(full&&last<a.items.length)setTimeout(()=>{if(s.p===pg){s.p=pg+1;Lesson.redraw()}},350);return Lesson.redraw()}}};
+const PLUR_HTML=`<div class="plur"><div class="big"><b>What is plurilingualism?</b>It is the ability to use what you know of several languages to communicate, even if you speak them at different levels.</div>
+ <p>Imagine you speak Russian fluently, learn English at school and know a few Turkish words. You don’t need to speak all three languages perfectly. You can use what you know to understand people, share ideas and solve problems. <b>That’s plurilingualism!</b></p>
+ <div class="two"><div><b>multilingual</b> a place or a society where several languages exist together: Switzerland, India, a big international airport</div><div><b>plurilingual</b> a person who uses all his languages flexibly, even a few words, to communicate</div></div></div>`;
+const SIGNS=[['AUSGANG','Munich'],['ABFLUG','Berlin'],['LLEGADAS','Madrid'],['SALIDAS','Barcelona'],['EQUIPAJE','Seville'],['BAGAGES','Paris'],['DOUANE','Nice'],['ADUANA','Valencia'],['USCITA','Rome'],['TOILETTEN','Vienna'],['ÇIKIŞ','Istanbul'],['AUSKUNFT','Frankfurt']];
+const SIGNS_HTML=`<div class="signs">${SIGNS.map(x=>`<div><small>${x[1].toUpperCase()}</small><b>${x[0]}</b></div>`).join('')}</div>`;
+const SG=['Exit','Departures','Arrivals','Baggage','Customs','Toilets','Information'];
+const sq=(sign,city,a,o,why)=>({q:city+' airport: '+sign,html:`<span style="font-size:.8em;color:#566b84">${city} airport</span><br><b style="font-family:Montserrat,sans-serif;letter-spacing:.04em">${sign}</b>`,o,a,why});
+const STEPS=[
+{stage:'Check-in',title:'Advice for learning English',hint:'Say the missing word in each gap. Be careful: noun, verb or adjective? <small>Tap a gap to see the word, then listen and check. Then the Speed Game: 15 seconds for each question.</small>',cols:'1.3fr 1fr',
+ acts:[
+ {type:'advice',title:'Advice · from memory'},
+ {type:'bomb',speed:true,secs:15,label:'Homework check',title:'Speed Game · word forms',items:[
+  {sec:'Word forms',q:'Don’t worry about making ___. Everybody makes them.',o:['mistake','mistakes','misses'],a:'mistakes'},
+  {sec:'Word forms',q:'You need to ___ every day.',o:['practice','practise','practising'],a:'practise',why:'verb: practise'},
+  {sec:'Word forms',q:'I need more ___ before the test.',o:['revise','revision','revising'],a:'revision'},
+  {sec:'Word forms',q:'It’s hard to ___ twenty words in one evening.',o:['memorisation','memorise','memory'],a:'memorise'},
+  {sec:'Word forms',q:'Her English is very ___: there are no mistakes.',o:['accuracy','accurate','accurately'],a:'accurate'},
+  {sec:'Word forms',q:'In speaking exams, ___ is as important as accuracy.',o:['fluent','fluency','fluently'],a:'fluency'},
+  {sec:'Word forms',q:'Can you ___ this word into Russian?',o:['translation','translate','translator'],a:'translate'},
+  {sec:'Word forms',q:'My cousin is ___ in three languages.',o:['fluency','fluent','fluid'],a:'fluent'},
+  {sec:'do or make',q:'I ___ my English homework every evening.',o:['make','do','take'],a:'do'},
+  {sec:'Airport Mystery',q:'I can ___ in Spanish, but I can’t discuss difficult topics.',o:['get by','look up','pick up'],a:'get by'}]}]},
+{stage:'Warm-up',title:'Why are there different languages?',hint:'Listen to the question and answer. <small>Then the pictures from the video: open the tiles one by one. What can you see? What is the video about?</small>',cols:'1fr 1.25fr',
+ acts:[
+ {type:'talk',title:'Ask and answer',label:'Question',secs:40,cards:WARM.map(q=>({q,say:q,audio:clip(q)}))},
+ {type:'reveal',title:'Predict · what is the video about?',items:[{label:'Picture 1',img:'assets/u3l3/p1.jpg'},{label:'Picture 2',img:'assets/u3l3/p2.jpg'},{label:'Picture 3',img:'assets/u3l3/p3.jpg'},{label:'Picture 4',img:'assets/u3l3/p4.jpg'},{label:'The title',title:'WHY ARE THERE',sub:'DIFFERENT LANGUAGES?'}]}]},
+{stage:'Video',title:'Why are there different languages?',hint:'Watch the video. Were your ideas about the pictures correct? <small>Then hide the video and answer from memory.</small>',cols:'1.3fr 1fr',
+ acts:[
+ {type:'media',title:'The video',items:[{label:'Video',video:'assets/u3l3/why-languages.mp4'}]},
+ {type:'quiz',title:'What do you remember?',label:'Question',cols:1,shuffle:false,items:[
+  {q:'“Bonjour”, “Hallo” and “Nǐ hǎo” all mean …',o:['hello','goodbye','thank you'],a:'hello'},
+  {q:'Which language has the most speakers?',o:['English','Spanish','Mandarin Chinese'],a:'Mandarin Chinese'},
+  {q:'About how many people speak Mandarin?',o:['12 million','120 million','1.2 billion'],a:'1.2 billion'},
+  {q:'Why did the languages of the first people become different?',o:['Groups of people moved to different places and lived apart','A king made new languages','People forgot their old words in one day'],a:'Groups of people moved to different places and lived apart'},
+  {q:'Where did the groups of people go in the video?',o:['To deserts, forests and mountains','Only to big cities','To the Moon'],a:'To deserts, forests and mountains'},
+  {q:'“Yes” in Spanish is …',o:['oui','sí','ja'],a:'sí'},
+  {q:'“Yes” in French is …',o:['sí','da','oui'],a:'oui'},
+  {q:'English, Spanish and French all have many words from …',o:['Latin','Japanese','Russian'],a:'Latin'},
+  {q:'Latin was the language of …',o:['the Roman Empire','ancient China','the Vikings'],a:'the Roman Empire'},
+  {q:'Athlete, athlète, atleta: what does this show?',o:['Languages share and borrow words','These languages are the same','English has no words of its own'],a:'Languages share and borrow words'},
+  {q:'Kwaheri! Zàijiàn! At the end of the video people say …',o:['hello','sorry','goodbye'],a:'goodbye'}]}]},
+{stage:'Plurilingual',title:'What is plurilingualism?',hint:'Read and explain the difference between multilingual and plurilingual in your own words. <small>Then listen to the question and answer: you are plurilingual too!</small>',cols:'1.2fr 1fr',
+ acts:[
+ {type:'read',title:'Plurilingual',html:PLUR_HTML},
+ {type:'talk',title:'You are plurilingual',label:'Question',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['I know a few words in …','I can get by in …','I picked up …','I guessed the meaning because …','It looks like the Russian word …'],cards:PLUR.map(q=>({q,say:q,audio:clip(q)}))}]},
+{stage:'Airport Mystery',title:'Language Radar',hint:'You are at airports all over Europe. Can you understand a language you have never studied? <small>Guess the signs aloud first, then the quiz: what does each sign mean?</small>',cols:'1.15fr 1fr',
+ acts:[
+ {type:'read',title:'Signs at the airports',html:SIGNS_HTML},
+ {type:'quiz',title:'Language Radar · what does it mean?',label:'Sign',cols:1,shuffle:false,items:[
+  sq('AUSGANG','Munich','Exit',['Exit','Gate','Shop'],'German: aus = out, gang = way'),
+  sq('ABFLUG','Berlin','Departures',['Arrivals','Departures','Baggage'],'German: ab = away, Flug = flight'),
+  sq('LLEGADAS','Madrid','Arrivals',['Departures','Customs','Arrivals'],'Spanish: llegar = to arrive'),
+  sq('SALIDAS','Barcelona','Departures',['Departures','Toilets','Arrivals'],'Spanish: salir = to go out, to leave'),
+  sq('EQUIPAJE','Seville','Baggage',['Information','Baggage','Exit'],'Spanish: equipaje = luggage, baggage'),
+  sq('BAGAGES','Paris','Baggage',['Baggage','Customs','Departures'],'French: almost the same as English'),
+  sq('DOUANE','Nice','Customs',['Toilets','Customs','Information'],'French: douane = customs'),
+  sq('ADUANA','Valencia','Customs',['Customs','Arrivals','Baggage'],'Spanish: aduana = customs'),
+  sq('USCITA','Rome','Exit',['Toilets','Information','Exit'],'Italian: uscita = exit; at airports also a gate'),
+  sq('TOILETTEN','Vienna','Toilets',['Toilets','Baggage','Departures'],'German: like the English word'),
+  sq('ÇIKIŞ','Istanbul','Exit',['Arrivals','Exit','Customs'],'Turkish: çıkış = exit'),
+  sq('AUSKUNFT','Frankfurt','Information',['Exit','Information','Customs'],'German: Auskunft = information')]}]},
+{stage:'Airport Mystery',title:'Language twins or traps?',hint:'Twins mean the same in both languages. Traps look the same but mean something different. <small>Then choose the correct English word: three wrong answers and the floor is lava.</small>',cols:'1.15fr 1fr',
+ acts:[
+ {type:'sort',title:'Twin or trap?',cols:['twin: same meaning','trap: different meaning'],items:[
+  {t:'компьютер – computer',c:0},{t:'аккуратный – accurate',c:1},{t:'телефон – telephone',c:0},{t:'магазин – magazine',c:1},{t:'футбол – football',c:0},{t:'фабрика – fabric',c:1},{t:'проблема – problem',c:0},{t:'симпатичный – sympathetic',c:1},
+  {t:'hospital (Spanish) – hospital',c:0},{t:'Gift (German) – gift',c:1},{t:'éxito (Spanish) – exit',c:1},{t:'otobüs (Turkish) – bus',c:0}]},
+ {type:'quiz',title:'Floor is lava · avoid the trap',label:'Sentence',lives:3,cols:3,shuffle:false,items:[
+  {q:'I buy bread at the ___. (магазин)',o:['magazine','shop','fabric'],a:'shop',why:'a magazine = журнал'},
+  {q:'My brother is very ___: his room is always clean. (аккуратный)',o:['accurate','tidy','exact'],a:'tidy',why:'accurate = точный'},
+  {q:'Your answer is ___: there are no mistakes. (точный)',o:['tidy','accurate','careful'],a:'accurate'},
+  {q:'Her new friend is very ___. (симпатичный)',o:['sympathetic','good-looking','symphonic'],a:'good-looking',why:'sympathetic = сочувствующий'},
+  {q:'My dad works at a car ___. (завод)',o:['factory','fabric','fabrication'],a:'factory',why:'fabric = ткань'},
+  {q:'This dress is made of soft ___. (ткань)',o:['factory','fabric','fabulous'],a:'fabric'},
+  {q:'I read an interesting article in a ___. (журнал)',o:['magazine','shop','decade'],a:'magazine'},
+  {q:'My grandfather is an ___: he paints landscapes. (художник)',o:['actor','artist','art'],a:'artist'},
+  {q:'He’s a famous ___: he plays in films. (актёр, артист)',o:['actor','artist','painter'],a:'actor'},
+  {q:'Ten years is a ___. (десятилетие)',o:['decade','dozen','decimal'],a:'decade',why:'декада = ten days'},
+  {q:'In German, Gift means …',o:['a present','poison','a gift shop'],a:'poison',why:'German Gift = яд'},
+  {q:'In Spanish, éxito means …',o:['exit','success','excitement'],a:'success',why:'exit in Spanish = salida'}]}]},
+{stage:'Facts',title:'15 facts about languages: true or false?',hint:'Decide first: true or false? Don’t watch the video yet. <small>Then watch the video and check your answers.</small>',cols:'1.2fr 1fr',
+ acts:[
+ {type:'tf',title:'True or false? · decide first',checkLabel:'Check after the video',per:4,items:[
+  {s:'There are about 7,000 languages in the world.',a:true},
+  {s:'Half of the people in the world speak just ten languages.',a:true},
+  {s:'English has the biggest alphabet in the world.',a:false,why:'Khmer: 74 letters'},
+  {s:'Papua New Guinea has more languages than any other country.',a:true,why:'about 840'},
+  {s:'One language has an alphabet with only ten letters.',a:true,why:'Central Rotokas'},
+  {s:'India has only one official language.',a:false,why:'23 official languages'},
+  {s:'There are only five different alphabets in the world.',a:false,why:'46 alphabets'},
+  {s:'Hebrew and Arabic are written from right to left.',a:true},
+  {s:'Some languages in southern Africa use click sounds.',a:true,why:'Khoisan languages'},
+  {s:'People can easily understand their language from 500 years ago.',a:false,why:'languages change'},
+  {s:'A new word is added to English about every two hours.',a:true,why:'about 4,000 words a year'},
+  {s:'English is the official language of the sky.',a:true,why:'pilots speak English on international flights'}]},
+ {type:'media',title:'The video · 15 facts',items:[{label:'Video',video:'assets/u3l3/fifteen-facts.mp4'}]}]},
+{stage:'Facts',title:'Numbers from memory',hint:'Hide the video. What do these numbers mean? <small>Then listen to the question and answer: give a reason.</small>',cols:'1fr 1fr',
+ acts:[
+ {type:'quiz',title:'What do you remember?',label:'Question',cols:3,shuffle:false,keepOrder:true,items:[
+  {q:'How many languages are there in the world?',o:['about 700','about 7,000','about 70,000'],a:'about 7,000'},
+  {q:'About how many languages are actively spoken?',o:['600','6,000','60,000'],a:'6,000'},
+  {q:'Which country has the most languages?',o:['India','Papua New Guinea','China'],a:'Papua New Guinea'},
+  {q:'How many languages are used in Papua New Guinea?',o:['84','840','8,400'],a:'840'},
+  {q:'How many letters are there in the Khmer alphabet?',o:['26','33','74'],a:'74'},
+  {q:'Which language has only ten letters?',o:['Central Rotokas','Khmer','Hindi'],a:'Central Rotokas'},
+  {q:'How many official languages does India have?',o:['2','23','720'],a:'23',why:'and about 720 languages are spoken there'},
+  {q:'How many different alphabets are there in the world?',o:['6','46','460'],a:'46'},
+  {q:'Slavic languages like Russian use the …',o:['Latin alphabet','Greek alphabet','Cyrillic alphabet'],a:'Cyrillic alphabet'},
+  {q:'In logographic writing, like Chinese, one character is …',o:['one sound','one word','one sentence'],a:'one word'},
+  {q:'Traditional Chinese and Japanese writing goes …',o:['left to right','right to left','top to bottom'],a:'top to bottom'},
+  {q:'How many words are added to English dictionaries every year?',o:['400','4,000','40,000'],a:'4,000'}]},
+ {type:'talk',title:'What makes you say that?',label:'Question',secs:40,cards:FACTQ.map(q=>({q,say:q,audio:clip(q)}))}]},
+{stage:'Facts',title:'English: true or false?',hint:'Interesting facts about English. Three wrong answers and the floor is lava. <small>Then the words English borrowed: match each word with the language it comes from.</small>',cols:'1fr 1.1fr',
+ acts:[
+ {type:'quiz',title:'Floor is lava · true or false?',label:'Fact',lives:3,cols:2,opts:['True','False'],shuffle:false,items:[
+  {q:'E is the most common letter in English.',a:'True'},
+  {q:'More people speak English as their first language than Mandarin Chinese.',a:'False',why:'Mandarin has many more native speakers'},
+  {q:'“The quick brown fox jumps over the lazy dog” uses every letter of the alphabet.',a:'True'},
+  {q:'The word alphabet comes from alpha and beta, the first two Greek letters.',a:'True'},
+  {q:'English has no words from other languages.',a:'False',why:'English has borrowed words from more than 300 languages'},
+  {q:'“Dreamt” is the only common English word that ends in -mt.',a:'True'},
+  {q:'The most common word in English is “and”.',a:'False',why:'it is “the”'},
+  {q:'“Queue” still sounds the same if you take away the last four letters.',a:'True',why:'queue – q'},
+  {q:'“I” is the only English word with one letter.',a:'False',why:'“a” is a word too'},
+  {q:'English uses the Cyrillic alphabet.',a:'False',why:'English uses the Latin alphabet'},
+  {q:'All pilots on international flights speak English.',a:'True'},
+  {q:'“Racecar” is a palindrome: it reads the same backwards.',a:'True'}]},
+ {type:'match',title:'Words English borrowed',tip:'Tap a word, then the language it comes from.',items:[
+  {l:'robot',r:'Czech'},{l:'yogurt',r:'Turkish'},{l:'shampoo',r:'Hindi'},{l:'tsunami',r:'Japanese'},{l:'piano',r:'Italian'},{l:'ballet',r:'French'},
+  {l:'kindergarten',r:'German'},{l:'sauna',r:'Finnish'},{l:'safari',r:'Swahili'},{l:'mammoth',r:'Russian'},{l:'ketchup',r:'Chinese'},{l:'chocolate',r:'Nahuatl (the Aztecs)'}]}]},
+{stage:'Airport Mystery',title:'The Wrong Gate',hint:'The announcements are in different languages. Use the words you can guess and the numbers. <small>Then the Polyglot Help Desk: Gabi works at the information desk and helps the passengers.</small>',cols:'1.1fr 1fr',
+ acts:[
+ {type:'quiz',title:'Announcements · what do they say?',label:'Announcement',cols:1,shuffle:false,items:[
+  {q:'Le vol AF 1845 pour Moscou est retardé. Nouvelle porte : C7.',html:'<i>“Le vol AF 1845 pour Moscou est retardé. Nouvelle porte : C7.”</i><br>What happened to the flight to Moscow?',o:['It is delayed, and the new gate is C7','It is cancelled','It is boarding now at gate A1'],a:'It is delayed, and the new gate is C7',why:'retardé = delayed, porte = gate'},
+  {q:'Último aviso: pasajeros del vuelo IB 3170 a Madrid, embarque inmediato por la puerta B12.',html:'<i>“Último aviso: pasajeros del vuelo IB 3170 a Madrid, embarque inmediato por la puerta B12.”</i><br>What must the passengers do?',o:['Go to gate B12 now: it is the last call','Wait for two hours','Collect their baggage'],a:'Go to gate B12 now: it is the last call',why:'último aviso = last call'},
+  {q:'Der Flug LH 1450 nach Moskau ist annulliert.',html:'<i>“Der Flug LH 1450 nach Moskau ist annulliert.”</i><br>What happened to the flight?',o:['It is delayed','It is cancelled','It has landed'],a:'It is cancelled',why:'annulliert = cancelled'},
+  {q:'Il volo AZ 610 per Roma partirà dall’uscita 24.',html:'<i>“Il volo AZ 610 per Roma partirà dall’uscita 24.”</i><br>Where does the flight to Rome leave from?',o:['Gate 24','Gate 6','Terminal 10'],a:'Gate 24',why:'uscita = gate'},
+  {q:'İstanbul uçuşu TK 418, B5 kapısından kalkacaktır.',html:'<i>“İstanbul uçuşu TK 418, B5 kapısından kalkacaktır.”</i><br>Which gate for Istanbul?',o:['B5','TK','418'],a:'B5',why:'kapı = gate'},
+  {q:'Voo TP 1230 para Lisboa: embarque no portão 9.',html:'<i>“Voo TP 1230 para Lisboa: embarque no portão 9.”</i><br>What is happening at gate 9?',o:['Boarding for Lisbon','Baggage from Lisbon','A shop is opening'],a:'Boarding for Lisbon',why:'Portuguese: embarque = boarding'},
+  {q:'Los pasajeros deben recoger su equipaje en la cinta 4.',html:'<i>“Los pasajeros deben recoger su equipaje en la cinta 4.”</i><br>What must the passengers do?',o:['Collect their baggage from belt 4','Go to gate 4','Show their passports 4 times'],a:'Collect their baggage from belt 4'},
+  {q:'Il est interdit de fumer dans l’aéroport.',html:'<i>“Il est interdit de fumer dans l’aéroport.”</i><br>What is the rule?',o:['No smoking in the airport','No food in the airport','No phones in the airport'],a:'No smoking in the airport',why:'interdit = forbidden'},
+  {q:'Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.',html:'<i>“Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.”</i><br>What do they ask?',o:['Don’t leave your luggage alone','Take off your shoes','Switch off your phone'],a:'Don’t leave your luggage alone',why:'Gepäck = luggage, nicht = not'},
+  {q:'Vlucht KL 1395 naar Amsterdam is vertraagd.',html:'<i>“Vlucht KL 1395 naar Amsterdam is vertraagd.”</i><br>What happened to the flight to Amsterdam?',o:['It is delayed','It is full','It is boarding'],a:'It is delayed',why:'Dutch: vertraagd = delayed'}]},
+ {type:'talk',title:'The Polyglot Help Desk',label:'Passenger',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['Can I help you?','Do you mean …?','In other words, …','It’s a kind of …','It’s the place where …','Could you say that again, please?','Follow me, please.'],cards:DESK.map(q=>({q,say:q,audio:clip(q)}))}]},
+{stage:'Toki Pona',title:'Toki Pona Challenge',hint:'Toki Pona is an invented language with only about 120 words. Match the words first. <small>Then decode the messages: how do you say “car” with so few words?</small>',cols:'1fr 1.1fr',
+ acts:[
+ {type:'match',title:'Toki Pona words',tip:'Tap a word, then its meaning.',items:[
+  {l:'toki',r:'hello; talk; language'},{l:'pona',r:'good; simple'},{l:'jan',r:'person'},{l:'moku',r:'food; eat'},{l:'tomo',r:'house; room'},{l:'telo',r:'water'},
+  {l:'tawa',r:'go; move'},{l:'suli',r:'big'},{l:'lili',r:'small'},{l:'mi',r:'I; me'},{l:'sina',r:'you'},{l:'kon',r:'air'}]},
+ {type:'quiz',title:'Decode the message',label:'Message',cols:3,shuffle:false,items:[
+  {q:'toki!',o:['Goodbye!','Hello!','Thank you!'],a:'Hello!'},
+  {q:'jan pona',o:['a friend','a teacher','an enemy'],a:'a friend',why:'a good person'},
+  {q:'tomo tawa',o:['a kitchen','a school','a car'],a:'a car',why:'a moving room'},
+  {q:'tomo telo',o:['a bathroom','a fridge','a garden'],a:'a bathroom',why:'a water room'},
+  {q:'tomo tawa kon',o:['a train','a plane','a bus'],a:'a plane',why:'a moving room in the air'},
+  {q:'telo suli',o:['the sea','a cup of tea','rain'],a:'the sea',why:'big water'},
+  {q:'jan lili',o:['a child','an old man','a pilot'],a:'a child',why:'a small person'},
+  {q:'mi wile moku',o:['I am hungry: I want to eat.','I am cooking.','I have a lot of food.'],a:'I am hungry: I want to eat.',why:'wile = want'},
+  {q:'sina pona',o:['You are good.','You are big.','You are late.'],a:'You are good.'},
+  {q:'toki pona',o:['a difficult language','a good, simple language','a long talk'],a:'a good, simple language'}]}]},
+{stage:'Final',title:'Critical thinkers',hint:'Is a language easier when it has fewer words? What makes you say that? <small>Then the Speed Game: 10 questions, 15 seconds each.</small>',cols:'1fr 1.2fr',
+ acts:[
+ {type:'talk',title:'What makes you say that?',label:'Question',secs:40,keepChips:true,chipLabel:'Tap each phrase he uses',chips:['In my opinion …','On the one hand … on the other hand …','For example, …','It’s a kind of …','What makes me say that is …'],cards:FINALQ.map(q=>({q,say:q,audio:clip(q)}))},
+ {type:'bomb',speed:true,secs:15,label:'Final challenge',title:'Speed Game · Lesson 3',items:[
+  {sec:'The videos',q:'How many languages are there in the world?',o:['about 700','about 7,000','about 70,000'],a:'about 7,000'},
+  {sec:'The videos',q:'Which language has the most speakers?',o:['English','Mandarin Chinese','Hindi'],a:'Mandarin Chinese'},
+  {sec:'The videos',q:'English, Spanish and French have many words from …',o:['Latin','Japanese','Turkish'],a:'Latin'},
+  {sec:'The videos',q:'The country with the most languages is …',o:['India','Papua New Guinea','Russia'],a:'Papua New Guinea'},
+  {sec:'The videos',q:'The official language of the sky is …',o:['English','French','Mandarin'],a:'English'},
+  {sec:'Airport Mystery',q:'AUSGANG at a German airport means …',o:['Exit','Arrivals','Baggage'],a:'Exit'},
+  {sec:'Airport Mystery',q:'In German, Gift means …',o:['a present','poison','luck'],a:'poison'},
+  {sec:'Airport Mystery',q:'аккуратный in English is …',o:['accurate','tidy','careful'],a:'tidy'},
+  {sec:'Toki Pona',q:'tomo tawa kon is …',o:['a plane','a car','a house'],a:'a plane'},
+  {sec:'Plurilingual',q:'Using a few words of several languages to communicate is …',o:['plurilingualism','translation','memorisation'],a:'plurilingualism'}]}]}
+];
+/* answers in a new order every time (number questions keep their order) */
+const mix=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+STEPS.forEach(st=>st.acts.forEach(a=>{if((a.type==='quiz'||a.type==='bomb')&&!a.keepOrder)a.items.forEach(q=>{if(q.o)q.o=mix(q.o)})}));
+Lesson.boot({kicker:'Module 3 · Lesson 3',steps:STEPS});
+</script>
+</body>
+</html>

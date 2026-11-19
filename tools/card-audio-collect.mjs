@@ -10,6 +10,7 @@ const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..')
 const PAGES = {
   'gabi-english-hub/unit3-lesson1.html': `AUDIO_TEXTS`,
   'gabi-english-hub/unit3-lesson2.html': `AUDIO_TEXTS`,
+  'gabi-english-hub/unit3-lesson3.html': `AUDIO_TEXTS`,
   'gabi-english-hub/word-walls-verbs.html': `AUDIO_TEXTS`,
   'kate-english-hub/homework-lesson2-generations.html': `generationCards.flatMap(c=>[c.en,c.ex])`,
   'kate-english-hub/homework-lesson3-money.html': `W.flatMap(w=>[w.t,w.ex])`,
