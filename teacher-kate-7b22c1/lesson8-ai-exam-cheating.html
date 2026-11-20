@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><script>/* open-from-main-screen */(function(){try{if(window.top!==window)return;var r=document.referrer;if(r&&new URL(r).origin===location.origin)return}catch(e){return}location.replace("index.html")})();</script>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Kate · Lesson 8 · AI Cheating before the Suneung</title>
+<style>
+:root{
+  --ink:#1f2433; --muted:#5b6275; --paper:#fbfaf7; --line:#e3e0d8;
+  --c1:#e8833a; --c2:#3a7bd5; --c3:#2e9e6a; --c4:#8a5cd0; --c5:#d64b5a; --c6:#1f9aa5; --c7:#c2185b;
+  --ok:#2f9e5f; --okbg:#e3f4ea; --bad:#d0463f; --badbg:#fbe5e3;
+  --opt:#eef1f7; --optb:#cdd4e3;
+  --serif: Georgia, "Times New Roman", serif;
+  --sans: "Segoe UI", Arial, sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#e9e6df;color:var(--ink);font-family:var(--serif)}
+button{font-family:var(--sans);cursor:pointer}
+.top{height:40px;display:flex;align-items:center;gap:12px;padding:0 14px;background:#fff;border-bottom:1px solid var(--line);font-family:var(--sans)}
+.badge{background:var(--ink);color:#fff;font-size:13px;font-weight:700;letter-spacing:.06em;padding:4px 9px;border-radius:5px}
+.top h1{font-family:var(--serif);font-size:19px;margin:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .sp{flex:1}
+.homebtn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:5px 12px;font-size:14px;font-weight:600;color:var(--ink)}
+.homebtn:hover{background:#f3f1ec}
+
+/* HUB */
+#hub{position:absolute;top:40px;left:0;right:0;bottom:0;background:#333 url(lesson8-media/cover.jpg) center/cover no-repeat;display:flex;align-items:center;justify-content:center;padding:18px}
+#hub::before{content:"";position:absolute;inset:0;background:rgba(20,24,36,.42)}
+.hubin{position:relative;width:min(1080px,100%)}
+.hubtitle{color:#fff;text-align:center;margin-bottom:16px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.hubtitle .k{font-family:var(--sans);font-size:14px;letter-spacing:.14em;text-transform:uppercase;opacity:.9}
+.hubtitle h2{font-size:clamp(26px,3.6vw,40px);margin:4px 0 0}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.tile{border:0;border-radius:14px;padding:14px 16px;text-align:left;color:#fff;min-height:clamp(78px,15vh,118px);display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 6px 18px rgba(0,0,0,.25);transition:transform .15s}
+.tile:hover{transform:translateY(-3px)}
+.tile .n{font-size:13px;font-weight:700;letter-spacing:.1em;opacity:.9}
+.tile .t{font-family:var(--serif);font-size:clamp(19px,2.1vw,25px);font-weight:700;line-height:1.15}
+.tile .s{font-size:14px;opacity:.95}
+.next-hint{margin-top:12px;text-align:center;color:#fff;font-family:var(--sans);font-size:14px;opacity:.9}
+
+/* PANELS */
+.panel{position:absolute;top:40px;left:0;right:0;bottom:0;display:none;flex-direction:column;background:var(--paper)}
+.panel.on{display:flex}
+.phead{height:46px;display:flex;align-items:center;gap:10px;padding:0 14px;color:#fff;font-family:var(--sans)}
+.phead .pt{font-family:var(--serif);font-size:21px;font-weight:700}
+.phead .sp{flex:1}
+.phead button{border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.15);color:#fff;border-radius:7px;padding:5px 12px;font-size:14px;font-weight:600}
+.phead button:hover{background:rgba(255,255,255,.3)}
+.pbody{flex:1;min-height:0;display:grid;gap:10px;padding:10px}
+.g2{grid-template-columns:1fr 1fr}
+.g2w{grid-template-columns:1.15fr 1fr}
+.box{background:#fff;border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;min-height:0;min-width:0;position:relative}
+.box.max{position:fixed;inset:44px 10px 10px 10px;z-index:50;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.bhead{display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:1px solid var(--line);font-family:var(--sans)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+.tab{border:1px solid var(--line);background:#f6f5f1;border-radius:8px;padding:5px 11px;font-size:15px;font-weight:600;color:var(--muted)}
+.tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.blabel{font-size:15px;font-weight:700;flex:1;color:var(--ink)}
+.xbtn{border:1px solid var(--line);background:#fff;border-radius:7px;width:32px;height:30px;display:flex;align-items:center;justify-content:center;padding:0}
+.xbtn svg{width:16px;height:16px}
+.bbody{flex:1;min-height:0;padding:10px 14px;display:flex;flex-direction:column}
+.pane{display:none;flex:1;min-height:0;flex-direction:column}
+.pane.on{display:flex}
+.note{font-family:var(--sans);font-size:14px;color:var(--muted);margin:0 0 6px}
+.headline{font-size:22px;font-weight:700;margin:2px 0 6px}
+
+/* Reveal */
+.reveal{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.rv-wrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.rv{position:relative;height:100%;max-width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000}
+.rv img{width:100%;height:100%;object-fit:cover;display:block}
+.rv .grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr)}
+.rv .cell{border:1px solid rgba(255,255,255,.35);background:#2b3a55;color:#fff;font-family:var(--sans);font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .35s}
+.rv .cell:nth-child(odd){background:#33466a}
+.rv .cell.gone{opacity:0;pointer-events:none}
+.rv-cap{font-size:20px;font-weight:700;text-align:center;min-height:28px}
+.ctrl{display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;font-family:var(--sans)}
+.btn{border:1px solid var(--optb);background:#fff;border-radius:9px;padding:7px 14px;font-size:16px;font-weight:600;color:var(--ink)}
+.btn:hover{background:#f2f4f9}
+.btn.pri{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:default}
+.count{font-size:15px;color:var(--muted);font-weight:600;min-width:60px;text-align:center}
+
+/* Flip cards */
+.flipwrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;gap:16px;perspective:1200px}
+.flip{width:min(460px,100%);height:min(250px,100%);position:relative;cursor:pointer}
+.flip .in{position:absolute;inset:0;transition:transform .5s;transform-style:preserve-3d}
+.flip.f .in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 20px;text-align:center;border:2px solid var(--line);background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.face.b{transform:rotateY(180deg)}
+.face .big{font-size:32px;font-weight:700}
+.face .mid{font-size:23px;line-height:1.3}
+.face .ru{font-size:21px;font-weight:700;color:var(--c2);margin-bottom:6px}
+.face .def{font-size:19px;color:var(--ink);margin-bottom:8px}
+.face .ex{font-size:18px;font-style:italic;color:var(--muted)}
+.face .lab{font-family:var(--sans);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);position:absolute;top:10px;left:14px}
+.timer{width:92px;height:92px;position:relative;cursor:pointer;flex:none}
+.timer svg{width:100%;height:100%;transform:rotate(-90deg)}
+.timer .tx{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:24px;font-weight:700}
+.timer .hint{position:absolute;bottom:-20px;left:0;right:0;text-align:center;font-family:var(--sans);font-size:12px;color:var(--muted)}
+select{font-size:15px;padding:5px;border-radius:7px;border:1px solid var(--optb);font-family:var(--sans)}
+
+/* Quiz */
+.quiz{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.qtop{display:flex;align-items:center;gap:8px;font-family:var(--sans)}
+.dots{display:flex;gap:4px;flex-wrap:wrap;flex:1}
+.dot{width:26px;height:26px;border-radius:50%;border:1px solid var(--optb);background:#fff;font-size:12px;font-weight:700;color:var(--muted);padding:0}
+.dot.cur{border:2px solid var(--ink);color:var(--ink)}
+.dot.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.dot.no{background:var(--bad);color:#fff;border-color:var(--bad)}
+.score{font-weight:700;font-size:15px}
+.qq{font-size:clamp(20px,2vw,25px);line-height:1.35;font-weight:600;min-height:2.7em;display:flex;align-items:center}
+.qq .gap{display:inline-block;min-width:90px;border-bottom:3px solid var(--ink);margin:0 4px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opt{border:2px solid var(--optb);background:var(--opt);border-radius:11px;padding:11px 14px;font-family:var(--serif);font-size:clamp(17px,1.6vw,20px);text-align:left;color:var(--ink);min-height:52px}
+.opt:hover{background:#e3e8f2}
+.opt.ok{background:var(--okbg);border-color:var(--ok);font-weight:700}
+.opt.no{background:var(--badbg);border-color:var(--bad)}
+.opt:disabled{cursor:default}
+.fb{font-family:var(--sans);font-size:15px;min-height:20px;color:var(--muted)}
+.qnav{display:flex;justify-content:space-between;align-items:center;font-family:var(--sans);margin-top:auto}
+.res{flex:1;min-height:0;overflow:auto;font-family:var(--sans)}
+.res h3{font-family:var(--serif);font-size:24px;margin:4px 0 8px}
+.res .row{font-size:15px;padding:5px 0;border-bottom:1px solid var(--line)}
+.res .row b{color:var(--ok)}
+.res .row s{color:var(--bad)}
+
+/* Match */
+.match{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px}
+.mcols{flex:1;min-height:0;display:grid;grid-template-columns:.8fr 1.2fr;gap:10px}
+.mcol{display:flex;flex-direction:column;gap:6px;min-height:0}
+.mi{flex:1;border:2px solid var(--optb);background:var(--opt);border-radius:9px;padding:4px 10px;font-family:var(--serif);font-size:clamp(15px,1.4vw,18px);text-align:left;color:var(--ink);min-height:0}
+.mi.w{font-weight:700}
+.mi.sel{border-color:var(--c3);background:#dcf1e6}
+.mi.done{background:var(--okbg);border-color:var(--ok);opacity:.55}
+.mi.err{background:var(--badbg);border-color:var(--bad)}
+
+/* Speed */
+.speed{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center}
+.speed .w{font-size:34px;font-weight:700}
+.speed .d{font-size:22px;color:var(--muted);max-width:560px}
+.speed .row2{display:flex;gap:12px}
+.speed .row2 .opt{min-width:170px;text-align:center}
+.bar{width:min(480px,90%);height:10px;background:#eceae4;border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c5);width:100%}
+
+/* media */
+.media{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;background:#111;border-radius:10px;overflow:hidden}
+.media video{max-width:100%;max-height:100%;display:block}
+audio{width:100%}
+.listen-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;flex:1;min-height:0;margin-top:8px}
+.lc{position:relative;perspective:900px;cursor:pointer;min-height:0}
+.lc .in{position:absolute;inset:0;transition:transform .5s;transform-style:preserve-3d}
+.lc.f .in{transform:rotateY(180deg)}
+.lc .face .big{font-size:26px}
+.task{font-size:20px;font-weight:600;margin:6px 0 2px}
+.rp{display:grid;grid-template-columns:1fr 1fr;gap:9px;flex:1;min-height:0}
+.rpc{border:2px solid var(--line);border-radius:11px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-height:0;overflow:hidden}
+.rpc h4{margin:0;font-size:20px}
+.rpc p{margin:0;font-size:17px;line-height:1.35}
+.rpc .who{font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--c6)}
+.phr{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.phr span{border:1px solid var(--optb);background:var(--opt);border-radius:16px;padding:4px 11px;font-size:16px}
+.hidden{display:none !important}
+.qcwrap{flex:1;min-height:0;display:flex;flex-direction:column}
+.hl{font-size:clamp(20px,2vw,26px);font-weight:700;border-left:5px solid var(--c7);background:#fbeef3;padding:8px 14px;border-radius:0 8px 8px 0;margin:8px 0}
+table.rule{width:100%;border-collapse:collapse;font-size:clamp(15px,1.3vw,18px)}
+table.rule th{background:var(--c7);color:#fff;font-family:var(--sans);font-size:14px;text-align:left;padding:7px 9px}
+table.rule td{border-bottom:1px solid var(--line);padding:7px 9px;vertical-align:top}
+table.rule td:last-child{font-family:var(--sans);font-size:14px;color:var(--muted)}
+.watch{margin:4px 0;padding-left:22px;font-size:clamp(17px,1.5vw,20px);line-height:1.45}
+.watch li{margin-bottom:6px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <span class="badge">Teacher</span>
+  <h1>Katya · Lesson 8 · AI cheating before the Suneung</h1>
+  <span class="sp"></span>
+  <button class="homebtn" onclick="goHome()">Lesson home</button>
+</div>
+
+<!-- LESSON HOME -->
+<section id="hub">
+  <div class="hubin">
+    <div class="hubtitle">
+      <div class="k">B2 · Module 1 · after Lesson 7 “Suneung”</div>
+      <h2>AI exam cheat confesses</h2>
+    </div>
+    <div class="tiles">
+      <button class="tile" style="background:var(--c1)" onclick="openP('p1')"><span class="n">1 · WARM-UP</span><span class="t">Interview &amp; Lesson 7 words</span><span class="s">Secret questions · Flashcards</span></button>
+      <button class="tile" style="background:var(--c3)" onclick="openP('p2')"><span class="n">2 · VOCABULARY</span><span class="t">Words from the news</span><span class="s">Flashcards · Match · Speed Game</span></button>
+      <button class="tile" style="background:var(--c5)" onclick="openP('p3')"><span class="n">3 · VIDEO</span><span class="t">Two days before the exam</span><span class="s">Predict · Who said it? · True or False</span></button>
+      <button class="tile" style="background:var(--c4)" onclick="openP('p4')"><span class="n">4 · PRACTICE</span><span class="t">Words in context</span><span class="s">Quiz · 13 questions</span></button>
+      <button class="tile" style="background:var(--c7)" onclick="openP('p5')"><span class="n">5 · GRAMMAR</span><span class="t">Headline English</span><span class="s">Rule · Headline decoder</span></button>
+      <button class="tile" style="background:var(--c2)" onclick="openP('p6')"><span class="n">6 · LISTENING</span><span class="t">BBC: English from the News</span><span class="s">Catch three words · Retell</span></button>
+      <button class="tile" style="background:var(--c6)" onclick="openP('p7')"><span class="n">7 · SPEAKING</span><span class="t">Discuss &amp; role-play</span><span class="s">Discussion · Headlines · Roles</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- P1 WARM-UP -->
+<section class="panel" id="p1">
+  <div class="phead" style="background:var(--c1)"><span class="pt">1 · Warm-up</span><span class="sp"></span><button onclick="openP('p2')">Next: Vocabulary →</button><button onclick="goHome()">Lesson home</button></div>
+  <div class="pbody g2">
+    <div class="box"><div class="bhead"><span class="blabel">Interview · listen, then answer in 40 seconds</span></div>
+      <div class="bbody"><div class="headline">Headline: “AI exam cheat confesses”</div><div id="warmCards" class="qcwrap"></div></div></div>
+    <div class="box"><div class="bhead"><span class="blabel">Words from Lesson 7 · Suneung</span></div>
+      <div class="bbody" id="quizlet7"></div></div>
+  </div>
+</section>
+
+<!-- P2 VOCAB -->
+<section class="panel" id="p2">
+  <div class="phead" style="background:var(--c3)"><span class="pt">2 · Vocabulary: Words from the news</span><span class="sp"></span><button onclick="openP('p3')">Next: Video →</button><button onclick="goHome()">Lesson home</button></div>
+  <div class="pbody g2">
+    <div class="box"><div class="bhead"><span class="blabel">Flashcards · 16 words</span></div>
+      <div class="bbody" id="quizlet"></div></div>
+    <div class="box"><div class="bhead"><div class="tabs" data-for="vgames"><button class="tab on" data-p="vm">Match</button><button class="tab" data-p="vs">Speed Game</button></div></div>
+      <div class="bbody" id="vgames"><div class="pane on" id="vm"></div><div class="pane" id="vs"></div></div></div>
+  </div>
+</section>
+
+<!-- P3 VIDEO -->
+<section class="panel" id="p3">
+  <div class="phead" style="background:var(--c5)"><span class="pt">3 · Video: AI cheating scandal two days before Korea's biggest exam</span><span class="sp"></span><button onclick="openP('p4')">Next: Practice →</button><button onclick="goHome()">Lesson home</button></div>
+  <div class="pbody g2w">
+    <div class="box"><div class="bhead"><span class="blabel">Yonhap News · Korea Now · 2:29</span></div>
+      <div class="bbody"><div class="media"><video id="vid" src="lesson8-media/ai-cheating-video.mp4" controls preload="metadata" playsinline></video></div></div></div>
+    <div class="box"><div class="bhead"><div class="tabs" data-for="vtasks"><button class="tab on" data-p="vp">1 · Predict</button><button class="tab" data-p="vw">2 · Who said it?</button><button class="tab" data-p="vt">3 · True or False</button></div></div>
+      <div class="bbody" id="vtasks"><div class="pane on" id="vp"><div class="reveal" id="reveal"></div></div><div class="pane" id="vw"><div class="quiz" id="whoQuiz"></div></div><div class="pane" id="vt"><div class="quiz" id="tfQuiz"></div></div></div></div>
+  </div>
+</section>
+
+<!-- P4 PRACTICE -->
+<section class="panel" id="p4">
+  <div class="phead" style="background:var(--c4)"><span class="pt">4 · Practice: Words in context</span><span class="sp"></span><button onclick="openP('p5')">Next: Grammar →</button><button onclick="goHome()">Lesson home</button></div>
+  <div class="pbody g2w">
+    <div class="box"><div class="bhead"><span class="blabel">Choose the word · sentences from the BBC worksheet and the video</span></div>
+      <div class="bbody"><div class="quiz" id="ctxQuiz"></div></div></div>
+    <div class="box"><div class="bhead"><span class="blabel">Word bank</span></div>
+      <div class="bbody" id="bank" style="overflow:hidden"></div></div>
+  </div>
+</section>
+
+<!-- P5 GRAMMAR -->
+<section class="panel" id="p5">
+  <div class="phead" style="background:var(--c7)"><span class="pt">5 · Grammar: Headline English</span><span class="sp"></span><button onclick="openP('p6')">Next: Listening →</button><button onclick="goHome()">Lesson home</button></div>
+  <div class="pbody g2w">
+    <div class="box"><div class="bhead"><span class="blabel">Headline decoder · what does the headline really mean?</span></div>
+      <div class="bbody"><div class="quiz" id="headQuiz"></div></div></div>
+    <div class="box"><div class="bhead"><div class="tabs" data-for="rules"><button class="tab on" data-p="r0">Notice</button><button class="tab" data-p="r1">Rule</button><button class="tab" data-p="r2">Watch out</button></div></div>
+      <div class="bbody" id="rules">
+        <div class="pane on" id="r0"><p class="task">Look at the three headlines. What is missing? What tense is used?</p>
+          <div class="hl">AI exam cheat confesses</div><div class="hl">Some calling for Suneung to be postponed</div><div class="hl">Korea to inspect glasses worn by exam candidates</div>
+          <p class="note" style="margin-top:10px">Open “Rule” after the student's guesses.</p></div>
+        <div class="pane" id="r1"><table class="rule">
+          <tr><th>Headline</th><th>Full sentence</th><th>Rule</th></tr>
+          <tr><td>AI exam cheat <b>confesses</b></td><td>An AI exam cheat <b>has confessed</b>.</td><td>Present Simple = something that has just happened</td></tr>
+          <tr><td>Korea <b>to inspect</b> glasses</td><td>Korea <b>is going to</b> inspect glasses.</td><td>to + verb = the future</td></tr>
+          <tr><td>Some <b>calling</b> for…</td><td>Some people <b>are calling</b> for…</td><td>-ing = Present Continuous without “be”</td></tr>
+          <tr><td>Glasses <b>banned</b></td><td>Glasses <b>have been banned</b>.</td><td>Past Participle = passive without “be”</td></tr>
+          <tr><td><b>AI exam cheat</b></td><td>a person who cheated in an exam using AI</td><td>noun + noun + noun, no articles</td></tr>
+        </table></div>
+        <div class="pane" id="r2"><ul class="watch">
+          <li>Articles (<i>a, an, the</i>) and the verb <i>be</i> usually disappear.</li>
+          <li>Present Simple in a headline is usually about the <b>past</b>: <i>confesses</i> = has confessed.</li>
+          <li><i>to</i> + verb is about the <b>future</b>, not purpose.</li>
+          <li>A past participle alone is usually <b>passive</b>: <i>banned</i> = has been banned.</li>
+          <li>Short strong words: <i>sparks</i> = causes, <i>outrage</i> = great anger.</li>
+        </ul></div>
+      </div></div>
+  </div>
+</section>
+
+<!-- P6 LISTENING -->
+<section class="panel" id="p6">
+  <div class="phead" style="background:var(--c2)"><span class="pt">6 · Listening: BBC Learning English from the News</span><span class="sp"></span><button onclick="openP('p7')">Next: Speaking →</button><button onclick="goHome()">Lesson home</button></div>
+  <div class="pbody" style="grid-template-rows:auto 1fr">
+    <div class="box"><div class="bbody" style="padding:8px 14px"><audio id="aud" src="lesson8-media/bbc-ai-exam-cheat.mp3" controls preload="metadata"></audio></div></div>
+    <div class="pbody g2" style="padding:0">
+      <div class="box"><div class="bhead"><span class="blabel">Task A · Listen to the whole episode. Catch the three words. What do they mean?</span></div>
+        <div class="bbody"><div class="listen-cards" id="lcards"></div></div></div>
+      <div class="box"><div class="bhead"><span class="blabel">Task B · What else can you remember about the story?</span></div>
+        <div class="bbody"><div id="retell" class="qcwrap"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- P7 SPEAKING -->
+<section class="panel" id="p7">
+  <div class="phead" style="background:var(--c6)"><span class="pt">7 · Speaking: Discuss &amp; role-play</span><span class="sp"></span><button onclick="goHome()">Lesson home</button></div>
+  <div class="pbody g2">
+    <div class="box"><div class="bhead"><div class="tabs" data-for="s1"><button class="tab on" data-p="sd">Discussion</button><button class="tab" data-p="sh">Headline challenge</button></div></div>
+      <div class="bbody" id="s1"><div class="pane on" id="sd"></div><div class="pane" id="sh"></div></div></div>
+    <div class="box"><div class="bhead"><span class="blabel">Role-play</span></div>
+      <div class="bbody"><div class="rp" id="roleplay"></div></div></div>
+  </div>
+</section>
+
+<script src="../card-audio.js?v=1"></script>
+<script>
+/* ---------- DATA ---------- */
+const WORDS=[
+ {w:"doesn't add up",ru:"не сходится, не вяжется",d:"doesn't seem true",e:"The suspect was at work when the crime took place. This just doesn't add up."},
+ {w:"screen (v)",ru:"проверять, обследовать",d:"check for problems",e:"They might screen you for illnesses before you enter the country."},
+ {w:"stern",ru:"строгий, суровый",d:"strict, severe or serious",e:"You don't have to be stern to be respected."},
+ {w:"confess",ru:"признаться",d:"say that you did something wrong",e:"AI exam cheat confesses"},
+ {w:"test-taker",ru:"участник экзамена",d:"a person who takes an exam",e:"Kim Yoon-seo / Test-taker"},
+ {w:"postpone",ru:"отложить, перенести",d:"move to a later date",e:"Some calling for Suneung to be postponed."},
+ {w:"cheating scandal",ru:"скандал со списыванием",d:"public anger about people cheating",e:"…amid a growing AI cheating scandal"},
+ {w:"go to waste",ru:"пропадать зря",d:"be wasted, give no result",e:"It feels like all my effort goes to waste."},
+ {w:"discouraging",ru:"обескураживающий",d:"making you lose hope or confidence",e:"It's really discouraging."},
+ {w:"undermine",ru:"подрывать",d:"make something weaker",e:"It undermines the exam's credibility."},
+ {w:"credibility",ru:"доверие, авторитет",d:"the quality of being trusted",e:"…the exam's credibility"},
+ {w:"be preoccupied with",ru:"быть поглощённым (мыслями о)",d:"think about something all the time",e:"They're so preoccupied with these concerns."},
+ {w:"be suspected of",ru:"подозреваться в",d:"people think you did something wrong",e:"I might be suspected of cheating just because of my frames."},
+ {w:"brush aside",ru:"отмахнуться, не принимать всерьёз",d:"treat as not important",e:"All our hard work is being brushed aside."},
+ {w:"rely on",ru:"полагаться на",d:"depend on",e:"I relied on a miniature camera, AI and a smartphone."},
+ {w:"horn-rimmed glasses",ru:"очки в толстой оправе",d:"glasses with thick dark frames",e:"I usually wear horn-rimmed or half-rimmed glasses."}
+];
+const WORDS7=[{"w": "sit an exam", "d": "to take an exam (British English)", "e": "More than 550,000 students sit the Suneung every November.", "ru": "сдавать экзамен"}, {"w": "entrance exam", "d": "an exam you must pass to get into a university", "e": "The Suneung is South Korea’s national university entrance exam.", "ru": "вступительный экзамен"}, {"w": "high-stakes", "d": "with very serious results if you fail", "e": "For many families it is a high-stakes exam.", "ru": "с очень высокими ставками"}, {"w": "a gateway to", "d": "a way of reaching something important", "e": "Families see the test as a gateway to a good career.", "ru": "путь к чему-то, «ворота» в"}, {"w": "social mobility", "d": "the chance to move to a higher position in society", "e": "The exam is seen as a route to social mobility.", "ru": "социальный лифт"}, {"w": "cram", "d": "to study a lot in a very short time before an exam", "e": "Many students cram in private academies until late at night.", "ru": "зубрить"}, {"w": "retake", "d": "to take an exam again after failing it or wanting a better score", "e": "Some students retake the exam for a second or third time.", "ru": "пересдавать"}, {"w": "put pressure on", "d": "to make someone feel that they must succeed", "e": "Parents and society put huge pressure on teenagers.", "ru": "давить на кого-то"}, {"w": "halt", "d": "to stop completely for a short time", "e": "Flights are halted during the English listening test.", "ru": "приостанавливать"}, {"w": "absolute grading", "d": "marks based on fixed score levels, not on how other students did", "e": "In 2025 very few students reached the top grade under absolute grading.", "ru": "абсолютная оценка (по порогам баллов)"}, {"w": "resign", "d": "to officially leave your job", "e": "The head of the exam institute resigned after the English section.", "ru": "уйти в отставку"}, {"w": "take responsibility for", "d": "to accept that something is your fault or duty", "e": "He said he took responsibility for the confusion.", "ru": "взять на себя ответственность"}, {"w": "a talisman", "d": "an object believed to bring good luck", "e": "Some parents put a talisman in their child’s pocket.", "ru": "талисман, оберег"}];
+const HEADQ=[
+ {q:"AI exam cheat confesses",o:["A person who cheated in an exam with AI has admitted it.","A person will confess to cheating with AI.","AI confesses that exams are too difficult."],a:0},
+ {q:"AI cheating scandal sparks outrage",o:["The scandal has caused great anger.","The scandal will start a fire.","People are happy about the scandal."],a:0},
+ {q:"Korea to inspect glasses worn by exam candidates",o:["Korea is going to check the glasses of exam candidates.","Korea inspected glasses last year.","Exam candidates are inspecting glasses."],a:0},
+ {q:"Some calling for Suneung to be postponed",o:["Some people are asking for the Suneung to be moved to a later date.","The Suneung has been postponed.","Some people called the Suneung yesterday."],a:0},
+ {q:"Exam delay ruled out",o:["The ministry has decided that the exam will not be delayed.","The exam has been delayed.","The ministry is going to delay the exam."],a:0},
+ {q:"Smart glasses banned from exam halls",o:["Smart glasses have been banned from exam halls.","Smart glasses ban exam halls.","Smart glasses will be sold in exam halls."],a:0},
+ {q:"Top scorer admits using hidden camera",o:["The person with the best result has admitted using a hidden camera.","The top scorer will use a hidden camera.","A hidden camera found the top scorer."],a:0},
+ {q:"Students fear being suspected over glasses",o:["Students are afraid people will think they cheat because of their glasses.","Students suspect their teachers.","Students are afraid of glasses."],a:0},
+ {q:"Ministry to review signal jamming in exam rooms",o:["The ministry is going to think about blocking phone signals in exam rooms.","The ministry has blocked all phones in Korea.","The ministry reviewed a film about exam rooms."],a:0},
+ {q:"Cheaters face three-year exam ban",o:["People who cheat may not be allowed to take the exam for three years.","Cheaters looked at the exam for three years.","The exam has been banned for three years."],a:0}
+];
+const PHOTOS=[
+ {src:"lesson8-media/p74.jpg",cap:"AI glasses"},
+ {src:"lesson8-media/p118.jpg",cap:"Button-sized hidden cameras"},
+ {src:"lesson8-media/p70.jpg",cap:"Phones are collected before the exam"},
+ {src:"lesson8-media/p62.jpg",cap:"Bags stay at the back of the exam room"}
+];
+const WARM=[
+ "What do you know about this news story already?",
+ "Have you heard about this news story?",
+ "What do you imagine this news story is about?",
+ "What is the Suneung, and why is it so important in Korea?",
+ "Have you ever seen someone cheat in an exam? What happened?",
+ "How do officials stop cheating at the EGE in Russia?",
+ "Would you wear smart glasses in everyday life? Why or why not?",
+ "Is it ever OK to use AI for schoolwork?"
+];
+const CTX=[
+ {q:"The suspect was at work when the crime took place. This just ___.",o:["doesn't add up","screen","stern"],a:0},
+ {q:"They might ___ you for illnesses before you enter the country.",o:["doesn't add up","screen","stern"],a:1},
+ {q:"When my nephew misbehaves, I give him a ___ look and he usually knows that he's done wrong.",o:["doesn't add up","screen","stern"],a:2},
+ {q:"You don't have to be ___ to be respected.",o:["doesn't add up","screened","stern"],a:2},
+ {q:"AI exam cheat ___",o:["confesses","confides","conforms","convinces"],a:0},
+ {q:"Some are calling for Suneung to be ___ amid a growing AI cheating scandal.",o:["postponed","confessed","relied","screened"],a:0},
+ {q:"I've studied hard all year. If others use AI to cheat, it feels like all my effort goes to ___.",o:["waste","loss","rubbish","pieces"],a:0},
+ {q:"It's really ___.",o:["discouraging","discouraged","discourage","discouragement"],a:0},
+ {q:"What's most frustrating is how it ___ the exam's credibility.",o:["undermines","underlines","understands","undertakes"],a:0},
+ {q:"Some students can't even focus because they're so ___ with these concerns.",o:["preoccupied","interested","bored","satisfied"],a:0},
+ {q:"I might be ___ of cheating just because of my frames.",o:["suspected","blamed","caught","charged"],a:0},
+ {q:"It feels like all our hard work is being ___ aside.",o:["brushed","combed","washed","painted"],a:0},
+ {q:"“I ___ on a miniature camera, AI and a smartphone.”",o:["relied","trusted","believed","hoped"],a:0}
+];
+const WHO_O=["Jung Yoon-ah, test-taker","Kim Yoon-seo, test-taker","A test-taker who wears glasses","Jun Yong-hwan, police officer exam","The man who confessed","An online shop or post"];
+const WHO=[
+ {q:"“I've studied hard all year. If others use AI to cheat, it feels like all my effort goes to waste.”",a:0},
+ {q:"“It's really discouraging.”",a:0},
+ {q:"“What's most frustrating is how it undermines the exam's credibility.”",a:1},
+ {q:"“Some students can't even focus because they're so preoccupied with these concerns.”",a:1},
+ {q:"“I usually wear horn-rimmed or half-rimmed glasses, so I'm a little worried.”",a:2},
+ {q:"“I might be suspected of cheating just because of my frames.”",a:2},
+ {q:"“It feels like all our hard work is being brushed aside.”",a:3},
+ {q:"“Everyone is feeling confused and deeply frustrated.”",a:3},
+ {q:"“I relied on miniature camera, AI and smartphone.”",a:4},
+ {q:"“Ways to not get caught!” / “Everything for your exam”",a:5}
+].map(x=>({q:x.q,o:WHO_O,a:x.a}));
+const TF=[
+ ["Some people want the Suneung to be postponed.",1],
+ ["The video says the AI cheating scandal is getting smaller.",0],
+ ["Jung Yoon-ah feels that cheaters make her hard work go to waste.",1],
+ ["Kim Yoon-seo says the scandal makes the exam more credible.",0],
+ ["Some students can't focus because they are worried about cheating.",1],
+ ["One test-taker is worried because of her glasses frames.",1],
+ ["Jun Yong-hwan is studying for a police officer exam.",1],
+ ["Jun Yong-hwan says everyone feels calm and confident.",0],
+ ["The man who confessed relied on a miniature camera, AI and a smartphone.",1],
+ ["In the online shop, the mini camera looks like a shirt button.",1],
+ ["The earpiece in the kit is hidden in a pair of glasses.",0],
+ ["The premium kit has a neck loop with a Bluetooth unit.",1]
+].map(x=>({q:x[0],o:["True","False"],a:x[1]?0:1}));
+const LISTEN=[
+ {k:"A",w:"doesn't add up",d:"doesn't seem true"},
+ {k:"B",w:"screen",d:"check for problems"},
+ {k:"C",w:"stern",d:"strict, severe or serious"}
+];
+const RETELL=[
+ "What else can you remember about the story?",
+ "Who confessed, and what did he do?",
+ "What does “doesn't add up” mean in the story?",
+ "Who or what is going to be screened?",
+ "Who is stern in the story, and why?"
+];
+const DISC=[
+ "How does this story affect you?",
+ "What do you think will happen next?",
+ "Is the news story positive or negative? Why?",
+ "Give three examples using the vocabulary.",
+ "Should the Suneung be postponed? Why or why not?",
+ "Should exam rooms screen every pair of glasses?",
+ "Is cheating with AI worse than old-fashioned cheating?",
+ "How would you feel if someone in your exam room cheated with AI?"
+];
+const HEAD=["doesn't add up","screen","stern","confess","postpone","undermine","brush aside","rely on","be suspected of","go to waste"];
+const ROLES=[
+ {who:"Newsroom",h:"Choose tomorrow's headline",p:"You are news editors. Write three headlines about the story aloud. Use “confess”, “screen” and “stern”. Vote for the best one."},
+ {who:"Interview · 2 roles",h:"Reporter + Test-taker",p:"Two days before the Suneung. The reporter asks how the scandal affects the test-taker. The test-taker uses: discouraging, go to waste, preoccupied with."},
+ {who:"Interview · 2 roles",h:"Reporter + Exam official",p:"The reporter asks: Will the exam be postponed? How will you screen the test-takers? The official answers in a stern voice."},
+ {who:"Interview · 2 roles",h:"Reporter + The man who confessed",p:"Why did you cheat? What did you rely on? Why did your score not add up? How do you feel now?"}
+];
+const PHRASES=["In my opinion,","To be honest,","I'm not sure, but…","On the one hand… on the other hand…","It depends on…","That's a good point, but…"];
+
+/* ---------- HELPERS ---------- */
+const $=s=>document.querySelector(s);
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+function goHome(){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.box.max').forEach(b=>b.classList.remove('max'));pauseAll();$('#hub').style.display='flex'}
+function openP(id){document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));document.querySelectorAll('.box.max').forEach(b=>b.classList.remove('max'));pauseAll();$('#hub').style.display='none';$('#'+id).classList.add('on')}
+function pauseAll(){['#vid','#aud'].forEach(s=>{const m=$(s);if(m&&!m.paused)m.pause()});hush()}
+// tabs
+document.querySelectorAll('.tabs').forEach(t=>t.addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;t.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));const host=$('#'+t.dataset.for);host.querySelectorAll(':scope>.pane').forEach(p=>p.classList.toggle('on',p.id===b.dataset.p))}));
+// expand buttons
+const EXP='<svg viewBox="0 0 16 16" fill="none" stroke="#1f2433" stroke-width="1.8"><path d="M10 2h4v4M6 14H2v-4M14 2l-5 5M2 14l5-5"/></svg>';
+const COL='<svg viewBox="0 0 16 16" fill="none" stroke="#1f2433" stroke-width="1.8"><path d="M9 3v4h4M7 13V9H3M9 7l5-5M7 9l-5 5"/></svg>';
+document.querySelectorAll('.box').forEach(b=>{const h=b.querySelector('.bhead');if(!h)return;const x=document.createElement('button');x.className='xbtn';x.title='Expand / collapse';x.innerHTML=EXP;x.onclick=()=>{b.classList.toggle('max');x.innerHTML=b.classList.contains('max')?COL:EXP};h.appendChild(x)});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){const m=document.querySelector('.box.max');if(m){m.classList.remove('max');m.querySelector('.xbtn').innerHTML=EXP}}});
+
+// natural recorded voice (site card-audio, British neural voice)
+const sayText=t=>String(t).replace(/\s*\(.*?\)/g,'').trim();
+function speak(t){try{if(window.CardAudio)CardAudio.say(sayText(t))}catch(e){}}
+function hush(){try{window.CardAudio&&CardAudio.stop()}catch(e){}}
+
+/* ---------- PHOTO REVEAL ---------- */
+(function(){const el=$('#reveal');let i=0;
+ el.innerHTML='<div class="rv-wrap"><div class="rv"><img alt=""><div class="grid"></div></div></div><div class="rv-cap"></div><div class="ctrl"><button class="btn" data-a="p">← Prev</button><span class="count"></span><button class="btn" data-a="n">Next →</button><button class="btn" data-a="all">Show photo</button><button class="btn pri" data-a="cap">Answer</button></div>';
+ const img=el.querySelector('img'),grid=el.querySelector('.grid'),cap=el.querySelector('.rv-cap'),cnt=el.querySelector('.count');
+ function load(){img.src=PHOTOS[i].src;cap.textContent='';cnt.textContent=(i+1)+' / '+PHOTOS.length;grid.innerHTML='';for(let k=1;k<=12;k++){const c=document.createElement('div');c.className='cell';c.textContent=k;c.onclick=()=>c.classList.add('gone');grid.appendChild(c)}}
+ el.querySelector('.ctrl').onclick=e=>{const a=e.target.dataset.a;if(!a)return;if(a==='p'){i=(i-1+PHOTOS.length)%PHOTOS.length;load()}if(a==='n'){i=(i+1)%PHOTOS.length;load()}if(a==='all')grid.querySelectorAll('.cell').forEach(c=>c.classList.add('gone'));if(a==='cap'){grid.querySelectorAll('.cell').forEach(c=>c.classList.add('gone'));cap.textContent=PHOTOS[i].cap}};
+ load()})();
+
+/* ---------- QUESTION CARDS with 40s timer ---------- */
+function questionCards(el,list,opts={}){let i=0,t=null,left=40;const R=40,C=2*Math.PI*R;
+ el.innerHTML=`<div class="flipwrap"><div class="flip"><div class="in"><div class="face a"><span class="lab">${opts.label||'Question'}</span><div class="big"></div><div class="note" style="margin-top:8px">Click to flip</div></div><div class="face b"><span class="lab">${opts.label||'Question'}</span><div class="mid"></div></div></div></div>
+ <div class="timer"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="${R}" stroke="#eceae4" stroke-width="9" fill="none"/><circle class="arc" cx="50" cy="50" r="${R}" stroke="${opts.color||'#e8833a'}" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="0"/></svg><div class="tx">40</div><div class="hint">click: start / reset</div></div></div>
+ ${opts.audio?'<div class="ctrl" style="margin-top:12px"><button class="btn pri" data-a="play">Play</button><button class="btn" data-a="play">Replay</button><button class="btn" data-a="stop">Stop</button></div>':''}<div class="ctrl" style="margin-top:8px"><button class="btn" data-a="p">← Back</button><button class="btn pri" data-a="f">Flip the card</button><button class="btn" data-a="n">Next →</button><select></select></div>`;
+ const flip=el.querySelector('.flip'),front=el.querySelector('.face.a .big'),back=el.querySelector('.face.b .mid'),arc=el.querySelector('.arc'),tx=el.querySelector('.tx'),sel=el.querySelector('select');
+ list.forEach((q,k)=>{const o=document.createElement('option');o.value=k;o.textContent=(opts.label||'Question')+' '+(k+1);sel.appendChild(o)});
+ function stop(){clearInterval(t);t=null;left=40;tx.textContent=40;arc.style.strokeDashoffset=0}
+ function show(){flip.classList.remove('f');stop();hush();front.textContent=opts.front?opts.front(list[i],i):(opts.label||'Question')+' '+(i+1);back.textContent=opts.back?opts.back(list[i]):list[i];sel.value=i}
+ flip.onclick=()=>flip.classList.toggle('f');
+ el.querySelector('.timer').onclick=()=>{if(t){stop();return}t=setInterval(()=>{left--;tx.textContent=left;arc.style.strokeDashoffset=C*(1-left/40);if(left<=0){clearInterval(t);t=null;tx.textContent='0'}},1000)};
+ el.querySelector('.ctrl').onclick=e=>{const a=e.target.dataset.a;if(a==='p'){i=(i-1+list.length)%list.length;show()}if(a==='n'){i=(i+1)%list.length;show()}if(a==='f')flip.classList.toggle('f');if(a==='play')speak(list[i]);if(a==='stop')hush()};
+ el.querySelectorAll('.ctrl')[0].onclick=el.querySelector('.ctrl').onclick;if(el.querySelectorAll('.ctrl')[1])el.querySelectorAll('.ctrl')[1].onclick=el.querySelector('.ctrl').onclick;
+ sel.onchange=()=>{i=+sel.value;show()};show()}
+questionCards($('#warmCards'),WARM,{color:'#e8833a',audio:true});
+questionCards($('#retell'),RETELL,{color:'#3a7bd5',audio:true});
+questionCards($('#sd'),DISC,{color:'#1f9aa5',audio:true});
+questionCards($('#sh'),HEAD,{label:'Headline',color:'#1f9aa5',front:(w)=>w,back:()=>'Say a news headline with this word. Then explain it in one sentence.'});
+$('#sd').insertAdjacentHTML('beforeend','<div class="phr">'+PHRASES.map(p=>'<span>'+p+'</span>').join('')+'</div>');
+
+/* ---------- QUIZLET (one card, word on the front; flip = meaning + example, the word is spoken) ---------- */
+function quizletCard(el,LIST){let i=0;
+ el.innerHTML=`<div class="flipwrap"><div class="flip" style="height:min(270px,100%)"><div class="in"><div class="face a"><div class="big"></div></div><div class="face b"><div class="ru"></div><div class="def"></div><div class="ex"></div></div></div></div></div>
+ <div class="ctrl" style="margin-top:10px"><button class="btn" data-a="p">←</button><span class="count"></span><button class="btn" data-a="n">→</button><button class="btn" data-a="s">Listen</button><button class="btn" data-a="sh">Shuffle</button></div>`;
+ let order=LIST.map((_,k)=>k);
+ const flip=el.querySelector('.flip'),w=el.querySelector('.face.a .big'),ru=el.querySelector('.ru'),d=el.querySelector('.def'),ex=el.querySelector('.ex'),cnt=el.querySelector('.count');
+ function show(){const x=LIST[order[i]];const was=flip.classList.contains('f');flip.classList.remove('f');setTimeout(()=>{w.textContent=x.w;ru.textContent=x.ru;d.textContent=x.d;ex.textContent=x.e},was?260:0);cnt.textContent=(i+1)+' / '+LIST.length}
+ flip.onclick=()=>{flip.classList.toggle('f');if(flip.classList.contains('f'))speak(LIST[order[i]].w);else hush()};
+ el.querySelector('.ctrl').onclick=e=>{const a=e.target.dataset.a;if(a==='p'){i=(i-1+LIST.length)%LIST.length;show()}if(a==='n'){i=(i+1)%LIST.length;show()}if(a==='s')speak(LIST[order[i]].w);if(a==='sh'){order=shuf(order);i=0;show()}};
+ show()}
+quizletCard($('#quizlet'),WORDS);
+quizletCard($('#quizlet7'),WORDS7);
+
+/* ---------- MATCH ---------- */
+(function(){const el=$('#vm');const rounds=[WORDS.slice(0,8),WORDS.slice(8,16)];let r,sel,done,errs,miss;
+ function start(){r=0;errs=0;miss=[];round()}
+ function round(){sel=null;done=0;const set=rounds[r];
+  el.innerHTML=`<div class="match"><div class="qtop"><span class="score">Round ${r+1} / 2</span><span style="flex:1"></span><span class="score">Mistakes: <span class="me">${errs}</span></span></div><div class="mcols"><div class="mcol l"></div><div class="mcol rr"></div></div></div>`;
+  const L=el.querySelector('.l'),Rr=el.querySelector('.rr');
+  shuf(set).forEach(x=>{const b=document.createElement('button');b.className='mi w';b.textContent=x.w;b.dataset.k=x.w;L.appendChild(b)});
+  shuf(set).forEach(x=>{const b=document.createElement('button');b.className='mi';b.textContent=x.d;b.dataset.k=x.w;Rr.appendChild(b)});
+  el.querySelectorAll('.mi').forEach(b=>b.onclick=()=>{if(b.classList.contains('done'))return;
+   if(!sel||sel.parentNode===b.parentNode){if(sel)sel.classList.remove('sel');sel=b;b.classList.add('sel');return}
+   if(sel.dataset.k===b.dataset.k){[sel,b].forEach(x=>{x.classList.remove('sel');x.classList.add('done');x.disabled=true});sel=null;done++;if(done===set.length){setTimeout(()=>{if(r===0){r=1;round()}else finish()},500)}}
+   else{errs++;miss.push(sel.parentNode.classList.contains('l')?sel.dataset.k:b.dataset.k);el.querySelector('.me').textContent=errs;[sel,b].forEach(x=>{x.classList.add('err');setTimeout(()=>x.classList.remove('err','sel'),600)});sel=null}})}
+ function finish(){const uniq=[...new Set(miss)];el.innerHTML=`<div class="res"><h3>All 16 pairs matched · Mistakes: ${errs}</h3>${uniq.length?uniq.map(w=>{const x=WORDS.find(y=>y.w===w);return `<div class="row"><b>${esc(x.w)}</b> = ${esc(x.d)}</div>`}).join(''):'<div class="row">No mistakes.</div>'}<div class="ctrl" style="margin-top:12px"><button class="btn pri">Play again</button></div></div>`;el.querySelector('.btn').onclick=start}
+ start()})();
+
+/* ---------- SPEED GAME ---------- */
+(function(){const el=$('#vs');let tm,left,score,wrong,cur,running=false;
+ function intro(){el.innerHTML=`<div class="speed"><div class="w">Speed Game</div><div class="d">Word and meaning: do they match? 60 seconds.</div><button class="btn pri">Start</button></div>`;el.querySelector('.btn').onclick=go}
+ function go(){left=60;score=0;wrong=[];running=true;
+  el.innerHTML=`<div class="speed"><div class="bar"><i></i></div><div class="count">Score: <span class="sc">0</span></div><div class="w"></div><div class="d"></div><div class="row2"><button class="opt" data-v="1">Match</button><button class="opt" data-v="0">No match</button></div></div>`;
+  next();clearInterval(tm);tm=setInterval(()=>{left--;el.querySelector('.bar i').style.width=(left/60*100)+'%';if(left<=0)end()},1000);
+  el.querySelector('.row2').onclick=e=>{const v=e.target.dataset.v;if(v===undefined||!running)return;const ok=(+v===1)===cur.ok;if(ok)score++;else wrong.push(cur.x);el.querySelector('.sc').textContent=score;e.target.classList.add(ok?'ok':'no');setTimeout(()=>{e.target.classList.remove('ok','no');if(running)next()},250)}}
+ function next(){const x=WORDS[Math.floor(Math.random()*WORDS.length)];const ok=Math.random()<.5;let d=x.d;if(!ok){let y;do{y=WORDS[Math.floor(Math.random()*WORDS.length)]}while(y===x);d=y.d}cur={x,ok};el.querySelector('.w').textContent=x.w;el.querySelector('.d').textContent=d}
+ function end(){clearInterval(tm);running=false;const u=[...new Set(wrong)];el.innerHTML=`<div class="res"><h3>Time! Score: ${score}</h3>${u.length?u.map(x=>`<div class="row"><b>${esc(x.w)}</b> = ${esc(x.d)}</div>`).join(''):'<div class="row">No mistakes.</div>'}<div class="ctrl" style="margin-top:12px"><button class="btn pri">Play again</button></div></div>`;el.querySelector('.btn').onclick=go}
+ intro()})();
+
+/* ---------- QUIZ (one question, 2 columns, free navigation) ---------- */
+function quiz(el,items,opts={}){let i,ans,order;
+ function start(){i=0;ans=items.map(()=>null);order=items.map(it=>shuf(it.o.map((t,k)=>k)));render()}
+ function render(){const it=items[i];const right=ans.filter((a,k)=>a!==null&&a===items[k].a).length;
+  const q=esc(it.q).replace('___','<span class="gap"></span>');
+  el.innerHTML=`<div class="qtop"><div class="dots">${items.map((x,k)=>`<button class="dot ${k===i?'cur':''} ${ans[k]===null?'':(ans[k]===items[k].a?'ok':'no')}" data-k="${k}">${k+1}</button>`).join('')}</div><span class="score">${right} / ${items.length}</span></div>
+  <div class="qq"><div>${q}</div></div><div class="opts" style="${it.o.length>4?'grid-template-columns:1fr 1fr':''}">${(opts.keep?it.o.map((t,k)=>k):order[i]).map(k=>`<button class="opt" data-k="${k}">${esc(it.o[k])}</button>`).join('')}</div>
+  <div class="fb"></div><div class="qnav"><button class="btn" data-a="p" ${i===0?'disabled':''}>← Back</button>${i===items.length-1?'<button class="btn pri" data-a="r">See result</button>':'<button class="btn pri" data-a="n">Next question →</button>'}</div>`;
+  if(ans[i]!==null)mark();
+  el.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(ans[i]!==null)return;ans[i]=+b.dataset.k;render()});
+  el.querySelectorAll('.dot').forEach(b=>b.onclick=()=>{i=+b.dataset.k;render()});
+  el.querySelector('.qnav').onclick=e=>{const a=e.target.dataset.a;if(a==='p'&&i>0){i--;render()}if(a==='n'){i++;render()}if(a==='r')result()}}
+ function mark(){const it=items[i];el.querySelectorAll('.opt').forEach(b=>{const k=+b.dataset.k;b.disabled=true;if(k===it.a)b.classList.add('ok');else if(k===ans[i])b.classList.add('no')});el.querySelector('.fb').innerHTML=ans[i]===it.a?'<span style="color:var(--ok);font-weight:700">✓ Correct</span>':'<span style="color:var(--bad);font-weight:700">✕ Correct answer: '+esc(it.o[it.a])+'</span>'}
+ function result(){const right=ans.filter((a,k)=>a===items[k].a).length;const wr=items.map((it,k)=>({it,k})).filter(x=>ans[x.k]!==x.it.a);
+  el.innerHTML=`<div class="res"><h3>Result: ${right} / ${items.length}</h3>${wr.length?wr.map(x=>`<div class="row">${x.k+1}. ${esc(x.it.q.replace('___','…'))}<br>${ans[x.k]===null?'<s>no answer</s>':'<s>'+esc(x.it.o[ans[x.k]])+'</s>'} → <b>${esc(x.it.o[x.it.a])}</b></div>`).join(''):'<div class="row">All correct.</div>'}<div class="ctrl" style="margin-top:12px"><button class="btn" data-a="b">Back to questions</button><button class="btn pri" data-a="s">Start again</button></div></div>`;
+  el.querySelector('.ctrl').onclick=e=>{if(e.target.dataset.a==='b'){i=0;render()}if(e.target.dataset.a==='s')start()}}
+ start()}
+quiz($('#ctxQuiz'),CTX);
+quiz($('#whoQuiz'),WHO,{keep:true});
+quiz($('#tfQuiz'),TF,{keep:true});
+quiz($('#headQuiz'),HEADQ);
+
+/* word bank */
+$('#bank').innerHTML='<div class="phr" style="margin:0;gap:8px">'+WORDS.map(x=>'<span style="font-size:18px">'+esc(x.w)+'</span>').join('')+'</div><p class="note" style="margin-top:12px">First answer in your notebook, then click. You can move between questions without answering.</p>';
+
+/* listening cards */
+$('#lcards').innerHTML=LISTEN.map(x=>`<div class="lc"><div class="in"><div class="face a"><span class="lab">Word ${x.k}</span><div class="big">?</div></div><div class="face b"><span class="lab">Word ${x.k}</span><div class="big">${x.w}</div><div class="def" style="margin-top:8px">${x.d}</div></div></div></div>`).join('');
+document.querySelectorAll('.lc').forEach((c,k)=>c.onclick=()=>{c.classList.toggle('f');if(c.classList.contains('f'))speak(LISTEN[k].w)});
+
+/* role-play */
+$('#roleplay').innerHTML=ROLES.map(r=>`<div class="rpc"><div class="who">${r.who}</div><h4>${r.h}</h4><p>${r.p}</p></div>`).join('');
+</script>
+</body>
+</html>
