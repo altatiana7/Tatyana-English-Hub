@@ -1,0 +1,286 @@
+<!doctype html><html lang="en"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>20 November · Language, Mind and Faith</title><style>
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{margin:0}
+body{background:#f3f0eb;color:#17212b;font:17px Georgia,'Times New Roman',serif}
+button{font-family:inherit}
+.wrap{max-width:1180px;margin:auto;padding:22px 14px 14px}
+/* home */
+.hero{background:linear-gradient(120deg,#071b27,#123e54);color:#fff;border-radius:16px;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.hero small{color:#f4b928;font:800 13px Inter,Segoe UI,Arial,sans-serif;letter-spacing:.08em}
+.hero h1{font:28px Georgia,serif;margin:2px 0}
+.hero p{margin:2px 0 0;color:#d5e2e8;font-size:16px}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.tile{border:0;border-radius:14px;background:#fff;padding:16px 16px 14px;text-align:left;cursor:pointer;color:#0d3042;box-shadow:0 6px 16px #0000000d;border-top:7px solid var(--c);min-height:150px;display:flex;flex-direction:column;gap:6px}
+.tile b{font-size:21px}
+.tile span{font-size:15px;color:#5a6b73;line-height:1.35}
+.tile i{margin-top:auto;font:800 13px Inter,Segoe UI,Arial,sans-serif;font-style:normal;color:var(--c);letter-spacing:.03em}
+.tile:hover{transform:translateY(-2px)}
+.status{margin-top:12px;background:#fff;border-radius:14px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.status p{margin:0;font-size:16px;color:#34444c}
+.send{border:0;border-radius:11px;padding:11px 18px;background:#1e8f5f;color:#fff;font:800 16px Inter,Segoe UI,Arial,sans-serif;cursor:pointer}
+.send:disabled{opacity:.5;cursor:default}
+/* block screen */
+.scr{display:none}.scr.on{display:block}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.home{border:0;border-radius:9px;padding:8px 13px;background:#0d3042;color:#fff;font:800 15px Inter,Segoe UI,Arial,sans-serif;cursor:pointer}
+.bar h2{margin:0 8px 0 2px;font-size:22px;color:#0d3042}
+.tab{border:2px solid #cfdde2;border-radius:10px;background:#fff;padding:7px 13px;font:700 15px Inter,Segoe UI,Arial,sans-serif;color:#0d3042;cursor:pointer}
+.tab.on{background:var(--c,#1b6f69);border-color:var(--c,#1b6f69);color:#fff}
+.tab .ok{color:#1e8f5f}.tab.on .ok{color:#fff}
+.nextb{margin-left:auto;border:0;border-radius:9px;padding:8px 13px;background:#e7eef1;color:#0d3042;font:800 15px Inter,Segoe UI,Arial,sans-serif;cursor:pointer}
+.grid{display:grid;grid-template-columns:400px minmax(0,1fr);gap:14px;align-items:start}
+.panel{background:#fff;border:1px solid #ded8cf;border-radius:16px;padding:14px 16px}
+.panel h3{margin:0 0 8px;font-size:18px;color:#0d3042}
+.note{color:#5a6b73;font-size:15px;margin:0 0 8px}
+/* quizlet card */
+.qc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.qc-top span{font:700 14px Inter,Segoe UI,Arial,sans-serif;color:#5a6b73}
+.uk{border:1px solid #cfdde2;border-radius:9px;background:#f5f8f9;padding:6px 11px;font:800 13px Inter,Segoe UI,Arial,sans-serif;color:#0d3042;cursor:pointer}
+.qcard{perspective:1200px;height:250px;cursor:pointer}
+.qin{position:relative;width:100%;height:100%;transition:transform .45s;transform-style:preserve-3d}
+.qcard.fl .qin{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;border:2px solid #bed1d6;background:#f5f8f9;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px}
+.face.b{transform:rotateY(180deg);background:#fff}
+.face .term{font-size:30px;font-weight:700;color:#102d3d;line-height:1.2}
+.face .mean{font-size:18px;line-height:1.4;color:#17212b}
+.face .ru{font-size:18px;color:#1b6f69;font-weight:700;margin:8px 0}
+.face .ex{font-size:16px;line-height:1.4;color:#4b5b63;font-style:italic}
+.qc-nav{display:flex;justify-content:center;gap:12px;margin-top:10px}
+.arr{border:0;border-radius:10px;padding:9px 22px;background:#0d3042;color:#fff;font:800 18px Inter,Segoe UI,Arial,sans-serif;cursor:pointer}
+/* quiz */
+.dots{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.dot{width:30px;height:30px;border-radius:8px;border:2px solid #cfdde2;background:#fff;font:700 13px Inter,Segoe UI,Arial,sans-serif;color:#0d3042;cursor:pointer;padding:0}
+.dot.cur{border-color:#0d3042}
+.dot.r{background:#d9f0e2;border-color:#7fbf98}
+.dot.w{background:#f7e0dc;border-color:#d59a90}
+.q{font-size:22px;line-height:1.45;margin:6px 0 14px;min-height:64px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{border:2px solid #cfdde2;border-radius:12px;background:#f5f8f9;padding:14px;font-size:19px;color:#0d3042;cursor:pointer;text-align:left;min-height:58px}
+.opt:hover:not(:disabled){border-color:#8fb1bc}
+.opt.ok{background:#d9f0e2;border-color:#2e8b57}
+.opt.bad{background:#f7d9d6;border-color:#b5483b}
+.opt:disabled{cursor:default;color:#17212b}
+.expl{margin-top:10px;font-size:16px;line-height:1.45;color:#34444c;min-height:24px}
+.qnav{display:flex;gap:10px;margin-top:10px;align-items:center}
+.qnav .arr{padding:8px 18px;font-size:16px}
+.res{font-size:26px;font-weight:700;color:#0d3042;margin:4px 0 8px}
+.rev{margin:0;padding-left:18px;font-size:16px;line-height:1.5;max-height:250px;overflow:auto}
+.rev li{margin-bottom:4px}.rev b{color:#2e6b4c}
+/* match */
+.mgrid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:12px}
+.mcol{display:flex;flex-direction:column;gap:9px}
+.mi{border:2px solid #cfdde2;border-radius:12px;background:#f5f8f9;padding:11px 13px;font-size:18px;color:#0d3042;cursor:pointer;text-align:left;min-height:52px}
+.mi.sel{border-color:#0d3042;background:#e3edf1}
+.mi.done{background:#d9f0e2;border-color:#7fbf98;color:#2b4a3a;cursor:default}
+.mi.no{animation:shk .35s;background:#f7d9d6;border-color:#b5483b}
+@keyframes shk{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+/* speed */
+.ring{width:84px;height:84px;flex:0 0 auto}
+.ring circle{fill:none;stroke-width:8}
+.ring .bg{stroke:#e3e8ea}.ring .fg{stroke:#1b6f69;stroke-linecap:round;transition:stroke-dashoffset .25s linear}
+.ring text{font:800 24px Inter,Segoe UI,Arial,sans-serif;fill:#0d3042}
+.sp-head{display:flex;align-items:center;gap:16px}
+.big2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.big2 .opt{text-align:center;font-weight:700;font-size:21px}
+.start{border:0;border-radius:12px;padding:13px 26px;background:#0d3042;color:#fff;font:800 18px Inter,Segoe UI,Arial,sans-serif;cursor:pointer}
+/* speaking */
+.ivcard{perspective:1200px;height:240px}
+.ivcard .face.f{background:linear-gradient(135deg,#0d3042,#1b6f69);color:#fff;border:0}
+.ivcard .face.f .term{color:#fff;font-size:24px}
+.ivq{font-size:22px;line-height:1.4;color:#102d3d;font-weight:700}
+.ivi{font-size:16px;line-height:1.45;color:#4b5b63;margin-top:10px}
+.ivbtns{display:flex;gap:8px;justify-content:center;margin-top:12px}
+.ivbtns button{border:0;border-radius:10px;padding:9px 16px;background:#fff;color:#0d3042;font:800 15px Inter,Segoe UI,Arial,sans-serif;cursor:pointer}
+.ivnav{display:flex;gap:10px;justify-content:center;margin-top:10px}
+.ivnav button{border:0;border-radius:10px;padding:9px 16px;background:#0d3042;color:#fff;font:800 15px Inter,Segoe UI,Arial,sans-serif;cursor:pointer}
+.ivnav button.mid{background:#1b6f69}
+.nums{display:flex;flex-wrap:wrap;gap:5px}
+.side{display:flex;flex-direction:column;gap:12px;align-items:center}
+.done-mark{font:800 13px Inter,Segoe UI,Arial,sans-serif;color:#1e8f5f}
+@media(max-width:900px){.tiles{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.opts,.big2{grid-template-columns:1fr}}
+@media(max-height:640px){.wrap{padding-top:18px}.qcard{height:220px}.ivcard{height:210px}.q{font-size:20px;margin:4px 0 10px;min-height:56px}.opt{padding:11px 13px;font-size:18px;min-height:50px}.mi{padding:9px 12px;font-size:17px;min-height:46px}.tile{min-height:130px}.panel{padding:12px 14px}}
+</style></head><body><main class="wrap">
+
+<!-- HOME -->
+<section id="home" class="scr on">
+<header class="hero"><div><small>HOMEWORK · 20 NOVEMBER 2026</small><h1>Language, Mind and Faith</h1><p>Words for our next discussion: how languages change the brain and personality, and how followers relate to a prophet.</p></div></header>
+<div class="tiles">
+<button class="tile" style="--c:#1b6f69" data-go="bA"><b>1 · Language &amp; the mind</b><span>Learn 16 words with the cards, then do the task: 12 sentences</span><i id="stA">To do</i></button>
+<button class="tile" style="--c:#b8741a" data-go="bB"><b>2 · Faith &amp; followers</b><span>Learn 16 words with the cards, then do the task: 12 sentences</span><i id="stB">To do</i></button>
+</div>
+<div class="status"><p id="prog"></p><span id="sendbox"><button class="send" id="send">Send to teacher</button></span></div>
+</section>
+
+<!-- BLOCK A -->
+<section id="bA" class="scr" style="--c:#1b6f69">
+<div class="bar"><button class="home">← Home</button><h2>Language &amp; the mind</h2>
+<button class="nextb" data-go="bB">Next: Faith &amp; followers →</button></div>
+<div class="grid">
+<div class="panel" id="cardsA"></div>
+<div class="panel"><div id="cA"></div></div>
+</div>
+</section>
+
+<!-- BLOCK B -->
+<section id="bB" class="scr" style="--c:#b8741a">
+<div class="bar"><button class="home">← Home</button><h2>Faith &amp; followers</h2>
+<button class="nextb home2">Finish and send →</button></div>
+<div class="grid">
+<div class="panel" id="cardsB"></div>
+<div class="panel"><div id="cB"></div></div>
+</div>
+</section>
+
+</main>
+<script src="../card-audio.js?v=1"></script>
+<script>
+const $=id=>document.getElementById(id);
+const PAGE='2026-11-20',STORE='nikita-hw:'+PAGE;
+const say=t=>{try{window.CardAudio&&CardAudio.say(t)}catch(e){}};
+const hush=()=>{try{window.CardAudio&&CardAudio.stop()}catch(e){}};
+let ST={};try{ST=JSON.parse(localStorage.getItem(STORE)||'{}')||{}}catch(e){ST={}}
+const save=()=>{try{localStorage.setItem(STORE,JSON.stringify(ST))}catch(e){};progress()};
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* ---------- words ---------- */
+const A=[
+['linguistic relativity','the idea that the language you speak influences how you think','лингвистическая относительность','Linguistic relativity suggests that Russian speakers may tell shades of blue apart faster.'],
+['shape the way you think','influence and form your thinking','формировать образ мышления','Does your first language shape the way you think about time?'],
+['perceive the world','notice and understand what is around you','воспринимать мир','People who speak several languages may perceive the world in different ways.'],
+['the bilingual brain','the brain of a person who uses two languages','мозг билингва','Scientists use brain scans to study the bilingual brain.'],
+['switch between languages','move from one language to another','переключаться между языками','She switches between Arabic and English without thinking.'],
+['cognitive flexibility','the ability to change how you think when the situation changes','когнитивная гибкость','Switching between languages may improve cognitive flexibility.'],
+['delay the onset of dementia','make memory loss in old age start later','отсрочить начало деменции','Some studies suggest that bilingualism may delay the onset of dementia.'],
+['build new neural pathways','create new connections between brain cells','создавать новые нейронные связи','Learning a new alphabet builds new neural pathways.'],
+['take on a different persona','start to behave like a slightly different person','становиться немного другим человеком','Many people take on a different persona when they speak a foreign language.'],
+['come across as','seem to other people to be','производить впечатление','In English I come across as more polite than in Russian.'],
+['express yourself','show your thoughts and feelings in words','выражать себя, свои мысли','It is hard to express yourself fully in a new language.'],
+['get lost in translation','lose part of the meaning when translated','теряться при переводе','Jokes often get lost in translation.'],
+['an untranslatable word','a word with no exact equivalent in another language','непереводимое слово','“Тоска” is often called an untranslatable word.'],
+['cultural identity','the feeling of belonging to a culture','культурная идентичность','Language is a big part of cultural identity.'],
+['pick up a language','learn a language naturally, without formal study','«подхватить» язык','Children pick up a language by playing with other kids.'],
+['the critical period','the time in early life when learning a language is easiest','критический период','Some linguists believe the critical period ends around puberty.']];
+const B=[
+['the Quran','the holy book of Islam (also spelt the Koran)','Коран','Muslims believe the Quran is the word of God.'],
+['the Prophet Muhammad','the founder of Islam, God’s final messenger for Muslims','Пророк Мухаммед','The Prophet Muhammad was born in Mecca around 570 CE.'],
+['a follower of','a person who supports a leader or a religion','последователь','Followers of Islam are called Muslims.'],
+['a devout Muslim','a Muslim who takes religion very seriously','набожный, верующий мусульманин','A devout Muslim prays five times a day.'],
+['revere','respect someone very deeply','глубоко почитать','Muslims revere the Prophet, but they worship only God.'],
+['worship','show love and respect to a god, especially by praying','поклоняться','In Islam, people worship only one God.'],
+['idolise','admire someone too much, like a fan','боготворить, обожать','Teenagers often idolise pop stars.'],
+['a role model','a person you want to be like','пример для подражания','For Muslims, the Prophet is the perfect role model.'],
+['follow in someone’s footsteps','do the same things someone did before you','идти по чьим-то стопам','Many Muslims try to follow in the Prophet’s footsteps in daily life.'],
+['the Sunnah','the words and actions of the Prophet that Muslims try to copy','Сунна','The Sunnah guides how many Muslims eat, dress and pray.'],
+['recite','say a text aloud from memory','читать наизусть вслух','Children in many countries learn to recite the Quran in Arabic.'],
+['learn by heart','memorise every word','выучить наизусть','Some people learn the whole Quran by heart.'],
+['a sacred text','a holy book that a religion is based on','священный текст','The Bible and the Quran are sacred texts.'],
+['observe a fast','not eat or drink for religious reasons','соблюдать пост','During Ramadan, Muslims observe a fast from dawn to sunset.'],
+['blind obedience','doing what you are told without asking questions','слепое подчинение','Critics say some groups demand blind obedience.'],
+['a matter of faith','something people believe without needing proof','вопрос веры','For believers, it is a matter of faith, not evidence.']];
+
+function Cards(box,list){
+ let i=0;
+ box.innerHTML='<div class="qc-top"><span class="cnt"></span><button class="uk">▶ UK</button></div><div class="qcard"><div class="qin"><div class="face f"><div class="term"></div></div><div class="face b"><div class="mean"></div><div class="ru"></div><div class="ex"></div></div></div></div><div class="qc-nav"><button class="arr pv">←</button><button class="arr nx">→</button></div>';
+ const c=box.querySelector('.qcard'),q=s=>box.querySelector(s);
+ function draw(){c.classList.remove('fl');const w=list[i];q('.cnt').textContent=(i+1)+' / '+list.length;q('.f .term').textContent=w[0];q('.mean').textContent=w[1];q('.ru').textContent=w[2];q('.ex').textContent=w[3];}
+ c.onclick=()=>{c.classList.toggle('fl');if(c.classList.contains('fl'))say(list[i][0]);};
+ q('.uk').onclick=()=>say(list[i][0]);
+ q('.pv').onclick=()=>{i=(i+list.length-1)%list.length;draw();};
+ q('.nx').onclick=()=>{i=(i+1)%list.length;draw();};
+ draw();
+}
+Cards($('cardsA'),A);Cards($('cardsB'),B);
+
+/* ---------- quiz: one question at a time, free navigation, one attempt ---------- */
+function Quiz(box,id,title,items){
+ const S=ST[id]||(ST[id]={a:{},o:{}});
+ items.forEach((it,k)=>{if(!S.o[k])S.o[k]=shuffle(it.o.map((_,j)=>j));});
+ let i=0;
+ const done=()=>Object.keys(S.a).length===items.length;
+ function result(){
+  const wrong=items.map((it,k)=>[it,k]).filter(([it,k])=>S.a[k]!==it.a);
+  box.innerHTML='<h3>'+title+'</h3><p class="res">'+(items.length-wrong.length)+' / '+items.length+'</p>'+(wrong.length?'<p class="note">Check these:</p><ol class="rev">'+wrong.map(([it])=>'<li>'+it.q.replace('___','<b>'+it.o[it.a]+'</b>')+'</li>').join('')+'</ol>':'<p class="q">All correct.</p>');
+ }
+ function draw(){
+  if(done()&&S.seen){result();return;}
+  const it=items[i],ans=S.a[i];
+  box.innerHTML='<h3>'+title+'</h3><div class="dots">'+items.map((x,k)=>'<button class="dot'+(k===i?' cur':'')+(S.a[k]==null?'':S.a[k]===x.a?' r':' w')+'" data-k="'+k+'">'+(k+1)+'</button>').join('')+'</div><p class="q">'+it.q+'</p><div class="opts">'+S.o[i].map(j=>'<button class="opt" data-j="'+j+'">'+it.o[j]+'</button>').join('')+'</div><div class="expl"></div><div class="qnav"><button class="arr pv">←</button><button class="arr nx">'+(done()?'See result':'→')+'</button></div>';
+  box.querySelectorAll('.dot').forEach(d=>d.onclick=()=>{i=+d.dataset.k;draw();});
+  box.querySelector('.pv').onclick=()=>{i=(i+items.length-1)%items.length;draw();};
+  box.querySelector('.nx').onclick=()=>{if(done()){S.seen=1;save();result();return;}i=(i+1)%items.length;draw();};
+  if(ans!=null)mark(ans);
+  else box.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{S.a[i]=+b.dataset.j;save();draw();});
+ }
+ function mark(ans){
+  const it=items[i];
+  box.querySelectorAll('.opt').forEach(b=>{b.disabled=true;const j=+b.dataset.j;if(j===it.a)b.classList.add('ok');else if(j===ans)b.classList.add('bad');});
+  box.querySelector('.expl').textContent=(ans===it.a?'Correct. ':'Not quite. ')+it.e;
+ }
+ draw();
+ return {done};
+}
+
+
+const QA=[
+{q:'When I speak English, I ___ : I joke more and feel more relaxed.',o:['take on a different persona','pick up a language','get lost in translation','perceive the world'],a:0,e:'Take on a different persona: start to behave like a slightly different person.'},
+{q:'Puns and wordplay usually ___ .',o:['get lost in translation','come across as','switch between languages','shape the way you think'],a:0,e:'Get lost in translation: lose part of the meaning when translated.'},
+{q:'My niece ___ Turkish in one summer, just by playing with local children.',o:['picked up','came across as','expressed','delayed'],a:0,e:'Pick up a language: learn it naturally, without lessons.'},
+{q:'Using two languages every day may ___ by several years.',o:['delay the onset of dementia','express yourself','perceive the world','take on a persona'],a:0,e:'Delay the onset of dementia: make memory loss start later.'},
+{q:'In Russian I can be very direct, but in English I don’t want to ___ rude.',o:['come across as','pick up','switch between','perceive'],a:0,e:'Come across as + adjective: seem to other people.'},
+{q:'Bilingual children often ___ in the middle of a sentence.',o:['switch between languages','delay the onset','come across as','build cultural identity'],a:0,e:'Switch between languages: move from one language to another.'},
+{q:'After ___, it is much harder to sound like a native speaker.',o:['the critical period','cognitive flexibility','cultural identity','the bilingual brain'],a:0,e:'The critical period: the time in early life when learning is easiest.'},
+{q:'“Saudade” in Portuguese is ___ : English needs a whole sentence to explain it.',o:['an untranslatable word','a critical period','a neural pathway','a cultural identity'],a:0,e:'An untranslatable word has no exact equivalent.'},
+{q:'For many immigrants, keeping their mother tongue protects their ___ .',o:['cultural identity','critical period','cognitive flexibility','untranslatable word'],a:0,e:'Cultural identity: the feeling of belonging to a culture.'},
+{q:'Every time you learn new words, you ___ in your brain.',o:['build new neural pathways','get lost in translation','come across as','pick up a language'],a:0,e:'Build new neural pathways: create new connections between brain cells.'},
+{q:'If a language has no future tense, does it ___ about the future?',o:['shape the way you think','switch between languages','come across as','delay the onset'],a:0,e:'Shape the way you think: influence and form your thinking. This is the idea of linguistic relativity.'},
+{q:'Moving quickly from one task to another is a sign of ___ .',o:['cognitive flexibility','cultural identity','linguistic relativity','the critical period'],a:0,e:'Cognitive flexibility: the ability to change how you think.'}];
+const cA=Quiz($('cA'),'cA','Choose the phrase',QA);
+
+const QB=[
+{q:'Muslims ___ the Prophet Muhammad, but they pray only to God.',o:['revere','worship','idolise','recite'],a:0,e:'Muslims revere (deeply respect) the Prophet. Worship is only for God.'},
+{q:'Fans ___ their favourite footballer and buy everything with his name on it.',o:['idolise','revere','observe','recite'],a:0,e:'Idolise: admire someone too much, like a fan.'},
+{q:'In Islam, people ___ only one God.',o:['worship','idolise','follow in','recite'],a:0,e:'Worship: show love and respect to a god, especially by praying.'},
+{q:'My grandmother is very ___ : she prays every day and never misses a religious holiday.',o:['devout','sacred','blind','revered'],a:0,e:'Devout: taking religion very seriously.'},
+{q:'The Quran is in Arabic, and many Muslims ___ it in Arabic even if they don’t speak the language.',o:['recite','revere','worship','idolise'],a:0,e:'Recite: say a text aloud from memory.'},
+{q:'A hafiz is a person who has learnt the whole Quran ___ .',o:['by heart','by faith','in footsteps','in obedience'],a:0,e:'Learn by heart: memorise every word.'},
+{q:'During Ramadan, Muslims ___ from dawn until sunset.',o:['observe a fast','follow a role model','recite a fast','revere a fast'],a:0,e:'Observe a fast: not eat or drink for religious reasons.'},
+{q:'Many Muslims try to live by the ___ : how the Prophet ate, prayed and treated people.',o:['Sunnah','role model','matter of faith','blind obedience'],a:0,e:'The Sunnah: the words and actions of the Prophet that Muslims try to copy.'},
+{q:'A good leader wants people to ask questions, not to show ___ .',o:['blind obedience','a matter of faith','a sacred text','a role model'],a:0,e:'Blind obedience: doing what you are told without asking questions.'},
+{q:'Whether miracles really happened is ___ : you cannot prove it in a lab.',o:['a matter of faith','a role model','blind obedience','a sacred text'],a:0,e:'A matter of faith: something people believe without needing proof.'},
+{q:'He became a lawyer to follow in the ___ of his father.',o:['footsteps','followers','role model','Sunnah'],a:0,e:'Follow in someone’s footsteps: do what someone did before you.'},
+{q:'The Torah, the Bible and the Quran are all ___ .',o:['sacred texts','role models','followers','fasts'],a:0,e:'A sacred text: a holy book that a religion is based on.'}];
+const cB=Quiz($('cB'),'cB','Choose the word',QB);
+
+
+/* ---------- navigation ---------- */
+function show(id){hush();document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id===id));window.scrollTo(0,0);progress();}
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>show(b.dataset.go));
+document.querySelectorAll('.home,.home2').forEach(b=>b.onclick=()=>show('home'));
+
+/* ---------- progress and sending ---------- */
+const TASKS=[['Language & the mind',()=>cA.done()],['Faith & followers',()=>cB.done()]];function score(){
+ const q=(id,items)=>{const S=ST[id];return S?Object.keys(S.a).filter(k=>S.a[k]===items[k].a).length:0};
+ return {language_and_mind:q('cA',QA)+' / '+QA.length,faith_and_followers:q('cB',QB)+' / '+QB.length};
+}function progress(){
+ const d=TASKS.filter(t=>t[1]()).length;
+ $('prog').textContent='Done '+d+' of '+TASKS.length+' tasks'+(d<TASKS.length?' · left: '+TASKS.filter(t=>!t[1]()).map(t=>t[0]).join(', '):' · ready to send');
+ $('stA').textContent=cA.done()?'✓ Done':'To do';
+ $('stB').textContent=cB.done()?'✓ Done':'To do';
+ if(window.HWSent&&HWSent.isSent('nikita',PAGE))$('sendbox').innerHTML=HWSent.badge('nikita',PAGE);
+}
+$('send').onclick=async()=>{
+ if(!window.HWSent)return;
+ const left=TASKS.filter(t=>!t[1]()).length;
+ if(!confirm((left?'Not all tasks are done ('+left+' left). ':'')+'Send this homework to your teacher? You can send it only once.'))return;
+ $('send').disabled=true;
+ await HWSent.submit({student:'nikita',name:'Никита',page:PAGE,title:'20 November · Language, Mind and Faith',data:score()});
+ progress();if(window.HWLock)HWLock.page(LOCK);
+};
+progress();
+</script>
+<script src="../shared/hw-sent.js?v=2"></script>
+<script src="../shared/hw-lock.js?v=20261104b"></script>
+<script>const LOCK={id:'nikita:2026-11-20',home:'index.html',keep:'#cardsA, #cardsB',
+ css:'.hwl-page-closed .wrap{max-width:1400px;display:grid;grid-template-columns:400px 400px;gap:12px;align-items:start;padding-top:12px}.hwl-page-closed .scr{display:block}.hwl-page-closed .grid{display:block}'};if(window.HWLock)HWLock.page(LOCK);progress();</script>
+<script src="../shared/page-label.js?v=20261104"></script>
+</body></html>
