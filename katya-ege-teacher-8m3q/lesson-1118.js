@@ -35,7 +35,7 @@ function speak(box){const st=S.sp,set=SETS[st.set];let left=40,t=null;
   const runT=()=>{stopT();left=40;paint();label.textContent='Answer';beep(880,200);const end=Date.now()+40000;t=setInterval(()=>{left=Math.max(0,Math.ceil((end-Date.now())/1000));paint();if(left===0){stopT();label.textContent='Time is up';beep(520,500);}},200);};
   function play(){stopT();left=40;paint();label.textContent='Question is playing';say(set.q[st.q],runT,()=>{label.textContent='No English voice: press Timer';});}
   function face(){card.className='ivcard'+(st.flip?' back':'');card.innerHTML='';
-    if(st.flip)card.append(el('div','ey','Question '+(st.q+1)+' · '+esc(set.name)),el('div','qq',esc(set.q[st.q])));
+    if(st.flip)card.append(el('div','ey','Model answer · FIPI Task 3 · '+(st.q+1)+'/5'),el('div','qq',esc(SPEAKING_MODEL_ANSWERS[st.set][st.q])));
     else{card.append(el('div','ey','Question '+(st.q+1)+' of '+set.q.length),el('div','big','Listen and answer'));const pb=el('div','navrow');pb.append(btn('Play',play,'main'),btn('Replay',play),btn('Stop',()=>{stopSay();stopT();label.textContent='Stopped';}));card.append(pb);}}
   face();bx.append(btn('Timer',runT,'sm'),btn('Reset',()=>{stopT();stopSay();left=40;paint();label.textContent='Press Play';},'sm'));
   c.append(ring,label,bx);box.append(c);
@@ -50,6 +50,38 @@ const S={sp:{set:0,q:0,flip:false},c:{i:0,order:null,shuf:false,flip:false},ft:{
 /* ---------- данные ---------- */
 /* Speaking: задание 3 ФИПИ со страницы тренажёров (ege-trainers/task3-interview-voice-1), озвучка – natural-voice.js */
 const SETS=[{"name": "Task 3 · Schools", "q": ["What do you think schools will look like in some twenty years?", "What kind of teachers will work at these schools?", "What subjects will be taught at these schools?", "How different will these schools be from today's school?", "Will it be boring or fun to study at the school of the future? Why?"]}, {"name": "Task 3 · Studying online", "q": ["Do you have any experience in studying online?", "What do you think are the main advantages of studying online?", "Do you see any disadvantages of online education?", "What subjects can be studied online with good results?", "Would you prefer to study at university online? Or do you think traditional offline education is still better? Why?"]}, {"name": "Task 3 · School subject", "q": ["What`s your favourite school subject? When did you get interested in it?", "Is your future profession connected with this subject? In what way?", "When did you start learning English? What tasks did you like doing at your English classes?", "Did you do anything outside English classes to master the language?", "In what way can your knowledge of English help you in the future?"]}, {"name": "Task 3 · Foreign languages", "q": ["Do you think it`s important to know foreign languages? Why yes or no?", "What foreign languages did you study at school? For how many years?", "Did you enjoy studying a foreign language at school? What was the most difficult aspect for you?", "What do you think is the best way to master a foreign language? How do you study English outside school?", "What foreign languages would you like to learn in the future?"]}];
+
+/* Original sample answers: 2–3 informative sentences per Task 3 question, aligned with FIPI assessment guidance (2026). */
+const SPEAKING_MODEL_ANSWERS=[
+  [
+    "I think schools will be more technologically advanced in twenty years. Students will probably use interactive screens and personalised learning programmes instead of traditional textbooks.",
+    "I believe teachers will still be essential, but they will use more digital tools in their lessons. They will also help students develop critical thinking and communication skills.",
+    "I expect students to study traditional subjects such as maths and history alongside new ones like artificial intelligence. Schools may also teach practical skills such as financial literacy.",
+    "I think future schools will offer more flexible schedules and individual learning plans. Unlike today's schools, they may combine classroom lessons with virtual activities.",
+    "I believe studying at future schools will be enjoyable because lessons will be more interactive. However, it will still require effort and self-discipline."
+  ],
+  [
+    "Yes, I have studied online several times, especially when preparing for exams. I attended video lessons and completed exercises on educational platforms.",
+    "One major advantage is that students can learn from anywhere and save time travelling. Online courses also allow learners to review recorded lessons at their own pace.",
+    "Yes, online learning can be challenging because students may get distracted at home. It is also harder to communicate naturally with classmates and teachers.",
+    "I think subjects such as foreign languages, history and computer science can be studied successfully online. Students can watch explanations, complete tasks and receive feedback remotely.",
+    "I would prefer a traditional university with some online courses. Face-to-face classes would help me make friends and practise communication, while online lessons would give me more flexibility."
+  ],
+  [
+    "My favourite school subject is English because I enjoy learning how people communicate. I became interested in it in primary school when we started learning simple words and songs.",
+    "Yes, I would like to use English in my future career. It could help me communicate with international colleagues and find information from different countries.",
+    "I started learning English in primary school. I particularly enjoyed listening activities and speaking games because they made lessons more interesting.",
+    "Yes, I have watched films in English and used language-learning apps at home. These activities have helped me improve my listening skills and vocabulary.",
+    "English will help me study abroad or work for an international company. It will also make travelling easier because I will be able to communicate with people from other countries."
+  ],
+  [
+    "Yes, I believe foreign languages are important because they help people communicate across cultures. Knowing another language can also create more opportunities for education and work.",
+    "I have studied English at school for about ten years. It is the main foreign language I have learnt, and I practise it regularly.",
+    "Yes, I enjoyed learning English because it gave me access to films and information from other countries. The most difficult part was understanding fast speech by native speakers.",
+    "I think regular practice is the best way to learn a language. Outside school, I watch videos in English and try to use new words in conversations.",
+    "I would like to learn Spanish because it is spoken in many countries. I also find its sound appealing and would love to use it when travelling."
+  ]
+];
 
 /* Family test: вопросы из урока Family на этом сайте (family-lesson.js) */
 const WHO=['a role model','feel down','spouses','grow up','the breadwinner','take after','an only child','close resemblance','the spitting image'];
