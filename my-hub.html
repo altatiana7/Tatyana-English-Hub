@@ -123,7 +123,7 @@
   [hidden] { display: none !important; }
 
   /* ---- группы и карточки -------------------------------------------- */
-  .group { margin-bottom: 9px; }
+  .group { margin-bottom: 8px; break-inside: avoid; }
   .group-label {
     font-size: 0.55rem;
     font-weight: 700;
@@ -136,18 +136,22 @@
     opacity: 0.5;
   }
 
-  /* Семь колонок на широком экране: карточки одного размера, хаб виден
-     почти целиком. Ниже — по убыванию, вплоть до одной колонки на телефоне. */
+  /* Вертикальные столбики: каждая группа — колонка, карточки в ней идут
+     сверху вниз. Группа не разрывается между колонками (break-inside).
+     На узких экранах колонок меньше, на телефоне — одна. */
+  .cols { column-count: 4; column-gap: 8px; }
+
+  @media (max-width: 1240px) { .cols { column-count: 4; } }
+  @media (max-width: 980px)  { .cols { column-count: 3; } }
+  @media (max-width: 700px)  { .cols { column-count: 2; } }
+  @media (max-width: 430px)  { .cols { column-count: 1; } }
+  @media (max-width: 700px)  { .card-sub { -webkit-line-clamp: 1; } }
+
   .grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
+    grid-template-columns: 1fr;
+    gap: 5px;
   }
-  @media (max-width: 1240px) { .grid { grid-template-columns: repeat(6, 1fr); } }
-  @media (max-width: 1020px) { .grid { grid-template-columns: repeat(5, 1fr); } }
-  @media (max-width: 860px)  { .grid { grid-template-columns: repeat(4, 1fr); } }
-  @media (max-width: 620px)  { .grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 420px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
 
   .card {
     /* Цвет пары задаётся на карточке: style="--c1:#…;--c2:#…" */
@@ -179,29 +183,29 @@
     pointer-events: none;
   }
   .card-body {
-    padding: 7px 10px 8px;
+    padding: 8px 11px 9px;
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
     position: relative;
     z-index: 1;
   }
   .card-title {
     font-family: var(--font-display);
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     font-weight: 700;
-    line-height: 1.15;
+    line-height: 1.2;
     text-wrap: balance;
     color: #fff;
   }
-  /* Описание — ровно одна строка: карточки одинаковой высоты, влезает больше. */
+  /* Описание — две строки: в столбике ширина карточки одна и та же. */
   .card-sub {
-    font-size: 0.58rem;
+    font-size: 0.62rem;
     color: rgba(255,255,255,0.78);
-    line-height: 1.3;
+    line-height: 1.35;
     display: -webkit-box;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -252,6 +256,8 @@
   <button id="q-reset" type="button" hidden>Сброс</button>
 </div>
 <div class="search-status" id="q-status" role="status" aria-live="polite"></div>
+
+<div class="cols">
 
 <!-- ИНСТРУМЕНТЫ И ИГРЫ — ВВЕРХУ -->
 <div class="group">
@@ -376,6 +382,13 @@
         <span class="card-tag">ЕГЭ · устная 2</span>
       </div>
     </a>
+  </div>
+</div>
+
+<!-- ХАБЫ КАТИ И РИТЫ (ученические, ЕГЭ) -->
+<div class="group">
+  <div class="group-label">Катя и Рита · ЕГЭ</div>
+  <div class="grid">
     <a class="card" href="katya-ege-teacher-8m3q/?v=20261106deliveryfix" target="_blank" rel="noopener" style="--c1:#3a2a4a;--c2:#6b4a85">
       <div class="card-body">
         <div class="card-title">Katya EGE - Teacher</div>
@@ -566,6 +579,8 @@
       </div>
     </a>
   </div>
+</div>
+
 </div>
 
 <div class="empty" id="q-empty" hidden>Ничего не нашлось. Попробуй другое слово — имя ученика, номер задания или тему.</div>
