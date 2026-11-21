@@ -1,7 +1,9 @@
+<!doctype html>
+<html lang="ru">
 <meta charset="utf-8">
 <meta name="robots" content="noindex,nofollow">
 <title>My Teaching Hub</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap">
 
 <style>
@@ -9,14 +11,24 @@
     --bg:   #f0eee8;
     --ink:  #1c1b18;
     --muted:#5a5850;
+    --line: rgba(28, 27, 24, 0.16);
+    --field:rgba(255, 255, 255, 0.55);
     --font-display: 'Playfair Display', Georgia, serif;
     --font-body:    'Inter', system-ui, sans-serif;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --bg:#111010; --ink:#f0ede3; --muted:#9e9b8e; color-scheme:dark; }
+    :root:not([data-theme="light"]) {
+      --bg:#111010; --ink:#f0ede3; --muted:#9e9b8e;
+      --line: rgba(240,237,227,0.18); --field: rgba(255,255,255,0.06);
+      color-scheme:dark;
+    }
   }
-  :root[data-theme="dark"] { --bg:#111010; --ink:#f0ede3; --muted:#9e9b8e; color-scheme:dark; }
+  :root[data-theme="dark"] {
+    --bg:#111010; --ink:#f0ede3; --muted:#9e9b8e;
+    --line: rgba(240,237,227,0.18); --field: rgba(255,255,255,0.06);
+    color-scheme:dark;
+  }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; }
 
@@ -31,7 +43,7 @@
 
   .page-header {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .page-header h1 {
     font-family: var(--font-display);
@@ -41,6 +53,73 @@
     color: var(--ink);
   }
 
+  /* ---- поиск -------------------------------------------------------- */
+  .search {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .search input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 14px;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    background: var(--field);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    line-height: 1.4;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .search input::placeholder { color: var(--muted); opacity: 0.8; }
+  .search input:focus { outline: 2px solid var(--ink); outline-offset: 1px; }
+  .search input::-webkit-search-cancel-button { -webkit-appearance: none; }
+  .search button {
+    flex: none;
+    padding: 7px 11px;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    background: var(--field);
+    color: var(--muted);
+    font-family: var(--font-body);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .search button:hover { color: var(--ink); }
+  .search button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+  .search-status {
+    max-width: 520px;
+    min-height: 1.1em;
+    margin: 6px auto 12px;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: center;
+    opacity: 0.75;
+  }
+
+  .empty {
+    max-width: 380px;
+    margin: 28px auto 10px;
+    font-size: 0.78rem;
+    line-height: 1.6;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  [hidden] { display: none !important; }
+
+  /* ---- группы и карточки -------------------------------------------- */
   .group { margin-bottom: 12px; }
   .group-label {
     font-size: 0.6rem;
@@ -61,12 +140,16 @@
   }
 
   .card {
+    /* Цвет пары задаётся на карточке: style="--c1:#…;--c2:#…" */
+    --c1: #1c1b18;
+    --c2: #4a4740;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
     overflow: hidden;
     text-decoration: none;
     color: #fff;
+    background: linear-gradient(135deg, var(--c1), var(--c2));
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     cursor: pointer;
     position: relative;
@@ -143,40 +226,45 @@
     width: fit-content;
     border: 1px solid rgba(255,255,255,0.22);
   }
-
 </style>
 
 <div class="page-header">
   <h1>Мои сайты</h1>
 </div>
 
+<div class="search" role="search">
+  <input id="q" type="search" inputmode="search" autocomplete="off" spellcheck="false"
+         placeholder="Найти ученика, тренажёр или тему…" aria-label="Поиск по хабу">
+  <button id="q-reset" type="button" hidden>Сброс</button>
+</div>
+<div class="search-status" id="q-status" role="status" aria-live="polite"></div>
 
 <!-- ИНСТРУМЕНТЫ И ИГРЫ — ВВЕРХУ -->
 <div class="group">
   <div class="group-label">Инструменты и игры</div>
   <div class="grid">
-    <a class="card" href="teacher-tasks-2026/" style="background:linear-gradient(135deg,#1f4e79,#2767ad)">
+    <a class="card" href="teacher-tasks-2026/" style="--c1:#1f4e79;--c2:#2767ad">
       <div class="card-body">
         <div class="card-title">Задания ЕГЭ-2026</div>
         <div class="card-sub">Reading 10–11, word formation, Speaking 1 и 4, аудирование · для работы с Катей</div>
         <span class="card-tag">моя работа</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/cool-games/" target="_blank" style="background:linear-gradient(135deg,#8c1818,#c83030)">
+    <a class="card" href="https://altatiana7.github.io/cool-games/" target="_blank" rel="noopener" style="--c1:#8c1818;--c2:#c83030">
       <div class="card-body">
         <div class="card-title">Cool Games</div>
         <div class="card-sub">Игры и тренажёры для занятий</div>
         <span class="card-tag">игры</span>
       </div>
     </a>
-    <a class="card" href="https://claude.ai/code/artifact/e1b0786b-a49e-4bb8-91da-b33ade3bf6eb" target="_blank" style="background:linear-gradient(135deg,#8b1a1a,#c0392b)">
+    <a class="card" href="russian-core.html?v=20261121" target="_blank" rel="noopener" style="--c1:#8b1a1a;--c2:#c0392b">
       <div class="card-body">
         <div class="card-title">Russian Core</div>
         <div class="card-sub">Тренажёр по теме Россия для ЕГЭ</div>
         <span class="card-tag">ЕГЭ · Россия</span>
       </div>
     </a>
-    <a class="card" href="crimes-and-criminals-a2b1/?v=20261105" target="_blank" style="background:linear-gradient(135deg,#3a3a48,#5c5c72)">
+    <a class="card" href="crimes-and-criminals-a2b1/?v=20261105" target="_blank" rel="noopener" style="--c1:#3a3a48;--c2:#5c5c72">
       <div class="card-body">
         <div class="card-title">Crimes and Criminals</div>
         <div class="card-sub">Лексика о преступлениях, Past Simple и Past Continuous · видео-загадка, алиби, игры</div>
@@ -190,14 +278,14 @@
 <div class="group">
   <div class="group-label">Арина · ЕГЭ</div>
   <div class="grid">
-    <a class="card" href="https://altatiana7.github.io/EGE-train-for-teacher/" target="_blank" style="background:linear-gradient(135deg,#5a3070,#7a44a0)">
+    <a class="card" href="https://altatiana7.github.io/EGE-train-for-teacher/" target="_blank" rel="noopener" style="--c1:#5a3070;--c2:#7a44a0">
       <div class="card-body">
         <div class="card-title">Arina EGE - Teacher</div>
         <div class="card-sub">План подготовки и Error Log</div>
         <span class="card-tag">мой хаб</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Arina-Teacher--Hub/" target="_blank" style="background:linear-gradient(135deg,#6b2d80,#9040b8)">
+    <a class="card" href="https://altatiana7.github.io/Arina-Teacher--Hub/" target="_blank" rel="noopener" style="--c1:#6b2d80;--c2:#9040b8">
       <div class="card-body">
         <div class="card-title">Arina EGE-Homework</div>
         <div class="card-sub">Сдача домашних заданий</div>
@@ -211,92 +299,91 @@
 <div class="group">
   <div class="group-label">ЕГЭ тренажёры</div>
   <div class="grid">
-    <a class="card" href="ege-trainers/" style="background:linear-gradient(135deg,#1c1b18,#4a4740)">
+    <a class="card" href="ege-trainers/" style="--c1:#1c1b18;--c2:#4a4740">
       <div class="card-body">
         <div class="card-title">Папка · Тренажёры ЕГЭ</div>
         <div class="card-sub">Чтение 12–18, грамматика 19–24, словообразование 25–29, устная часть 1, 3, 4 · для всех учеников ЕГЭ</div>
         <span class="card-tag">12 тренажёров</span>
       </div>
     </a>
-    
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/katya-ege-teacher-8m3q/tricky-reading.html?v=20261109u" target="_blank" style="background:linear-gradient(135deg,#087579,#32a8a0)">
+    <a class="card" href="katya-ege-teacher-8m3q/tricky-reading.html?v=20261109u" target="_blank" rel="noopener" style="--c1:#087579;--c2:#32a8a0">
       <div class="card-body">
         <div class="card-title">Чтение · Confusing Words</div>
         <div class="card-sub">Все наборы на вкладках: 1 (78), 2 (20), 3 (20) и микс топ-15 · IPA, британская озвучка</div>
         <span class="card-tag">ЕГЭ · чтение</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/ege-teachers-hub/lexika.html?v=20261115" target="_blank" style="background:linear-gradient(135deg,#13806f,#c93d6e)">
+    <a class="card" href="ege-teachers-hub/lexika.html?v=20261115" target="_blank" rel="noopener" style="--c1:#13806f;--c2:#c93d6e">
       <div class="card-body">
         <div class="card-title">ЕГЭ · Лексика по темам ФИПИ</div>
         <div class="card-sub">17 тем А–С: карточки с переводом и примером, Listen, соединение пар · плюс 13 блоков-памяток</div>
         <span class="card-tag">ЕГЭ · лексика</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/katya-ege-teacher-8m3q/ege-30-36.html" target="_blank" style="background:linear-gradient(135deg,#1f6e45,#16a19a)">
+    <a class="card" href="katya-ege-teacher-8m3q/ege-30-36.html" target="_blank" rel="noopener" style="--c1:#1f6e45;--c2:#16a19a">
       <div class="card-body">
         <div class="card-title">Тренажёр 30–36</div>
         <div class="card-sub">Confusing Words, Error Hunter, Speed Game, тексты ЕГЭ</div>
         <span class="card-tag">ЕГЭ · 30–36</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/katya-ege-teacher-8m3q/pamyatki.html?v=7" target="_blank" style="background:linear-gradient(135deg,#7a3f1f,#b0683a)">
+    <a class="card" href="katya-ege-teacher-8m3q/pamyatki.html?v=7" target="_blank" rel="noopener" style="--c1:#7a3f1f;--c2:#b0683a">
       <div class="card-body">
         <div class="card-title">Памятки ЕГЭ</div>
         <div class="card-sub">Памятки на пробковой доске и тренировка к каждой</div>
         <span class="card-tag">ЕГЭ · памятки</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/ege-trainers/write37-letters.html" target="_blank" style="background:linear-gradient(135deg,#1d5a54,#2c7f78)">
+    <a class="card" href="ege-trainers/write37-letters.html" target="_blank" rel="noopener" style="--c1:#1d5a54;--c2:#2c7f78">
       <div class="card-body">
         <div class="card-title">Письмо 37</div>
         <div class="card-sub">95 писем: задание, ответы, фразы-опоры, готовое письмо</div>
         <span class="card-tag">ЕГЭ · 37</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/katya-ege-teacher-8m3q/write38.html" target="_blank" style="background:linear-gradient(135deg,#7e3d22,#b0683a)">
+    <a class="card" href="katya-ege-teacher-8m3q/write38.html" target="_blank" rel="noopener" style="--c1:#7e3d22;--c2:#b0683a">
       <div class="card-body">
         <div class="card-title">Задание 38</div>
         <div class="card-sub">Структура и клише, данные, проблема и вывод, 27 тем</div>
         <span class="card-tag">ЕГЭ · 38</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/katya-ege-teacher-8m3q/russia.html" target="_blank" style="background:linear-gradient(135deg,#6b4b16,#a0742c)">
+    <a class="card" href="katya-ege-teacher-8m3q/russia.html" target="_blank" rel="noopener" style="--c1:#6b4b16;--c2:#a0742c">
       <div class="card-body">
         <div class="card-title">Russia</div>
         <div class="card-sub">Устная часть о России, интервью со звуком, 35 писем</div>
         <span class="card-tag">ЕГЭ · Russia</span>
       </div>
     </a>
-    <a class="card" href="https://claude.ai/artifact/AK2SHp59StmRAcQJVdcUuk" target="_blank" style="background:linear-gradient(135deg,#1f4f7a,#2f6f9f)">
+    <a class="card" href="https://claude.ai/artifact/AK2SHp59StmRAcQJVdcUuk" target="_blank" rel="noopener" style="--c1:#1f4f7a;--c2:#2f6f9f">
       <div class="card-body">
         <div class="card-title">Устная часть · задание 2</div>
         <div class="card-sub">Вопросы по рекламе: правила, игры, Speed Game, экзамен на 72 варианта</div>
         <span class="card-tag">ЕГЭ · устная 2</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/katya-ege-teacher-8m3q/?v=20261106deliveryfix" target="_blank" style="background:linear-gradient(135deg,#3a2a4a,#6b4a85)">
+    <a class="card" href="katya-ege-teacher-8m3q/?v=20261106deliveryfix" target="_blank" rel="noopener" style="--c1:#3a2a4a;--c2:#6b4a85">
       <div class="card-body">
         <div class="card-title">Katya EGE - Teacher</div>
         <div class="card-sub">Общий комплект ЕГЭ, все уроки и проверка работ Кати</div>
         <span class="card-tag">только для меня</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/ege-2027-b2-katya/" target="_blank" style="background:linear-gradient(135deg,#4a2f5e,#7a4f96)">
+    <a class="card" href="ege-2027-b2-katya/" target="_blank" rel="noopener" style="--c1:#4a2f5e;--c2:#7a4f96">
       <div class="card-body">
         <div class="card-title">Katya EGE-Homework</div>
         <div class="card-sub">Отдельный сайт — Катя</div>
         <span class="card-tag">сайт ученицы</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/rita-ege-teacher-0vop/" target="_blank" style="background:linear-gradient(135deg,#3d2a22,#7a4a30)">
+    <a class="card" href="rita-ege-teacher-0vop/" target="_blank" rel="noopener" style="--c1:#3d2a22;--c2:#7a4a30">
       <div class="card-body">
         <div class="card-title">Rita EGE - Teacher</div>
         <div class="card-sub">Всё открыто + Homework Check Риты</div>
         <span class="card-tag">только для меня</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/ege-2027-b2-rita/" target="_blank" style="background:linear-gradient(135deg,#5e3a2a,#9a5f3d)">
+    <a class="card" href="ege-2027-b2-rita/" target="_blank" rel="noopener" style="--c1:#5e3a2a;--c2:#9a5f3d">
       <div class="card-body">
         <div class="card-title">Rita EGE-Homework</div>
         <div class="card-sub">Отдельный сайт — Рита</div>
@@ -310,14 +397,14 @@
 <div class="group">
   <div class="group-label">Kate</div>
   <div class="grid">
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/teacher-kate-7b22c1/" target="_blank" style="background:linear-gradient(135deg,#6b1a3a,#a02858)">
+    <a class="card" href="teacher-kate-7b22c1/" target="_blank" rel="noopener" style="--c1:#6b1a3a;--c2:#a02858">
       <div class="card-body">
         <div class="card-title">Katya - Teacher</div>
         <div class="card-sub">Мой хаб для урока</div>
         <span class="card-tag">мой хаб</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/kate-english-hub/" target="_blank" style="background:linear-gradient(135deg,#8b2252,#c03878)">
+    <a class="card" href="kate-english-hub/" target="_blank" rel="noopener" style="--c1:#8b2252;--c2:#c03878">
       <div class="card-body">
         <div class="card-title">Katya Homework</div>
         <div class="card-sub">Только Homework</div>
@@ -331,14 +418,14 @@
 <div class="group">
   <div class="group-label">Габи</div>
   <div class="grid">
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/gabi-english-hub/?v=20261019-fs" target="_blank" style="background:linear-gradient(135deg,#2e5220,#4a8034)">
+    <a class="card" href="gabi-english-hub/?v=20261019-fs" target="_blank" rel="noopener" style="--c1:#2e5220;--c2:#4a8034">
       <div class="card-body">
         <div class="card-title">Gabi - Teacher</div>
         <div class="card-sub">Gateway to the World B1</div>
         <span class="card-tag">мой хаб</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/gabriel-homework/?v=20261019-fs" target="_blank" style="background:linear-gradient(135deg,#3d6828,#5a9840)">
+    <a class="card" href="gabriel-homework/?v=20261019-fs" target="_blank" rel="noopener" style="--c1:#3d6828;--c2:#5a9840">
       <div class="card-body">
         <div class="card-title">Gabi Homework</div>
         <div class="card-sub">Задания с отправкой учителю</div>
@@ -352,14 +439,14 @@
 <div class="group">
   <div class="group-label">Никита</div>
   <div class="grid">
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/teacher-nikita-7f3a92/" target="_blank" style="background:linear-gradient(135deg,#7a4010,#b85e18)">
+    <a class="card" href="teacher-nikita-7f3a92/" target="_blank" rel="noopener" style="--c1:#7a4010;--c2:#b85e18">
       <div class="card-body">
         <div class="card-title">Nikita - Teacher</div>
         <div class="card-sub">Outcomes Pre-Int, фразовые глаголы</div>
         <span class="card-tag">мой хаб</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/nikita-homework/" target="_blank" style="background:linear-gradient(135deg,#9a5018,#c87830)">
+    <a class="card" href="nikita-homework/" target="_blank" rel="noopener" style="--c1:#9a5018;--c2:#c87830">
       <div class="card-body">
         <div class="card-title">Nikita Homework</div>
         <div class="card-sub">Outcomes Pre-Int — даты заданий</div>
@@ -373,14 +460,14 @@
 <div class="group">
   <div class="group-label">Мая</div>
   <div class="grid">
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/maya-course/?v=20260926-0111" target="_blank" style="background:linear-gradient(135deg,#0e3d4d,#1a6070)">
+    <a class="card" href="maya-course/?v=20260926-0111" target="_blank" rel="noopener" style="--c1:#0e3d4d;--c2:#1a6070">
       <div class="card-body">
         <div class="card-title">Maya - Teacher</div>
         <div class="card-sub">English File Pre-Int — мой хаб</div>
         <span class="card-tag">мой хаб</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/maya-english-hub/" target="_blank" style="background:linear-gradient(135deg,#1a5060,#2a8090)">
+    <a class="card" href="maya-english-hub/" target="_blank" rel="noopener" style="--c1:#1a5060;--c2:#2a8090">
       <div class="card-body">
         <div class="card-title">Maya Homework</div>
         <div class="card-sub">English File Pre-Int — уроки</div>
@@ -394,14 +481,14 @@
 <div class="group">
   <div class="group-label">Тимофей</div>
   <div class="grid">
-    <a class="card" href="https://altatiana7.github.io/timofey-teacher/" target="_blank" style="background:linear-gradient(135deg,#1e3050,#2e5080)">
+    <a class="card" href="https://altatiana7.github.io/timofey-teacher/" target="_blank" rel="noopener" style="--c1:#1e3050;--c2:#2e5080">
       <div class="card-body">
         <div class="card-title">Timofey - Teacher</div>
         <div class="card-sub">ОГЭ + On Screen — мой хаб</div>
         <span class="card-tag">мой хаб</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/timofey/" target="_blank" style="background:linear-gradient(135deg,#284068,#3a5898)">
+    <a class="card" href="https://altatiana7.github.io/timofey/" target="_blank" rel="noopener" style="--c1:#284068;--c2:#3a5898">
       <div class="card-body">
         <div class="card-title">Timofey Homework</div>
         <div class="card-sub">Homework On Screen + ОГЭ, в том числе Reading</div>
@@ -415,28 +502,28 @@
 <div class="group">
   <div class="group-label">Go Getter</div>
   <div class="grid">
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/dasha-english-hub/" target="_blank" style="background:linear-gradient(135deg,#1f6f7c,#2A8C9B)">
+    <a class="card" href="dasha-english-hub/" target="_blank" rel="noopener" style="--c1:#1f6f7c;--c2:#2A8C9B">
       <div class="card-body">
         <div class="card-title">Даша · 4 класс</div>
         <div class="card-sub">Reading Lab · Go Getter 1 · глаголы</div>
         <span class="card-tag">чтение · дифтонги · уроки</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/go-getter-3-trainer/" target="_blank" style="background:linear-gradient(135deg,#6d3fe0,#e0417f)">
+    <a class="card" href="go-getter-3-trainer/" target="_blank" rel="noopener" style="--c1:#6d3fe0;--c2:#e0417f">
       <div class="card-body">
         <div class="card-title">Go Getter 3 · для Сони</div>
         <div class="card-sub">Unit 0 открыт — остальные юниты закрыты</div>
         <span class="card-tag">лексика · игры</span>
       </div>
     </a>
-    <a class="card" href="go-getter-3-teacher/" target="_blank" style="background:linear-gradient(135deg,#2f3e46,#4e6572)">
+    <a class="card" href="go-getter-3-teacher/" target="_blank" rel="noopener" style="--c1:#2f3e46;--c2:#4e6572">
       <div class="card-body">
         <div class="card-title">Go Getter 3 · для учителя</div>
         <div class="card-sub">Все юниты открыты · версия для работы на уроке</div>
         <span class="card-tag">моя версия</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/go-getter-4-grade6/?v=20261002-teacherbook-v8" target="_blank" style="background:linear-gradient(135deg,#2a4a20,#3e7030)">
+    <a class="card" href="go-getter-4-grade6/?v=20261002-teacherbook-v8" target="_blank" rel="noopener" style="--c1:#2a4a20;--c2:#3e7030">
       <div class="card-body">
         <div class="card-title">Go Getter 4 · 6 кл.</div>
         <div class="card-sub">Unit 1 — уроки и хаб</div>
@@ -450,14 +537,14 @@
 <div class="group">
   <div class="group-label">Школьные классы</div>
   <div class="grid">
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/spotlight-9-brief-check/" target="_blank" style="background:linear-gradient(135deg,#2c2260,#4e3c9a)">
+    <a class="card" href="spotlight-9-brief-check/" target="_blank" rel="noopener" style="--c1:#2c2260;--c2:#4e3c9a">
       <div class="card-body">
         <div class="card-title">Spotlight 9</div>
         <div class="card-sub">Brief Check-in — ОГЭ</div>
         <span class="card-tag">ОГЭ · 9 кл.</span>
       </div>
     </a>
-    <a class="card" href="https://altatiana7.github.io/Tatyana-English-Hub/spotlight-10-11-brief-check/" target="_blank" style="background:linear-gradient(135deg,#3a2870,#5a44b0)">
+    <a class="card" href="spotlight-10-11-brief-check/" target="_blank" rel="noopener" style="--c1:#3a2870;--c2:#5a44b0">
       <div class="card-body">
         <div class="card-title">Spotlight 10–11</div>
         <div class="card-sub">Brief Check-in — ЕГЭ</div>
@@ -467,9 +554,106 @@
   </div>
 </div>
 
+<div class="empty" id="q-empty" hidden>Ничего не нашлось. Попробуй другое слово — имя ученика, номер задания или тему.</div>
+
 <!-- Планнер: тихая ссылка внизу, без описания -->
 <div class="foot-link">
   <a href="planner-local/planner.html">Планнер</a>
 </div>
 
+<script>
+/* Поиск по хабу: фильтрует карточки по названию, описанию, тегу и группе.
+   Понимает и латиницу, и кириллицу: «катя» находит «Katya», «katya» — «Катя». */
+(function () {
+  var input  = document.getElementById('q');
+  var reset  = document.getElementById('q-reset');
+  var status = document.getElementById('q-status');
+  var empty  = document.getElementById('q-empty');
+  var groups = Array.prototype.slice.call(document.querySelectorAll('.group'));
+  var cards  = Array.prototype.slice.call(document.querySelectorAll('.card'));
+
+  var TRANSLIT = {
+    'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'e','ж':'zh','з':'z','и':'i',
+    'й':'y','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t',
+    'у':'u','ф':'f','х':'h','ц':'ts','ч':'ch','ш':'sh','щ':'shch','ъ':'','ы':'y','ь':'',
+    'э':'e','ю':'yu','я':'ya'
+  };
+
+  function latin(text) {
+    return text.replace(/[а-яё]/g, function (ch) { return TRANSLIT[ch] || ch; });
+  }
+  function norm(text) {
+    return text.toLowerCase().replace(/\s+/g, ' ').trim();
+  }
+
+  var index = cards.map(function (card) {
+    var group = card.closest('.group');
+    var label = group ? group.querySelector('.group-label').textContent : '';
+    var hay = norm(label + ' ' + card.textContent);
+    return { el: card, group: group, hay: hay, hayLatin: latin(hay) };
+  });
+  var total = index.length;
+
+  function apply() {
+    var term = norm(input.value);
+    var words = term ? term.split(' ') : [];
+    var latinTerm = latin(term);
+    var latinWords = latinTerm ? latinTerm.split(' ') : [];
+    var shown = 0;
+
+    index.forEach(function (item) {
+      var hit = true;
+      if (words.length) {
+        hit = words.every(function (word) {
+          return item.hay.indexOf(word) !== -1;
+        });
+        if (!hit) {
+          hit = latinWords.every(function (word) {
+            return item.hayLatin.indexOf(word) !== -1;
+          });
+        }
+      }
+      item.el.hidden = !hit;
+      if (hit) shown++;
+    });
+
+    groups.forEach(function (group) {
+      group.hidden = !group.querySelector('.card:not([hidden])');
+    });
+
+    reset.hidden = !term;
+    empty.hidden = !(term && shown === 0);
+    status.textContent = term ? 'Найдено ' + shown + ' из ' + total : '';
+  }
+
+  /* ?q=катя — можно дать ссылку сразу на отфильтрованный хаб */
+  try {
+    var preset = new URLSearchParams(location.search).get('q');
+    if (preset) input.value = preset;
+  } catch (error) { /* старый браузер — просто без предзаполнения */ }
+
+  input.addEventListener('input', apply);
+  input.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+      input.value = '';
+      apply();
+      input.blur();
+    }
+  });
+  reset.addEventListener('click', function () {
+    input.value = '';
+    apply();
+    input.focus();
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key === '/' && document.activeElement !== input) {
+      event.preventDefault();
+      input.focus();
+    }
+  });
+
+  apply();
+})();
+</script>
 <script src="shared/page-label.js?v=20261104"></script>
+</html>
