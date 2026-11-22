@@ -40,6 +40,12 @@ h1{font-family:Georgia,serif;font-size:clamp(28px,3.4vw,40px);line-height:1.05;m
 .mod.now .n{background:#e3bc90;color:#2b1d14}
 .mod.now .u{color:#e3bc90}
 .mod.extra .n{background:var(--wine)}
+.mod.culture-active{background:#fff4d8;border:2px solid #c9913b;box-shadow:0 0 0 3px rgba(227,188,144,.20),0 8px 18px rgba(110,66,16,.12);padding:5px 13px}
+.mod.culture-active .n{background:#e3bc90;color:#2b1d14}
+.mod.culture-active .t{color:#593617;font-weight:900}
+.mod.culture-active .u{color:#936022;font-weight:800}
+.mod.culture-active:hover{border-color:#ad7429;box-shadow:0 0 0 3px rgba(227,188,144,.35),0 10px 22px rgba(110,66,16,.18)}
+
 .side{position:relative;background:url('./cover-lawyer.jpg') center 20%/cover;min-height:0}
 .side::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,34,53,0) 35%,rgba(12,34,53,.92) 100%)}
 .quick{position:absolute;left:18px;right:18px;bottom:18px;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -68,8 +74,8 @@ h1{font-family:Georgia,serif;font-size:clamp(28px,3.4vw,40px);line-height:1.05;m
   </aside>
 </div>
 <script>
-const M=[[1,'Jobs','Unit 1'],[2,'Shops','Unit 2'],[3,'Getting There','Unit 3'],[4,'Eat','Unit 4'],[5,'Relax','Unit 5'],[6,'Family & Friends','Unit 6'],[7,'Crime & Punishment','Bridge module'],[8,'Your Place','Unit 7'],[9,'Education','Unit 8 · now'],[10,'Mind & Body','Unit 9'],[11,'Places to Stay','Unit 10'],[12,'Science & Nature','Unit 11'],[13,'On the Phone','Unit 12'],[14,'Culture','Unit 13'],[15,'Stuff','Unit 14'],[16,'Money','Unit 15'],[17,'Events','Unit 16'],[0,'Speaking Lessons','Extra speaking']];
-document.getElementById('grid').innerHTML=M.map(([n,t,u])=>`<a class="mod ${n===9?'now':''} ${n===0||n===7?'extra':''}" href="${n===9?'./education.html?b=0&v=20261025b':n===14?'./culture.html?v=20261122':'./course.html?m='+n}"><span class="n">${n===0?'SP':n}</span><span class="t">${t}<span class="u">${u}</span></span></a>`).join('');
+const M=[[1,'Jobs','Unit 1'],[2,'Shops','Unit 2'],[3,'Getting There','Unit 3'],[4,'Eat','Unit 4'],[5,'Relax','Unit 5'],[6,'Family & Friends','Unit 6'],[7,'Crime & Punishment','Bridge module'],[8,'Your Place','Unit 7'],[9,'Education','Unit 8 · now'],[10,'Mind & Body','Unit 9'],[11,'Places to Stay','Unit 10'],[12,'Science & Nature','Unit 11'],[13,'On the Phone','Unit 12'],[14,'Culture','Unit 13 · New lesson'],[15,'Stuff','Unit 14'],[16,'Money','Unit 15'],[17,'Events','Unit 16'],[0,'Speaking Lessons','Extra speaking']];
+document.getElementById('grid').innerHTML=M.map(([n,t,u])=>`<a class="mod ${n===9?'now':''} ${n===14?'culture-active':''} ${n===0||n===7?'extra':''}" href="${n===9?'./education.html?b=0&v=20261025b':n===14?'./culture.html?v=20261122':'./course.html?m='+n}"><span class="n">${n===0?'SP':n}</span><span class="t">${t}<span class="u">${u}</span></span></a>`).join('');
 </script>
 <script src="../shared/page-label.js?v=20261104"></script>
 </body>
