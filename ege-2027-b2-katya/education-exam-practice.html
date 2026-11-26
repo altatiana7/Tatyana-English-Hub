@@ -18,10 +18,25 @@ select,input{padding:3px 5px;min-height:28px}
 footer{gap:6px;margin-top:4px}
 @media(max-width:740px){.panes>section{max-height:none}.panes #passage{max-height:45dvh}}
 
+
+/* Full-width tasks, with the section list on demand. */
+#section-picker{position:relative;z-index:10;flex:none;margin-left:auto}
+#section-picker summary{cursor:pointer;padding:2px 7px;border:1px solid #b8c7df;border-radius:5px;background:#fff;color:#293b82;font-size:13px;font-weight:600}
+#section-picker nav{position:absolute;top:100%;right:0;display:grid;gap:2px;min-width:175px;max-width:calc(100vw - 20px);max-height:65dvh;overflow:auto;padding:4px;background:#fff;border:1px solid #dce3f1;border-radius:6px;box-shadow:0 4px 12px #23304c26}
+#section-picker nav button{white-space:normal;text-align:left;padding:3px 6px}
+
+header,main{max-width:none;padding:2px 6px}
+header{min-height:30px;flex-wrap:wrap}
+h1{margin:2px 0;line-height:1.2}
+#note{margin:0 0 3px}
+.panes>section{max-height:calc(100dvh - 112px);padding:2px 6px}
+footer{margin-top:2px}
+@media(max-width:740px){.panes>section{max-height:none}.panes #passage{max-height:45dvh}}
+
 </style><meta name="worksheet-layout" content="compact">
 </head><body>
-<header><a href="./">← Home</a><strong>Education · Exam Practice</strong></header>
-<main><nav aria-label="Sections"></nav><h1 tabindex="-1"></h1><p id="note"></p><audio controls preload="metadata" playsinline hidden></audio>
+<header><a href="./">← Home</a><strong>Education · Exam Practice</strong><details id="section-picker"><summary>Sections</summary><nav aria-label="Sections"></nav></details></header>
+<main><h1 tabindex="-1"></h1><p id="note"></p><audio controls preload="metadata" playsinline hidden></audio>
 <form><div class="panes"><section id="passage" aria-label="Text and options" tabindex="0"></section><section id="prompts" aria-label="Questions" tabindex="0"></section></div><footer><button type="button" id="back">Back</button><button type="button" id="next">Next</button><p id="status" role="status"></p></footer></form>
 </main><script>
 const config={"id":"katya-ege:education-skills-2026-11","title":"Education · Exam Practice","label":"Катя · Education · Exam Practice","url":"https://lzxcmrlubhjfdhtqvqzt.supabase.co","key":"sb_publishable_PmyZRwzWne8lqprej4XJQA_XiujtjEI"};
@@ -95,4 +110,21 @@ async function sync(){
  remoteReady=true;render();
 }
 window.addEventListener('online',sync);render();sync();
+</script><script>
+{
+ const picker=document.getElementById('section-picker');
+ const summary=picker.querySelector('summary');
+ picker.addEventListener('click',event=>{
+  if(event.composedPath().includes(picker.querySelector('nav'))){
+   picker.open=false;
+   if(picker.contains(document.activeElement)||document.activeElement===document.body)summary.focus();
+  }
+ });
+ picker.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&picker.open){picker.open=false;summary.focus()}
+ });
+ document.addEventListener('click',event=>{
+  if(picker.open&&!picker.contains(event.target))picker.open=false;
+ });
+}
 </script></body></html>
