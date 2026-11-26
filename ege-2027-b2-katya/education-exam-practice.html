@@ -3,7 +3,23 @@
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f3f6fb;color:#142544;font:18px/1.5 system-ui,sans-serif}header,main{max-width:1440px;margin:auto;padding:12px 20px}header{display:flex;align-items:center;gap:20px}a{color:#203c76}nav{display:flex;gap:7px;flex-wrap:wrap}button,select,input{font:inherit}button{border:1px solid #b1bfd4;border-radius:8px;background:#fff;color:#203c76;padding:7px 10px;cursor:pointer}button[aria-current=step],button[type=submit]{background:#203c76;color:white}button:disabled{opacity:.5;cursor:default}h1{font-size:1.4rem;margin:8px 0}#note{margin:0 0 10px}#note:empty{display:none}audio{width:min(100%,650px);margin:4px 0}.panes{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:12px}.panes>section{min-width:0;border:1px solid #d8e1ee;border-radius:10px;background:#fff;padding:0 14px;max-height:58dvh;overflow:auto}.panes>section:focus-visible{outline:3px solid #3261ae}#passage[hidden]+section{grid-column:1/-1}label{display:grid;gap:5px;padding:9px 0;border-bottom:1px solid #e3eaf4}label:last-child{border:0}select,input{width:100%;min-width:0;padding:6px;border:1px solid #a8b8d1;border-radius:6px;color:inherit;background:white}footer{display:flex;align-items:center;gap:10px;margin-top:10px}#status{margin:0;color:#215963}#prompts>button{margin:10px 0}button:not([type]){font-size:16px}
 @media(max-width:740px){header,main{padding:8px 12px}nav{flex-wrap:nowrap;overflow-x:auto;padding-bottom:5px}nav button{flex:none}body{font-size:16px}.panes{grid-template-columns:1fr}.panes>section{max-height:none}.panes #passage{max-height:45dvh}}
-</style></head><body>
+
+/* Compact worksheet layout */
+body{font-size:15px;line-height:1.37}
+header,main{padding:5px 10px}header{gap:10px}
+nav{gap:4px}nav button,footer button{padding:3px 7px;font-size:14px}
+h1{font-size:18px;margin:5px 0 3px}
+#note{margin:0 0 4px}
+audio{height:33px;margin:3px 0}
+.panes{gap:6px}.panes>section{padding:3px 7px;max-height:calc(100dvh - 150px)}
+.panes p{margin:2px 0 5px}
+label{padding:4px 0;gap:2px}
+select,input{padding:3px 5px;min-height:28px}
+footer{gap:6px;margin-top:4px}
+@media(max-width:740px){.panes>section{max-height:none}.panes #passage{max-height:45dvh}}
+
+</style><meta name="worksheet-layout" content="compact">
+</head><body>
 <header><a href="./">← Home</a><strong>Education · Exam Practice</strong></header>
 <main><nav aria-label="Sections"></nav><h1 tabindex="-1"></h1><p id="note"></p><audio controls preload="metadata" playsinline hidden></audio>
 <form><div class="panes"><section id="passage" aria-label="Text and options" tabindex="0"></section><section id="prompts" aria-label="Questions" tabindex="0"></section></div><footer><button type="button" id="back">Back</button><button type="button" id="next">Next</button><p id="status" role="status"></p></footer></form>
