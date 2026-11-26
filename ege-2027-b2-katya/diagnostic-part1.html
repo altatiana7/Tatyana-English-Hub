@@ -76,7 +76,7 @@ const form=document.querySelector('form'), nav=document.querySelector('nav'), wo
 let state={answers:{},current:0};
 if(!teacher)try{state=JSON.parse(localStorage.getItem(id))||state}catch{}
 if(reviewed?.data?.answers)state.answers=reviewed.data.answers;
-if(reviewed)document.getElementById('review-banner').append(KS.reviewBar(reviewed));
+if(reviewed){const receipt=document.createElement('p');receipt.className='ksrev';receipt.textContent='Ответы Кати'+(reviewed.data?._at?' · отправлено '+reviewed.data._at:'');document.getElementById('review-banner').append(receipt);}
 function save(){if(!teacher)try{localStorage.setItem(id,JSON.stringify(state))}catch{}}
 function node(tag,text){const el=document.createElement(tag);el.textContent=text;return el}
 function go(i){
