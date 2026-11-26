@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Катя · Диагностика 1 · аудирование и чтение</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f6fb;color:#142544;font:18px/1.5 system-ui,sans-serif}header,main{max-width:1440px;margin:auto;padding:12px 20px}header{display:flex;align-items:center;gap:20px}a{color:#203c76}nav{display:flex;gap:7px;flex-wrap:wrap}button,select,input{font:inherit}button{border:1px solid #b1bfd4;border-radius:8px;background:#fff;color:#203c76;padding:7px 10px;cursor:pointer}button[aria-current=step],button[type=submit]{background:#203c76;color:white}button:disabled{opacity:.5;cursor:default}h1{font-size:1.4rem;margin:8px 0}#note{margin:0 0 10px}#note:empty{display:none}audio{width:min(100%,650px);margin:4px 0}.panes{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:12px}.panes>section{min-width:0;border:1px solid #d8e1ee;border-radius:10px;background:#fff;padding:0 14px;max-height:58dvh;overflow:auto}.panes>section:focus-visible{outline:3px solid #3261ae}#passage[hidden]+section{grid-column:1/-1}label{display:grid;gap:5px;padding:9px 0;border-bottom:1px solid #e3eaf4}label:last-child{border:0}select,input{width:100%;min-width:0;padding:6px;border:1px solid #a8b8d1;border-radius:6px;color:inherit;background:white}footer{display:flex;align-items:center;gap:10px;margin-top:10px}#status{margin:0;color:#215963}#prompts>button{margin:10px 0}button:not([type]){font-size:16px}
+@media(max-width:740px){header,main{padding:8px 12px}nav{flex-wrap:nowrap;overflow-x:auto;padding-bottom:5px}nav button{flex:none}body{font-size:16px}.panes{grid-template-columns:1fr}.panes>section{max-height:none}.panes #passage{max-height:45dvh}}
+
+/* Compact worksheet layout */
+body{font-size:15px;line-height:1.37}
+header,main{padding:5px 10px}header{gap:10px}
+nav{gap:4px}nav button,footer button{padding:3px 7px;font-size:14px}
+h1{font-size:18px;margin:5px 0 3px}
+#note{margin:0 0 4px}
+audio{height:33px;margin:3px 0}
+.panes{gap:6px}.panes>section{padding:3px 7px;max-height:calc(100dvh - 150px)}
+.panes p{margin:2px 0 5px}
+label{padding:4px 0;gap:2px}
+select,input{padding:3px 5px;min-height:28px}
+footer{gap:6px;margin-top:4px}
+@media(max-width:740px){.panes>section{max-height:none}.panes #passage{max-height:45dvh}}
+
+
+/* Full-width tasks, with the section list on demand. */
+#section-picker{position:relative;z-index:10;flex:none;margin-left:auto}
+#section-picker summary{cursor:pointer;padding:2px 7px;border:1px solid #b8c7df;border-radius:5px;background:#fff;color:#293b82;font-size:13px;font-weight:600}
+#section-picker nav{position:absolute;top:100%;right:0;display:grid;gap:2px;min-width:175px;max-width:calc(100vw - 20px);max-height:65dvh;overflow:auto;padding:4px;background:#fff;border:1px solid #dce3f1;border-radius:6px;box-shadow:0 4px 12px #23304c26}
+#section-picker nav button{white-space:normal;text-align:left;padding:3px 6px}
+
+header,main{max-width:none;padding:2px 6px}
+header{min-height:30px;flex-wrap:wrap}
+h1{margin:2px 0;line-height:1.2}
+#note{margin:0 0 3px}
+.panes>section{max-height:calc(100dvh - 112px);padding:2px 6px}
+footer{margin-top:2px}
+@media(max-width:740px){.panes>section{max-height:none}.panes #passage{max-height:45dvh}}
+
+
+/* Keep each question and its available answers together. */
+.choice-question{min-width:0;margin:0;padding:6px 0 8px;border:0;border-bottom:1px solid #dde5f0}
+.choice-question legend{padding:0;color:#172b4c;font-size:17px;font-weight:650;line-height:1.35}
+.choice-options{display:flex;flex-wrap:wrap;gap:4px 7px;margin-top:4px;min-width:0}
+.choice-option{display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:3px 8px;margin:0;border:1px solid #bbcae0;border-radius:7px;background:#fff;color:#172b4c;font-size:16px;line-height:1.3;cursor:pointer;overflow-wrap:anywhere}
+.choice-option input{width:1em;min-height:0;padding:0;margin:0;flex:none;accent-color:#293b82}
+.choice-option:has(input:checked){border-color:#294b91;background:#e8f0ff;color:#183677}
+.choice-option:has(input:focus-visible){outline:2px solid #294b91;outline-offset:2px}
+.choice-option:has(input:disabled){cursor:default}
+
+header,main{padding:5px clamp(8px,1.6vw,20px)}
+main>h1{margin:4px 0 8px}
+.diagnostic-part{border-top:1px solid #bccce4;padding:8px 0 10px}
+.diagnostic-part>h2,.diagnostic-review h2{margin:0 0 5px;font-size:21px;line-height:1.25}
+.part-note{margin:0 0 5px;color:#465a78}
+.panes{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(8px,1.5vw,20px);align-items:start}
+.panes>section,.panes #passage{max-height:none;overflow:visible;padding:6px 10px}
+.part-text{font-size:20px;line-height:1.55}
+.panes .part-text p{margin:0 0 8px}
+.panes>section:only-child{grid-column:1/-1}
+.diagnostic-review{padding:8px 0 10px}
+.diagnostic-review p{margin:5px 0}
+#section-picker nav{max-height:65dvh;overflow:auto}
+@media(max-width:850px){.panes{grid-template-columns:minmax(0,1fr)}}
+</style><meta name="worksheet-layout" content="compact">
+</head><body>
+<header><a id="back-home" href="./#hw">← Homework</a><details id="section-picker"><summary>Sections</summary><nav aria-label="Sections"></nav></details></header>
+<main><h1>Диагностика 1 · аудирование и чтение</h1><div id="review-banner"></div>
+<form><div id="worksheet"></div><section class="diagnostic-review" id="review"><h2 tabindex="-1">Review and send</h2><p id="progress"></p><div id="send-control"></div><p id="status" role="status"></p></section></form>
+</main><script>window.TEACHER=new URLSearchParams(location.search).get('teacher')==='1';</script>
+<script src="send.js?v=20261115b"></script><script>
+const page='diagnostic-part1';
+const id='katya-ege:diagnostic-part1:draft';
+const title='Диагностика 1 · аудирование 1–9 и чтение 10–18';
+KS.TITLE[page]=title;
+const teacher=!!window.TEACHER,reviewed=teacher?KS.review(page):null;
+if(teacher)document.getElementById('back-home').href='../katya-ege-teacher-8m3q/index.html';
+const sections=[{"title":"Listening · Task 1","audio":"https://altatiana7.github.io/Tatyana-English-Hub/teacher-tasks-2026/audio/F0D977-listening.mp3","note":"Match speakers A–F to statements 1–7. There is one extra statement.","text":["1. Diving can be a dangerous experience.","2. Diving is suitable for all kinds of people.","3. Diving can be an educational experience.","4. Diving is a great way to become healthy.","5. Diving can be ruined by bad weather.","6. Diving is quite an expensive sport.","7. Diving can improve your mental health."],"items":[["Speaker A",["1","2","3","4","5","6","7"]],["Speaker B",["1","2","3","4","5","6","7"]],["Speaker C",["1","2","3","4","5","6","7"]],["Speaker D",["1","2","3","4","5","6","7"]],["Speaker E",["1","2","3","4","5","6","7"]],["Speaker F",["1","2","3","4","5","6","7"]]]},{"title":"Listening · Task 2","audio":"https://altatiana7.github.io/Tatyana-English-Hub/katerina-ege-2027/audio/listening-variant-4.mp3","note":"In the recording, skip to the dialogue between Ryan and Ella about gyms after Task 1.","items":[["1. Ryan has been doing sport since he was six.",["True","False","Not stated"]],["2. It’s important for Ella that the gym is close to her place.",["True","False","Not stated"]],["3. Ryan prefers strength training to group workouts.",["True","False","Not stated"]],["4. It’s easy for Ella to find information online.",["True","False","Not stated"]],["5. Ryan has a younger sister.",["True","False","Not stated"]],["6. Ryan’s friend goes to the PowerHouse gym.",["True","False","Not stated"]],["7. Ryan suggests showing Ella the FitZone gym.",["True","False","Not stated"]]]},{"title":"Listening · Tasks 3–9","audio":"https://altatiana7.github.io/Tatyana-English-Hub/katerina-ege-2027/audio/listening-variant-4.mp3","note":"In the recording, skip to the interview about learning languages after Task 2.","items":[["3. What do we learn about the presenter at the beginning of the radio show?",["She runs the show every afternoon.","She has over ten years of experience.","She has learnt English with the ETL Co."]],["4. How old was the speaker when he started learning languages?",["2","6","19"]],["5. The speaker believes that learning French helped him to...",["develop in a positive way.","keep engaged with friends.","miss out on travel experience."]],["6. Before getting into teaching, the speaker worked as a...",["lawyer.","tour guide.","jazz musician."]],["7. According to the speaker, what prevents people from moving to another country?",["Age.","Desires.","Responsibilities."]],["8. What does the speaker NOT mention as a benefit of teaching online?",["Good salary.","Career opportunities.","Flexible working hours."]],["9. What would the speaker do differently if he could?",["Go to another country.","Invest into a community.","Start his own business."]]]},{"title":"Reading · Task 10","note":"Match texts A–G with headings 1–8. There is one extra heading.","text":["A. Figuring out the way you learn best will help you in your academic life. Over the years, researchers and psychologists have tried to understand how we learn. The VARK model proposes that if you are a visual learner, you need to use visuals such as diagrams, charts and colour in your notes. Auditory learners can learn best through listening. Kinaesthetic learners prefer using all their senses or moving around. Of course, we learn through a mix of styles and methods, but one may be more useful than the others.","B. Studying on your own can be productive; however, there are times when studying in a group can be more effective. Studying in a group or with a partner can make the experience more enjoyable. It can provide you with new views and experiences. It can also be helpful in revealing knowledge gaps or gaps in your understanding. For example, when explaining a concept to the members of your study group, you may realise that you get stuck while explaining a step of a process.","C. Our attention span is between 45 to 60 minutes so continuous studying is not as productive as you may think. Taking a break will help you prevent study fatigue and allow you to return to your notes with fresh focus. However, if the breaks are too long, you will lose motivation to return to your studies. Try using the Pomodoro Technique where you balance study and breaks. Set a timer for 25 minutes and completely focus on your task. When the time is up, take a short 3-to-5-minute break.","D. In order to be productive and study efficiently, it is important to reward yourself for your hard work. This can help to keep you motivated and will also reinforce the behaviour. There are several ways that you can reward yourself. Give yourself one evening off once you have achieved your study goals. Reward a study session with a half hour of your favourite show or game. You can take a nap, or meet up with a friend, whatever makes you happy. You complete your study, you get a reward!","E. A popular productivity and time management method used by many around the world, is the “Eat the Frog” technique. This is how it works. First, choose a “frog” (difficult task) for the day. You should try to get your task done early in the day. It helps when you have an assignment with a near deadline, but you are not sure how to start. When a task is difficult, we tend to put it off. By completing the most difficult tasks of the day first thing in the morning, you are putting a stop to procrastination.","F. Most of us buy into the idea that we can multitask effectively, but in reality, we cannot focus on multiple tasks at the same time. What usually happens is that our focus moves from task to task. As a result of this, the task we are trying to complete takes longer, and we are more likely to make mistakes. Instead of multitasking, try to focus on single tasks at a time. You might spend an hour studying with the TV on, but instead focus only on your study for 45 minutes, and this will allow you to watch TV for 15 minutes.","G. When we talk about productivity, it is true that there are some unavoidable distractions that students face. However, there are certain things that we can do to limit distractions and therefore improve our productivity. Firstly, it is important to minimise the use of devices when trying to study or be productive. If we receive a message and we decide not to check it, it will hold our attention. It is best to keep devices out of sight and out of mind. Also, take away smartwatches. They may alert you and break your focus."],"choices":["Small pleasures for big efforts","Study time, digital silence","Beat delay by starting strong","Two heads learn better than one","The smart way to press pause","Learning works differently","Too late to take a break","One thing at a time"],"items":[["Text A",["1","2","3","4","5","6","7","8"]],["Text B",["1","2","3","4","5","6","7","8"]],["Text C",["1","2","3","4","5","6","7","8"]],["Text D",["1","2","3","4","5","6","7","8"]],["Text E",["1","2","3","4","5","6","7","8"]],["Text F",["1","2","3","4","5","6","7","8"]],["Text G",["1","2","3","4","5","6","7","8"]]]},{"title":"Reading · Task 11","note":"Match gaps A–F with fragments 1–7. There is one extra fragment.","text":["Climate change is putting hundreds of millions of people’s lives at risk, and is threatening nature worldwide – from the poles to the tropics, from mountains to oceans. Many of the world’s biggest challenges, from poverty to dying wildlife, are increased by the climate crisis.","Climate change is caused by increasing greenhouse gases in the atmosphere, A__________ the planet’s weather patterns. Such a rise in the average temperature is often referred to as “global warming.” Climate and weather are often confused. Weather refers to short-term changes in atmospheric conditions, B__________ a much longer period. That is why we still experience cold, snowy days, even though we are now facing a climate crisis, C__________.","The impact of climate change can be seen everywhere, from melting glaciers resulting in a global rise in the sea level, D__________, more frequent heatwaves, and other extreme weather events. All these extreme weather events threaten people’s lives and nature across the planet. They are also more difficult E__________. The longer people wait to act, the worse the situation will become.","While climate change is a global crisis, its effects are not felt evenly worldwide. The poorest, native people, and future generations are those F__________ greenhouse gases. However, they are often the most affected by the climate crisis."],"choices":["while climate refers to changes over","resulting in serious, long-term shifts in","who is living in harmony with nature","which has resulted from global warming","who are the least responsible for","and more expensive to recover from","to heavier rainstorms, more droughts"],"items":[["Gap A",["1","2","3","4","5","6","7"]],["Gap B",["1","2","3","4","5","6","7"]],["Gap C",["1","2","3","4","5","6","7"]],["Gap D",["1","2","3","4","5","6","7"]],["Gap E",["1","2","3","4","5","6","7"]],["Gap F",["1","2","3","4","5","6","7"]]]},{"title":"Reading · Tasks 12–18","text":["Taking a gap year after your graduation exams has gone out of fashion. It could be down to its notoriety, now that voluntourism schemes are widely considered self-serving. And then of course there’s the cost, which many students are avoiding in favour of travelling for a month or two. “A lot of my friends take the mick out of me saying, ‘Oh, you went to Cambodia on a gap year’,” says Beth Adams, 21, who studied politics and international relations at the University of Manchester, and took a year out after graduating. “You do feel like you’re fulfilling a stereotype a bit.”","According to researchers, the number of people deferring their university places has gone down from 8% in 2002 to around 5% last year. Instead of postponing university study, many graduates are taking a year out after receiving their degree. According to a survey carried out by YouGov and London Stansted airport, more young people are taking a gap year after university, and almost half of UK adults believe job prospects are enhanced by combining travel and learning. So is it better to save your gap year until after graduating?","Definitely, when you’ve been in education for all those years, where your life is September to July, a break is a good idea. You can recharge your batteries and see the world outside the classroom. You can practise foreign languages and improve your communication skills. You have time to figure things out and a year of being able to work on different projects. As a result, you may land in a job in the industry you like.","Although some take a gap year after university because they have a job lined up and managed to delay their start date, most are yet to secure work and are biding their time. It’s a common misconception that such individuals immediately go abroad to volunteer or travel. In reality, students don’t have the funds to do this. Many prefer to stay in their country juggling internships and part-time work.","For those who do go abroad, a gap-year stint volunteering is no longer merely a way for middle-class kids to boost their CVs. Graduates say they are making more considered choices. The practical experience of working abroad helps some of them get ready for a master’s, which is something they do not have time to do during their finals.","Graduates are also using gap years to explore different career routes. According to recruitment firm Tempo, more than half of students feel there is too much emphasis placed on graduate schemes when starting out in their career. Elena Ricci, 23, who graduated from the University of Southampton last year, agrees. “After I finished my degree, I didn’t really know what to do. So I worked for a law firm for a month, and then I went to Cambodia on a placement. If I had gone straight into a grad job, I don’t think I would have been happy,” she says.","Although graduates can bring great skills to volunteering and enhance their employability, there are some risks attached. “You are delaying your career or further study for a year and some employers may not get why you’ve done it,” says ManuelOtero, a senior lecturer in social sciences at Cardiff University who specialises in the link between education and work. His advice is not to stand still. It makes sense to work out what to do, and one of the best ways to find out what to do is to try it out.","After her year abroad, Ricci has now decided to start a master’s in September. She says graduates should ignore stereotypes and do what works for them. So, do what you want, regardless of what others might say. It’s up to you to decide. What works out for others may not work out for you, and vice versa. You never know till you try."],"items":[["12. Why is taking a gap year going out of fashion, according to Beth Adams?",["It is boring.","It is quite expensive.","It is too long.","It is pointless."]],["13. Deferring in Paragraph 2 most probably means …",["rejecting.","delaying.","getting.","choosing."]],["14. Which advantage of a gap year is NOT mentioned in the text?",["Understanding what you want.","Experiencing a different culture.","Becoming better at languages.","Having a rest and getting new impressions."]],["15. Such individuals in Paragraph 4 (“It’s a common misconception that such individuals immediately go abroad …”) refers to …",["interns and part-time workers.","young people with sufficient funds.","students having sufficient free time.","graduates without a stable job."]],["16. Which statement about Elena Ricci’s experience is FALSE?",["She had a vision of her future job.","She worked abroad for some time.","She worked for a firm for a short time.","She is satisfied with her experience."]],["17. What is the danger of taking a gap year, according to the text?",["Risk of losing important skills.","Having a career in the field you dislike.","Misunderstanding on the part of employers.","Impossibility of further study."]],["18. The author advises that students should …",["study on a master’s programme.","copy what other people do.","follow their own route.","try working after graduation."]]]}];
+const form=document.querySelector('form'), nav=document.querySelector('nav'), worksheet=document.querySelector('#worksheet'), review=document.querySelector('#review'), status=document.querySelector('#status'), sendControl=document.querySelector('#send-control'), progress=document.querySelector('#progress');
+let state={answers:{},current:0};
+if(!teacher)try{state=JSON.parse(localStorage.getItem(id))||state}catch{}
+if(reviewed?.data?.answers)state.answers=reviewed.data.answers;
+if(reviewed)document.getElementById('review-banner').append(KS.reviewBar(reviewed));
+function save(){if(!teacher)try{localStorage.setItem(id,JSON.stringify(state))}catch{}}
+function node(tag,text){const el=document.createElement(tag);el.textContent=text;return el}
+function go(i){
+ const target=i===sections.length?review:document.getElementById('part-'+i);
+ if(!target)return;
+ state.current=i;save();
+ target.querySelector('h2').focus({preventScroll:true});target.scrollIntoView({block:'start'});
+}
+function updateProgress(){
+ const total=sections.reduce((count,section)=>count+section.items.length,0);
+ progress.textContent=Object.keys(state.answers).length+' / '+total+' answered';
+}
+function render(){
+ const sent=KS.sent(page),locked=teacher||!!sent;
+ worksheet.querySelectorAll('input').forEach(input=>{input.disabled=locked});
+ updateProgress();
+ status.textContent=sent?(sent.pending?'Ответы сохранены. Сайт повторит отправку.':'Работа отправлена учителю.'):'';
+ const button=sendControl.querySelector('button');
+ if(button&&!locked)button.disabled=Object.keys(state.answers).length===0;
+}
+function saveAnswer(key,value){
+ if(value.trim())state.answers[key]=value;else delete state.answers[key];
+ save();render();
+}
+sections.forEach((section,i)=>{
+ const part=node('section','');part.id='part-'+i;part.className='diagnostic-part';
+ const heading=node('h2',section.title);heading.tabIndex=-1;part.append(heading);
+ if(section.note){const note=node('p',section.note);note.className='part-note';part.append(note)}
+ if(section.audio){
+  const audio=node('audio','');audio.controls=true;audio.preload='none';audio.setAttribute('playsinline','');audio.src=section.audio;
+  audio.addEventListener('play',()=>worksheet.querySelectorAll('audio').forEach(other=>{if(other!==audio)other.pause()}));
+  part.append(audio);
+ }
+ const panes=node('div','');panes.className='panes';
+ if(section.text||section.choices){
+  const passage=node('section','');passage.className='part-text';passage.setAttribute('aria-label','Text and options');
+  section.text?.forEach(text=>passage.append(node('p',text)));
+  section.choices?.forEach((text,k)=>passage.append(node('p',(k+1)+'. '+text)));
+  panes.append(passage);
+ }
+ const prompts=node('section','');prompts.setAttribute('aria-label','Questions');
+ section.items.forEach(([q,options],j)=>{
+  const key=i+'-'+j;
+  if(!options){
+   const field=node('label',q),input=node('input','');input.autocomplete='off';input.spellcheck=false;
+   input.value=state.answers[key]||'';input.addEventListener('input',()=>saveAnswer(key,input.value));
+   field.append(input);prompts.append(field);return;
+  }
+  const question=node('fieldset','');question.className='choice-question';
+  const choices=node('div','');choices.className='choice-options';
+  options.forEach(option=>{
+   const label=node('label','');label.className='choice-option';
+   const input=node('input','');input.type='radio';input.name=key;input.value=option;
+   input.checked=state.answers[key]===option;input.addEventListener('change',()=>saveAnswer(key,option));
+   label.append(input,node('span',option));choices.append(label);
+  });
+  question.append(node('legend',q),choices);prompts.append(question);
+ });
+ panes.append(prompts);part.append(panes);worksheet.append(part);
+});
+sections.concat({title:'Review and send'}).forEach((section,i)=>{const button=node('button',section.title);button.type='button';button.onclick=()=>go(i);nav.append(button)});
+form.onsubmit=e=>e.preventDefault();
+sendControl.append(KS.button(page,()=>({
+ answers:{...state.answers},
+ responses:Object.fromEntries(Object.entries(state.answers).map(([key,value])=>{
+  const [i,j]=key.split('-').map(Number);
+  return [sections[i].title+' · '+sections[i].items[j][0],value];
+ }))
+}),render));
+new MutationObserver(render).observe(sendControl,{childList:true});
+render();
+if(state.current>0)requestAnimationFrame(()=>go(state.current));
+</script><script>
+{
+ const picker=document.getElementById('section-picker');
+ const summary=picker.querySelector('summary');
+ picker.addEventListener('click',event=>{
+  if(event.composedPath().includes(picker.querySelector('nav'))){
+   picker.open=false;
+   if(picker.contains(document.activeElement)||document.activeElement===document.body)summary.focus();
+  }
+ });
+ picker.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&picker.open){picker.open=false;summary.focus()}
+ });
+ document.addEventListener('click',event=>{
+  if(picker.open&&!picker.contains(event.target))picker.open=false;
+ });
+}
+</script></body></html>
