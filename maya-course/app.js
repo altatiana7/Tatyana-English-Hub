@@ -6,7 +6,8 @@ const materials={
  '1PE':[{title:'Practical English · Hotel Problems · Calling Reception',url:'practical-english.html',type:'learn'}],
  '1REV':[{title:'A trip to a hotel · Revision File 1 + Hotel Problems',url:'revision-file1.html?v=20261025t',type:'learn'}],
  '2A':[{title:'2A · Lost… and found? · Past Simple',url:'2a-lost-and-found.html?v=20261025u',type:'learn'}],
- '2B':[{title:'Revision 2A + 2B · On top of the world · Past continuous',url:'2b-on-top-of-the-world.html?v=20261108d',type:'learn'},{title:'Holiday Photo Detective · Past Simple & Past Continuous',url:'2b-holiday-photo-detective.html?v=20261115a',type:'learn'}]
+ '2B':[{title:'Revision 2A + 2B · On top of the world · Past continuous',url:'2b-on-top-of-the-world.html?v=20261108d',type:'learn'},{title:'Holiday Photo Detective · Past Simple & Past Continuous',url:'2b-holiday-photo-detective.html?v=20261115a',type:'learn'}],
+ '2C':[{title:'2C · After Dark · Time sequencers and connectors',url:'2c-after-dark.html?v=20261129a',type:'learn'}]
 };
 const $=s=>document.querySelector(s),links=$('#links'),screen=$('#screen'),body=$('#body');let active=null,lastFocus=null;let completed=[];try{completed=JSON.parse(localStorage.getItem('maya-course-completed')||'[]');if(!Array.isArray(completed))completed=[];completed=completed.filter(x=>x!=='1C')}catch{}
 function hotspot(label,x,y,w,h,action,code){const b=document.createElement('button');b.className='hot';b.style.cssText=`left:${x/1672*100}%;top:${y/941*100}%;width:${w/1672*100}%;height:${h/941*100}%`;b.setAttribute('aria-label',label);b.title=label;if(code)b.dataset.code=code;b.onclick=action;links.append(b)}
